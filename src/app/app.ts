@@ -5,7 +5,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matPlayArrowOutline } from '@ng-icons/material-symbols/outline';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonModule, NgIcon],
+  imports: [ButtonModule, NgIcon],
   templateUrl: './app.html',
   styleUrl: './app.css',
   providers: [provideIcons({ matPlayArrowOutline })],

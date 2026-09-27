@@ -2,7 +2,7 @@
 /* serve a collegare i colori di PrimeNG con Tailwind CSS */
 @theme {
   --font-sans: 'Mulish', sans-serif;
-  /* --color-primary-50: var(--p-primary-50);
+
   --color-primary-100: var(--p-primary-100);
   --color-primary-200: var(--p-primary-200);
   --color-primary-300: var(--p-primary-300);
@@ -12,10 +12,7 @@
   --color-primary-700: var(--p-primary-700);
   --color-primary-800: var(--p-primary-800);
   --color-primary-900: var(--p-primary-900);
-  --color-primary-950: var(--p-primary-950);
 
-  --color-surface-0: var(--p-surface-0);
-  --color-surface-50: var(--p-surface-50);
   --color-surface-100: var(--p-surface-100);
   --color-surface-200: var(--p-surface-200);
   --color-surface-300: var(--p-surface-300);
@@ -25,5 +22,4 @@
   --color-surface-700: var(--p-surface-700);
   --color-surface-800: var(--p-surface-800);
   --color-surface-900: var(--p-surface-900);
-  --color-surface-950: var(--p-surface-950); */
 }
