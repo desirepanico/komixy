@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-/* serve a collegare i colori di PrimeNG con Tailwind CSS */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: 'Mulish', sans-serif;
 
