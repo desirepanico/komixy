@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matPlayArrowOutline } from '@ng-icons/material-symbols/outline';
+import { ButtonModule } from 'primeng/button';
+import { MobileBottomNav } from './shared/components/mobile-bottom-nav/mobile-bottom-nav';
 @Component({
   selector: 'app-root',
-  imports: [ButtonModule, NgIcon],
+  imports: [ButtonModule, NgIcon, MobileBottomNav],
   templateUrl: './app.html',
   styleUrl: './app.css',
   providers: [provideIcons({ matPlayArrowOutline })],

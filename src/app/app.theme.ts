@@ -1,5 +1,5 @@
-import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/styled';
+import Aura from '@primeuix/themes/aura';
 
 // TEMA dell'app
 export const KomixyPreset = definePreset(Aura, {
