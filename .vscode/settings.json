@@ -1,0 +1,14 @@
+{
+  "json.schemaDownload.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+
+  "i18n-ally.sourceLanguage": "it",
+  "i18n-ally.displayLanguage": "it",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.localesPaths": ["public/i18n", "src/assets/i18n", "src/app/common/i18n"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["transloco"]
+}
