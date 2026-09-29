@@ -8,10 +8,10 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 
-import { routes } from './app.routes';
 import { providePrimeNG } from 'primeng/config';
-import { KomixyPreset } from './app.theme';
 import { lastValueFrom } from 'rxjs';
+import { KomixyPreset } from './app.primeng-preset';
+import { routes } from './app.routes';
 // carica le traduzioni prima dell'avvio dell'app
 function initializeApp(): Promise<any> {
   const translateService = inject(TranslocoService);

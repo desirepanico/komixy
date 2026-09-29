@@ -1,7 +1,7 @@
 import { definePreset } from '@primeuix/styled';
 import Aura from '@primeuix/themes/aura';
 
-// TEMA dell'app
+// Preset personalizzato PrimeNG
 export const KomixyPreset = definePreset(Aura, {
   borderRadius: {
     none: '0',
