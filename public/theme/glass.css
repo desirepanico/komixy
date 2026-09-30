@@ -1,129 +1,111 @@
-/* =========================================
-   KOMIXY — GLASS SYSTEM
-   Effetto vetro: blur + saturazione + shadow
-   ========================================= */
+/* =========================================================
+    KOMIXY — GLASS SYSTEM
+    Mobile + Desktop
+    ========================================================= */
 
-/* =========================================
+/* =========================================================
+   VARIABILI
+   ========================================================= */
+
+:root {
+  --glass-blur: 20px;
+  --glass-saturation: 140%;
+  --glass-shadow: 55%;
+}
+
+/* =========================================================
    GLASS
-   ========================================= */
+   ========================================================= */
 
 /*
   GLASS — DEFAULT
 
   USALO PER:
-  - Navbar
   - Card manga
   - Card collezione
-  - Sidebar
-  - Pannelli principali
-  - Sezioni dell'interfaccia
+  - Pannelli
+  - Sezioni
+  - Elementi principali
 */
 
 .glass {
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
   box-shadow:
-    0 8px 32px color-mix(in srgb, var(--p-surface-950) 45%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 6%, transparent);
+    0 8px 32px color-mix(in srgb, var(--p-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 8%, transparent);
 }
 
-/* =========================================
+/* =========================================================
    GLASS LIGHT
-   ========================================= */
+   ========================================================= */
 
 /*
-  GLASS LIGHT — SECONDARIO
+  GLASS LIGHT
 
   USALO PER:
   - Filtri
   - Toolbar
-  - Statistiche
+  - Badge
   - Piccoli pannelli
-  - Informazioni secondarie
-  - Card meno importanti
+  - Elementi secondari
 */
 
 .glass-light {
-  backdrop-filter: blur(16px) saturate(135%);
-  -webkit-backdrop-filter: blur(16px) saturate(135%);
+  --glass-blur: 14px;
+  --glass-saturation: 130%;
+  --glass-shadow: 40%;
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
   box-shadow:
-    0 6px 24px color-mix(in srgb, var(--p-surface-950) 35%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 5%, transparent);
+    0 6px 24px color-mix(in srgb, var(--p-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 6%, transparent);
 }
 
-/* =========================================
+/* =========================================================
    GLASS STRONG
-   ========================================= */
+   ========================================================= */
 
 /*
-  GLASS STRONG — SOVRAPPOSTO
+  GLASS STRONG
 
   USALO PER:
+  - Navbar
+  - Menu
+  - Drawer
   - Modal
   - Dialog
-  - Drawer
-  - Menu aperti
   - Popup
-  - Pannelli sopra altri contenuti
 */
 
 .glass-strong {
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  --glass-blur: 28px;
+  --glass-saturation: 150%;
+  --glass-shadow: 70%;
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
   box-shadow:
-    0 12px 40px color-mix(in srgb, var(--p-surface-950) 55%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 7%, transparent);
+    0 12px 40px color-mix(in srgb, var(--p-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 10%, transparent);
 }
 
-/* =========================================
-   GLASS PRIMARY
-   ========================================= */
+/* =========================================================
+   FALLBACK
+   ========================================================= */
 
-/*
-  GLASS PRIMARY — ATTIVO
-
-  USALO PER:
-  - Elementi selezionati
-  - Stato active
-  - Categoria selezionata
-  - Voce sidebar attiva
-  - Card selezionata
-  - Badge importanti
-  - Sezioni evidenziate
-*/
-
-.glass-primary {
-  backdrop-filter: blur(22px) saturate(155%);
-  -webkit-backdrop-filter: blur(22px) saturate(155%);
-
-  box-shadow:
-    0 8px 32px color-mix(in srgb, var(--p-primary-950) 40%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 7%, transparent);
-}
-
-/* =========================================
-   GLASS PRIMARY STRONG
-   ========================================= */
-
-/*
-  GLASS PRIMARY STRONG — FOCUS
-
-  USALO SOLO PER:
-  - Hero
-  - CTA principali
-  - Elemento principale della pagina
-  - Stato selezionato molto importante
-  - Pannello protagonista
-*/
-
-.glass-primary-strong {
-  backdrop-filter: blur(26px) saturate(165%);
-  -webkit-backdrop-filter: blur(26px) saturate(165%);
-
-  box-shadow:
-    0 12px 40px color-mix(in srgb, var(--p-primary-950) 50%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--p-surface-50) 9%, transparent);
+@supports not (backdrop-filter: blur(1px)) {
+  .glass,
+  .glass-light,
+  .glass-strong {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
