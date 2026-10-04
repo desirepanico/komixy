@@ -1,0 +1,9 @@
+{
+  "menu": {
+    "home": "Home",
+    "releases": "Releases",
+    "library": "Library",
+    "scan": "Scan",
+    "profile": "Profile"
+  }
+}
