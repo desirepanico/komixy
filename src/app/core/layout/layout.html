@@ -1,0 +1,30 @@
+<div class="min-h-dvh">
+  <!-- DESKTOP -->
+  @if (viewport.isDesktop()) {
+    <div class="flex min-h-dvh">
+      <!-- SIDEBAR -->
+      <aside class="fixed inset-y-0 left-0 z-40 w-72">
+        TODO SIDE_BAR
+        <!-- <app-desktop-sidebar /> -->
+      </aside>
+
+      <!-- CONTENUTO DESKTOP -->
+      <main class="ml-72 min-h-dvh flex-1">
+        <router-outlet />
+      </main>
+    </div>
+  }
+
+  <!-- MOBILE + TABLET -->
+  @else {
+    <div class="min-h-dvh">
+      <!-- CONTENUTO -->
+      <main class="min-h-dvh pb-20">
+        <router-outlet />
+      </main>
+
+      <!-- BOTTOM NAV -->
+      <app-mobile-bottom-nav />
+    </div>
+  }
+</div>
