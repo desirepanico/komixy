@@ -12,6 +12,7 @@ import { providePrimeNG } from 'primeng/config';
 import { lastValueFrom } from 'rxjs';
 import { KomixyPreset } from './app.primeng-preset';
 import { routes } from './app.routes';
+import { TranslocoHttpLoader } from './core/interceptors/transloco-loader.interceptor';
 // carica le traduzioni prima dell'avvio dell'app
 function initializeApp(): Promise<any> {
   const translateService = inject(TranslocoService);
@@ -44,7 +45,7 @@ export const appConfig: ApplicationConfig = {
         prodMode: !isDevMode(), // warning in sviluppo, nessuno in produzione
         scopes: { autoPrefixKeys: false }, // aggiungi questa opzione per non usare prefissi di lingua
       },
-      // loader: TranslocoHttpLoader,
+      loader: TranslocoHttpLoader,
     }),
     provideAppInitializer(initializeApp),
   ],

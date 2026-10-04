@@ -1,13 +1,34 @@
 import { Routes } from '@angular/router';
-import { HomePage } from './home/pages/home-page/home-page';
+export enum AppRoutes {
+  Releases = 'releases',
+  Scan = 'scan',
+  Library = 'library',
+  Profile = 'profile',
+  Home = 'home',
+}
+
 export const routes: Routes = [
-  //test
   {
     path: '',
-    component: HomePage,
+    loadComponent: () => import('./core/layout/layout').then((m) => m.Layout),
+
+    children: [
+      {
+        path: AppRoutes.Home,
+        loadComponent: () => import('./home/pages/home-page').then((m) => m.HomePage),
+      },
+    ],
   },
-  {
-    path: 'releases',
-    component: HomePage,
-  },
+  // {
+  //   path: '500',
+  //   loadComponent: () =>
+  //     import('./common/components/error/error.component').then((m) => m.ErrorComponent),
+  //   data: { errorCode: 500 },
+  // },
+  // {
+  //   path: '401',
+  //   loadComponent: () =>
+  //     import('./common/components/error/error.component').then((m) => m.ErrorComponent),
+  //   data: { errorCode: 401 },
+  // },
 ];
