@@ -1,36 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBarcodeScannerOutline, matHomeOutline } from '@ng-icons/material-symbols/outline';
+import {
+  matBarcodeScannerOutline,
+  matCalendarTodayOutline,
+  matCollectionsBookmarkOutline,
+  matHomeOutline,
+  matPersonOutline,
+} from '@ng-icons/material-symbols/outline';
+import { AppRoutes } from '../../../app.routes';
+import { NavigationService } from '../../../core/services/navigation.service';
 
 @Component({
   selector: 'app-mobile-bottom-nav',
   imports: [NgIcon, TranslocoPipe, RouterLink, RouterLinkActive],
   templateUrl: './mobile-bottom-nav.html',
-  providers: [provideIcons({ matBarcodeScannerOutline, matHomeOutline })],
+  providers: [
+    provideIcons({
+      matBarcodeScannerOutline,
+      matHomeOutline,
+      matCollectionsBookmarkOutline,
+      matCalendarTodayOutline,
+      matPersonOutline,
+    }),
+  ],
 })
 export class MobileBottomNav {
-  navItems = [
-    {
-      icon: 'matHomeOutline',
-      label: 'home',
-      route: '',
-    },
-    {
-      icon: 'matCollectionsBookmarkOutline',
-      label: 'uscite',
-      route: '/releases',
-    },
-    {
-      icon: 'matFavoriteBorder',
-      label: 'library',
-      route: '/favorites',
-    },
-    {
-      icon: 'matPersonOutline',
-      label: 'profile',
-      route: '/profile',
-    },
-  ];
+  private readonly navigationService = inject(NavigationService);
+
+  public appRoutes: WritableSignal<typeof AppRoutes>;
+  protected readonly navItems = this.navigationService.navItems;
+  constructor() {
+    this.appRoutes = signal(AppRoutes);
+  }
 }

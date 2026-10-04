@@ -1,25 +1,18 @@
 <nav
-  class="relative grid h-14 grid-cols-5 items-center rounded-full border border-surface-600/60 bg-surface-800/60 glass-strong"
+  class="fixed inset-x-2 bottom-6 z-50 grid h-14 grid-cols-5 items-center rounded-full border border-surface-600/60 bg-surface-800/60 px-4 shadow-lg shadow-black/20 glass-strong"
 >
   <!-- SINISTRA -->
-  <div class="col-span-2 flex items-center justify-around">
+  <div class="col-span-2 flex gap-2 items-center justify-around pr-5">
     @for (item of navItems.slice(0, 2); track item.route) {
       <a
         [routerLink]="item.route"
-        routerLinkActive="text-primary-400"
-        class="flex flex-col items-center justify-center gap-0.5 transition-colors"
+        routerLinkActive="text-primary-400 [&>span]:font-bold"
+        [routerLinkActiveOptions]="{ exact: item.route === '' }"
+        class="flex flex-col items-center justify-center gap-0.5 text-neutral-500 transition-colors"
       >
-        <ng-icon
-          [name]="item.icon"
-          size="24"
-          class="text-neutral-500"
-          routerLinkActive="text-primary-400"
-        />
+        <ng-icon [name]="item.icon" size="24" />
 
-        <span
-          class="text-xs font-semibold text-neutral-500"
-          routerLinkActive="font-bold text-primary-400"
-        >
+        <span class="text-xs font-semibold transition-all">
           {{ item.label | transloco }}
         </span>
       </a>
@@ -27,29 +20,29 @@
   </div>
 
   <!-- SCAN -->
-  <div
-    class="absolute left-1/2 -top-4 z-10 size-20 -translate-x-1/2 rounded-full border-4 border-surface-800 bg-primary-400 shadow-xl shadow-black/40"
+  <a
+    [routerLink]="appRoutes().Scan"
+    routerLinkActive="bg-primary-500 text-surface-800"
+    class="col-span-1 absolute left-1/2 top-1/2 z-10 flex size-20 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-4 border-surface-800 bg-primary-400 text-primary-900 shadow-xl shadow-black/40 transition-colors"
   >
-    <a routerLink="/scan" class="flex h-full flex-col items-center justify-center text-primary-900">
-      <ng-icon name="matBarcodeScannerOutline" size="24" />
+    <ng-icon name="matBarcodeScannerOutline" size="24" />
 
-      <span class="text-xs font-semibold">
-        {{ 'scan' }}
-      </span>
-    </a>
-  </div>
+    <span class="text-xs font-semibold">
+      {{ 'menu.scan' | transloco }}
+    </span>
+  </a>
 
   <!-- DESTRA -->
-  <div class="col-span-2 col-start-4 flex items-center justify-around">
+  <div class="col-start-4 col-span-2 flex gap-2 items-center justify-around pl-5">
     @for (item of navItems.slice(2); track item.route) {
       <a
         [routerLink]="item.route"
-        routerLinkActive="text-primary-400 font-bold"
+        routerLinkActive="text-primary-400 [&>span]:font-bold"
         class="flex flex-col items-center justify-center gap-0.5 text-neutral-500 transition-colors"
       >
         <ng-icon [name]="item.icon" size="24" />
 
-        <span class="text-xs font-semibold">
+        <span class="text-xs font-semibold transition-all">
           {{ item.label | transloco }}
         </span>
       </a>
