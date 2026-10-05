@@ -4,6 +4,7 @@
     "releases": "Releases",
     "library": "Library",
     "scan": "Scan",
-    "profile": "Profile"
+    "profile": "Profile",
+    "discover": "Discover"
   }
 }
