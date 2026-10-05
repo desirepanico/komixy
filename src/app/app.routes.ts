@@ -4,7 +4,7 @@ export enum AppRoutes {
   Scan = 'scan',
   Library = 'library',
   Profile = 'profile',
-  Home = 'home',
+  Discover = 'home',
 }
 
 export const routes: Routes = [
@@ -16,12 +16,14 @@ export const routes: Routes = [
       {
         path: '', //"Se l'URL è esattamente /, vai automaticamente a /home
         pathMatch: 'full',
-        redirectTo: AppRoutes.Home,
+        redirectTo: AppRoutes.Discover,
       },
       {
-        path: AppRoutes.Home,
+        path: AppRoutes.Discover,
         loadComponent: () =>
-          import('./features/home/pages/home-page/home-page').then((m) => m.HomePage),
+          import('./features/discover/pages/discover-page/discover-page').then(
+            (m) => m.DiscoverPage,
+          ),
       },
       {
         path: AppRoutes.Releases,
