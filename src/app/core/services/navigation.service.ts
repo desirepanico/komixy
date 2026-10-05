@@ -1,17 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { AppRoutes } from '../../app.routes';
-
-export interface NavItem {
-  icon: string;
-  label: string;
-  route: string;
-}
+import { NavItem } from '../models/nav-item.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavigationService {
-  readonly navItems: NavItem[] = [
+  readonly navItems = signal<NavItem[]>([
     {
       icon: 'matHomeOutline',
       label: 'menu.home',
@@ -32,5 +27,5 @@ export class NavigationService {
       label: 'menu.profile',
       route: AppRoutes.Profile,
     },
-  ];
+  ]);
 }

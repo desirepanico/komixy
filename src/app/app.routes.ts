@@ -20,7 +20,15 @@ export const routes: Routes = [
       },
       {
         path: AppRoutes.Home,
-        loadComponent: () => import('./home/pages/home-page').then((m) => m.HomePage),
+        loadComponent: () =>
+          import('./features/home/pages/home-page/home-page').then((m) => m.HomePage),
+      },
+      {
+        path: AppRoutes.Releases,
+        loadComponent: () =>
+          import('./features/releases/pages/releases-page/releases-page').then(
+            (m) => m.ReleasesPage,
+          ),
       },
     ],
   },
@@ -36,4 +44,11 @@ export const routes: Routes = [
   //     import('./common/components/error/error.component').then((m) => m.ErrorComponent),
   //   data: { errorCode: 401 },
   // },
+  //TODO craere pagina not_found
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./features/home/pages/home-page/home-page').then((m) => m.HomePage),
+    data: { title: 'pageNotFound' },
+  },
 ];

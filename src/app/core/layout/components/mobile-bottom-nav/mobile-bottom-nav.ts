@@ -9,8 +9,8 @@ import {
   matHomeOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '../../../app.routes';
-import { NavigationService } from '../../../core/services/navigation.service';
+import { AppRoutes } from '../../../../app.routes';
+import { NavigationService } from '../../../services/navigation.service';
 
 @Component({
   selector: 'app-mobile-bottom-nav',

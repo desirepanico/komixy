@@ -3,7 +3,7 @@
 >
   <!-- SINISTRA -->
   <div class="col-span-2 flex gap-2 items-center justify-around pr-5">
-    @for (item of navItems.slice(0, 2); track item.route) {
+    @for (item of navItems().slice(0, 2); track item.route) {
       <a
         [routerLink]="item.route"
         routerLinkActive="text-primary-400 [&>span]:font-bold"
@@ -34,7 +34,7 @@
 
   <!-- DESTRA -->
   <div class="col-start-4 col-span-2 flex gap-2 items-center justify-around pl-5">
-    @for (item of navItems.slice(2); track item.route) {
+    @for (item of navItems().slice(2); track item.route) {
       <a
         [routerLink]="item.route"
         routerLinkActive="text-primary-400 [&>span]:font-bold"
