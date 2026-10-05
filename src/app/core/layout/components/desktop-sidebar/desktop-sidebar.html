@@ -1,1 +1,125 @@
-<p>desktop-sidebar works!</p>
+<aside
+  class="fixed left-0 top-0 z-40 flex h-dvh w-64 flex-col border-r border-surface-700/40 bg-surface-950/70 backdrop-blur-xl"
+>
+  <!-- Logo -->
+  <div class="flex h-20 shrink-0 items-center px-5">
+    <a routerLink="/" class="flex items-center gap-3" aria-label="Komixy">
+      <div
+        class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
+      >
+        <i class="pi pi-book text-lg"></i>
+      </div>
+
+      <span class="text-xl font-bold tracking-tight text-surface-50"> Komixy </span>
+    </a>
+  </div>
+
+  <!-- Navigazione -->
+  <nav aria-label="Navigazione principale" class="flex-1 overflow-y-auto px-3 py-4">
+    <!-- Principale -->
+    <div class="mb-2 px-3">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-surface-500">
+        Principale
+      </span>
+    </div>
+
+    <ul class="flex flex-col gap-1">
+      <li>
+        <a
+          routerLink="/discover"
+          routerLinkActive="bg-primary-500/15 text-primary-300"
+          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
+        >
+          <i
+            class="pi pi-compass text-base text-surface-500 transition-colors group-hover:text-primary-300"
+          ></i>
+
+          <span>Scopri</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/catalog"
+          routerLinkActive="bg-primary-500/15 text-primary-300"
+          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
+        >
+          <i
+            class="pi pi-book text-base text-surface-500 transition-colors group-hover:text-primary-300"
+          ></i>
+
+          <span>Catalogo</span>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Libreria -->
+    <div class="mb-2 mt-8 px-3">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-surface-500">
+        La mia libreria
+      </span>
+    </div>
+
+    <ul class="flex flex-col gap-1">
+      <li>
+        <a
+          routerLink="/collection"
+          routerLinkActive="bg-primary-500/15 text-primary-300"
+          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
+        >
+          <i
+            class="pi pi-heart text-base text-surface-500 transition-colors group-hover:text-primary-300"
+          ></i>
+
+          <span>Collezione</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/reading-list"
+          routerLinkActive="bg-primary-500/15 text-primary-300"
+          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
+        >
+          <i
+            class="pi pi-bookmark text-base text-surface-500 transition-colors group-hover:text-primary-300"
+          ></i>
+
+          <span>Da leggere</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/favorites"
+          routerLinkActive="bg-primary-500/15 text-primary-300"
+          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
+        >
+          <i
+            class="pi pi-star text-base text-surface-500 transition-colors group-hover:text-primary-300"
+          ></i>
+
+          <span>Preferiti</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Profilo -->
+  <div class="border-t border-surface-700/40 p-3">
+    <button
+      type="button"
+      class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors hover:bg-surface-800/70"
+    >
+      <p-avatar label="DP" shape="circle" styleClass="bg-primary-500 text-surface-950" />
+
+      <div class="min-w-0 flex-1">
+        <p class="truncate text-sm font-semibold text-surface-100">Il mio profilo</p>
+
+        <p class="truncate text-xs text-surface-500">Visualizza profilo</p>
+      </div>
+
+      <i class="pi pi-angle-right text-surface-500"></i>
+    </button>
+  </div>
+</aside>
