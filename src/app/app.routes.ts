@@ -14,6 +14,11 @@ export const routes: Routes = [
 
     children: [
       {
+        path: '', //"Se l'URL è esattamente /, vai automaticamente a /home
+        pathMatch: 'full',
+        redirectTo: AppRoutes.Home,
+      },
+      {
         path: AppRoutes.Home,
         loadComponent: () => import('./home/pages/home-page').then((m) => m.HomePage),
       },
