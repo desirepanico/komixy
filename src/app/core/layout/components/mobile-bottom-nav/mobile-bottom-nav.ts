@@ -6,6 +6,7 @@ import {
   matBarcodeScannerOutline,
   matCalendarTodayOutline,
   matCollectionsBookmarkOutline,
+  matExploreOutline,
   matHomeOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
@@ -23,6 +24,7 @@ import { NavigationService } from '../../../services/navigation.service';
       matCollectionsBookmarkOutline,
       matCalendarTodayOutline,
       matPersonOutline,
+      matExploreOutline,
     }),
   ],
 })

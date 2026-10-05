@@ -8,9 +8,9 @@ import { NavItem } from '../models/nav-item.model';
 export class NavigationService {
   readonly navItems = signal<NavItem[]>([
     {
-      icon: 'matHomeOutline',
-      label: 'menu.home',
-      route: AppRoutes.Home,
+      icon: 'matExploreOutline',
+      label: 'menu.discover',
+      route: AppRoutes.Discover,
     },
     {
       icon: 'matCalendarTodayOutline',
