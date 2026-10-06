@@ -3,3 +3,7 @@ export interface NavItem {
   label: string;
   route: string;
 }
+export interface NavGroup {
+  title: string;
+  items: NavItem[];
+}

@@ -30,6 +30,7 @@ body {
       rgba(var(--p-primary-700-rgb, 103, 48, 194), 0.2) 15%,
       rgba(var(--p-primary-700-rgb, 103, 48, 194), 0.2) 40%
     );
+
     background-color: #000000;
     background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scroll */
   }

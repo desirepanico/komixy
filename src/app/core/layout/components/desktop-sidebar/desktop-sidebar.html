@@ -1,5 +1,5 @@
 <aside
-  class="fixed left-0 top-0 z-40 flex h-dvh w-64 flex-col border-r border-surface-700/15 bg-black/25 backdrop-blur-xl"
+  class="fixed left-0 top-0 z-40 flex h-dvh w-64 flex-col border-r border-surface-700/20 bg-surface-950/40 backdrop-blur-2xl"
 >
   <!-- Logo -->
   <div class="flex h-20 shrink-0 items-center px-5">
@@ -15,94 +15,37 @@
   </div>
 
   <!-- Navigazione -->
-  <nav aria-label="Navigazione principale" class="flex-1 overflow-y-auto px-3 py-4">
-    <!-- Principale -->
-    <div class="mb-2 px-3">
-      <span class="text-[11px] font-bold uppercase tracking-wider text-surface-500">
-        Principale
-      </span>
+  <nav class="flex-1 overflow-y-auto px-3 py-4">
+    <div class="flex flex-col gap-4">
+      @for (group of navGroups(); track group.title) {
+        <section class="">
+          <div class="mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-surface-500">
+              {{ group.title | transloco }}
+            </span>
+          </div>
+
+          <ul class="flex flex-col gap-1">
+            @for (item of group.items; track item.route) {
+              <li>
+                <a
+                  [routerLink]="item.route"
+                  [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+                  #rla="routerLinkActive"
+                  [routerLinkActive]="['bg-primary-500/15', 'text-primary-300']"
+                  [class.hover:bg-surface-800/70]="!rla.isActive"
+                  [class.hover:text-surface-100]="!rla.isActive"
+                  class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200"
+                >
+                  <ng-icon [name]="item.icon" size="16" />
+                  <span>{{ item.label | transloco }}</span>
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
     </div>
-
-    <ul class="flex flex-col gap-1">
-      <li>
-        <a
-          routerLink="/discover"
-          routerLinkActive="bg-primary-500/15 text-primary-300"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
-        >
-          <i
-            class="pi pi-compass text-base text-surface-500 transition-colors group-hover:text-primary-300"
-          ></i>
-
-          <span>Scopri</span>
-        </a>
-      </li>
-
-      <li>
-        <a
-          routerLink="/catalog"
-          routerLinkActive="bg-primary-500/15 text-primary-300"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
-        >
-          <i
-            class="pi pi-book text-base text-surface-500 transition-colors group-hover:text-primary-300"
-          ></i>
-
-          <span>Catalogo</span>
-        </a>
-      </li>
-    </ul>
-
-    <!-- Libreria -->
-    <div class="mb-2 mt-8 px-3">
-      <span class="text-[11px] font-bold uppercase tracking-wider text-surface-500">
-        La mia libreria
-      </span>
-    </div>
-
-    <ul class="flex flex-col gap-1">
-      <li>
-        <a
-          routerLink="/collection"
-          routerLinkActive="bg-primary-500/15 text-primary-300"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
-        >
-          <i
-            class="pi pi-heart text-base text-surface-500 transition-colors group-hover:text-primary-300"
-          ></i>
-
-          <span>Collezione</span>
-        </a>
-      </li>
-
-      <li>
-        <a
-          routerLink="/reading-list"
-          routerLinkActive="bg-primary-500/15 text-primary-300"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
-        >
-          <i
-            class="pi pi-bookmark text-base text-surface-500 transition-colors group-hover:text-primary-300"
-          ></i>
-
-          <span>Da leggere</span>
-        </a>
-      </li>
-
-      <li>
-        <a
-          routerLink="/favorites"
-          routerLinkActive="bg-primary-500/15 text-primary-300"
-          class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-surface-800/70 hover:text-surface-100"
-        >
-          <i
-            class="pi pi-star text-base text-surface-500 transition-colors group-hover:text-primary-300"
-          ></i>
-
-          <span>Preferiti</span>
-        </a>
-      </li>
-    </ul>
   </nav>
 
   <!-- Profilo -->
@@ -111,7 +54,7 @@
       type="button"
       class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors hover:bg-surface-800/70"
     >
-      <p-avatar label="DP" shape="circle" styleClass="bg-primary-500 text-surface-950" />
+      <p-avatar label="DP" shape="circle" class="bg-primary-500 text-surface-950" />
 
       <div class="min-w-0 flex-1">
         <p class="truncate text-sm font-semibold text-surface-100">Il mio profilo</p>

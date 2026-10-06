@@ -1,4 +1,4 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -11,7 +11,7 @@ import {
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
-import { NavigationService } from '../../../services/navigation.service';
+import { NavItem } from '../../../models/nav-item.model';
 
 @Component({
   selector: 'app-mobile-bottom-nav',
@@ -29,10 +29,29 @@ import { NavigationService } from '../../../services/navigation.service';
   ],
 })
 export class MobileBottomNav {
-  private readonly navigationService = inject(NavigationService);
-
   public appRoutes: WritableSignal<typeof AppRoutes>;
-  protected readonly navItems = this.navigationService.navItems;
+  readonly navItems = signal<NavItem[]>([
+    {
+      icon: 'matExploreOutline',
+      label: 'menu.discover',
+      route: AppRoutes.Discover,
+    },
+    {
+      icon: 'matCalendarTodayOutline',
+      label: 'menu.releases',
+      route: AppRoutes.Releases,
+    },
+    {
+      icon: 'matCollectionsBookmarkOutline',
+      label: 'menu.library',
+      route: AppRoutes.Library,
+    },
+    {
+      icon: 'matPersonOutline',
+      label: 'menu.profile',
+      route: AppRoutes.Profile,
+    },
+  ]);
   constructor() {
     this.appRoutes = signal(AppRoutes);
   }
