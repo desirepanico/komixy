@@ -1,10 +1,11 @@
 {
   "menu": {
-    "home": "Home",
+    "main": "Main",
     "releases": "Releases",
     "library": "Library",
     "scan": "Scan",
     "profile": "Profile",
-    "discover": "Discover"
+    "discover": "Discover",
+    "collection": "Collection"
   }
 }

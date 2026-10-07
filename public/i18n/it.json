@@ -1,10 +1,11 @@
 {
   "menu": {
-    "home": "Home",
+    "main": "Principale",
     "discover": "Scopri",
     "releases": "Uscite",
     "library": "Libreria",
     "scan": "Scan",
-    "profile": "Profilo"
+    "profile": "Profilo",
+    "collection": ""
   }
 }

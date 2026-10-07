@@ -1,19 +1,19 @@
 <div class="min-h-dvh">
-  <!-- DESKTOP -->
+  <!-- DESKTOP: da 1024px in su -->
   @if (viewport.isDesktop()) {
-    <div class="flex min-h-dvh">
+    <div class="flex min-h-dvh gap-4 p-4">
       <!-- SIDEBAR -->
 
       <app-desktop-sidebar />
 
       <!-- CONTENUTO DESKTOP -->
-      <main class="ml-72 min-h-dvh flex-1">
+      <main class="flex-1">
         <router-outlet />
       </main>
     </div>
   }
 
-  <!-- MOBILE + TABLET -->
+  <!-- TABLET + MOBILE: sotto i 1024px -->
   @else {
     <div class="min-h-dvh">
       <!-- CONTENUTO -->
