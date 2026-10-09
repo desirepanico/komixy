@@ -12,6 +12,7 @@ import {
 } from '@ng-icons/material-symbols/outline';
 import { AvatarModule } from 'primeng/avatar';
 import { AppRoutes } from '../../../../app.routes';
+import { UserRole } from '../../../../features/auth/models/user.model';
 import { NavGroup } from '../../../models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',
@@ -37,11 +38,13 @@ export class DesktopSidebar {
           icon: 'matExploreOutline',
           label: 'menu.discover',
           route: AppRoutes.Discover,
+          roles: [UserRole.User, UserRole.Admin],
         },
         {
           icon: 'matCalendarTodayOutline',
           label: 'menu.releases',
           route: AppRoutes.Releases,
+          roles: [UserRole.User, UserRole.Admin],
         },
       ],
     },
@@ -52,6 +55,7 @@ export class DesktopSidebar {
           icon: 'matCollectionsBookmarkOutline',
           label: 'menu.collection',
           route: AppRoutes.Library,
+          roles: [UserRole.User, UserRole.Admin],
         },
       ],
     },

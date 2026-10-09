@@ -5,6 +5,7 @@ export enum AppRoutes {
   Library = 'library',
   Profile = 'profile',
   Discover = 'discover',
+  Login = 'login',
 }
 
 export const routes: Routes = [
