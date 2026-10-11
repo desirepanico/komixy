@@ -98,7 +98,7 @@
 }
 
 /* =========================================================
-   FALLBACK
+   serve a gestire la compatibilità con i browser che non supportano l'effetto di sfocatura dello sfondo (backdrop-filter)
    ========================================================= */
 
 @supports not (backdrop-filter: blur(1px)) {
