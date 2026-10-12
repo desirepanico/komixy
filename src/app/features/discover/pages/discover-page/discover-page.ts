@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComicCard } from '../../components/comic-card/comic-card';
 
 @Component({
@@ -6,4 +6,10 @@ import { ComicCard } from '../../components/comic-card/comic-card';
   imports: [ComicCard],
   templateUrl: './discover-page.html',
 })
-export class DiscoverPage {}
+export class DiscoverPage {
+  readonly bookmarked = signal(false);
+
+  public toggleBookmark(): void {
+    this.bookmarked.update((value) => !value);
+  }
+}

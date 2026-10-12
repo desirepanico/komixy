@@ -7,5 +7,12 @@
     "profile": "Profile",
     "discover": "Discover",
     "collection": "Collection"
+  },
+
+  "mangaCard": {
+    "coverAlt": "Cover of {{title}}",
+    "volume": "Vol. {{volume}}",
+    "addBookmark": "Add to bookmarks",
+    "removeBookmark": "Remove from bookmarks"
   }
 }

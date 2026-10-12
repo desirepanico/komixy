@@ -7,5 +7,11 @@
     "scan": "Scan",
     "profile": "Profilo",
     "collection": ""
+  },
+  "mangaCard": {
+    "coverAlt": "Copertina di {{title}}",
+    "volume": "Vol. {{volume}}",
+    "addBookmark": "Aggiungi ai preferiti",
+    "removeBookmark": "Rimuovi dai preferiti"
   }
 }

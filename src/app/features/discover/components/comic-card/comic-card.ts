@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
+import { AppRoutes } from '../../../../app.routes';
 
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon],
+  imports: [NgIcon, TranslocoPipe, RouterLink],
   templateUrl: './comic-card.html',
   styleUrl: './comic-card.css',
   providers: [
@@ -13,4 +16,20 @@ import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
     }),
   ],
 })
-export class ComicCard {}
+export class ComicCard {
+  protected readonly AppRoutes = signal(AppRoutes);
+  public title = input.required<string>();
+  public author = input.required<string>();
+  public volume = input.required<number>();
+  public description = input.required<string>();
+  public id = input.required<string>();
+  public genre = input<string[]>([]);
+  public coverUrl = input<string>('https://picsum.photos/seed/komixy-neon/160/200');
+  public bookmarked = input<boolean>(false);
+
+  public bookmarkToggle = output<void>();
+
+  onBookmarkClick(): void {
+    this.bookmarkToggle.emit();
+  }
+}

@@ -6,16 +6,16 @@ export enum AppRoutes {
   Profile = 'profile',
   Discover = 'discover',
   Login = 'login',
+  Comic = 'comic',
 }
 
 export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./core/layout/layout').then((m) => m.Layout),
-
     children: [
       {
-        path: '', //"Se l'URL è esattamente /, vai automaticamente a /home
+        path: '',
         pathMatch: 'full',
         redirectTo: AppRoutes.Discover,
       },
@@ -33,21 +33,25 @@ export const routes: Routes = [
             (m) => m.ReleasesPage,
           ),
       },
+      //TODO insierire pagina dettaglio manga
+      {
+        path: AppRoutes.Comic,
+        loadComponent: () =>
+          import('./features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
+        children: [
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
+            // loadComponent: () =>
+            //   import('./features/comicd/pages/comicd-detail-page/comic-detail-page').then(
+            //     (m) => m.ComicDetailPage,
+            //   ),
+          },
+        ],
+      },
     ],
   },
-  // {
-  //   path: '500',
-  //   loadComponent: () =>
-  //     import('./common/components/error/error.component').then((m) => m.ErrorComponent),
-  //   data: { errorCode: 500 },
-  // },
-  // {
-  //   path: '401',
-  //   loadComponent: () =>
-  //     import('./common/components/error/error.component').then((m) => m.ErrorComponent),
-  //   data: { errorCode: 401 },
-  // },
-  //TODO craere pagina not_found
   {
     path: '**',
     loadComponent: () =>

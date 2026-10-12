@@ -1,41 +1,57 @@
-<div
-  class="borderborder-primary-400/20 rounded-3xl bg-surface-900/75 shadow-lg shadow-black/20 glass-strong p-3 md:p-4"
+<a
+  [routerLink]="[AppRoutes().Comic, id()]"
+  class="group block rounded-3xl border border-primary-400/20 bg-surface-900/75 p-3 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.99] md:p-4"
 >
   <div class="flex gap-4">
     <img
-      class="rounded-lg"
-      height="100"
-      width="80"
-      src="https://picsum.photos/seed/komixy-neon/160/200"
+      class="shrink-0 rounded-lg object-cover h-30 w-20"
+      [src]="coverUrl()"
+      loading="lazy"
+      [alt]="'mangaCard.coverAlt' | transloco: { title: title() }"
     />
 
-    <div class="flex flex-col gap-2 w-full">
-      <div class="flex justify-between">
-        <div class="flex flex-col">
-          <span class="text-lg text-surface-50 font-bold"> Neon Horizon</span>
-          <div class="flex gap-2">
-            <span class="text-sm text-surface-400 font-normal"> C. Arisato</span>
-            <span class="text-sm text-primary-500 font-semibold"> Vol. 4</span>
+    <div class="flex min-w-0 flex-1 flex-col gap-2">
+      <div class="flex min-w-0 items-start justify-between gap-2">
+        <div class="flex min-w-0 flex-1 flex-col gap-1">
+          <h3
+            class="line-clamp-2 wrap-break-word text-base font-bold leading-snug text-surface-50 transition-colors group-hover:text-primary-300 sm:text-lg"
+          >
+            {{ title() }}
+          </h3>
+
+          <div class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <span class="min-w-0 wrap-break-word text-sm text-surface-400">
+              {{ author() }}
+            </span>
+
+            <span class="shrink-0 text-sm font-semibold text-primary-400">
+              {{ 'mangaCard.volume' | transloco: { volume: volume() } }}
+            </span>
           </div>
         </div>
-        <!-- TODO componente bottone -->
-        <button
-          type="button"
-          class="rounded-full border cursor-pointer flex size-10 justify-center items-center border-surface-700/70 bg-surface-800/60 transition-colors hover:border-primary-400/50"
+
+        <!-- Il pulsante dei preferiti va mantenuto separato dal link. -->
+        <span
+          class="flex size-11 shrink-0 items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400"
+          aria-hidden="true"
         >
-          <ng-icon name="matBookmarkOutline" size="24" class="text-primary-500!" />
-        </button>
+          <ng-icon name="matBookmarkOutline" size="24" />
+        </span>
       </div>
-      <p class="line-clamp-2 text-xs text-surface-500">
-        Un viaggio tra città futuristiche e poteri misteriosi.
+
+      <p class="line-clamp-2 wrap-break-word text-xs leading-relaxed text-surface-500">
+        {{ description() }}
       </p>
 
-      <!-- TODO componente tag -->
-      <div
-        class="border border-primary-500 rounded-full 0 px-2.5 py-1 text-primary-500 uppercase w-fit text-xs"
-      >
-        fantasy
+      <div class="flex min-w-0 flex-wrap items-center gap-1.5">
+        @for (genre of genre(); track genre) {
+          <span
+            class="w-fit rounded-full border border-primary-500/40 bg-primary-500/10 px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-primary-300"
+          >
+            {{ genre }}
+          </span>
+        }
       </div>
     </div>
   </div>
-</div>
+</a>
