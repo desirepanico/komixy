@@ -38,7 +38,7 @@
                 (bookmarked() ? 'mangaCard.removeBookmark' : 'mangaCard.addBookmark') | transloco
               "
               [attr.aria-pressed]="bookmarked()"
-              (click)="$event.preventDefault(); $event.stopPropagation(); onBookmarkClick()"
+              (click)="handleBookmarkClick($event)"
             >
               <ng-icon
                 [name]="bookmarked() ? 'matBookmark' : 'matBookmarkOutline'"

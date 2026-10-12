@@ -29,7 +29,9 @@ export class ComicCard {
 
   public bookmarkToggle = output<void>();
 
-  onBookmarkClick(): void {
+  public handleBookmarkClick(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
     this.bookmarkToggle.emit();
   }
 }
