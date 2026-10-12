@@ -19,8 +19,8 @@
             {{ title() }}
           </h3>
 
-          <div class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
-            <span class="min-w-0 wrap-break-word text-sm text-surface-400">
+          <div class="flex gap-2">
+            <span class="w-fit flex-1 truncate text-sm text-surface-400">
               {{ author() }}
             </span>
 
@@ -30,13 +30,17 @@
           </div>
         </div>
 
-        <!-- Il pulsante dei preferiti va mantenuto separato dal link. -->
-        <span
-          class="flex size-11 shrink-0 items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400"
-          aria-hidden="true"
+        <button
+          type="button"
+          class="flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400 transition-colors duration-200 hover:border-primary-400/60 hover:bg-primary-500/10 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          [attr.aria-label]="
+            (bookmarked() ? 'mangaCard.removeBookmark' : 'mangaCard.addBookmark') | transloco
+          "
+          [attr.aria-pressed]="bookmarked()"
+          (click)="onBookmarkClick()"
         >
-          <ng-icon name="matBookmarkOutline" size="24" />
-        </span>
+          <ng-icon name="matBookmarkOutline" size="24" class="text-primary-500!" />
+        </button>
       </div>
 
       <p class="hidden sm:line-clamp-2 wrap-break-word text-xs leading-relaxed text-surface-500">
