@@ -1,4 +1,4 @@
-<a
+<div
   [routerLink]="[AppRoutes().Comic, id()]"
   class="group block rounded-3xl border border-primary-400/20 bg-surface-900/75 p-3 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.99] md:p-4"
 >
@@ -33,14 +33,18 @@
 
             <button
               type="button"
-              class="flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400 transition-colors duration-200 hover:border-primary-400/60 hover:bg-primary-500/10 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+              class="relative z-10 flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400 transition duration-200 hover:scale-105 hover:border-primary-400/60 hover:bg-primary-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 active:scale-95"
               [attr.aria-label]="
                 (bookmarked() ? 'mangaCard.removeBookmark' : 'mangaCard.addBookmark') | transloco
               "
               [attr.aria-pressed]="bookmarked()"
-              (click)="onBookmarkClick()"
+              (click)="$event.preventDefault(); $event.stopPropagation(); onBookmarkClick()"
             >
-              <ng-icon name="matBookmarkOutline" size="24" class="text-primary-500!" />
+              <ng-icon
+                [name]="bookmarked() ? 'matBookmark' : 'matBookmarkOutline'"
+                size="24"
+                class="text-primary-400!"
+              />
             </button>
           </div>
           <p class="line-clamp-2 wrap-break-word text-xs leading-relaxed text-surface-500">
@@ -60,4 +64,4 @@
       </div>
     </div>
   </div>
-</a>
+</div>
