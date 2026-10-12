@@ -1,6 +1,6 @@
 <div
   [routerLink]="[AppRoutes().Comic, id()]"
-  class="group block rounded-3xl border border-primary-400/20 bg-surface-900/75 p-3 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.99] md:p-4"
+  class="group block rounded-3xl border cursor-pointer border-primary-400/20 bg-surface-900/75 p-3 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.99] md:p-4"
 >
   <div class="flex gap-4">
     <img
@@ -33,7 +33,7 @@
 
             <button
               type="button"
-              class="relative z-10 flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border"
+              class="relative z-10 flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border cursor-pointer hover:border-primary-500"
               [class.border-primary-500]="bookmarked()"
               [class.bg-primary-900]="bookmarked()"
               [class.border-surface-700/70]="!bookmarked()"
