@@ -26,7 +26,6 @@ export class ComicCard {
   public genre = input<string[]>([]);
   public coverUrl = input<string>('https://picsum.photos/seed/komixy-neon/160/200');
   public bookmarked = input<boolean>(false);
-
   public bookmarkToggle = output<void>();
 
   public handleBookmarkClick(event: MouseEvent): void {
