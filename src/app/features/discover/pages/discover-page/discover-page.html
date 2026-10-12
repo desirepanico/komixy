@@ -8,8 +8,8 @@
       description="Un viaggio tra città futuristiche e poteri misteriosi."
       [genre]="['Fantasy', 'Sci-Fi', 'Avventura']"
       coverUrl="https://picsum.photos/seed/komixy-neon/160/200"
-      [bookmarked]="bookmarked()"
-      (bookmarkToggle)="toggleBookmark()"
+      [bookmarked]="selectedId() === '1'"
+      (bookmarkToggle)="toggleBookmark('1')"
     ></app-comic-card>
 
     <app-comic-card
@@ -20,8 +20,8 @@
       description="In una metropoli futuristica dove le stelle sono scomparse dal cielo e la tecnologia governa ogni aspetto della vita quotidiana, una giovane esploratrice scopre un antico potere capace di alterare la realtà. Tra alleanze inaspettate, segreti dimenticati e organizzazioni misteriose, dovrà affrontare un viaggio che metterà in discussione tutto ciò in cui ha sempre creduto."
       [genre]="['Fantasy', 'Sci-Fi', 'Avventura', 'Mistero']"
       coverUrl="https://picsum.photos/seed/komixy-neon/160/200"
-      [bookmarked]="bookmarked()"
-      (bookmarkToggle)="toggleBookmark()"
+      [bookmarked]="selectedId() === '2'"
+      (bookmarkToggle)="toggleBookmark('2')"
     ></app-comic-card>
   </div>
 </div>

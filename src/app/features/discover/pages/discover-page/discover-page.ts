@@ -7,9 +7,9 @@ import { ComicCard } from '../../components/comic-card/comic-card';
   templateUrl: './discover-page.html',
 })
 export class DiscoverPage {
-  readonly bookmarked = signal(false);
+  readonly selectedId = signal<string | null>(null);
 
-  public toggleBookmark(): void {
-    this.bookmarked.update((value) => !value);
+  public toggleBookmark(id: string): void {
+    this.selectedId.update((current) => (current === id ? null : id));
   }
 }

@@ -33,18 +33,19 @@
 
             <button
               type="button"
-              class="relative z-10 flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border border-surface-700/70 bg-surface-800/60 text-primary-400 transition duration-200 hover:scale-105 hover:border-primary-400/60 hover:bg-primary-500/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 active:scale-95"
+              class="relative z-10 flex size-11 shrink-0 touch-manipulation items-center justify-center rounded-full border transition duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 active:scale-95"
+              [class.border-primary-500]="bookmarked()"
+              [class.bg-primary-900]="bookmarked()"
+              [class.border-surface-700/70]="!bookmarked()"
+              [class.bg-surface-800/60]="!bookmarked()"
+              [class.text-primary-400]="true"
               [attr.aria-label]="
                 (bookmarked() ? 'mangaCard.removeBookmark' : 'mangaCard.addBookmark') | transloco
               "
               [attr.aria-pressed]="bookmarked()"
               (click)="handleBookmarkClick($event)"
             >
-              <ng-icon
-                [name]="bookmarked() ? 'matBookmark' : 'matBookmarkOutline'"
-                size="24"
-                class="text-primary-400!"
-              />
+              <ng-icon name="matBookmarkOutline" size="24" class="transition-colors duration-200" />
             </button>
           </div>
           <p class="line-clamp-2 wrap-break-word text-xs leading-relaxed text-surface-500">
