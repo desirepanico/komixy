@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root',
 })
+//Servizio
 export class MobileSwipeService {
   private readonly router = inject(Router);
 
