@@ -17,7 +17,12 @@
   @else {
     <div class="min-h-dvh">
       <!-- CONTENUTO -->
-      <main class="min-h-dvh pb-20">
+      <main
+        class="min-h-dvh pb-20 touch-pan-y"
+        (pointerdown)="onSwipePointerDown($event)"
+        (pointerup)="onSwipePointerUp($event)"
+        (pointercancel)="onSwipePointerCancel()"
+      >
         <router-outlet />
       </main>
 
