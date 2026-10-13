@@ -4,12 +4,12 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
+import { StatusTag } from '../../../../shared/components/status-tag/status-tag';
 
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink],
+  imports: [NgIcon, TranslocoPipe, RouterLink, StatusTag],
   templateUrl: './comic-card.html',
-  styleUrl: './comic-card.css',
   providers: [
     provideIcons({
       matBookmarkOutline,
