@@ -5,9 +5,9 @@ export interface NavItem {
   label: string;
   route: string;
   roles: UserRole[];
-  children?: NavItem[];
 }
 export interface NavGroup {
   title: string;
   items: NavItem[];
+  expandable: boolean;
 }

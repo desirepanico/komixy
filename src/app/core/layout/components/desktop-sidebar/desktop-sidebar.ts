@@ -8,6 +8,7 @@ import {
   matCollectionsBookmarkOutline,
   matExploreOutline,
   matHomeOutline,
+  matKeyboardArrowDownOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { AvatarModule } from 'primeng/avatar';
@@ -26,6 +27,7 @@ import { NavGroup } from '../../../models/nav-item.model';
       matCalendarTodayOutline,
       matPersonOutline,
       matExploreOutline,
+      matKeyboardArrowDownOutline,
     }),
   ],
 })
@@ -33,6 +35,7 @@ export class DesktopSidebar {
   public readonly navGroups = signal<NavGroup[]>([
     {
       title: 'menu.main',
+      expandable: true,
       items: [
         {
           icon: 'matExploreOutline',
@@ -50,6 +53,7 @@ export class DesktopSidebar {
     },
     {
       title: 'menu.library',
+      expandable: true,
       items: [
         {
           icon: 'matCollectionsBookmarkOutline',
@@ -60,4 +64,6 @@ export class DesktopSidebar {
       ],
     },
   ]);
+
+  public toggleGroup(group: NavGroup) {}
 }

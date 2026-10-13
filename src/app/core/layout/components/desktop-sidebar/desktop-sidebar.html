@@ -20,12 +20,26 @@
   <nav class="flex-1 overflow-y-auto px-3 py-4">
     <div class="flex flex-col gap-4">
       @for (group of navGroups(); track group.title) {
-        <section class="">
-          <div class="mb-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-surface-500">
-              {{ group.title | transloco }}
-            </span>
-          </div>
+        <section>
+          <button
+            type="button"
+            class="mb-2 flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-xs font-bold uppercase tracking-wider text-surface-500 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            [class.hover:bg-surface-800/50]="group.expandable"
+            [class.hover:text-primary-300]="group.expandable"
+            [class.cursor-default]="!group.expandable"
+            [attr.aria-expanded]="group.expandable"
+            [attr.aria-controls]="'nav-group-' + group.title"
+            [attr.aria-disabled]="!group.expandable"
+            (click)="toggleGroup(group)"
+          >
+            <span>{{ group.title | transloco }}</span>
+
+            <ng-icon
+              name="matKeyboardArrowDownOutline"
+              size="14"
+              class="transition-transform duration-200"
+            />
+          </button>
 
           <ul class="flex flex-col gap-1">
             @for (item of group.items; track item.route) {
