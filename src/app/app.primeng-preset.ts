@@ -87,14 +87,6 @@ export const KomixyPreset = definePreset(Aura, {
         fontSize: '0.75rem',
         fontWeight: '500',
       },
-      colorScheme: {
-        dark: {
-          primary: {
-            background: 'color-mix(in srgb, {primary.500} 10%, transparent)',
-            color: '{primary.300}',
-          },
-        },
-      },
     },
   },
 });
