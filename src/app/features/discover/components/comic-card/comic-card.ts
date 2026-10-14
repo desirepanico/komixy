@@ -3,12 +3,12 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
+import { TagModule } from 'primeng/tag';
 import { AppRoutes } from '../../../../app.routes';
-import { StatusTag } from '../../../../shared/components/status-tag/status-tag';
 
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink, StatusTag],
+  imports: [NgIcon, TranslocoPipe, RouterLink, TagModule],
   templateUrl: './comic-card.html',
   providers: [
     provideIcons({

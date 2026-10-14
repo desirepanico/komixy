@@ -13,5 +13,14 @@
     "volume": "Vol. {{volume}}",
     "addBookmark": "Aggiungi ai preferiti",
     "removeBookmark": "Rimuovi dai preferiti"
+  },
+
+  "notFound": {
+    "eyebrow": "Perso nello spazio?",
+    "code": "404",
+    "title": "Pagina non trovata",
+    "description": "Questa pagina sembra essersi persa nel cosmo. Torna alla scoperta e trova la tua prossima avventura.",
+    "backHome": "Scopri manga e fumetti",
+    "goBack": "Torna indietro"
   }
 }
