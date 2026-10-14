@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppRoutes } from '../../app.routes';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,12 @@ export class MobileSwipeService {
    * Ordine delle pagine nella navigazione mobile.
    * Deve corrispondere alle route configurate in app.routes.ts.
    */
-  private readonly routes = ['/discover', '/releases', '/scan', '/library', '/profile'];
+  private readonly routes = [
+    `/${AppRoutes.Discover}`,
+    `/${AppRoutes.Releases}`,
+    `/${AppRoutes.Library}`,
+    `/${AppRoutes.Profile}`,
+  ];
 
   navigate(direction: 'left' | 'right'): void {
     // Rimuove query string e fragment dall'URL corrente.
