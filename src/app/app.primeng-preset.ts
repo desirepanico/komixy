@@ -81,11 +81,13 @@ export const KomixyPreset = definePreset(Aura, {
       },
     },
   },
+
   components: {
     tag: {
       root: {
-        fontSize: '0.75rem',
-        fontWeight: '500',
+        fontSize: '0.70rem',
+        fontWeight: '600',
+        padding: '0.2rem 0.6rem',
       },
     },
   },

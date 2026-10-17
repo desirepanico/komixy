@@ -9,10 +9,19 @@
     "collection": ""
   },
   "mangaCard": {
-    "coverAlt": "Copertina di {{title}}",
-    "volume": "Vol. {{volume}}",
-    "addBookmark": "Aggiungi ai preferiti",
-    "removeBookmark": "Rimuovi dai preferiti"
+    "coverAlt": "Copertina di {{ title }}",
+    "addBookmark": "Aggiungi ai segnalibri",
+    "removeBookmark": "Rimuovi dai segnalibri",
+    "singleVolume": "Volume Unico",
+    "volume": "Vol. {{ volume }}",
+    "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
+    "editions": {
+      "variant": "Cover Variant",
+      "deluxe": "Edizione Deluxe",
+      "limited": "Edizione Limitata",
+      "collector": "Edizione da Collezione",
+      "exclusive": "Esclusiva"
+    }
   },
 
   "notFound": {

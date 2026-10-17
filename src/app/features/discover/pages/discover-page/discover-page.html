@@ -1,27 +1,18 @@
 <div class="p-4">
   <div class="grid grid-cols-1 gap-2">
-    <app-comic-card
-      id="1"
-      title="Neon Horizon"
-      author="C. Arisato"
-      [volume]="4"
-      description="Un viaggio tra città futuristiche e poteri misteriosi."
-      [genre]="['Fantasy', 'Sci-Fi', 'Avventura']"
-      coverUrl="https://picsum.photos/seed/komixy-neon/160/200"
-      [bookmarked]="selectedId() === '1'"
-      (bookmarkToggle)="toggleBookmark('1')"
-    ></app-comic-card>
-
-    <app-comic-card
-      id="2"
-      title="Neon Horizon: Chronicles of the Last Star"
-      author="Chiara Arisato & Lorenzo Hayakawa"
-      [volume]="4"
-      description="In una metropoli futuristica dove le stelle sono scomparse dal cielo e la tecnologia governa ogni aspetto della vita quotidiana, una giovane esploratrice scopre un antico potere capace di alterare la realtà. Tra alleanze inaspettate, segreti dimenticati e organizzazioni misteriose, dovrà affrontare un viaggio che metterà in discussione tutto ciò in cui ha sempre creduto."
-      [genre]="['Fantasy', 'Sci-Fi', 'Avventura', 'Mistero']"
-      coverUrl="https://picsum.photos/seed/komixy-neon/160/200"
-      [bookmarked]="selectedId() === '2'"
-      (bookmarkToggle)="toggleBookmark('2')"
-    ></app-comic-card>
+    @for (comic of comics(); track comic.id) {
+      <app-comic-card
+        [id]="comic.id"
+        [title]="comic.title"
+        [author]="comic.author"
+        [volume]="comic.volume"
+        [totalVolumes]="comic.totalVolumes"
+        [isSingleVolume]="comic.isSingleVolume"
+        [editionType]="comic.editionType"
+        [coverUrl]="comic.coverUrl"
+        [bookmarked]="selectedId() === comic.id"
+        (bookmarkToggle)="toggleBookmark(comic.id)"
+      />
+    }
   </div>
 </div>
