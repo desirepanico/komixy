@@ -13,7 +13,7 @@ import {
 } from '@ng-icons/material-symbols/outline';
 import { AvatarModule } from 'primeng/avatar';
 import { AppRoutes } from '../../../../app.routes';
-import { UserRole } from '../../../../features/auth/models/user.model';
+import { UserRole } from '../../../../features/auth/models/auth.model';
 import { NavGroup } from '../../../models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',

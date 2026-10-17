@@ -11,7 +11,7 @@ import {
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
-import { UserRole } from '../../../../features/auth/models/user.model';
+import { UserRole } from '../../../../features/auth/models/auth.model';
 import { NavItem } from '../../../models/nav-item.model';
 
 @Component({
