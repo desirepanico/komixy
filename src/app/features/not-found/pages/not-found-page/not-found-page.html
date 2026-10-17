@@ -19,10 +19,6 @@
       <ng-icon name="matExploreOutline" size="2.5rem" />
     </div>
 
-    <p class="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-primary-300 sm:text-sm">
-      {{ 'notFound.eyebrow' | transloco }}
-    </p>
-
     <p
       class="bg-linear-to-b from-primary-200 to-primary-500 bg-clip-text text-7xl font-extrabold tracking-tight text-transparent sm:text-9xl"
       aria-label="404"
@@ -49,16 +45,6 @@
         styleClass="w-full sm:w-auto"
       >
         <ng-icon name="matExploreOutline" size="1.125rem" />
-      </p-button>
-
-      <p-button
-        [label]="'notFound.goBack' | transloco"
-        severity="secondary"
-        [outlined]="true"
-        (onClick)="goBack()"
-        styleClass="w-full sm:w-auto"
-      >
-        <ng-icon name="matArrowBackOutline" size="1.125rem" />
       </p-button>
     </div>
   </section>
