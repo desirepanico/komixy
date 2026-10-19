@@ -16,10 +16,10 @@
     "volume": "Vol. {{ volume }}",
     "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
     "editions": {
-      "variant": "Cover Variant",
-      "deluxe": "Edizione Deluxe",
-      "limited": "Edizione Limitata",
-      "collector": "Edizione da Collezione",
+      "variant": "Cover variant",
+      "deluxe": "Deluxe",
+      "limited": "Limitata",
+      "collector": "Da collezione",
       "exclusive": "Esclusiva"
     }
   },
