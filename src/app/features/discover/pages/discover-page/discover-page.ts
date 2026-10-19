@@ -52,7 +52,17 @@ export class DiscoverPage {
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
     {
-      id: '3',
+      id: '4',
+      title: 'Cyber Pulse Reborn',
+      author: 'Kenji Sato',
+      volume: 2,
+      totalVolumes: null,
+      isSingleVolume: false,
+      editionType: 'collector',
+      coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
+    },
+    {
+      id: '5',
       title: 'Cyber Pulse Reborn',
       author: 'Kenji Sato',
       volume: 2,
