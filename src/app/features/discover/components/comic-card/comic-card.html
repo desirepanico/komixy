@@ -1,11 +1,11 @@
 <div
   [routerLink]="[AppRoutes().Comic, id()]"
-  class="group flex h-full min-w-0 cursor-pointer flex-col overflow-hidden rounded-3xl border border-primary-400/20 bg-surface-900/75 p-3 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.98]"
+  class="group flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-3xl border border-primary-400/20 bg-surface-900/75 p-2 outline-none transition duration-200 glass-strong hover:border-primary-400/50 hover:bg-surface-800/80 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.98]"
 >
   <!-- Copertina verticale -->
   <div class="relative w-full shrink-0 overflow-hidden rounded-2xl">
     <img
-      class="block h-40 md:h-60 aspect-2/3 w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+      class="block h-40 w-full aspect-2/3 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
       [src]="coverUrl()"
       loading="lazy"
       [alt]="'mangaCard.coverAlt' | transloco: { title: title() }"
@@ -46,7 +46,7 @@
   </div>
 
   <!-- Informazioni compatte in colonna -->
-  <div class="flex min-w-0 flex-1 flex-col gap-1 px-1 pt-2.5">
+  <div class="flex min-w-0 flex-1 flex-col gap-1 px-1">
     <!-- Titolo -->
     <h3
       class="truncate text-sm font-bold leading-5 text-surface-50 transition-colors group-hover:text-primary-300"
