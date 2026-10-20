@@ -12,8 +12,8 @@
 
 body {
   font-family: 'Mulish', sans-serif;
-  overflow-x: clip; /*serve a tagliare (nascondere) tutto il contenuto che fuoriesce orizzontalmente dal contenitore*/
-}
+  overflow-x: clip;
+} /*serve a tagliare (nascondere) tutto il contenuto che fuoriesce orizzontalmente dal contenitore*/
 .debug {
   outline: 1px solid red !important;
 }

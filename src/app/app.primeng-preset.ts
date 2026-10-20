@@ -18,7 +18,7 @@ export const KomixyPreset = definePreset(Aura, {
     violet: {
       50: '#FCFAFF',
       100: '#F5F0FF',
-      200: 'E7DBFF',
+      200: '#E7DBFF',
       300: '#D0BCFF',
       400: '#B89BFF',
       500: '#A078FF',
@@ -56,6 +56,13 @@ export const KomixyPreset = definePreset(Aura, {
       900: '{violet.900}',
       950: '{violet.950}',
     },
+    focusRing: {
+      width: '2px',
+      style: 'solid',
+      color: '{primary.400}', // Usa il violetto chiaro del tuo tema come ring
+      offset: '2px',
+      shadow: 'none',
+    },
     colorScheme: {
       dark: {
         surface: {
@@ -74,7 +81,7 @@ export const KomixyPreset = definePreset(Aura, {
 
         primary: {
           color: '{primary.500}',
-          contrastColor: '{surface.800}',
+          contrastColor: '{surface.900}',
           hoverColor: '{primary.300}',
           activeColor: '{primary.200}',
         },
