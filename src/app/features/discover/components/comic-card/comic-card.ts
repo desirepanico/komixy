@@ -3,13 +3,14 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
+import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { AppRoutes } from '../../../../app.routes';
 export type EditionType = 'variant' | 'deluxe' | 'limited' | 'collector' | 'exclusive';
 export type TagSeverity = 'secondary' | undefined;
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink, TagModule],
+  imports: [NgIcon, TranslocoPipe, RouterLink, TagModule, ButtonModule],
   templateUrl: './comic-card.html',
   providers: [
     provideIcons({
