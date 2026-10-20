@@ -23,7 +23,10 @@
       "exclusive": "Esclusiva"
     }
   },
-
+  "discoverManga": {
+    "title": "Manga da scoprire",
+    "subtitle": "Le prossime storie da aggiungere alla tua libreria"
+  },
   "notFound": {
     "eyebrow": "Perso nello spazio?",
     "code": "404",

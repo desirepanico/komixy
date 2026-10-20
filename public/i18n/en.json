@@ -8,14 +8,17 @@
     "discover": "Discover",
     "collection": "Collection"
   },
-
+  "discoverManga": {
+    "title": "Discover Manga",
+    "subtitle": "The next stories to add to your library"
+  },
   "mangaCard": {
-    "coverAlt": "Copertina di {{ title }}",
-    "addBookmark": "Aggiungi ai segnalibri",
-    "removeBookmark": "Rimuovi dai segnalibri",
-    "singleVolume": "Volume Unico",
+    "coverAlt": "Cover of {{ title }}",
+    "addBookmark": "Add to bookmarks",
+    "removeBookmark": "Remove from bookmarks",
+    "singleVolume": "Single Volume",
     "volume": "Vol. {{ volume }}",
-    "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
+    "volumeWithTotal": "Vol. {{ volume }} of {{ total }}",
     "editions": {
       "variant": "Cover Variant",
       "deluxe": "Deluxe",
