@@ -1,18 +1,63 @@
-<div class="p-4">
-  <div class="grid xl:grid-cols-6 sm:grid-cols-4 grid-cols-2 gap-2">
+<section class="min-w-0 space-y-4 px-3 py-2 md:p-2">
+  <!-- Header -->
+  <div class="flex items-center justify-between gap-3">
+    <div class="min-w-0">
+      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
+        {{ 'discoverManga.title' | transloco }}
+      </h2>
+      <p class="text-sm text-surface-400">
+        {{ 'discoverManga.subtitle' | transloco }}
+      </p>
+    </div>
+
+    <!-- Controlli desktop -->
+
+    <div class="hidden shrink-0 items-center gap-2 sm:flex">
+      <p-button
+        type="button"
+        [rounded]="true"
+        [outlined]="true"
+        [disabled]="!canScrollLeft()"
+        aria-label="Scorri verso sinistra"
+        (onClick)="scrollComics(comicList, -1)"
+      >
+        <ng-icon name="matChevronLeftOutline" size="20" />
+      </p-button>
+
+      <p-button
+        type="button"
+        [rounded]="true"
+        [outlined]="true"
+        [disabled]="!canScrollRight()"
+        aria-label="Scorri verso destra"
+        (onClick)="scrollComics(comicList, 1)"
+      >
+        <ng-icon name="matChevronRightOutline" size="20" />
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Lista orizzontale -->
+  <div
+    #comicList
+    (scroll)="updateScrollState(comicList)"
+    class="flex min-w-0 gap-3 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-proximity touch-pan-x pb-3 scrollbar-none"
+  >
     @for (comic of comics(); track comic.id) {
-      <app-comic-card
-        [id]="comic.id"
-        [title]="comic.title"
-        [author]="comic.author"
-        [volume]="comic.volume"
-        [totalVolumes]="comic.totalVolumes"
-        [isSingleVolume]="comic.isSingleVolume"
-        [editionType]="comic.editionType"
-        [coverUrl]="comic.coverUrl"
-        [bookmarked]="selectedId() === comic.id"
-        (bookmarkToggle)="toggleBookmark(comic.id)"
-      />
+      <div class="w-40 shrink-0 snap-start lg:w-44">
+        <app-comic-card
+          [id]="comic.id"
+          [title]="comic.title"
+          [author]="comic.author"
+          [volume]="comic.volume"
+          [totalVolumes]="comic.totalVolumes"
+          [isSingleVolume]="comic.isSingleVolume"
+          [editionType]="comic.editionType"
+          [coverUrl]="comic.coverUrl"
+          [bookmarked]="selectedId() === comic.id"
+          (bookmarkToggle)="toggleBookmark(comic.id)"
+        />
+      </div>
     }
   </div>
-</div>
+</section>
