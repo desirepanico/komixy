@@ -1,10 +1,10 @@
 <div
   [tabIndex]="0"
   [routerLink]="[AppRoutes().Comic, id()]"
-  class="group flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-3xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 focus-visible:border-primary-400/50 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.98]"
+  class="group flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 focus-visible:border-primary-400/50 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.98]"
 >
   <!-- Copertina verticale -->
-  <div class="relative w-full shrink-0 overflow-hidden rounded-2xl">
+  <div class="relative w-full shrink-0 overflow-hidden rounded-xl">
     <img
       class="block h-40 w-full aspect-2/3 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
       [src]="coverUrl()"
