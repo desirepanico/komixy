@@ -1,6 +1,8 @@
 <!-- Posizione in classifica: visiva, letta come "Posizione N" dai lettori di schermo -->
 <span [class]="badgeClasses()">
-  <span aria-hidden="true">{{ rank() }}</span>
+  <span aria-hidden="true" class="flex items-baseline gap-0.5">
+    <span class="text-xs font-semibold">#</span>{{ rank() }}
+  </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 </span>
 

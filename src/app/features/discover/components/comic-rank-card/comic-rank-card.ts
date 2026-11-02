@@ -22,7 +22,7 @@ export class ComicRankCard {
   /** Badge glass; le prime tre posizioni hanno una tinta viola */
   protected badgeClasses = computed(() => {
     const base =
-      'pointer-events-none absolute left-4 top-4 z-20 flex size-9 select-none items-center justify-center rounded-full border text-base font-extrabold tabular-nums shadow-lg shadow-surface-950/40 backdrop-blur-md';
+      'pointer-events-none absolute left-4 top-4 z-20 flex h-10 min-w-10 select-none items-center justify-center rounded-full border px-3 text-lg font-extrabold tabular-nums shadow-lg shadow-surface-950/40 backdrop-blur-md';
     const tone =
       this.rank() <= 3
         ? 'border-primary-300/50 bg-primary-500/30 text-primary-100'
