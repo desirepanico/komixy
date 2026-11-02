@@ -1,10 +1,3 @@
----
-paths:
-  - "src/**/*.html"
-  - "src/**/*.css"
-  - "public/theme/**/*.css"
----
-
 # Regole di stile (Tailwind e tema)
 
 - Colori solo dai token del tema in `src/tailwind.css`: `primary-*`, `surface-*`, `neutral-*`, `violet-*`.

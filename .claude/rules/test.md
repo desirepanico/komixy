@@ -1,9 +1,3 @@
----
-paths:
-  - "src/**/*.spec.ts"
-  - "src/**/*.ts"
----
-
 # Regole sui test
 
 - Test con Vitest (`npm test`). Il file `*.spec.ts` sta accanto al file che testa.

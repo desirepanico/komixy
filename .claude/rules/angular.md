@@ -1,9 +1,3 @@
----
-paths:
-  - "src/**/*.ts"
-  - "src/**/*.html"
----
-
 # Regole Angular e TypeScript
 
 ## TypeScript
