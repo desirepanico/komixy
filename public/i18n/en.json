@@ -17,14 +17,16 @@
     "subtitle": "The most read this week",
     "rank": "Rank {{ rank }}"
   },
+  "bookmark": {
+    "add": "Add to bookmarks",
+    "remove": "Remove from bookmarks"
+  },
   "scroller": {
     "scrollLeft": "Scroll left",
     "scrollRight": "Scroll right"
   },
   "mangaCard": {
     "coverAlt": "Cover of {{ title }}",
-    "addBookmark": "Add to bookmarks",
-    "removeBookmark": "Remove from bookmarks",
     "singleVolume": "Single Volume",
     "volume": "Vol. {{ volume }}",
     "volumeWithTotal": "Vol. {{ volume }} of {{ total }}",

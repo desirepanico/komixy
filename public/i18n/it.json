@@ -10,8 +10,6 @@
   },
   "mangaCard": {
     "coverAlt": "Copertina di {{ title }}",
-    "addBookmark": "Aggiungi ai segnalibri",
-    "removeBookmark": "Rimuovi dai segnalibri",
     "singleVolume": "Volume Unico",
     "volume": "Vol. {{ volume }}",
     "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
@@ -31,6 +29,10 @@
     "title": "Manga della settimana",
     "subtitle": "I più letti della settimana",
     "rank": "Posizione {{ rank }}"
+  },
+  "bookmark": {
+    "add": "Aggiungi ai segnalibri",
+    "remove": "Rimuovi dai segnalibri"
   },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",

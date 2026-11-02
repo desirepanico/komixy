@@ -10,16 +10,19 @@
       </p>
     </div>
 
-    <app-horizontal-scroller [ariaLabel]="'weeklyManga.title' | transloco">
+    <!-- Su desktop due colonne, lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
+    <ol class="grid gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
       @for (comic of weeklyComics(); track comic.id; let i = $index) {
-        <app-comic-rank-card
-          [comic]="comic"
-          [rank]="i + 1"
-          [bookmarked]="selectedId() === comic.id"
-          (bookmarkToggle)="toggleBookmark(comic.id)"
-        />
+        <li>
+          <app-comic-rank-card
+            [comic]="comic"
+            [rank]="i + 1"
+            [bookmarked]="selectedId() === comic.id"
+            (bookmarkToggle)="toggleBookmark(comic.id)"
+          />
+        </li>
       }
-    </app-horizontal-scroller>
+    </ol>
   </div>
 
   <!-- Manga da scoprire -->

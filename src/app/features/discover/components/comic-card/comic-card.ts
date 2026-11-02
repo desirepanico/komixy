@@ -1,20 +1,14 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
-import { Tag, TagSeverity } from '../../../../shared/components/tag/tag';
-import { EditionType } from '../../models/comic.model';
+import { BookmarkButton } from '../../../../shared/components/bookmark-button/bookmark-button';
+import { Tag } from '../../../../shared/components/tag/tag';
+import { EditionType, editionSeverity } from '../../models/comic.model';
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink, Tag],
+  imports: [TranslocoPipe, RouterLink, Tag, BookmarkButton],
   templateUrl: './comic-card.html',
-  providers: [
-    provideIcons({
-      matBookmarkOutline,
-    }),
-  ],
 })
 export class ComicCard {
   protected readonly AppRoutes = signal(AppRoutes);
@@ -32,22 +26,8 @@ export class ComicCard {
   public bookmarked = input<boolean>(false);
   public bookmarkToggle = output<void>();
 
-  // Mappa le edizioni su soli 2 stili visivi coerenti
-  editionSeverity = computed<TagSeverity>(() => {
-    switch (this.editionType()) {
-      // 🟣 EDIZIONI SPECIALI / RARITÀ: Stile Primary Viola
-      case 'collector':
-      case 'limited':
-      case 'exclusive':
-        return 'primary';
-
-      // ⚪ EDIZIONI STANDARD / VARIANTI: Stile Secondary Neutro
-      case 'variant':
-      case 'deluxe':
-      default:
-        return 'secondary';
-    }
-  });
+  // Stile del tag in base all'edizione
+  protected editionSeverity = computed(() => editionSeverity(this.editionType()));
 
   public handleBookmarkClick(event: MouseEvent): void {
     event.preventDefault();
