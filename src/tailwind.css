@@ -28,4 +28,26 @@
   --color-surface-800: #2C2832;
   --color-surface-900: #1B1F2D;
   --color-surface-950: #0E1017;
+
+  /* Border radius (dal vecchio preset PrimeNG) */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 48px;
+
+  /* Palette neutral (dal vecchio preset PrimeNG) */
+  --color-neutral-50: #FCFBFC;
+  --color-neutral-100: #F8F7FA;
+  --color-neutral-200: #F0EDF4;
+  --color-neutral-300: #E7E3ED;
+  --color-neutral-400: #DCD6E5;
+  --color-neutral-500: #CBC3D7;
+  --color-neutral-600: #A99EB9;
+  --color-neutral-700: #837694;
+  --color-neutral-800: #5C506D;
+  --color-neutral-900: #382D47;
+  --color-neutral-950: #22192E;
 }
