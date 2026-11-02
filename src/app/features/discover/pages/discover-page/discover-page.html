@@ -43,7 +43,7 @@
   <div
     #comicList
     (scroll)="updateScrollState(comicList)"
-    class="flex min-w-0 gap-3 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-proximity touch-pan-x pb-3 scrollbar-none"
+    class="-mx-3 flex min-w-0 gap-3 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scroll-px-3 touch-pan-x px-3 pb-3 pt-1 scrollbar-none md:-mx-2 md:scroll-px-2 md:px-2"
   >
     @for (comic of comics(); track comic.id) {
       <div class="w-40 shrink-0 snap-start lg:w-44">

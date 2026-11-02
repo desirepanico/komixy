@@ -64,3 +64,11 @@
   --color-neutral-900: #382D47;
   --color-neutral-950: #22192E;
 }
+
+/* Nasconde la scrollbar mantenendo lo scroll (usata dal carosello) */
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
