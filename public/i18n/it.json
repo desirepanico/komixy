@@ -27,6 +27,11 @@
     "title": "Manga da scoprire",
     "subtitle": "Le prossime storie da aggiungere alla tua libreria"
   },
+  "weeklyManga": {
+    "title": "Manga della settimana",
+    "subtitle": "I più letti e collezionati degli ultimi 7 giorni",
+    "rank": "Posizione {{ rank }}"
+  },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
     "scrollRight": "Scorri verso destra"

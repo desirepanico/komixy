@@ -1,0 +1,23 @@
+<div class="relative h-full pl-12">
+  <!-- Numero in classifica: decorativo, la posizione è letta dal testo per i lettori di schermo -->
+  <span
+    aria-hidden="true"
+    class="pointer-events-none absolute bottom-6 left-0 select-none text-8xl font-extrabold leading-none tracking-tighter text-transparent [-webkit-text-stroke:2px_var(--color-primary-400)]"
+  >
+    {{ rank() }}
+  </span>
+  <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
+
+  <app-comic-card
+    [id]="comic().id"
+    [title]="comic().title"
+    [author]="comic().author"
+    [volume]="comic().volume"
+    [totalVolumes]="comic().totalVolumes"
+    [isSingleVolume]="comic().isSingleVolume"
+    [editionType]="comic().editionType"
+    [coverUrl]="comic().coverUrl"
+    [bookmarked]="bookmarked()"
+    (bookmarkToggle)="bookmarkToggle.emit()"
+  />
+</div>

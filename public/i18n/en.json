@@ -12,6 +12,11 @@
     "title": "Discover Manga",
     "subtitle": "The next stories to add to your library"
   },
+  "weeklyManga": {
+    "title": "Manga of the week",
+    "subtitle": "The most read and collected in the last 7 days",
+    "rank": "Rank {{ rank }}"
+  },
   "scroller": {
     "scrollLeft": "Scroll left",
     "scrollRight": "Scroll right"
