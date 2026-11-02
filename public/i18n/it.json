@@ -27,6 +27,10 @@
     "title": "Manga da scoprire",
     "subtitle": "Le prossime storie da aggiungere alla tua libreria"
   },
+  "scroller": {
+    "scrollLeft": "Scorri verso sinistra",
+    "scrollRight": "Scorri verso destra"
+  },
   "notFound": {
     "eyebrow": "Perso nello spazio?",
     "code": "404",

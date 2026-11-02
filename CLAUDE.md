@@ -33,7 +33,7 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature
 │   └── shared/                riutilizzabile da più feature, senza logica di business
-│       └── components/        componenti UI generici: app-tag, appButton, ...
+│       └── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/

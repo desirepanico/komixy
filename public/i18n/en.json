@@ -12,6 +12,10 @@
     "title": "Discover Manga",
     "subtitle": "The next stories to add to your library"
   },
+  "scroller": {
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right"
+  },
   "mangaCard": {
     "coverAlt": "Cover of {{ title }}",
     "addBookmark": "Add to bookmarks",

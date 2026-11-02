@@ -1,52 +1,16 @@
 <section class="min-w-0 space-y-4 px-3 py-2 md:p-2">
   <!-- Header -->
-  <div class="flex items-center justify-between gap-3">
-    <div class="min-w-0">
-      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
-        {{ 'discoverManga.title' | transloco }}
-      </h2>
-      <p class="text-sm text-surface-400">
-        {{ 'discoverManga.subtitle' | transloco }}
-      </p>
-    </div>
-
-    <!-- Controlli desktop -->
-
-    <div class="hidden shrink-0 items-center gap-2 lg:flex">
-      <button
-        appButton
-        type="button"
-        variant="outlined"
-        [iconOnly]="true"
-        [rounded]="true"
-        [disabled]="!canScrollLeft()"
-        aria-label="Scorri verso sinistra"
-        (click)="scrollComics(comicList, -1)"
-      >
-        <ng-icon name="matChevronLeftOutline" size="20" />
-      </button>
-
-      <button
-        appButton
-        type="button"
-        variant="outlined"
-        [iconOnly]="true"
-        [rounded]="true"
-        [disabled]="!canScrollRight()"
-        aria-label="Scorri verso destra"
-        (click)="scrollComics(comicList, 1)"
-      >
-        <ng-icon name="matChevronRightOutline" size="20" />
-      </button>
-    </div>
+  <div class="min-w-0">
+    <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
+      {{ 'discoverManga.title' | transloco }}
+    </h2>
+    <p class="text-sm text-surface-400">
+      {{ 'discoverManga.subtitle' | transloco }}
+    </p>
   </div>
 
   <!-- Lista orizzontale -->
-  <div
-    #comicList
-    (scroll)="updateScrollState(comicList)"
-    class="-mx-3 flex min-w-0 gap-3 overflow-x-auto overflow-y-hidden scroll-smooth snap-x snap-mandatory scroll-px-3 touch-pan-x px-3 pb-3 pt-1 scrollbar-none md:-mx-2 md:scroll-px-2 md:px-2"
-  >
+  <app-horizontal-scroller [ariaLabel]="'discoverManga.title' | transloco">
     @for (comic of comics(); track comic.id) {
       <div class="w-40 shrink-0 snap-start lg:w-44">
         <app-comic-card
@@ -63,5 +27,5 @@
         />
       </div>
     }
-  </div>
+  </app-horizontal-scroller>
 </section>
