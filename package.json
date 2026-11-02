@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy:dev": "npx vercel",
-    "deploy:login": "npx vercel login"
+    "deploy:login": "npx vercel login",
+    "deploy:prod": "npx vercel --prod"
   },
   "prettier": {
     "printWidth": 100,

@@ -9,6 +9,7 @@ App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: 
 - `npm test` — test con Vitest
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
+- `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
 
 ## Struttura del progetto
 
