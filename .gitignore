@@ -38,6 +38,16 @@ testem.log
 /typings
 __screenshots__/
 
+# Segreti e credenziali (non committare mai)
+.env
+.env.*
+*.env
+**/environment.local.ts
+*.pem
+*.key
+secrets/
+*credentials*
+
 # System files
 .DS_Store
 Thumbs.db
