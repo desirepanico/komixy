@@ -43,10 +43,6 @@ __screenshots__/
 .env.*
 *.env
 **/environment.local.ts
-*.pem
-*.key
-secrets/
-*credentials*
 
 # System files
 .DS_Store

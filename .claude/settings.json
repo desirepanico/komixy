@@ -5,10 +5,6 @@
       "Read(./.env.*)",
       "Read(./**/*.env)",
       "Read(./**/environment.local.ts)",
-      "Read(./**/*.pem)",
-      "Read(./**/*.key)",
-      "Read(./**/secrets/**)",
-      "Read(./**/*credentials*)",
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.npmrc)"
