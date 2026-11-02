@@ -8,7 +8,7 @@
       <div
         class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
       >
-        <i class="pi pi-book text-lg"></i>
+        <ng-icon name="matMenuBookOutline" size="22" />
       </div>
 
       <span class="text-xl font-bold tracking-tight text-surface-50"> Komixy </span>
@@ -68,14 +68,18 @@
       type="button"
       class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors duration-200 hover:bg-surface-800/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
     >
-      <p-avatar label="DP" shape="circle" class="bg-primary-500 text-surface-950" />
+      <span
+        class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-semibold text-surface-950"
+        aria-hidden="true"
+        >DP</span
+      >
 
       <div class="min-w-0 flex-1">
         <p class="truncate text-sm font-semibold text-surface-100">Il mio profilo</p>
         <p class="truncate text-xs text-surface-500">Visualizza profilo</p>
       </div>
 
-      <i class="pi pi-angle-right text-surface-500"></i>
+      <ng-icon name="matChevronRightOutline" size="20" class="text-surface-500" />
     </button>
   </div>
 </aside>

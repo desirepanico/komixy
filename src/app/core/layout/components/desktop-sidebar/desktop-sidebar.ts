@@ -8,16 +8,17 @@ import {
   matCollectionsBookmarkOutline,
   matExploreOutline,
   matHomeOutline,
+  matChevronRightOutline,
   matKeyboardArrowDownOutline,
+  matMenuBookOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AvatarModule } from 'primeng/avatar';
 import { AppRoutes } from '../../../../app.routes';
 import { UserRole } from '../../../../features/auth/models/auth.model';
 import { NavGroup } from '../../../models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',
-  imports: [AvatarModule, RouterLink, RouterLinkActive, NgIcon, TranslocoPipe],
+  imports: [RouterLink, RouterLinkActive, NgIcon, TranslocoPipe],
   templateUrl: './desktop-sidebar.html',
   providers: [
     provideIcons({
@@ -28,6 +29,8 @@ import { NavGroup } from '../../../models/nav-item.model';
       matPersonOutline,
       matExploreOutline,
       matKeyboardArrowDownOutline,
+      matChevronRightOutline,
+      matMenuBookOutline,
     }),
   ],
 })

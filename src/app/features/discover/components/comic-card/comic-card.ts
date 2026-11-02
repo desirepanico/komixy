@@ -3,14 +3,12 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
-import { ButtonModule } from 'primeng/button';
-import { TagModule } from 'primeng/tag';
 import { AppRoutes } from '../../../../app.routes';
 export type EditionType = 'variant' | 'deluxe' | 'limited' | 'collector' | 'exclusive';
-export type TagSeverity = 'secondary' | undefined;
+export type TagSeverity = 'primary' | 'secondary';
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink, TagModule, ButtonModule],
+  imports: [NgIcon, TranslocoPipe, RouterLink],
   templateUrl: './comic-card.html',
   providers: [
     provideIcons({
@@ -37,11 +35,11 @@ export class ComicCard {
   // Mappa le edizioni su soli 2 stili visivi coerenti
   editionSeverity = computed<TagSeverity>(() => {
     switch (this.editionType()) {
-      // 🟣 EDIZIONI SPECIALI / RARITÀ: Stile Primary Viola (nessuna severity = default primary)
+      // 🟣 EDIZIONI SPECIALI / RARITÀ: Stile Primary Viola
       case 'collector':
       case 'limited':
       case 'exclusive':
-        return undefined;
+        return 'primary';
 
       // ⚪ EDIZIONI STANDARD / VARIANTI: Stile Secondary Neutro
       case 'variant':

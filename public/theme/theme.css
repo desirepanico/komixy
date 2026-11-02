@@ -25,22 +25,22 @@ body {
    - 2° gradiente: primary-600, bagliore secondario in alto a destra
    - 3° gradiente: primary-800, bagliore secondario in basso al centro
 */
-    background-color: var(--p-surface-950);
+    background-color: var(--color-surface-950);
     background-image:
       radial-gradient(
         circle at 180px 300px,
-        color-mix(in srgb, var(--p-primary-700) 22%, transparent),
-        color-mix(in srgb, var(--p-primary-700) 8%, transparent) 35%,
+        color-mix(in srgb, var(--color-primary-700) 22%, transparent),
+        color-mix(in srgb, var(--color-primary-700) 8%, transparent) 35%,
         transparent 65%
       ),
       radial-gradient(
         circle at 80% 20%,
-        color-mix(in srgb, var(--p-primary-600) 12%, transparent),
+        color-mix(in srgb, var(--color-primary-600) 12%, transparent),
         transparent 45%
       ),
       radial-gradient(
         circle at 50% 80%,
-        color-mix(in srgb, var(--p-primary-800) 15%, transparent),
+        color-mix(in srgb, var(--color-primary-800) 15%, transparent),
         transparent 60%
       );
     background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scroll */

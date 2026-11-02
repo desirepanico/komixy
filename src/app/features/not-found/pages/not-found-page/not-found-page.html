@@ -39,13 +39,13 @@
 
     <!-- Azioni -->
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-      <p-button
-        [label]="'notFound.backHome' | transloco"
+      <a
         [routerLink]="['/', AppRoutes.Discover]"
-        styleClass="w-full sm:w-auto"
+        class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary-500 px-5 py-2.5 text-sm font-semibold text-surface-900 transition-colors hover:bg-primary-300 active:bg-primary-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 sm:w-auto"
       >
         <ng-icon name="matExploreOutline" size="1.125rem" />
-      </p-button>
+        {{ 'notFound.backHome' | transloco }}
+      </a>
     </div>
   </section>
 </main>

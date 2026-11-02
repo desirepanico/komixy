@@ -35,11 +35,15 @@
       <div
         class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/95 via-black/75 to-transparent px-2 pb-3 pt-8"
       >
-        <p-tag
-          [value]="'mangaCard.editions.' + editionType() | transloco"
-          [severity]="editionSeverity()"
-          [rounded]="true"
-        />
+        <span
+          class="inline-block rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold"
+          [class.bg-primary-500]="editionSeverity() === 'primary'"
+          [class.text-surface-900]="editionSeverity() === 'primary'"
+          [class.bg-surface-700]="editionSeverity() === 'secondary'"
+          [class.text-surface-100]="editionSeverity() === 'secondary'"
+        >
+          {{ 'mangaCard.editions.' + editionType() | transloco }}
+        </span>
       </div>
     }
   </div>
