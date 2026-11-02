@@ -1,4 +1,29 @@
 <section class="min-w-0 space-y-8 px-3 py-2 md:p-2">
+  <!-- Manga della settimana (classifica) -->
+  <div class="space-y-4">
+    <div class="min-w-0">
+      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
+        {{ 'weeklyManga.title' | transloco }}
+      </h2>
+      <p class="text-sm text-surface-400">
+        {{ 'weeklyManga.subtitle' | transloco }}
+      </p>
+    </div>
+
+    <app-horizontal-scroller [ariaLabel]="'weeklyManga.title' | transloco">
+      @for (comic of weeklyComics(); track comic.id; let i = $index) {
+        <div class="w-52 shrink-0 snap-start lg:w-56">
+          <app-comic-rank-card
+            [comic]="comic"
+            [rank]="i + 1"
+            [bookmarked]="selectedId() === comic.id"
+            (bookmarkToggle)="toggleBookmark(comic.id)"
+          />
+        </div>
+      }
+    </app-horizontal-scroller>
+  </div>
+
   <!-- Manga da scoprire -->
   <div class="space-y-4">
     <div class="min-w-0">
@@ -22,31 +47,6 @@
             [isSingleVolume]="comic.isSingleVolume"
             [editionType]="comic.editionType"
             [coverUrl]="comic.coverUrl"
-            [bookmarked]="selectedId() === comic.id"
-            (bookmarkToggle)="toggleBookmark(comic.id)"
-          />
-        </div>
-      }
-    </app-horizontal-scroller>
-  </div>
-
-  <!-- Manga della settimana (classifica) -->
-  <div class="space-y-4">
-    <div class="min-w-0">
-      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
-        {{ 'weeklyManga.title' | transloco }}
-      </h2>
-      <p class="text-sm text-surface-400">
-        {{ 'weeklyManga.subtitle' | transloco }}
-      </p>
-    </div>
-
-    <app-horizontal-scroller [ariaLabel]="'weeklyManga.title' | transloco">
-      @for (comic of weeklyComics(); track comic.id; let i = $index) {
-        <div class="w-52 shrink-0 snap-start lg:w-56">
-          <app-comic-rank-card
-            [comic]="comic"
-            [rank]="i + 1"
             [bookmarked]="selectedId() === comic.id"
             (bookmarkToggle)="toggleBookmark(comic.id)"
           />
