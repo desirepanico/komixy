@@ -3,6 +3,7 @@ import { afterNextRender, Component, ElementRef, signal, viewChild } from '@angu
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/material-symbols/outline';
+import { Button } from '../../../../shared/components/button/button';
 import { ComicCard, EditionType } from '../../components/comic-card/comic-card';
 
 // Modello che rappresenta un fumetto nella pagina Discovery
@@ -19,7 +20,7 @@ export interface ComicItem {
 
 @Component({
   selector: 'app-discover-page',
-  imports: [ComicCard, NgIcon, TranslocoPipe],
+  imports: [ComicCard, NgIcon, TranslocoPipe, Button],
   templateUrl: './discover-page.html',
   providers: [
     provideIcons({
