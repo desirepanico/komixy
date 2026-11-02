@@ -1,0 +1,37 @@
+<section class="min-w-0 space-y-6 px-3 py-2 md:p-2">
+  <div class="flex items-center gap-3">
+    <a
+      appButton
+      variant="outlined"
+      [iconOnly]="true"
+      [rounded]="true"
+      [routerLink]="['/', AppRoutes.Discover]"
+      [attr.aria-label]="'common.back' | transloco"
+    >
+      <ng-icon name="matArrowBackOutline" size="20" />
+    </a>
+
+    <div class="min-w-0">
+      <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+        {{ 'weeklyManga.title' | transloco }}
+      </h1>
+      <p class="text-sm text-surface-400">
+        {{ 'weeklyManga.subtitle' | transloco }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
+  <ol class="grid gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
+    @for (comic of ranking.comics(); track comic.id; let i = $index) {
+      <li>
+        <app-comic-rank-card
+          [comic]="comic"
+          [rank]="i + 1"
+          [bookmarked]="selectedId() === comic.id"
+          (bookmarkToggle)="toggleBookmark(comic.id)"
+        />
+      </li>
+    }
+  </ol>
+</section>

@@ -23,10 +23,15 @@
       }
     </ol>
 
-    <!-- TODO: collegare alla pagina con la classifica completa quando esisterà -->
-    <button appButton type="button" variant="outlined" [rounded]="true" class="w-full max-w-2xl">
+    <a
+      appButton
+      variant="outlined"
+      [rounded]="true"
+      [routerLink]="['/', AppRoutes.Discover, AppRoutes.Ranking]"
+      class="w-full max-w-2xl"
+    >
       {{ 'weeklyManga.seeAll' | transloco }}
-    </button>
+    </a>
   </div>
 
   <!-- Manga da scoprire -->

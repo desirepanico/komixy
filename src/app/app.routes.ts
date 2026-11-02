@@ -7,6 +7,7 @@ export enum AppRoutes {
   Discover = 'discover',
   Login = 'login',
   Comic = 'comic',
+  Ranking = 'ranking',
 }
 
 export const routes: Routes = [
@@ -21,10 +22,22 @@ export const routes: Routes = [
       },
       {
         path: AppRoutes.Discover,
-        loadComponent: () =>
-          import('./features/discover/pages/discover-page/discover-page').then(
-            (m) => m.DiscoverPage,
-          ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./features/discover/pages/discover-page/discover-page').then(
+                (m) => m.DiscoverPage,
+              ),
+          },
+          {
+            path: AppRoutes.Ranking,
+            loadComponent: () =>
+              import('./features/discover/pages/ranking-page/ranking-page').then(
+                (m) => m.RankingPage,
+              ),
+          },
+        ],
       },
       {
         path: AppRoutes.Releases,

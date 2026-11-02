@@ -22,6 +22,9 @@
     "add": "Add to bookmarks",
     "remove": "Remove from bookmarks"
   },
+  "common": {
+    "back": "Back"
+  },
   "scroller": {
     "scrollLeft": "Scroll left",
     "scrollRight": "Scroll right"

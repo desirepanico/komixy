@@ -35,6 +35,9 @@
     "add": "Aggiungi ai segnalibri",
     "remove": "Rimuovi dai segnalibri"
   },
+  "common": {
+    "back": "Indietro"
+  },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
     "scrollRight": "Scorri verso destra"
