@@ -46,3 +46,45 @@ body {
     background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scroll */
   }
 }
+
+/* =========================================
+   TOKEN SEMANTICI (dal vecchio preset PrimeNG)
+   I colori primary/surface/neutral e i radius sono in src/tailwind.css (@theme)
+   ========================================= */
+
+:root {
+  /* Colori semantici del primary (tema scuro) */
+  --primary-color: var(--color-primary-500);
+  --primary-contrast-color: var(--color-surface-900);
+  --primary-hover-color: var(--color-primary-300);
+  --primary-active-color: var(--color-primary-200);
+
+  /* Focus ring */
+  --focus-ring-width: 2px;
+  --focus-ring-style: solid;
+  --focus-ring-color: var(--color-primary-400);
+  --focus-ring-offset: 2px;
+}
+
+/* Focus ring uniforme: aggiungere la classe .focus-ring agli elementi interattivi */
+.focus-ring:focus-visible {
+  outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* Tag (ex p-tag): .tag + .tag-primary oppure .tag-secondary */
+.tag {
+  display: inline-block;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+}
+.tag-primary {
+  background-color: var(--primary-color);
+  color: var(--primary-contrast-color);
+}
+.tag-secondary {
+  background-color: var(--color-surface-700);
+  color: var(--color-surface-100);
+}
