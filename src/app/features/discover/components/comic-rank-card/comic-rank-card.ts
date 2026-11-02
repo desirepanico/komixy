@@ -28,17 +28,9 @@ export class ComicRankCard {
 
   protected severity = computed(() => editionSeverity(this.comic().editionType));
 
-  /** Chip della posizione: 1° pieno viola con bagliore, 2° e 3° viola trasparente, le altre vetro neutro */
+  /** Posizione senza cerchio: il podio (1-3) in viola, le altre in grigio chiaro */
   protected rankClasses = computed(() => {
-    const base =
-      'flex size-9 shrink-0 items-center justify-center rounded-xl text-base font-extrabold tabular-nums';
-    const rank = this.rank();
-    const tone =
-      rank === 1
-        ? 'bg-primary-500 text-surface-900 shadow-lg shadow-primary-500/40'
-        : rank <= 3
-          ? 'border border-primary-300/40 bg-primary-500/25 text-primary-100'
-          : 'border border-surface-50/10 bg-surface-800/70 text-surface-300';
-    return `${base} ${tone}`;
+    const base = 'flex w-12 shrink-0 items-baseline justify-center gap-px';
+    return `${base} ${this.rank() <= 3 ? 'text-primary-300' : 'text-surface-400'}`;
   });
 }
