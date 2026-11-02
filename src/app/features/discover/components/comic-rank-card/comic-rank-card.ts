@@ -4,6 +4,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { AppRoutes } from '../../../../app.routes';
 import { BookmarkButton } from '../../../../shared/components/bookmark-button/bookmark-button';
 import { Tag } from '../../../../shared/components/tag/tag';
+import { InView } from '../../../../shared/directives/in-view/in-view';
 import { ComicItem, editionSeverity } from '../../models/comic.model';
 
 /**
@@ -13,7 +14,7 @@ import { ComicItem, editionSeverity } from '../../models/comic.model';
 @Component({
   selector: 'app-comic-rank-card',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, TranslocoPipe, Tag, BookmarkButton],
+  imports: [RouterLink, TranslocoPipe, Tag, BookmarkButton, InView],
   templateUrl: './comic-rank-card.html',
   host: { class: 'block' },
 })
@@ -28,11 +29,12 @@ export class ComicRankCard {
 
   protected severity = computed(() => editionSeverity(this.comic().editionType));
 
-  /** Entrata del numero: sale e appare, una posizione dopo l'altra (solo senza "riduci movimento") */
-  protected enterClasses = 'flex w-18 shrink-0 justify-center motion-safe:animate-rank-in';
+  /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
+  protected enterClasses =
+    'flex w-18 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in';
 
-  /** Ritardo di entrata: 70ms per posizione */
-  protected enterDelay = computed(() => (this.rank() - 1) * 70);
+  /** Ritardo di entrata: 70ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
+  protected enterDelay = computed(() => ((this.rank() - 1) % 5) * 70);
 
   /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
   protected rankClasses = computed(() => {
