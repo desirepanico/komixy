@@ -1,6 +1,8 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matArrowForwardOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
 import { Button } from '../../../../shared/components/button/button';
 import { HorizontalScroller } from '../../../../shared/components/horizontal-scroller/horizontal-scroller';
@@ -11,8 +13,17 @@ import { WeeklyRankingService } from '../../../ranking/services/weekly-ranking.s
 
 @Component({
   selector: 'app-discover-page',
-  imports: [ComicCard, ComicRankCard, TranslocoPipe, HorizontalScroller, Button, RouterLink],
+  imports: [
+    ComicCard,
+    ComicRankCard,
+    TranslocoPipe,
+    HorizontalScroller,
+    Button,
+    RouterLink,
+    NgIcon,
+  ],
   templateUrl: './discover-page.html',
+  providers: [provideIcons({ matArrowForwardOutline })],
 })
 export class DiscoverPage {
   public selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti
@@ -89,10 +100,10 @@ export class DiscoverPage {
     },
   ]);
 
-  // In Discover si mostrano solo le prime 5 posizioni della classifica
+  // In Discover si mostrano le prime 6 posizioni (la sesta solo da tablet in su, per avere due colonne piene)
   protected readonly weeklyRanking = inject(WeeklyRankingService);
   protected readonly AppRoutes = AppRoutes;
-  public topEntries = computed(() => this.weeklyRanking.entries().slice(0, 5));
+  public topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
 
   // Seleziona o deseleziona un fumetto dai preferiti
   public toggleBookmark(id: string): void {
