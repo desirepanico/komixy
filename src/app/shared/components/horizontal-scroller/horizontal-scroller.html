@@ -15,33 +15,31 @@
     </div>
   </div>
 
-  @if (showArrows()) {
-    <button
-      appButton
-      type="button"
-      variant="outlined"
-      [iconOnly]="true"
-      [rounded]="true"
-      class="absolute left-2 top-1/2 -translate-y-1/2 bg-surface-900/90 max-lg:hidden"
-      [disabled]="!canScrollLeft()"
-      [attr.aria-label]="'scroller.scrollLeft' | transloco"
-      (click)="scroll(-1)"
-    >
-      <ng-icon name="matChevronLeftOutline" size="20" />
-    </button>
+  <button
+    appButton
+    type="button"
+    variant="outlined"
+    [iconOnly]="true"
+    [rounded]="true"
+    class="absolute left-2 top-1/2 -translate-y-1/2 bg-surface-900/90 max-lg:hidden"
+    [disabled]="!canScrollLeft()"
+    [attr.aria-label]="'scroller.scrollLeft' | transloco"
+    (click)="scroll(-1)"
+  >
+    <ng-icon name="matChevronLeftOutline" size="20" />
+  </button>
 
-    <button
-      appButton
-      type="button"
-      variant="outlined"
-      [iconOnly]="true"
-      [rounded]="true"
-      class="absolute right-2 top-1/2 -translate-y-1/2 bg-surface-900/90 max-lg:hidden"
-      [disabled]="!canScrollRight()"
-      [attr.aria-label]="'scroller.scrollRight' | transloco"
-      (click)="scroll(1)"
-    >
-      <ng-icon name="matChevronRightOutline" size="20" />
-    </button>
-  }
+  <button
+    appButton
+    type="button"
+    variant="outlined"
+    [iconOnly]="true"
+    [rounded]="true"
+    class="absolute right-2 top-1/2 -translate-y-1/2 bg-surface-900/90 max-lg:hidden"
+    [disabled]="!canScrollRight()"
+    [attr.aria-label]="'scroller.scrollRight' | transloco"
+    (click)="scroll(1)"
+  >
+    <ng-icon name="matChevronRightOutline" size="20" />
+  </button>
 </div>

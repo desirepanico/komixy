@@ -16,7 +16,7 @@ import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/materia
 import { Button } from '../button/button';
 
 /**
- * Lista orizzontale con scroll nativo, snap e frecce (solo schermi grandi).
+ * Lista orizzontale con scroll nativo, snap e frecce (visibili solo da lg in su; su touch si scorre col dito).
  * Gli elementi si passano come contenuto e devono avere `shrink-0 snap-start` e una larghezza.
  * Con `bleed` (default) la lista esce dal padding della pagina (px-3, md:px-2) fino al bordo dello schermo.
  *
@@ -34,8 +34,6 @@ import { Button } from '../button/button';
 export class HorizontalScroller {
   /** Etichetta della lista per i lettori di schermo (già tradotta) */
   public ariaLabel = input.required<string>();
-  /** Mostra le frecce sugli schermi grandi */
-  public showArrows = input<boolean>(true);
   /** Esce dal padding della pagina fino al bordo dello schermo */
   public bleed = input<boolean>(true);
 
