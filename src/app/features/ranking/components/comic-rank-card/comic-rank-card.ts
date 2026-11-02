@@ -31,10 +31,10 @@ export class ComicRankCard {
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =
-    'flex w-18 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in';
+    'flex w-18 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in md:w-22';
 
-  /** Ritardo di entrata: 70ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
-  protected enterDelay = computed(() => ((this.rank() - 1) % 5) * 70);
+  /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
+  protected enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
 
   /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
   protected rankClasses = computed(() => {

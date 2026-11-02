@@ -6,8 +6,8 @@
   --font-sans: 'Mulish', sans-serif;
 
   /* Animazioni del numero in classifica */
-  --animate-rank-in: rank-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-rank-glow: rank-glow 3s ease-in-out infinite;
+  --animate-rank-in: rank-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-rank-glow: rank-glow 5s ease-in-out infinite;
 
   @keyframes rank-in {
     from {
