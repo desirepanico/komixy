@@ -12,7 +12,7 @@ export type ButtonVariant = 'filled' | 'outlined';
   selector: 'button[appButton], a[appButton]',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class]': 'classes()' },
-  template: `<ng-content />`,
+  templateUrl: './button.html',
 })
 export class Button {
   /** filled = pieno viola (default), outlined = solo bordo */

@@ -6,17 +6,7 @@ export type TagSeverity = 'primary' | 'secondary';
 @Component({
   selector: 'app-tag',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <span
-      class="inline-block rounded-full px-2.5 py-0.5 text-[0.7rem] font-semibold"
-      [class.bg-primary-500]="severity() === 'primary'"
-      [class.text-surface-900]="severity() === 'primary'"
-      [class.bg-surface-700]="severity() === 'secondary'"
-      [class.text-surface-100]="severity() === 'secondary'"
-    >
-      <ng-content />
-    </span>
-  `,
+  templateUrl: './tag.html',
 })
 export class Tag {
   /** primary = viola (default), secondary = neutro */
