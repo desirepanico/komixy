@@ -5,17 +5,30 @@
 @theme static {
   --font-sans: 'Mulish', sans-serif;
 
-  --color-primary-50: #FCFAFF;
-  --color-primary-100: #F5F0FF;
-  --color-primary-200: #E7DBFF;
-  --color-primary-300: #D0BCFF;
-  --color-primary-400: #B89BFF;
-  --color-primary-500: #A078FF;
-  --color-primary-600: #8455E0;
-  --color-primary-700: #6730C2;
-  --color-primary-800: #4D109E;
-  --color-primary-900: #340080;
-  --color-primary-950: #1F004D;
+  /* Palette violet (dal vecchio preset PrimeNG) */
+  --color-violet-50: #FCFAFF;
+  --color-violet-100: #F5F0FF;
+  --color-violet-200: #E7DBFF;
+  --color-violet-300: #D0BCFF;
+  --color-violet-400: #B89BFF;
+  --color-violet-500: #A078FF;
+  --color-violet-600: #8455E0;
+  --color-violet-700: #6730C2;
+  --color-violet-800: #4D109E;
+  --color-violet-900: #340080;
+  --color-violet-950: #1F004D;
+
+  --color-primary-50: var(--color-violet-50);
+  --color-primary-100: var(--color-violet-100);
+  --color-primary-200: var(--color-violet-200);
+  --color-primary-300: var(--color-violet-300);
+  --color-primary-400: var(--color-violet-400);
+  --color-primary-500: var(--color-violet-500);
+  --color-primary-600: var(--color-violet-600);
+  --color-primary-700: var(--color-violet-700);
+  --color-primary-800: var(--color-violet-800);
+  --color-primary-900: var(--color-violet-900);
+  --color-primary-950: var(--color-violet-950);
 
   --color-surface-50: #FAFAFC;
   --color-surface-100: #F6F6F8;
