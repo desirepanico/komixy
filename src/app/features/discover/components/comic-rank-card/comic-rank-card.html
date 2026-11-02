@@ -1,21 +1,18 @@
-<div [class]="rootClasses()">
-  <!-- Numero in classifica: decorativo, la posizione è letta dal testo per i lettori di schermo -->
-  <span aria-hidden="true" [class]="numberClasses()">
-    {{ rank() }}
-  </span>
+<!-- Posizione in classifica: visiva, letta come "Posizione N" dai lettori di schermo -->
+<span [class]="badgeClasses()">
+  <span aria-hidden="true">{{ rank() }}</span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
+</span>
 
-  <app-comic-card
-    class="relative z-10 block h-full"
-    [id]="comic().id"
-    [title]="comic().title"
-    [author]="comic().author"
-    [volume]="comic().volume"
-    [totalVolumes]="comic().totalVolumes"
-    [isSingleVolume]="comic().isSingleVolume"
-    [editionType]="comic().editionType"
-    [coverUrl]="comic().coverUrl"
-    [bookmarked]="bookmarked()"
-    (bookmarkToggle)="bookmarkToggle.emit()"
-  />
-</div>
+<app-comic-card
+  [id]="comic().id"
+  [title]="comic().title"
+  [author]="comic().author"
+  [volume]="comic().volume"
+  [totalVolumes]="comic().totalVolumes"
+  [isSingleVolume]="comic().isSingleVolume"
+  [editionType]="comic().editionType"
+  [coverUrl]="comic().coverUrl"
+  [bookmarked]="bookmarked()"
+  (bookmarkToggle)="bookmarkToggle.emit()"
+/>
