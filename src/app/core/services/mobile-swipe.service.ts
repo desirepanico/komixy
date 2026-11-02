@@ -1,38 +1,39 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppRoutes } from '../../app.routes';
+import { Router, Routes } from '@angular/router';
+import { MAIN_PAGES } from '../navigation/main-pages';
+
+/** Percorsi completi (es. "/discover") di tutte le rotte configurate. */
+function collectPaths(routes: Routes, prefix = ''): string[] {
+  return routes.flatMap((route) => {
+    const full = [prefix, route.path].filter(Boolean).join('/');
+    return [`/${full}`, ...collectPaths(route.children ?? [], full)];
+  });
+}
 
 @Injectable({
   providedIn: 'root',
 })
-//Servizio
+/** Cambia pagina con lo swipe, seguendo l'ordine delle pagine principali che esistono davvero. */
 export class MobileSwipeService {
   private readonly router = inject(Router);
 
-  /**
-   * Ordine delle pagine nella navigazione mobile.
-   * Deve corrispondere alle route configurate in app.routes.ts.
-   */
-  private readonly routes = [
-    `/${AppRoutes.Discover}`,
-    `/${AppRoutes.Releases}`,
-    `/${AppRoutes.Library}`,
-    `/${AppRoutes.Profile}`,
-  ];
+  /** Pagine principali che hanno una rotta configurata (le altre vengono saltate). */
+  private readonly routes = (() => {
+    const existing = new Set(collectPaths(this.router.config));
+    return MAIN_PAGES.map((page) => `/${page.route}`).filter((path) => existing.has(path));
+  })();
 
   navigate(direction: 'left' | 'right'): void {
     // Rimuove query string e fragment dall'URL corrente.
     const currentUrl = this.router.url.split(/[?#]/)[0];
 
-    // Lo swipe funziona solo sulle route principali elencate.
+    // Lo swipe funziona solo sulle pagine principali.
     const currentIndex = this.routes.indexOf(currentUrl);
-
     if (currentIndex === -1) {
       return;
     }
 
-    // Sinistra: pagina successiva.
-    // Destra: pagina precedente.
+    // Sinistra: pagina successiva. Destra: pagina precedente.
     const nextIndex = direction === 'left' ? currentIndex + 1 : currentIndex - 1;
 
     // Non uscire dai limiti della navigazione.

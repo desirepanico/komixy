@@ -11,8 +11,8 @@ import {
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
-import { UserRole } from '../../../../features/auth/models/auth.model';
 import { NavItem } from '../../../models/nav-item.model';
+import { MAIN_PAGES } from '../../../navigation/main-pages';
 
 @Component({
   selector: 'app-mobile-bottom-nav',
@@ -31,32 +31,7 @@ import { NavItem } from '../../../models/nav-item.model';
 })
 export class MobileBottomNav {
   public appRoutes: WritableSignal<typeof AppRoutes>;
-  readonly navItems = signal<NavItem[]>([
-    {
-      icon: 'matExploreOutline',
-      label: 'menu.discover',
-      route: AppRoutes.Discover,
-      roles: [UserRole.User, UserRole.Admin],
-    },
-    {
-      icon: 'matCalendarTodayOutline',
-      label: 'menu.releases',
-      route: AppRoutes.Releases,
-      roles: [UserRole.User, UserRole.Admin],
-    },
-    {
-      icon: 'matCollectionsBookmarkOutline',
-      label: 'menu.library',
-      route: AppRoutes.Library,
-      roles: [UserRole.User, UserRole.Admin],
-    },
-    {
-      icon: 'matPersonOutline',
-      label: 'menu.profile',
-      route: AppRoutes.Profile,
-      roles: [UserRole.User, UserRole.Admin],
-    },
-  ]);
+  readonly navItems = signal<readonly NavItem[]>(MAIN_PAGES);
   constructor() {
     this.appRoutes = signal(AppRoutes);
   }

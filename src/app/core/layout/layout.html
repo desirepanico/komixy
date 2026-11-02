@@ -18,10 +18,10 @@
     <div class="min-h-dvh">
       <!-- CONTENUTO -->
       <main
-        class="min-h-dvh pb-20 touch-pan-y"
-        (pointerdown)="onSwipePointerDown($event)"
-        (pointerup)="onSwipePointerUp($event)"
-        (pointercancel)="onSwipePointerCancel()"
+        appSwipe
+        class="min-h-dvh pb-20 touch-pan-y [view-transition-name:page]"
+        (swipeLeft)="swipeService.navigate('left')"
+        (swipeRight)="swipeService.navigate('right')"
       >
         <router-outlet />
       </main>

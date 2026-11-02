@@ -5,11 +5,12 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 
 import { lastValueFrom } from 'rxjs';
 import { routes } from './app.routes';
+import { provideNavDirection } from './core/navigation/nav-direction';
 import { TranslocoHttpLoader } from './core/interceptors/transloco-loader.interceptor';
 // carica le traduzioni prima dell'avvio dell'app
 function initializeApp(): Promise<any> {
@@ -23,7 +24,8 @@ function initializeApp(): Promise<any> {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
+    provideRouter(routes, withViewTransitions()),
+    provideNavDirection(),
     //TRADUZIONI
     provideTransloco({
       config: {

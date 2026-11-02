@@ -25,6 +25,7 @@ src/
 │   │   ├── interceptors/      interceptor HTTP e loader Transloco
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
 │   │   ├── models/            modelli e tipi globali (environment, nav-item)
+│   │   ├── navigation/        main-pages (ordine delle pagine principali) e direzione delle transizioni
 │   │   └── services/          servizi globali (viewport, swipe mobile)
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, home, not-found, releases
@@ -33,7 +34,8 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature
 │   └── shared/                riutilizzabile da più feature, senza logica di business
-│       └── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
+│       └── directives/        direttive generiche: appSwipe
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
@@ -56,6 +58,7 @@ Dove mettere le cose:
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Nessun testo hardcoded nei template.
 - Commenti nel codice e messaggi di commit in italiano.
 - Componenti riutilizzabili: usa la skill `shared-component`.
+- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `core/navigation/main-pages.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Flusso git
 
