@@ -12,14 +12,12 @@
 
     <app-horizontal-scroller [ariaLabel]="'weeklyManga.title' | transloco">
       @for (comic of weeklyComics(); track comic.id; let i = $index) {
-        <div class="w-52 shrink-0 snap-start lg:w-56">
-          <app-comic-rank-card
-            [comic]="comic"
-            [rank]="i + 1"
-            [bookmarked]="selectedId() === comic.id"
-            (bookmarkToggle)="toggleBookmark(comic.id)"
-          />
-        </div>
+        <app-comic-rank-card
+          [comic]="comic"
+          [rank]="i + 1"
+          [bookmarked]="selectedId() === comic.id"
+          (bookmarkToggle)="toggleBookmark(comic.id)"
+        />
       }
     </app-horizontal-scroller>
   </div>
