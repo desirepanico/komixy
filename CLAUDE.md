@@ -1,3 +1,23 @@
+# Komixy
+
+App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
+
+## Comandi
+
+- `npm start` — dev server su http://localhost:4200
+- `npm run build` — build di produzione (da lanciare prima di ogni commit)
+- `npm test` — test con Vitest
+
+## Convenzioni del progetto
+
+- **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
+- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`). Niente classi `pi pi-*`.
+- Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Nessun testo hardcoded nei template.
+- Struttura: `src/app/core` (layout, guard, interceptor, servizi) e `src/app/features/<feature>` (pages, components, models).
+- Commenti nel codice e messaggi di commit in italiano.
+- Colori sempre tramite i token Tailwind (`primary-400`, `surface-900`, ...), mai hex nei template.
+
+## Linee guida generali
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
