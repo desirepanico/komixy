@@ -3,12 +3,11 @@ import { RouterLink } from '@angular/router';
 import { TranslocoModule } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline, matExploreOutline } from '@ng-icons/material-symbols/outline';
-import { ButtonModule } from 'primeng/button';
 import { AppRoutes } from '../../../../app.routes';
 @Component({
   selector: 'app-not-found-page',
 
-  imports: [RouterLink, ButtonModule, TranslocoModule, NgIcon],
+  imports: [RouterLink, TranslocoModule, NgIcon],
   templateUrl: './not-found-page.html',
   providers: [
     provideIcons({

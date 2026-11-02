@@ -1,30 +1,31 @@
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+/* static: genera sempre le variabili CSS (usate anche in theme.css e glass.css) */
+@theme static {
   --font-sans: 'Mulish', sans-serif;
 
-  --color-primary-50: var(--p-primary-50);
-  --color-primary-100: var(--p-primary-100);
-  --color-primary-200: var(--p-primary-200);
-  --color-primary-300: var(--p-primary-300);
-  --color-primary-400: var(--p-primary-400);
-  --color-primary-500: var(--p-primary-500);
-  --color-primary-600: var(--p-primary-600);
-  --color-primary-700: var(--p-primary-700);
-  --color-primary-800: var(--p-primary-800);
-  --color-primary-900: var(--p-primary-900);
-  --color-primary-950: var(--p-primary-950);
+  --color-primary-50: #FCFAFF;
+  --color-primary-100: #F5F0FF;
+  --color-primary-200: #E7DBFF;
+  --color-primary-300: #D0BCFF;
+  --color-primary-400: #B89BFF;
+  --color-primary-500: #A078FF;
+  --color-primary-600: #8455E0;
+  --color-primary-700: #6730C2;
+  --color-primary-800: #4D109E;
+  --color-primary-900: #340080;
+  --color-primary-950: #1F004D;
 
-  --color-surface-50: var(--p-surface-50);
-  --color-surface-100: var(--p-surface-100);
-  --color-surface-200: var(--p-surface-200);
-  --color-surface-300: var(--p-surface-300);
-  --color-surface-400: var(--p-surface-400);
-  --color-surface-500: var(--p-surface-500);
-  --color-surface-600: var(--p-surface-600);
-  --color-surface-700: var(--p-surface-700);
-  --color-surface-800: var(--p-surface-800);
-  --color-surface-900: var(--p-surface-900);
-  --color-surface-950: var(--p-surface-950);
+  --color-surface-50: #FAFAFC;
+  --color-surface-100: #F6F6F8;
+  --color-surface-200: #E9E9EE;
+  --color-surface-300: #D6D6DE;
+  --color-surface-400: #B8B8C6;
+  --color-surface-500: #8E8FA3;
+  --color-surface-600: #5E5F73;
+  --color-surface-700: #494454;
+  --color-surface-800: #2C2832;
+  --color-surface-900: #1B1F2D;
+  --color-surface-950: #0E1017;
 }

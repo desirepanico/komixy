@@ -8,9 +8,7 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 
-import { providePrimeNG } from 'primeng/config';
 import { lastValueFrom } from 'rxjs';
-import { KomixyPreset } from './app.primeng-preset';
 import { routes } from './app.routes';
 import { TranslocoHttpLoader } from './core/interceptors/transloco-loader.interceptor';
 // carica le traduzioni prima dell'avvio dell'app
@@ -26,15 +24,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    //PRIMENG CONFIG
-    providePrimeNG({
-      theme: {
-        preset: KomixyPreset,
-        options: {
-          darkModeSelector: '.dark',
-        },
-      },
-    }),
     //TRADUZIONI
     provideTransloco({
       config: {

@@ -13,27 +13,25 @@
     <!-- Controlli desktop -->
 
     <div class="hidden shrink-0 items-center gap-2 lg:flex">
-      <p-button
+      <button
         type="button"
-        [rounded]="true"
-        [outlined]="true"
+        class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-primary-400 text-primary-300 transition-colors hover:bg-primary-400/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40"
         [disabled]="!canScrollLeft()"
         aria-label="Scorri verso sinistra"
-        (onClick)="scrollComics(comicList, -1)"
+        (click)="scrollComics(comicList, -1)"
       >
         <ng-icon name="matChevronLeftOutline" size="20" />
-      </p-button>
+      </button>
 
-      <p-button
+      <button
         type="button"
-        [rounded]="true"
-        [outlined]="true"
+        class="flex size-10 cursor-pointer items-center justify-center rounded-full border border-primary-400 text-primary-300 transition-colors hover:bg-primary-400/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40"
         [disabled]="!canScrollRight()"
         aria-label="Scorri verso destra"
-        (onClick)="scrollComics(comicList, 1)"
+        (click)="scrollComics(comicList, 1)"
       >
         <ng-icon name="matChevronRightOutline" size="20" />
-      </p-button>
+      </button>
     </div>
   </div>
 
