@@ -28,13 +28,19 @@ export class ComicRankCard {
 
   protected severity = computed(() => editionSeverity(this.comic().editionType));
 
-  /** Numero grande con riempimento a sfumatura: il podio (1-3) in viola con un leggero alone, le altre in grigio chiaro */
+  /** Entrata del numero: sale e appare, una posizione dopo l'altra (solo senza "riduci movimento") */
+  protected enterClasses = 'flex w-18 shrink-0 justify-center motion-safe:animate-rank-in';
+
+  /** Ritardo di entrata: 70ms per posizione */
+  protected enterDelay = computed(() => (this.rank() - 1) * 70);
+
+  /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
   protected rankClasses = computed(() => {
     const base =
-      'flex w-18 shrink-0 items-baseline justify-center gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums';
+      'flex origin-center items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';
     const tone =
       this.rank() <= 3
-        ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)]'
+        ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)] motion-safe:animate-rank-glow'
         : 'bg-linear-to-b from-surface-200 to-surface-500';
     return `${base} ${tone}`;
   });

@@ -2,9 +2,11 @@
   class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
-  <span [class]="rankClasses()" aria-hidden="true">
-    <span class="text-lg font-bold">#</span>
-    <span class="text-5xl">{{ rank() }}</span>
+  <span [class]="enterClasses" [style.animation-delay.ms]="enterDelay()" aria-hidden="true">
+    <span [class]="rankClasses()">
+      <span class="text-lg font-bold">#</span>
+      <span class="text-5xl">{{ rank() }}</span>
+    </span>
   </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 

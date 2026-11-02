@@ -5,18 +5,43 @@
 @theme static {
   --font-sans: 'Mulish', sans-serif;
 
+  /* Animazioni del numero in classifica */
+  --animate-rank-in: rank-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-rank-glow: rank-glow 3s ease-in-out infinite;
+
+  @keyframes rank-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.6em) scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes rank-glow {
+    0%,
+    100% {
+      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-primary-500) 35%, transparent));
+    }
+    50% {
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--color-primary-500) 70%, transparent));
+    }
+  }
+
   /* Palette violet (dal vecchio preset PrimeNG) */
-  --color-violet-50: #FCFAFF;
-  --color-violet-100: #F5F0FF;
-  --color-violet-200: #E7DBFF;
-  --color-violet-300: #D0BCFF;
-  --color-violet-400: #B89BFF;
-  --color-violet-500: #A078FF;
-  --color-violet-600: #8455E0;
-  --color-violet-700: #6730C2;
-  --color-violet-800: #4D109E;
+  --color-violet-50: #fcfaff;
+  --color-violet-100: #f5f0ff;
+  --color-violet-200: #e7dbff;
+  --color-violet-300: #d0bcff;
+  --color-violet-400: #b89bff;
+  --color-violet-500: #a078ff;
+  --color-violet-600: #8455e0;
+  --color-violet-700: #6730c2;
+  --color-violet-800: #4d109e;
   --color-violet-900: #340080;
-  --color-violet-950: #1F004D;
+  --color-violet-950: #1f004d;
 
   --color-primary-50: var(--color-violet-50);
   --color-primary-100: var(--color-violet-100);
@@ -30,17 +55,17 @@
   --color-primary-900: var(--color-violet-900);
   --color-primary-950: var(--color-violet-950);
 
-  --color-surface-50: #FAFAFC;
-  --color-surface-100: #F6F6F8;
-  --color-surface-200: #E9E9EE;
-  --color-surface-300: #D6D6DE;
-  --color-surface-400: #B8B8C6;
-  --color-surface-500: #8E8FA3;
-  --color-surface-600: #5E5F73;
+  --color-surface-50: #fafafc;
+  --color-surface-100: #f6f6f8;
+  --color-surface-200: #e9e9ee;
+  --color-surface-300: #d6d6de;
+  --color-surface-400: #b8b8c6;
+  --color-surface-500: #8e8fa3;
+  --color-surface-600: #5e5f73;
   --color-surface-700: #494454;
-  --color-surface-800: #2C2832;
-  --color-surface-900: #1B1F2D;
-  --color-surface-950: #0E1017;
+  --color-surface-800: #2c2832;
+  --color-surface-900: #1b1f2d;
+  --color-surface-950: #0e1017;
 
   /* Border radius (dal vecchio preset PrimeNG) */
   --radius-xs: 4px;
@@ -52,17 +77,17 @@
   --radius-3xl: 48px;
 
   /* Palette neutral (dal vecchio preset PrimeNG) */
-  --color-neutral-50: #FCFBFC;
-  --color-neutral-100: #F8F7FA;
-  --color-neutral-200: #F0EDF4;
-  --color-neutral-300: #E7E3ED;
-  --color-neutral-400: #DCD6E5;
-  --color-neutral-500: #CBC3D7;
-  --color-neutral-600: #A99EB9;
+  --color-neutral-50: #fcfbfc;
+  --color-neutral-100: #f8f7fa;
+  --color-neutral-200: #f0edf4;
+  --color-neutral-300: #e7e3ed;
+  --color-neutral-400: #dcd6e5;
+  --color-neutral-500: #cbc3d7;
+  --color-neutral-600: #a99eb9;
   --color-neutral-700: #837694;
-  --color-neutral-800: #5C506D;
-  --color-neutral-900: #382D47;
-  --color-neutral-950: #22192E;
+  --color-neutral-800: #5c506d;
+  --color-neutral-900: #382d47;
+  --color-neutral-950: #22192e;
 }
 
 /* Nasconde la scrollbar mantenendo lo scroll (usata dal carosello) */
