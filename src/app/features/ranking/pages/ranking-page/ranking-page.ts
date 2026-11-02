@@ -5,8 +5,8 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
 import { Button } from '../../../../shared/components/button/button';
-import { ComicRankCard } from '../../../../shared/components/comic-rank-card/comic-rank-card';
-import { WeeklyRankingService } from '../../../../core/services/weekly-ranking.service';
+import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
+import { WeeklyRankingService } from '../../services/weekly-ranking.service';
 
 /** Classifica completa dei manga più letti della settimana. */
 @Component({

@@ -11,13 +11,13 @@
     </div>
 
     <ol class="grid max-w-2xl gap-2">
-      @for (comic of topWeeklyComics(); track comic.id; let i = $index) {
+      @for (entry of topEntries(); track entry.comic.id) {
         <li>
           <app-comic-rank-card
-            [comic]="comic"
-            [rank]="i + 1"
-            [bookmarked]="selectedId() === comic.id"
-            (bookmarkToggle)="toggleBookmark(comic.id)"
+            [comic]="entry.comic"
+            [rank]="entry.rank"
+            [bookmarked]="selectedId() === entry.comic.id"
+            (bookmarkToggle)="toggleBookmark(entry.comic.id)"
           />
         </li>
       }

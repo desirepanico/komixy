@@ -1,11 +1,12 @@
-import { Injectable, signal } from '@angular/core';
-import { ComicItem } from '../models/comic.model';
+import { computed, Injectable, signal } from '@angular/core';
+import { RankingEntry } from '../models/ranking-entry.model';
+import { ComicItem } from '../../../core/models/comic.model';
 
 /** Classifica dei manga più letti della settimana, in ordine di posizione. */
 @Injectable({ providedIn: 'root' })
 export class WeeklyRankingService {
   // TODO: sostituire con i dati reali dell'API
-  public comics = signal<ComicItem[]>([
+  private readonly comics = signal<ComicItem[]>([
     {
       id: 'w1',
       title: 'Neon Horizon',
@@ -107,4 +108,9 @@ export class WeeklyRankingService {
       coverUrl: 'https://picsum.photos/seed/komixy-week-10/160/200',
     },
   ]);
+
+  /** La classifica: la posizione dipende dall'ordine dei fumetti */
+  public entries = computed<RankingEntry[]>(() =>
+    this.comics().map((comic, index) => ({ rank: index + 1, comic })),
+  );
 }

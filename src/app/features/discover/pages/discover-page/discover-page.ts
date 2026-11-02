@@ -5,9 +5,9 @@ import { AppRoutes } from '../../../../app.routes';
 import { Button } from '../../../../shared/components/button/button';
 import { HorizontalScroller } from '../../../../shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';
-import { ComicRankCard } from '../../../../shared/components/comic-rank-card/comic-rank-card';
+import { ComicRankCard } from '../../../ranking/components/comic-rank-card/comic-rank-card';
 import { ComicItem } from '../../../../core/models/comic.model';
-import { WeeklyRankingService } from '../../../../core/services/weekly-ranking.service';
+import { WeeklyRankingService } from '../../../ranking/services/weekly-ranking.service';
 
 @Component({
   selector: 'app-discover-page',
@@ -92,7 +92,7 @@ export class DiscoverPage {
   // In Discover si mostrano solo le prime 5 posizioni della classifica
   protected readonly weeklyRanking = inject(WeeklyRankingService);
   protected readonly AppRoutes = AppRoutes;
-  public topWeeklyComics = computed(() => this.weeklyRanking.comics().slice(0, 5));
+  public topEntries = computed(() => this.weeklyRanking.entries().slice(0, 5));
 
   // Seleziona o deseleziona un fumetto dai preferiti
   public toggleBookmark(id: string): void {

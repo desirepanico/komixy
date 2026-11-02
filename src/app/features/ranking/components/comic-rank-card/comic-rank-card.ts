@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '../../../app.routes';
-import { BookmarkButton } from '../bookmark-button/bookmark-button';
-import { Tag } from '../tag/tag';
-import { InView } from '../../directives/in-view/in-view';
-import { ComicItem, editionSeverity } from '../../../core/models/comic.model';
+import { AppRoutes } from '../../../../app.routes';
+import { BookmarkButton } from '../../../../shared/components/bookmark-button/bookmark-button';
+import { Tag } from '../../../../shared/components/tag/tag';
+import { InView } from '../../../../shared/directives/in-view/in-view';
+import { ComicItem, editionSeverity } from '../../../../core/models/comic.model';
 
 /**
  * Riga di classifica: posizione, copertina e le stesse informazioni di `app-comic-card`,

@@ -23,13 +23,13 @@
 
   <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
   <ol class="grid gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
-    @for (comic of ranking.comics(); track comic.id; let i = $index) {
+    @for (entry of ranking.entries(); track entry.comic.id) {
       <li>
         <app-comic-rank-card
-          [comic]="comic"
-          [rank]="i + 1"
-          [bookmarked]="selectedId() === comic.id"
-          (bookmarkToggle)="toggleBookmark(comic.id)"
+          [comic]="entry.comic"
+          [rank]="entry.rank"
+          [bookmarked]="selectedId() === entry.comic.id"
+          (bookmarkToggle)="toggleBookmark(entry.comic.id)"
         />
       </li>
     }
