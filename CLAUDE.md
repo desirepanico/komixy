@@ -8,12 +8,48 @@ App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: 
 - `npm run build` — build di produzione (da lanciare prima di ogni commit)
 - `npm test` — test con Vitest
 
+## Struttura del progetto
+
+```
+src/
+├── app/
+│   ├── app.config.ts          provider globali (router, Transloco, ...)
+│   ├── app.routes.ts          rotte (lazy loading per feature) ed enum AppRoutes
+│   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
+│   │   ├── guards/            auth.guard, user-role.guard
+│   │   ├── interceptors/      interceptor HTTP e loader Transloco
+│   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
+│   │   ├── models/            modelli e tipi globali (environment, nav-item)
+│   │   └── services/          servizi globali (viewport, swipe mobile)
+│   ├── features/              una cartella per area funzionale
+│   │   └── <feature>/         auth, comics, discover, home, not-found, releases
+│   │       ├── pages/         componenti collegati alle rotte (lazy)
+│   │       ├── components/    componenti usati solo da questa feature
+│   │       ├── models/        tipi e interfacce della feature
+│   │       └── services/      servizi della feature
+│   └── shared/                riutilizzabile da più feature, senza logica di business
+│       └── components/        componenti UI generici: app-tag, appButton, ...
+├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
+├── styles.css                 entry degli stili globali
+public/
+├── i18n/                      traduzioni Transloco (it.json, en.json)
+├── theme/                     theme.css (token, sfondo), glass.css (effetto glass)
+└── fonts/
+```
+
+Dove mettere le cose:
+
+- **core**: guard, interceptor, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
+- **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared`.
+- **shared**: solo componenti, direttive e pipe generici e riutilizzabili. Possono essere importati da qualsiasi parte, ma non dipendono da `features`.
+- Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`.
+
 ## Convenzioni del progetto
 
 - **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
 - Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`). Niente classi `pi pi-*`.
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Nessun testo hardcoded nei template.
-- Struttura: `src/app/core` (layout, guard, interceptor, servizi) e `src/app/features/<feature>` (pages, components, models).
+- Struttura: vedi la sezione "Struttura del progetto" qui sotto.
 - Commenti nel codice e messaggi di commit in italiano.
 - Componenti riutilizzabili in `src/app/shared/components/<nome>/` (selector `app-<nome>`, usati da più feature). Prima di scrivere markup duplicato controlla se esiste già un componente shared (es. `app-tag` per le etichette, `appButton` per i bottoni: `<button appButton>`, `<a appButton routerLink>`). Niente classi CSS globali per componenti: stile con Tailwind dentro il componente.
 - Colori sempre tramite i token Tailwind (`primary-400`, `surface-900`, ...), mai hex nei template.
