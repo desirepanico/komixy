@@ -18,7 +18,7 @@
       class="absolute right-2 top-2 z-10 flex size-9 cursor-pointer items-center justify-center rounded-full border backdrop-blur-md transition-all outline-hidden focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400"
       [class.border-primary-400]="bookmarked()"
       [class.bg-primary-900/90]="bookmarked()"
-      [class.border-white/20]="!bookmarked()"
+      [class.border-surface-50/20]="!bookmarked()"
       [class.bg-surface-950/75]="!bookmarked()"
       [class.text-primary-300]="true"
       [attr.aria-label]="
@@ -33,7 +33,7 @@
     <!-- Tag edizione sulla copertina (ripulito dal doppio @if) -->
     @if (editionType()) {
       <div
-        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/95 via-black/75 to-transparent px-2 pb-3 pt-8"
+        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-surface-950/95 via-surface-950/75 to-transparent px-2 pb-3 pt-8"
       >
         <app-tag [severity]="editionSeverity()">
           {{ 'mangaCard.editions.' + editionType() | transloco }}

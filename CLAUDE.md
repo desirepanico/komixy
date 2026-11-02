@@ -52,7 +52,7 @@ Dove mettere le cose:
 - Struttura: vedi la sezione "Struttura del progetto" qui sotto.
 - Commenti nel codice e messaggi di commit in italiano.
 - Componenti riutilizzabili in `src/app/shared/components/<nome>/` (selector `app-<nome>`, usati da più feature). Prima di scrivere markup duplicato controlla se esiste già un componente shared (es. `app-tag` per le etichette, `appButton` per i bottoni: `<button appButton>`, `<a appButton routerLink>`). Niente classi CSS globali per componenti: stile con Tailwind dentro il componente.
-- Colori sempre tramite i token Tailwind (`primary-400`, `surface-900`, ...), mai hex nei template.
+- Colori solo dai token del tema in `src/tailwind.css` (`primary-*`, `surface-*`, `neutral-*`, `violet-*`). Vietati hex e colori di default di Tailwind (`white`, `black`, `red-500`, `gray-*`, ...): se serve una tinta nuova, aggiungila prima come token in `@theme`. In CSS usa `var(--color-<nome>)`.
 
 ## Linee guida generali
 
