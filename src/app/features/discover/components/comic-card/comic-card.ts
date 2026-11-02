@@ -4,11 +4,11 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
+import { Tag, TagSeverity } from '../../../../shared/components/tag/tag';
 export type EditionType = 'variant' | 'deluxe' | 'limited' | 'collector' | 'exclusive';
-export type TagSeverity = 'primary' | 'secondary';
 @Component({
   selector: 'app-comic-card',
-  imports: [NgIcon, TranslocoPipe, RouterLink],
+  imports: [NgIcon, TranslocoPipe, RouterLink, Tag],
   templateUrl: './comic-card.html',
   providers: [
     provideIcons({

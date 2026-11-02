@@ -71,20 +71,3 @@ body {
   outline: var(--focus-ring-width) var(--focus-ring-style) var(--focus-ring-color);
   outline-offset: var(--focus-ring-offset);
 }
-
-/* Tag (ex p-tag): .tag + .tag-primary oppure .tag-secondary */
-.tag {
-  display: inline-block;
-  border-radius: 9999px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.2rem 0.6rem;
-}
-.tag-primary {
-  background-color: var(--primary-color);
-  color: var(--primary-contrast-color);
-}
-.tag-secondary {
-  background-color: var(--color-surface-700);
-  color: var(--color-surface-100);
-}

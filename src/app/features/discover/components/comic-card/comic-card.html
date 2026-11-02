@@ -35,13 +35,9 @@
       <div
         class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/95 via-black/75 to-transparent px-2 pb-3 pt-8"
       >
-        <span
-          class="tag"
-          [class.tag-primary]="editionSeverity() === 'primary'"
-          [class.tag-secondary]="editionSeverity() === 'secondary'"
-        >
+        <app-tag [severity]="editionSeverity()">
           {{ 'mangaCard.editions.' + editionType() | transloco }}
-        </span>
+        </app-tag>
       </div>
     }
   </div>

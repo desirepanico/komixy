@@ -15,6 +15,7 @@ App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: 
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Nessun testo hardcoded nei template.
 - Struttura: `src/app/core` (layout, guard, interceptor, servizi) e `src/app/features/<feature>` (pages, components, models).
 - Commenti nel codice e messaggi di commit in italiano.
+- Componenti riutilizzabili in `src/app/shared/components/<nome>/` (selector `app-<nome>`, usati da più feature). Prima di scrivere markup duplicato controlla se esiste già un componente shared (es. `app-tag` per le etichette). Niente classi CSS globali per componenti: stile con Tailwind dentro il componente.
 - Colori sempre tramite i token Tailwind (`primary-400`, `surface-900`, ...), mai hex nei template.
 
 ## Linee guida generali
