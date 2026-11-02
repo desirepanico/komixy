@@ -29,7 +29,7 @@
   },
   "weeklyManga": {
     "title": "Manga della settimana",
-    "subtitle": "I più letti e collezionati degli ultimi 7 giorni",
+    "subtitle": "I più letti della settimana",
     "rank": "Posizione {{ rank }}"
   },
   "scroller": {

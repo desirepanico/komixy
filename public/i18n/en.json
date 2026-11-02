@@ -14,7 +14,7 @@
   },
   "weeklyManga": {
     "title": "Manga of the week",
-    "subtitle": "The most read and collected in the last 7 days",
+    "subtitle": "The most read this week",
     "rank": "Rank {{ rank }}"
   },
   "scroller": {
