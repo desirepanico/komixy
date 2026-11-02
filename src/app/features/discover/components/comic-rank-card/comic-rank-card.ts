@@ -28,9 +28,14 @@ export class ComicRankCard {
 
   protected severity = computed(() => editionSeverity(this.comic().editionType));
 
-  /** Posizione senza cerchio: il podio (1-3) in viola, le altre in grigio chiaro */
+  /** Numero grande con riempimento a sfumatura: il podio (1-3) in viola con un leggero alone, le altre in grigio chiaro */
   protected rankClasses = computed(() => {
-    const base = 'flex w-12 shrink-0 items-baseline justify-center gap-px';
-    return `${base} ${this.rank() <= 3 ? 'text-primary-300' : 'text-surface-400'}`;
+    const base =
+      'flex w-18 shrink-0 items-baseline justify-center gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums';
+    const tone =
+      this.rank() <= 3
+        ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)]'
+        : 'bg-linear-to-b from-surface-200 to-surface-500';
+    return `${base} ${tone}`;
   });
 }

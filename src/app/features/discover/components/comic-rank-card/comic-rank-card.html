@@ -3,8 +3,8 @@
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
   <span [class]="rankClasses()" aria-hidden="true">
-    <span class="text-sm font-semibold">#</span>
-    <span class="text-3xl font-extrabold leading-none tabular-nums">{{ rank() }}</span>
+    <span class="text-lg font-bold">#</span>
+    <span class="text-5xl">{{ rank() }}</span>
   </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 
