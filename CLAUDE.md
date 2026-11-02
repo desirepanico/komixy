@@ -24,17 +24,17 @@ src/
 │   │   ├── guards/            auth.guard, user-role.guard
 │   │   ├── interceptors/      interceptor HTTP e loader Transloco
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   ├── models/            modelli e tipi globali (environment, nav-item)
+│   │   ├── models/            modelli e tipi globali (environment, nav-item, comic)
 │   │   ├── navigation/        main-pages (ordine delle pagine principali) e direzione delle transizioni
-│   │   └── services/          servizi globali (viewport, swipe mobile)
+│   │   └── services/          servizi globali (viewport, swipe mobile, classifica settimanale)
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         auth, comics, discover, home, not-found, releases
+│   │   └── <feature>/         auth, comics, discover, home, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature
 │   └── shared/                riutilizzabile da più feature, senza logica di business
-│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-comic-rank-card, ...
 │       └── directives/        direttive generiche: appSwipe
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
@@ -47,7 +47,7 @@ public/
 Dove mettere le cose:
 
 - **core**: guard, interceptor, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
-- **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared`.
+- **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti) o in `core` (modelli e servizi). Esempio: la classifica è la feature `ranking`, ma la sua card (`shared`), i dati (`core/services`) e il modello `ComicItem` (`core/models`) sono condivisi con `discover`.
 - **shared**: solo componenti, direttive e pipe generici e riutilizzabili. Possono essere importati da qualsiasi parte, ma non dipendono da `features`.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`.
 

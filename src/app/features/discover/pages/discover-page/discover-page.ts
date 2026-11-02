@@ -5,9 +5,9 @@ import { AppRoutes } from '../../../../app.routes';
 import { Button } from '../../../../shared/components/button/button';
 import { HorizontalScroller } from '../../../../shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';
-import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
-import { ComicItem } from '../../models/comic.model';
-import { WeeklyRankingService } from '../../services/weekly-ranking.service';
+import { ComicRankCard } from '../../../../shared/components/comic-rank-card/comic-rank-card';
+import { ComicItem } from '../../../../core/models/comic.model';
+import { WeeklyRankingService } from '../../../../core/services/weekly-ranking.service';
 
 @Component({
   selector: 'app-discover-page',

@@ -33,7 +33,7 @@ export const routes: Routes = [
           {
             path: AppRoutes.Ranking,
             loadComponent: () =>
-              import('./features/discover/pages/ranking-page/ranking-page').then(
+              import('./features/ranking/pages/ranking-page/ranking-page').then(
                 (m) => m.RankingPage,
               ),
           },

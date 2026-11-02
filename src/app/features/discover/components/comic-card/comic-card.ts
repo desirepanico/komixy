@@ -4,7 +4,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { AppRoutes } from '../../../../app.routes';
 import { BookmarkButton } from '../../../../shared/components/bookmark-button/bookmark-button';
 import { Tag } from '../../../../shared/components/tag/tag';
-import { EditionType, editionSeverity } from '../../models/comic.model';
+import { EditionType, editionSeverity } from '../../../../core/models/comic.model';
 @Component({
   selector: 'app-comic-card',
   imports: [TranslocoPipe, RouterLink, Tag, BookmarkButton],

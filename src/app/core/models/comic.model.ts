@@ -1,5 +1,3 @@
-import { TagSeverity } from '../../../shared/components/tag/tag';
-
 export type EditionType = 'variant' | 'deluxe' | 'limited' | 'collector' | 'exclusive';
 
 // Modello che rappresenta un fumetto nella pagina Discovery
@@ -15,7 +13,7 @@ export interface ComicItem {
 }
 
 /** Due soli stili: edizioni speciali/rare in viola (primary), standard e varianti neutre (secondary). */
-export function editionSeverity(type: EditionType | null): TagSeverity {
+export function editionSeverity(type: EditionType | null): 'primary' | 'secondary' {
   switch (type) {
     case 'collector':
     case 'limited':
