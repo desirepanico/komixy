@@ -28,7 +28,8 @@
   "weeklyManga": {
     "title": "Manga della settimana",
     "subtitle": "I più letti della settimana",
-    "rank": "Posizione {{ rank }}"
+    "rank": "Posizione {{ rank }}",
+    "seeAll": "Vedi tutta la classifica"
   },
   "bookmark": {
     "add": "Aggiungi ai segnalibri",

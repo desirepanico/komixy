@@ -30,7 +30,7 @@ export class ComicRankCard {
 
   /** Le prime tre posizioni in viola, le altre neutre */
   protected rankClasses = computed(() => {
-    const base = 'w-9 shrink-0 text-center text-2xl font-extrabold tabular-nums';
+    const base = 'w-8 shrink-0 text-center text-xl font-extrabold tabular-nums';
     return `${base} ${this.rank() <= 3 ? 'text-primary-300' : 'text-surface-400'}`;
   });
 }

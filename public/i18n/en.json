@@ -15,7 +15,8 @@
   "weeklyManga": {
     "title": "Manga of the week",
     "subtitle": "The most read this week",
-    "rank": "Rank {{ rank }}"
+    "rank": "Rank {{ rank }}",
+    "seeAll": "See the full ranking"
   },
   "bookmark": {
     "add": "Add to bookmarks",

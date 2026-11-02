@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { Button } from '../../../../shared/components/button/button';
 import { HorizontalScroller } from '../../../../shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
@@ -7,7 +8,7 @@ import { ComicItem } from '../../models/comic.model';
 
 @Component({
   selector: 'app-discover-page',
-  imports: [ComicCard, ComicRankCard, TranslocoPipe, HorizontalScroller],
+  imports: [ComicCard, ComicRankCard, TranslocoPipe, HorizontalScroller, Button],
   templateUrl: './discover-page.html',
 })
 export class DiscoverPage {
@@ -188,6 +189,9 @@ export class DiscoverPage {
       coverUrl: 'https://picsum.photos/seed/komixy-week-10/160/200',
     },
   ]);
+
+  // In Discover si mostrano solo le prime 5 posizioni
+  public topWeeklyComics = computed(() => this.weeklyComics().slice(0, 5));
 
   // Seleziona o deseleziona un fumetto dai preferiti
   public toggleBookmark(id: string): void {

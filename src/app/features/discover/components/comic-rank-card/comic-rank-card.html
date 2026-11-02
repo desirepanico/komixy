@@ -1,12 +1,12 @@
 <div
-  class="group relative flex items-center gap-2 rounded-2xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
+  class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
   <span [class]="rankClasses()" aria-hidden="true">{{ rank() }}</span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 
   <img
-    class="aspect-2/3 h-28 shrink-0 rounded-xl object-cover"
+    class="aspect-2/3 h-20 shrink-0 rounded-lg object-cover"
     [src]="comic().coverUrl"
     loading="lazy"
     [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
@@ -16,7 +16,7 @@
     <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->
     <a
       [routerLink]="[AppRoutes.Comic, comic().id]"
-      class="truncate text-sm font-bold leading-5 text-surface-50 outline-none transition-colors group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-2xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
+      class="truncate text-sm font-bold leading-5 text-surface-50 outline-none transition-colors group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
       [title]="comic().title"
     >
       {{ comic().title }}
