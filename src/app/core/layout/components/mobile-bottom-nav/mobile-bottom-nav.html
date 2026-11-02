@@ -6,13 +6,20 @@
     @for (item of navItems().slice(0, 2); track item.route) {
       <a
         [routerLink]="item.route"
-        routerLinkActive="text-primary-400 [&>span]:font-bold"
+        routerLinkActive
+        #rla="routerLinkActive"
         [routerLinkActiveOptions]="{ exact: item.route === '' }"
-        class="flex flex-col items-center justify-center gap-0.5 text-neutral-500 transition-colors"
+        class="flex flex-col items-center justify-center gap-0.5 transition-colors"
+        [class.text-primary-400]="rla.isActive"
+        [class.text-surface-600]="!rla.isActive"
       >
         <ng-icon [name]="item.icon" size="24" />
 
-        <span class="text-xs font-semibold transition-all">
+        <span
+          class="text-xs transition-all"
+          [class.font-bold]="rla.isActive"
+          [class.font-semibold]="!rla.isActive"
+        >
           {{ item.label | transloco }}
         </span>
       </a>
@@ -37,12 +44,19 @@
     @for (item of navItems().slice(2); track item.route) {
       <a
         [routerLink]="item.route"
-        routerLinkActive="text-primary-400 [&>span]:font-bold"
-        class="flex flex-col items-center justify-center gap-0.5 text-neutral-500 transition-colors"
+        routerLinkActive
+        #rla="routerLinkActive"
+        class="flex flex-col items-center justify-center gap-0.5 transition-colors"
+        [class.text-primary-400]="rla.isActive"
+        [class.text-surface-600]="!rla.isActive"
       >
         <ng-icon [name]="item.icon" size="24" />
 
-        <span class="text-xs font-semibold transition-all">
+        <span
+          class="text-xs transition-all"
+          [class.font-bold]="rla.isActive"
+          [class.font-semibold]="!rla.isActive"
+        >
           {{ item.label | transloco }}
         </span>
       </a>
