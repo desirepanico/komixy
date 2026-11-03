@@ -12,8 +12,15 @@
 
 body {
   font-family: 'Mulish', sans-serif;
+  /* Colore base del testo (tema scuro): chi non imposta un colore lo eredita da qui, senza finire nero su sfondo scuro */
+  color: var(--color-surface-100);
   overflow-x: clip;
 } /*serve a tagliare (nascondere) tutto il contenuto che fuoriesce orizzontalmente dal contenitore*/
+
+/* Testo alternativo (alt) mostrato quando l'immagine non si carica: leggibile sul tema scuro */
+img {
+  color: var(--color-surface-400);
+}
 .debug {
   outline: 1px solid red !important;
 }
