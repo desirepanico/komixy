@@ -32,7 +32,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | Evento | Script | Cosa fa |
 |---|---|---|
 | `SessionStart` | `setup-deps.sh` | `npm ci` se manca `node_modules` |
-| `PostToolUse` (Edit/Write) | `after-edit.sh` | controlla `it.json`/`en.json` se modificati |
+| `PostToolUse` (Edit/Write) | `after-edit.sh` | controlla `it.json`/`en.json` se modificati; lancia ESLint sui file `.ts`/`.html` di `src/` e mostra gli errori a Claude |
 
 Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni che Claude può non rispettare. Ciò che si può far controllare a uno script va in un hook.
 
