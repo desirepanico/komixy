@@ -16,7 +16,9 @@ import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/materia
 import { Button } from '../button/button';
 
 /**
- * Lista orizzontale con scroll nativo, snap e frecce (nascoste solo sui dispositivi touch, dove si scorre col dito; con il mouse restano visibili anche a finestra stretta).
+ * Lista orizzontale con scroll nativo, snap e frecce.
+ * Le frecce sono nascoste solo sui dispositivi touch (si scorre col dito); col mouse restano visibili anche a finestra stretta.
+ * Da tastiera la lista non prende il focus: si naviga con Tab tra gli elementi, che il browser porta in vista; ← → scorrono.
  * Gli elementi si passano come contenuto e devono avere `shrink-0 snap-start` e una larghezza.
  * Con `bleed` (default) la lista esce dal padding della pagina (px-3, md:px-2) fino al bordo dello schermo.
  *
@@ -39,7 +41,7 @@ export class HorizontalScroller {
 
   protected listClasses = computed(() => {
     const base =
-      'flex min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-3 pt-1 outline-none scrollbar-none focus-visible:ring-2 focus-visible:ring-primary-400';
+      'flex min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-3 pt-1 scrollbar-none';
     const bleed = '-mx-3 px-3 scroll-px-3 md:-mx-2 md:px-2 md:scroll-px-2';
     return this.bleed() ? `${base} ${bleed}` : base;
   });
@@ -74,12 +76,10 @@ export class HorizontalScroller {
     this.canScrollLeft.set(left);
     this.canScrollRight.set(right);
 
-    // Se la freccia che ha il focus sta per sparire (inizio/fine lista), il focus passa alla lista
+    // Se la freccia che ha il focus sta per sparire (inizio/fine lista), il focus passa all'altra freccia
     const active = document.activeElement;
-    const focusedArrowGone =
-      (!left && active === this.prev().nativeElement) ||
-      (!right && active === this.next().nativeElement);
-    if (focusedArrowGone) el.focus();
+    if (!left && right && active === this.prev().nativeElement) this.next().nativeElement.focus();
+    if (!right && left && active === this.next().nativeElement) this.prev().nativeElement.focus();
   }
 
   /** Scorre di una larghezza visibile: 1 = avanti, -1 = indietro */
