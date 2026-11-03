@@ -9,9 +9,14 @@ if echo "$cmd" | grep -Eq 'git +(checkout +-b|switch +-c|branch +[^-])'; then
   exit 2
 fi
 
-# 2. Prima di ogni commit: build e test
+# 2. Prima di ogni commit: traduzioni, build e test
 if echo "$cmd" | grep -Eq 'git +commit'; then
   cd "$CLAUDE_PROJECT_DIR" || exit 0
+  if ! out=$(node .claude/hooks/check-i18n.mjs 2>&1); then
+    echo "Commit bloccato: traduzioni non valide." >&2
+    echo "$out" >&2
+    exit 2
+  fi
   if ! out=$(npm run build 2>&1); then
     echo "Commit bloccato: 'npm run build' è fallita." >&2
     echo "$out" | tail -n 30 >&2

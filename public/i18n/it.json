@@ -6,7 +6,7 @@
     "library": "Libreria",
     "scan": "Scan",
     "profile": "Profilo",
-    "collection": ""
+    "collection": "Collezione"
   },
   "mangaCard": {
     "coverAlt": "Copertina di {{ title }}",
