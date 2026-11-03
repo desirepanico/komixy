@@ -7,7 +7,7 @@ Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, 
 ## Comandi
 
 - `npm start` — dev server su http://localhost:4200
-- `npm run build` — build di produzione (da lanciare prima di ogni commit)
+- `npm run build` — build di produzione
 - `npm test` — test con Vitest
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
@@ -95,16 +95,15 @@ Per aggiungere una feature nuova:
 ## Convenzioni
 
 - **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
-- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`). Niente classi `pi pi-*`.
-- Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Nessun testo hardcoded nei template.
+- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
+- Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
 - Commenti nel codice e messaggi di commit in italiano.
-- Componenti riutilizzabili: usa la skill `shared-component`.
 - Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `core/navigation/main-pages.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Flusso git
 
-- Si lavora direttamente su `develop`, senza creare branch (salvo richiesta esplicita).
-- Prima di ogni commit lancia `npm run build`. Prima del push fai `git pull --rebase origin develop`.
+- Regole sui branch in `.claude/rules/git.md`. Build e test prima del commit sono controllati dall'hook `.claude/hooks/guard-git.sh`.
+- Prima del push fai `git pull --rebase origin develop`.
 - Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`.
 
 ## Sicurezza
