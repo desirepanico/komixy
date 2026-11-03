@@ -32,7 +32,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | Evento | Script | Cosa fa |
 |---|---|---|
 | `SessionStart` | `setup-deps.sh` | `npm ci` se manca `node_modules` |
-| `PreToolUse` (Bash) | `guard-git.sh` | blocca i branch nuovi; prima di ogni commit lancia traduzioni, build e test |
+| `PreToolUse` (Bash) | `guard-git.sh` | blocca i branch nuovi; prima di ogni commit lancia traduzioni, build e test. Controlla solo i comandi che iniziano con `git`: il testo tra virgolette non lo fa scattare |
 | `PostToolUse` (Edit/Write) | `after-edit.sh` | controlla `it.json`/`en.json` se modificati |
 
 Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni che Claude può non rispettare. Ciò che si può far controllare a uno script va in un hook.
