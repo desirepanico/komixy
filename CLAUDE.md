@@ -9,6 +9,7 @@ Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, 
 - `npm start` — dev server su http://localhost:4200
 - `npm run build` — build di produzione
 - `npm test` — test con Vitest
+- `npm run lint` — ESLint (angular-eslint): fa rispettare le regole di `.claude/rules/angular.md`
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
 - `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
@@ -17,7 +18,7 @@ Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, 
 
 Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
 
-- **core**: guard, interceptor, layout, navigazione, modelli e servizi globali. Non importa da `features`.
+- **core**: guard, interceptor, layout, navigazione, modelli e servizi globali. Non importa da `features`. Eccezione: `features/auth` (modello e servizio) resta nella feature, ma `core` lo usa (guard, navigazione, sidebar), a senso unico.
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking`, a senso unico.
 - **shared**: componenti e direttive generici, senza logica di business. Non dipende da `features`.
 

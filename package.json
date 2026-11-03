@@ -9,7 +9,8 @@
     "test": "ng test",
     "deploy:dev": "npx vercel",
     "deploy:login": "npx vercel login",
-    "deploy:prod": "npx vercel --prod"
+    "deploy:prod": "npx vercel --prod",
+    "lint": "eslint src"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,10 +45,13 @@
     "@angular/cli": "^21.0.3",
     "@angular/compiler-cli": "^21.0.0",
     "@tailwindcss/postcss": "^4.3.3",
+    "angular-eslint": "^22.6.0",
+    "eslint": "^9.39.5",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.3.3",
     "typescript": "~5.9.2",
+    "typescript-eslint": "^8.72.1",
     "vitest": "^4.0.8"
   }
 }

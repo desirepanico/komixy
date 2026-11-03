@@ -13,7 +13,7 @@ import { routes } from './app.routes';
 import { provideNavDirection } from './core/navigation/nav-direction';
 import { TranslocoHttpLoader } from './core/interceptors/transloco-loader.interceptor';
 // carica le traduzioni prima dell'avvio dell'app
-function initializeApp(): Promise<any> {
+function initializeApp(): Promise<unknown> {
   const translateService = inject(TranslocoService);
   const defaultLang = translateService.getDefaultLang();
   translateService.setActiveLang(defaultLang);
