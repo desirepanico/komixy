@@ -22,7 +22,7 @@
   </div>
 
   <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
-  <ol class="grid gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
+  <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
     @for (entry of ranking.entries(); track entry.comic.id) {
       <li>
         <app-comic-rank-card

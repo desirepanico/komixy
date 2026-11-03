@@ -26,7 +26,7 @@
     <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->
     <a
       [routerLink]="[AppRoutes.Comic, comic().id]"
-      class="line-clamp-2 text-base font-bold leading-6 text-surface-50 outline-none transition-colors md:text-lg group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
+      class="truncate text-sm font-bold leading-6 text-surface-50 outline-none transition-colors md:line-clamp-2 md:whitespace-normal md:text-lg group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
       [title]="comic().title"
     >
       {{ comic().title }}
