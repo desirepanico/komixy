@@ -33,7 +33,7 @@ Le rotte sono in `app.routes.ts`, con lazy loading per feature (`loadComponent`)
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
-- `comic/:id` è una rotta figlia di `comic`; la pagina di dettaglio non è ancora implementata.
+- `comic/:id` è una rotta figlia di `comic`: per ora usa lo stesso componente segnaposto, la pagina di dettaglio non è ancora implementata.
 - Il router usa le view transitions e il ripristino dello scroll.
 
 ### Navigazione principale
