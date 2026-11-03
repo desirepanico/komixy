@@ -25,7 +25,7 @@ export class ComicRankCard {
   /** Posizione in classifica (1 = primo) */
   public rank = input.required<number>();
   public bookmarked = input<boolean>(false);
-  public bookmarkToggle = output<void>();
+  public readonly bookmarkToggle = output<void>();
 
   protected severity = computed(() => editionSeverity(this.comic().editionType));
 

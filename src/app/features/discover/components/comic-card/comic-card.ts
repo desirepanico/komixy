@@ -24,7 +24,7 @@ export class ComicCard {
   public totalVolumes = input<number | null>(null);
 
   public bookmarked = input<boolean>(false);
-  public bookmarkToggle = output<void>();
+  public readonly bookmarkToggle = output<void>();
 
   // Stile del tag in base all'edizione
   protected editionSeverity = computed(() => editionSeverity(this.editionType()));

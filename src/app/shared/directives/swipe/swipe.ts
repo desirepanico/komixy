@@ -32,8 +32,8 @@ export class Swipe {
   /** Distanza minima in pixel per riconoscere lo swipe */
   public swipeThreshold = input<number>(70);
 
-  public swipeLeft = output<void>();
-  public swipeRight = output<void>();
+  public readonly swipeLeft = output<void>();
+  public readonly swipeRight = output<void>();
 
   private startX: number | null = null;
   private startY: number | null = null;
