@@ -1,5 +1,5 @@
 <div
-  class="group relative flex items-center gap-3 rounded-xl border border-primary-400/20 bg-surface-900 p-3 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
+  class="group relative flex items-center gap-3 rounded-xl border border-primary-400/20 bg-surface-900 py-3 pl-2 pr-3 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
   <span
@@ -9,8 +9,8 @@
     aria-hidden="true"
   >
     <span [class]="rankClasses()">
-      <span class="text-lg font-bold md:text-xl">#</span>
-      <span class="text-5xl md:text-6xl">{{ rank() }}</span>
+      <span class="text-base font-bold md:text-lg">#</span>
+      <span class="text-4xl md:text-5xl">{{ rank() }}</span>
     </span>
   </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
