@@ -5,7 +5,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 ## Dove sta cosa
 
 - `src/tailwind.css`: tema Tailwind (`@theme`), con i colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, i raggi `--radius-*` e il font `Mulish`.
-- `public/theme/theme.css`: token, font, sfondo dell'app e focus ring.
+- `public/theme/theme.css`: token, font, colore base del testo (`surface-100` sul `body`), colore dell'alt delle immagini che non caricano (`surface-400`), sfondo dell'app e focus ring.
 - `public/theme/glass.css`: effetto "glass".
 - `public/theme/page-transition.css`: transizione tra le pagine su mobile/tablet (view transition).
 - `src/styles.css`: entry degli stili globali. Importa i file di `public/theme/` e poi `tailwind.css`.
