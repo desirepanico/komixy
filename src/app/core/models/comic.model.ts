@@ -1,4 +1,5 @@
-export type EditionType = 'variant' | 'deluxe' | 'limited' | 'collector' | 'exclusive';
+/** Solo edizioni che esistono davvero sul mercato (variant, deluxe, limited): nessuna fonte di dati le dà come campo, si ricavano dal titolo o si scelgono a mano. */
+export type EditionType = 'variant' | 'deluxe' | 'limited';
 
 // Modello che rappresenta un fumetto nella pagina Discovery
 export interface ComicItem {
@@ -12,12 +13,10 @@ export interface ComicItem {
   coverUrl: string;
 }
 
-/** Due soli stili: edizioni speciali/rare in viola (primary), standard e varianti neutre (secondary). */
+/** Due soli stili: edizione limitata in viola (primary), deluxe e varianti neutre (secondary). */
 export function editionSeverity(type: EditionType | null): 'primary' | 'secondary' {
   switch (type) {
-    case 'collector':
     case 'limited':
-    case 'exclusive':
       return 'primary';
     default:
       return 'secondary';

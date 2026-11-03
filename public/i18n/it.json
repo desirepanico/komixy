@@ -16,9 +16,7 @@
     "editions": {
       "variant": "Cover variant",
       "deluxe": "Deluxe",
-      "limited": "Limitata",
-      "collector": "Da collezione",
-      "exclusive": "Esclusiva"
+      "limited": "Limitata"
     }
   },
   "discoverManga": {

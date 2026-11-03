@@ -74,7 +74,7 @@ export class WeeklyRankingService {
       volume: 11,
       totalVolumes: 30,
       isSingleVolume: false,
-      editionType: 'collector',
+      editionType: 'limited',
       coverUrl: 'https://picsum.photos/seed/komixy-week-7/160/200',
     },
     {
@@ -84,7 +84,7 @@ export class WeeklyRankingService {
       volume: 1,
       totalVolumes: null,
       isSingleVolume: true,
-      editionType: 'exclusive',
+      editionType: 'variant',
       coverUrl: 'https://picsum.photos/seed/komixy-week-8/160/200',
     },
     {

@@ -65,7 +65,7 @@ export class DiscoverPage {
       volume: 2,
       totalVolumes: null,
       isSingleVolume: false,
-      editionType: 'collector',
+      editionType: 'limited',
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
     {
@@ -75,7 +75,7 @@ export class DiscoverPage {
       volume: 2,
       totalVolumes: null,
       isSingleVolume: false,
-      editionType: 'collector',
+      editionType: 'limited',
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
     {
@@ -85,7 +85,7 @@ export class DiscoverPage {
       volume: 2,
       totalVolumes: null,
       isSingleVolume: false,
-      editionType: 'collector',
+      editionType: 'limited',
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
     {
@@ -95,7 +95,7 @@ export class DiscoverPage {
       volume: 2,
       totalVolumes: null,
       isSingleVolume: false,
-      editionType: 'collector',
+      editionType: 'limited',
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
   ]);

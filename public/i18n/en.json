@@ -37,9 +37,7 @@
     "editions": {
       "variant": "Cover Variant",
       "deluxe": "Deluxe",
-      "limited": "Limited",
-      "collector": "Collector",
-      "exclusive": "Exclusive"
+      "limited": "Limited"
     }
   },
 
