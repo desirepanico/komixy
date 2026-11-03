@@ -2,7 +2,20 @@
 
 App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
 
-Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): leggila quando serve, non è caricata in automatico. Questo file contiene solo l'essenziale.
+Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
+
+## Documentazione (`docs/`)
+
+Prima di toccare questi temi, leggi il file relativo:
+
+- Struttura cartelle, nuova feature, dipendenze tra aree: `docs/architettura.md` e `docs/struttura-progetto.md`
+- Pagine, funzionalità, stato di avanzamento: `docs/funzionalita.md`
+- Tailwind, token del tema, effetto glass: `docs/tema-e-stile.md`
+- Testi e traduzioni: `docs/traduzioni.md`
+- Comandi, test, lint, deploy: `docs/sviluppo.md`
+- Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
+
+Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna il file di `docs/` corrispondente nello stesso commit. Una regola si scrive in un solo posto: se esiste già in `.claude/rules/`, in `docs/` si rimanda senza ripeterla.
 
 ## Comandi
 
