@@ -1,0 +1,61 @@
+/* =========================================
+   TRANSIZIONE TRA LE PAGINE (mobile/tablet)
+   La pagina ha view-transition-name "page", la nav in basso "mobile-nav" (resta ferma).
+   La direzione arriva da <html data-nav-direction="forward|back"> (core/navigation/nav-direction.ts).
+   ========================================= */
+
+@keyframes page-out-left {
+  to {
+    transform: translateX(-24px);
+    opacity: 0;
+  }
+}
+@keyframes page-out-right {
+  to {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+@keyframes page-in-from-right {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+@keyframes page-in-from-left {
+  from {
+    transform: translateX(-24px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1023px) {
+  /* Lo sfondo cambia subito, anima solo la pagina */
+  ::view-transition-old(root) {
+    display: none;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  html[data-nav-direction='forward']::view-transition-old(page) {
+    animation: page-out-left 200ms ease both;
+  }
+  html[data-nav-direction='forward']::view-transition-new(page) {
+    animation: page-in-from-right 200ms ease both;
+  }
+  html[data-nav-direction='back']::view-transition-old(page) {
+    animation: page-out-right 200ms ease both;
+  }
+  html[data-nav-direction='back']::view-transition-new(page) {
+    animation: page-in-from-left 200ms ease both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

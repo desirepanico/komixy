@@ -4,7 +4,7 @@ import { mainPageIndex } from './main-pages';
 
 /**
  * Imposta `data-nav-direction` ("forward" | "back") su <html> quando si passa da una pagina
- * principale a un'altra. Il CSS in public/theme/theme.css lo usa per far scorrere la pagina.
+ * principale a un'altra. Il CSS in public/theme/page-transition.css lo usa per far scorrere la pagina.
  */
 export function provideNavDirection() {
   return provideAppInitializer(() => {
