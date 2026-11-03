@@ -16,7 +16,7 @@
 - Le regole sui branch sono in `.claude/rules/git.md`: nessun branch nuovo di iniziativa, il nome lo sceglie l'utente.
 - Messaggi di commit in italiano con prefisso `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`.
 - Prima del push: `git pull --rebase origin develop`.
-- Prima di ogni commit l'hook `guard-git.sh` lancia controllo traduzioni, `npm run build` e `npm test`; se uno fallisce il commit è bloccato.
+- Prima di ogni commit lancia `npm run build` e `npm test`.
 
 ## Test
 

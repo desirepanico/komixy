@@ -41,7 +41,7 @@ Per aggiungere una feature nuova:
 
 ## Flusso git
 
-- Regole sui branch in `.claude/rules/git.md`. Build e test prima del commit sono controllati dall'hook `.claude/hooks/guard-git.sh`.
+- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run build` e `npm test`.
 - Prima del push fai `git pull --rebase origin develop`.
 - Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`.
 

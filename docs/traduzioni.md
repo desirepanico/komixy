@@ -13,7 +13,6 @@ Le regole sono in `.claude/rules/i18n.md`. Qui il funzionamento.
 
 `.claude/hooks/check-i18n.mjs` confronta le chiavi di tutti i file in `public/i18n/` e segnala chiavi mancanti e valori vuoti. Gira:
 
-- dopo ogni modifica a un file in `public/i18n/` (hook `PostToolUse`);
-- prima di ogni `git commit` (hook `guard-git.sh`).
+- dopo ogni modifica a un file in `public/i18n/` (hook `PostToolUse`).
 
 Per lanciarlo a mano: `node .claude/hooks/check-i18n.mjs`.
