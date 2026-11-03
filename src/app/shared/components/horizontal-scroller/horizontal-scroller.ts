@@ -16,7 +16,7 @@ import { matChevronLeftOutline, matChevronRightOutline } from '@ng-icons/materia
 import { Button } from '../button/button';
 
 /**
- * Lista orizzontale con scroll nativo, snap e frecce (visibili solo da lg in su; su touch si scorre col dito).
+ * Lista orizzontale con scroll nativo, snap e frecce (nascoste solo sui dispositivi touch, dove si scorre col dito; con il mouse restano visibili anche a finestra stretta).
  * Gli elementi si passano come contenuto e devono avere `shrink-0 snap-start` e una larghezza.
  * Con `bleed` (default) la lista esce dal padding della pagina (px-3, md:px-2) fino al bordo dello schermo.
  *
