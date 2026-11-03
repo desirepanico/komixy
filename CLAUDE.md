@@ -2,7 +2,7 @@
 
 App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
 
-Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test). Questo file contiene solo l'essenziale.
+Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): leggila quando serve, non è caricata in automatico. Questo file contiene solo l'essenziale.
 
 ## Comandi
 
