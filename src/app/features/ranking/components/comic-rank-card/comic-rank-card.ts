@@ -31,7 +31,7 @@ export class ComicRankCard {
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =
-    'flex w-18 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in md:w-22';
+    'flex w-18 shrink-0 justify-end motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in md:w-22';
 
   /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
   protected enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
@@ -39,7 +39,7 @@ export class ComicRankCard {
   /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
   protected rankClasses = computed(() => {
     const base =
-      'flex origin-center items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';
+      'flex origin-right items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';
     const tone =
       this.rank() <= 3
         ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)] motion-safe:animate-rank-glow'
