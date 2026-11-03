@@ -26,7 +26,11 @@
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(npm run lint)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git pull --rebase origin develop)"
     ],
     "ask": [
       "Bash(git push *)",

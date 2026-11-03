@@ -38,7 +38,7 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 ## Permessi (`settings.json`)
 
-- `allow`: build, test, start e comandi git di sola lettura.
+- `allow`: build, test, lint, start, comandi git di sola lettura, `git add`, `git commit` e `git pull --rebase origin develop`.
 - `ask`: `git push` e `npm run deploy:*`.
 - `deny`: lettura dei file con segreti, push forzati e creazione di branch (`git checkout -b`, `git switch -c`, `git branch <nome>`, `git worktree add`).
 
