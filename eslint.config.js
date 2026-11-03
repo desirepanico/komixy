@@ -1,6 +1,9 @@
 // @ts-check
+// @ts-ignore
 const eslint = require('@eslint/js');
+// @ts-ignore
 const tseslint = require('typescript-eslint');
+// @ts-ignore
 const angular = require('angular-eslint');
 
 module.exports = tseslint.config(
@@ -14,7 +17,10 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
-      '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: 'app', style: 'camelCase' }],
+      '@angular-eslint/directive-selector': [
+        'error',
+        { type: 'attribute', prefix: 'app', style: 'camelCase' },
+      ],
       // I componenti shared usano selector ad attributo (button[appButton]): la regola non li copre
       '@angular-eslint/component-selector': 'off',
       // Regole di .claude/rules/angular.md
