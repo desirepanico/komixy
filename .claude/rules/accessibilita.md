@@ -1,3 +1,9 @@
+---
+paths:
+  - "src/app/**/*.html"
+  - "src/app/**/*.ts"
+---
+
 # Regole di accessibilità
 
 - Devono passare tutti i controlli AXE.
