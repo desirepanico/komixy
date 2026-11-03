@@ -9,7 +9,15 @@
       "Read(~/.aws/**)",
       "Read(~/.npmrc)",
       "Bash(git push --force *)",
-      "Bash(git push -f *)"
+      "Bash(git push -f *)",
+      "Bash(git checkout -b *)",
+      "Bash(git checkout -B *)",
+      "Bash(git switch -c *)",
+      "Bash(git switch -C *)",
+      "Bash(git branch [!-]*)",
+      "Bash(git branch -c *)",
+      "Bash(git branch -m *)",
+      "Bash(git worktree add *)"
     ],
     "allow": [
       "Bash(npm run build)",

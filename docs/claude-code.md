@@ -40,7 +40,7 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 - `allow`: build, test, start e comandi git di sola lettura.
 - `ask`: `git push` e `npm run deploy:*`.
-- `deny`: lettura dei file con segreti e push forzati.
+- `deny`: lettura dei file con segreti, push forzati e creazione di branch (`git checkout -b`, `git switch -c`, `git branch <nome>`, `git worktree add`).
 
 ## Skills (`.claude/skills/`)
 
