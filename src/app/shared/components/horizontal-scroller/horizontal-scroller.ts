@@ -49,6 +49,8 @@ export class HorizontalScroller {
 
   private list = viewChild.required<ElementRef<HTMLElement>>('list');
   private content = viewChild.required<ElementRef<HTMLElement>>('content');
+  private prev = viewChild.required('prev', { read: ElementRef<HTMLElement> });
+  private next = viewChild.required('next', { read: ElementRef<HTMLElement> });
 
   constructor() {
     const destroyRef = inject(DestroyRef);
@@ -67,8 +69,17 @@ export class HorizontalScroller {
   protected updateScrollState(): void {
     const el = this.list().nativeElement;
     const max = el.scrollWidth - el.clientWidth;
-    this.canScrollLeft.set(el.scrollLeft > 1);
-    this.canScrollRight.set(el.scrollLeft < max - 1);
+    const left = el.scrollLeft > 1;
+    const right = el.scrollLeft < max - 1;
+    this.canScrollLeft.set(left);
+    this.canScrollRight.set(right);
+
+    // Se la freccia che ha il focus sta per sparire (inizio/fine lista), il focus passa alla lista
+    const active = document.activeElement;
+    const focusedArrowGone =
+      (!left && active === this.prev().nativeElement) ||
+      (!right && active === this.next().nativeElement);
+    if (focusedArrowGone) el.focus();
   }
 
   /** Scorre di una larghezza visibile: 1 = avanti, -1 = indietro */

@@ -22,7 +22,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 |---|---|---|
 | `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
-| `accessibilita.md` | WCAG AA | `src/app/**/*.html` e `*.ts` |
+| `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
 | `test.md` | Test | `src/**/*.spec.ts` |
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
 | `git.md` | Branch | sempre |

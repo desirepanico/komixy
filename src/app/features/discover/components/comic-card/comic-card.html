@@ -1,7 +1,6 @@
+<!-- Card cliccabile: il link è sul titolo e il suo ::after copre tutta la card (raggiungibile con Tab, Invio apre) -->
 <div
-  [tabIndex]="0"
-  [routerLink]="[AppRoutes().Comic, id()]"
-  class="group flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 focus-visible:border-primary-400/50 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 active:scale-[0.98]"
+  class="group relative flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 has-[a:focus-visible]:border-primary-400/50 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-400 has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-surface-950 active:scale-[0.98]"
 >
   <!-- Copertina verticale -->
   <div class="relative w-full shrink-0 overflow-hidden rounded-xl">
@@ -40,7 +39,12 @@
       class="truncate text-sm font-bold leading-5 text-surface-50 transition-colors group-hover:text-primary-300"
       [title]="title()"
     >
-      {{ title() }}
+      <a
+        [routerLink]="[AppRoutes().Comic, id()]"
+        class="outline-none after:absolute after:inset-0 after:rounded-xl"
+      >
+        {{ title() }}
+      </a>
     </h3>
     <!-- Autore -->
     <p class="truncate text-xs leading-4 text-surface-400" [title]="author()">
