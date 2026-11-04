@@ -4,14 +4,18 @@
 
 | Comando | Cosa fa |
 |---|---|
-| `npm start` | Dev server su http://localhost:4200 |
-| `npm run build` | Build di produzione |
-| `npm test` | Tutti gli `*.spec.ts` di `src` con Vitest. In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
+| `npm start` | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica |
+| `npm run build` | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel |
+| `npm run watch` | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server |
+| `npm test` | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
 | `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) |
-| `npm run knip` | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`) |
+| `npm run knip` | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`) |
+| `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...` |
 | `npm run deploy:login` | Accesso a Vercel (una volta sola) |
-| `npm run deploy:dev` | Preview su Vercel |
-| `npm run deploy:prod` | Pubblicazione in produzione |
+| `npm run deploy:dev` | Preview su Vercel: un indirizzo di prova, separato dal sito pubblico |
+| `npm run deploy:prod` | Pubblicazione in produzione su Vercel |
+
+Gli script `prestart`, `prebuild`, `pretest`, `prelint` e `preknip` non si lanciano a mano: npm esegue automaticamente lo script con prefisso `pre` prima di quello con lo stesso nome. Tutti eseguono `scripts/ensure-deps.mjs` (sezione seguente).
 
 ## Installazione automatica delle dipendenze
 
