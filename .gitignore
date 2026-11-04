@@ -38,6 +38,18 @@ testem.log
 /typings
 __screenshots__/
 
+# Segreti e credenziali (non committare mai)
+.env
+.env.*
+*.env
+**/environment.local.ts
+
 # System files
 .DS_Store
 Thumbs.db
+
+# Vercel
+.vercel
+
+# Impostazioni personali di Claude Code
+.claude/settings.local.json

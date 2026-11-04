@@ -1,0 +1,111 @@
+/* =========================================================
+    KOMIXY — GLASS SYSTEM
+    Mobile + Desktop
+    ========================================================= */
+
+/* =========================================================
+   VARIABILI
+   ========================================================= */
+
+:root {
+  --glass-blur: 20px;
+  --glass-saturation: 140%;
+  --glass-shadow: 55%;
+}
+
+/* =========================================================
+   GLASS
+   ========================================================= */
+
+/*
+  GLASS — DEFAULT
+
+  USALO PER:
+  - Card manga
+  - Card collezione
+  - Pannelli
+  - Sezioni
+  - Elementi principali
+*/
+
+.glass {
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  box-shadow:
+    0 8px 32px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 8%, transparent);
+}
+
+/* =========================================================
+   GLASS LIGHT
+   ========================================================= */
+
+/*
+  GLASS LIGHT
+
+  USALO PER:
+  - Filtri
+  - Toolbar
+  - Badge
+  - Piccoli pannelli
+  - Elementi secondari
+*/
+
+.glass-light {
+  --glass-blur: 14px;
+  --glass-saturation: 130%;
+  --glass-shadow: 40%;
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  box-shadow:
+    0 6px 24px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 6%, transparent);
+}
+
+/* =========================================================
+   GLASS STRONG
+   ========================================================= */
+
+/*
+  GLASS STRONG
+
+  USALO PER:
+  - Navbar
+  - Menu
+  - Drawer
+  - Modal
+  - Dialog
+  - Popup
+*/
+
+.glass-strong {
+  --glass-blur: 28px;
+  --glass-saturation: 150%;
+  --glass-shadow: 70%;
+
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+
+  box-shadow:
+    0 12px 40px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
+}
+
+/* =========================================================
+   serve a gestire la compatibilità con i browser che non supportano l'effetto di sfocatura dello sfondo (backdrop-filter)
+   ========================================================= */
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass,
+  .glass-light,
+  .glass-strong {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}

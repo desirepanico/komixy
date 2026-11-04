@@ -1,0 +1,69 @@
+<div
+  class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 py-3 pl-2 pr-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98] xs:gap-3 xs:pr-3"
+>
+  <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
+  <span
+    appInView
+    [class]="enterClasses"
+    [style.animation-delay.ms]="enterDelay()"
+    aria-hidden="true"
+  >
+    <span [class]="rankClasses()">
+      <span class="text-base font-bold md:text-lg">#</span>
+      <span class="text-3xl xs:text-4xl md:text-5xl">{{ rank() }}</span>
+    </span>
+  </span>
+  <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
+
+  <img
+    class="aspect-2/3 h-20 shrink-0 rounded-lg object-cover xs:h-24 md:h-28"
+    [src]="comic().coverUrl"
+    loading="lazy"
+    [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
+  />
+
+  <div class="flex min-w-0 flex-1 flex-col gap-1.5 md:pl-1">
+    <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->
+    <a
+      [routerLink]="comicLink()"
+      class="truncate text-sm font-bold leading-6 text-surface-50 outline-none transition-colors md:text-base group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
+      [title]="comic().title"
+    >
+      {{ comic().title }}
+    </a>
+
+    <p class="truncate text-sm leading-5 text-surface-400" [title]="comic().author">
+      {{ comic().author }}
+    </p>
+
+    <div class="flex flex-wrap items-baseline gap-x-2.5 gap-y-1.5">
+      @if (comic().isSingleVolume) {
+        <span class="text-sm font-semibold text-primary-400">
+          {{ 'mangaCard.singleVolume' | transloco }}
+        </span>
+      } @else {
+        <span class="text-sm text-primary-400">
+          {{ 'mangaCard.volumeLabel' | transloco }}
+          <span class="text-base font-bold text-primary-300">{{ comic().volume }}</span>
+          @if (comic().totalVolumes) {
+            <span class="text-surface-400"> / {{ comic().totalVolumes }}</span>
+          }
+        </span>
+      }
+
+      @if (comic().editionType) {
+        <app-tag [severity]="severity()">
+          {{ 'mangaCard.editions.' + comic().editionType | transloco }}
+        </app-tag>
+      }
+    </div>
+  </div>
+
+  <button
+    appBookmarkButton
+    type="button"
+    class="relative z-10 shrink-0"
+    [bookmarked]="bookmarked()"
+    (click)="bookmarkToggle.emit()"
+  ></button>
+</div>

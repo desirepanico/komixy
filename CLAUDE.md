@@ -1,0 +1,66 @@
+# Komixy
+
+App Angular 22 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
+
+Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, commenti, codice inutilizzato con Knip, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
+
+## Documentazione (`docs/`)
+
+Prima di toccare questi temi, leggi il file relativo:
+
+- Struttura cartelle, nuova feature, dipendenze tra aree: `docs/architettura.md` e `docs/struttura-progetto.md`
+- Pagine, funzionalità, stato di avanzamento: `docs/funzionalita.md`
+- Tailwind, token del tema, effetto glass: `docs/tema-e-stile.md`
+- Testi e traduzioni: `docs/traduzioni.md`
+- Comandi, test (come funzionano gli spec), lint, deploy: `docs/sviluppo.md`
+- Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
+
+Se la modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti o configurazione (CI, Knip, dipendenze), aggiorna da solo il file di `docs/` corrispondente nello stesso commit, senza aspettare che l'utente lo chieda. Prima del commit controlla anche che `docs/` non citi file o dipendenze che hai tolto.
+
+## Comandi
+
+- `npm start` — dev server su http://localhost:4200
+- `npm run build` — build di produzione
+- `npm test` — test con Vitest (jsdom); in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`
+- `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`)
+- `npm run knip` — cerca file, export e dipendenze inutilizzati (config in `knip.json`, regole in `.claude/rules/knip.md`); gira anche in CI
+- `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
+- `npm run deploy:dev` — pubblica una **preview** su Vercel: indirizzo di prova, il sito pubblico non cambia (usa `vercel.json`)
+- `npm run deploy:prod` — pubblica in **produzione** su Vercel dai file locali: solo per emergenze, la produzione si aggiorna con la pull request `develop` → `master`. Preview, produzione e rilasci: `docs/sviluppo.md`, sezione Deploy
+
+## Struttura
+
+Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
+
+- **core**: `guards`, `interceptors`, `layout`, `providers` (provider di avvio). Non importa da `features`. Eccezione: `userRoleGuard` usa `AuthService` di `features/auth`, a senso unico.
+- **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`) e la card di `ranking` usata da `discover`.
+- **shared**: `components`, `directives`, `models`, `services`, `constants` (file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
+
+Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`; funzionamento degli spec in `docs/sviluppo.md`). Nuovi componenti riutilizzabili: skill `shared-component`.
+
+Per aggiungere una feature nuova:
+
+1. Crea `features/<nome>/pages/<nome>-page/` e il servizio di navigazione `services/<nome>-navigation/` (solo le rotte della feature; per le altre feature si inietta il loro servizio; regole in `.claude/rules/angular.md`).
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, lazy) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione a `app.routes.spec.ts`.
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
+4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
+
+## Convenzioni
+
+- **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
+- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
+- Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
+- Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume e rimanda, `docs/` spiega ma non definisce regole.
+- Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.
+- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+
+## Flusso git
+
+- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run lint`, `npm run knip`, `npm run build` e `npm test`.
+- Prima del push fai `git pull --rebase origin develop`.
+- Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `test:`, `chore:`, `docs:`.
+
+## Sicurezza
+
+- Non leggere né committare file con segreti (`.env*`, `environment.local.ts`, chiavi). I permessi sono in `.claude/settings.json`, le esclusioni in `.gitignore`.
+- Non scrivere chiavi, token o password nei file del repo né nella chat.

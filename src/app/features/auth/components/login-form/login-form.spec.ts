@@ -1,0 +1,83 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { LoginForm } from './login-form';
+
+describe('LoginForm', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [LoginForm] }).compileComponents();
+  });
+
+  let fixture: ComponentFixture<LoginForm>;
+  let html: HTMLElement;
+  const emessi: unknown[] = [];
+
+  const campo = (id: string) => html.querySelector(`#${id}`) as HTMLInputElement;
+  const scrivi = (id: string, valore: string) => {
+    campo(id).value = valore;
+    campo(id).dispatchEvent(new Event('input'));
+  };
+  const invia = async () => {
+    html.querySelector('form')?.dispatchEvent(new Event('submit'));
+    await fixture.whenStable();
+  };
+  const errori = () =>
+    Array.from(html.querySelectorAll('[role="alert"]')).map((e) => e.textContent?.trim());
+
+  beforeEach(async () => {
+    emessi.length = 0;
+    fixture = TestBed.createComponent(LoginForm);
+    fixture.componentInstance.loginSubmit.subscribe((c) => emessi.push(c));
+    html = fixture.nativeElement;
+    await fixture.whenStable();
+  });
+
+  it('viene creato', () => {
+    expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('non mostra errori prima del primo invio', () => {
+    expect(errori()).toEqual([]);
+  });
+
+  it('con il form vuoto mostra gli errori e non emette nulla', async () => {
+    await invia();
+    expect(errori()).toEqual(['login.errors.emailRequired', 'login.errors.passwordRequired']);
+    expect(campo('login-email').getAttribute('aria-invalid')).toBe('true');
+    expect(emessi).toEqual([]);
+  });
+
+  it('segnala email non valida e password troppo corta', async () => {
+    scrivi('login-email', 'non-una-email');
+    scrivi('login-password', '123');
+    await invia();
+    expect(errori()).toEqual(['login.errors.emailInvalid', 'login.errors.passwordMinLength']);
+    expect(emessi).toEqual([]);
+  });
+
+  it('con credenziali valide emette email e password', async () => {
+    scrivi('login-email', 'a@b.it');
+    scrivi('login-password', '123456');
+    await invia();
+    expect(errori()).toEqual([]);
+    expect(emessi).toEqual([{ email: 'a@b.it', password: '123456' }]);
+  });
+
+  it('mostra e nasconde la password', async () => {
+    const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
+    expect(campo('login-password').type).toBe('password');
+    expect(occhio.getAttribute('aria-label')).toBe('login.showPassword');
+
+    occhio.click();
+    await fixture.whenStable();
+    expect(campo('login-password').type).toBe('text');
+    expect(occhio.getAttribute('aria-label')).toBe('login.hidePassword');
+    expect(occhio.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('toglie l’errore man mano che i campi diventano validi', async () => {
+    await invia();
+    scrivi('login-email', 'a@b.it');
+    await fixture.whenStable();
+    expect(errori()).toEqual(['login.errors.passwordRequired']);
+  });
+});

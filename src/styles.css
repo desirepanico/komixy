@@ -1,3 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../public/theme/theme.scss';
-@import 'tailwindcss';
+@import '../public/theme/theme.css';
+@import '../public/theme/glass.css';
+@import '../public/theme/page-transition.css';
+@import './tailwind.css';

@@ -1,0 +1,94 @@
+{
+  "menu": {
+    "main": "Principale",
+    "discover": "Scopri",
+    "releases": "Uscite",
+    "library": "Libreria",
+    "scan": "Scan",
+    "profile": "Profilo",
+    "collection": "Collezione",
+    "myProfile": "Il mio profilo",
+    "viewProfile": "Visualizza profilo"
+  },
+  "mangaCard": {
+    "coverAlt": "Copertina di {{ title }}",
+    "singleVolume": "Volume Unico",
+    "volumeLabel": "Vol.",
+    "volume": "Vol. {{ volume }}",
+    "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
+    "editions": {
+      "variant": "Cover variant",
+      "deluxe": "Deluxe",
+      "limited": "Limitata"
+    }
+  },
+  "discoverManga": {
+    "title": "Manga da scoprire",
+    "subtitle": "Le prossime storie da aggiungere alla tua libreria"
+  },
+  "weeklyManga": {
+    "title": "Manga della settimana",
+    "subtitle": "I più letti della settimana",
+    "rank": "Posizione {{ rank }}",
+    "seeAll": "Vedi tutta la classifica"
+  },
+  "bookmark": {
+    "add": "Aggiungi ai segnalibri",
+    "remove": "Rimuovi dai segnalibri"
+  },
+  "common": {
+    "back": "Indietro"
+  },
+  "scroller": {
+    "scrollLeft": "Scorri verso sinistra",
+    "scrollRight": "Scorri verso destra"
+  },
+  "notFound": {
+    "eyebrow": "Perso nello spazio?",
+    "code": "404",
+    "title": "Pagina non trovata",
+    "description": "Questa pagina sembra essersi persa nel cosmo. Torna alla scoperta e trova la tua prossima avventura.",
+    "backHome": "Scopri manga e fumetti",
+    "goBack": "Torna indietro"
+  },
+  "login": {
+    "title": "Accedi a Komixy",
+    "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",
+    "email": "Email",
+    "emailPlaceholder": "nome@esempio.it",
+    "password": "Password",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password",
+    "submit": "Accedi",
+    "errors": {
+      "emailRequired": "Inserisci la tua email.",
+      "emailInvalid": "Inserisci un indirizzo email valido.",
+      "passwordRequired": "Inserisci la password.",
+      "passwordMinLength": "La password deve avere almeno {{ min }} caratteri."
+    }
+  },
+  "releases": {
+    "title": "Uscite",
+    "subtitle": "I prossimi volumi in uscita",
+    "comingSoon": "Uscite in arrivo",
+    "comingSoonHint": "Qui vedrai il calendario dei volumi in uscita."
+  },
+  "library": {
+    "title": "Libreria",
+    "subtitle": "La tua collezione di fumetti e manga",
+    "comingSoon": "Libreria in arrivo",
+    "comingSoonHint": "Qui troverai i volumi che possiedi e quelli che ti mancano."
+  },
+  "profile": {
+    "title": "Profilo",
+    "subtitle": "Il tuo account e le tue preferenze",
+    "comingSoon": "Profilo in arrivo",
+    "comingSoonHint": "Qui potrai gestire il tuo account e le impostazioni dell'app."
+  },
+  "comics": {
+    "title": "Fumetto",
+    "subtitle": "Dettagli del volume",
+    "comingSoon": "Dettaglio del fumetto in arrivo",
+    "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
+  }
+}

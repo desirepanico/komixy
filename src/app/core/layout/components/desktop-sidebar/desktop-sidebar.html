@@ -1,0 +1,89 @@
+<aside
+  class="glass-strong sticky top-4 z-40 flex h-[calc(100dvh-2rem)] w-64 shrink-0 flex-col rounded-xl border border-surface-50/10 bg-surface-950/70 transition-all duration-300"
+>
+  <div class="flex h-20 shrink-0 items-center px-5">
+    <a
+      routerLink="/"
+      class="flex items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      aria-label="Komixy"
+    >
+      <div
+        class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
+      >
+        <ng-icon name="matMenuBookOutline" size="22" />
+      </div>
+
+      <span class="text-xl font-bold tracking-tight text-surface-50"> Komixy </span>
+    </a>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto px-3 py-4">
+    <div class="flex flex-col gap-4">
+      @for (group of navGroups(); track group.title) {
+        <section>
+          <button
+            type="button"
+            class="mb-2 flex w-full items-center cursor-pointer hover:bg-surface-800/70 hover:text-surface-100 justify-between rounded-lg px-3 py-2 text-left text-xs font-bold uppercase tracking-wider text-surface-500 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            [attr.aria-expanded]="group.expandable"
+            [attr.aria-controls]="'nav-group-' + group.title"
+            (click)="toggleGroup(group)"
+          >
+            <span>{{ group.title | transloco }}</span>
+
+            <ng-icon
+              name="matKeyboardArrowDownOutline"
+              size="14"
+              class="transition-transform duration-200"
+            />
+          </button>
+          @if (group.expandable) {
+            <ul [id]="'nav-group-' + group.title" class="flex flex-col gap-1">
+              @for (item of group.items; track item.route) {
+                <li>
+                  <a
+                    [routerLink]="item.route"
+                    [routerLinkActiveOptions]="{
+                      exact: item.route === '/',
+                    }"
+                    #rla="routerLinkActive"
+                    [routerLinkActive]="['bg-primary-500/15', 'text-primary-300']"
+                    [class.hover:bg-surface-800/70]="!rla.isActive"
+                    [class.hover:text-surface-100]="!rla.isActive"
+                    class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                  >
+                    <ng-icon [name]="item.icon" size="16" />
+                    <span>{{ item.label | transloco }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          }
+        </section>
+      }
+    </div>
+  </nav>
+
+  <div class="border-t border-surface-700/40 p-3">
+    <a
+      [routerLink]="profileLink"
+      #profileRla="routerLinkActive"
+      routerLinkActive="bg-primary-500/15"
+      ariaCurrentWhenActive="page"
+      [class.hover:bg-surface-800/70]="!profileRla.isActive"
+      class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+    >
+      <span
+        class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-semibold text-surface-950"
+        aria-hidden="true"
+        >DP</span
+      >
+
+      <div class="min-w-0 flex-1">
+        <p class="truncate text-sm font-semibold text-surface-100">{{ 'menu.myProfile' | transloco }}</p>
+        <p class="truncate text-xs text-surface-500">{{ 'menu.viewProfile' | transloco }}</p>
+      </div>
+
+      <ng-icon name="matChevronRightOutline" size="20" class="text-surface-500" />
+    </a>
+  </div>
+</aside>

@@ -1,0 +1,46 @@
+<div class="relative">
+  <div
+    #list
+    role="region"
+    data-no-swipe
+    [attr.aria-label]="ariaLabel()"
+    (scroll)="updateScrollState()"
+    (keydown.arrowLeft)="scroll(-1)"
+    (keydown.arrowRight)="scroll(1)"
+    [class]="listClasses()"
+  >
+    <div #content class="flex gap-3">
+      <ng-content />
+    </div>
+  </div>
+
+  <button
+    #prev
+    appButton
+    type="button"
+    variant="outlined"
+    [iconOnly]="true"
+    [rounded]="true"
+    class="absolute left-2 top-1/2 -translate-y-1/2 bg-surface-900/90 pointer-coarse:hidden disabled:invisible"
+    [disabled]="!canScrollLeft()"
+    [attr.aria-label]="'scroller.scrollLeft' | transloco"
+    (click)="scroll(-1)"
+  >
+    <ng-icon name="matChevronLeftOutline" size="20" />
+  </button>
+
+  <button
+    #next
+    appButton
+    type="button"
+    variant="outlined"
+    [iconOnly]="true"
+    [rounded]="true"
+    class="absolute right-2 top-1/2 -translate-y-1/2 bg-surface-900/90 pointer-coarse:hidden disabled:invisible"
+    [disabled]="!canScrollRight()"
+    [attr.aria-label]="'scroller.scrollRight' | transloco"
+    (click)="scroll(1)"
+  >
+    <ng-icon name="matChevronRightOutline" size="20" />
+  </button>
+</div>

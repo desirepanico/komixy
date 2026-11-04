@@ -1,0 +1,29 @@
+<div class="min-h-dvh">
+  <!-- DESKTOP: da 1024px in su -->
+  @if (viewport.isDesktop()) {
+    <div class="flex min-h-dvh gap-1 pl-2 py-2">
+
+      <app-desktop-sidebar />
+
+      <main class="flex-1 min-w-0">
+        <router-outlet />
+      </main>
+    </div>
+  }
+
+  <!-- TABLET + MOBILE: sotto i 1024px -->
+  @else {
+    <div class="min-h-dvh">
+      <main
+        appSwipe
+        class="min-h-dvh pb-20 touch-pan-y [view-transition-name:page]"
+        (swipeLeft)="swipeService.navigate('left')"
+        (swipeRight)="swipeService.navigate('right')"
+      >
+        <router-outlet />
+      </main>
+
+      <app-mobile-bottom-nav />
+    </div>
+  }
+</div>

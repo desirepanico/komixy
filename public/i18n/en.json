@@ -1,0 +1,95 @@
+{
+  "menu": {
+    "main": "Main",
+    "releases": "Releases",
+    "library": "Library",
+    "scan": "Scan",
+    "profile": "Profile",
+    "discover": "Discover",
+    "collection": "Collection",
+    "myProfile": "My profile",
+    "viewProfile": "View profile"
+  },
+  "discoverManga": {
+    "title": "Discover Manga",
+    "subtitle": "The next stories to add to your library"
+  },
+  "weeklyManga": {
+    "title": "Manga of the week",
+    "subtitle": "The most read this week",
+    "rank": "Rank {{ rank }}",
+    "seeAll": "See the full ranking"
+  },
+  "bookmark": {
+    "add": "Add to bookmarks",
+    "remove": "Remove from bookmarks"
+  },
+  "common": {
+    "back": "Back"
+  },
+  "scroller": {
+    "scrollLeft": "Scroll left",
+    "scrollRight": "Scroll right"
+  },
+  "mangaCard": {
+    "coverAlt": "Cover of {{ title }}",
+    "singleVolume": "Single Volume",
+    "volumeLabel": "Vol.",
+    "volume": "Vol. {{ volume }}",
+    "volumeWithTotal": "Vol. {{ volume }} of {{ total }}",
+    "editions": {
+      "variant": "Cover Variant",
+      "deluxe": "Deluxe",
+      "limited": "Limited"
+    }
+  },
+
+  "notFound": {
+    "eyebrow": "Lost in space?",
+    "code": "404",
+    "title": "Page not found",
+    "description": "This page seems to have drifted into the cosmos. Head back to discover your next adventure.",
+    "backHome": "Explore manga",
+    "goBack": "Go back"
+  },
+  "login": {
+    "title": "Sign in to Komixy",
+    "subtitle": "Sign in to manage your comic and manga collection.",
+    "email": "Email",
+    "emailPlaceholder": "name@example.com",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "submit": "Sign in",
+    "errors": {
+      "emailRequired": "Enter your email.",
+      "emailInvalid": "Enter a valid email address.",
+      "passwordRequired": "Enter your password.",
+      "passwordMinLength": "The password must be at least {{ min }} characters long."
+    }
+  },
+  "releases": {
+    "title": "Releases",
+    "subtitle": "Upcoming volumes",
+    "comingSoon": "Releases coming soon",
+    "comingSoonHint": "Here you will see the calendar of upcoming volumes."
+  },
+  "library": {
+    "title": "Library",
+    "subtitle": "Your comics and manga collection",
+    "comingSoon": "Library coming soon",
+    "comingSoonHint": "Here you will find the volumes you own and the ones you are missing."
+  },
+  "profile": {
+    "title": "Profile",
+    "subtitle": "Your account and preferences",
+    "comingSoon": "Profile coming soon",
+    "comingSoonHint": "Here you will be able to manage your account and the app settings."
+  },
+  "comics": {
+    "title": "Comic",
+    "subtitle": "Volume details",
+    "comingSoon": "Comic details coming soon",
+    "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
+  }
+}

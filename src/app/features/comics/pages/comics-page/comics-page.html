@@ -1,0 +1,16 @@
+<section class="min-w-0 space-y-6 px-3 py-2 md:p-2">
+  <div class="min-w-0">
+    <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+      {{ 'comics.title' | transloco }}
+    </h1>
+    <p class="text-sm text-surface-400">
+      {{ 'comics.subtitle' | transloco }}
+    </p>
+  </div>
+
+  <app-empty-state
+    icon="matMenuBookOutline"
+    [title]="'comics.comingSoon' | transloco"
+    [description]="'comics.comingSoonHint' | transloco"
+  />
+</section>

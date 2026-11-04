@@ -1,0 +1,81 @@
+<section class="min-w-0 space-y-8 px-3 py-2 md:p-2">
+  <div class="space-y-4">
+    <div class="flex items-end justify-between gap-3">
+      <div class="min-w-0">
+        <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
+          {{ 'weeklyManga.title' | transloco }}
+        </h2>
+        <p class="text-sm text-surface-400">
+          {{ 'weeklyManga.subtitle' | transloco }}
+        </p>
+      </div>
+
+      <!-- Da tablet in su: pulsante compatto in alto a destra -->
+      <a
+        appButton
+        variant="outlined"
+        [rounded]="true"
+        [routerLink]="rankingNavigation.rankingLink"
+        class="shrink-0 max-md:hidden"
+      >
+        {{ 'weeklyManga.seeAll' | transloco }}
+        <ng-icon name="matArrowForwardOutline" size="18" />
+      </a>
+    </div>
+
+    <!-- Da tablet in su due colonne lette dall'alto in basso: 1-3 a sinistra, 4-6 a destra. Su telefono solo le prime 5 -->
+    <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-3">
+      @for (entry of topEntries(); track entry.comic.id) {
+        <li [class]="entry.rank > 5 ? 'max-md:hidden' : ''">
+          <app-comic-rank-card
+            [comic]="entry.comic"
+            [rank]="entry.rank"
+            [bookmarked]="selectedId() === entry.comic.id"
+            (bookmarkToggle)="toggleBookmark(entry.comic.id)"
+          />
+        </li>
+      }
+    </ol>
+
+    <!-- Su telefono: pulsante a tutta larghezza sotto la lista -->
+    <a
+      appButton
+      variant="outlined"
+      [rounded]="true"
+      [routerLink]="rankingNavigation.rankingLink"
+      class="w-full md:hidden"
+    >
+      {{ 'weeklyManga.seeAll' | transloco }}
+    </a>
+  </div>
+
+  <div class="space-y-4">
+    <div class="min-w-0">
+      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
+        {{ 'discoverManga.title' | transloco }}
+      </h2>
+      <p class="text-sm text-surface-400">
+        {{ 'discoverManga.subtitle' | transloco }}
+      </p>
+    </div>
+
+    <app-horizontal-scroller [ariaLabel]="'discoverManga.title' | transloco">
+      @for (comic of comics(); track comic.id) {
+        <div class="w-40 shrink-0 snap-start lg:w-44">
+          <app-comic-card
+            [id]="comic.id"
+            [title]="comic.title"
+            [author]="comic.author"
+            [volume]="comic.volume"
+            [totalVolumes]="comic.totalVolumes"
+            [isSingleVolume]="comic.isSingleVolume"
+            [editionType]="comic.editionType"
+            [coverUrl]="comic.coverUrl"
+            [bookmarked]="selectedId() === comic.id"
+            (bookmarkToggle)="toggleBookmark(comic.id)"
+          />
+        </div>
+      }
+    </app-horizontal-scroller>
+  </div>
+</section>
