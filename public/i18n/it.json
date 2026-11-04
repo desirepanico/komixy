@@ -73,6 +73,9 @@
   "library": {
     "comingSoon": "Libreria in arrivo"
   },
+  "profile": {
+    "comingSoon": "Profilo in arrivo"
+  },
   "comics": {
     "comingSoon": "Dettaglio del fumetto in arrivo"
   }

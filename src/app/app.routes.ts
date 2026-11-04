@@ -38,6 +38,11 @@ export const routes: Routes = [
           import('@features/library/routes/library.routes').then((m) => m.LIBRARY_ROUTES),
       },
       {
+        path: AppRoutes.Profile,
+        loadChildren: () =>
+          import('@features/profile/routes/profile.routes').then((m) => m.PROFILE_ROUTES),
+      },
+      {
         path: AppRoutes.Comic,
         loadChildren: () =>
           import('@features/comics/routes/comics.routes').then((m) => m.COMICS_ROUTES),
