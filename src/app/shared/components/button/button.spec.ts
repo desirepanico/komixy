@@ -12,6 +12,9 @@ import { Button } from './button';
     <button id="testo" appButton variant="text" class="px-3">Ok</button>
     <button id="secondario" appButton severity="secondary">Ok</button>
     <button id="secondario-bordo" appButton severity="secondary" variant="outlined">Ok</button>
+    <button id="pericolo" appButton severity="danger">Ok</button>
+    <button id="pericolo-bordo" appButton severity="danger" variant="outlined">Ok</button>
+    <button id="pericolo-testo" appButton severity="danger" variant="text">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
   `,
 })
@@ -35,12 +38,12 @@ describe('Button', () => {
   it('è pieno viola con angoli arrotondati per default', async () => {
     const classi = (await el('pieno')).classList;
     expect(classi).toContain('bg-primary-500');
-    expect(classi).toContain('rounded-xl');
+    expect(classi).toContain('rounded-sm');
   });
 
   it('con variant outlined ha solo il bordo, e con rounded è a pillola', async () => {
     const classi = (await el('bordo')).classList;
-    expect(classi).toContain('border-primary-400');
+    expect(classi).toContain('border-primary-500');
     expect(classi).not.toContain('bg-primary-500');
     expect(classi).toContain('rounded-full');
   });
@@ -53,19 +56,25 @@ describe('Button', () => {
     const classi = (await el('testo')).classList;
     expect(classi).not.toContain('bg-primary-500');
     expect(classi).not.toContain('border');
-    expect(classi).not.toContain('px-5');
+    expect(classi).not.toContain('px-4');
   });
 
   it('con severity secondary è neutro, non viola', async () => {
     const classi = (await el('secondario')).classList;
-    expect(classi).toContain('bg-surface-700');
+    expect(classi).toContain('bg-surface-800');
     expect(classi).not.toContain('bg-primary-500');
   });
 
   it('con severity secondary e variant outlined ha il bordo neutro', async () => {
     const classi = (await el('secondario-bordo')).classList;
-    expect(classi).toContain('border-surface-500');
-    expect(classi).not.toContain('border-primary-400');
+    expect(classi).toContain('border-surface-600');
+    expect(classi).not.toContain('border-primary-500');
+  });
+
+  it('con severity danger usa i colori rosa in tutte le varianti', async () => {
+    expect((await el('pericolo')).classList).toContain('bg-rose-400');
+    expect((await el('pericolo-bordo')).classList).toContain('border-rose-300');
+    expect((await el('pericolo-testo')).classList).toContain('text-red-400');
   });
 
   it('funziona anche su un link e mostra il contenuto', async () => {
