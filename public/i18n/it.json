@@ -77,7 +77,10 @@
     "comingSoonHint": "Qui troverai i volumi che possiedi e quelli che ti mancano."
   },
   "profile": {
-    "comingSoon": "Profilo in arrivo"
+    "title": "Profilo",
+    "subtitle": "Il tuo account e le tue preferenze",
+    "comingSoon": "Profilo in arrivo",
+    "comingSoonHint": "Qui potrai gestire il tuo account e le impostazioni dell'app."
   },
   "comics": {
     "comingSoon": "Dettaglio del fumetto in arrivo"

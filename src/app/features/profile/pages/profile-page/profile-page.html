@@ -1,1 +1,27 @@
-<p>{{ 'profile.comingSoon' | transloco }}</p>
+<section class="min-w-0 space-y-6 px-3 py-2 md:p-2">
+  <div class="min-w-0">
+    <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+      {{ 'profile.title' | transloco }}
+    </h1>
+    <p class="text-sm text-surface-400">
+      {{ 'profile.subtitle' | transloco }}
+    </p>
+  </div>
+
+  <div
+    class="mx-auto flex min-h-[60dvh] max-w-md flex-col items-center justify-center gap-4 px-4 text-center"
+  >
+    <span
+      class="flex size-20 items-center justify-center rounded-full border border-primary-400/20 bg-surface-900 text-primary-300 shadow-lg shadow-surface-950/50 md:size-24"
+      aria-hidden="true"
+    >
+      <ng-icon name="matPersonOutline" size="40" />
+    </span>
+    <h2 class="text-base font-bold text-surface-50 md:text-lg">
+      {{ 'profile.comingSoon' | transloco }}
+    </h2>
+    <p class="text-sm text-surface-400">
+      {{ 'profile.comingSoonHint' | transloco }}
+    </p>
+  </div>
+</section>

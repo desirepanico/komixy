@@ -78,7 +78,10 @@
     "comingSoonHint": "Here you will find the volumes you own and the ones you are missing."
   },
   "profile": {
-    "comingSoon": "Profile coming soon"
+    "title": "Profile",
+    "subtitle": "Your account and preferences",
+    "comingSoon": "Profile coming soon",
+    "comingSoonHint": "Here you will be able to manage your account and the app settings."
   },
   "comics": {
     "comingSoon": "Comic details coming soon"
