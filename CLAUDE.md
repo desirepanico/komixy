@@ -25,8 +25,8 @@ Se la modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti 
 - `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`)
 - `npm run knip` — cerca file, export e dipendenze inutilizzati (config in `knip.json`, regole in `.claude/rules/knip.md`); gira anche in CI
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
-- `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
-- `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
+- `npm run deploy:dev` — pubblica una **preview** su Vercel: indirizzo di prova, il sito pubblico non cambia (usa `vercel.json`)
+- `npm run deploy:prod` — pubblica in **produzione** su Vercel dai file locali: solo per emergenze, la produzione si aggiorna con la pull request `develop` → `master`. Preview, produzione e rilasci: `docs/sviluppo.md`, sezione Deploy
 
 ## Struttura
 
