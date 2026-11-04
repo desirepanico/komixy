@@ -14,6 +14,7 @@ describe('LoginPage', () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl(url, LoginPage);
     vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
+    vi.spyOn(router, 'navigate').mockResolvedValue(true);
     return harness.routeNativeElement as HTMLElement;
   };
 
@@ -61,11 +62,11 @@ describe('LoginPage', () => {
 
   it('senza returnUrl va a Scopri', async () => {
     accedi(await apri('/login'));
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/discover');
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 
   it('con un returnUrl esterno va a Scopri', async () => {
     accedi(await apri('/login?returnUrl=https%3A%2F%2Fsito.it'));
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/discover');
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 });

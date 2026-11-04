@@ -14,17 +14,13 @@ describe('DiscoverNavigationService', () => {
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
   });
 
-  it('espone percorsi assoluti per i link', () => {
+  it('espone solo le rotte di Scopri, con percorso assoluto', () => {
     expect(service.discoverLink).toEqual(['/', 'discover']);
-    expect(service.rankingLink).toEqual(['/', 'discover', 'ranking']);
-    expect(service.comicLink('7')).toEqual(['/', 'comic', '7']);
+    expect(router.serializeUrl(service.discoverUrlTree())).toBe('/discover');
   });
 
-  it('va alla classifica e alla pagina di un fumetto', async () => {
-    await service.goToRanking();
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'discover', 'ranking']);
-
-    await service.goToComic('7');
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'comic', '7']);
+  it('va a Scopri', async () => {
+    await service.goToDiscover();
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 });

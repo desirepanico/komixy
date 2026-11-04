@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowForwardOutline } from '@ng-icons/material-symbols/outline';
-import { DiscoverNavigationService } from '../../services/discover-navigation/discover-navigation.service';
+import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
 import { Button } from '@shared/components/button/button';
 import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';
@@ -102,7 +102,7 @@ export class DiscoverPage {
 
   // In Discover si mostrano le prime 6 posizioni (la sesta solo da tablet in su, per avere due colonne piene)
   protected readonly weeklyRanking = inject(WeeklyRankingService);
-  protected readonly navigation = inject(DiscoverNavigationService);
+  protected readonly rankingNavigation = inject(RankingNavigationService);
   protected readonly topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
 
   protected toggleBookmark(id: string): void {

@@ -65,29 +65,9 @@ describe('routes', () => {
         'app-discover-page',
       ],
       [
-        'discover → rankingLink',
-        () => TestBed.inject(DiscoverNavigationService).rankingLink,
-        'app-ranking-page',
-      ],
-      [
-        'discover → comicLink',
-        () => TestBed.inject(DiscoverNavigationService).comicLink('1'),
-        'app-comics-page',
-      ],
-      [
         'ranking → rankingLink',
         () => TestBed.inject(RankingNavigationService).rankingLink,
         'app-ranking-page',
-      ],
-      [
-        'ranking → discoverLink',
-        () => TestBed.inject(RankingNavigationService).discoverLink,
-        'app-discover-page',
-      ],
-      [
-        'ranking → comicLink',
-        () => TestBed.inject(RankingNavigationService).comicLink('1'),
-        'app-comics-page',
       ],
       [
         'comics → comicsLink',
@@ -100,29 +80,19 @@ describe('routes', () => {
         'app-comics-page',
       ],
       [
-        'comics → discoverLink',
-        () => TestBed.inject(ComicsNavigationService).discoverLink,
-        'app-discover-page',
-      ],
-      [
         'releases → releasesLink',
         () => TestBed.inject(ReleasesNavigationService).releasesLink,
         'app-releases-page',
       ],
-      [
-        'releases → discoverLink',
-        () => TestBed.inject(ReleasesNavigationService).discoverLink,
-        'app-discover-page',
-      ],
       ['auth → loginLink', () => TestBed.inject(AuthNavigationService).loginLink, 'app-login-page'],
       [
-        'not-found → homeLink',
-        () => TestBed.inject(NotFoundNavigationService).homeLink,
-        'app-discover-page',
+        'not-found → notFoundLink',
+        () => TestBed.inject(NotFoundNavigationService).notFoundLink,
+        'app-not-found-page',
       ],
     ];
 
-    it.each(casi)('%s porta alla pagina giusta', async (_nome, link, pagina) => {
+    it.each(casi)('%s apre la pagina della sua feature', async (_nome, link, pagina) => {
       const router = TestBed.inject(Router);
       const url = router.serializeUrl(router.createUrlTree([...link()]));
       const { html } = await apri(url);

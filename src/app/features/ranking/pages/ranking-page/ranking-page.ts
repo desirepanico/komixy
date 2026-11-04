@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
-import { RankingNavigationService } from '../../services/ranking-navigation/ranking-navigation.service';
+import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { Button } from '@shared/components/button/button';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
 import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ranking.service';
@@ -15,7 +15,7 @@ import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ran
   providers: [provideIcons({ matArrowBackOutline })],
 })
 export class RankingPage {
-  protected readonly navigation = inject(RankingNavigationService);
+  protected readonly discoverNavigation = inject(DiscoverNavigationService);
   protected readonly ranking = inject(WeeklyRankingService);
 
   public readonly selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti

@@ -14,12 +14,12 @@ describe('NotFoundNavigationService', () => {
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
   });
 
-  it('espone il percorso verso Scopri per il link', () => {
-    expect(service.homeLink).toEqual(['/', 'discover']);
+  it('espone solo la rotta della pagina 404', () => {
+    expect(service.notFoundLink).toEqual(['/', 'not-found']);
   });
 
-  it('torna a Scopri', async () => {
-    await service.goHome();
-    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
+  it('mostra la pagina 404 senza cambiare l’indirizzo nella barra', async () => {
+    await service.goToNotFound();
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'not-found'], { skipLocationChange: true });
   });
 });

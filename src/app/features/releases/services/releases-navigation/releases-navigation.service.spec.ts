@@ -14,13 +14,12 @@ describe('ReleasesNavigationService', () => {
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
   });
 
-  it('espone percorsi assoluti per i link', () => {
+  it('espone solo la rotta delle uscite', () => {
     expect(service.releasesLink).toEqual(['/', 'releases']);
-    expect(service.discoverLink).toEqual(['/', 'discover']);
   });
 
-  it('torna a Scopri', async () => {
-    await service.goToDiscover();
-    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
+  it('va alle uscite', async () => {
+    await service.goToReleases();
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'releases']);
   });
 });

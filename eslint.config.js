@@ -9,6 +9,49 @@ const angular = require('angular-eslint');
 // defineConfig sostituisce tseslint.config (deprecato)
 const { defineConfig } = require('eslint/config');
 
+// Regole sugli import delle feature (vedi .claude/rules/angular.md):
+// - tra feature si importano solo i servizi di navigazione (`regexVietate`);
+// - pagine e componenti non usano Router né AppRoutes: navigano con i servizi di navigazione.
+function regoleFeature(cartella, regexVietate) {
+  const patterns = regexVietate.map((regex) => ({
+    regex,
+    message: "Una feature importa da un'altra solo i servizi di navigazione (<nome>-navigation).",
+  }));
+  const pagineEComponenti = [`${cartella}/pages/**/*.ts`, `${cartella}/components/**/*.ts`];
+  return [
+    {
+      files: [`${cartella}/*.ts`],
+      ignores: ['**/*.spec.ts'],
+      rules: { 'no-restricted-imports': ['error', { patterns }] },
+    },
+    {
+      files: pagineEComponenti,
+      ignores: ['**/*.spec.ts'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            paths: [
+              {
+                name: '@angular/router',
+                importNames: ['Router'],
+                message: 'Naviga con il servizio di navigazione, non con Router.',
+              },
+            ],
+            patterns: [
+              ...patterns,
+              {
+                group: ['@shared/constants/app-routes/*'],
+                message: 'I percorsi si costruiscono nei servizi di navigazione.',
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ];
+}
+
 module.exports = defineConfig(
   { ignores: ['dist/**', '.angular/**', 'node_modules/**'] },
   {
@@ -39,31 +82,11 @@ module.exports = defineConfig(
       '@typescript-eslint/no-explicit-any': 'error',
     },
   },
-  {
-    // La navigazione passa dal servizio di navigazione della feature (vedi .claude/rules/angular.md)
-    files: ['src/app/features/**/pages/**/*.ts', 'src/app/features/**/components/**/*.ts'],
-    ignores: ['**/*.spec.ts'],
-    rules: {
-      'no-restricted-imports': [
-        'error',
-        {
-          paths: [
-            {
-              name: '@angular/router',
-              importNames: ['Router'],
-              message: 'Naviga con il servizio di navigazione della feature, non con Router.',
-            },
-          ],
-          patterns: [
-            {
-              group: ['@shared/constants/app-routes/*'],
-              message: 'I percorsi si costruiscono nel servizio di navigazione della feature.',
-            },
-          ],
-        },
-      ],
-    },
-  },
+  ...regoleFeature('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
+  // discover mostra la card della classifica (unica eccezione oltre ai servizi di navigazione)
+  ...regoleFeature('src/app/features/discover/**', [
+    '^@features/(?!ranking/components/|.*/services/[^/]+-navigation/)',
+  ]),
   {
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended],

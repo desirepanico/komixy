@@ -41,6 +41,7 @@ Dove mettere le cose:
 - **core**: `guards`, `interceptors`, `layout` e `providers`: la shell dell'app, che esiste una volta sola. Non importare codice da `features`.
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti, direttive, modelli, servizi, costanti).
   - **Eccezione**: `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`. La dipendenza è a senso unico: `auth` non importa da `core`.
+  - **Eccezione**: i servizi di navigazione: per andare in un'altra feature si inietta il suo `<nome>-navigation.service` (`DiscoverNavigationService`, `ComicsNavigationService`, ...).
   - **Eccezione**: `discover` mostra la Top 5 usando la card della feature `ranking` (`features/ranking/components`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: componenti, direttive, modelli, servizi e costanti usati da più feature (o da `core`). Può essere importato da qualsiasi parte, ma non dipende da `features` né da `core`. Un servizio qui è un singleton come quelli di `core`: la differenza è che serve alle feature, non alla shell dell'app.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`, e `shared` non dipende da `core`.
@@ -68,7 +69,7 @@ features/auth/
 │   ├── auth/
 │   │   ├── auth.service.ts          dati e logica della feature (signal + computed)
 │   │   └── auth.service.spec.ts
-│   └── auth-navigation/             percorsi e spostamenti della feature (vedi sotto)
+│   └── auth-navigation/             solo le rotte della feature (vedi sotto)
 │       ├── auth-navigation.service.ts
 │       └── auth-navigation.service.spec.ts
 └── utils/
@@ -81,7 +82,7 @@ features/auth/
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
 - **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **routes**: `<nome>.routes.ts` (`export const NOME_ROUTES: Routes`): le rotte della feature, relative alla sua radice. In coppia con il servizio di navigazione.
-- **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found` e `releases`). Costruisce i percorsi con `AppRoutes` e li espone ai template (`navigation.rankingLink`) e al codice (`navigation.goToRanking()`); pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
+- **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found` e `releases`), con **solo le rotte della propria feature**: percorsi per i template (`rankingNavigation.rankingLink`), metodi `goToXxx()` per il codice, `*UrlTree()` per i guard. Per andare in un'altra feature si inietta il suo servizio (è l'unico import ammesso tra feature). Pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
 - **utils**: funzioni pure della feature (`<nome>.ts`), senza Angular se possibile.
 - **Una cartella per file**: ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`). Fanno eccezione i `*.model.ts`, `main.ts` e i file nella radice di `src/app`.

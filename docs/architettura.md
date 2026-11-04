@@ -24,7 +24,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 ### Regole sulle dipendenze
 
 - `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: il guard `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`; la dipendenza è a senso unico e `auth` non importa da `core`.
-- Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking` (a senso unico). Il servizio `WeeklyRankingService` è in `shared/services`.
+- Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature") e la card di `ranking` usata da `discover`. `WeeklyRankingService` è in `shared/services`.
 - Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
 
 ## Routing
@@ -38,18 +38,15 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ### Navigazione delle feature
 
-Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>-navigation/`):
+Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>-navigation/`), in coppia con le sue rotte (`routes/<nome>.routes.ts`):
 
-- ha le sue rotte in coppia (`routes/<nome>.routes.ts`): il test `app.routes.spec.ts` verifica che ogni link dei servizi porti alla pagina giusta;
-- espone i **percorsi** per i link (`DiscoverNavigationService.rankingLink`, `comicLink(id)`), usati con `[routerLink]`: i link restano `<a>`;
-- ha i metodi `goToXxx()` per navigare da codice (`AuthNavigationService.goAfterLogin()` dopo l'accesso) e i `*UrlTree()` per i guard;
-- usa percorsi assoluti, costruiti con `AppRoutes` (`shared`): le feature non si importano tra loro, quindi ognuna descrive nel suo servizio la navigazione che parte dalle sue pagine.
+- contiene **solo le rotte della propria feature**: `DiscoverNavigationService` ha la pagina Scopri, `RankingNavigationService` la classifica, `ComicsNavigationService` i fumetti, `AuthNavigationService` il login, `ReleasesNavigationService` le uscite, `NotFoundNavigationService` la pagina 404;
+- espone i **percorsi** per i link (`discoverLink`, `detailLink(id)`), usati con `[routerLink]`: i link restano `<a>`; ha i metodi `goToXxx()` per navigare da codice e i `*UrlTree()` per i guard;
+- usa percorsi assoluti, costruiti con `AppRoutes` (`shared`);
+- **per andare in un'altra feature si inietta il suo servizio**: la pagina della classifica torna a Scopri con `DiscoverNavigationService`, la card di Scopri porta al fumetto con `ComicsNavigationService`, `AuthNavigationService` dopo il login usa `DiscoverNavigationService`. È l'unico import ammesso tra feature (oltre alla card della classifica per `discover`);
+- il test `app.routes.spec.ts` verifica che ogni link dei servizi porti alla pagina della sua feature.
 
-Così un percorso cambia in un solo posto per feature, e pagine e componenti non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce).
-
-### Navigazione principale
-
-`MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+Così ogni percorso è scritto in un solo servizio, e pagine e componenti non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce, insieme agli import tra feature).
 
 ## Provider
 

@@ -14,17 +14,12 @@ describe('RankingNavigationService', () => {
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
   });
 
-  it('espone percorsi assoluti per i link', () => {
+  it('espone solo la rotta della classifica, sotto il percorso di Scopri', () => {
     expect(service.rankingLink).toEqual(['/', 'discover', 'ranking']);
-    expect(service.discoverLink).toEqual(['/', 'discover']);
-    expect(service.comicLink('w1')).toEqual(['/', 'comic', 'w1']);
   });
 
-  it('torna a Scopri e va alla pagina di un fumetto', async () => {
-    await service.goToDiscover();
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'discover']);
-
-    await service.goToComic('w1');
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'comic', 'w1']);
+  it('va alla classifica', async () => {
+    await service.goToRanking();
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover', 'ranking']);
   });
 });

@@ -14,17 +14,13 @@ describe('ComicsNavigationService', () => {
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
   });
 
-  it('espone percorsi assoluti per i link', () => {
+  it('espone solo le rotte dei fumetti, con percorsi assoluti', () => {
     expect(service.comicsLink).toEqual(['/', 'comic']);
     expect(service.detailLink('42')).toEqual(['/', 'comic', '42']);
-    expect(service.discoverLink).toEqual(['/', 'discover']);
   });
 
-  it('va al dettaglio di un fumetto e torna a Scopri', async () => {
+  it('va alla pagina di un fumetto', async () => {
     await service.goToDetail('42');
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'comic', '42']);
-
-    await service.goToDiscover();
-    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'discover']);
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'comic', '42']);
   });
 });

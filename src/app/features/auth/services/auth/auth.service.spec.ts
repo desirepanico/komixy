@@ -33,6 +33,6 @@ describe('AuthService', () => {
     service.login(utente);
     service.logout();
     expect(service.loggedUser()).toBeNull();
-    expect(router.navigate).toHaveBeenCalledWith([AppRoutes.Login]);
+    expect(router.navigate).toHaveBeenCalledWith(['/', AppRoutes.Login]);
   });
 });

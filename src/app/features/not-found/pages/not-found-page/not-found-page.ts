@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline, matExploreOutline } from '@ng-icons/material-symbols/outline';
-import { NotFoundNavigationService } from '../../services/not-found-navigation/not-found-navigation.service';
+import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { Button } from '@shared/components/button/button';
 @Component({
   selector: 'app-not-found-page',
@@ -18,5 +18,5 @@ import { Button } from '@shared/components/button/button';
   ],
 })
 export class NotFoundPage {
-  protected readonly navigation = inject(NotFoundNavigationService);
+  protected readonly discoverNavigation = inject(DiscoverNavigationService);
 }
