@@ -34,6 +34,8 @@ Le regole (cosa testare, un file di spec per ogni file `.ts`, una cartella per f
 | `setupFiles` | `src/testing/test-setup/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha |
 | `runnerConfig` | `vitest-base.config.mts` | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima |
 
+**A cosa serve `src/testing/`.** jsdom simula il browser ma non lo replica del tutto: se un componente usa una funzione che jsdom non ha, il test si rompe con errori come "ResizeObserver is not defined". I finti in `src/testing/` sono scritti una volta sola e caricati prima di ogni test, così gli spec restano brevi. Le traduzioni sono finte perché il test controlla il comportamento del componente, non il testo italiano.
+
 I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclude e `tsconfig.spec.json` li include.
 
 **Il controllo.** `scripts/check-specs.mjs` gira dopo ESLint dentro `npm run lint` e controlla due cose in `src/`: che ogni file `.ts` abbia il suo `*.spec.ts` accanto, e che in ogni cartella ci sia un solo file con spec (la cartella propria del file). Se non è così, elenca i file e esce con errore. Salta gli spec, i `*.d.ts`, i `*.model.ts` (solo tipi ed enum, senza codice da eseguire), `main.ts` e i file nella radice di `src/app`. Un file con una funzione, anche se sta in una cartella `models`, ha bisogno dello spec: la funzione va in un file senza `.model`, nella sua cartella.
