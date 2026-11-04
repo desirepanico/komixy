@@ -6,7 +6,9 @@
     "scan": "Scan",
     "profile": "Profile",
     "discover": "Discover",
-    "collection": "Collection"
+    "collection": "Collection",
+    "myProfile": "My profile",
+    "viewProfile": "View profile"
   },
   "discoverManga": {
     "title": "Discover Manga",
@@ -32,6 +34,7 @@
   "mangaCard": {
     "coverAlt": "Cover of {{ title }}",
     "singleVolume": "Single Volume",
+    "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
     "volumeWithTotal": "Vol. {{ volume }} of {{ total }}",
     "editions": {
@@ -64,5 +67,11 @@
       "passwordRequired": "Enter your password.",
       "passwordMinLength": "The password must be at least {{ min }} characters long."
     }
+  },
+  "releases": {
+    "comingSoon": "Releases coming soon"
+  },
+  "comics": {
+    "comingSoon": "Comic details coming soon"
   }
 }

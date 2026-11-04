@@ -1,11 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { describe, expect, it } from 'vitest';
 import { ComicsPage } from './comics-page';
 
 describe('ComicsPage', () => {
-  it('viene creata e mostra il segnaposto', () => {
+  it('mostra il segnaposto tradotto', () => {
+    TestBed.configureTestingModule({
+      imports: [
+        TranslocoTestingModule.forRoot({
+          langs: { it: {} },
+          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
+        }),
+      ],
+    });
     const fixture = TestBed.createComponent(ComicsPage);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('p')).not.toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('comics.comingSoon');
   });
 });

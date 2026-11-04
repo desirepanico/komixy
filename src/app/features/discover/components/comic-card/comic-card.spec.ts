@@ -57,6 +57,7 @@ describe('ComicCard', () => {
 
   it('mostra volume e totale dei volumi', () => {
     const { html } = crea();
+    expect(html.textContent).toContain('mangaCard.volumeLabel');
     expect(html.textContent).toContain('4');
     expect(html.textContent).toContain('/ 12');
   });

@@ -39,6 +39,11 @@ describe('DesktopSidebar', () => {
     expect(html.querySelector('a[aria-label="Komixy"]')?.getAttribute('href')).toBe('/');
   });
 
+  it('traduce il riquadro del profilo', () => {
+    expect(html.textContent).toContain('menu.myProfile');
+    expect(html.textContent).toContain('menu.viewProfile');
+  });
+
   it('chiude e riapre un gruppo, aggiornando aria-expanded', async () => {
     const gruppo = () => titoli()[0];
     expect(gruppo().getAttribute('aria-expanded')).toBe('true');

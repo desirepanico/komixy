@@ -1,11 +1,20 @@
 import { TestBed } from '@angular/core/testing';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import { describe, expect, it } from 'vitest';
 import { ReleasesPage } from './releases-page';
 
 describe('ReleasesPage', () => {
-  it('viene creata e mostra il segnaposto', () => {
+  it('mostra il segnaposto tradotto', () => {
+    TestBed.configureTestingModule({
+      imports: [
+        TranslocoTestingModule.forRoot({
+          langs: { it: {} },
+          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
+        }),
+      ],
+    });
     const fixture = TestBed.createComponent(ReleasesPage);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('p')).not.toBeNull();
+    expect(fixture.nativeElement.textContent).toContain('releases.comingSoon');
   });
 });

@@ -43,7 +43,8 @@
         </span>
       } @else {
         <span class="text-sm text-primary-400">
-          Vol. <span class="text-base font-bold text-primary-300">{{ comic().volume }}</span>
+          {{ 'mangaCard.volumeLabel' | transloco }}
+          <span class="text-base font-bold text-primary-300">{{ comic().volume }}</span>
           @if (comic().totalVolumes) {
             <span class="text-surface-400"> / {{ comic().totalVolumes }}</span>
           }

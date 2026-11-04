@@ -65,6 +65,12 @@ describe('ComicRankCard', () => {
     expect(html.querySelector('app-tag')?.textContent).toContain('mangaCard.editions.limited');
   });
 
+  it('mostra l’etichetta tradotta del volume con il numero e il totale', () => {
+    const { html } = crea();
+    expect(html.textContent).toContain('mangaCard.volumeLabel');
+    expect(html.textContent).toContain('/ 12');
+  });
+
   it('il podio (1-3) ha lo stile viola, dal quarto in poi è neutro', async () => {
     const { fixture, html } = crea();
     const numero = () => html.querySelector('span.tabular-nums') as HTMLElement;
