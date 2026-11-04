@@ -1,15 +1,5 @@
 import { Routes } from '@angular/router';
-export enum AppRoutes {
-  Releases = 'releases',
-  Scan = 'scan',
-  Library = 'library',
-  Profile = 'profile',
-  Discover = 'discover',
-  Login = 'login',
-  Comic = 'comic',
-  Ranking = 'ranking',
-}
-
+import { AppRoutes } from '@core/navigation/app-routes';
 export const routes: Routes = [
   {
     path: '',
@@ -22,22 +12,8 @@ export const routes: Routes = [
       },
       {
         path: AppRoutes.Discover,
-        children: [
-          {
-            path: '',
-            loadComponent: () =>
-              import('@features/discover/pages/discover-page/discover-page').then(
-                (m) => m.DiscoverPage,
-              ),
-          },
-          {
-            path: AppRoutes.Ranking,
-            loadComponent: () =>
-              import('@features/ranking/pages/ranking-page/ranking-page').then(
-                (m) => m.RankingPage,
-              ),
-          },
-        ],
+        loadChildren: () =>
+          import('@features/discover/discover.routes').then((m) => m.DISCOVER_ROUTES),
       },
       {
         path: AppRoutes.Releases,
@@ -46,22 +22,9 @@ export const routes: Routes = [
             (m) => m.ReleasesPage,
           ),
       },
-      //TODO insierire pagina dettaglio manga
       {
         path: AppRoutes.Comic,
-        loadComponent: () =>
-          import('@features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
-        children: [
-          {
-            path: ':id',
-            loadComponent: () =>
-              import('@features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
-            // loadComponent: () =>
-            //   import('@features/comicd/pages/comicd-detail-page/comic-detail-page').then(
-            //     (m) => m.ComicDetailPage,
-            //   ),
-          },
-        ],
+        loadChildren: () => import('@features/comics/comics.routes').then((m) => m.COMICS_ROUTES),
       },
     ],
   },

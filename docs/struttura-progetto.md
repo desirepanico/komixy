@@ -6,16 +6,18 @@ Albero delle cartelle e regole su dove mettere i file. Le regole essenziali sull
 src/
 ├── app/
 │   ├── app.config.ts          provider globali (router, Transloco, ...)
-│   ├── app.routes.ts          rotte (lazy loading per feature) ed enum AppRoutes
+│   ├── app.routes.ts          rotte principali (lazy loading per feature)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
+│   │   ├── auth/              modello utente e AuthService
+│   │   ├── config/            configurazione (environment)
 │   │   ├── guards/            user-role.guard
-│   │   ├── interceptors/      interceptor HTTP e loader Transloco
+│   │   ├── i18n/              provideI18n() e loader Transloco
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   ├── models/            modelli e tipi globali (environment, nav-item, comic)
-│   │   ├── navigation/        main-pages (ordine delle pagine principali) e direzione delle transizioni
+│   │   ├── models/            modelli e tipi globali del dominio (comic, edition-severity)
+│   │   ├── navigation/        AppRoutes, main-pages (ordine delle pagine principali), nav-item e direzione delle transizioni
 │   │   └── services/          servizi globali (viewport, swipe mobile)
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
+│   │   └── <feature>/         comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
@@ -33,7 +35,7 @@ public/
 
 Dove mettere le cose:
 
-- **core**: guard, interceptor, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
+- **core**: auth, guard, i18n, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti) o in `core` (modelli e servizi).
   - **Eccezione**: `discover` mostra la Top 5 usando la card e il servizio della feature `ranking` (`features/ranking/components`, `features/ranking/services`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: solo componenti, direttive e pipe generici e riutilizzabili. Possono essere importati da qualsiasi parte, ma non dipendono da `features`.
@@ -59,7 +61,7 @@ features/ranking/
     └── weekly-ranking.service.ts    dati e logica della feature (signal + computed)
 ```
 
-- **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts`. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
+- **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts` o nel `<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
 - **models**: `*.model.ts`, solo tipi, interfacce e piccole funzioni pure collegate (es. `editionSeverity()`). Se un modello serve a più feature, vai in `core/models` (es. `ComicItem`).
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `core/services`.
@@ -68,7 +70,7 @@ features/ranking/
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` (e le altre cartelle solo se servono).
-2. Aggiungi il valore in `AppRoutes` e la rotta con `loadComponent` in `app.routes.ts`.
+2. Aggiungi il valore in `AppRoutes` (`core/navigation/app-routes.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
 3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/navigation/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 

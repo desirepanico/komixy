@@ -14,8 +14,8 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ## Struttura di `src/app`
 
 ```
-core/       singleton dell'app: guard, interceptor, layout, modelli e servizi globali, navigazione
-features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
+core/       singleton dell'app: auth, guard, i18n, layout, modelli e servizi globali, navigazione
+features/   una cartella per area: comics, discover, not-found, ranking, releases
 shared/     componenti e direttive generici, senza logica di business
 ```
 
@@ -23,13 +23,13 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ### Regole sulle dipendenze
 
-- `features` → `shared` e `core`; `shared` e `core` non importano mai da `features`. Eccezione: `core` importa da `features/auth` (modello e servizio), che resta nella feature; la dipendenza è a senso unico e `auth` non importa da `core/layout`.
+- `features` → `shared` e `core`; `shared` e `core` non importano mai da `features`.
 - Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking` (a senso unico).
 - Se due feature condividono qualcosa, va in `shared` (componenti) o in `core` (modelli e servizi).
 
 ## Routing
 
-Le rotte sono in `app.routes.ts`, con lazy loading per feature (`loadComponent`) ed enum `AppRoutes`.
+Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `core/navigation/app-routes.ts`, così `core` non dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
@@ -42,9 +42,9 @@ Le rotte sono in `app.routes.ts`, con lazy loading per feature (`loadComponent`)
 
 ## Accesso e ruoli
 
-- `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
+- `AuthService` (`core/auth`) tiene l'utente loggato in un signal.
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
 
 ## Dati
 
-I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/models/environment.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
+I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/config/environment.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).

@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AppRoutes } from '../../app.routes';
-import { UserRole } from '@features/auth/models/auth.model';
-import { AuthService } from '@features/auth/services/auth.service';
+import { AppRoutes } from '../navigation/app-routes';
+import { UserRole } from '../auth/auth.model';
+import { AuthService } from '../auth/auth.service';
 import { userRoleGuard } from './user-role.guard';
 
 describe('userRoleGuard', () => {

@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '../../../../app.routes';
+import { AppRoutes } from '@core/navigation/app-routes';
 import { Button } from '@shared/components/button/button';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
 import { WeeklyRankingService } from '../../services/weekly-ranking.service';

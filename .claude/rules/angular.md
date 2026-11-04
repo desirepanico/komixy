@@ -44,6 +44,10 @@ paths:
 - Pipe `async` per gli observable.
 - Niente funzioni freccia nei template e niente globali come `new Date()`.
 
+## Import
+
+- Alias `@core/*`, `@shared/*`, `@features/*` (definiti in `tsconfig.json`) per importare da un'altra area; percorsi relativi dentro la stessa area o feature. Mai `../../../`.
+
 ## Routing
 
 - Lazy loading per le rotte delle feature.
