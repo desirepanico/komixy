@@ -29,10 +29,10 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ## Routing
 
-Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `routes/<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes/app-routes.const.ts`, così nessuna area dipende da `app.routes.ts`.
+`app.routes.ts` monta le feature sui loro percorsi, sempre con lazy loading (`loadChildren`). Ogni feature ha le sue rotte in `features/<nome>/routes/<nome>.routes.ts` (`DISCOVER_ROUTES`, `RANKING_ROUTES`, `COMICS_ROUTES`, `RELEASES_ROUTES`, `AUTH_ROUTES`, `NOT_FOUND_ROUTES`): sono relative alla radice della feature, senza il suo percorso, così la feature non conosce dove è montata e non importa le altre. L'enum `AppRoutes` sta in `shared/constants/app-routes/app-routes.const.ts`, così nessuna area dipende da `app.routes.ts`.
 
-- Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
-- `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
+- Tutte le pagine stanno dentro il layout (`core/layout`), tranne il login (`login`) e la pagina 404 (`**`).
+- `/` reindirizza a `discover`; `discover/ranking` è montata come figlia di `discover` (le rotte sono della feature `ranking`), così la voce di menu resta attiva.
 - `comic/:id` è una rotta figlia di `comic`: per ora usa lo stesso componente segnaposto, la pagina di dettaglio non è ancora implementata.
 - Il router usa le view transitions e il ripristino dello scroll.
 
@@ -40,6 +40,7 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>-navigation/`):
 
+- ha le sue rotte in coppia (`routes/<nome>.routes.ts`): il test `app.routes.spec.ts` verifica che ogni link dei servizi porti alla pagina giusta;
 - espone i **percorsi** per i link (`DiscoverNavigationService.rankingLink`, `comicLink(id)`), usati con `[routerLink]`: i link restano `<a>`;
 - ha i metodi `goToXxx()` per navigare da codice (`AuthNavigationService.goAfterLogin()` dopo l'accesso) e i `*UrlTree()` per i guard;
 - usa percorsi assoluti, costruiti con `AppRoutes` (`shared`): le feature non si importano tra loro, quindi ognuna descrive nel suo servizio la navigazione che parte dalle sue pagine.

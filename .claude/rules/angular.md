@@ -67,6 +67,8 @@ paths:
 ## Routing
 
 - Lazy loading per le rotte delle feature.
+- **Ogni feature ha le sue rotte**, in `routes/<nome>.routes.ts` (`export const DISCOVER_ROUTES: Routes`): rotte **relative** alla radice della feature (`path: ''`), con `loadComponent` per le pagine. Non scrivono il percorso della feature e non importano altre feature. `app.routes.ts` le monta sul loro percorso con `loadChildren` e `AppRoutes`.
+- Rotte e servizio di navigazione vanno in coppia: i link e i metodi del servizio devono portare a pagine che le rotte della feature (montate in `app.routes.ts`) servono davvero. Lo verifica `app.routes.spec.ts`: aggiungendo un link a un servizio si aggiunge la riga del test.
 - **Ogni feature ha un servizio di navigazione**: `services/<feature>-navigation/<feature>-navigation.service.ts` (`DiscoverNavigationService`). È l'unico posto dove la feature scrive percorsi (con `AppRoutes`) e naviga.
 - Il servizio espone i **percorsi** come proprietà o metodi (`rankingLink`, `comicLink(id)`), usati nei template con `[routerLink]="navigation.rankingLink"`: i link restano `<a>` (accessibilità). Per navigare **da codice**, dopo un'azione, ha i metodi `goToXxx()` (`goAfterLogin()`); i guard usano i `*UrlTree()`.
 - Percorsi assoluti (`['/', ...]`): un link relativo cambia destinazione secondo la pagina in cui sta.

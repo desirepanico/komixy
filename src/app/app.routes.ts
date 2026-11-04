@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+
+/** Ogni feature porta le sue rotte (`routes/<nome>.routes.ts`, relative): qui si montano sui loro percorsi. */
 export const routes: Routes = [
   {
     path: '',
@@ -12,15 +14,23 @@ export const routes: Routes = [
       },
       {
         path: AppRoutes.Discover,
-        loadChildren: () =>
-          import('@features/discover/routes/discover.routes').then((m) => m.DISCOVER_ROUTES),
+        children: [
+          {
+            path: AppRoutes.Ranking,
+            loadChildren: () =>
+              import('@features/ranking/routes/ranking.routes').then((m) => m.RANKING_ROUTES),
+          },
+          {
+            path: '',
+            loadChildren: () =>
+              import('@features/discover/routes/discover.routes').then((m) => m.DISCOVER_ROUTES),
+          },
+        ],
       },
       {
         path: AppRoutes.Releases,
-        loadComponent: () =>
-          import('@features/releases/pages/releases-page/releases-page').then(
-            (m) => m.ReleasesPage,
-          ),
+        loadChildren: () =>
+          import('@features/releases/routes/releases.routes').then((m) => m.RELEASES_ROUTES),
       },
       {
         path: AppRoutes.Comic,
@@ -31,13 +41,11 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.Login,
-    loadComponent: () =>
-      import('@features/auth/pages/login-page/login-page').then((m) => m.LoginPage),
+    loadChildren: () => import('@features/auth/routes/auth.routes').then((m) => m.AUTH_ROUTES),
   },
   {
     path: '**',
-    loadComponent: () =>
-      import('@features/not-found/pages/not-found-page/not-found-page').then((m) => m.NotFoundPage),
-    data: { title: 'pageNotFound' },
+    loadChildren: () =>
+      import('@features/not-found/routes/not-found.routes').then((m) => m.NOT_FOUND_ROUTES),
   },
 ];

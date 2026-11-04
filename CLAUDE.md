@@ -40,7 +40,7 @@ Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; pe
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` e il servizio di navigazione `services/<nome>-navigation/` (percorsi e spostamenti della feature, regole in `.claude/rules/angular.md`).
-2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`) e la rotta in `app.routes.ts`: `loadComponent` per una pagina sola, `loadChildren` con un file `routes/<nome>.routes.ts` nella feature se ne ha più di una.
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, lazy) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione a `app.routes.spec.ts`.
 3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
