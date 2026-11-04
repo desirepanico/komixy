@@ -23,6 +23,7 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 - `npm run build` — build di produzione
 - `npm test` — test con Vitest (jsdom); in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`
 - `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`)
+- `npm run knip` — cerca file, export e dipendenze inutilizzati (config in `knip.json`); gira anche in CI
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
 - `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
@@ -54,7 +55,7 @@ Per aggiungere una feature nuova:
 
 ## Flusso git
 
-- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run lint`, `npm run build` e `npm test`.
+- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run lint`, `npm run knip`, `npm run build` e `npm test`.
 - Prima del push fai `git pull --rebase origin develop`.
 - Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `test:`, `chore:`, `docs:`.
 
