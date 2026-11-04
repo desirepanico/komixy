@@ -44,7 +44,6 @@ Le rotte sono in `app.routes.ts`, con lazy loading per feature (`loadComponent`)
 
 - `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
-- Il guard `authGuard` è presente ma commentato.
 
 ## Dati
 

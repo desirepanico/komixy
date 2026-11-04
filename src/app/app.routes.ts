@@ -13,7 +13,7 @@ export enum AppRoutes {
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./core/layout/layout').then((m) => m.Layout),
+    loadComponent: () => import('@core/layout/layout').then((m) => m.Layout),
     children: [
       {
         path: '',
@@ -26,14 +26,14 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () =>
-              import('./features/discover/pages/discover-page/discover-page').then(
+              import('@features/discover/pages/discover-page/discover-page').then(
                 (m) => m.DiscoverPage,
               ),
           },
           {
             path: AppRoutes.Ranking,
             loadComponent: () =>
-              import('./features/ranking/pages/ranking-page/ranking-page').then(
+              import('@features/ranking/pages/ranking-page/ranking-page').then(
                 (m) => m.RankingPage,
               ),
           },
@@ -42,7 +42,7 @@ export const routes: Routes = [
       {
         path: AppRoutes.Releases,
         loadComponent: () =>
-          import('./features/releases/pages/releases-page/releases-page').then(
+          import('@features/releases/pages/releases-page/releases-page').then(
             (m) => m.ReleasesPage,
           ),
       },
@@ -50,14 +50,14 @@ export const routes: Routes = [
       {
         path: AppRoutes.Comic,
         loadComponent: () =>
-          import('./features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
+          import('@features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
         children: [
           {
             path: ':id',
             loadComponent: () =>
-              import('./features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
+              import('@features/comics/pages/comics-page/comics-page').then((m) => m.ComicsPage),
             // loadComponent: () =>
-            //   import('./features/comicd/pages/comicd-detail-page/comic-detail-page').then(
+            //   import('@features/comicd/pages/comicd-detail-page/comic-detail-page').then(
             //     (m) => m.ComicDetailPage,
             //   ),
           },
@@ -68,9 +68,7 @@ export const routes: Routes = [
   {
     path: '**',
     loadComponent: () =>
-      import('./features/not-found/pages/not-found-page/not-found-page').then(
-        (m) => m.NotFoundPage,
-      ),
+      import('@features/not-found/pages/not-found-page/not-found-page').then((m) => m.NotFoundPage),
     data: { title: 'pageNotFound' },
   },
 ];
