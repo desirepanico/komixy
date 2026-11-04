@@ -8,7 +8,11 @@ argument-hint: <nome-componente> [dove usarlo]
 
 Argomento: `$ARGUMENTS` (primo termine = nome della cartella in `src/app/shared/components/`, il resto = dove e come usarlo).
 
-1. Se il nome manca, elenca le cartelle di `src/app/shared/components/` e chiedi quale usare.
+Componenti disponibili ora (selector da `@Component`):
+
+!`cd src/app/shared/components && for d in */; do d=${d%/}; echo "- $d: $(grep -m1 -o "selector: '[^']*'" $d/$d.ts | cut -d"'" -f2)"; done`
+
+1. Se il nome manca o è impreciso, non indovinare: proponi i nomi dell'elenco sopra che combaciano con ciò che l'utente vuole ottenere (es. «bottone» → `button`), con una riga su cosa fa ciascuno, e chiedi quale usare. Con `AskUserQuestion` offri al massimo 4 opzioni, le più adatte in cima.
 2. Se la cartella non esiste, cerca un nome simile e proponilo; se non c'è nulla di adatto, proponi la skill `shared-component` per crearlo. Non inventare componenti.
 3. Leggi `<nome>.ts` e `<nome>.html`: ricava selector, `input()`/`input.required()`, `output()`, `<ng-content />` e varianti ammesse (tipi unione).
 4. Nel componente di destinazione:
