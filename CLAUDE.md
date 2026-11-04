@@ -15,7 +15,9 @@ Prima di toccare questi temi, leggi il file relativo:
 - Comandi, test (come funzionano gli spec), lint, deploy: `docs/sviluppo.md`
 - Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
 
-Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna il file di `docs/` corrispondente nello stesso commit. Una regola o un'informazione si scrive in un solo posto (CLAUDE.md, `.claude/rules/` o `docs/`): se esiste già, si rimanda senza ripeterla. Vale per ogni istruzione che scrivi.
+Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna il file di `docs/` corrispondente nello stesso commit. 
+
+Una regola si scrive in un solo posto: se esiste già in `.claude/rules/` o in `CLAUDE.md`, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume soltanto, i dettagli stanno in `docs/`.
 
 ## Comandi
 
