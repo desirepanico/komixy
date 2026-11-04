@@ -73,7 +73,19 @@ Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.conf
 
 ## CI
 
-`.github/workflows/ci.yml` gira su push e pull request verso `develop` ed esegue, in ordine, `npm run lint`, `npm run knip`, `npm run build` e `npm test -- --no-watch`. Knip (`knip.json`) fallisce se trova file, export o dipendenze inutilizzati.
+CI (*Continuous Integration*) è un controllo automatico che GitHub esegue su un server pulito, senza il computer di chi sviluppa, ogni volta che si pubblica codice. Serve a verificare che il progetto funzioni anche fuori dalla propria macchina: per esempio prende un pacchetto dimenticato in `package.json` che in locale funziona perché era già installato.
+
+`.github/workflows/ci.yml` gira su push e pull request verso `develop`. Su una macchina Linux con Node 22 esegue, in ordine:
+
+1. `npm ci`: installa le dipendenze;
+2. `npm run lint`;
+3. `npm run knip`: fallisce se trova file, export o dipendenze inutilizzati (`knip.json`, regole in `.claude/rules/knip.md`);
+4. `npm run build`;
+5. `npm test -- --no-watch`.
+
+Se un passaggio fallisce il commit è segnato con ❌, se passano tutti con ✅.
+
+**`npm ci` e `npm install`.** `npm install` installa o aggiorna i pacchetti e può modificare `package-lock.json`: si usa in locale (lo lancia da solo `scripts/ensure-deps.mjs`, vedi sopra). `npm ci` cancella `node_modules` e installa esattamente le versioni di `package-lock.json` senza cambiarlo: è più lento ma riproducibile, quindi è quello giusto per la CI. GitHub imposta la variabile `CI`, e per questo `scripts/ensure-deps.mjs` in CI non fa nulla.
 
 ## Deploy
 

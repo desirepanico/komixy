@@ -19,7 +19,7 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, ...
 │       ├── constants/         costanti condivise, `*.const.ts` (app-routes, main-pages)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item) e edition-severity/
@@ -32,7 +32,8 @@ public/
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
 scripts/
-└── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
+├── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
+└── ensure-deps.mjs            installa le dipendenze se sono cambiate, lanciato da solo prima di start, build, test, lint e knip
 vitest-base.config.mts         opzioni di Vitest per i test (ripristino automatico di mock e globali)
 knip.json                      configurazione di Knip (file, export e dipendenze inutilizzati), lanciato da `npm run knip`
 .github/workflows/ci.yml       CI di GitHub Actions: lint, knip, build e test su push e pull request verso develop
