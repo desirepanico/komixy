@@ -37,14 +37,14 @@ describe('Button', () => {
 
   it('è pieno viola con angoli arrotondati per default', async () => {
     const classi = (await el('pieno')).classList;
-    expect(classi).toContain('bg-primary-500');
+    expect(classi).toContain('bg-primary-300');
     expect(classi).toContain('rounded-sm');
   });
 
   it('con variant outlined ha solo il bordo, e con rounded è a pillola', async () => {
     const classi = (await el('bordo')).classList;
-    expect(classi).toContain('border-primary-500');
-    expect(classi).not.toContain('bg-primary-500');
+    expect(classi).toContain('border-primary-300');
+    expect(classi).not.toContain('bg-primary-300');
     expect(classi).toContain('rounded-full');
   });
 
@@ -54,7 +54,7 @@ describe('Button', () => {
 
   it('con variant text non ha sfondo né bordo e lascia le spaziature a chi lo usa', async () => {
     const classi = (await el('testo')).classList;
-    expect(classi).not.toContain('bg-primary-500');
+    expect(classi).not.toContain('bg-primary-300');
     expect(classi).not.toContain('border');
     expect(classi).not.toContain('px-4');
   });
@@ -62,13 +62,13 @@ describe('Button', () => {
   it('con severity secondary è neutro, non viola', async () => {
     const classi = (await el('secondario')).classList;
     expect(classi).toContain('bg-surface-800');
-    expect(classi).not.toContain('bg-primary-500');
+    expect(classi).not.toContain('bg-primary-300');
   });
 
   it('con severity secondary e variant outlined ha il bordo neutro', async () => {
     const classi = (await el('secondario-bordo')).classList;
     expect(classi).toContain('border-surface-600');
-    expect(classi).not.toContain('border-primary-500');
+    expect(classi).not.toContain('border-primary-300');
   });
 
   it('con severity danger usa i colori rosa in tutte le varianti', async () => {
@@ -79,7 +79,7 @@ describe('Button', () => {
 
   it('funziona anche su un link e mostra il contenuto', async () => {
     const link = await el('link');
-    expect(link.classList).toContain('bg-primary-500');
+    expect(link.classList).toContain('bg-primary-300');
     expect(link.textContent?.trim()).toBe('Vai');
   });
 });
