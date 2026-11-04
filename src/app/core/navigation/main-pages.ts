@@ -1,5 +1,5 @@
 import { AppRoutes } from './app-routes';
-import { UserRole } from '../auth/auth.model';
+import { UserRole } from '@features/auth/models/auth.model';
 import { NavItem } from './nav-item.model';
 
 /**

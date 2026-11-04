@@ -31,7 +31,7 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 
 Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
 
-- **core**: auth, guard, i18n, layout, navigazione, modelli e servizi globali. Non importa da `features`.
+- **core**: guard, i18n, layout, navigazione, modelli e servizi globali. Non importa da `features`. Eccezione: `features/auth` (modello e servizio) resta nella feature, ma `core` lo usa (guard, navigazione, sidebar), a senso unico.
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking`, a senso unico.
 - **shared**: componenti e direttive generici, senza logica di business. Non dipende da `features`.
 

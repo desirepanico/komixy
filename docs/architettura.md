@@ -14,8 +14,8 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ## Struttura di `src/app`
 
 ```
-core/       singleton dell'app: auth, guard, i18n, layout, modelli e servizi globali, navigazione
-features/   una cartella per area: comics, discover, not-found, ranking, releases
+core/       singleton dell'app: guard, i18n, layout, modelli e servizi globali, navigazione
+features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
 shared/     componenti e direttive generici, senza logica di business
 ```
 
@@ -23,7 +23,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ### Regole sulle dipendenze
 
-- `features` → `shared` e `core`; `shared` e `core` non importano mai da `features`.
+- `features` → `shared` e `core`; `shared` e `core` non importano mai da `features`. Eccezione: `core` importa da `features/auth` (modello e servizio), che resta nella feature; la dipendenza è a senso unico e `auth` non importa da `core/layout`.
 - Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking` (a senso unico).
 - Se due feature condividono qualcosa, va in `shared` (componenti) o in `core` (modelli e servizi).
 
@@ -42,7 +42,7 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ## Accesso e ruoli
 
-- `AuthService` (`core/auth`) tiene l'utente loggato in un signal.
+- `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
 
 ## Dati

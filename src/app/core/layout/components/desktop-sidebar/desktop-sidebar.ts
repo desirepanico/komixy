@@ -14,7 +14,7 @@ import {
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../navigation/app-routes';
-import { UserRole } from '../../../auth/auth.model';
+import { UserRole } from '@features/auth/models/auth.model';
 import { NavGroup } from '../../../navigation/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',

@@ -8,7 +8,6 @@ src/
 │   ├── app.config.ts          provider globali (router, Transloco, ...)
 │   ├── app.routes.ts          rotte principali (lazy loading per feature)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
-│   │   ├── auth/              modello utente e AuthService
 │   │   ├── config/            configurazione (environment)
 │   │   ├── guards/            user-role.guard
 │   │   ├── i18n/              provideI18n() e loader Transloco
@@ -17,7 +16,7 @@ src/
 │   │   ├── navigation/        AppRoutes, main-pages (ordine delle pagine principali), nav-item e direzione delle transizioni
 │   │   └── services/          servizi globali (viewport, swipe mobile)
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         comics, discover, not-found, ranking, releases
+│   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
@@ -35,8 +34,9 @@ public/
 
 Dove mettere le cose:
 
-- **core**: auth, guard, i18n, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
+- **core**: guard, i18n, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti) o in `core` (modelli e servizi).
+  - **Eccezione**: `core` importa da `features/auth` (modello utente e `AuthService`, usati da guard, navigazione e sidebar). La dipendenza è a senso unico: `auth` non importa da `core/layout`.
   - **Eccezione**: `discover` mostra la Top 5 usando la card e il servizio della feature `ranking` (`features/ranking/components`, `features/ranking/services`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: solo componenti, direttive e pipe generici e riutilizzabili. Possono essere importati da qualsiasi parte, ma non dipendono da `features`.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`.
