@@ -19,7 +19,7 @@ export class ToggleButton {
 
   protected readonly classes = computed(() => {
     const base =
-      'inline-flex size-7.5 shrink-0 cursor-pointer items-center justify-center rounded-full border text-primary-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40';
+      'inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border text-primary-500 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40';
     const state = this.pressed()
       ? 'border-primary-500 bg-primary-900'
       : 'border-surface-700 bg-surface-800';
