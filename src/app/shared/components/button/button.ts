@@ -8,7 +8,7 @@ const FILLED_TEXT = 'text-surface-800';
 const COLORS: Record<ButtonSeverity, Record<ButtonVariant, string>> = {
   primary: {
     filled: `bg-primary-300 ${FILLED_TEXT} hover:bg-primary-500`,
-    outlined: 'border border-primary-300 text-primary-300 hover:bg-primary-400/15',
+    outlined: 'border border-primary-400 text-primary-300 hover:bg-primary-400/15',
     text: 'text-primary-300 hover:bg-primary-400/15',
   },
   secondary: {

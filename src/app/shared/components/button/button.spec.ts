@@ -43,7 +43,7 @@ describe('Button', () => {
 
   it('con variant outlined ha solo il bordo, e con rounded è a pillola', async () => {
     const classi = (await el('bordo')).classList;
-    expect(classi).toContain('border-primary-300');
+    expect(classi).toContain('border-primary-400');
     expect(classi).not.toContain('bg-primary-300');
     expect(classi).toContain('rounded-full');
   });
@@ -68,7 +68,7 @@ describe('Button', () => {
   it('con severity secondary e variant outlined ha il bordo neutro', async () => {
     const classi = (await el('secondario-bordo')).classList;
     expect(classi).toContain('border-surface-600');
-    expect(classi).not.toContain('border-primary-300');
+    expect(classi).not.toContain('border-primary-400');
   });
 
   it('con severity danger usa i colori rosa in tutte le varianti', async () => {
