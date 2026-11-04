@@ -48,6 +48,8 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 - `shared-component`: crea o modifica un componente in `shared/components`. Si usa anche prima di duplicare markup: se esiste già lo si importa, se sta per comparire una seconda volta lo si estrae e lo si importa in entrambi i punti.
 
+- `use-shared`: usa un componente di `shared/components` indicandone il nome (`/use-shared <nome> [dove]`). Legge selector e input dal codice del componente, lo importa e lo inserisce senza duplicare markup.
+
 ## Quando aggiungere cosa
 
 - Un divieto o un controllo verificabile → hook.
