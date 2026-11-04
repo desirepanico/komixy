@@ -10,7 +10,8 @@
     "deploy:dev": "npx vercel",
     "deploy:login": "npx vercel login",
     "deploy:prod": "npx vercel --prod",
-    "lint": "eslint src && node scripts/check-specs.mjs"
+    "lint": "eslint src && node scripts/check-specs.mjs",
+    "knip": "knip"
   },
   "prettier": {
     "printWidth": 100,
@@ -48,6 +49,7 @@
     "angular-eslint": "^22.6.0",
     "eslint": "^9.39.5",
     "jsdom": "^27.1.0",
+    "knip": "^6.44.1",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",

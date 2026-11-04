@@ -8,6 +8,7 @@
 | `npm run build` | Build di produzione |
 | `npm test` | Tutti gli `*.spec.ts` di `src` con Vitest. In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
 | `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) |
+| `npm run knip` | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`) |
 | `npm run deploy:login` | Accesso a Vercel (una volta sola) |
 | `npm run deploy:dev` | Preview su Vercel |
 | `npm run deploy:prod` | Pubblicazione in produzione |
