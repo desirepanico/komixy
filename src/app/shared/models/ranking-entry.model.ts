@@ -1,4 +1,4 @@
-import { ComicItem } from '@core/models/comic.model';
+import { ComicItem } from './comic.model';
 
 /** Una posizione della classifica: il fumetto e il suo piazzamento (1 = primo). */
 export interface RankingEntry {

@@ -13,7 +13,7 @@ import {
   matMenuBookOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '../../../models/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { UserRole } from '@features/auth/models/auth.model';
 import { NavGroup } from '../../../models/nav-item.model';
 @Component({

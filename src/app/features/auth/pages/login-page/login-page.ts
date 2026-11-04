@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@core/models/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { LoginForm } from '../../components/login-form/login-form';
 import { LoginCredentials, UserRole } from '../../models/auth.model';
 import { AuthService } from '../../services/auth.service';

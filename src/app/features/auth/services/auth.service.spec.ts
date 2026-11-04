@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AppRoutes } from '@core/models/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { LoggedUser, UserRole } from '../models/auth.model';
 import { AuthService } from './auth.service';
 

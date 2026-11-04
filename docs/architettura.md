@@ -16,20 +16,20 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ```
 core/       singleton dell'app: models, services, guards, interceptors, layout
 features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
-shared/     componenti e direttive generici, senza logica di business
+shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
 ```
 
 Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea solo quello che serve. I test `*.spec.ts` stanno accanto al file testato.
 
 ### Regole sulle dipendenze
 
-- `features` → `shared` e `core`; `shared` e `core` non importano mai da `features`. Eccezione: `core` importa da `features/auth` (modello e servizio), che resta nella feature; la dipendenza è a senso unico e `auth` non importa da `core/layout`.
-- Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking` (a senso unico).
-- Se due feature condividono qualcosa, va in `shared` (componenti) o in `core` (modelli e servizi).
+- `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: `core` importa da `features/auth` (modello e servizio), che resta nella feature; la dipendenza è a senso unico e `auth` non importa da `core/layout`.
+- Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking` (a senso unico). Il servizio `WeeklyRankingService` è in `shared/services`.
+- Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, navigazione, avvio).
 
 ## Routing
 
-Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `core/models/app-routes.ts`, così `core` non dipende da `app.routes.ts`.
+Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes.ts`, così nessuna area dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.

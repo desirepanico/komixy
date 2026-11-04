@@ -3,13 +3,13 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowForwardOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@core/models/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { Button } from '@shared/components/button/button';
 import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';
 import { ComicRankCard } from '@features/ranking/components/comic-rank-card/comic-rank-card';
-import { ComicItem } from '@core/models/comic.model';
-import { WeeklyRankingService } from '@features/ranking/services/weekly-ranking.service';
+import { ComicItem } from '@shared/models/comic.model';
+import { WeeklyRankingService } from '@shared/services/weekly-ranking.service';
 
 @Component({
   selector: 'app-discover-page',

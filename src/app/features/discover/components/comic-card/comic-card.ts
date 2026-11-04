@@ -1,11 +1,11 @@
 import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '@core/models/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
-import { EditionType } from '@core/models/comic.model';
-import { editionSeverity } from '@core/models/edition-severity';
+import { EditionType } from '@shared/models/comic.model';
+import { editionSeverity } from '@shared/models/edition-severity';
 @Component({
   selector: 'app-comic-card',
   imports: [TranslocoPipe, RouterLink, Tag, BookmarkButton],

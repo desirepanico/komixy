@@ -32,15 +32,15 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
 
 - **core**: `models`, `services`, `guards`, `interceptors`, `layout`. Non importa da `features`. Eccezione: `features/auth` (modello e servizio) resta nella feature, ma `core` lo usa (guard, navigazione, sidebar), a senso unico.
-- **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking`, a senso unico.
-- **shared**: componenti e direttive generici, senza logica di business. Non dipende da `features`.
+- **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking`, a senso unico.
+- **shared**: `components`, `directives`, `models`, `services`, `constants` usati da più feature. Non dipende da `features` né da `core`.
 
-Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared` (componenti) o in `core` (modelli e servizi). I test `*.spec.ts` stanno accanto al file testato. Nuovi componenti riutilizzabili: skill `shared-component`.
+Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. I test `*.spec.ts` stanno accanto al file testato. Nuovi componenti riutilizzabili: skill `shared-component`.
 
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/`.
-2. Aggiungi il valore in `AppRoutes` (`core/models/app-routes.ts`) e la rotta in `app.routes.ts`: `loadComponent` per una pagina sola, `loadChildren` con un file `<nome>.routes.ts` nella feature se ne ha più di una.
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes.ts`) e la rotta in `app.routes.ts`: `loadComponent` per una pagina sola, `loadChildren` con un file `<nome>.routes.ts` nella feature se ne ha più di una.
 3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/models/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 

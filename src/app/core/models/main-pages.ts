@@ -1,4 +1,4 @@
-import { AppRoutes } from './app-routes';
+import { AppRoutes } from '@shared/constants/app-routes';
 import { UserRole } from '@features/auth/models/auth.model';
 import { NavItem } from './nav-item.model';
 
