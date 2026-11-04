@@ -25,7 +25,7 @@
   <div class="flex min-w-0 flex-1 flex-col gap-1.5 md:pl-1">
     <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->
     <a
-      [routerLink]="[AppRoutes.Comic, comic().id]"
+      [routerLink]="comicLink()"
       class="truncate text-sm font-bold leading-6 text-surface-50 outline-none transition-colors md:line-clamp-2 md:whitespace-normal md:text-lg group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400"
       [title]="comic().title"
     >

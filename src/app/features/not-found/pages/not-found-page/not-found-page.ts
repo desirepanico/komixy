@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline, matExploreOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { NotFoundNavigationService } from '../../services/not-found-navigation/not-found-navigation.service';
 import { Button } from '@shared/components/button/button';
 @Component({
   selector: 'app-not-found-page',
@@ -18,5 +18,5 @@ import { Button } from '@shared/components/button/button';
   ],
 })
 export class NotFoundPage {
-  protected readonly AppRoutes = AppRoutes;
+  protected readonly navigation = inject(NotFoundNavigationService);
 }

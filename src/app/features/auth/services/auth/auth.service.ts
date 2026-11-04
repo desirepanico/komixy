@@ -1,13 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
 import { LoggedUser } from '../../models/auth.model';
+import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private router = inject(Router);
+  private readonly navigation = inject(AuthNavigationService);
 
   private readonly _loggedUser = signal<LoggedUser | null>(null);
 
@@ -21,6 +20,6 @@ export class AuthService {
 
   public logout(): void {
     this._loggedUser.set(null);
-    void this.router.navigate([AppRoutes.Login]);
+    void this.navigation.goToLogin();
   }
 }

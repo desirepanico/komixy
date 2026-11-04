@@ -1,14 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
 import { LoginForm } from '../../components/login-form/login-form';
 import { LoginCredentials } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
+import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
 import { AuthService } from '../../services/auth/auth.service';
-import { safeReturnUrl } from '../../utils/safe-return-url/safe-return-url';
 
 /** Pagina di accesso. Dopo il login torna alla pagina richiesta (`returnUrl`) o a Scopri. */
 @Component({
@@ -19,7 +18,7 @@ import { safeReturnUrl } from '../../utils/safe-return-url/safe-return-url';
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+  private readonly navigation = inject(AuthNavigationService);
   private readonly route = inject(ActivatedRoute);
 
   protected login(credentials: LoginCredentials): void {
@@ -31,6 +30,6 @@ export class LoginPage {
     });
 
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-    void this.router.navigateByUrl(safeReturnUrl(returnUrl, `/${AppRoutes.Discover}`));
+    void this.navigation.goAfterLogin(returnUrl);
   }
 }

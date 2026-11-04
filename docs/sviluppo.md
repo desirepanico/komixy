@@ -56,6 +56,7 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 
 - `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`).
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
+- Nelle cartelle `pages` e `components` delle feature `no-restricted-imports` vieta `Router` e `AppRoutes` (la navigazione passa dal servizio `<nome>-navigation`).
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 

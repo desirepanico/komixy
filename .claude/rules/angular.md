@@ -67,3 +67,7 @@ paths:
 ## Routing
 
 - Lazy loading per le rotte delle feature.
+- **Ogni feature ha un servizio di navigazione**: `services/<feature>-navigation/<feature>-navigation.service.ts` (`DiscoverNavigationService`). È l'unico posto dove la feature scrive percorsi (con `AppRoutes`) e naviga.
+- Il servizio espone i **percorsi** come proprietà o metodi (`rankingLink`, `comicLink(id)`), usati nei template con `[routerLink]="navigation.rankingLink"`: i link restano `<a>` (accessibilità). Per navigare **da codice**, dopo un'azione, ha i metodi `goToXxx()` (`goAfterLogin()`); i guard usano i `*UrlTree()`.
+- Percorsi assoluti (`['/', ...]`): un link relativo cambia destinazione secondo la pagina in cui sta.
+- Pagine e componenti non importano `Router` né `AppRoutes` (lo controlla ESLint): iniettano il servizio della propria feature. Una feature non usa il servizio di un'altra: costruisce i percorsi con `AppRoutes` nel suo.

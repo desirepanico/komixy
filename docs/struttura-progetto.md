@@ -62,9 +62,12 @@ features/auth/
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── services/
-│   └── auth/
-│       ├── auth.service.ts          dati e logica della feature (signal + computed)
-│       └── auth.service.spec.ts
+│   ├── auth/
+│   │   ├── auth.service.ts          dati e logica della feature (signal + computed)
+│   │   └── auth.service.spec.ts
+│   └── auth-navigation/             percorsi e spostamenti della feature (vedi sotto)
+│       ├── auth-navigation.service.ts
+│       └── auth-navigation.service.spec.ts
 └── utils/
     └── safe-return-url/
         ├── safe-return-url.ts       funzioni pure della feature
@@ -74,13 +77,14 @@ features/auth/
 - **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts` o in `routes/<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
 - **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
+- **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found` e `releases`). Costruisce i percorsi con `AppRoutes` e li espone ai template (`navigation.rankingLink`) e al codice (`navigation.goToRanking()`); pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
 - **utils**: funzioni pure della feature (`<nome>.ts`), senza Angular se possibile.
 - **Una cartella per file**: ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`). Fanno eccezione i `*.model.ts`, `main.ts` e i file nella radice di `src/app`.
 
 Per aggiungere una feature nuova:
 
-1. Crea `features/<nome>/pages/<nome>-page/` (e le altre cartelle solo se servono).
+1. Crea `features/<nome>/pages/<nome>-page/` e il servizio di navigazione `services/<nome>-navigation/` (le altre cartelle solo se servono).
 2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
 3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.

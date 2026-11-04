@@ -40,6 +40,31 @@ module.exports = defineConfig(
     },
   },
   {
+    // La navigazione passa dal servizio di navigazione della feature (vedi .claude/rules/angular.md)
+    files: ['src/app/features/**/pages/**/*.ts', 'src/app/features/**/components/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: '@angular/router',
+              importNames: ['Router'],
+              message: 'Naviga con il servizio di navigazione della feature, non con Router.',
+            },
+          ],
+          patterns: [
+            {
+              group: ['@shared/constants/app-routes/*'],
+              message: 'I percorsi si costruiscono nel servizio di navigazione della feature.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended],
     rules: {

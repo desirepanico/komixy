@@ -1,24 +1,22 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { CanActivateFn } from '@angular/router';
 import { UserRole } from '@shared/models/user-role.model';
+import { AuthNavigationService } from '@features/auth/services/auth-navigation/auth-navigation.service';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 
 export const userRoleGuard: (userRole: UserRole) => CanActivateFn =
   (userRole) => (route, state) => {
     const authService = inject(AuthService);
-    const router = inject(Router);
+    const navigation = inject(AuthNavigationService);
 
     const loggedUser = authService.loggedUser();
 
     if (!loggedUser) {
-      return router.createUrlTree([AppRoutes.Login], {
-        queryParams: { returnUrl: state.url },
-      });
+      return navigation.loginUrlTree(state.url);
     }
 
     if (loggedUser.userRole !== userRole) {
-      return router.createUrlTree([AppRoutes.Discover]);
+      return navigation.forbiddenUrlTree();
     }
 
     return true;

@@ -36,6 +36,16 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 - `comic/:id` è una rotta figlia di `comic`: per ora usa lo stesso componente segnaposto, la pagina di dettaglio non è ancora implementata.
 - Il router usa le view transitions e il ripristino dello scroll.
 
+### Navigazione delle feature
+
+Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>-navigation/`):
+
+- espone i **percorsi** per i link (`DiscoverNavigationService.rankingLink`, `comicLink(id)`), usati con `[routerLink]`: i link restano `<a>`;
+- ha i metodi `goToXxx()` per navigare da codice (`AuthNavigationService.goAfterLogin()` dopo l'accesso) e i `*UrlTree()` per i guard;
+- usa percorsi assoluti, costruiti con `AppRoutes` (`shared`): le feature non si importano tra loro, quindi ognuna descrive nel suo servizio la navigazione che parte dalle sue pagine.
+
+Così un percorso cambia in un solo posto per feature, e pagine e componenti non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce).
+
 ### Navigazione principale
 
 `MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.

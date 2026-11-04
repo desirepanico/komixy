@@ -1,7 +1,7 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { RankingNavigationService } from '../../services/ranking-navigation/ranking-navigation.service';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
 import { InView } from '@shared/directives/in-view/in-view.directive';
@@ -19,7 +19,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
   host: { class: 'block' },
 })
 export class ComicRankCard {
-  protected readonly AppRoutes = AppRoutes;
+  private readonly navigation = inject(RankingNavigationService);
 
   public readonly comic = input.required<ComicItem>();
   /** Posizione in classifica (1 = primo) */
@@ -27,6 +27,7 @@ export class ComicRankCard {
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
+  protected readonly comicLink = computed(() => this.navigation.comicLink(this.comic().id));
   protected readonly severity = computed(() => editionSeverity(this.comic().editionType));
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */

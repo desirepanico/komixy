@@ -1,7 +1,7 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { DiscoverNavigationService } from '../../services/discover-navigation/discover-navigation.service';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
 import { EditionType } from '@shared/models/comic.model';
@@ -12,7 +12,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
   templateUrl: './comic-card.html',
 })
 export class ComicCard {
-  protected readonly AppRoutes = AppRoutes;
+  private readonly navigation = inject(DiscoverNavigationService);
 
   public readonly title = input.required<string>();
   public readonly author = input.required<string>();
@@ -27,6 +27,7 @@ export class ComicCard {
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
+  protected readonly comicLink = computed(() => this.navigation.comicLink(this.id()));
   protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));
 
   public handleBookmarkClick(event: MouseEvent): void {
