@@ -4,8 +4,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
-import { Button } from '@shared/components/button/button';
 import { Tag } from '@shared/components/tag/tag';
+import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
@@ -16,7 +16,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
  */
 @Component({
   selector: 'app-comic-rank-card',
-  imports: [RouterLink, TranslocoPipe, Tag, Button, NgIcon, InView],
+  imports: [RouterLink, TranslocoPipe, Tag, ToggleButton, NgIcon, InView],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-rank-card.html',
   host: { class: 'block' },

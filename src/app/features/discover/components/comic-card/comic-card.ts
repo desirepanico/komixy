@@ -4,13 +4,13 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
-import { Button } from '@shared/components/button/button';
 import { Tag } from '@shared/components/tag/tag';
+import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { EditionType } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 @Component({
   selector: 'app-comic-card',
-  imports: [TranslocoPipe, RouterLink, Tag, Button, NgIcon],
+  imports: [TranslocoPipe, RouterLink, Tag, ToggleButton, NgIcon],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-card.html',
 })

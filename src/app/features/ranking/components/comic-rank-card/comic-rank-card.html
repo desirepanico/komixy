@@ -60,16 +60,13 @@
   </div>
 
   <button
-    appButton
+    appToggleButton
     type="button"
-    [variant]="bookmarked() ? 'filled' : 'outlined'"
-    [iconOnly]="true"
-    [rounded]="true"
-    class="relative z-10 shrink-0"
-    [attr.aria-pressed]="bookmarked()"
+    [pressed]="bookmarked()"
+    class="relative z-10"
     [attr.aria-label]="(bookmarked() ? 'bookmark.remove' : 'bookmark.add') | transloco"
     (click)="bookmarkToggle.emit()"
   >
-    <ng-icon name="matBookmarkOutline" size="18" />
+    <ng-icon name="matBookmarkOutline" size="16" />
   </button>
 </div>
