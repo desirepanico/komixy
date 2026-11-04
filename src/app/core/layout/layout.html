@@ -2,11 +2,9 @@
   <!-- DESKTOP: da 1024px in su -->
   @if (viewport.isDesktop()) {
     <div class="flex min-h-dvh gap-1 pl-2 py-2">
-      <!-- SIDEBAR -->
 
       <app-desktop-sidebar />
 
-      <!-- CONTENUTO DESKTOP -->
       <main class="flex-1 min-w-0">
         <router-outlet />
       </main>
@@ -16,7 +14,6 @@
   <!-- TABLET + MOBILE: sotto i 1024px -->
   @else {
     <div class="min-h-dvh">
-      <!-- CONTENUTO -->
       <main
         appSwipe
         class="min-h-dvh pb-20 touch-pan-y [view-transition-name:page]"
@@ -26,7 +23,6 @@
         <router-outlet />
       </main>
 
-      <!-- BOTTOM NAV -->
       <app-mobile-bottom-nav />
     </div>
   }

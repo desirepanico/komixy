@@ -2,7 +2,7 @@
 
 App Angular 22 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
 
-Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
+Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, commenti, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
 
 ## Documentazione (`docs/`)
 
@@ -22,7 +22,7 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 - `npm start` — dev server su http://localhost:4200
 - `npm run build` — build di produzione
 - `npm test` — test con Vitest
-- `npm run lint` — ESLint (angular-eslint): fa rispettare le regole di `.claude/rules/angular.md`
+- `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
 - `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
@@ -35,7 +35,7 @@ Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking`, a senso unico.
 - **shared**: `components`, `directives`, `models`, `services`, `constants` (file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
 
-Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. I test `*.spec.ts` stanno accanto al file testato. Nuovi componenti riutilizzabili: skill `shared-component`.
+Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` ha il suo `*.spec.ts` accanto (esclusi `*.model.ts` e `main.ts`): lo controlla `npm run lint`, regole in `.claude/rules/test.md`. Nuovi componenti riutilizzabili: skill `shared-component`.
 
 Per aggiungere una feature nuova:
 
@@ -49,7 +49,7 @@ Per aggiungere una feature nuova:
 - **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
 - Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
-- Commenti nel codice e messaggi di commit in italiano.
+- Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.
 - Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/main-pages.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Flusso git

@@ -10,7 +10,7 @@
     "deploy:dev": "npx vercel",
     "deploy:login": "npx vercel login",
     "deploy:prod": "npx vercel --prod",
-    "lint": "eslint src"
+    "lint": "eslint src && node scripts/check-specs.mjs"
   },
   "prettier": {
     "printWidth": 100,

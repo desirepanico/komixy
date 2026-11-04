@@ -8,7 +8,6 @@ import { Button } from '@shared/components/button/button';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
 import { WeeklyRankingService } from '@shared/services/weekly-ranking.service';
 
-/** Classifica completa dei manga più letti della settimana. */
 @Component({
   selector: 'app-ranking-page',
   imports: [ComicRankCard, Button, RouterLink, NgIcon, TranslocoPipe],

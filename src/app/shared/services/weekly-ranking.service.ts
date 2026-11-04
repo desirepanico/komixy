@@ -2,7 +2,6 @@ import { computed, Injectable, signal } from '@angular/core';
 import { RankingEntry } from '../models/ranking-entry.model';
 import { ComicItem } from '../models/comic.model';
 
-/** Classifica dei manga più letti della settimana, in ordine di posizione. */
 @Injectable({ providedIn: 'root' })
 export class WeeklyRankingService {
   // TODO: sostituire con i dati reali dell'API

@@ -105,7 +105,6 @@ export class DiscoverPage {
   protected readonly AppRoutes = AppRoutes;
   protected readonly topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
 
-  // Seleziona o deseleziona un fumetto dai preferiti
   protected toggleBookmark(id: string): void {
     this.selectedId.update((current) => (current === id ? null : id));
   }

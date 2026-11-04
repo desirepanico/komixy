@@ -7,7 +7,7 @@
 | `npm start` | Dev server su http://localhost:4200 |
 | `npm run build` | Build di produzione |
 | `npm test` | Test con Vitest (una sola esecuzione) |
-| `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) |
+| `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`) |
 | `npm run deploy:login` | Accesso a Vercel (una volta sola) |
 | `npm run deploy:dev` | Preview su Vercel |
 | `npm run deploy:prod` | Pubblicazione in produzione |
@@ -31,6 +31,8 @@ Regole in `.claude/rules/test.md`: si testano servizi, guard, `computed()` con l
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
+
+Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs`: elenca i file `.ts` di `src/` senza `*.spec.ts` accanto (esclusi i `*.model.ts` e `main.ts`) ed esce con errore. La regola è in `.claude/rules/test.md`.
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
 

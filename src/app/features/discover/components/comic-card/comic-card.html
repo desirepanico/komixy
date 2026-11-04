@@ -2,7 +2,6 @@
 <div
   class="group relative flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 has-[a:focus-visible]:border-primary-400/50 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-400 has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-surface-950 active:scale-[0.98]"
 >
-  <!-- Copertina verticale -->
   <div class="relative w-full shrink-0 overflow-hidden rounded-xl">
     <img
       class="block h-40 w-full aspect-2/3 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
@@ -11,7 +10,6 @@
       [alt]="'mangaCard.coverAlt' | transloco: { title: title() }"
     />
 
-    <!-- Bookmark -->
     <button
       appBookmarkButton
       type="button"
@@ -20,7 +18,6 @@
       (click)="handleBookmarkClick($event)"
     ></button>
 
-    <!-- Tag edizione sulla copertina (ripulito dal doppio @if) -->
     @if (editionType()) {
       <div
         class="absolute inset-x-0 bottom-0 bg-linear-to-t from-surface-950/95 via-surface-950/75 to-transparent px-2 pb-3 pt-8"
@@ -32,9 +29,7 @@
     }
   </div>
 
-  <!-- Informazioni compatte in colonna -->
   <div class="flex min-w-0 flex-1 flex-col gap-1.5 px-2 pb-2 pt-1">
-    <!-- Titolo -->
     <h3
       class="truncate text-sm font-bold leading-5 text-surface-50 transition-colors group-hover:text-primary-300"
       [title]="title()"
@@ -46,7 +41,6 @@
         {{ title() }}
       </a>
     </h3>
-    <!-- Autore -->
     <p class="truncate text-xs leading-4 text-surface-400" [title]="author()">
       {{ author() }}
     </p>
@@ -55,7 +49,6 @@
         {{ 'mangaCard.singleVolume' | transloco }}
       </span>
     } @else {
-      <!-- Volume -->
       <div class="flex items-center gap-1">
         <span class="text-xs text-primary-400">Vol.</span>
 

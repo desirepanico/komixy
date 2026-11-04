@@ -27,7 +27,6 @@ export class ComicCard {
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
-  // Stile del tag in base all'edizione
   protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));
 
   public handleBookmarkClick(event: MouseEvent): void {

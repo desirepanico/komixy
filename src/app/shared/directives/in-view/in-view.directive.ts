@@ -39,7 +39,7 @@ export class InView {
         ([entry]) => {
           if (entry.isIntersecting) {
             this.inView.set(true);
-            observer.disconnect(); // una volta sola
+            observer.disconnect();
           }
         },
         { threshold: this.inViewThreshold() },

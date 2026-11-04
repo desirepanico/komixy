@@ -1,7 +1,6 @@
 <main
   class="relative flex min-h-[calc(100dvh-2rem)] items-center justify-center overflow-hidden px-4 py-10 sm:px-8"
 >
-  <!-- Decorazioni cosmiche -->
   <div
     aria-hidden="true"
     class="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-600/10 blur-3xl sm:h-96 sm:w-96"
@@ -11,7 +10,6 @@
     class="glass-strong relative w-full max-w-2xl rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 text-center sm:px-12 sm:py-14"
     aria-labelledby="not-found-title"
   >
-    <!-- Icona -->
     <div
       class="mx-auto mb-6 flex size-16 items-center justify-center rounded-2xl border border-primary-400/25 bg-primary-500/10 text-primary-300 sm:size-20"
       aria-hidden="true"
@@ -37,7 +35,6 @@
       {{ 'notFound.description' | transloco }}
     </p>
 
-    <!-- Azioni -->
     <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
       <a appButton [rounded]="true" [routerLink]="['/', AppRoutes.Discover]" class="w-full sm:w-auto">
         <ng-icon name="matExploreOutline" size="1.125rem" />

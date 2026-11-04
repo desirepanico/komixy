@@ -23,8 +23,9 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
-| `test.md` | Test | `src/**/*.spec.ts` |
+| `test.md` | Test: ogni file `.ts` ha il suo spec (controllato da `npm run lint`) | `src/**/*.spec.ts` |
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
+| `commenti.md` | Commenti nel codice: solo il perché, in italiano | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
 | `git.md` | Branch | sempre |
 
 ## Hooks (`.claude/hooks/`, registrati in `settings.json`)
