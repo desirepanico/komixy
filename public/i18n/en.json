@@ -72,7 +72,10 @@
     "comingSoon": "Releases coming soon"
   },
   "library": {
-    "comingSoon": "Library coming soon"
+    "title": "Library",
+    "subtitle": "Your comics and manga collection",
+    "comingSoon": "Library coming soon",
+    "comingSoonHint": "Here you will find the volumes you own and the ones you are missing."
   },
   "profile": {
     "comingSoon": "Profile coming soon"

@@ -71,7 +71,10 @@
     "comingSoon": "Uscite in arrivo"
   },
   "library": {
-    "comingSoon": "Libreria in arrivo"
+    "title": "Libreria",
+    "subtitle": "La tua collezione di fumetti e manga",
+    "comingSoon": "Libreria in arrivo",
+    "comingSoonHint": "Qui troverai i volumi che possiedi e quelli che ti mancano."
   },
   "profile": {
     "comingSoon": "Profilo in arrivo"

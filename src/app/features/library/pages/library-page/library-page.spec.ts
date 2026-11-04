@@ -15,7 +15,14 @@ describe('LibraryPage', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra il segnaposto tradotto', () => {
-    expect(fixture.nativeElement.textContent).toContain('library.comingSoon');
+  it('mostra titolo e segnaposto tradotti', () => {
+    const testo = fixture.nativeElement.textContent;
+    expect(testo).toContain('library.title');
+    expect(testo).toContain('library.comingSoon');
+    expect(testo).toContain('library.comingSoonHint');
+  });
+
+  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+    expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });
