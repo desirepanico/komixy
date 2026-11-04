@@ -8,13 +8,11 @@ src/
 │   ├── app.config.ts          provider globali (router, Transloco, ...)
 │   ├── app.routes.ts          rotte principali (lazy loading per feature)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
-│   │   ├── config/            configurazione (environment)
 │   │   ├── guards/            user-role.guard
-│   │   ├── i18n/              provideI18n() e loader Transloco
+│   │   ├── interceptors/      interceptor HTTP (si crea con il primo interceptor)
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   ├── models/            modelli e tipi globali del dominio (comic, edition-severity)
-│   │   ├── navigation/        AppRoutes, main-pages (ordine delle pagine principali), nav-item e direzione delle transizioni
-│   │   └── services/          servizi globali (viewport, swipe mobile)
+│   │   ├── models/            modelli, tipi e costanti globali (comic, environment, nav-item, AppRoutes, MAIN_PAGES)
+│   │   └── services/          servizi globali (viewport, swipe mobile, loader Transloco) e provider di avvio (i18n, direzione delle transizioni)
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
@@ -34,7 +32,7 @@ public/
 
 Dove mettere le cose:
 
-- **core**: guard, i18n, layout dell'app e servizi che esistono una volta sola. Non importare codice da `features`.
+- **core**: `models`, `services`, `guards`, `interceptors` e `layout`: tutto ciò che esiste una volta sola per l'app. Non importare codice da `features`.
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti) o in `core` (modelli e servizi).
   - **Eccezione**: `core` importa da `features/auth` (modello utente e `AuthService`, usati da guard, navigazione e sidebar). La dipendenza è a senso unico: `auth` non importa da `core/layout`.
   - **Eccezione**: `discover` mostra la Top 5 usando la card e il servizio della feature `ranking` (`features/ranking/components`, `features/ranking/services`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
@@ -70,13 +68,15 @@ features/ranking/
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` (e le altre cartelle solo se servono).
-2. Aggiungi il valore in `AppRoutes` (`core/navigation/app-routes.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
-3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/navigation/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
+2. Aggiungi il valore in `AppRoutes` (`core/models/app-routes.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/models/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Dove vanno le altre cose
 
-- **core/navigation**: ordine delle pagine principali (`main-pages.ts`) e direzione delle transizioni; non contiene UI.
+- **core/models**: oltre ai tipi, le costanti di navigazione: `AppRoutes` (percorsi), `MAIN_PAGES` (ordine delle pagine principali) e `nav-item.model.ts`.
+- **core/services**: servizi globali `*.service.ts` e funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`), registrate in `app.config.ts`.
+- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`). La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `services`.
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
 - **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`).
 - **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` + `swipe/detect-swipe.ts`).

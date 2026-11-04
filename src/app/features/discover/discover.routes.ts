@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AppRoutes } from '@core/navigation/app-routes';
+import { AppRoutes } from '@core/models/app-routes';
 
 export const DISCOVER_ROUTES: Routes = [
   {

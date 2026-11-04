@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowForwardOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@core/navigation/app-routes';
+import { AppRoutes } from '@core/models/app-routes';
 import { Button } from '@shared/components/button/button';
 import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
 import { ComicCard } from '../../components/comic-card/comic-card';

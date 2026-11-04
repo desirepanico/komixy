@@ -1,7 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '@core/navigation/app-routes';
+import { AppRoutes } from '@core/models/app-routes';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
 import { EditionType } from '@core/models/comic.model';

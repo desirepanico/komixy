@@ -10,9 +10,9 @@ import {
   matHomeOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '../../../navigation/app-routes';
-import { NavItem } from '../../../navigation/nav-item.model';
-import { MAIN_PAGES } from '../../../navigation/main-pages';
+import { AppRoutes } from '../../../models/app-routes';
+import { NavItem } from '../../../models/nav-item.model';
+import { MAIN_PAGES } from '../../../models/main-pages';
 
 @Component({
   selector: 'app-mobile-bottom-nav',

@@ -14,7 +14,7 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ## Struttura di `src/app`
 
 ```
-core/       singleton dell'app: guard, i18n, layout, modelli e servizi globali, navigazione
+core/       singleton dell'app: models, services, guards, interceptors, layout
 features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
 shared/     componenti e direttive generici, senza logica di business
 ```
@@ -29,7 +29,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ## Routing
 
-Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `core/navigation/app-routes.ts`, così `core` non dipende da `app.routes.ts`.
+Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `core/models/app-routes.ts`, così `core` non dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
@@ -38,7 +38,7 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ### Navigazione principale
 
-`MAIN_PAGES` in `core/navigation/main-pages.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+`MAIN_PAGES` in `core/models/main-pages.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Accesso e ruoli
 
@@ -47,4 +47,4 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ## Dati
 
-I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/config/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
+I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/models/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).

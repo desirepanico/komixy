@@ -31,7 +31,7 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 
 Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
 
-- **core**: guard, i18n, layout, navigazione, modelli e servizi globali. Non importa da `features`. Eccezione: `features/auth` (modello e servizio) resta nella feature, ma `core` lo usa (guard, navigazione, sidebar), a senso unico.
+- **core**: `models`, `services`, `guards`, `interceptors`, `layout`. Non importa da `features`. Eccezione: `features/auth` (modello e servizio) resta nella feature, ma `core` lo usa (guard, navigazione, sidebar), a senso unico.
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa card e servizio di `ranking`, a senso unico.
 - **shared**: componenti e direttive generici, senza logica di business. Non dipende da `features`.
 
@@ -40,8 +40,8 @@ Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; pe
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/`.
-2. Aggiungi il valore in `AppRoutes` (`core/navigation/app-routes.ts`) e la rotta in `app.routes.ts`: `loadComponent` per una pagina sola, `loadChildren` con un file `<nome>.routes.ts` nella feature se ne ha più di una.
-3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/navigation/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
+2. Aggiungi il valore in `AppRoutes` (`core/models/app-routes.ts`) e la rotta in `app.routes.ts`: `loadComponent` per una pagina sola, `loadChildren` con un file `<nome>.routes.ts` nella feature se ne ha più di una.
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/models/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Convenzioni
@@ -50,7 +50,7 @@ Per aggiungere una feature nuova:
 - Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
 - Commenti nel codice e messaggi di commit in italiano.
-- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `core/navigation/main-pages.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `core/models/main-pages.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Flusso git
 

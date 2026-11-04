@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppRoutes } from '@core/navigation/app-routes';
+import { AppRoutes } from '@core/models/app-routes';
 import { LoggedUser } from '../models/auth.model';
 
 @Injectable({

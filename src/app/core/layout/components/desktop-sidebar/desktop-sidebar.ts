@@ -13,9 +13,9 @@ import {
   matMenuBookOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '../../../navigation/app-routes';
+import { AppRoutes } from '../../../models/app-routes';
 import { UserRole } from '@features/auth/models/auth.model';
-import { NavGroup } from '../../../navigation/nav-item.model';
+import { NavGroup } from '../../../models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',
   imports: [RouterLink, RouterLinkActive, NgIcon, TranslocoPipe],

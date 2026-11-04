@@ -1,7 +1,7 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
-import { provideI18n } from '@core/i18n/provide-i18n';
-import { provideNavDirection } from '@core/navigation/nav-direction';
+import { provideI18n } from '@core/services/i18n.provider';
+import { provideNavDirection } from '@core/services/nav-direction.provider';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
