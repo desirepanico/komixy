@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes.const';
+import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
 
 export const DISCOVER_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/discover-page/discover-page').then((m) => m.DiscoverPage),
+    loadComponent: () => import('../pages/discover-page/discover-page').then((m) => m.DiscoverPage),
   },
   {
     path: AppRoutes.Ranking,

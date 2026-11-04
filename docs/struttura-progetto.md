@@ -8,10 +8,10 @@ src/
 │   ├── app.config.ts          provider globali (router, Transloco, ...)
 │   ├── app.routes.ts          rotte principali (lazy loading per feature)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
-│   │   ├── guards/            user-role.guard
+│   │   ├── guards/            user-role/ (user-role.guard + spec)
 │   │   ├── interceptors/      interceptor HTTP (si crea con il primo interceptor)
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   └── providers/         provider di avvio: provideCore() (i18n, direzione delle transizioni)
+│   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
@@ -22,9 +22,9 @@ src/
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
 │       ├── constants/         costanti condivise, `*.const.ts` (app-routes, main-pages)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, environment, edition-severity)
-│       └── services/          servizi condivisi (weekly-ranking, viewport, mobile-swipe, loader Transloco)
-├── testing/                   codice di supporto ai test (Transloco finto, polyfill di jsdom), non fa parte dell'app
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, environment) e edition-severity/
+│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, transloco-http-loader/)
+├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
@@ -62,32 +62,36 @@ features/auth/
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── services/
-│   └── auth.service.ts              dati e logica della feature (signal + computed)
+│   └── auth/
+│       ├── auth.service.ts          dati e logica della feature (signal + computed)
+│       └── auth.service.spec.ts
 └── utils/
-    └── safe-return-url.ts           funzioni pure della feature, con il loro spec
+    └── safe-return-url/
+        ├── safe-return-url.ts       funzioni pure della feature
+        └── safe-return-url.spec.ts
 ```
 
-- **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts` o nel `<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
+- **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts` o in `routes/<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
 - **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
 - **utils**: funzioni pure della feature (`<nome>.ts`), senza Angular se possibile.
-- Ogni file `.ts` ha il suo `*.spec.ts` accanto (regola in `.claude/rules/test.md`).
+- **Una cartella per file**: ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`). Fanno eccezione i `*.model.ts`, `main.ts` e i file nella radice di `src/app`.
 
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` (e le altre cartelle solo se servono).
-2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes.const.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
-3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Dove vanno le altre cose
 
-- **shared/constants**: costanti condivise, un file per costante con `.const.ts` (es. `app-routes.const.ts` con i percorsi di tutte le rotte, `main-pages.const.ts` con l'ordine delle pagine principali).
+- **shared/constants**: costanti condivise, una cartella per costante con `.const.ts` (es. `app-routes/app-routes.const.ts` con i percorsi di tutte le rotte, `main-pages/main-pages.const.ts` con l'ordine delle pagine principali).
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
-- **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale si aggiunge in `core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
-- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
+- **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
+- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
 - **core/guards**: guard delle rotte (`*.guard.ts`).
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
 - **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`).
-- **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` + `swipe/detect-swipe.ts`).
+- **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` e `swipe/detect-swipe/detect-swipe.ts`, ognuno col suo spec).

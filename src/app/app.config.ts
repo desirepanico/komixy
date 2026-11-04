@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
-import { provideCore } from '@core/providers/core.provider';
+import { provideCore } from '@core/providers/core/core.provider';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

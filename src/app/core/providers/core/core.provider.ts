@@ -1,6 +1,6 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
-import { provideI18n } from './i18n.provider';
-import { provideNavDirection } from './nav-direction.provider';
+import { provideI18n } from '../i18n/i18n.provider';
+import { provideNavDirection } from '../nav-direction/nav-direction.provider';
 
 /**
  * Tutti i provider di avvio dell'app (traduzioni, direzione delle transizioni).

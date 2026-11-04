@@ -1,5 +1,5 @@
 import { Directive, input, output } from '@angular/core';
-import { detectSwipe } from './detect-swipe';
+import { detectSwipe } from './detect-swipe/detect-swipe';
 
 /** Elementi su cui un gesto non deve essere considerato uno swipe di pagina. */
 const IGNORED_TARGETS = [

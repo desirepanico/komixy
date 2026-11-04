@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AppRoutes } from './app-routes.const';
+import { AppRoutes } from '../app-routes/app-routes.const';
 import { MAIN_PAGES, mainPageIndex } from './main-pages.const';
 
 describe('MAIN_PAGES', () => {

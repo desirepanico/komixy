@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ComicsPage } from './pages/comics-page/comics-page';
+import { ComicsPage } from '../pages/comics-page/comics-page';
 import { COMICS_ROUTES } from './comics.routes';
 
 describe('COMICS_ROUTES', () => {

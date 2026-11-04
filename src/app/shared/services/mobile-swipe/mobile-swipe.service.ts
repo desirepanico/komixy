@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
-import { MAIN_PAGES } from '../constants/main-pages.const';
+import { MAIN_PAGES } from '../../constants/main-pages/main-pages.const';
 
 /** Percorsi completi (es. "/discover") di tutte le rotte configurate. */
 function collectPaths(routes: Routes, prefix = ''): string[] {

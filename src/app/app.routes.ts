@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes.const';
+import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
 export const routes: Routes = [
   {
     path: '',
@@ -13,7 +13,7 @@ export const routes: Routes = [
       {
         path: AppRoutes.Discover,
         loadChildren: () =>
-          import('@features/discover/discover.routes').then((m) => m.DISCOVER_ROUTES),
+          import('@features/discover/routes/discover.routes').then((m) => m.DISCOVER_ROUTES),
       },
       {
         path: AppRoutes.Releases,
@@ -24,7 +24,8 @@ export const routes: Routes = [
       },
       {
         path: AppRoutes.Comic,
-        loadChildren: () => import('@features/comics/comics.routes').then((m) => m.COMICS_ROUTES),
+        loadChildren: () =>
+          import('@features/comics/routes/comics.routes').then((m) => m.COMICS_ROUTES),
       },
     ],
   },

@@ -29,7 +29,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ## Routing
 
-Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes.const.ts`, così nessuna area dipende da `app.routes.ts`.
+Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `routes/<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes/app-routes.const.ts`, così nessuna area dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
@@ -38,7 +38,7 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ### Navigazione principale
 
-`MAIN_PAGES` in `shared/constants/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+`MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Provider
 
@@ -47,7 +47,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 | Tipo | Dove | Esempio |
 |---|---|---|
 | Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
-| Funzioni di avvio `provideXxx()` | `core/providers/*.provider.ts` | `provideI18n()`, `provideNavDirection()` |
+| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()` |
 | Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
 | Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
 
@@ -55,7 +55,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 
 - `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
 - `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
-- `provideCore()` (`core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
+- `provideCore()` (`core/providers/core/core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
 
 `provideAppInitializer` esegue codice all'avvio; se restituisce una `Promise` o un `Observable`, Angular aspetta che finisca prima di mostrare l'app.
 
@@ -65,10 +65,10 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 
 Regole:
 
-- Un nuovo provider globale è una funzione `provideXxx()` in `core/providers/<nome>.provider.ts`, aggiunta all'elenco di `provideCore()`. In `app.config.ts` si lascia solo ciò che riguarda il router e `provideCore()`.
+- Un nuovo provider globale è una funzione `provideXxx()` in `core/providers/<nome>/<nome>.provider.ts`, aggiunta all'elenco di `provideCore()`. In `app.config.ts` si lascia solo ciò che riguarda il router e `provideCore()`.
 - Un servizio non ha bisogno di un provider: usa `providedIn: 'root'` e `inject()`. Un provider esplicito serve solo per configurare qualcosa (opzioni, token, valori diversi per ambiente).
 - I provider che dipendono dal router o da altre librerie restano nel posto che le configura: non spostare `provideRouter` in `provideCore()`.
-- Gli interceptor HTTP si registrano con `provideHttpClient(withInterceptors([...]))` in `core.provider.ts`, quando ce ne sarà uno.
+- Gli interceptor HTTP si registrano con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`, quando ce ne sarà uno.
 - Niente `NgModule` né `importProvidersFrom`, se esiste una funzione `provideXxx()` della libreria.
 
 ## Accesso e ruoli

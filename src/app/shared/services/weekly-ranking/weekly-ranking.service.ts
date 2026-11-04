@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { RankingEntry } from '../models/ranking-entry.model';
-import { ComicItem } from '../models/comic.model';
+import { RankingEntry } from '../../models/ranking-entry.model';
+import { ComicItem } from '../../models/comic.model';
 
 @Injectable({ providedIn: 'root' })
 export class WeeklyRankingService {

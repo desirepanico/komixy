@@ -1,6 +1,6 @@
-import { AppRoutes } from './app-routes.const';
-import { UserRole } from '../models/user-role.model';
-import { NavItem } from '../models/nav-item.model';
+import { AppRoutes } from '../app-routes/app-routes.const';
+import { UserRole } from '../../models/user-role.model';
+import { NavItem } from '../../models/nav-item.model';
 
 /**
  * Pagine principali nell'ordine della navigazione mobile.

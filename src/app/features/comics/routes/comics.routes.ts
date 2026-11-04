@@ -4,11 +4,11 @@ import { Routes } from '@angular/router';
 export const COMICS_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('./pages/comics-page/comics-page').then((m) => m.ComicsPage),
+    loadComponent: () => import('../pages/comics-page/comics-page').then((m) => m.ComicsPage),
     children: [
       {
         path: ':id',
-        loadComponent: () => import('./pages/comics-page/comics-page').then((m) => m.ComicsPage),
+        loadComponent: () => import('../pages/comics-page/comics-page').then((m) => m.ComicsPage),
       },
     ],
   },

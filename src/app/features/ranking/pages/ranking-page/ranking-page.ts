@@ -3,10 +3,10 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@shared/constants/app-routes.const';
+import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
 import { Button } from '@shared/components/button/button';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
-import { WeeklyRankingService } from '@shared/services/weekly-ranking.service';
+import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ranking.service';
 
 @Component({
   selector: 'app-ranking-page',

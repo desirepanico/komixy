@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { AppRoutes } from '@shared/constants/app-routes.const';
-import { DiscoverPage } from './pages/discover-page/discover-page';
+import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { DiscoverPage } from '../pages/discover-page/discover-page';
 import { RankingPage } from '@features/ranking/pages/ranking-page/ranking-page';
 import { DISCOVER_ROUTES } from './discover.routes';
 

@@ -2,8 +2,8 @@ import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { MobileSwipeService } from '@shared/services/mobile-swipe.service';
-import { ViewportService } from '@shared/services/viewport.service';
+import { MobileSwipeService } from '@shared/services/mobile-swipe/mobile-swipe.service';
+import { ViewportService } from '@shared/services/viewport/viewport.service';
 import { Layout } from './layout';
 
 describe('Layout', () => {

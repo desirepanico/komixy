@@ -15,7 +15,7 @@ case "$file" in
     case "$file" in
       *.spec.ts|*.d.ts|*.model.ts|*/main.ts|*.html) ;;
       *.ts)
-        [ -f "${file%.ts}.spec.ts" ] || { echo "Manca lo spec: crea ${file%.ts}.spec.ts (vedi .claude/rules/test.md)" >&2; exit 2; }
+        [ -f "${file%.ts}.spec.ts" ] || { echo "Manca lo spec: crea ${file%.ts}.spec.ts nella stessa cartella, una cartella per file (vedi .claude/rules/test.md e angular.md)" >&2; exit 2; }
         ;;
     esac
     ;;
