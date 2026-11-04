@@ -65,6 +65,10 @@ Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezion
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
 
+## CI
+
+`.github/workflows/ci.yml` gira su push e pull request verso `develop` ed esegue, in ordine, `npm run lint`, `npm run knip`, `npm run build` e `npm test -- --no-watch`. Knip (`knip.json`) fallisce se trova file, export o dipendenze inutilizzati.
+
 ## Deploy
 
 L'app è una single page app su Vercel. `vercel.json` definisce il comando di build, la cartella di output (`dist/komixy/browser`) e il rewrite di ogni percorso su `index.html`.
