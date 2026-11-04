@@ -15,7 +15,7 @@ PrimeNG è stato rimosso e non va reintrodotto.
 
 ```
 core/       singleton dell'app: guard, interceptor, layout, modelli e servizi globali, navigazione
-features/   una cartella per area: auth, comics, discover, home, not-found, ranking, releases
+features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
 shared/     componenti e direttive generici, senza logica di business
 ```
 

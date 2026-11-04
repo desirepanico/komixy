@@ -13,7 +13,6 @@ Komixy è un'app per collezionisti di fumetti e manga.
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
 | Login | `/login` | `auth` | Rotta nell'enum, pagina non ancora implementata |
 | Non trovata | qualsiasi altra | `not-found` | Attiva: pagina 404 |
-| Home | — | `home` | Segnaposto, non collegata a nessuna rotta |
 
 ## Componenti condivisi
 

@@ -8,14 +8,14 @@ src/
 │   ├── app.config.ts          provider globali (router, Transloco, ...)
 │   ├── app.routes.ts          rotte (lazy loading per feature) ed enum AppRoutes
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
-│   │   ├── guards/            auth.guard, user-role.guard
+│   │   ├── guards/            user-role.guard
 │   │   ├── interceptors/      interceptor HTTP e loader Transloco
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
 │   │   ├── models/            modelli e tipi globali (environment, nav-item, comic)
 │   │   ├── navigation/        main-pages (ordine delle pagine principali) e direzione delle transizioni
 │   │   └── services/          servizi globali (viewport, swipe mobile)
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         auth, comics, discover, home, not-found, ranking, releases
+│   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
