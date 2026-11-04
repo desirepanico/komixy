@@ -21,6 +21,100 @@
     <link rel="preconnect" href="https://fastly.picsum.photos" crossorigin />
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <!--
+        Skeleton mostrato finché Angular non parte: Angular lo sostituisce da solo.
+        È solo decorativo (aria-hidden) e usa le stesse misure della pagina vera (sidebar w-64, nav mobile h-14)
+        per non far "saltare" il layout. La variante si sceglie con data-variant sul div #skeleton.
+        Per adattarlo a una pagina nuova:
+          1. aggiungi un blocco con `group-data-[variant=<nome>]/skel:...` (come "list" e "profile" qui sotto);
+          2. aggiungi la rotta nella mappa dello script sotto il tag app-root.
+        "list" è la variante di default (Scopri, Classifica, Libreria, Uscite) e vale anche per le rotte non in mappa.
+      -->
+      <div id="skeleton" class="group/skel" data-variant="list" aria-hidden="true">
+        <!-- Pagine con menu (tutte tranne login): sidebar da 1024px in su, barra in basso sotto -->
+        <div
+          class="min-h-dvh animate-pulse motion-reduce:animate-none group-data-[variant=login]/skel:hidden lg:flex lg:gap-1 lg:py-2 lg:pl-2"
+        >
+          <div
+            class="sticky top-4 hidden h-[calc(100dvh-2rem)] w-64 shrink-0 rounded-xl border border-surface-50/10 bg-surface-950/70 lg:block"
+          ></div>
+
+          <div class="min-w-0 flex-1 space-y-8 px-3 py-2 md:p-2">
+            <!-- list: titolo, sei righe di classifica e una fila di card -->
+            <div class="hidden space-y-8 group-data-[variant=list]/skel:block">
+              <div class="space-y-4">
+                <div class="space-y-2">
+                  <div class="h-6 w-56 rounded-md bg-surface-800"></div>
+                  <div class="h-4 w-40 rounded-md bg-surface-800/70"></div>
+                </div>
+                <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 md:h-36"></div>
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 md:h-36"></div>
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 md:h-36"></div>
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 max-md:hidden md:h-36"></div>
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 max-md:hidden md:h-36"></div>
+                  <div class="h-28 rounded-xl border border-primary-400/20 bg-surface-900 max-md:hidden md:h-36"></div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="space-y-2">
+                  <div class="h-6 w-48 rounded-md bg-surface-800"></div>
+                  <div class="h-4 w-64 max-w-full rounded-md bg-surface-800/70"></div>
+                </div>
+                <div class="flex gap-2 overflow-hidden">
+                  <div class="h-72 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"></div>
+                  <div class="h-72 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"></div>
+                  <div class="h-72 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"></div>
+                  <div class="h-72 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- profile: avatar con nome e tre blocchi -->
+            <div class="hidden space-y-6 group-data-[variant=profile]/skel:block">
+              <div class="flex items-center gap-4">
+                <div class="size-16 rounded-full bg-surface-800"></div>
+                <div class="space-y-2">
+                  <div class="h-6 w-40 rounded-md bg-surface-800"></div>
+                  <div class="h-4 w-28 rounded-md bg-surface-800/70"></div>
+                </div>
+              </div>
+              <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
+              <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
+              <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
+            </div>
+          </div>
+
+          <div
+            class="fixed inset-x-2 bottom-6 h-14 rounded-full border border-primary-400/15 bg-surface-900/60 lg:hidden"
+          ></div>
+        </div>
+
+        <!-- login: card centrata, senza menu -->
+        <div
+          class="hidden min-h-dvh animate-pulse items-center justify-center px-4 py-10 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:px-8"
+        >
+          <div
+            class="w-full max-w-md space-y-4 rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+          >
+            <div class="mx-auto size-14 rounded-2xl bg-surface-800"></div>
+            <div class="mx-auto h-7 w-48 rounded-md bg-surface-800"></div>
+            <div class="h-11 rounded-xl bg-surface-800/70"></div>
+            <div class="h-11 rounded-xl bg-surface-800/70"></div>
+            <div class="h-11 rounded-full bg-surface-800"></div>
+          </div>
+        </div>
+      </div>
+    </app-root>
+    <script>
+      // Sceglie lo skeleton dal primo segmento dell'indirizzo (rotte non in mappa = "list")
+      (function () {
+        var variants = { login: 'login', profile: 'profile' };
+        var skeleton = document.getElementById('skeleton');
+        var variant = variants[location.pathname.split('/')[1]];
+        if (skeleton && variant) skeleton.setAttribute('data-variant', variant);
+      })();
+    </script>
   </body>
 </html>
