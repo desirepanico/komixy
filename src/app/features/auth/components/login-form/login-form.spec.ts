@@ -65,13 +65,19 @@ describe('LoginForm', () => {
   it('mostra e nasconde la password', async () => {
     const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
     expect(campo('login-password').type).toBe('password');
-    expect(occhio.getAttribute('aria-label')).toBe('login.showPassword');
+    expect(occhio.getAttribute('aria-pressed')).toBe('false');
 
     occhio.click();
     await fixture.whenStable();
     expect(campo('login-password').type).toBe('text');
-    expect(occhio.getAttribute('aria-label')).toBe('login.hidePassword');
     expect(occhio.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('l’occhio mantiene la stessa etichetta quando cambia stato', async () => {
+    const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
+    occhio.click();
+    await fixture.whenStable();
+    expect(occhio.getAttribute('aria-label')).toBe('login.showPassword');
   });
 
   it('toglie l’errore man mano che i campi diventano validi', async () => {

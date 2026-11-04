@@ -58,7 +58,6 @@
     "emailPlaceholder": "nome@esempio.it",
     "password": "Password",
     "showPassword": "Mostra password",
-    "hidePassword": "Nascondi password",
     "submit": "Accedi",
     "errors": {
       "emailRequired": "Inserisci la tua email.",

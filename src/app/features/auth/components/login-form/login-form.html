@@ -51,9 +51,7 @@
         [iconOnly]="true"
         class="absolute right-1 top-1/2 -translate-y-1/2"
         [attr.aria-pressed]="showPassword()"
-        [attr.aria-label]="
-          (showPassword() ? 'login.hidePassword' : 'login.showPassword') | transloco
-        "
+        [attr.aria-label]="'login.showPassword' | transloco"
         (click)="togglePassword()"
       >
         <ng-icon
