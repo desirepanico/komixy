@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserRole } from '@shared/models/user-role.model';
 import { AuthService } from '../../services/auth.service';
@@ -31,12 +30,6 @@ describe('LoginPage', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [provideRouter([{ path: 'login', component: LoginPage }])],
     });
     router = TestBed.inject(Router);

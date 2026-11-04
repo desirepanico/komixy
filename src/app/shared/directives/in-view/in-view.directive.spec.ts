@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { InView } from './in-view.directive';
 
 @Component({
@@ -10,11 +10,8 @@ import { InView } from './in-view.directive';
 class Host {}
 
 describe('InView', () => {
-  afterEach(() => vi.unstubAllGlobals());
-
   const crea = async () => {
     const fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
     await fixture.whenStable();
     return fixture.nativeElement.querySelector('span') as HTMLElement;
   };

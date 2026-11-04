@@ -15,31 +15,31 @@ import { Button } from './button';
 class Host {}
 
 describe('Button', () => {
-  const el = (id: string) => {
+  const el = async (id: string) => {
     const fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
+    await fixture.whenStable();
     return fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
   };
 
-  it('è pieno viola con angoli arrotondati per default', () => {
-    const classi = el('pieno').classList;
+  it('è pieno viola con angoli arrotondati per default', async () => {
+    const classi = (await el('pieno')).classList;
     expect(classi).toContain('bg-primary-500');
     expect(classi).toContain('rounded-xl');
   });
 
-  it('con variant outlined ha solo il bordo, e con rounded è a pillola', () => {
-    const classi = el('bordo').classList;
+  it('con variant outlined ha solo il bordo, e con rounded è a pillola', async () => {
+    const classi = (await el('bordo')).classList;
     expect(classi).toContain('border-primary-400');
     expect(classi).not.toContain('bg-primary-500');
     expect(classi).toContain('rounded-full');
   });
 
-  it('con iconOnly è un quadrato di sola icona', () => {
-    expect(el('icona').classList).toContain('size-10');
+  it('con iconOnly è un quadrato di sola icona', async () => {
+    expect((await el('icona')).classList).toContain('size-10');
   });
 
-  it('funziona anche su un link e mostra il contenuto', () => {
-    const link = el('link');
+  it('funziona anche su un link e mostra il contenuto', async () => {
+    const link = await el('link');
     expect(link.classList).toContain('bg-primary-500');
     expect(link.textContent?.trim()).toBe('Vai');
   });

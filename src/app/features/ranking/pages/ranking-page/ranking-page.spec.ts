@@ -1,26 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { RankingPage } from './ranking-page';
 
 describe('RankingPage', () => {
   let html: HTMLElement;
-  let fixture: ReturnType<typeof TestBed.createComponent<RankingPage>>;
+  let fixture: ComponentFixture<RankingPage>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [provideRouter([])],
     });
     fixture = TestBed.createComponent(RankingPage);
     html = fixture.nativeElement;
-    fixture.detectChanges();
     await fixture.whenStable();
   });
 

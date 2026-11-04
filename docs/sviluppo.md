@@ -23,25 +23,32 @@
 
 Le regole (cosa testare, un file di spec per ogni file `.ts`) sono in `.claude/rules/test.md`. Qui come funziona.
 
-**Come girano.** `npm test` usa il builder `@angular/build:unit-test`: compila gli `*.spec.ts` come l'app (con gli stessi alias `@core`, `@shared`, `@features`) e li esegue con Vitest in un browser simulato (jsdom). Lo spec sta accanto al file (`auth.service.ts` → `auth.service.spec.ts`) e il suo nome è il file più `.spec`.
+**Come girano.** `npm test` usa il builder `@angular/build:unit-test`: compila gli `*.spec.ts` come l'app (con gli stessi alias `@core`, `@shared`, `@features`) e li esegue con Vitest in un browser simulato (jsdom). Lo spec sta accanto al file (`auth.service.ts` → `auth.service.spec.ts`).
+
+**Cosa è già pronto in ogni test.** Le opzioni del builder in `angular.json` caricano tre cose, così gli spec non le ripetono:
+
+| Opzione | File | Cosa fa |
+|---|---|---|
+| `providersFile` | `src/testing/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test |
+| `setupFiles` | `src/testing/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha |
+| `runnerConfig` | `vitest-base.config.mts` | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima |
+
+I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclude e `tsconfig.spec.json` li include.
 
 **Il controllo.** `scripts/check-specs.mjs` gira dopo ESLint dentro `npm run lint`: cerca in `src/` i file `.ts` senza `*.spec.ts` accanto e, se ne trova, li elenca ed esce con errore. Salta gli spec, i `*.d.ts`, i `*.model.ts` (solo tipi ed enum, non hanno codice da eseguire) e `main.ts`. Un file con una funzione, anche se sta in una cartella `models`, ha bisogno dello spec: la funzione va in un file senza `.model`.
 
-**Cosa c'è in uno spec.** `describe` con il nome della classe o della funzione, `it` con il comportamento in italiano. Un componente si testa con `TestBed.createComponent`: si impostano gli input (con un componente `Host` di prova nel file, oppure `fixture.componentRef.setInput`), si fa `fixture.detectChanges()` e, dopo ogni azione che cambia un signal, `await fixture.whenStable()` (l'app è zoneless: non c'è rilevamento automatico).
+**Cosa c'è in uno spec.** `describe` con il nome della classe o della funzione, `it` con il comportamento in italiano. Un componente si crea con `TestBed.createComponent`; gli input si impostano con un componente `Host` di prova nel file (che prova anche i binding del template) o con `fixture.componentRef.setInput`. L'app è zoneless: dopo la creazione e dopo ogni azione che cambia un signal si fa `await fixture.whenStable()`, non `detectChanges()`.
 
 **Ricette ricorrenti**
 
 | Serve | Come |
 |---|---|
-| Testi tradotti (`transloco`) | `TranslocoTestingModule.forRoot({ langs: { it: {} }, translocoConfig: { availableLangs: ['it'], defaultLang: 'it' } })`: i testi che si leggono sono le chiavi (`'menu.main'`) |
 | `routerLink`, `Router` | `provideRouter([...rotte])`; per una pagina vera `RouterTestingHarness.create()` e `harness.navigateByUrl(...)` |
-| Richieste HTTP | `provideHttpClient()` + `provideHttpClientTesting()`, poi `HttpTestingController.expectOne(...).flush(...)` |
+| Richieste HTTP | `provideHttpClient()` + `provideHttpClientTesting()`, `HttpTestingController.expectOne(...).flush(...)` e `http.verify()` alla fine |
 | Codice di avvio (`provideXxx()`) | `providers: [provideXxx()]`, poi `await TestBed.inject(ApplicationInitStatus).donePromise` |
 | Un servizio di cui non serve il codice vero | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova |
-| API che jsdom non ha (`ResizeObserver`, `IntersectionObserver`, `matchMedia`, `scrollBy`) | `vi.stubGlobal(...)` nel test, `vi.unstubAllGlobals()` dopo |
+| Un'API del browser con un comportamento diverso (`matchMedia` vero, `IntersectionObserver`) | `vi.stubGlobal(...)` dentro il test |
 | Un guard | `TestBed.runInInjectionContext(() => guard(...))` |
-
-Ogni spec imposta da sé il suo `TestBed`: non ci sono helper condivisi, perché anche un helper `.ts` avrebbe bisogno del suo spec.
 
 ## Lint
 

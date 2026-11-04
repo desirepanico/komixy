@@ -1,36 +1,21 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { TranslocoTestingModule } from '@jsverse/transloco';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { DiscoverPage } from './discover-page';
 
 describe('DiscoverPage', () => {
   let html: HTMLElement;
-  let fixture: ReturnType<typeof TestBed.createComponent<DiscoverPage>>;
+  let fixture: ComponentFixture<DiscoverPage>;
 
   const segnalibri = (selettore: string) =>
     Array.from(html.querySelectorAll(`${selettore} button[aria-pressed]`)) as HTMLButtonElement[];
 
   beforeEach(async () => {
-    vi.stubGlobal(
-      'ResizeObserver',
-      class {
-        observe = vi.fn();
-        disconnect = vi.fn();
-      },
-    );
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [provideRouter([])],
     });
     fixture = TestBed.createComponent(DiscoverPage);
     html = fixture.nativeElement;
-    fixture.detectChanges();
     await fixture.whenStable();
   });
 

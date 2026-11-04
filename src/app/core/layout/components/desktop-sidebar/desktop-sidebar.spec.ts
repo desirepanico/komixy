@@ -1,29 +1,22 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { DesktopSidebar } from './desktop-sidebar';
 
 describe('DesktopSidebar', () => {
-  let fixture: ReturnType<typeof TestBed.createComponent<DesktopSidebar>>;
+  let fixture: ComponentFixture<DesktopSidebar>;
   let html: HTMLElement;
 
   const titoli = () => Array.from(html.querySelectorAll('section button')) as HTMLButtonElement[];
   const link = () => Array.from(html.querySelectorAll('nav a')) as HTMLAnchorElement[];
 
-  beforeEach(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [provideRouter([])],
     });
     fixture = TestBed.createComponent(DesktopSidebar);
     html = fixture.nativeElement;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('mostra i gruppi di menu con i loro link', () => {

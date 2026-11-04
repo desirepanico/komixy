@@ -24,6 +24,7 @@ src/
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, environment, edition-severity)
 │       └── services/          servizi condivisi (weekly-ranking, viewport, mobile-swipe, loader Transloco)
+├── testing/                   codice di supporto ai test (Transloco finto, polyfill di jsdom), non fa parte dell'app
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
@@ -32,6 +33,7 @@ public/
 └── fonts/
 scripts/
 └── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
+vitest-base.config.mts         opzioni di Vitest per i test (ripristino automatico di mock e globali)
 ```
 
 Dove mettere le cose:

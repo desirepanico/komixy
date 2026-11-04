@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslocoTestingModule } from '@jsverse/transloco';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HorizontalScroller } from './horizontal-scroller';
 
 @Component({
@@ -32,33 +31,13 @@ describe('HorizontalScroller', () => {
   };
 
   beforeEach(async () => {
-    vi.stubGlobal(
-      'ResizeObserver',
-      class {
-        observe = vi.fn();
-        disconnect = vi.fn();
-      },
-    );
-    vi.stubGlobal('matchMedia', () => ({ matches: false }));
-
-    TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
-    });
     fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
     await fixture.whenStable();
 
     lista = fixture.nativeElement.querySelector('[role="region"]');
     scrollBy = vi.fn();
     lista.scrollBy = scrollBy as unknown as typeof lista.scrollBy;
   });
-
-  afterEach(() => vi.unstubAllGlobals());
 
   it("è una regione con l'etichetta per i lettori di schermo e il contenuto passato", () => {
     expect(lista.getAttribute('aria-label')).toBe('Lista di prova');

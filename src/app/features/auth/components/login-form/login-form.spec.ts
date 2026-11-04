@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { LoginForm } from './login-form';
 
@@ -20,20 +19,12 @@ describe('LoginForm', () => {
   const errori = () =>
     Array.from(html.querySelectorAll('[role="alert"]')).map((e) => e.textContent?.trim());
 
-  beforeEach(() => {
+  beforeEach(async () => {
     emessi.length = 0;
-    TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
-    });
     fixture = TestBed.createComponent(LoginForm);
     fixture.componentInstance.loginSubmit.subscribe((c) => emessi.push(c));
     html = fixture.nativeElement;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('non mostra errori prima del primo invio', () => {

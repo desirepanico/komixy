@@ -20,5 +20,6 @@ describe('provideI18n', () => {
     const transloco = TestBed.inject(TranslocoService);
     expect(transloco.getActiveLang()).toBe('it');
     expect(transloco.translate('saluto')).toBe('Ciao');
+    http.verify();
   });
 });

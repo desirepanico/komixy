@@ -1,26 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
-import { TranslocoTestingModule } from '@jsverse/transloco';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { routes } from './app.routes';
 
 describe('routes', () => {
   beforeEach(() => {
-    vi.stubGlobal(
-      'ResizeObserver',
-      class {
-        observe = vi.fn();
-        disconnect = vi.fn();
-      },
-    );
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [provideRouter(routes)],
     });
   });

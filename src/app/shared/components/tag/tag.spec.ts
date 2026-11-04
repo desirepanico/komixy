@@ -12,18 +12,18 @@ class Host {
 }
 
 describe('Tag', () => {
-  const crea = () => {
+  const crea = async () => {
     const fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
+    await fixture.whenStable();
     return fixture;
   };
 
-  it('mostra il testo passato come contenuto', () => {
-    expect(crea().nativeElement.textContent.trim()).toBe('Limitata');
+  it('mostra il testo passato come contenuto', async () => {
+    expect((await crea()).nativeElement.textContent.trim()).toBe('Limitata');
   });
 
   it('è viola per default e neutro con severity secondary', async () => {
-    const fixture = crea();
+    const fixture = await crea();
     const span = fixture.nativeElement.querySelector('span') as HTMLElement;
     expect(span.classList).toContain('bg-primary-500');
 

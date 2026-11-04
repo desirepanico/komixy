@@ -31,6 +31,7 @@ describe('provideCore', () => {
     await router.navigateByUrl('/discover');
     await router.navigateByUrl('/releases');
     expect(document.documentElement.dataset['navDirection']).toBe('forward');
+    http.verify();
     delete document.documentElement.dataset['navDirection'];
   });
 });

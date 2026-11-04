@@ -13,7 +13,6 @@ describe('AuthService', () => {
   let router: Router;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
     vi.spyOn(router, 'navigate').mockResolvedValue(true);

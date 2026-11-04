@@ -1,7 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { MobileSwipeService } from '@shared/services/mobile-swipe.service';
 import { ViewportService } from '@shared/services/viewport.service';
@@ -13,7 +12,6 @@ describe('Layout', () => {
 
   const crea = async () => {
     const fixture = TestBed.createComponent(Layout);
-    fixture.detectChanges();
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
   };
@@ -21,12 +19,6 @@ describe('Layout', () => {
   beforeEach(() => {
     navigate.mockClear();
     TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
       providers: [
         provideRouter([]),
         { provide: ViewportService, useValue: { isDesktop: desktop } },

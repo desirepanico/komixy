@@ -33,10 +33,10 @@ describe('Swipe', () => {
   let host: Host;
   const el = (id: string) => fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     fixture = TestBed.createComponent(Host);
     host = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('emette swipeLeft con un gesto verso sinistra', () => {

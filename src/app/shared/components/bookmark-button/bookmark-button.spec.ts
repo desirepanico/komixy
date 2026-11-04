@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { TranslocoTestingModule } from '@jsverse/transloco';
 import { describe, expect, it } from 'vitest';
 import { BookmarkButton } from './bookmark-button';
 
@@ -13,22 +12,14 @@ class Host {
 }
 
 describe('BookmarkButton', () => {
-  const setup = () => {
-    TestBed.configureTestingModule({
-      imports: [
-        TranslocoTestingModule.forRoot({
-          langs: { it: {} },
-          translocoConfig: { availableLangs: ['it'], defaultLang: 'it' },
-        }),
-      ],
-    });
+  const setup = async () => {
     const fixture = TestBed.createComponent(Host);
-    fixture.detectChanges();
+    await fixture.whenStable();
     return { fixture, button: fixture.nativeElement.querySelector('button') as HTMLElement };
   };
 
   it('espone lo stato ai lettori di schermo con aria-pressed e un testo nascosto', async () => {
-    const { fixture, button } = setup();
+    const { fixture, button } = await setup();
     expect(button.getAttribute('aria-pressed')).toBe('false');
     expect(button.querySelector('.sr-only')?.textContent).toBe('bookmark.add');
 
@@ -39,7 +30,7 @@ describe('BookmarkButton', () => {
   });
 
   it('cambia stile quando è salvato', async () => {
-    const { fixture, button } = setup();
+    const { fixture, button } = await setup();
     expect(button.classList).toContain('bg-surface-950/75');
 
     fixture.componentInstance.salvato.set(true);

@@ -19,7 +19,6 @@ describe('userRoleGuard', () => {
     );
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
     auth = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
   });
