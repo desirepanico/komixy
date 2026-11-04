@@ -1,7 +1,5 @@
 #!/bin/bash
-# Hook SessionStart: installa le dipendenze solo se mancano (es. sessioni cloud con clone nuovo).
+# Hook SessionStart: installa le dipendenze se mancano o se package.json/package-lock.json sono cambiati.
 cd "$CLAUDE_PROJECT_DIR" || exit 0
-if [ ! -d node_modules ]; then
-  npm ci --no-audit --no-fund >&2 || echo "npm ci fallita: installa le dipendenze a mano" >&2
-fi
+node scripts/ensure-deps.mjs >&2 || echo "Installazione delle dipendenze fallita: installale a mano" >&2
 exit 0

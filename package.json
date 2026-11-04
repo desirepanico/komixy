@@ -3,14 +3,19 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "prestart": "node scripts/ensure-deps.mjs",
     "start": "ng serve",
+    "prebuild": "node scripts/ensure-deps.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "pretest": "node scripts/ensure-deps.mjs",
     "test": "ng test",
     "deploy:dev": "npx vercel",
     "deploy:login": "npx vercel login",
     "deploy:prod": "npx vercel --prod",
+    "prelint": "node scripts/ensure-deps.mjs",
     "lint": "eslint src && node scripts/check-specs.mjs",
+    "preknip": "node scripts/ensure-deps.mjs",
     "knip": "knip"
   },
   "prettier": {

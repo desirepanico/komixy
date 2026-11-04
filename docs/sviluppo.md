@@ -13,6 +13,10 @@
 | `npm run deploy:dev` | Preview su Vercel |
 | `npm run deploy:prod` | Pubblicazione in produzione |
 
+## Installazione automatica delle dipendenze
+
+Non serve lanciare `npm install` a mano dopo un `git pull`. Prima di `npm start`, `build`, `test`, `lint` e `knip` (script `pre*` in `package.json`) parte `scripts/ensure-deps.mjs`: confronta un'impronta di `package.json` e `package-lock.json` con quella salvata in `node_modules/.komixy-deps-hash` e, se è diversa o manca, esegue `npm install`. Se non è cambiato nulla esce subito. In CI (`CI` impostata) non fa nulla, perché le dipendenze arrivano da `npm ci`. Vale anche per le attività di VS Code e per Claude Code (hook `SessionStart` e modifica di `package.json`, vedi `docs/claude-code.md`).
+
 ## Flusso git
 
 - Le regole sui branch sono in `.claude/rules/git.md`: nessun branch nuovo di iniziativa, il nome lo sceglie l'utente.
