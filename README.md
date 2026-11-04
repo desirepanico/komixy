@@ -1,6 +1,6 @@
 # Komixy
 
-App Angular 21 per collezionisti di fumetti e manga: tema scuro viola, Tailwind CSS v4, traduzioni con Transloco.
+App Angular 22 per collezionisti di fumetti e manga: tema scuro viola, Tailwind CSS v4, traduzioni con Transloco.
 
 - `npm start` — dev server su http://localhost:4200
 - `npm run build` · `npm test` · `npm run lint`

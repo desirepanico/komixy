@@ -1,6 +1,6 @@
 # Komixy
 
-App Angular 21 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
+App Angular 22 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
 
 Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
 
