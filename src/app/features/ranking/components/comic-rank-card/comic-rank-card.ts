@@ -32,7 +32,7 @@ export class ComicRankCard {
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =
-    '-mr-1 flex w-15 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in md:-mr-2 md:w-20';
+    '-mr-1 flex w-12 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in xs:w-15 md:-mr-2 md:w-20';
 
   /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
   protected readonly enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);

@@ -1,5 +1,5 @@
 <div
-  class="group relative flex items-center gap-3 rounded-xl border border-primary-400/20 bg-surface-900 py-3 pl-2 pr-3 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98]"
+  class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 py-3 pl-2 pr-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98] xs:gap-3 xs:pr-3"
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
   <span
@@ -10,13 +10,13 @@
   >
     <span [class]="rankClasses()">
       <span class="text-base font-bold md:text-lg">#</span>
-      <span class="text-4xl md:text-5xl">{{ rank() }}</span>
+      <span class="text-3xl xs:text-4xl md:text-5xl">{{ rank() }}</span>
     </span>
   </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 
   <img
-    class="aspect-2/3 h-24 shrink-0 rounded-lg object-cover md:h-28"
+    class="aspect-2/3 h-20 shrink-0 rounded-lg object-cover xs:h-24 md:h-28"
     [src]="comic().coverUrl"
     loading="lazy"
     [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"

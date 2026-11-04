@@ -5,6 +5,9 @@
 @theme static {
   --font-sans: 'Mulish', sans-serif;
 
+  /* Telefoni stretti: sotto i 360px (es. 320px) le card della classifica si stringono */
+  --breakpoint-xs: 22.5rem;
+
   /* Animazioni del numero in classifica */
   --animate-rank-in: rank-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-rank-glow: rank-glow 5s ease-in-out infinite;
