@@ -47,5 +47,21 @@
     "description": "Questa pagina sembra essersi persa nel cosmo. Torna alla scoperta e trova la tua prossima avventura.",
     "backHome": "Scopri manga e fumetti",
     "goBack": "Torna indietro"
+  },
+  "login": {
+    "title": "Accedi a Komixy",
+    "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",
+    "email": "Email",
+    "emailPlaceholder": "nome@esempio.it",
+    "password": "Password",
+    "showPassword": "Mostra password",
+    "hidePassword": "Nascondi password",
+    "submit": "Accedi",
+    "errors": {
+      "emailRequired": "Inserisci la tua email.",
+      "emailInvalid": "Inserisci un indirizzo email valido.",
+      "passwordRequired": "Inserisci la password.",
+      "passwordMinLength": "La password deve avere almeno {{ min }} caratteri."
+    }
   }
 }

@@ -7,3 +7,8 @@ export interface LoggedUser {
   email: string;
   userRole: UserRole;
 }
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}

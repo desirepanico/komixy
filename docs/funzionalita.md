@@ -11,7 +11,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 | Libreria | `/library` | — | Voce di menu, rotta non ancora implementata |
 | Profilo | `/profile` | — | Voce di menu, rotta non ancora implementata |
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
-| Login | `/login` | `auth` | Rotta nell'enum, pagina non ancora implementata |
+| Login | `/login` | `auth` | Attiva, fuori dal layout: form reattivo (email e password) con errori dopo l'invio; l'accesso è simulato in `AuthService` (TODO API) e torna alla pagina richiesta (`returnUrl`, solo percorsi interni) o a Scopri |
 | Non trovata | qualsiasi altra | `not-found` | Attiva: pagina 404 |
 
 ## Componenti condivisi

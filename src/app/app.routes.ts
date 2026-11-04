@@ -29,6 +29,11 @@ export const routes: Routes = [
     ],
   },
   {
+    path: AppRoutes.Login,
+    loadComponent: () =>
+      import('@features/auth/pages/login-page/login-page').then((m) => m.LoginPage),
+  },
+  {
     path: '**',
     loadComponent: () =>
       import('@features/not-found/pages/not-found-page/not-found-page').then((m) => m.NotFoundPage),
