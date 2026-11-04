@@ -7,6 +7,7 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { NotFoundNavigationService } from '@features/not-found/services/not-found-navigation/not-found-navigation.service';
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
+import { LibraryNavigationService } from '@features/library/services/library-navigation/library-navigation.service';
 import { ReleasesNavigationService } from '@features/releases/services/releases-navigation/releases-navigation.service';
 import { routes } from './app.routes';
 
@@ -40,6 +41,11 @@ describe('routes', () => {
   it('releases mostra la pagina delle uscite', async () => {
     const { html } = await apri('/releases');
     expect(html.querySelector('app-releases-page')).not.toBeNull();
+  });
+
+  it('library mostra la pagina della libreria', async () => {
+    const { html } = await apri('/library');
+    expect(html.querySelector('app-library-page')).not.toBeNull();
   });
 
   it('comic/:id mostra la pagina dei fumetti', async () => {
@@ -83,6 +89,11 @@ describe('routes', () => {
         'releases → releasesLink',
         () => TestBed.inject(ReleasesNavigationService).releasesLink,
         'app-releases-page',
+      ],
+      [
+        'library → libraryLink',
+        () => TestBed.inject(LibraryNavigationService).libraryLink,
+        'app-library-page',
       ],
       ['auth → loginLink', () => TestBed.inject(AuthNavigationService).loginLink, 'app-login-page'],
       [

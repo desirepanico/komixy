@@ -70,6 +70,9 @@
   "releases": {
     "comingSoon": "Uscite in arrivo"
   },
+  "library": {
+    "comingSoon": "Libreria in arrivo"
+  },
   "comics": {
     "comingSoon": "Dettaglio del fumetto in arrivo"
   }

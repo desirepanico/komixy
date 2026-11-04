@@ -8,7 +8,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 | Classifica | `/discover/ranking` | `ranking` | Attiva: classifica settimanale completa |
 | Uscite | `/releases` | `releases` | Segnaposto: la pagina mostra solo un testo provvisorio |
 | Fumetto | `/comic/:id` | `comics` | Segnaposto (testo provvisorio); manca la pagina di dettaglio |
-| Libreria | `/library` | — | Voce di menu, rotta non ancora implementata |
+| Libreria | `/library` | `library` | Segnaposto: la pagina mostra solo un testo provvisorio |
 | Profilo | `/profile` | — | Voce di menu, rotta non ancora implementata |
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
 | Login | `/login` | `auth` | Attiva, fuori dal layout: form reattivo (email e password) con errori dopo l'invio; l'accesso è simulato in `AuthService` (TODO API) e torna alla pagina richiesta (`returnUrl`, solo percorsi interni) o a Scopri |
