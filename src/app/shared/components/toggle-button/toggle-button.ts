@@ -22,7 +22,7 @@ export class ToggleButton {
       'inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border text-primary-300 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40';
     const state = this.pressed()
       ? 'border-primary-500 bg-primary-900'
-      : 'border-surface-700 bg-primary-950/75';
+      : 'border-surface-700 bg-surface-950/75';
     return `${base} ${state}`;
   });
 }
