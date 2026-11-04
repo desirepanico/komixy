@@ -95,46 +95,54 @@ Se un passaggio fallisce il commit è segnato con ❌, se passano tutti con ✅.
 
 L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel.json` definisce il comando di build, la cartella di output (`dist/komixy/browser`) e il rewrite di ogni percorso su `index.html`.
 
+**I deploy sono sempre manuali.** `vercel.json` ha `"git": { "deploymentEnabled": false }`: un `git push`, su qualsiasi ramo, non pubblica niente. Si pubblica solo lanciando un comando (o *Redeploy*/*Promote* dal pannello Vercel). Così nessun push cambia per sbaglio dev o produzione, e pubblicare in dev non tocca mai la produzione.
+
 **Preview e produzione.** Vercel distingue due tipi di deployment:
 
-- **Preview**: un indirizzo di prova, separato dal sito pubblico. Ogni deployment ha il suo indirizzo (`desirepanico-komixy-<codice>-<team>.vercel.app`).
-- **Produzione**: il sito pubblico, sul dominio `desirepanico-komixy.vercel.app`. Cambia solo quando un deployment di produzione va in linea.
+- **Preview (dev)**: un indirizzo di prova, separato dal sito pubblico. Ogni deployment ha il suo indirizzo (`desirepanico-komixy-<codice>-<team>.vercel.app`).
+- **Produzione**: il sito pubblico. Cambia solo con un deployment di produzione.
 
-**Gli indirizzi del progetto.** Dev: `https://desirepanico-komixy-dev.vercel.app` (ultimo `develop`). Produzione: `https://desirepanico-komixy.vercel.app` (ultimo `master`).
+**Gli indirizzi del progetto.** Dev: `https://desirepanico-komixy-dev.vercel.app`. Produzione: `https://desirepanico-komixy.vercel.app`.
 
-**I due rami.**
-
-| Ramo | Serve a | Su Vercel |
-|---|---|---|
-| `develop` | Lavoro di tutti i giorni | **Preview**, sul dominio dev |
-| `master` | Versione pubblica | **Produzione**, sul dominio pubblico |
-
-Il ramo di produzione si imposta in Vercel, *Settings → Environments → Production → Branch Tracking* (deve essere `master`): non lo decide il codice del repository.
+**I due rami.** `develop` è il ramo di lavoro e `master` la versione pubblicata. Non sono collegati a Vercel: a decidere cosa va in dev e in produzione è il comando che si lancia.
 
 **Cosa pubblica cosa.**
 
 | Azione | Risultato |
 |---|---|
-| `git push` su `develop` | Parte da solo un deployment: una **preview** sull'ultimo `develop` (`desirepanico-komixy-dev.vercel.app`; l'alias automatico `desirepanico-komixy-git-develop-<team>.vercel.app` porta allo stesso posto) |
-| Pull request `develop` → `master` unita | Parte da solo un deployment di **produzione**: aggiorna il dominio pubblico |
-| `npm run deploy:dev` | Preview delle modifiche locali, anche non ancora pushate (serve `npm run deploy:login` la prima volta) |
-| `npm run deploy:prod` | Produzione dai file locali, saltando `master`: solo per emergenze |
-| «Promote to Production» nel pannello Vercel | Mette in produzione un deployment già fatto (utile anche per tornare indietro) |
+| `git push` (qualsiasi ramo) | Non pubblica. Parte solo la CI su GitHub |
+| `npm run deploy:dev` | **Preview** dai file locali: mai la produzione |
+| `npm run deploy:prod` | **Produzione** dai file locali |
+| *Redeploy* o *Promote to Production* nel pannello Vercel | Rifà o mette in produzione un deployment già fatto (utile anche per tornare indietro) |
 
 **Come si rilascia.**
 
-1. Si lavora e si pusha su `develop`: la preview è su `desirepanico-komixy-dev.vercel.app` e la CI controlla il codice.
-2. Quando la preview va bene, su GitHub si apre una pull request da `develop` a `master`. La CI la controlla.
-3. Si unisce la pull request: Vercel pubblica `master` in produzione da solo.
+1. Si lavora e si pusha su `develop`: la CI controlla il codice. Non si pubblica niente.
+2. Per provare: da `develop`, pulito e aggiornato, `npm run deploy:dev`. L'indirizzo di dev è `https://desirepanico-komixy-dev.vercel.app`.
+3. Quando va bene, su GitHub si apre una pull request da `develop` a `master` (la CI la controlla) e si unisce.
+4. Da `master` aggiornato e pulito, `npm run deploy:prod`. Il sito pubblico è `https://desirepanico-komixy.vercel.app`.
 
-**Allineare `master` la prima volta.** `master` contiene solo due commit iniziali con una storia diversa da `develop`. Prima di usarlo come produzione si porta al contenuto di `develop`, a cura dell'utente (è un push forzato, sovrascrive `master`):
+**Comandi per pubblicare.** La prima volta su un PC: `npm run deploy:login` e, se Vercel lo chiede, collegare il progetto esistente `desirepanico-komixy` nel team `desy2`.
+
+*Dev*:
 
 ```bash
-git fetch origin
-git push origin origin/develop:master --force-with-lease
+git checkout develop
+git pull --rebase origin develop
+npm run deploy:dev
 ```
 
-Prima di quel push in Vercel si imposta `master` come ramo di produzione: così il push crea subito il deployment di produzione.
+*Produzione* (dopo aver unito la pull request):
+
+```bash
+git checkout master
+git pull origin master
+git status
+npm run deploy:prod
+git checkout develop
+```
+
+`npm run deploy:*` pubblica i file della cartella in cui lo lanci, non il ramo remoto: per questo si lancia da `develop` (dev) o da `master` (produzione), con `git status` pulito. Se l'indirizzo `-dev` non si aggiorna dopo `deploy:dev`, si assegna a mano all'ultima preview: `npx vercel alias set <indirizzo-della-preview> desirepanico-komixy-dev.vercel.app`.
 
 **Accesso.** Gli indirizzi `*.vercel.app` delle preview sono protetti (Vercel Authentication): chi li apre deve essere collegato a Vercel con un account del team.
 
