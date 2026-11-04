@@ -86,4 +86,4 @@ Regole:
 
 ## Dati
 
-I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `shared/models/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
+I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale).
