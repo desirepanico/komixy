@@ -22,8 +22,10 @@
       @for (group of navGroups(); track group.title) {
         <section>
           <button
+            appButton
             type="button"
-            class="mb-2 flex w-full items-center cursor-pointer hover:bg-surface-800/70 hover:text-surface-100 justify-between rounded-lg px-3 py-2 text-left text-xs font-bold uppercase tracking-wider text-surface-500 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            variant="text"
+            class="mb-2 w-full justify-between px-3 py-2 text-left text-xs font-bold uppercase tracking-wider hover:bg-surface-800/70"
             [attr.aria-expanded]="group.expandable"
             [attr.aria-controls]="'nav-group-' + group.title"
             (click)="toggleGroup(group)"

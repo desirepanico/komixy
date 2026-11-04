@@ -1,14 +1,17 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
-import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
+import { Button } from '@shared/components/button/button';
 import { Tag } from '@shared/components/tag/tag';
 import { EditionType } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 @Component({
   selector: 'app-comic-card',
-  imports: [TranslocoPipe, RouterLink, Tag, BookmarkButton],
+  imports: [TranslocoPipe, RouterLink, Tag, Button, NgIcon],
+  providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-card.html',
 })
 export class ComicCard {

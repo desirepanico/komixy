@@ -9,6 +9,7 @@ import { Button } from './button';
     <button id="pieno" appButton>Ok</button>
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
     <button id="icona" appButton [iconOnly]="true" aria-label="Chiudi"></button>
+    <button id="testo" appButton variant="text" class="px-3">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
   `,
 })
@@ -44,6 +45,13 @@ describe('Button', () => {
 
   it('con iconOnly è un quadrato di sola icona', async () => {
     expect((await el('icona')).classList).toContain('size-10');
+  });
+
+  it('con variant text non ha sfondo né bordo e lascia le spaziature a chi lo usa', async () => {
+    const classi = (await el('testo')).classList;
+    expect(classi).not.toContain('bg-primary-500');
+    expect(classi).not.toContain('border');
+    expect(classi).not.toContain('px-5');
   });
 
   it('funziona anche su un link e mostra il contenuto', async () => {

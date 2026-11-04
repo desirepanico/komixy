@@ -44,8 +44,11 @@
         class="w-full rounded-xl border border-surface-700 bg-surface-950/60 py-2.5 pl-4 pr-12 text-sm text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
       />
       <button
+        appButton
         type="button"
-        class="absolute right-1.5 top-1/2 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-lg text-surface-400 transition-colors hover:text-surface-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        variant="text"
+        [iconOnly]="true"
+        class="absolute right-1 top-1/2 -translate-y-1/2"
         [attr.aria-pressed]="showPassword()"
         [attr.aria-label]="
           (showPassword() ? 'login.hidePassword' : 'login.showPassword') | transloco
