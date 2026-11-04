@@ -28,9 +28,10 @@ paths:
 
 ## Nomi
 
-- File in kebab-case, con il tipo nel nome: `comic.model.ts`, `auth.service.ts`, `user-role.guard.ts`, `swipe.directive.ts`, `auth.interceptor.ts`, `i18n.provider.ts` (funzione `provideXxx()` di avvio). Componenti e pagine senza `.component`: `comic-card.ts`, `discover-page.ts` (le pagine finiscono con `-page`).
+- File in kebab-case, con il tipo nel nome: `comic.model.ts`, `auth.service.ts`, `user-role.guard.ts`, `swipe.directive.ts`, `auth.interceptor.ts`, `i18n.provider.ts` (funzione `provideXxx()` di avvio), `app-routes.const.ts` (costanti). Componenti e pagine senza `.component`: `comic-card.ts`, `discover-page.ts` (le pagine finiscono con `-page`).
 - Classi in PascalCase, con il suffisso del tipo dove il file lo ha: `AuthService`, `DiscoverPage`. Componenti e direttive senza suffisso: `ComicCard`, `Swipe`.
-- Costanti e funzioni (`app-routes.ts`, `detect-swipe.ts`) senza suffisso: il nome dice già cosa sono.
+- Le costanti stanno in `shared/constants`, un file per costante, con `.const.ts` nel nome (`app-routes.const.ts`, `main-pages.const.ts`). Nel codice le costanti sono `readonly` e in `UPPER_SNAKE_CASE` (`MAIN_PAGES`); un enum resta in PascalCase (`AppRoutes`).
+- Le funzioni pure (`detect-swipe.ts`) senza suffisso: il nome dice già cosa sono.
 - Prefisso `app` per tutti i componenti e le direttive, sia generici (`shared`) sia di feature: selector `app-nome` (componenti), `[appNome]` (direttive e componenti ad attributo come `button[appButton]`).
 
 ## Stato e servizi

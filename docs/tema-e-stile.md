@@ -21,7 +21,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 
 - Anima il passaggio tra le pagine principali con la View Transitions API, solo sotto i 1024px (mobile e tablet). Da 1024px in su la pagina cambia senza animazione.
 - La pagina ha `view-transition-name: page` e la nav in basso `mobile-nav` (resta ferma): sono impostati in `core/layout/layout.html` e `mobile-bottom-nav.html`.
-- La direzione arriva da `<html data-nav-direction="forward|back">`, impostato da `core/services/nav-direction.provider.ts`. Con `forward` la pagina esce a sinistra ed entra da destra, con `back` il contrario (200 ms, spostamento di 24px con dissolvenza).
+- La direzione arriva da `<html data-nav-direction="forward|back">`, impostato da `core/providers/nav-direction.provider.ts`. Con `forward` la pagina esce a sinistra ed entra da destra, con `back` il contrario (200 ms, spostamento di 24px con dissolvenza).
 - Lo sfondo (`root`) cambia subito, anima solo la pagina.
 - Con `prefers-reduced-motion: reduce` tutte le animazioni della view transition sono disattivate.
 

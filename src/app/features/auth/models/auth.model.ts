@@ -1,7 +1,5 @@
-export enum UserRole {
-  Admin,
-  User,
-}
+import { UserRole } from '@shared/models/user-role.model';
+
 export interface LoggedUser {
   id: string;
   email: string;

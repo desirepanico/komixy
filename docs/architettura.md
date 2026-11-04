@@ -14,7 +14,7 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ## Struttura di `src/app`
 
 ```
-core/       singleton dell'app: models, services, guards, interceptors, layout
+core/       shell dell'app: guards, interceptors, layout, providers (provideCore)
 features/   una cartella per area: auth, comics, discover, not-found, ranking, releases
 shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
 ```
@@ -23,13 +23,13 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 ### Regole sulle dipendenze
 
-- `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: `core` importa da `features/auth` (modello e servizio), che resta nella feature; la dipendenza è a senso unico e `auth` non importa da `core/layout`.
+- `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: il guard `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`; la dipendenza è a senso unico e `auth` non importa da `core`.
 - Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking` (a senso unico). Il servizio `WeeklyRankingService` è in `shared/services`.
-- Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, navigazione, avvio).
+- Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
 
 ## Routing
 
-Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes.ts`, così nessuna area dipende da `app.routes.ts`.
+Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le feature con più pagine hanno un file `<nome>.routes.ts` caricato con `loadChildren` (`discover`, `comics`). L'enum `AppRoutes` sta in `shared/constants/app-routes.const.ts`, così nessuna area dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne la pagina 404 (`**`).
 - `/` reindirizza a `discover`; `discover/ranking` è una rotta figlia, così la voce di menu resta attiva.
@@ -38,7 +38,7 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ### Navigazione principale
 
-`MAIN_PAGES` in `core/models/main-pages.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+`MAIN_PAGES` in `shared/constants/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Accesso e ruoli
 
@@ -47,4 +47,4 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ## Dati
 
-I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/models/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
+I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `shared/models/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).

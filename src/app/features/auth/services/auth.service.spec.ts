@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AppRoutes } from '@shared/constants/app-routes';
-import { LoggedUser, UserRole } from '../models/auth.model';
+import { AppRoutes } from '@shared/constants/app-routes.const';
+import { LoggedUser } from '../models/auth.model';
+import { UserRole } from '@shared/models/user-role.model';
 import { AuthService } from './auth.service';
 
 const utente: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };

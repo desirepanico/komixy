@@ -1,7 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { AppRoutes } from '@shared/constants/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes.const';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
 import { InView } from '@shared/directives/in-view/in-view.directive';

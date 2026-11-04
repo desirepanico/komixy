@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes.const';
 export const routes: Routes = [
   {
     path: '',

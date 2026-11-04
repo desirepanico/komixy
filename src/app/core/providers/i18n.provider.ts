@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { lastValueFrom } from 'rxjs';
-import { TranslocoHttpLoader } from './transloco-http-loader.service';
+import { TranslocoHttpLoader } from '@shared/services/transloco-http-loader.service';
 
 /** Configura Transloco e carica le traduzioni prima dell'avvio dell'app. */
 export function provideI18n(): EnvironmentProviders {

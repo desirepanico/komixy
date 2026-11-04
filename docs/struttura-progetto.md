@@ -11,8 +11,7 @@ src/
 │   │   ├── guards/            user-role.guard
 │   │   ├── interceptors/      interceptor HTTP (si crea con il primo interceptor)
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   ├── models/            modelli globali dell'app (environment, nav-item, MAIN_PAGES)
-│   │   └── services/          servizi globali (viewport, swipe mobile, loader Transloco) e provider di avvio (i18n, direzione delle transizioni)
+│   │   └── providers/         provider di avvio: provideCore() (i18n, direzione delle transizioni)
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, not-found, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
@@ -21,10 +20,10 @@ src/
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
-│       ├── constants/         costanti condivise (AppRoutes)
+│       ├── constants/         costanti condivise, `*.const.ts` (app-routes, main-pages)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi tra feature (comic, ranking-entry, edition-severity)
-│       └── services/          servizi condivisi tra feature (weekly-ranking)
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, environment, edition-severity)
+│       └── services/          servizi condivisi (weekly-ranking, viewport, mobile-swipe, loader Transloco)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
@@ -35,9 +34,9 @@ public/
 
 Dove mettere le cose:
 
-- **core**: `models`, `services`, `guards`, `interceptors` e `layout`: tutto ciò che esiste una volta sola per l'app. Non importare codice da `features`.
+- **core**: `guards`, `interceptors`, `layout` e `providers`: la shell dell'app, che esiste una volta sola. Non importare codice da `features`.
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti, direttive, modelli, servizi, costanti).
-  - **Eccezione**: `core` importa da `features/auth` (modello utente e `AuthService`, usati da guard, navigazione e sidebar). La dipendenza è a senso unico: `auth` non importa da `core/layout`.
+  - **Eccezione**: `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`. La dipendenza è a senso unico: `auth` non importa da `core`.
   - **Eccezione**: `discover` mostra la Top 5 usando la card della feature `ranking` (`features/ranking/components`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: componenti, direttive, modelli, servizi e costanti usati da più feature (o da `core`). Può essere importato da qualsiasi parte, ma non dipende da `features` né da `core`. Un servizio qui è un singleton come quelli di `core`: la differenza è che serve alle feature, non alla shell dell'app.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`, e `shared` non dipende da `core`.
@@ -73,16 +72,17 @@ features/auth/
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` (e le altre cartelle solo se servono).
-2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
-3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`core/models/main-pages.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes.const.ts`) e la rotta in `app.routes.ts` (`loadComponent`, oppure `loadChildren` con `<nome>.routes.ts` se la feature ha più pagine).
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Dove vanno le altre cose
 
-- **core/models**: modelli della shell dell'app: `MAIN_PAGES` (ordine delle pagine principali), `nav-item.model.ts` ed `environment.model.ts`. Stanno in `core` perché `MAIN_PAGES` usa il ruolo utente di `features/auth`.
-- **shared/constants**: costanti condivise, un file per costante (es. `AppRoutes` con i percorsi di tutte le rotte).
-- **core/services**: servizi globali `*.service.ts` e funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`), registrate in `app.config.ts`.
-- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`). La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `services`.
+- **shared/constants**: costanti condivise, un file per costante con `.const.ts` (es. `app-routes.const.ts` con i percorsi di tutte le rotte, `main-pages.const.ts` con l'ordine delle pagine principali).
+- **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
+- **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale si aggiunge in `core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
+- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
+- **core/guards**: guard delle rotte (`*.guard.ts`).
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
 - **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`).
 - **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` + `swipe/detect-swipe.ts`).

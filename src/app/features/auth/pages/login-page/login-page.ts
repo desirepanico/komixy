@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
-import { AppRoutes } from '@shared/constants/app-routes';
+import { AppRoutes } from '@shared/constants/app-routes.const';
 import { LoginForm } from '../../components/login-form/login-form';
-import { LoginCredentials, UserRole } from '../../models/auth.model';
+import { LoginCredentials } from '../../models/auth.model';
+import { UserRole } from '@shared/models/user-role.model';
 import { AuthService } from '../../services/auth.service';
 import { safeReturnUrl } from '../../utils/safe-return-url';
 

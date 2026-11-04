@@ -1,4 +1,4 @@
-import { UserRole } from '@features/auth/models/auth.model';
+import { UserRole } from './user-role.model';
 
 export interface NavItem {
   icon: string;

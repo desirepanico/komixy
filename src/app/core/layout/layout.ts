@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { Swipe } from '@shared/directives/swipe/swipe.directive';
-import { MobileSwipeService } from '../services/mobile-swipe.service';
-import { ViewportService } from '../services/viewport.service';
+import { MobileSwipeService } from '@shared/services/mobile-swipe.service';
+import { ViewportService } from '@shared/services/viewport.service';
 import { DesktopSidebar } from './components/desktop-sidebar/desktop-sidebar';
 import { MobileBottomNav } from './components/mobile-bottom-nav/mobile-bottom-nav';
 
