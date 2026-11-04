@@ -10,6 +10,8 @@ import { Button } from './button';
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
     <button id="icona" appButton [iconOnly]="true" aria-label="Chiudi"></button>
     <button id="testo" appButton variant="text" class="px-3">Ok</button>
+    <button id="secondario" appButton severity="secondary">Ok</button>
+    <button id="secondario-bordo" appButton severity="secondary" variant="outlined">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
   `,
 })
@@ -52,6 +54,18 @@ describe('Button', () => {
     expect(classi).not.toContain('bg-primary-500');
     expect(classi).not.toContain('border');
     expect(classi).not.toContain('px-5');
+  });
+
+  it('con severity secondary è neutro, non viola', async () => {
+    const classi = (await el('secondario')).classList;
+    expect(classi).toContain('bg-surface-700');
+    expect(classi).not.toContain('bg-primary-500');
+  });
+
+  it('con severity secondary e variant outlined ha il bordo neutro', async () => {
+    const classi = (await el('secondario-bordo')).classList;
+    expect(classi).toContain('border-surface-500');
+    expect(classi).not.toContain('border-primary-400');
   });
 
   it('funziona anche su un link e mostra il contenuto', async () => {

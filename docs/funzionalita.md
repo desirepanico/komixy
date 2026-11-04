@@ -16,7 +16,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 ## Componenti condivisi
 
-- `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`)
+- `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`; severity `primary`, `secondary`)
 - `app-horizontal-scroller`: liste che scorrono in orizzontale (scroll nativo, snap, frecce visibili col mouse e nascoste solo sui dispositivi touch, tasti freccia da tastiera)
 - Direttive `appSwipe` (swipe tra pagine) e `appInView`
 
