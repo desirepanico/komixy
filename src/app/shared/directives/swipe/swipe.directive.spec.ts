@@ -69,9 +69,20 @@ describe('Swipe', () => {
     expect(host.sinistra).toBe(0);
   });
 
-  it('ignora i gesti su bottoni e zone con data-no-swipe', () => {
-    gesto(el('bottone'), [300, 100], [100, 100]);
+  it('ignora i gesti su zone con data-no-swipe', () => {
     gesto(el('escluso'), [300, 100], [100, 100]);
     expect(host.sinistra).toBe(0);
+  });
+
+  it('riconosce lo swipe che parte da un bottone o da un link', () => {
+    gesto(el('bottone'), [300, 100], [100, 100]);
+    expect(host.sinistra).toBe(1);
+  });
+
+  it('annulla il click che segue uno swipe', () => {
+    gesto(el('bottone'), [300, 100], [100, 100]);
+    const click = new Event('click', { bubbles: true, cancelable: true });
+    el('bottone').dispatchEvent(click);
+    expect(click.defaultPrevented).toBe(true);
   });
 });

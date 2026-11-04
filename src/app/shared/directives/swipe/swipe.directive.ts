@@ -1,15 +1,14 @@
-import { Directive, input, output } from '@angular/core';
+import { DestroyRef, Directive, inject, input, output } from '@angular/core';
 import { detectSwipe } from './detect-swipe/detect-swipe';
 
-/** Elementi su cui un gesto non deve essere considerato uno swipe di pagina. */
+/**
+ * Elementi su cui un gesto non deve essere considerato uno swipe di pagina.
+ * Link e bottoni non sono qui: le card sono link e coprono quasi tutta la pagina.
+ */
 const IGNORED_TARGETS = [
-  'button',
-  'a',
   'input',
   'textarea',
   'select',
-  'label',
-  '[role="button"]',
   '[role="slider"]',
   '[data-no-swipe]',
 ].join(',');
@@ -39,6 +38,7 @@ export class Swipe {
   private startY: number | null = null;
 
   protected onPointerDown(event: PointerEvent): void {
+    this.releaseClick();
     const target = event.target;
     const ignored = target instanceof Element && !!target.closest(IGNORED_TARGETS);
 
@@ -61,8 +61,33 @@ export class Swipe {
     );
     this.reset();
 
+    if (!direction) return;
+
+    this.suppressNextClick();
     if (direction === 'left') this.swipeLeft.emit();
-    if (direction === 'right') this.swipeRight.emit();
+    else this.swipeRight.emit();
+  }
+
+  /** Se il dito finisce sullo stesso link da cui è partito, il browser genera un click: va annullato. */
+  private suppressNextClick(): void {
+    this.releaseClick();
+    const block = (event: Event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    document.addEventListener('click', block, { capture: true, once: true });
+    const timer = setTimeout(() => this.releaseClick(), 400);
+    this.releaseClick = () => {
+      clearTimeout(timer);
+      document.removeEventListener('click', block, { capture: true });
+      this.releaseClick = () => undefined;
+    };
+  }
+
+  private releaseClick: () => void = () => undefined;
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.releaseClick());
   }
 
   protected reset(): void {
