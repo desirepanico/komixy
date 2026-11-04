@@ -2,7 +2,7 @@
 
 App Angular 22 (standalone, signals) per collezionisti di fumetti/manga. Stile: Tailwind CSS v4, tema scuro viola (`primary-*` / `surface-*` definiti in `src/tailwind.css`), effetto "glass" in `public/theme/glass.css`.
 
-Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, commenti, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
+Le regole dettagliate sono in `.claude/rules/` (Angular, stile, accessibilità, test, i18n, commenti, codice inutilizzato con Knip, git). La documentazione del progetto è in `docs/` (indice in `docs/README.md`): non è caricata in automatico, quindi aprila tu quando il compito la riguarda. Questo file contiene solo l'essenziale.
 
 ## Documentazione (`docs/`)
 
@@ -23,7 +23,7 @@ Se la modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti 
 - `npm run build` — build di produzione
 - `npm test` — test con Vitest (jsdom); in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`
 - `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`)
-- `npm run knip` — cerca file, export e dipendenze inutilizzati (config in `knip.json`); gira anche in CI
+- `npm run knip` — cerca file, export e dipendenze inutilizzati (config in `knip.json`, regole in `.claude/rules/knip.md`); gira anche in CI
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
 - `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)

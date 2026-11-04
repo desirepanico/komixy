@@ -68,7 +68,10 @@
     }
   },
   "releases": {
-    "comingSoon": "Uscite in arrivo"
+    "title": "Uscite",
+    "subtitle": "I prossimi volumi in uscita",
+    "comingSoon": "Uscite in arrivo",
+    "comingSoonHint": "Qui vedrai il calendario dei volumi in uscita."
   },
   "library": {
     "title": "Libreria",
@@ -83,6 +86,9 @@
     "comingSoonHint": "Qui potrai gestire il tuo account e le impostazioni dell'app."
   },
   "comics": {
-    "comingSoon": "Dettaglio del fumetto in arrivo"
+    "title": "Fumetto",
+    "subtitle": "Dettagli del volume",
+    "comingSoon": "Dettaglio del fumetto in arrivo",
+    "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
   }
 }

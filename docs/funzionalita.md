@@ -6,10 +6,10 @@ Komixy è un'app per collezionisti di fumetti e manga.
 |---|---|---|---|
 | Scopri | `/discover` | `discover` | Attiva: manga da scoprire e Top 5 della settimana |
 | Classifica | `/discover/ranking` | `ranking` | Attiva: classifica settimanale completa |
-| Uscite | `/releases` | `releases` | Segnaposto: la pagina mostra solo un testo provvisorio |
-| Fumetto | `/comic/:id` | `comics` | Segnaposto (testo provvisorio); manca la pagina di dettaglio |
-| Libreria | `/library` | `library` | Segnaposto: la pagina mostra solo un testo provvisorio |
-| Profilo | `/profile` | `profile` | Segnaposto: la pagina mostra solo un testo provvisorio |
+| Uscite | `/releases` | `releases` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
+| Fumetto | `/comic/:id` | `comics` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`); manca la pagina di dettaglio |
+| Libreria | `/library` | `library` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
+| Profilo | `/profile` | `profile` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
 | Login | `/login` | `auth` | Attiva, fuori dal layout: form reattivo (email e password) con errori dopo l'invio; l'accesso è simulato in `AuthService` (TODO API) e torna alla pagina richiesta (`returnUrl`, solo percorsi interni) o a Scopri |
 | Non trovata | qualsiasi altra | `not-found` | Attiva: pagina 404 |

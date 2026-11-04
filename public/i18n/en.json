@@ -69,7 +69,10 @@
     }
   },
   "releases": {
-    "comingSoon": "Releases coming soon"
+    "title": "Releases",
+    "subtitle": "Upcoming volumes",
+    "comingSoon": "Releases coming soon",
+    "comingSoonHint": "Here you will see the calendar of upcoming volumes."
   },
   "library": {
     "title": "Library",
@@ -84,6 +87,9 @@
     "comingSoonHint": "Here you will be able to manage your account and the app settings."
   },
   "comics": {
-    "comingSoon": "Comic details coming soon"
+    "title": "Comic",
+    "subtitle": "Volume details",
+    "comingSoon": "Comic details coming soon",
+    "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
   }
 }

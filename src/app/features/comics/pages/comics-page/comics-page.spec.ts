@@ -15,7 +15,14 @@ describe('ComicsPage', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra il segnaposto tradotto', () => {
-    expect(fixture.nativeElement.textContent).toContain('comics.comingSoon');
+  it('mostra titolo e segnaposto tradotti', () => {
+    const testo = fixture.nativeElement.textContent;
+    expect(testo).toContain('comics.title');
+    expect(testo).toContain('comics.comingSoon');
+    expect(testo).toContain('comics.comingSoonHint');
+  });
+
+  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+    expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

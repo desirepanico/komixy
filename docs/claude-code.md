@@ -26,6 +26,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
 | `commenti.md` | Commenti nel codice: solo il perché, in italiano | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
+| `knip.md` | Codice inutilizzato: si toglie, non si nasconde in `knip.json` | `src/**/*.ts`, `knip.json`, `scripts/*.mjs` |
 | `git.md` | Branch | sempre |
 
 ## Hooks (`.claude/hooks/`, registrati in `settings.json`)
