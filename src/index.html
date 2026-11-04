@@ -6,6 +6,19 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Le traduzioni servono prima di mostrare qualsiasi pagina: partono insieme al JavaScript e non dopo -->
+    <link rel="preload" href="./i18n/it.json" as="fetch" crossorigin />
+    <!-- Il font parte subito, senza aspettare che il CSS sia letto -->
+    <link
+      rel="preload"
+      href="/fonts/mulish-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <!-- Le copertine arrivano da picsum.photos e poi dal suo CDN: la connessione si apre in anticipo -->
+    <link rel="preconnect" href="https://picsum.photos" />
+    <link rel="preconnect" href="https://fastly.picsum.photos" crossorigin />
   </head>
   <body>
     <app-root></app-root>

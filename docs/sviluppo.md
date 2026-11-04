@@ -93,7 +93,7 @@ Se un passaggio fallisce il commit è segnato con ❌, se passano tutti con ✅.
 
 ## Deploy
 
-L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel.json` definisce il comando di build, la cartella di output (`dist/komixy/browser`) e il rewrite di ogni percorso su `index.html`.
+L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel.json` definisce il comando di build, la cartella di output (`dist/komixy/browser`) il rewrite di ogni percorso su `index.html` e la cache di una settimana per i font in `/fonts/`.
 
 **I deploy sono sempre manuali.** `vercel.json` ha `"git": { "deploymentEnabled": false }`: un `git push`, su qualsiasi ramo, non pubblica niente. Si pubblica solo lanciando un comando (o *Redeploy*/*Promote* dal pannello Vercel). Così nessun push cambia per sbaglio dev o produzione, e pubblicare in dev non tocca mai la produzione.
 

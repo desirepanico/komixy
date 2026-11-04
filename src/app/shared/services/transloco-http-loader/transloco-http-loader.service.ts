@@ -7,6 +7,6 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   private readonly http = inject(HttpClient);
 
   getTranslation(lang: string) {
-    return this.http.get<Translation>(`./i18n/${lang}.json?cb=${new Date().getTime()}`);
+    return this.http.get<Translation>(`./i18n/${lang}.json`);
   }
 }

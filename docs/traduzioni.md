@@ -6,6 +6,7 @@ Le regole sono in `.claude/rules/i18n.md`. Qui il funzionamento.
 
 - Libreria: Transloco, configurata in `app.config.ts`.
 - File: `public/i18n/it.json` e `public/i18n/en.json`.
+- Le traduzioni si scaricano in anticipo con un `<link rel="preload">` in `src/index.html`, che oggi punta a `it.json`: se la lingua di avvio cambia, va cambiato anche lì. Il loader non aggiunge parametri all'indirizzo, così il browser può riusare il file.
 - Le traduzioni sono caricate prima dell'avvio dell'app (`provideAppInitializer`) tramite `TranslocoHttpLoader`.
 - Lingua di default e di riserva: `it`. Oggi `availableLangs` contiene solo `it`: `en.json` va tenuto allineato, ma non è ancora selezionabile nell'app.
 
