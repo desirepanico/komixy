@@ -32,9 +32,9 @@ describe('ToggleButton', () => {
     expect(toggle.textContent?.trim()).toBe('Ok');
   });
 
-  it('spento ha sfondo e bordo neutri e aria-pressed false', async () => {
+  it('spento ha sfondo viola scuro semitrasparente e bordo neutro e aria-pressed false', async () => {
     const { toggle } = await crea();
-    expect(toggle.classList).toContain('bg-surface-800');
+    expect(toggle.classList).toContain('bg-primary-950/75');
     expect(toggle.classList).toContain('border-surface-700');
     expect(toggle.getAttribute('aria-pressed')).toBe('false');
   });
