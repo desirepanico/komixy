@@ -40,6 +40,37 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 `MAIN_PAGES` in `shared/constants/main-pages.const.ts` è l'elenco ordinato delle pagine principali: Scopri, Uscite, Libreria, Profilo. È usato dalla nav mobile, dallo swipe tra pagine e dalla direzione delle transizioni. Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
+## Provider
+
+Un provider dice al sistema di dependency injection di Angular come creare o configurare qualcosa (un servizio, un'opzione, un'operazione da fare all'avvio). Nel progetto ce ne sono di quattro tipi, dal più globale al più locale:
+
+| Tipo | Dove | Esempio |
+|---|---|---|
+| Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
+| Funzioni di avvio `provideXxx()` | `core/providers/*.provider.ts` | `provideI18n()`, `provideNavDirection()` |
+| Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
+| Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
+
+**Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
+
+- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
+- `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
+- `provideCore()` (`core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
+
+`provideAppInitializer` esegue codice all'avvio; se restituisce una `Promise` o un `Observable`, Angular aspetta che finisca prima di mostrare l'app.
+
+**Servizi `providedIn: 'root'`.** Sono registrati da soli: un'unica istanza per tutta l'app, e finiscono nel bundle solo se qualcuno li usa. Non vanno elencati in nessun `providers`.
+
+**Provider di componente.** `provideIcons` registra solo le icone usate dal componente, così le altre non entrano nel suo chunk lazy. Il provider vive quanto il componente.
+
+Regole:
+
+- Un nuovo provider globale è una funzione `provideXxx()` in `core/providers/<nome>.provider.ts`, aggiunta all'elenco di `provideCore()`. In `app.config.ts` si lascia solo ciò che riguarda il router e `provideCore()`.
+- Un servizio non ha bisogno di un provider: usa `providedIn: 'root'` e `inject()`. Un provider esplicito serve solo per configurare qualcosa (opzioni, token, valori diversi per ambiente).
+- I provider che dipendono dal router o da altre librerie restano nel posto che le configura: non spostare `provideRouter` in `provideCore()`.
+- Gli interceptor HTTP si registrano con `provideHttpClient(withInterceptors([...]))` in `core.provider.ts`, quando ce ne sarà uno.
+- Niente `NgModule` né `importProvidersFrom`, se esiste una funzione `provideXxx()` della libreria.
+
 ## Accesso e ruoli
 
 - `AuthService` (`features/auth`) tiene l'utente loggato in un signal.

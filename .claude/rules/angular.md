@@ -44,6 +44,7 @@ paths:
 - Membri usati solo nel template: `protected`.
 - Trasformazioni di stato pure e prevedibili.
 - Servizi con una sola responsabilità, `providedIn: 'root'`, e `inject()` al posto dell'iniezione nel costruttore.
+- Provider globali: funzioni `provideXxx()` in `core/providers`, raccolte da `provideCore()` (vedi `docs/architettura.md`). Mai `NgModule` né `importProvidersFrom` se esiste una funzione `provideXxx()`.
 
 ## Template
 
