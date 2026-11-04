@@ -22,7 +22,7 @@ src/
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, ...
 │       ├── constants/         costanti condivise, `*.const.ts` (app-routes, main-pages)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, environment) e edition-severity/
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item) e edition-severity/
 │       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
@@ -34,6 +34,8 @@ public/
 scripts/
 └── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
 vitest-base.config.mts         opzioni di Vitest per i test (ripristino automatico di mock e globali)
+knip.json                      configurazione di Knip (file, export e dipendenze inutilizzati), lanciato da `npm run knip`
+.github/workflows/ci.yml       CI di GitHub Actions: lint, knip, build e test su push e pull request verso develop
 ```
 
 Dove mettere le cose:

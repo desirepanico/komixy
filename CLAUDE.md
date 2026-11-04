@@ -15,7 +15,7 @@ Prima di toccare questi temi, leggi il file relativo:
 - Comandi, test (come funzionano gli spec), lint, deploy: `docs/sviluppo.md`
 - Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
 
-Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna il file di `docs/` corrispondente nello stesso commit.
+Se la modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti o configurazione (CI, Knip, dipendenze), aggiorna da solo il file di `docs/` corrispondente nello stesso commit, senza aspettare che l'utente lo chieda. Prima del commit controlla anche che `docs/` non citi file o dipendenze che hai tolto.
 
 ## Comandi
 
