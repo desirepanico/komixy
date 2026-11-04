@@ -8,12 +8,17 @@ describe('RankingPage', () => {
   let fixture: ComponentFixture<RankingPage>;
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [RankingPage],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
     fixture = TestBed.createComponent(RankingPage);
     html = fixture.nativeElement;
     await fixture.whenStable();
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra il titolo e tutta la classifica in ordine', () => {

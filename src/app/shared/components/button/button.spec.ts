@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { Button } from './button';
 
 @Component({
@@ -15,11 +15,19 @@ import { Button } from './button';
 class Host {}
 
 describe('Button', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   const el = async (id: string) => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
   };
+
+  it('viene creato', async () => {
+    expect(await el('pieno')).toBeTruthy();
+  });
 
   it('è pieno viola con angoli arrotondati per default', async () => {
     const classi = (await el('pieno')).classList;

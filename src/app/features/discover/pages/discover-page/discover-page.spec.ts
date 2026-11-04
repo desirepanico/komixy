@@ -11,12 +11,17 @@ describe('DiscoverPage', () => {
     Array.from(html.querySelectorAll(`${selettore} button[aria-pressed]`)) as HTMLButtonElement[];
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [DiscoverPage],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
     fixture = TestBed.createComponent(DiscoverPage);
     html = fixture.nativeElement;
     await fixture.whenStable();
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra le prime sei posizioni della classifica', () => {

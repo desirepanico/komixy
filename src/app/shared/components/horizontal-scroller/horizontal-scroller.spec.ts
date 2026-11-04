@@ -14,6 +14,10 @@ import { HorizontalScroller } from './horizontal-scroller';
 class Host {}
 
 describe('HorizontalScroller', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   let fixture: ComponentFixture<Host>;
   let lista: HTMLElement;
   let scrollBy: ReturnType<typeof vi.fn>;
@@ -37,6 +41,10 @@ describe('HorizontalScroller', () => {
     lista = fixture.nativeElement.querySelector('[role="region"]');
     scrollBy = vi.fn();
     lista.scrollBy = scrollBy as unknown as typeof lista.scrollBy;
+  });
+
+  it('viene creato', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it("è una regione con l'etichetta per i lettori di schermo e il contenuto passato", () => {

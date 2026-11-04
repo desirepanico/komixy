@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { Tag, TagSeverity } from './tag';
 
 @Component({
@@ -12,11 +12,19 @@ class Host {
 }
 
 describe('Tag', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   const crea = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return fixture;
   };
+
+  it('viene creato', async () => {
+    expect(await crea()).toBeTruthy();
+  });
 
   it('mostra il testo passato come contenuto', async () => {
     expect((await crea()).nativeElement.textContent.trim()).toBe('Limitata');

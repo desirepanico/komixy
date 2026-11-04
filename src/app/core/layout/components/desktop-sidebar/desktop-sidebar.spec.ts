@@ -11,12 +11,17 @@ describe('DesktopSidebar', () => {
   const link = () => Array.from(html.querySelectorAll('nav a')) as HTMLAnchorElement[];
 
   beforeEach(async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [DesktopSidebar],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
     fixture = TestBed.createComponent(DesktopSidebar);
     html = fixture.nativeElement;
     await fixture.whenStable();
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra i gruppi di menu con i loro link', () => {

@@ -31,10 +31,11 @@ class Host {
 }
 
 describe('ComicRankCard', () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Host],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
   });
 
   const crea = async () => {
@@ -42,6 +43,10 @@ describe('ComicRankCard', () => {
     await fixture.whenStable();
     return { fixture, html: fixture.nativeElement as HTMLElement };
   };
+
+  it('viene creata', async () => {
+    expect((await crea()).fixture.componentInstance).toBeTruthy();
+  });
 
   it('mostra la posizione, anche come testo per i lettori di schermo', async () => {
     const { html } = await crea();

@@ -16,15 +16,20 @@ describe('Layout', () => {
     return fixture.nativeElement as HTMLElement;
   };
 
-  beforeEach(() => {
+  beforeEach(async () => {
     navigate.mockClear();
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [Layout],
       providers: [
         provideRouter([]),
         { provide: ViewportService, useValue: { isDesktop: desktop } },
         { provide: MobileSwipeService, useValue: { navigate } },
       ],
-    });
+    }).compileComponents();
+  });
+
+  it('viene creato', async () => {
+    expect(await crea()).toBeTruthy();
   });
 
   it('da desktop mostra la sidebar e non la barra in basso', async () => {

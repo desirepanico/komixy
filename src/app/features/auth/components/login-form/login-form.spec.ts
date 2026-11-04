@@ -3,6 +3,10 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [LoginForm] }).compileComponents();
+  });
+
   let fixture: ComponentFixture<LoginForm>;
   let html: HTMLElement;
   const emessi: unknown[] = [];
@@ -25,6 +29,10 @@ describe('LoginForm', () => {
     fixture.componentInstance.loginSubmit.subscribe((c) => emessi.push(c));
     html = fixture.nativeElement;
     await fixture.whenStable();
+  });
+
+  it('viene creato', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('non mostra errori prima del primo invio', () => {

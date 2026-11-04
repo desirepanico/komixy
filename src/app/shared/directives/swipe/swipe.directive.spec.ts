@@ -29,6 +29,10 @@ function gesto(el: Element, da: [number, number], a: [number, number], pointerTy
 }
 
 describe('Swipe', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   let fixture: ComponentFixture<Host>;
   let host: Host;
   const el = (id: string) => fixture.nativeElement.querySelector(`#${id}`) as HTMLElement;
@@ -37,6 +41,10 @@ describe('Swipe', () => {
     fixture = TestBed.createComponent(Host);
     host = fixture.componentInstance;
     await fixture.whenStable();
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('emette swipeLeft con un gesto verso sinistra', () => {

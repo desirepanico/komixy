@@ -28,12 +28,17 @@ describe('LoginPage', () => {
     html.querySelector('form')?.dispatchEvent(new Event('submit'));
   };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [LoginPage],
       providers: [provideRouter([{ path: 'login', component: LoginPage }])],
-    });
+    }).compileComponents();
     router = TestBed.inject(Router);
     auth = TestBed.inject(AuthService);
+  });
+
+  it('viene creata', async () => {
+    expect(await apri('/login')).toBeTruthy();
   });
 
   it('mostra il titolo e il form', async () => {

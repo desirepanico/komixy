@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { InView } from './in-view.directive';
 
 @Component({
@@ -10,11 +10,19 @@ import { InView } from './in-view.directive';
 class Host {}
 
 describe('InView', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   const crea = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return fixture.nativeElement.querySelector('span') as HTMLElement;
   };
+
+  it('viene creata', async () => {
+    expect(await crea()).toBeTruthy();
+  });
 
   it("mostra subito l'elemento se il browser non ha IntersectionObserver", async () => {
     vi.stubGlobal('IntersectionObserver', undefined);

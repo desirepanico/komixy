@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import providers, { provideTranslocoTesting } from './test-providers';
 
 @Component({ imports: [TranslocoPipe], template: `{{ 'menu.main' | transloco }}` })
 class Host {}
 
 describe('provideTranslocoTesting', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   it('è caricato di default in ogni TestBed e mostra le chiavi', async () => {
     expect(providers).toBeInstanceOf(Array);
     const fixture = TestBed.createComponent(Host);

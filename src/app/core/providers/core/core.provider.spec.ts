@@ -4,10 +4,12 @@ import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { TranslocoService } from '@jsverse/transloco';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { provideCore } from './core.provider';
 
 describe('provideCore', () => {
+  afterEach(() => delete document.documentElement.dataset['navDirection']);
+
   it('registra insieme traduzioni e direzione delle transizioni', async () => {
     TestBed.configureTestingModule({
       providers: [
@@ -32,6 +34,5 @@ describe('provideCore', () => {
     await router.navigateByUrl('/releases');
     expect(document.documentElement.dataset['navDirection']).toBe('forward');
     http.verify();
-    delete document.documentElement.dataset['navDirection'];
   });
 });

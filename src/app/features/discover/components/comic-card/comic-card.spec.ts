@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -14,30 +14,36 @@ import { ComicCard } from './comic-card';
       author="C. Arisato"
       [volume]="4"
       [totalVolumes]="12"
-      [isSingleVolume]="unico"
-      [editionType]="edizione"
+      [isSingleVolume]="unico()"
+      [editionType]="edizione()"
       (bookmarkToggle)="toggle()"
     />
   `,
 })
 class Host {
-  unico = false;
-  edizione: EditionType | null = null;
+  readonly unico = signal(false);
+  readonly edizione = signal<EditionType | null>(null);
   toggle = vi.fn();
 }
 
 describe('ComicCard', () => {
-  const crea = async (impostazioni: Partial<Host> = {}) => {
+  const crea = async (impostazioni: { unico?: boolean; edizione?: EditionType | null } = {}) => {
     const fixture = TestBed.createComponent(Host);
-    Object.assign(fixture.componentInstance, impostazioni);
+    fixture.componentInstance.unico.set(impostazioni.unico ?? false);
+    fixture.componentInstance.edizione.set(impostazioni.edizione ?? null);
     await fixture.whenStable();
     return { fixture, html: fixture.nativeElement as HTMLElement };
   };
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Host],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
+  });
+
+  it('viene creata', async () => {
+    expect((await crea()).fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra titolo e autore, con il titolo che porta alla pagina del fumetto', async () => {

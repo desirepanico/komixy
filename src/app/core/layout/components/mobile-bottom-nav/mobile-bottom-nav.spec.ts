@@ -5,13 +5,18 @@ import { MobileBottomNav } from './mobile-bottom-nav';
 
 describe('MobileBottomNav', () => {
   const crea = async () => {
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
+      imports: [MobileBottomNav],
       providers: [provideRouter([])],
-    });
+    }).compileComponents();
     const fixture = TestBed.createComponent(MobileBottomNav);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
   };
+
+  it('viene creata', async () => {
+    expect(await crea()).toBeTruthy();
+  });
 
   it('mostra le quattro pagine principali e il pulsante Scan al centro', async () => {
     const link = Array.from((await crea()).querySelectorAll('a'));

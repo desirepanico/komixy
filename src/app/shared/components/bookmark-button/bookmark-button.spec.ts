@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { BookmarkButton } from './bookmark-button';
 
 @Component({
@@ -12,11 +12,19 @@ class Host {
 }
 
 describe('BookmarkButton', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
   const setup = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return { fixture, button: fixture.nativeElement.querySelector('button') as HTMLElement };
   };
+
+  it('viene creato', async () => {
+    expect((await setup()).button).toBeTruthy();
+  });
 
   it('espone lo stato ai lettori di schermo con aria-pressed e un testo nascosto', async () => {
     const { fixture, button } = await setup();
