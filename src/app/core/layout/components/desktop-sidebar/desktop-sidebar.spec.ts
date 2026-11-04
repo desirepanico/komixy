@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { DesktopSidebar } from './desktop-sidebar';
 
@@ -40,6 +40,24 @@ describe('DesktopSidebar', () => {
   it('traduce il riquadro del profilo', () => {
     expect(html.textContent).toContain('menu.myProfile');
     expect(html.textContent).toContain('menu.viewProfile');
+  });
+
+  it('il riquadro del profilo è un link alla pagina del profilo', () => {
+    const profilo = html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
+    expect(profilo.getAttribute('href')).toBe('/profile');
+  });
+
+  it('evidenzia il riquadro del profilo solo quando la pagina è aperta', async () => {
+    const profilo = () => html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
+    expect(profilo().getAttribute('aria-current')).toBeNull();
+
+    const router = TestBed.inject(Router);
+    router.resetConfig([{ path: 'profile', children: [] }]);
+    await router.navigateByUrl('/profile');
+    await fixture.whenStable();
+
+    expect(profilo().getAttribute('aria-current')).toBe('page');
+    expect(profilo().classList).toContain('bg-primary-500/15');
   });
 
   it('chiude e riapre un gruppo, aggiornando aria-expanded', async () => {

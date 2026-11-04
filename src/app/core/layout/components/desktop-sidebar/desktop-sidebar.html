@@ -64,9 +64,13 @@
   </nav>
 
   <div class="border-t border-surface-700/40 p-3">
-    <button
-      type="button"
-      class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors duration-200 hover:bg-surface-800/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+    <a
+      [routerLink]="profileLink"
+      #profileRla="routerLinkActive"
+      routerLinkActive="bg-primary-500/15"
+      ariaCurrentWhenActive="page"
+      [class.hover:bg-surface-800/70]="!profileRla.isActive"
+      class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
     >
       <span
         class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-semibold text-surface-950"
@@ -80,6 +84,6 @@
       </div>
 
       <ng-icon name="matChevronRightOutline" size="20" class="text-surface-500" />
-    </button>
+    </a>
   </div>
 </aside>

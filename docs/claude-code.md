@@ -45,7 +45,7 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 ## Skills (`.claude/skills/`)
 
-- `shared-component`: crea o modifica un componente in `shared/components`.
+- `shared-component`: crea o modifica un componente in `shared/components`. Si usa anche prima di duplicare markup: se esiste già lo si importa, se sta per comparire una seconda volta lo si estrae e lo si importa in entrambi i punti.
 
 ## Quando aggiungere cosa
 

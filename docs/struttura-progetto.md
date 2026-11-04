@@ -104,5 +104,5 @@ Per aggiungere una feature nuova:
 - **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
 - **core/guards**: guard delle rotte (`*.guard.ts`).
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
-- **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`).
+- **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`, `empty-state/`).
 - **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` e `swipe/detect-swipe/detect-swipe.ts`, ognuno col suo spec).

@@ -14,6 +14,6 @@ paths:
 - Nei file CSS usa `var(--color-<nome>)`.
 - Raggi dei bordi con le classi `rounded-*` (i valori sono definiti in `@theme` come `--radius-*`).
 - Niente classi CSS globali per i componenti: stile con Tailwind dentro il componente. Il CSS globale resta in `public/theme/` (sfondo, glass, token).
-- Se lo stesso markup compare in più feature, crea un componente shared con la skill `shared-component` (es. `app-tag`, `appButton`).
+- Se lo stesso markup compare, o sta per comparire, in più pagine o feature, non copiarlo: crea un componente shared con la skill `shared-component` e importalo (es. `app-tag`, `appButton`, `app-empty-state`).
 - Liste che scorrono in orizzontale: usa sempre `app-horizontal-scroller` (scroll nativo, snap, frecce, accessibilità), non riscrivere la logica nella pagina.
 - Icone solo con `ng-icon`. Niente `pi pi-*`.

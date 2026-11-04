@@ -35,6 +35,8 @@ import { NavGroup } from '@shared/models/nav-item.model';
   ],
 })
 export class DesktopSidebar {
+  protected readonly profileLink = ['/', AppRoutes.Profile];
+
   protected readonly navGroups = signal<NavGroup[]>([
     {
       title: 'menu.main',

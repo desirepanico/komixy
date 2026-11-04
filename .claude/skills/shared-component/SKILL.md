@@ -1,9 +1,11 @@
 ---
 name: shared-component
-description: Crea o modifica un componente riutilizzabile in src/app/shared/components (es. tag, bottoni, avatar). Usare quando lo stesso markup compare in più feature o quando si sostituisce un componente ex PrimeNG.
+description: Crea o modifica un componente riutilizzabile in src/app/shared/components (es. tag, bottoni, avatar, segnaposto). Usare appena lo stesso markup o la stessa combinazione di elementi compare, o sta per comparire, una seconda volta in più pagine o feature: invece di copiarlo si crea il componente in shared e lo si importa ovunque. Usare anche per sostituire un componente ex PrimeNG.
 ---
 
 # Componente shared
+
+0. Prima di copiare markup da un'altra pagina guarda `src/app/shared/components/`: se il componente esiste, importalo in `imports` e usalo. Se non esiste e lo stesso markup starebbe in un secondo punto, non duplicarlo: crea il componente (passi sotto) e sostituisci anche il primo uso.
 
 1. Crea `src/app/shared/components/<nome>/<nome>.ts` (classe in PascalCase senza suffisso, selector `app-<nome>`).
 2. Segui le regole in `.claude/rules/` (angular, stile, accessibilità): standalone (senza `standalone: true`), `input()`/`output()`, `computed()`, control flow nativo (`@if`, `@for`).
