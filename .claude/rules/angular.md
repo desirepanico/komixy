@@ -26,6 +26,13 @@ paths:
 - Form: preferisci i Reactive Forms.
 - `NgOptimizedImage` per le immagini statiche (non funziona con base64 inline).
 
+## Nomi
+
+- File in kebab-case, con il tipo nel nome: `comic.model.ts`, `auth.service.ts`, `user-role.guard.ts`, `swipe.directive.ts`. Componenti e pagine senza `.component`: `comic-card.ts`, `discover-page.ts` (le pagine finiscono con `-page`).
+- Classi in PascalCase, con il suffisso del tipo dove il file lo ha: `AuthService`, `DiscoverPage`. Componenti e direttive senza suffisso: `ComicCard`, `Swipe`.
+- Costanti, funzioni e loader (`app-routes.ts`, `detect-swipe.ts`, `transloco-loader.ts`) senza suffisso: il nome dice già cosa sono.
+- Prefisso `app` per tutti i componenti e le direttive, sia generici (`shared`) sia di feature: selector `app-nome` (componenti), `[appNome]` (direttive e componenti ad attributo come `button[appButton]`).
+
 ## Stato e servizi
 
 - Signals per lo stato locale. Niente `mutate`: usa `update` o `set`, restituendo un nuovo oggetto o array (mai modificare quello dentro il signal).

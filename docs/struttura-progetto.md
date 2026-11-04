@@ -79,4 +79,4 @@ Per aggiungere una feature nuova:
 - **core/navigation**: ordine delle pagine principali (`main-pages.ts`) e direzione delle transizioni; non contiene UI.
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
 - **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`).
-- **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.ts` + `swipe/detect-swipe.ts`).
+- **shared/directives**: una cartella per direttiva, con l'eventuale logica pura separata e testabile (es. `swipe/swipe.directive.ts` + `swipe/detect-swipe.ts`).

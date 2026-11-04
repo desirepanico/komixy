@@ -4,7 +4,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { AppRoutes } from '@core/navigation/app-routes';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Tag } from '@shared/components/tag/tag';
-import { InView } from '@shared/directives/in-view/in-view';
+import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@core/models/comic.model';
 import { editionSeverity } from '@core/models/edition-severity';
 

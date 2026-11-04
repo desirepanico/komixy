@@ -47,4 +47,4 @@ Le rotte principali sono in `app.routes.ts`, con lazy loading per feature. Le fe
 
 ## Dati
 
-I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/config/environment.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
+I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale). `core/config/environment.model.ts` descrive la configurazione dell'API (`baseUrl`, `publicKey`).
