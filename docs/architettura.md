@@ -19,7 +19,7 @@ features/   una cartella per area: auth, comics, discover, not-found, ranking, r
 shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
 ```
 
-Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea solo quello che serve. I test `*.spec.ts` stanno accanto al file testato.
+Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea solo quello che serve. Ogni file `.ts` ha il suo `*.spec.ts` accanto (vedi `docs/sviluppo.md`).
 
 ### Regole sulle dipendenze
 

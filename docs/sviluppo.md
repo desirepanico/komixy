@@ -6,8 +6,8 @@
 |---|---|
 | `npm start` | Dev server su http://localhost:4200 |
 | `npm run build` | Build di produzione |
-| `npm test` | Test con Vitest (una sola esecuzione) |
-| `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`) |
+| `npm test` | Tutti gli `*.spec.ts` di `src` con Vitest. In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
+| `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) |
 | `npm run deploy:login` | Accesso a Vercel (una volta sola) |
 | `npm run deploy:dev` | Preview su Vercel |
 | `npm run deploy:prod` | Pubblicazione in produzione |
@@ -15,13 +15,33 @@
 ## Flusso git
 
 - Le regole sui branch sono in `.claude/rules/git.md`: nessun branch nuovo di iniziativa, il nome lo sceglie l'utente.
-- Messaggi di commit in italiano con prefisso `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`.
+- Messaggi di commit in italiano con prefisso `feat:`, `fix:`, `refactor:`, `test:` (solo test), `chore:`, `docs:`.
 - Prima del push: `git pull --rebase origin develop`.
-- Prima di ogni commit lancia `npm run build` e `npm test`; prima di consegnare anche `npm run lint`.
+- Prima di ogni commit lancia `npm run lint`, `npm run build` e `npm test`.
 
 ## Test
 
-Regole in `.claude/rules/test.md`: si testano servizi, guard, `computed()` con logica di business e funzioni pure. Il file `*.spec.ts` sta accanto al file testato.
+Le regole (cosa testare, un file di spec per ogni file `.ts`) sono in `.claude/rules/test.md`. Qui come funziona.
+
+**Come girano.** `npm test` usa il builder `@angular/build:unit-test`: compila gli `*.spec.ts` come l'app (con gli stessi alias `@core`, `@shared`, `@features`) e li esegue con Vitest in un browser simulato (jsdom). Lo spec sta accanto al file (`auth.service.ts` → `auth.service.spec.ts`) e il suo nome è il file più `.spec`.
+
+**Il controllo.** `scripts/check-specs.mjs` gira dopo ESLint dentro `npm run lint`: cerca in `src/` i file `.ts` senza `*.spec.ts` accanto e, se ne trova, li elenca ed esce con errore. Salta gli spec, i `*.d.ts`, i `*.model.ts` (solo tipi ed enum, non hanno codice da eseguire) e `main.ts`. Un file con una funzione, anche se sta in una cartella `models`, ha bisogno dello spec: la funzione va in un file senza `.model`.
+
+**Cosa c'è in uno spec.** `describe` con il nome della classe o della funzione, `it` con il comportamento in italiano. Un componente si testa con `TestBed.createComponent`: si impostano gli input (con un componente `Host` di prova nel file, oppure `fixture.componentRef.setInput`), si fa `fixture.detectChanges()` e, dopo ogni azione che cambia un signal, `await fixture.whenStable()` (l'app è zoneless: non c'è rilevamento automatico).
+
+**Ricette ricorrenti**
+
+| Serve | Come |
+|---|---|
+| Testi tradotti (`transloco`) | `TranslocoTestingModule.forRoot({ langs: { it: {} }, translocoConfig: { availableLangs: ['it'], defaultLang: 'it' } })`: i testi che si leggono sono le chiavi (`'menu.main'`) |
+| `routerLink`, `Router` | `provideRouter([...rotte])`; per una pagina vera `RouterTestingHarness.create()` e `harness.navigateByUrl(...)` |
+| Richieste HTTP | `provideHttpClient()` + `provideHttpClientTesting()`, poi `HttpTestingController.expectOne(...).flush(...)` |
+| Codice di avvio (`provideXxx()`) | `providers: [provideXxx()]`, poi `await TestBed.inject(ApplicationInitStatus).donePromise` |
+| Un servizio di cui non serve il codice vero | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova |
+| API che jsdom non ha (`ResizeObserver`, `IntersectionObserver`, `matchMedia`, `scrollBy`) | `vi.stubGlobal(...)` nel test, `vi.unstubAllGlobals()` dopo |
+| Un guard | `TestBed.runInInjectionContext(() => guard(...))` |
+
+Ogni spec imposta da sé il suo `TestBed`: non ci sono helper condivisi, perché anche un helper `.ts` avrebbe bisogno del suo spec.
 
 ## Lint
 
@@ -32,7 +52,7 @@ Regole in `.claude/rules/test.md`: si testano servizi, guard, `computed()` con l
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 
-Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs`: elenca i file `.ts` di `src/` senza `*.spec.ts` accanto (esclusi i `*.model.ts` e `main.ts`) ed esce con errore. La regola è in `.claude/rules/test.md`.
+Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test).
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
 

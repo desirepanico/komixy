@@ -30,6 +30,8 @@ public/
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
+scripts/
+└── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
 ```
 
 Dove mettere le cose:
@@ -65,9 +67,10 @@ features/auth/
 
 - **pages**: una cartella per pagina, collegata a una rotta in `app.routes.ts` o nel `<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
-- **models**: `*.model.ts`, solo tipi, interfacce e piccole funzioni pure collegate (es. `editionSeverity()`). Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
+- **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
-- I test `*.spec.ts` stanno accanto al file che testano.
+- **utils**: funzioni pure della feature (`<nome>.ts`), senza Angular se possibile.
+- Ogni file `.ts` ha il suo `*.spec.ts` accanto (regola in `.claude/rules/test.md`).
 
 Per aggiungere una feature nuova:
 

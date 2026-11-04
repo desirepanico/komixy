@@ -23,7 +23,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
-| `test.md` | Test: ogni file `.ts` ha il suo spec (controllato da `npm run lint`) | `src/**/*.spec.ts` |
+| `test.md` | Test e spec | `src/**/*.ts` |
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
 | `commenti.md` | Commenti nel codice: solo il perché, in italiano | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
 | `git.md` | Branch | sempre |
@@ -33,7 +33,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | Evento | Script | Cosa fa |
 |---|---|---|
 | `SessionStart` | `setup-deps.sh` | `npm ci` se manca `node_modules` |
-| `PostToolUse` (Edit/Write) | `after-edit.sh` | controlla `it.json`/`en.json` se modificati; lancia ESLint sui file `.ts`/`.html` di `src/` e mostra gli errori a Claude |
+| `PostToolUse` (Edit/Write) | `after-edit.sh` | controlla `it.json`/`en.json` se modificati; lancia ESLint sui file `.ts`/`.html` di `src/`; ricorda di creare lo spec se un `.ts` non ce l'ha. Gli errori sono mostrati a Claude |
 
 Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni che Claude può non rispettare. Ciò che si può far controllare a uno script va in un hook.
 

@@ -12,7 +12,7 @@ Prima di toccare questi temi, leggi il file relativo:
 - Pagine, funzionalità, stato di avanzamento: `docs/funzionalita.md`
 - Tailwind, token del tema, effetto glass: `docs/tema-e-stile.md`
 - Testi e traduzioni: `docs/traduzioni.md`
-- Comandi, test, lint, deploy: `docs/sviluppo.md`
+- Comandi, test (come funzionano gli spec), lint, deploy: `docs/sviluppo.md`
 - Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
 
 Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna il file di `docs/` corrispondente nello stesso commit. Una regola si scrive in un solo posto: se esiste già in `.claude/rules/`, in `docs/` si rimanda senza ripeterla.
@@ -21,8 +21,8 @@ Se la modifica cambia struttura, rotte, funzionalità, hook o comandi, aggiorna 
 
 - `npm start` — dev server su http://localhost:4200
 - `npm run build` — build di produzione
-- `npm test` — test con Vitest
-- `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec
+- `npm test` — test con Vitest (jsdom); in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`
+- `npm run lint` — ESLint (angular-eslint) e controllo che ogni file `.ts` abbia il suo spec (`scripts/check-specs.mjs`)
 - `npm run deploy:login` — accesso a Vercel (da fare una volta sola)
 - `npm run deploy:dev` — pubblica una preview su Vercel (usa `vercel.json`)
 - `npm run deploy:prod` — pubblica in produzione su Vercel (indirizzo pubblico del progetto)
@@ -35,7 +35,7 @@ Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione: `discover` usa la card di `ranking`, a senso unico.
 - **shared**: `components`, `directives`, `models`, `services`, `constants` (file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
 
-Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` ha il suo `*.spec.ts` accanto (esclusi `*.model.ts` e `main.ts`): lo controlla `npm run lint`, regole in `.claude/rules/test.md`. Nuovi componenti riutilizzabili: skill `shared-component`.
+Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` ha il suo `*.spec.ts` accanto: regola in `.claude/rules/test.md`, funzionamento in `docs/sviluppo.md`. Nuovi componenti riutilizzabili: skill `shared-component`.
 
 Per aggiungere una feature nuova:
 
@@ -54,9 +54,9 @@ Per aggiungere una feature nuova:
 
 ## Flusso git
 
-- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run build` e `npm test`.
+- Regole sui branch in `.claude/rules/git.md`. Prima del commit lancia tu `npm run lint`, `npm run build` e `npm test`.
 - Prima del push fai `git pull --rebase origin develop`.
-- Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `chore:`, `docs:`.
+- Messaggi di commit in italiano, con prefisso `feat:`, `fix:`, `refactor:`, `test:`, `chore:`, `docs:`.
 
 ## Sicurezza
 
