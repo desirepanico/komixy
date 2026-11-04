@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AppRoutes } from '../../../../app.routes';
@@ -13,7 +13,6 @@ import { ComicItem, editionSeverity } from '../../../../core/models/comic.model'
  */
 @Component({
   selector: 'app-comic-rank-card',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, TranslocoPipe, Tag, BookmarkButton, InView],
   templateUrl: './comic-rank-card.html',
   host: { class: 'block' },
@@ -21,23 +20,23 @@ import { ComicItem, editionSeverity } from '../../../../core/models/comic.model'
 export class ComicRankCard {
   protected readonly AppRoutes = AppRoutes;
 
-  public comic = input.required<ComicItem>();
+  public readonly comic = input.required<ComicItem>();
   /** Posizione in classifica (1 = primo) */
-  public rank = input.required<number>();
-  public bookmarked = input<boolean>(false);
+  public readonly rank = input.required<number>();
+  public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
-  protected severity = computed(() => editionSeverity(this.comic().editionType));
+  protected readonly severity = computed(() => editionSeverity(this.comic().editionType));
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =
     '-mr-1 flex w-15 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in md:-mr-2 md:w-20';
 
   /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
-  protected enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
+  protected readonly enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
 
   /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
-  protected rankClasses = computed(() => {
+  protected readonly rankClasses = computed(() => {
     const base =
       'flex origin-center items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';
     const tone =

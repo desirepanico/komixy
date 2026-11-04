@@ -35,7 +35,7 @@ import { NavGroup } from '../../../models/nav-item.model';
   ],
 })
 export class DesktopSidebar {
-  public readonly navGroups = signal<NavGroup[]>([
+  protected readonly navGroups = signal<NavGroup[]>([
     {
       title: 'menu.main',
       expandable: true,
@@ -68,12 +68,9 @@ export class DesktopSidebar {
     },
   ]);
 
-  public toggleGroup(group: NavGroup) {
-    const index = this.navGroups().findIndex((g) => g.title === group.title);
-
-    this.navGroups.update((groups) => {
-      groups[index].expandable = !groups[index].expandable;
-      return [...groups];
-    });
+  protected toggleGroup(group: NavGroup): void {
+    this.navGroups.update((groups) =>
+      groups.map((g) => (g.title === group.title ? { ...g, expandable: !g.expandable } : g)),
+    );
   }
 }

@@ -1,6 +1,5 @@
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
@@ -29,30 +28,29 @@ import { Button } from '../button/button';
 @Component({
   selector: 'app-horizontal-scroller',
   imports: [Button, NgIcon, TranslocoPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './horizontal-scroller.html',
   providers: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 })
 export class HorizontalScroller {
   /** Etichetta della lista per i lettori di schermo (già tradotta) */
-  public ariaLabel = input.required<string>();
+  public readonly ariaLabel = input.required<string>();
   /** Esce dal padding della pagina fino al bordo dello schermo */
-  public bleed = input<boolean>(true);
+  public readonly bleed = input<boolean>(true);
 
-  protected listClasses = computed(() => {
+  protected readonly listClasses = computed(() => {
     const base =
       'flex min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-3 pt-1 scrollbar-none';
     const bleed = '-mx-3 px-3 scroll-px-3 md:-mx-2 md:px-2 md:scroll-px-2';
     return this.bleed() ? `${base} ${bleed}` : base;
   });
 
-  protected canScrollLeft = signal<boolean>(false);
-  protected canScrollRight = signal<boolean>(false);
+  protected readonly canScrollLeft = signal<boolean>(false);
+  protected readonly canScrollRight = signal<boolean>(false);
 
-  private list = viewChild.required<ElementRef<HTMLElement>>('list');
-  private content = viewChild.required<ElementRef<HTMLElement>>('content');
-  private prev = viewChild.required('prev', { read: ElementRef<HTMLElement> });
-  private next = viewChild.required('next', { read: ElementRef<HTMLElement> });
+  private readonly list = viewChild.required<ElementRef<HTMLElement>>('list');
+  private readonly content = viewChild.required<ElementRef<HTMLElement>>('content');
+  private readonly prev = viewChild.required('prev', { read: ElementRef<HTMLElement> });
+  private readonly next = viewChild.required('next', { read: ElementRef<HTMLElement> });
 
   constructor() {
     const destroyRef = inject(DestroyRef);

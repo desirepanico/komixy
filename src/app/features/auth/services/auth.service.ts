@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../../../app.routes';
 import { LoggedUser } from '../models/auth.model';
@@ -13,9 +13,7 @@ export class AuthService {
 
   public readonly loggedUser = this._loggedUser.asReadonly();
 
-  public get isAuthenticated(): boolean {
-    return this._loggedUser() !== null;
-  }
+  public readonly isAuthenticated = computed(() => this._loggedUser() !== null);
 
   public login(user: LoggedUser): void {
     this._loggedUser.set(user);

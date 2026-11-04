@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
@@ -10,7 +10,6 @@ import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 @Component({
   selector: 'button[appBookmarkButton]',
   imports: [NgIcon, TranslocoPipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './bookmark-button.html',
   providers: [provideIcons({ matBookmarkOutline })],
   host: {
@@ -19,9 +18,9 @@ import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
   },
 })
 export class BookmarkButton {
-  public bookmarked = input<boolean>(false);
+  public readonly bookmarked = input<boolean>(false);
 
-  protected classes = computed(() => {
+  protected readonly classes = computed(() => {
     const base =
       'flex size-9 cursor-pointer items-center justify-center rounded-full border text-primary-300 backdrop-blur-md transition-all outline-hidden focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400';
     const tone = this.bookmarked()

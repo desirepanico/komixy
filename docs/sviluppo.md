@@ -27,7 +27,7 @@ Regole in `.claude/rules/test.md`: si testano servizi, guard, `computed()` con l
 
 `npm run lint` lancia ESLint 9 (angular-eslint + typescript-eslint) su `src`. La configurazione è nel file `eslint.config.js` in radice: è obbligatorio, senza di esso ESLint 9 non parte.
 
-- `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush`, `inject()`, niente `any`, `output` readonly, niente rinomina degli `input`).
+- `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`).
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.

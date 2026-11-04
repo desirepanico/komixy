@@ -26,8 +26,8 @@ import { WeeklyRankingService } from '../../../ranking/services/weekly-ranking.s
   providers: [provideIcons({ matArrowForwardOutline })],
 })
 export class DiscoverPage {
-  public selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti
-  public comics = signal<ComicItem[]>([
+  protected readonly selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti
+  protected readonly comics = signal<ComicItem[]>([
     {
       id: '1',
       title: 'Neon Horizon',
@@ -103,10 +103,10 @@ export class DiscoverPage {
   // In Discover si mostrano le prime 6 posizioni (la sesta solo da tablet in su, per avere due colonne piene)
   protected readonly weeklyRanking = inject(WeeklyRankingService);
   protected readonly AppRoutes = AppRoutes;
-  public topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
+  protected readonly topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
 
   // Seleziona o deseleziona un fumetto dai preferiti
-  public toggleBookmark(id: string): void {
+  protected toggleBookmark(id: string): void {
     this.selectedId.update((current) => (current === id ? null : id));
   }
 }

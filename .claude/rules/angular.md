@@ -18,7 +18,8 @@ paths:
 - Componenti piccoli, con una sola responsabilità.
 - `input()` e `output()` al posto dei decorator.
 - `computed()` per lo stato derivato.
-- `changeDetection: ChangeDetectionStrategy.OnPush` in ogni `@Component`.
+- `OnPush` è il default da Angular 22: non scrivere `changeDetection`. Mai `ChangeDetectionStrategy.Eager`.
+- App zoneless (senza zone.js): lo stato che cambia la vista deve stare in un signal.
 - Template sempre in un file `.html` accanto al `.ts` (`templateUrl: './nome.html'`), anche per i componenti piccoli. Percorsi relativi al file `.ts`.
 - Niente `@HostBinding` e `@HostListener`: usa l'oggetto `host` del decorator.
 - `class` e `style` bindings, mai `ngClass` e `ngStyle`.
@@ -27,7 +28,12 @@ paths:
 
 ## Stato e servizi
 
-- Signals per lo stato locale. Niente `mutate`: usa `update` o `set`.
+- Signals per lo stato locale. Niente `mutate`: usa `update` o `set`, restituendo un nuovo oggetto o array (mai modificare quello dentro il signal).
+- Ogni signal, `input()`, `output()` e `viewChild()` è `readonly` (lo controlla ESLint). Un signal che non cambia mai non è un signal: usa una costante.
+- Valori derivati con `computed()`, non con funzioni o getter che leggono un signal.
+- Stato derivato ma modificabile: `linkedSignal()`. Dati asincroni da una richiesta: `resource()` / `httpResource()`. Effetti collaterali: `effect()` solo quando serve, mai per sincronizzare signal tra loro.
+- Costanti usate nel template (es. `AppRoutes`): `protected readonly AppRoutes = AppRoutes;`, senza signal.
+- Membri usati solo nel template: `protected`.
 - Trasformazioni di stato pure e prevedibili.
 - Servizi con una sola responsabilità, `providedIn: 'root'`, e `inject()` al posto dell'iniezione nel costruttore.
 

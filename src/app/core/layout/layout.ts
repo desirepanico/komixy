@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { Swipe } from '../../shared/directives/swipe/swipe';
@@ -9,7 +9,6 @@ import { MobileBottomNav } from './components/mobile-bottom-nav/mobile-bottom-na
 
 @Component({
   selector: 'app-layout',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterOutlet, MobileBottomNav, DesktopSidebar, Swipe],
   templateUrl: './layout.html',
 })

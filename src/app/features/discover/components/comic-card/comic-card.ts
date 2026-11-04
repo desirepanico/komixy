@@ -1,4 +1,4 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { AppRoutes } from '../../../../app.routes';
@@ -11,23 +11,23 @@ import { EditionType, editionSeverity } from '../../../../core/models/comic.mode
   templateUrl: './comic-card.html',
 })
 export class ComicCard {
-  protected readonly AppRoutes = signal(AppRoutes);
+  protected readonly AppRoutes = AppRoutes;
 
-  public title = input.required<string>();
-  public author = input.required<string>();
-  public id = input.required<string>();
-  public coverUrl = input<string>('https://picsum.photos/seed/komixy-neon/160/200');
-  public editionType = input<EditionType | null>(null);
+  public readonly title = input.required<string>();
+  public readonly author = input.required<string>();
+  public readonly id = input.required<string>();
+  public readonly coverUrl = input<string>('https://picsum.photos/seed/komixy-neon/160/200');
+  public readonly editionType = input<EditionType | null>(null);
 
-  public isSingleVolume = input<boolean>(false);
-  public volume = input<number>();
-  public totalVolumes = input<number | null>(null);
+  public readonly isSingleVolume = input<boolean>(false);
+  public readonly volume = input<number>();
+  public readonly totalVolumes = input<number | null>(null);
 
-  public bookmarked = input<boolean>(false);
+  public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
   // Stile del tag in base all'edizione
-  protected editionSeverity = computed(() => editionSeverity(this.editionType()));
+  protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));
 
   public handleBookmarkClick(event: MouseEvent): void {
     event.preventDefault();

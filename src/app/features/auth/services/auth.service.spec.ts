@@ -20,16 +20,16 @@ describe('AuthService', () => {
 
   it('parte senza utente autenticato', () => {
     expect(service.loggedUser()).toBeNull();
-    expect(service.isAuthenticated).toBe(false);
+    expect(service.isAuthenticated()).toBe(false);
   });
 
-  it('dopo il login espone l\'utente', () => {
+  it("dopo il login espone l'utente", () => {
     service.login(utente);
     expect(service.loggedUser()).toEqual(utente);
-    expect(service.isAuthenticated).toBe(true);
+    expect(service.isAuthenticated()).toBe(true);
   });
 
-  it('dopo il logout cancella l\'utente e va al login', () => {
+  it("dopo il logout cancella l'utente e va al login", () => {
     service.login(utente);
     service.logout();
     expect(service.loggedUser()).toBeNull();

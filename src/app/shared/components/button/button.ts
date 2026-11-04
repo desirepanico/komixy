@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 export type ButtonVariant = 'filled' | 'outlined';
 
@@ -10,19 +10,18 @@ export type ButtonVariant = 'filled' | 'outlined';
  */
 @Component({
   selector: 'button[appButton], a[appButton]',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '[class]': 'classes()' },
   templateUrl: './button.html',
 })
 export class Button {
   /** filled = pieno viola (default), outlined = solo bordo */
-  public variant = input<ButtonVariant>('filled');
+  public readonly variant = input<ButtonVariant>('filled');
   /** true = bottone tondo di sola icona (serve aria-label) */
-  public iconOnly = input<boolean>(false);
+  public readonly iconOnly = input<boolean>(false);
   /** true = bordi completamente tondi (pillola/cerchio, come `rounded` di PrimeNG); false = angoli arrotondati (rounded-xl) */
-  public rounded = input<boolean>(false);
+  public readonly rounded = input<boolean>(false);
 
-  protected classes = computed(() => {
+  protected readonly classes = computed(() => {
     const base =
       'inline-flex items-center justify-center gap-2 cursor-pointer font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40';
     const variant =

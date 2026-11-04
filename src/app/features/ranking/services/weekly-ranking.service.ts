@@ -110,7 +110,7 @@ export class WeeklyRankingService {
   ]);
 
   /** La classifica: la posizione dipende dall'ordine dei fumetti */
-  public entries = computed<RankingEntry[]>(() =>
+  public readonly entries = computed<RankingEntry[]>(() =>
     this.comics().map((comic, index) => ({ rank: index + 1, comic })),
   );
 }

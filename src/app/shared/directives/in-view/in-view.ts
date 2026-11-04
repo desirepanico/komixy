@@ -20,9 +20,9 @@ import {
 })
 export class InView {
   /** Quota dell'elemento che deve essere visibile (0-1) */
-  public inViewThreshold = input<number>(0.4);
+  public readonly inViewThreshold = input<number>(0.4);
 
-  protected inView = signal<boolean>(false);
+  protected readonly inView = signal<boolean>(false);
 
   constructor() {
     const element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;

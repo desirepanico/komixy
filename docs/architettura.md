@@ -2,7 +2,7 @@
 
 ## Stack
 
-- Angular 22: componenti standalone, signals, `OnPush`, control flow nativo
+- Angular 22: componenti standalone, signals, `OnPush` (default), zoneless, control flow nativo
 - Tailwind CSS v4 (tema in `src/tailwind.css`)
 - Transloco per le traduzioni
 - Icone con `@ng-icons/material-symbols`

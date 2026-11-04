@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline, matExploreOutline } from '@ng-icons/material-symbols/outline';
 import { AppRoutes } from '../../../../app.routes';
@@ -8,7 +8,7 @@ import { Button } from '../../../../shared/components/button/button';
 @Component({
   selector: 'app-not-found-page',
 
-  imports: [RouterLink, TranslocoModule, NgIcon, Button],
+  imports: [RouterLink, TranslocoPipe, NgIcon, Button],
   templateUrl: './not-found-page.html',
   providers: [
     provideIcons({

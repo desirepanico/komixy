@@ -6,7 +6,10 @@ const tseslint = require('typescript-eslint');
 // @ts-ignore
 const angular = require('angular-eslint');
 
-module.exports = tseslint.config(
+// defineConfig sostituisce tseslint.config (deprecato)
+const { defineConfig } = require('eslint/config');
+
+module.exports = defineConfig(
   { ignores: ['dist/**', '.angular/**', 'node_modules/**'] },
   {
     files: ['**/*.ts'],
@@ -28,6 +31,9 @@ module.exports = tseslint.config(
       '@angular-eslint/prefer-on-push-component-change-detection': 'error',
       '@angular-eslint/prefer-inject': 'error',
       '@angular-eslint/prefer-output-readonly': 'error',
+      '@angular-eslint/prefer-output-emitter-ref': 'error',
+      '@angular-eslint/prefer-signals': 'error',
+      '@angular-eslint/prefer-host-metadata-property': 'error',
       '@angular-eslint/no-host-metadata-property': 'off',
       '@angular-eslint/no-input-rename': 'error',
       '@typescript-eslint/no-explicit-any': 'error',

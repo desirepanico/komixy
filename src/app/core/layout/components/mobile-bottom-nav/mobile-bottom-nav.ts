@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -30,9 +30,6 @@ import { MAIN_PAGES } from '../../../navigation/main-pages';
   ],
 })
 export class MobileBottomNav {
-  public appRoutes: WritableSignal<typeof AppRoutes>;
-  readonly navItems = signal<readonly NavItem[]>(MAIN_PAGES);
-  constructor() {
-    this.appRoutes = signal(AppRoutes);
-  }
+  protected readonly AppRoutes = AppRoutes;
+  protected readonly navItems: readonly NavItem[] = MAIN_PAGES;
 }
