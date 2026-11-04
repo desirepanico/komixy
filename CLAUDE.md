@@ -50,7 +50,7 @@ Per aggiungere una feature nuova:
 - **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
 - Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
-- Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume soltanto, e `docs/` spiega senza definire regole.
+- Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume e rimanda, `docs/` spiega ma non definisce regole.
 - Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.
 - Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
