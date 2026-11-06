@@ -1,0 +1,103 @@
+import { Component, signal } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { InputText } from './input-text';
+
+@Component({
+  imports: [InputText],
+  template: `
+    <app-input-text
+      inputId="campo"
+      type="email"
+      placeholder="login.emailPlaceholder"
+      autocomplete="email"
+      [(value)]="testo"
+      [invalid]="invalid()"
+      [touched]="touched()"
+      [disabled]="disabled()"
+      (touch)="segnaTocco()"
+    />
+  `,
+})
+class Host {
+  readonly testo = signal('');
+  readonly invalid = signal(false);
+  readonly touched = signal(false);
+  readonly disabled = signal(false);
+  readonly tocchi = signal(0);
+
+  segnaTocco(): void {
+    this.tocchi.update((n) => n + 1);
+  }
+}
+
+describe('InputText', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+  });
+
+  const crea = async () => {
+    const fixture = TestBed.createComponent(Host);
+    await fixture.whenStable();
+    const campo = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    return { fixture, host: fixture.componentInstance, campo };
+  };
+
+  it('viene creato', async () => {
+    expect((await crea()).fixture).toBeTruthy();
+  });
+
+  it('imposta id, tipo, segnaposto e autocomplete sul campo', async () => {
+    const { campo } = await crea();
+    expect(campo.id).toBe('campo');
+    expect(campo.type).toBe('email');
+    expect(campo.getAttribute('placeholder')).toBe('login.emailPlaceholder');
+    expect(campo.getAttribute('autocomplete')).toBe('email');
+  });
+
+  it('aggiorna il valore mentre si scrive', async () => {
+    const { fixture, host, campo } = await crea();
+    campo.value = 'a@b.it';
+    campo.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(host.testo()).toBe('a@b.it');
+  });
+
+  it('mostra nel campo il valore del modello', async () => {
+    const { fixture, host, campo } = await crea();
+    host.testo.set('x@y.it');
+    await fixture.whenStable();
+    expect(campo.value).toBe('x@y.it');
+  });
+
+  it('segnala che è stato toccato quando si esce dal campo', async () => {
+    const { fixture, host, campo } = await crea();
+    campo.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(host.tocchi()).toBe(1);
+  });
+
+  it('non segnala l’errore finché il campo non è stato toccato', async () => {
+    const { fixture, host, campo } = await crea();
+    host.invalid.set(true);
+    await fixture.whenStable();
+    expect(campo.getAttribute('aria-invalid')).toBe('false');
+    expect(campo.getAttribute('aria-describedby')).toBeNull();
+  });
+
+  it('segnala l’errore e lo collega al messaggio quando è toccato e non valido', async () => {
+    const { fixture, host, campo } = await crea();
+    host.invalid.set(true);
+    host.touched.set(true);
+    await fixture.whenStable();
+    expect(campo.getAttribute('aria-invalid')).toBe('true');
+    expect(campo.getAttribute('aria-describedby')).toBe('campo-error');
+  });
+
+  it('si disabilita quando il campo è disabilitato', async () => {
+    const { fixture, host, campo } = await crea();
+    host.disabled.set(true);
+    await fixture.whenStable();
+    expect(campo.disabled).toBe(true);
+  });
+});

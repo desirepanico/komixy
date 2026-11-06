@@ -1,0 +1,9 @@
+<label [attr.for]="inputId()" class="text-sm font-semibold text-surface-100">
+  {{ label() | transloco }}
+</label>
+<ng-content />
+@if (error(); as key) {
+  <p [id]="inputId() + '-error'" class="text-sm text-red-400" role="alert">
+    {{ key | transloco: errorParams() }}
+  </p>
+}

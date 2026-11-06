@@ -88,7 +88,7 @@ describe('LoginForm', () => {
     const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
     occhio.click();
     await fixture.whenStable();
-    expect(occhio.getAttribute('aria-label')).toBe('login.showPassword');
+    expect(occhio.getAttribute('aria-label')).toBe('inputPassword.show');
   });
 
   it('collega ogni errore al suo campo con aria-describedby', async () => {

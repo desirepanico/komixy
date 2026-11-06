@@ -51,13 +51,15 @@
     "backHome": "Scopri manga e fumetti",
     "goBack": "Torna indietro"
   },
+  "inputPassword": {
+    "show": "Mostra password"
+  },
   "login": {
     "title": "Accedi a Komixy",
     "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",
     "email": "Email",
     "emailPlaceholder": "nome@esempio.it",
     "password": "Password",
-    "showPassword": "Mostra password",
     "submit": "Accedi",
     "errors": {
       "emailRequired": "Inserisci la tua email.",

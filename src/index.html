@@ -16,15 +16,12 @@
       type="font/woff2"
       crossorigin
     />
-    <!-- Le copertine arrivano da picsum.photos e poi dal suo CDN: la connessione si apre in anticipo -->
     <style>
       /* Con lo skeleton di avvio presente la pagina vera resta nascosta, poi lo skeleton si toglie */
       body:has(#skeleton) > app-root {
         display: none;
       }
     </style>
-    <link rel="preconnect" href="https://picsum.photos" />
-    <link rel="preconnect" href="https://fastly.picsum.photos" crossorigin />
   </head>
   <body>
     <app-root></app-root>
@@ -124,14 +121,29 @@
       <div
         class="hidden min-h-dvh animate-pulse items-center justify-center px-4 py-10 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:px-8"
       >
+        <!-- Stesse misure di login-page e login-form: icona, titolo, sottotitolo (2 righe sotto 417px), due campi e bottone -->
         <div
-          class="w-full max-w-md space-y-4 rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+          class="w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
         >
-          <div class="mx-auto size-14 rounded-2xl bg-surface-800"></div>
-          <div class="mx-auto h-7 w-48 rounded-md bg-surface-800"></div>
-          <div class="h-11 rounded-xl bg-surface-800/70"></div>
-          <div class="h-11 rounded-xl bg-surface-800/70"></div>
-          <div class="h-11 rounded-full bg-surface-800"></div>
+          <div class="mx-auto mb-6 size-14 rounded-2xl bg-surface-800"></div>
+          <div class="flex h-8 items-center justify-center sm:h-9">
+            <div class="h-6 w-48 rounded-md bg-surface-800 sm:h-7"></div>
+          </div>
+          <div class="mb-8 mt-3 flex h-12 flex-col justify-center gap-2 min-[417px]:h-6">
+            <div class="h-4 rounded-md bg-surface-800/70"></div>
+            <div class="h-4 w-2/3 rounded-md bg-surface-800/70 min-[417px]:hidden"></div>
+          </div>
+          <div class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
+              <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="h-5 w-20 rounded-md bg-surface-800/70"></div>
+              <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+            </div>
+            <div class="mt-2 h-11 rounded-full bg-surface-800"></div>
+          </div>
         </div>
       </div>
     </div>

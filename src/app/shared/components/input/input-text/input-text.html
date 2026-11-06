@@ -1,0 +1,18 @@
+<input
+  #field
+  [id]="inputId()"
+  [type]="type()"
+  [value]="value()"
+  [disabled]="disabled()"
+  [attr.placeholder]="placeholder() ? (placeholder() | transloco) : null"
+  [attr.autocomplete]="autocomplete() || null"
+  [attr.inputmode]="inputmode() || null"
+  [attr.aria-invalid]="showError()"
+  [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
+  [class.pr-4]="!trailingSpace()"
+  [class.pr-14]="trailingSpace()"
+  (input)="value.set(field.value)"
+  (blur)="touch.emit()"
+  class="w-full rounded-xl border border-surface-700 bg-surface-950/60 py-2.5 pl-4 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
+/>
+<ng-content />
