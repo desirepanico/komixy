@@ -31,7 +31,6 @@ export class InputText implements FormValueControl<string> {
   /** Chiave Transloco del segnaposto */
   public readonly placeholder = input.required<string>();
   public readonly autocomplete = input('');
-  public readonly inputmode = input('');
 
   // Stato che `[formField]` scrive da solo
   public readonly disabled = input(false);
