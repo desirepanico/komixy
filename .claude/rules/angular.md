@@ -9,7 +9,7 @@ paths:
 ## TypeScript
 
 - Type checking strict.
-- Preferisci l'inferenza quando il tipo è ovvio.
+- Preferisci l'inferenza quando il tipo è ovvio. Eccezione: `signal()`, `input()`, `model()` e `output()` hanno sempre il tipo scritto (`model<string>('')`, `input<boolean>(false)`, `signal<number>(0)`): si vede subito cosa contengono e un valore iniziale diverso (`null`, `[]`) non ne cambia il tipo in silenzio. Negli spec basta l'inferenza.
 - Evita `any`: usa `unknown` quando il tipo è incerto.
 
 ## Componenti

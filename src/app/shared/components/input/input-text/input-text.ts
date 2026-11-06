@@ -24,16 +24,16 @@ type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
   host: { class: 'block' },
 })
 export class InputText implements FormValueControl<string> {
-  public readonly value = model('');
+  public readonly value = model<string>('');
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
   public readonly type = input<InputType>('text');
   /** Chiave Transloco del segnaposto */
   public readonly placeholder = input.required<string>();
-  public readonly autocomplete = input('');
+  public readonly autocomplete = input<string>('');
 
   // Stato che `[formField]` scrive da solo
-  public readonly disabled = input(false);
+  public readonly disabled = input<boolean>(false);
 
   /**
    * La direttiva `[formField]` sta sullo stesso elemento di questo componente: iniettandola si ottiene

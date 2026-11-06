@@ -32,7 +32,7 @@ export class ComicCard {
   public readonly bookmarkToggle = output<void>();
 
   /** Finché la copertina non è arrivata si vede lo skeleton */
-  protected readonly coverLoaded = signal(false);
+  protected readonly coverLoaded = signal<boolean>(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.id()));
   protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));

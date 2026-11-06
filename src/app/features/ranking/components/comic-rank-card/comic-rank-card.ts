@@ -34,7 +34,7 @@ export class ComicRankCard {
   public readonly bookmarkToggle = output<void>();
 
   /** Finché la copertina non è arrivata si vede lo skeleton */
-  protected readonly coverLoaded = signal(false);
+  protected readonly coverLoaded = signal<boolean>(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
   /** Solo la prima copertina ha la priorità più alta: è quasi sempre l'elemento più grande della pagina */

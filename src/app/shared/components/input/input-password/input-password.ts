@@ -35,17 +35,17 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
   host: { class: 'block' },
 })
 export class InputPassword implements FormValueControl<string> {
-  public readonly value = model('');
+  public readonly value = model<string>('');
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
   /** Chiave Transloco del segnaposto */
   public readonly placeholder = input.required<string>();
-  public readonly autocomplete = input('current-password');
+  public readonly autocomplete = input<string>('current-password');
 
   // Stato che `[formField]` scrive da solo
-  public readonly disabled = input(false);
+  public readonly disabled = input<boolean>(false);
 
-  protected readonly visible = signal(false);
+  protected readonly visible = signal<boolean>(false);
 
   /**
    * La direttiva `[formField]` sta sullo stesso elemento di questo componente: iniettandola si ottiene
