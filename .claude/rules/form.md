@@ -9,7 +9,7 @@ paths:
 Guida: https://angular.dev/guide/forms/signals/overview. API verificate sui tipi di `@angular/forms` 22.2.4 (`node_modules/@angular/forms/types/signals.d.ts`): se l'aggiornamento di Angular cambia un nome, correggi qui.
 
 - I form nuovi usano i **Signal Forms**, import da `@angular/forms/signals`. Niente `FormBuilder`, `FormGroup`, `FormControl`, `ReactiveFormsModule`, `FormsModule` né `ngModel`.
-- Un form esistente con Reactive Forms (oggi `login-form`) si migra quando lo si modifica in modo sostanziale, non di passaggio.
+- Un form esistente con Reactive Forms si migra quando lo si modifica in modo sostanziale, non di passaggio. Esempio già migrato: `features/auth/components/login-form`.
 
 ## Modello e campi
 

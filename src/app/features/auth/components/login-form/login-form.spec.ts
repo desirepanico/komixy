@@ -39,6 +39,12 @@ describe('LoginForm', () => {
     expect(errori()).toEqual([]);
   });
 
+  it('mostra l’errore di un campo quando si esce senza compilarlo', async () => {
+    campo('login-email').dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    expect(errori()).toEqual(['login.errors.emailRequired']);
+  });
+
   it('con il form vuoto mostra gli errori e non emette nulla', async () => {
     await invia();
     expect(errori()).toEqual(['login.errors.emailRequired', 'login.errors.passwordRequired']);
