@@ -33,9 +33,9 @@
       È solo decorativo (aria-hidden) e usa le stesse misure della pagina vera (sidebar w-64, nav mobile h-14)
       per non far "saltare" il layout. La variante si sceglie con data-variant sul div #skeleton.
       Per adattarlo a una pagina nuova:
-        1. aggiungi un blocco con `group-data-[variant=<nome>]/skel:...` (come "list" e "profile" qui sotto);
+        1. aggiungi un blocco con `group-data-[variant=<nome>]/skel:...` (come "list" e "placeholder" qui sotto);
         2. aggiungi la rotta nella mappa dello script sotto lo skeleton.
-      "list" è la variante di default (Scopri, Classifica, Libreria, Uscite) e vale anche per le rotte non in mappa.
+      "list" è la variante di default (Scopri, Classifica) e vale anche per le rotte non in mappa; "placeholder" è per Profilo, Libreria e Uscite.
     -->
     <div id="skeleton" class="group/skel" data-variant="list" aria-hidden="true">
       <!-- Pagine con menu (tutte tranne login): sidebar da 1024px in su, barra in basso sotto -->
@@ -105,18 +105,25 @@
             </div>
           </div>
 
-          <!-- profile: avatar con nome e tre blocchi -->
-          <div class="hidden space-y-6 group-data-[variant=profile]/skel:block">
-            <div class="flex items-center gap-4">
-              <div class="size-16 rounded-full bg-surface-800"></div>
-              <div class="space-y-2">
-                <div class="h-6 w-40 rounded-md bg-surface-800"></div>
-                <div class="h-4 w-28 rounded-md bg-surface-800/70"></div>
+          <!-- placeholder: titolo e riquadro centrato con cerchio, titolo e descrizione (Profilo, Libreria, Uscite) -->
+          <div class="hidden space-y-6 group-data-[variant=placeholder]/skel:block">
+            <div class="space-y-2">
+              <div class="h-6 w-40 rounded-md bg-surface-800"></div>
+              <div class="h-4 w-56 max-w-full rounded-md bg-surface-800/70"></div>
+            </div>
+            <div
+              class="mx-auto flex min-h-[60dvh] max-w-md flex-col items-center justify-center gap-4 px-4"
+            >
+              <div
+                class="size-20 rounded-full border border-primary-400/20 bg-surface-900 md:size-24"
+              ></div>
+              <div class="h-6 w-32 rounded-md bg-surface-800 md:h-7"></div>
+              <!-- Descrizione su due righe sotto il tablet, su una da md in su (come va a capo la vera) -->
+              <div class="flex h-10 w-full flex-col justify-center gap-1 md:h-5">
+                <div class="h-4 rounded-md bg-surface-800/70"></div>
+                <div class="h-4 w-2/3 self-center rounded-md bg-surface-800/70 md:hidden"></div>
               </div>
             </div>
-            <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
-            <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
-            <div class="h-32 rounded-xl border border-primary-400/20 bg-surface-900"></div>
           </div>
         </div>
 
@@ -183,7 +190,12 @@
     <script>
       // Sceglie lo skeleton dal primo segmento dell'indirizzo (rotte non in mappa = "list")
       (function () {
-        var variants = { login: 'login', profile: 'profile' };
+        var variants = {
+          login: 'login',
+          profile: 'placeholder',
+          library: 'placeholder',
+          releases: 'placeholder',
+        };
         var skeleton = document.getElementById('skeleton');
         var variant = variants[location.pathname.split('/')[1]];
         if (skeleton && variant) skeleton.setAttribute('data-variant', variant);
