@@ -42,7 +42,6 @@
       "limited": "Limited"
     }
   },
-
   "notFound": {
     "code": "404",
     "title": "Page not found",
@@ -61,7 +60,9 @@
   "loginHero": {
     "brand": "Komixy",
     "title": "Your comic and manga collection, always with you",
-    "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release."
+    "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release.",
+    "coversHint": "Tap the covers you own",
+    "coversCount": "{{ count }} of {{ total }} in your collection"
   },
   "login": {
     "title": "Sign in to Komixy",

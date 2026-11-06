@@ -36,20 +36,51 @@
     </p>
   </div>
 
-  <!-- Volumi che fluttuano -->
-  <div
-    class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-5"
-    aria-hidden="true"
+  <p
+    role="status"
+    class="text-sm text-surface-300 animate-fade-up [animation-delay:240ms] motion-reduce:animate-none"
   >
-    @for (volume of volumes; track volume.icon) {
-      <div
-        class="relative flex aspect-2/3 w-16 animate-float items-center justify-center rounded-lg border border-primary-300/30 bg-linear-to-br shadow-xl shadow-surface-950/60 motion-reduce:animate-none sm:w-20 lg:w-[min(8rem,13dvh)] {{
-          volume.colors
-        }} {{ volume.motion }} {{ volume.offset }}"
-      >
-        <span class="absolute inset-y-0 left-2 w-0.5 rounded-full bg-surface-50/20"></span>
-        <ng-icon [name]="volume.icon" size="1.75rem" class="text-surface-50/85" />
-      </div>
+    @if (ownedCount() === 0) {
+      {{ 'loginHero.coversHint' | transloco }}
+    } @else {
+      {{ 'loginHero.coversCount' | transloco: { count: ownedCount(), total: covers.length } }}
     }
-  </div>
+  </p>
+
+  <ul
+    class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+  >
+    @for (cover of covers; track cover.id) {
+      <li
+        class="relative aspect-2/3 w-16 animate-float motion-reduce:animate-none sm:w-20 lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+          cover.motion
+        }} {{ cover.offset }}"
+      >
+        <button
+          type="button"
+          class="relative block size-full cursor-pointer rounded-lg border border-primary-300/30 shadow-xl shadow-surface-950/60 outline-none brightness-75 saturate-50 transition duration-300 hover:-translate-y-2 hover:scale-110 hover:brightness-100 hover:saturate-100 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 aria-pressed:border-primary-300 aria-pressed:shadow-primary-500/40 aria-pressed:brightness-100 aria-pressed:saturate-100 aria-pressed:ring-2 aria-pressed:ring-primary-300 motion-reduce:transition-none"
+          [attr.aria-pressed]="owned().has(cover.id)"
+          [attr.aria-label]="'mangaCard.coverAlt' | transloco: { title: cover.title }"
+          (click)="toggle(cover.id)"
+        >
+          <img
+            [ngSrc]="cover.src"
+            width="240"
+            height="360"
+            alt=""
+            draggable="false"
+            class="size-full rounded-lg object-cover"
+          />
+          @if (owned().has(cover.id)) {
+            <span
+              class="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-primary-300 text-surface-950 shadow-lg"
+              aria-hidden="true"
+            >
+              <ng-icon name="matCheckOutline" size="1rem" />
+            </span>
+          }
+        </button>
+      </li>
+    }
+  </ul>
 </div>
