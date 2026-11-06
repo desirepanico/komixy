@@ -31,13 +31,13 @@ paths:
 - Ogni file `.ts` con il suo spec sta in una **cartella propria**, con dentro solo lui, il suo `*.spec.ts` e, per un componente, il suo `.html`. La cartella ha il nome del file senza il tipo: `services/viewport/viewport.service.ts` + `viewport.service.spec.ts`, `guards/user-role/user-role.guard.ts`, `providers/i18n/i18n.provider.ts`.
 - Un file di logica che serve solo a un altro (es. `detect-swipe`) ha la sua cartella dentro quella del file che lo usa: `directives/swipe/detect-swipe/`.
 - Le rotte di una feature stanno in `routes/<nome>.routes.ts`.
-- Eccezioni: i file `*.model.ts` (nessuno spec) restano nella cartella del loro tipo (`models/`) e i `*.const.ts` in `constants/`, tutti insieme; `main.ts` e i file nella radice di `src/app` (`app.ts`, `app.config.ts`, `app.routes.ts`) restano dove sono. Lo controlla `npm run lint` (`scripts/check-specs.mjs`).
+- Eccezioni: i file `*.model.ts` (nessuno spec) restano nella cartella del loro tipo (`models/`) e i `*.const.ts` in `shared/constants/`, tutti insieme; `main.ts` e i file nella radice di `src/app` (`app.ts`, `app.config.ts`, `app.routes.ts`) restano dove sono. Lo controlla `npm run lint` (`scripts/check-specs.mjs`).
 
 ## Nomi
 
 - File in kebab-case, con il tipo nel nome: `comic.model.ts`, `auth.service.ts`, `user-role.guard.ts`, `swipe.directive.ts`, `auth.interceptor.ts`, `i18n.provider.ts` (funzione `provideXxx()` di avvio), `navigation.const.ts` (costanti), `login-page.spec.ts` (test). Componenti e pagine senza `.component`: `comic-card.ts`, `discover-page.ts` (le pagine finiscono con `-page`).
 - Classi in PascalCase, con il suffisso del tipo dove il file lo ha: `AuthService`, `DiscoverPage`. Componenti e direttive senza suffisso: `ComicCard`, `Swipe`.
-- Le costanti stanno in una cartella `constants/`, un file per argomento: regole in `.claude/rules/costanti.md`.
+- Le costanti stanno in `shared/constants`, un file per argomento: regole in `.claude/rules/costanti.md`.
 - Le funzioni pure (`detect-swipe.ts`) senza suffisso: il nome dice già cosa sono.
 - Prefisso `app` per tutti i componenti e le direttive, sia generici (`shared`) sia di feature: selector `app-nome` (componenti), `[appNome]` (direttive e componenti ad attributo come `button[appButton]`).
 

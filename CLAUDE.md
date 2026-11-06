@@ -34,7 +34,7 @@ Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto
 
 - **core**: `guards`, `interceptors`, `layout`, `providers` (provider di avvio). Non importa da `features`. Eccezione: `userRoleGuard` usa `AuthService` di `features/auth`, a senso unico.
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`) e la card di `ranking` usata da `discover`.
-- **shared**: `components`, `directives`, `models`, `services`, `constants` (file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
+- **shared**: `components`, `directives`, `models`, `services`, `constants` (tutte le costanti dichiarate con `const`, file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
 
 Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`; funzionamento degli spec in `docs/sviluppo.md`). Nuovi componenti riutilizzabili: skill `shared-component`.
 
