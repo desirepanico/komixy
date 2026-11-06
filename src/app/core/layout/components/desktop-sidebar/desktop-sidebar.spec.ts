@@ -25,7 +25,7 @@ describe('DesktopSidebar', () => {
   });
 
   it('mostra i gruppi di menu con i loro link', () => {
-    expect(titoli().map((b) => b.textContent?.trim())).toEqual(['menu.main', 'menu.library']);
+    expect(titoli().map((b) => b.textContent?.trim())).toEqual(['menu.main', 'common.library']);
     expect(link().map((a) => a.getAttribute('href'))).toEqual([
       '/discover',
       '/releases',

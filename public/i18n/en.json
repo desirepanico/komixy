@@ -1,10 +1,7 @@
 {
   "menu": {
     "main": "Main",
-    "releases": "Releases",
-    "library": "Library",
     "scan": "Scan",
-    "profile": "Profile",
     "discover": "Discover",
     "collection": "Collection",
     "myProfile": "My profile",
@@ -25,7 +22,10 @@
     "remove": "Remove from bookmarks"
   },
   "common": {
-    "back": "Back"
+    "back": "Back",
+    "releases": "Releases",
+    "library": "Library",
+    "profile": "Profile"
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -68,19 +68,16 @@
     "submit": "Sign in"
   },
   "releases": {
-    "title": "Releases",
     "subtitle": "Upcoming volumes",
     "comingSoon": "Releases coming soon",
     "comingSoonHint": "Here you will see the calendar of upcoming volumes."
   },
   "library": {
-    "title": "Library",
     "subtitle": "Your comics and manga collection",
     "comingSoon": "Library coming soon",
     "comingSoonHint": "Here you will find the volumes you own and the ones you are missing."
   },
   "profile": {
-    "title": "Profile",
     "subtitle": "Your account and preferences",
     "comingSoon": "Profile coming soon",
     "comingSoonHint": "Here you will be able to manage your account and the app settings."

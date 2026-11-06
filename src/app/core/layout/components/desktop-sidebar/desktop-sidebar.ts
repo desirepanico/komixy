@@ -51,14 +51,14 @@ export class DesktopSidebar {
         },
         {
           icon: 'matCalendarTodayOutline',
-          label: 'menu.releases',
+          label: 'common.releases',
           route: AppRoutes.Releases,
           roles: [UserRole.User, UserRole.Admin],
         },
       ],
     },
     {
-      title: 'menu.library',
+      title: 'common.library',
       expandable: true,
       items: [
         {

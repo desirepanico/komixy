@@ -2,10 +2,7 @@
   "menu": {
     "main": "Principale",
     "discover": "Scopri",
-    "releases": "Uscite",
-    "library": "Libreria",
     "scan": "Scan",
-    "profile": "Profilo",
     "collection": "Collezione",
     "myProfile": "Il mio profilo",
     "viewProfile": "Visualizza profilo"
@@ -36,7 +33,10 @@
     "remove": "Rimuovi dai segnalibri"
   },
   "common": {
-    "back": "Indietro"
+    "back": "Indietro",
+    "releases": "Uscite",
+    "library": "Libreria",
+    "profile": "Profilo"
   },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
@@ -67,19 +67,16 @@
     "submit": "Accedi"
   },
   "releases": {
-    "title": "Uscite",
     "subtitle": "I prossimi volumi in uscita",
     "comingSoon": "Uscite in arrivo",
     "comingSoonHint": "Qui vedrai il calendario dei volumi in uscita."
   },
   "library": {
-    "title": "Libreria",
     "subtitle": "La tua collezione di fumetti e manga",
     "comingSoon": "Libreria in arrivo",
     "comingSoonHint": "Qui troverai i volumi che possiedi e quelli che ti mancano."
   },
   "profile": {
-    "title": "Profilo",
     "subtitle": "Il tuo account e le tue preferenze",
     "comingSoon": "Profilo in arrivo",
     "comingSoonHint": "Qui potrai gestire il tuo account e le impostazioni dell'app."

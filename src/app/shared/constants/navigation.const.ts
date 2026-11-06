@@ -27,19 +27,19 @@ export const MAIN_PAGES: readonly NavItem[] = [
   },
   {
     icon: 'matCalendarTodayOutline',
-    label: 'menu.releases',
+    label: 'common.releases',
     route: AppRoutes.Releases,
     roles: [UserRole.User, UserRole.Admin],
   },
   {
     icon: 'matCollectionsBookmarkOutline',
-    label: 'menu.library',
+    label: 'common.library',
     route: AppRoutes.Library,
     roles: [UserRole.User, UserRole.Admin],
   },
   {
     icon: 'matPersonOutline',
-    label: 'menu.profile',
+    label: 'common.profile',
     route: AppRoutes.Profile,
     roles: [UserRole.User, UserRole.Admin],
   },

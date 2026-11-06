@@ -17,7 +17,7 @@ describe('LibraryPage', () => {
 
   it('mostra titolo e segnaposto tradotti', () => {
     const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('library.title');
+    expect(testo).toContain('common.library');
     expect(testo).toContain('library.comingSoon');
     expect(testo).toContain('library.comingSoonHint');
   });

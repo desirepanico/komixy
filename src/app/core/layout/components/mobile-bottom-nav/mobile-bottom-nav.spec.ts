@@ -33,6 +33,6 @@ describe('MobileBottomNav', () => {
     const testo = (await crea()).textContent;
     expect(testo).toContain('menu.discover');
     expect(testo).toContain('menu.scan');
-    expect(testo).toContain('menu.profile');
+    expect(testo).toContain('common.profile');
   });
 });

@@ -17,7 +17,7 @@ describe('ReleasesPage', () => {
 
   it('mostra titolo e segnaposto tradotti', () => {
     const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('releases.title');
+    expect(testo).toContain('common.releases');
     expect(testo).toContain('releases.comingSoon');
     expect(testo).toContain('releases.comingSoonHint');
   });

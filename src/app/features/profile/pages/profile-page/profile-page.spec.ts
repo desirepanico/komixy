@@ -17,7 +17,7 @@ describe('ProfilePage', () => {
 
   it('mostra titolo e segnaposto tradotti', () => {
     const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('profile.title');
+    expect(testo).toContain('common.profile');
     expect(testo).toContain('profile.comingSoon');
     expect(testo).toContain('profile.comingSoonHint');
   });
