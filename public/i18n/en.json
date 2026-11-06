@@ -61,8 +61,11 @@
     "brand": "Komixy",
     "title": "Your comic and manga collection, always with you",
     "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release.",
-    "coversHint": "Tap the covers you own",
-    "coversCount": "{{ count }} of {{ total }} in your collection"
+    "coversHint": "Tap a cover to discover it",
+    "kind": {
+      "manga": "Manga",
+      "comic": "Comic"
+    }
   },
   "login": {
     "title": "Sign in to Komixy",

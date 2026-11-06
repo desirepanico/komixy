@@ -29,37 +29,50 @@ describe('LoginHero', () => {
     bottoni()[indice].click();
     await fixture.whenStable();
   };
-  const stato = () => html.querySelector('[role="status"]')?.textContent?.trim();
+  const dietro = (indice: number) =>
+    bottoni()[indice].querySelector('[aria-hidden]:last-child') as HTMLElement;
 
-  it('mostra quattro copertine, ognuna un bottone con l’etichetta tradotta e non premuto', () => {
+  it('mostra quattro copertine, ognuna un bottone con il suo testo alternativo tradotto', () => {
     expect(bottoni()).toHaveLength(4);
     bottoni().forEach((bottone) => {
-      expect(bottone.getAttribute('aria-label')).toBe('mangaCard.coverAlt');
+      expect(bottone.querySelector('img')?.getAttribute('alt')).toBe('mangaCard.coverAlt');
       expect(bottone.getAttribute('aria-pressed')).toBe('false');
     });
   });
 
-  it('le immagini sono decorative: il nome lo dà il bottone', () => {
-    html.querySelectorAll('img').forEach((img) => expect(img.getAttribute('alt')).toBe(''));
+  it('dietro ogni copertina ci sono titolo, autore e tipo', () => {
+    const testo = dietro(0).textContent ?? '';
+    expect(testo).toContain('One Piece');
+    expect(testo).toContain('Eiichiro Oda');
+    expect(testo).toContain('loginHero.kind.manga');
+    expect(dietro(1).textContent).toContain('loginHero.kind.comic');
   });
 
-  it('un clic segna la copertina e mostra il segno di spunta', async () => {
+  it('all’inizio il retro è nascosto agli screen reader', () => {
+    expect(dietro(0).getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('un clic gira la copertina e mostra il retro agli screen reader', async () => {
     await premi(0);
     expect(bottoni()[0].getAttribute('aria-pressed')).toBe('true');
-    expect(bottoni()[0].querySelector('ng-icon')).not.toBeNull();
+    expect(bottoni()[0].querySelector('.rotate-y-180')).not.toBeNull();
+    expect(dietro(0).getAttribute('aria-hidden')).toBe('false');
   });
 
-  it('un secondo clic la toglie', async () => {
+  it('un secondo clic la rigira', async () => {
     await premi(0);
     await premi(0);
     expect(bottoni()[0].getAttribute('aria-pressed')).toBe('false');
-    expect(bottoni()[0].querySelector('ng-icon')).toBeNull();
+    expect(dietro(0).getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('all’inizio il messaggio invita a toccare le copertine, poi mostra il conteggio', async () => {
-    expect(stato()).toBe('loginHero.coversHint');
-    await premi(1);
-    expect(stato()).toBe('loginHero.coversCount');
+  it('girare una copertina non cambia le altre', async () => {
+    await premi(0);
+    expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('invita a toccare una copertina', () => {
+    expect(html.textContent).toContain('loginHero.coversHint');
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {

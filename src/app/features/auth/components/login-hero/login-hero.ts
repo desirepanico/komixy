@@ -1,60 +1,68 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matCheckOutline, matMenuBookOutline } from '@ng-icons/material-symbols/outline';
+import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
+import { Tag } from '@shared/components/tag/tag';
 
 /**
  * Pannello di marca della login: logo, titolo e copertine vere che fluttuano su bagliori viola.
- * Le copertine sono un gioco: ognuna è un bottone «ce l'ho» che la colora e la mette in evidenza,
- * un secondo clic la toglie (non salva nulla). I bagliori sono decorativi (`aria-hidden`) e con
- * `prefers-reduced-motion` le animazioni si fermano.
+ * Ogni copertina è un bottone che la gira come una carta e mostra titolo, autore e tipo; un secondo
+ * clic la rigira. È solo una curiosità: non aggiunge nulla alla libreria. I bagliori sono decorativi
+ * (`aria-hidden`) e con `prefers-reduced-motion` le animazioni si fermano.
  */
 @Component({
   selector: 'app-login-hero',
-  imports: [NgIcon, NgOptimizedImage, TranslocoPipe],
+  imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-hero.html',
-  providers: [provideIcons({ matCheckOutline, matMenuBookOutline })],
+  providers: [provideIcons({ matMenuBookOutline })],
   host: { class: 'relative block' },
 })
 export class LoginHero {
   /** Ogni copertina ha la sua inclinazione, altezza e ritardo, così non si muovono all'unisono */
   protected readonly covers = [
     {
-      id: 'berserk',
-      title: 'Berserk',
-      src: 'img/covers/berserk.webp',
+      id: 'one-piece',
+      title: 'One Piece',
+      author: 'Eiichiro Oda',
+      kind: 'manga',
+      src: 'img/covers/one-piece.webp',
       motion: '[--tilt:-10deg] [animation-delay:-1s]',
       offset: 'mb-6 lg:mb-10',
     },
     {
-      id: 'watchmen',
-      title: 'Watchmen',
-      src: 'img/covers/watchmen.webp',
+      id: 'v-for-vendetta',
+      title: 'V for Vendetta',
+      author: 'Alan Moore, David Lloyd',
+      kind: 'comic',
+      src: 'img/covers/v-for-vendetta.webp',
       motion: '[--tilt:-3deg] [animation-delay:-3s]',
       offset: 'mb-0',
     },
     {
-      id: 'akira',
-      title: 'Akira',
-      src: 'img/covers/akira.webp',
+      id: 'chainsaw-man',
+      title: 'Chainsaw Man',
+      author: 'Tatsuki Fujimoto',
+      kind: 'manga',
+      src: 'img/covers/chainsaw-man.webp',
       motion: '[--tilt:4deg] [animation-delay:-5s]',
       offset: 'mb-8 lg:mb-14',
     },
     {
-      id: 'saga',
-      title: 'Saga',
-      src: 'img/covers/saga.webp',
+      id: 'watchmen',
+      title: 'Watchmen',
+      author: 'Alan Moore, Dave Gibbons',
+      kind: 'comic',
+      src: 'img/covers/watchmen.webp',
       motion: '[--tilt:11deg] [animation-delay:-2s]',
       offset: 'mb-2 lg:mb-4',
     },
   ];
 
-  protected readonly owned = signal<ReadonlySet<string>>(new Set());
-  protected readonly ownedCount = computed(() => this.owned().size);
+  protected readonly flipped = signal<ReadonlySet<string>>(new Set());
 
   protected toggle(id: string): void {
-    this.owned.update((current) => {
+    this.flipped.update((current) => {
       const next = new Set(current);
       if (!next.delete(id)) next.add(id);
       return next;

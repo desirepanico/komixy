@@ -37,14 +37,9 @@
   </div>
 
   <p
-    role="status"
-    class="text-sm text-surface-300 animate-fade-up [animation-delay:240ms] motion-reduce:animate-none"
+    class="animate-fade-up text-sm text-surface-300 [animation-delay:240ms] motion-reduce:animate-none"
   >
-    @if (ownedCount() === 0) {
-      {{ 'loginHero.coversHint' | transloco }}
-    } @else {
-      {{ 'loginHero.coversCount' | transloco: { count: ownedCount(), total: covers.length } }}
-    }
+    {{ 'loginHero.coversHint' | transloco }}
   </p>
 
   <ul
@@ -56,29 +51,43 @@
           cover.motion
         }} {{ cover.offset }}"
       >
+        <!-- Il bottone gira come una carta: davanti la copertina, dietro titolo, autore e tipo -->
         <button
           type="button"
-          class="relative block size-full cursor-pointer rounded-lg border border-primary-300/30 shadow-xl shadow-surface-950/60 outline-none brightness-75 saturate-50 transition duration-300 hover:-translate-y-2 hover:scale-110 hover:brightness-100 hover:saturate-100 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 aria-pressed:border-primary-300 aria-pressed:shadow-primary-500/40 aria-pressed:brightness-100 aria-pressed:saturate-100 aria-pressed:ring-2 aria-pressed:ring-primary-300 motion-reduce:transition-none"
-          [attr.aria-pressed]="owned().has(cover.id)"
-          [attr.aria-label]="'mangaCard.coverAlt' | transloco: { title: cover.title }"
+          class="group block size-full cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
+          [attr.aria-pressed]="flipped().has(cover.id)"
           (click)="toggle(cover.id)"
         >
-          <img
-            [ngSrc]="cover.src"
-            width="240"
-            height="360"
-            alt=""
-            draggable="false"
-            class="size-full rounded-lg object-cover"
-          />
-          @if (owned().has(cover.id)) {
+          <span
+            class="relative block size-full transform-3d motion-safe:transition-transform motion-safe:duration-500"
+            [class.rotate-y-180]="flipped().has(cover.id)"
+          >
             <span
-              class="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full bg-primary-300 text-surface-950 shadow-lg"
-              aria-hidden="true"
+              class="absolute inset-0 overflow-hidden rounded-lg border border-primary-300/30 shadow-xl shadow-surface-950/60 backface-hidden"
+              [attr.aria-hidden]="flipped().has(cover.id)"
             >
-              <ng-icon name="matCheckOutline" size="1rem" />
+              <img
+                [ngSrc]="cover.src"
+                width="240"
+                height="360"
+                [alt]="'mangaCard.coverAlt' | transloco: { title: cover.title }"
+                draggable="false"
+                class="size-full object-cover"
+              />
             </span>
-          }
+            <span
+              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 text-center shadow-xl shadow-primary-900/40 backface-hidden"
+              [attr.aria-hidden]="!flipped().has(cover.id)"
+            >
+              <span class="text-xs font-bold leading-tight text-surface-50 lg:text-sm">
+                {{ cover.title }}
+              </span>
+              <span class="text-[0.65rem] leading-tight text-surface-200 lg:text-xs">
+                {{ cover.author }}
+              </span>
+              <app-tag>{{ 'loginHero.kind.' + cover.kind | transloco }}</app-tag>
+            </span>
+          </span>
         </button>
       </li>
     }

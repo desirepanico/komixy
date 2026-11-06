@@ -61,8 +61,11 @@
     "brand": "Komixy",
     "title": "La tua collezione di fumetti e manga, sempre con te",
     "subtitle": "Tieni traccia dei volumi che possiedi, scopri le novità e non perdere nessuna uscita.",
-    "coversHint": "Tocca le copertine che hai in libreria",
-    "coversCount": "{{ count }} di {{ total }} nella tua collezione"
+    "coversHint": "Tocca una copertina per scoprirla",
+    "kind": {
+      "manga": "Manga",
+      "comic": "Fumetto"
+    }
   },
   "login": {
     "title": "Accedi a Komixy",
