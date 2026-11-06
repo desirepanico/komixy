@@ -1,31 +1,26 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InputPassword } from './input-password';
 
 @Component({
-  imports: [InputPassword],
+  imports: [InputPassword, FormField],
   template: `
     <app-input-password
       label="login.password"
       inputId="password"
       placeholder="login.passwordPlaceholder"
-      [errors]="errori()"
-      [(value)]="testo"
-      [touched]="touched()"
-      (touch)="segnaTocco()"
+      [formField]="campoForm"
     />
   `,
 })
 class Host {
   readonly testo = signal('');
-  readonly errori = signal<{ kind: string }[]>([]);
-  readonly touched = signal(false);
-  readonly tocchi = signal(0);
-
-  segnaTocco(): void {
-    this.tocchi.update((n) => n + 1);
-  }
+  readonly campoForm = form(this.testo, (path) => {
+    required(path);
+    minLength(path, 6);
+  });
 }
 
 describe('InputPassword', () => {
@@ -37,11 +32,25 @@ describe('InputPassword', () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const html = fixture.nativeElement as HTMLElement;
+    const campo = html.querySelector('input') as HTMLInputElement;
+    const scrivi = async (valore: string) => {
+      campo.value = valore;
+      campo.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+    };
+    const esci = async () => {
+      campo.dispatchEvent(new Event('blur'));
+      await fixture.whenStable();
+    };
     return {
       fixture,
       host: fixture.componentInstance,
-      campo: html.querySelector('input') as HTMLInputElement,
+      html,
+      campo,
       occhio: html.querySelector('button') as HTMLButtonElement,
+      scrivi,
+      esci,
+      messaggio: () => html.querySelector('[role="alert"]')?.textContent?.trim(),
     };
   };
 
@@ -50,8 +59,7 @@ describe('InputPassword', () => {
   });
 
   it('mostra il nome del campo', async () => {
-    const { fixture } = await crea();
-    expect(fixture.nativeElement.querySelector('label').textContent.trim()).toBe('login.password');
+    expect((await crea()).html.querySelector('label')?.textContent?.trim()).toBe('login.password');
   });
 
   it('mostra il segnaposto tradotto', async () => {
@@ -87,37 +95,31 @@ describe('InputPassword', () => {
     expect(occhio.getAttribute('aria-label')).toBe('inputPassword.show');
   });
 
-  it('aggiorna il valore mentre si scrive', async () => {
-    const { fixture, host, campo } = await crea();
-    campo.value = '123456';
-    campo.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
+  it('aggiorna il modello mentre si scrive', async () => {
+    const { host, scrivi } = await crea();
+    await scrivi('123456');
     expect(host.testo()).toBe('123456');
   });
 
-  it('segnala che è stato toccato quando si esce dal campo', async () => {
-    const { fixture, host, campo } = await crea();
-    campo.dispatchEvent(new Event('blur'));
-    await fixture.whenStable();
-    expect(host.tocchi()).toBe(1);
+  it('non mostra errori finché il campo non è stato toccato', async () => {
+    const { campo, messaggio } = await crea();
+    expect(messaggio()).toBeUndefined();
+    expect(campo.getAttribute('aria-invalid')).toBe('false');
   });
 
-  it('segnala l’errore e lo collega al messaggio quando è toccato e non valido', async () => {
-    const { fixture, host, campo } = await crea();
-    host.errori.set([{ kind: 'required' }]);
-    host.touched.set(true);
-    await fixture.whenStable();
+  it('dopo l’uscita dal campo mostra il messaggio e lo collega al campo', async () => {
+    const { html, campo, esci, messaggio } = await crea();
+    await esci();
+    expect(messaggio()).toBe('validation.required');
+    expect(html.querySelector('[role="alert"]')?.id).toBe('password-error');
     expect(campo.getAttribute('aria-invalid')).toBe('true');
     expect(campo.getAttribute('aria-describedby')).toBe('password-error');
   });
 
-  it('mostra il messaggio dell’errore dopo il tocco', async () => {
-    const { fixture, host } = await crea();
-    host.touched.set(true);
-    host.errori.set([{ kind: 'minLength' }]);
-    await fixture.whenStable();
-    const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
-    expect(messaggio.id).toBe('password-error');
-    expect(messaggio.textContent?.trim()).toBe('validation.minLength');
+  it('sceglie il messaggio dal tipo di errore', async () => {
+    const { scrivi, esci, messaggio } = await crea();
+    await scrivi('123');
+    await esci();
+    expect(messaggio()).toBe('validation.minLength');
   });
 });

@@ -31,7 +31,7 @@ Ogni campo di un form ha, sempre, tutte e quattro queste cose:
 
 - **Label**: il nome del campo, chiave Transloco (`label="login.email"`).
 - **Placeholder**: un esempio o un suggerimento, chiave Transloco (`placeholder="login.emailPlaceholder"`). `placeholder` e `label` sono `input.required()` dei controlli, quindi il build non passa senza.
-- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra label ed errore con l'`inputId` collegato (`for`, `aria-describedby`). Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form.
+- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra label ed errore con l'`inputId` collegato (`for`, `aria-describedby`). Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form. Il controllo legge `touched` ed errori iniettando `FormField` (`inject(FormField)`, poi `state().touched()` ed `errors()`) e non li dichiara come `input()`: sono pubblici e il form non li userebbe mai. Servono solo `value` (`model()`), `touch` e gli input che il controllo usa davvero (es. `disabled`).
 - **Messaggio d'errore** per ogni validatore dello schema. Il testo è generico e sta in `validation.*` (`it.json` e `en.json`), scelto dal `kind` dell'errore con `VALIDATION_MESSAGES` (`shared/constants/validation.const.ts`) e con il nome del campo (`{{ name }}`, la label). Un validatore nuovo (`maxLength`, `pattern`, ...) aggiunge il suo `kind` a `VALIDATION_MESSAGES` e la sua chiave in tutte le lingue; non si scrivono messaggi nel singolo form.
 
 ## Invio
