@@ -1,0 +1,55 @@
+<!-- Bagliori dietro ai volumi -->
+<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+  <div
+    class="absolute -left-16 top-1/4 size-56 animate-orb rounded-full bg-primary-600/30 blur-3xl motion-reduce:animate-none"
+  ></div>
+  <div
+    class="absolute -right-10 bottom-8 size-48 animate-orb rounded-full bg-primary-400/20 blur-3xl [animation-delay:-4s] motion-reduce:animate-none"
+  ></div>
+</div>
+
+<div
+  class="relative flex h-full flex-col justify-center gap-6 px-6 py-6 lg:px-12 lg:py-16 xl:px-20"
+>
+  <div class="flex animate-fade-up items-center gap-3 motion-reduce:animate-none">
+    <span
+      class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
+      aria-hidden="true"
+    >
+      <ng-icon name="matMenuBookOutline" size="1.5rem" />
+    </span>
+    <span class="text-xl font-bold tracking-tight text-surface-50">
+      {{ 'loginHero.brand' | transloco }}
+    </span>
+  </div>
+
+  <div
+    class="max-w-xl animate-fade-up space-y-3 [animation-delay:120ms] motion-reduce:animate-none"
+  >
+    <p
+      class="text-2xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-5xl"
+    >
+      {{ 'loginHero.title' | transloco }}
+    </p>
+    <p class="hidden text-base leading-7 text-surface-300 sm:block">
+      {{ 'loginHero.subtitle' | transloco }}
+    </p>
+  </div>
+
+  <!-- Volumi che fluttuano -->
+  <div
+    class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-72 lg:justify-start lg:-space-x-5"
+    aria-hidden="true"
+  >
+    @for (volume of volumes; track volume.icon) {
+      <div
+        class="relative flex aspect-2/3 w-16 animate-float items-center justify-center rounded-lg border border-primary-300/30 bg-linear-to-br shadow-xl shadow-surface-950/60 motion-reduce:animate-none sm:w-20 lg:w-32 {{
+          volume.colors
+        }} {{ volume.motion }} {{ volume.offset }}"
+      >
+        <span class="absolute inset-y-0 left-2 w-0.5 rounded-full bg-surface-50/20"></span>
+        <ng-icon [name]="volume.icon" size="1.75rem" class="text-surface-50/85" />
+      </div>
+    }
+  </div>
+</div>

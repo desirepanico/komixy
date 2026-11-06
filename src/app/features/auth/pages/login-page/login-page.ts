@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
 import { LoginForm } from '../../components/login-form/login-form';
+import { LoginHero } from '../../components/login-hero/login-hero';
 import { LoginCredentials } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
@@ -12,9 +11,8 @@ import { AuthService } from '../../services/auth/auth.service';
 /** Pagina di accesso. Dopo il login torna alla pagina richiesta (`returnUrl`) o a Scopri. */
 @Component({
   selector: 'app-login-page',
-  imports: [LoginForm, NgIcon, TranslocoPipe],
+  imports: [LoginForm, LoginHero, TranslocoPipe],
   templateUrl: './login-page.html',
-  providers: [provideIcons({ matMenuBookOutline })],
 })
 export class LoginPage {
   private readonly authService = inject(AuthService);

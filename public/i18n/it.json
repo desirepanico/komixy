@@ -57,6 +57,11 @@
     "minLength": "Il campo {{ name }} deve contenere almeno {{ min }} caratteri.",
     "invalid": "Il campo {{ name }} non è valido."
   },
+  "loginHero": {
+    "brand": "Komixy",
+    "title": "La tua collezione di fumetti e manga, sempre con te",
+    "subtitle": "Tieni traccia dei volumi che possiedi, scopri le novità e non perdere nessuna uscita."
+  },
   "login": {
     "title": "Accedi a Komixy",
     "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",

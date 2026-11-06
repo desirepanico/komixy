@@ -157,32 +157,69 @@
         </div>
       </div>
 
-      <!-- login: card centrata, senza menu -->
+      <!-- login: pannello di marca (a sinistra da 1024px, sopra sotto) e card del form, senza menu -->
       <div
-        class="hidden min-h-dvh animate-pulse items-center justify-center px-4 py-10 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:px-8"
+        class="hidden min-h-dvh animate-pulse motion-reduce:animate-none group-data-[variant=login]/skel:grid lg:grid-cols-2"
       >
-        <!-- Stesse misure di login-page e login-form: icona, titolo, sottotitolo (2 righe sotto 417px), due campi e bottone -->
+        <!-- Stesse misure di login-hero: marchio, titolo (2 righe, 3 da 1024px), sottotitolo da 640px e volumi -->
+        <div class="flex flex-col justify-center gap-6 px-6 py-6 lg:px-12 lg:py-16 xl:px-20">
+          <div class="flex items-center gap-3">
+            <div class="size-10 rounded-xl bg-surface-800"></div>
+            <div class="h-6 w-24 rounded-md bg-surface-800"></div>
+          </div>
+          <div class="max-w-xl space-y-3">
+            <!-- Righe del titolo: 3 sotto 340px, 1 tra 605 e 639px, 2 negli altri casi, 3 da 1024px -->
+            <div
+              class="flex h-15 flex-col justify-center gap-3 max-[340px]:h-22.5 min-[605px]:max-[640px]:h-7.5 sm:h-18.75 lg:h-45"
+            >
+              <div class="h-6 rounded-md bg-surface-800 max-[340px]:h-5 lg:h-9"></div>
+              <div
+                class="h-6 w-4/5 rounded-md bg-surface-800 max-[340px]:h-5 min-[605px]:max-[640px]:hidden lg:h-9"
+              ></div>
+              <div
+                class="hidden h-9 w-2/3 rounded-md bg-surface-800 max-[340px]:block max-[340px]:h-5 lg:block"
+              ></div>
+            </div>
+            <div class="hidden h-14 flex-col justify-center gap-2 sm:flex">
+              <div class="h-4 rounded-md bg-surface-800/70"></div>
+              <div class="h-4 w-2/3 rounded-md bg-surface-800/70"></div>
+            </div>
+          </div>
+          <div
+            class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-72 lg:justify-start lg:-space-x-5"
+          >
+            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
+            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
+            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
+            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
+          </div>
+        </div>
+
         <div
-          class="w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+          class="flex items-center justify-center px-4 py-10 sm:px-8 lg:border-l lg:border-primary-400/15 lg:bg-surface-950/40"
         >
-          <div class="mx-auto mb-6 size-14 rounded-2xl bg-surface-800"></div>
-          <div class="flex h-8 items-center justify-center sm:h-9">
-            <div class="h-6 w-48 rounded-md bg-surface-800 sm:h-7"></div>
-          </div>
-          <div class="mb-8 mt-3 flex h-12 flex-col justify-center gap-2 min-[417px]:h-6">
-            <div class="h-4 rounded-md bg-surface-800/70"></div>
-            <div class="h-4 w-2/3 rounded-md bg-surface-800/70 min-[417px]:hidden"></div>
-          </div>
-          <div class="flex flex-col gap-5">
-            <div class="flex flex-col gap-2">
-              <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
-              <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+          <!-- Stesse misure di login-page e login-form: titolo, sottotitolo (2 righe sotto 417px), due campi e bottone -->
+          <div
+            class="w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+          >
+            <div class="flex h-8 items-center justify-center sm:h-9">
+              <div class="h-6 w-48 rounded-md bg-surface-800 sm:h-7"></div>
             </div>
-            <div class="flex flex-col gap-2">
-              <div class="h-5 w-20 rounded-md bg-surface-800/70"></div>
-              <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+            <div class="mb-8 mt-3 flex h-12 flex-col justify-center gap-2 min-[417px]:h-6">
+              <div class="h-4 rounded-md bg-surface-800/70"></div>
+              <div class="h-4 w-2/3 rounded-md bg-surface-800/70 min-[417px]:hidden"></div>
             </div>
-            <div class="mt-2 h-11 rounded-full bg-surface-800"></div>
+            <div class="flex flex-col gap-5">
+              <div class="flex flex-col gap-2">
+                <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
+                <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+              </div>
+              <div class="flex flex-col gap-2">
+                <div class="h-5 w-20 rounded-md bg-surface-800/70"></div>
+                <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+              </div>
+              <div class="mt-2 h-11 rounded-full bg-surface-800"></div>
+            </div>
           </div>
         </div>
       </div>

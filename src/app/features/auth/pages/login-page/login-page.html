@@ -1,25 +1,24 @@
-<main class="flex min-h-dvh items-center justify-center px-4 py-10 sm:px-8">
-  <section
-    class="glass-strong w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
-    aria-labelledby="login-title"
+<main class="grid min-h-dvh lg:grid-cols-2">
+  <app-login-hero />
+
+  <div
+    class="flex items-center justify-center px-4 py-10 sm:px-8 lg:border-l lg:border-primary-400/15 lg:bg-surface-950/40"
   >
-    <div
-      class="mx-auto mb-6 flex size-14 items-center justify-center rounded-2xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
-      aria-hidden="true"
+    <section
+      class="glass-strong w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+      aria-labelledby="login-title"
     >
-      <ng-icon name="matMenuBookOutline" size="1.75rem" />
-    </div>
+      <h1
+        id="login-title"
+        class="text-center text-2xl font-bold tracking-tight text-surface-50 sm:text-3xl"
+      >
+        {{ 'login.title' | transloco }}
+      </h1>
+      <p class="mb-8 mt-3 text-center text-sm leading-6 text-surface-300">
+        {{ 'login.subtitle' | transloco }}
+      </p>
 
-    <h1
-      id="login-title"
-      class="text-center text-2xl font-bold tracking-tight text-surface-50 sm:text-3xl"
-    >
-      {{ 'login.title' | transloco }}
-    </h1>
-    <p class="mb-8 mt-3 text-center text-sm leading-6 text-surface-300">
-      {{ 'login.subtitle' | transloco }}
-    </p>
-
-    <app-login-form (loginSubmit)="login($event)" />
-  </section>
+      <app-login-form (loginSubmit)="login($event)" />
+    </section>
+  </div>
 </main>

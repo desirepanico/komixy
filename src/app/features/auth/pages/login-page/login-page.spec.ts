@@ -48,6 +48,12 @@ describe('LoginPage', () => {
     expect(html.querySelector('app-login-form')).not.toBeNull();
   });
 
+  it('mostra il pannello di marca accanto al form', async () => {
+    const html = await apri('/login');
+    expect(html.querySelector('app-login-hero')).not.toBeNull();
+    expect(html.querySelector('app-login-form')).not.toBeNull();
+  });
+
   it('dopo il login registra l’utente e torna alla pagina richiesta', async () => {
     const html = await apri('/login?returnUrl=%2Freleases');
     accedi(html);

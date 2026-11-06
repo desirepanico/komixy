@@ -60,9 +60,12 @@ features/auth/
 │       ├── login-page.ts            componente della rotta (lazy), orchestra la pagina
 │       └── login-page.html
 ├── components/
-│   └── login-form/                  componente usato solo da questa feature
-│       ├── login-form.ts
-│       └── login-form.html
+│   ├── login-form/                  componente usato solo da questa feature
+│   │   ├── login-form.ts
+│   │   └── login-form.html
+│   └── login-hero/                  pannello di marca della login (animazioni decorative)
+│       ├── login-hero.ts
+│       └── login-hero.html
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── routes/

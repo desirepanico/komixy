@@ -11,7 +11,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 | Libreria | `/library` | `library` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Profilo | `/profile` | `profile` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
-| Login | `/login` | `auth` | Attiva, fuori dal layout, ed è la pagina di partenza (`/` rimanda qui): form con i Signal Forms (email e password), gli errori compaiono quando si esce dal campo o si invia; l'accesso è simulato in `AuthService` (TODO API) e torna alla pagina richiesta (`returnUrl`, solo percorsi interni) o a Scopri |
+| Login | `/login` | `auth` | Attiva, fuori dal layout, ed è la pagina di partenza (`/` rimanda qui). Da 1024px in su due colonne: a sinistra il pannello di marca `app-login-hero` (logo, titolo e volumi che fluttuano su bagliori viola), a destra il form; sotto 1024px il pannello è una fascia sopra al form, con le stesse animazioni (si fermano con `prefers-reduced-motion`). Il form usa i Signal Forms (email e password), gli errori compaiono quando si esce dal campo o si invia; l'accesso è simulato in `AuthService` (TODO API) e torna alla pagina richiesta (`returnUrl`, solo percorsi interni) o a Scopri |
 | Non trovata | qualsiasi altra | `not-found` | Attiva: pagina 404 |
 
 ## Componenti condivisi
