@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { TranslocoService } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { FieldWrapper } from './field-wrapper';
 
@@ -68,6 +69,24 @@ describe('FieldWrapper', () => {
     fixture.componentInstance.errori.set([]);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
+  });
+
+  it('nel messaggio scrive il nome del campo con l’iniziale minuscola', async () => {
+    TestBed.inject(TranslocoService).setTranslation(
+      {
+        login: { email: 'Email' },
+        validation: { required: 'Il campo {{ name }} è obbligatorio.' },
+      },
+      'it',
+    );
+    const fixture = await crea();
+    fixture.componentInstance.errori.set([{ kind: 'required' }]);
+    await fixture.whenStable();
+    const html = fixture.nativeElement as HTMLElement;
+    expect(html.querySelector('label')?.textContent?.trim()).toBe('Email');
+    expect(html.querySelector('[role="alert"]')?.textContent?.trim()).toBe(
+      'Il campo email è obbligatorio.',
+    );
   });
 
   it('sceglie il messaggio dal tipo di errore', async () => {
