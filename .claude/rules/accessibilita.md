@@ -24,3 +24,10 @@ Regola generale: tutto ciò che si fa con mouse o touch si deve poter fare anche
 - L'ordine di Tab segue l'ordine visivo. Gli elementi nascosti non devono essere raggiungibili (`hidden` o `invisible`, non solo `opacity-0`).
 - Se un elemento che ha il focus sparisce o si disabilita (es. freccia a fine lista), sposta il focus su un elemento vicino (es. l'altra freccia): il focus non va mai perso.
 - Prova ogni nuova pagina o componente usando solo Tab, Invio, Spazio ed Esc.
+
+## Form
+
+- L'errore non si riconosce solo dal colore: il messaggio ha sempre il testo e un'icona (`app-field-wrapper`), e il campo ha `aria-invalid` e `aria-describedby`.
+- I campi obbligatori hanno `aria-required` (lo imposta `[formField]` dallo schema).
+- Dopo un invio fallito il focus va al primo campo con l'errore (`onInvalid` del form, vedi `form.md`).
+- Sul campo in errore l'anello di focus resta staccato dal bordo rosso con `outline-offset-2`: a contatto, viola e rosso hanno solo 1,26 a 1 e non si distinguono.

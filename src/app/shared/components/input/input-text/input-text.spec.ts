@@ -16,6 +16,7 @@ import { InputText } from './input-text';
       [(value)]="testo"
       [invalid]="invalid()"
       [touched]="touched()"
+      [required]="obbligatorio()"
       [disabled]="disabled()"
       (touch)="segnaTocco()"
     />
@@ -26,6 +27,7 @@ class Host {
   readonly errori = signal<{ kind: string }[]>([]);
   readonly invalid = signal(false);
   readonly touched = signal(false);
+  readonly obbligatorio = signal(false);
   readonly disabled = signal(false);
   readonly tocchi = signal(0);
 
@@ -132,5 +134,14 @@ describe('InputText', () => {
 
   it('senza bottone occhio se non è una password', async () => {
     expect((await crea()).fixture.nativeElement.querySelector('button')).toBeNull();
+  });
+
+  it('segnala ai lettori di schermo che il campo è obbligatorio', async () => {
+    const { fixture, host, campo } = await crea();
+    expect(campo.getAttribute('aria-required')).toBeNull();
+
+    host.obbligatorio.set(true);
+    await fixture.whenStable();
+    expect(campo.getAttribute('aria-required')).toBe('true');
   });
 });

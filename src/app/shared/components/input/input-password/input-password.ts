@@ -40,6 +40,7 @@ export class InputPassword implements FormValueControl<string> {
 
   // Stato che `[formField]` scrive da solo
   public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
+  public readonly required = input(false);
   public readonly disabled = input(false);
   public readonly invalid = input(false);
   public readonly touched = input(false);

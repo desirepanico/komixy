@@ -36,7 +36,7 @@ Ogni campo di un form ha, sempre, tutte e quattro queste cose:
 
 ## Invio
 
-- `submit(this.form, { action: async (f) => { ... } })` esegue l'azione solo se il form è valido e segna i campi come toccati. Con `form(model, schema, { submission: { action } })` l'azione sta nella definizione e `[formRoot]` la usa da solo. `onInvalid` gestisce il tentativo con form non valido (es. focus sul primo errore).
+- `submit(this.form, { action: async (f) => { ... } })` esegue l'azione solo se il form è valido e segna i campi come toccati. Con `form(model, schema, { submission: { action } })` l'azione sta nella definizione e `[formRoot]` la usa da solo. `onInvalid` gestisce il tentativo con form non valido e porta il focus sul primo campo con l'errore (`field().errorSummary()[0]?.fieldTree().focusBoundControl()`, come in `login-form`; regola in `.claude/rules/accessibilita.md`).
 - L'azione restituisce `undefined` se va a buon fine, oppure gli errori del server come `{ fieldTree, kind, message }` per mostrarli sul campo giusto.
 - Mentre l'azione è in corso `form().submitting()` è `true`: usalo per disabilitare il bottone di invio.
 

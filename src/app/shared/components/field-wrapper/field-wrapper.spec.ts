@@ -53,6 +53,14 @@ describe('FieldWrapper', () => {
     expect(messaggio.textContent?.trim()).toBe('validation.required');
   });
 
+  it('affianca al messaggio un’icona nascosta agli screen reader', async () => {
+    const fixture = await crea();
+    fixture.componentInstance.errori.set([{ kind: 'required' }]);
+    await fixture.whenStable();
+    const icona = fixture.nativeElement.querySelector('[role="alert"] ng-icon') as HTMLElement;
+    expect(icona.getAttribute('aria-hidden')).toBe('true');
+  });
+
   it('toglie il messaggio quando l’errore sparisce', async () => {
     const fixture = await crea();
     fixture.componentInstance.errori.set([{ kind: 'required' }]);

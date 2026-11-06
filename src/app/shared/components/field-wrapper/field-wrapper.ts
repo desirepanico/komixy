@@ -1,6 +1,8 @@
 import { Component, computed, input } from '@angular/core';
 import { ValidationError } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matErrorOutline } from '@ng-icons/material-symbols/outline';
 import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constants/validation.const';
 
 /**
@@ -13,8 +15,9 @@ import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constant
  */
 @Component({
   selector: 'app-field-wrapper',
-  imports: [TranslocoPipe],
+  imports: [TranslocoPipe, NgIcon],
   templateUrl: './field-wrapper.html',
+  providers: [provideIcons({ matErrorOutline })],
   host: { class: 'flex flex-col gap-2' },
 })
 export class FieldWrapper {

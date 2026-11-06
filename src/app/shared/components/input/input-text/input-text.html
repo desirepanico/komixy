@@ -8,6 +8,7 @@
     [placeholder]="placeholder() | transloco"
     [attr.autocomplete]="autocomplete() || null"
     [attr.inputmode]="inputmode() || null"
+    [attr.aria-required]="required() || null"
     [attr.aria-invalid]="showError()"
     [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
     (input)="value.set(field.value)"

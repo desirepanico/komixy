@@ -33,6 +33,8 @@ export class LoginForm {
           this.loginSubmit.emit(this.model());
           return undefined;
         },
+        // Dopo un invio fallito il focus va al primo campo con l'errore, così lo trovano anche tastiera e screen reader
+        onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
       },
     },
   );

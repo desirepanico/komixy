@@ -14,6 +14,7 @@ import { InputPassword } from './input-password';
       [(value)]="testo"
       [invalid]="invalid()"
       [touched]="touched()"
+      [required]="obbligatorio()"
       (touch)="segnaTocco()"
     />
   `,
@@ -23,6 +24,7 @@ class Host {
   readonly errori = signal<{ kind: string }[]>([]);
   readonly invalid = signal(false);
   readonly touched = signal(false);
+  readonly obbligatorio = signal(false);
   readonly tocchi = signal(0);
 
   segnaTocco(): void {
@@ -122,5 +124,14 @@ describe('InputPassword', () => {
     const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
     expect(messaggio.id).toBe('password-error');
     expect(messaggio.textContent?.trim()).toBe('validation.minLength');
+  });
+
+  it('segnala ai lettori di schermo che il campo è obbligatorio', async () => {
+    const { fixture, host, campo } = await crea();
+    expect(campo.getAttribute('aria-required')).toBeNull();
+
+    host.obbligatorio.set(true);
+    await fixture.whenStable();
+    expect(campo.getAttribute('aria-required')).toBe('true');
   });
 });
