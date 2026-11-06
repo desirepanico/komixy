@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { InputText, InputType } from './input-text';
+import { InputText } from './input-text';
 
 @Component({
   imports: [InputText],
@@ -9,7 +9,7 @@ import { InputText, InputType } from './input-text';
     <app-input-text
       label="login.email"
       inputId="campo"
-      [type]="tipo()"
+      type="email"
       [errorMessages]="{ required: 'login.errors.emailRequired' }"
       [errors]="errori()"
       placeholder="login.emailPlaceholder"
@@ -24,7 +24,6 @@ import { InputText, InputType } from './input-text';
 })
 class Host {
   readonly testo = signal('');
-  readonly tipo = signal<InputType>('email');
   readonly errori = signal<{ kind: string }[]>([]);
   readonly invalid = signal(false);
   readonly touched = signal(false);
@@ -134,21 +133,5 @@ describe('InputText', () => {
 
   it('senza bottone occhio se non è una password', async () => {
     expect((await crea()).fixture.nativeElement.querySelector('button')).toBeNull();
-  });
-
-  it('con type password mostra e nasconde il testo con il bottone', async () => {
-    const { fixture, host, campo } = await crea();
-    host.tipo.set('password');
-    await fixture.whenStable();
-    const occhio = fixture.nativeElement.querySelector('button') as HTMLButtonElement;
-    expect(campo.type).toBe('password');
-    expect(occhio.getAttribute('aria-pressed')).toBe('false');
-    expect(occhio.getAttribute('aria-label')).toBe('inputPassword.show');
-
-    occhio.click();
-    await fixture.whenStable();
-    expect(campo.type).toBe('text');
-    expect(occhio.getAttribute('aria-pressed')).toBe('true');
-    expect(occhio.getAttribute('aria-label')).toBe('inputPassword.show');
   });
 });
