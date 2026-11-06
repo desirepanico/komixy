@@ -68,7 +68,6 @@
     }
   },
   "login": {
-    "title": "Accedi a Komixy",
     "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",
     "email": "Email",
     "emailPlaceholder": "Inserisci l'email",

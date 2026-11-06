@@ -68,7 +68,6 @@
     }
   },
   "login": {
-    "title": "Sign in to Komixy",
     "subtitle": "Sign in to manage your comic and manga collection.",
     "email": "Email",
     "emailPlaceholder": "Enter your email",

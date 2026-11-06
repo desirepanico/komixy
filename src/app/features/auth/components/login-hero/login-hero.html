@@ -9,9 +9,11 @@
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center gap-3 px-6 py-4 sm:gap-4 sm:py-5 lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
+  class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
 >
-  <div class="flex animate-fade-up items-center gap-3 motion-reduce:animate-none">
+  <div
+    class="flex animate-fade-up items-center justify-center gap-3 motion-reduce:animate-none lg:justify-start"
+  >
     <span
       class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
       aria-hidden="true"
@@ -24,16 +26,14 @@
   </div>
 
   <div
-    class="hidden max-w-xl animate-fade-up space-y-3 lg:block [@media(min-height:52rem)]:block [animation-delay:120ms] motion-reduce:animate-none"
+    class="max-w-xl animate-fade-up space-y-3 text-center lg:text-left [animation-delay:120ms] motion-reduce:animate-none"
   >
     <p
-      class="text-2xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
+      class="text-xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
       {{ 'loginHero.title' | transloco }}
     </p>
-    <p
-      class="hidden text-base leading-7 text-surface-300 lg:block [@media(min-height:60rem)]:block"
-    >
+    <p class="hidden text-base leading-7 text-surface-300 lg:block">
       {{ 'loginHero.subtitle' | transloco }}
     </p>
   </div>
@@ -51,11 +51,11 @@
   </p>
 
   <ul
-    class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(14rem,21dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none sm:w-[min(8rem,11.5dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
       >

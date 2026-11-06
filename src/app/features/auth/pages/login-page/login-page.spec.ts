@@ -44,7 +44,7 @@ describe('LoginPage', () => {
 
   it('mostra il titolo e il form', async () => {
     const html = await apri('/login');
-    expect(html.querySelector('h1')?.textContent).toContain('login.title');
+    expect(html.querySelector('h1')?.textContent).toContain('login.submit');
     expect(html.querySelector('app-login-form')).not.toBeNull();
   });
 

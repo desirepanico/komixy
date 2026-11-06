@@ -157,59 +157,62 @@
         </div>
       </div>
 
-      <!-- login: pannello di marca (a sinistra da 1024px, sopra sotto) e card del form, senza menu -->
+      <!-- login: sotto 1024px una colonna centrata senza card (marchio, titolo, invito, copertine, campi); da 1024px pannello di marca a sinistra e card a destra, senza menu -->
       <div
-        class="hidden min-h-dvh animate-pulse motion-reduce:animate-none group-data-[variant=login]/skel:grid lg:grid-cols-2"
+        class="hidden h-dvh animate-pulse flex-col items-center justify-center-safe gap-3 overflow-hidden px-6 py-4 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:gap-4 lg:grid lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0"
       >
-        <!-- Stesse misure di login-hero: marchio, titolo (2 righe, 3 da 1024px), sottotitolo da 640px e volumi -->
-        <div class="flex flex-col justify-center gap-6 px-6 py-6 lg:px-12 lg:py-16 xl:px-20">
-          <div class="flex items-center gap-3">
+        <!-- Stesse misure di login-hero: marchio, titolo e sottotitolo (solo da 1024px), invito e copertine -->
+        <div
+          class="flex flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
+        >
+          <div class="flex items-center justify-center gap-3 lg:justify-start">
             <div class="size-10 rounded-xl bg-surface-800"></div>
             <div class="h-6 w-24 rounded-md bg-surface-800"></div>
           </div>
-          <div class="max-w-xl space-y-3">
-            <!-- Righe del titolo: 3 sotto 340px, 1 tra 605 e 639px, 2 negli altri casi, 3 da 1024px -->
+          <div class="max-w-xl space-y-3 text-center">
             <div
-              class="flex h-15 flex-col justify-center gap-3 max-[340px]:h-22.5 min-[605px]:max-[640px]:h-7.5 sm:h-18.75 lg:h-45"
+              class="flex h-12.5 flex-col items-center justify-center gap-2 sm:h-18.75 sm:gap-3 lg:h-45 lg:items-stretch"
             >
-              <div class="h-6 rounded-md bg-surface-800 max-[340px]:h-5 lg:h-9"></div>
-              <div
-                class="h-6 w-4/5 rounded-md bg-surface-800 max-[340px]:h-5 min-[605px]:max-[640px]:hidden lg:h-9"
-              ></div>
-              <div
-                class="hidden h-9 w-2/3 rounded-md bg-surface-800 max-[340px]:block max-[340px]:h-5 lg:block"
-              ></div>
+              <div class="h-5 w-full rounded-md bg-surface-800 sm:h-9"></div>
+              <div class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9"></div>
+              <div class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block"></div>
             </div>
-            <div class="hidden h-14 flex-col justify-center gap-2 sm:flex">
+            <div class="hidden h-14 flex-col justify-center gap-2 lg:flex">
               <div class="h-4 rounded-md bg-surface-800/70"></div>
               <div class="h-4 w-2/3 rounded-md bg-surface-800/70"></div>
             </div>
           </div>
+          <div class="h-5 w-56 rounded-md bg-surface-800/70"></div>
           <div
-            class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-72 lg:justify-start lg:-space-x-5"
+            class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
           >
-            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
-            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
-            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
-            <div class="aspect-2/3 w-16 rounded-lg bg-surface-800 sm:w-20 lg:w-32"></div>
+            <div
+              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
+            ></div>
           </div>
         </div>
 
-        <div
-          class="flex items-center justify-center px-4 py-10 sm:px-8 lg:border-l lg:border-primary-400/15 lg:bg-surface-950/40"
-        >
-          <!-- Stesse misure di login-page e login-form: titolo, sottotitolo (2 righe sotto 417px), due campi e bottone -->
+        <!-- Stesse misure di login-page e login-form: titolo, sottotitolo (solo da 1024px), due campi e bottone -->
+        <div class="max-lg:contents lg:flex lg:items-center lg:justify-center lg:px-8 lg:py-10">
           <div
-            class="w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+            class="max-lg:contents lg:w-full lg:max-w-md lg:rounded-3xl lg:border lg:border-primary-400/20 lg:bg-surface-900/65 lg:px-10 lg:py-10"
           >
-            <div class="flex h-8 items-center justify-center sm:h-9">
-              <div class="h-6 w-48 rounded-md bg-surface-800 sm:h-7"></div>
+            <div class="hidden h-9 items-center lg:flex">
+              <div class="h-6 w-24 rounded-md bg-surface-800 lg:h-7"></div>
             </div>
-            <div class="mb-8 mt-3 flex h-12 flex-col justify-center gap-2 min-[417px]:h-6">
-              <div class="h-4 rounded-md bg-surface-800/70"></div>
-              <div class="h-4 w-2/3 rounded-md bg-surface-800/70 min-[417px]:hidden"></div>
+            <div class="mb-8 mt-3 hidden h-6 items-center lg:flex">
+              <div class="h-4 w-full rounded-md bg-surface-800/70"></div>
             </div>
-            <div class="flex flex-col gap-5">
+            <div class="flex w-full max-w-sm flex-col gap-5 lg:max-w-none">
               <div class="flex flex-col gap-2">
                 <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
                 <div class="h-10.5 rounded-xl bg-surface-800/70"></div>

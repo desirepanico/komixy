@@ -16,7 +16,7 @@ import { Tag } from '@shared/components/tag/tag';
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-hero.html',
   providers: [provideIcons({ matMenuBookOutline, matTouchAppOutline })],
-  host: { class: 'relative block' },
+  host: { class: 'relative block max-lg:contents' },
 })
 export class LoginHero {
   /** Ogni copertina ha la sua inclinazione, altezza e ritardo, così non si muovono all'unisono */

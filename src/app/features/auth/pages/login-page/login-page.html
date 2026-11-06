@@ -1,26 +1,27 @@
 <main
-  class="grid h-dvh grid-rows-[auto_1fr] overflow-x-clip overflow-y-auto lg:grid-cols-2 lg:grid-rows-1"
+  class="relative flex h-dvh flex-col items-center justify-center-safe gap-3 overflow-x-clip overflow-y-auto px-6 py-4 sm:gap-4 sm:py-5 lg:grid lg:grid-cols-2 lg:items-stretch lg:justify-normal lg:gap-0 lg:overflow-y-hidden lg:p-0"
 >
   <app-login-hero />
 
-  <div class="flex items-center justify-center px-4 py-4 sm:px-8 sm:py-10 lg:overflow-y-auto">
+  <!-- Sotto i 1024px niente card né colonna: gli elementi si dispongono in fila, nello stesso ordine del DOM -->
+  <div
+    class="max-lg:contents lg:flex lg:items-center lg:justify-center lg:overflow-y-auto lg:px-8 lg:py-10"
+  >
     <section
-      class="glass-strong w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-6 sm:px-10 sm:py-10"
+      class="glass-strong-from-lg max-lg:contents lg:w-full lg:max-w-md lg:rounded-3xl lg:border lg:border-primary-400/20 lg:bg-surface-900/65 lg:px-10 lg:py-10"
       aria-labelledby="login-title"
     >
       <h1
         id="login-title"
-        class="mb-5 text-center text-2xl font-bold tracking-tight text-surface-50 sm:text-3xl lg:mb-0 [@media(min-height:52rem)]:mb-0"
+        class="max-lg:sr-only text-2xl font-bold tracking-tight text-surface-50 lg:text-3xl"
       >
-        {{ 'login.title' | transloco }}
+        {{ 'login.submit' | transloco }}
       </h1>
-      <p
-        class="mb-8 mt-3 hidden text-center text-sm leading-6 text-surface-300 lg:block [@media(min-height:52rem)]:block"
-      >
+      <p class="mb-8 mt-3 hidden text-sm leading-6 text-surface-300 lg:block">
         {{ 'login.subtitle' | transloco }}
       </p>
 
-      <app-login-form (loginSubmit)="login($event)" />
+      <app-login-form class="block w-full max-w-sm lg:max-w-none" (loginSubmit)="login($event)" />
     </section>
   </div>
 </main>
