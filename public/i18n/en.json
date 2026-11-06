@@ -64,7 +64,7 @@
     "email": "Email",
     "emailPlaceholder": "Enter your email",
     "password": "Password",
-    "passwordPlaceholder": "Enter your password",
+    "passwordPlaceholder": "Enter at least 6 characters",
     "submit": "Sign in"
   },
   "releases": {
