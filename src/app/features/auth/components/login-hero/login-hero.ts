@@ -2,7 +2,7 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
+import { matMenuBookOutline, matTouchAppOutline } from '@ng-icons/material-symbols/outline';
 import { Tag } from '@shared/components/tag/tag';
 
 /**
@@ -15,7 +15,7 @@ import { Tag } from '@shared/components/tag/tag';
   selector: 'app-login-hero',
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-hero.html',
-  providers: [provideIcons({ matMenuBookOutline })],
+  providers: [provideIcons({ matMenuBookOutline, matTouchAppOutline })],
   host: { class: 'relative block' },
 })
 export class LoginHero {
@@ -28,7 +28,7 @@ export class LoginHero {
       kind: 'manga',
       src: 'img/covers/one-piece.webp',
       motion: '[--tilt:-10deg] [animation-delay:-1s]',
-      offset: 'mb-6 lg:mb-10',
+      offset: 'mb-4 lg:mb-10',
     },
     {
       id: 'v-for-vendetta',
@@ -46,7 +46,7 @@ export class LoginHero {
       kind: 'manga',
       src: 'img/covers/chainsaw-man.webp',
       motion: '[--tilt:4deg] [animation-delay:-5s]',
-      offset: 'mb-8 lg:mb-14',
+      offset: 'mb-5 lg:mb-14',
     },
     {
       id: 'watchmen',
@@ -55,7 +55,7 @@ export class LoginHero {
       kind: 'comic',
       src: 'img/covers/watchmen.webp',
       motion: '[--tilt:11deg] [animation-delay:-2s]',
-      offset: 'mb-2 lg:mb-4',
+      offset: 'mb-1 lg:mb-4',
     },
   ];
 

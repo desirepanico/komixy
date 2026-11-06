@@ -1,18 +1,22 @@
-<main class="grid min-h-dvh overflow-x-clip lg:h-dvh lg:grid-cols-2">
+<main
+  class="grid h-dvh grid-rows-[auto_1fr] overflow-x-clip overflow-y-auto lg:grid-cols-2 lg:grid-rows-1"
+>
   <app-login-hero />
 
-  <div class="flex items-center justify-center px-4 py-10 sm:px-8 lg:overflow-y-auto">
+  <div class="flex items-center justify-center px-4 py-4 sm:px-8 sm:py-10 lg:overflow-y-auto">
     <section
-      class="glass-strong w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-10"
+      class="glass-strong w-full max-w-md rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-6 sm:px-10 sm:py-10"
       aria-labelledby="login-title"
     >
       <h1
         id="login-title"
-        class="text-center text-2xl font-bold tracking-tight text-surface-50 sm:text-3xl"
+        class="mb-5 text-center text-2xl font-bold tracking-tight text-surface-50 sm:text-3xl lg:mb-0 [@media(min-height:52rem)]:mb-0"
       >
         {{ 'login.title' | transloco }}
       </h1>
-      <p class="mb-8 mt-3 text-center text-sm leading-6 text-surface-300">
+      <p
+        class="mb-8 mt-3 hidden text-center text-sm leading-6 text-surface-300 lg:block [@media(min-height:52rem)]:block"
+      >
         {{ 'login.subtitle' | transloco }}
       </p>
 
