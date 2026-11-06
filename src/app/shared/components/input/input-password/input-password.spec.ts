@@ -12,7 +12,6 @@ import { InputPassword } from './input-password';
       placeholder="login.passwordPlaceholder"
       [errors]="errori()"
       [(value)]="testo"
-      [invalid]="invalid()"
       [touched]="touched()"
       [required]="obbligatorio()"
       (touch)="segnaTocco()"
@@ -22,7 +21,6 @@ import { InputPassword } from './input-password';
 class Host {
   readonly testo = signal('');
   readonly errori = signal<{ kind: string }[]>([]);
-  readonly invalid = signal(false);
   readonly touched = signal(false);
   readonly obbligatorio = signal(false);
   readonly tocchi = signal(0);
@@ -108,7 +106,7 @@ describe('InputPassword', () => {
 
   it('segnala l’errore e lo collega al messaggio quando è toccato e non valido', async () => {
     const { fixture, host, campo } = await crea();
-    host.invalid.set(true);
+    host.errori.set([{ kind: 'required' }]);
     host.touched.set(true);
     await fixture.whenStable();
     expect(campo.getAttribute('aria-invalid')).toBe('true');
@@ -117,7 +115,6 @@ describe('InputPassword', () => {
 
   it('mostra il messaggio dell’errore dopo il tocco', async () => {
     const { fixture, host } = await crea();
-    host.invalid.set(true);
     host.touched.set(true);
     host.errori.set([{ kind: 'minLength' }]);
     await fixture.whenStable();

@@ -42,7 +42,6 @@ export class InputPassword implements FormValueControl<string> {
   public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   public readonly required = input(false);
   public readonly disabled = input(false);
-  public readonly invalid = input(false);
   public readonly touched = input(false);
   public readonly touch = output<void>();
 
@@ -51,7 +50,7 @@ export class InputPassword implements FormValueControl<string> {
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 
   /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
-  protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly showError = computed(() => this.touched() && this.errors().length > 0);
   protected readonly visibleErrors = computed(() => (this.showError() ? this.errors() : []));
 
   public focus(options?: FocusOptions): void {

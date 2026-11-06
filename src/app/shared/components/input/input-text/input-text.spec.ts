@@ -14,7 +14,6 @@ import { InputText } from './input-text';
       placeholder="login.emailPlaceholder"
       autocomplete="email"
       [(value)]="testo"
-      [invalid]="invalid()"
       [touched]="touched()"
       [required]="obbligatorio()"
       [disabled]="disabled()"
@@ -25,7 +24,6 @@ import { InputText } from './input-text';
 class Host {
   readonly testo = signal('');
   readonly errori = signal<{ kind: string }[]>([]);
-  readonly invalid = signal(false);
   readonly touched = signal(false);
   readonly obbligatorio = signal(false);
   readonly disabled = signal(false);
@@ -91,7 +89,7 @@ describe('InputText', () => {
 
   it('non segnala l’errore finché il campo non è stato toccato', async () => {
     const { fixture, host, campo } = await crea();
-    host.invalid.set(true);
+    host.errori.set([{ kind: 'required' }]);
     await fixture.whenStable();
     expect(campo.getAttribute('aria-invalid')).toBe('false');
     expect(campo.getAttribute('aria-describedby')).toBeNull();
@@ -99,7 +97,7 @@ describe('InputText', () => {
 
   it('segnala l’errore e lo collega al messaggio quando è toccato e non valido', async () => {
     const { fixture, host, campo } = await crea();
-    host.invalid.set(true);
+    host.errori.set([{ kind: 'required' }]);
     host.touched.set(true);
     await fixture.whenStable();
     expect(campo.getAttribute('aria-invalid')).toBe('true');
@@ -115,7 +113,6 @@ describe('InputText', () => {
 
   it('non mostra il messaggio finché il campo non è stato toccato', async () => {
     const { fixture, host } = await crea();
-    host.invalid.set(true);
     host.errori.set([{ kind: 'required' }]);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
@@ -123,7 +120,6 @@ describe('InputText', () => {
 
   it('mostra il messaggio dell’errore, scelto dal suo kind, dopo il tocco', async () => {
     const { fixture, host } = await crea();
-    host.invalid.set(true);
     host.touched.set(true);
     host.errori.set([{ kind: 'required' }]);
     await fixture.whenStable();

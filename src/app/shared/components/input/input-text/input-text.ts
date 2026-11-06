@@ -3,7 +3,7 @@ import { FormValueControl, ValidationError } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { FieldWrapper } from '../../field-wrapper/field-wrapper';
 
-export type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
+type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
 
 /**
  * Campo di testo con nome del campo ed errore (`app-field-wrapper`), che si lega ai Signal Forms con
@@ -33,14 +33,13 @@ export class InputText implements FormValueControl<string> {
   public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
   public readonly required = input(false);
   public readonly disabled = input(false);
-  public readonly invalid = input(false);
   public readonly touched = input(false);
   public readonly touch = output<void>();
 
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 
   /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
-  protected readonly showError = computed(() => this.touched() && this.invalid());
+  protected readonly showError = computed(() => this.touched() && this.errors().length > 0);
   protected readonly visibleErrors = computed(() => (this.showError() ? this.errors() : []));
 
   public focus(options?: FocusOptions): void {
