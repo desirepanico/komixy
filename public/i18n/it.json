@@ -15,7 +15,6 @@
     "singleVolume": "Volume Unico",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
-    "volumeWithTotal": "Vol. {{ volume }} di {{ total }}",
     "editions": {
       "variant": "Cover variant",
       "deluxe": "Deluxe",
@@ -44,12 +43,10 @@
     "scrollRight": "Scorri verso destra"
   },
   "notFound": {
-    "eyebrow": "Perso nello spazio?",
     "code": "404",
     "title": "Pagina non trovata",
     "description": "Questa pagina sembra essersi persa nel cosmo. Torna alla scoperta e trova la tua prossima avventura.",
-    "backHome": "Scopri manga e fumetti",
-    "goBack": "Torna indietro"
+    "backHome": "Scopri manga e fumetti"
   },
   "inputPassword": {
     "show": "Mostra password"

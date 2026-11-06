@@ -36,7 +36,6 @@
     "singleVolume": "Single Volume",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
-    "volumeWithTotal": "Vol. {{ volume }} of {{ total }}",
     "editions": {
       "variant": "Cover Variant",
       "deluxe": "Deluxe",
@@ -45,12 +44,10 @@
   },
 
   "notFound": {
-    "eyebrow": "Lost in space?",
     "code": "404",
     "title": "Page not found",
     "description": "This page seems to have drifted into the cosmos. Head back to discover your next adventure.",
-    "backHome": "Explore manga",
-    "goBack": "Go back"
+    "backHome": "Explore manga"
   },
   "inputPassword": {
     "show": "Show password"
