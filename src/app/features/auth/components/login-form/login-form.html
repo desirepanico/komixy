@@ -1,23 +1,25 @@
 <form class="flex flex-col gap-5" [formRoot]="form">
-  <app-field-wrapper label="login.email" inputId="login-email" [error]="emailError()">
-    <app-input-text
-      inputId="login-email"
-      type="email"
-      autocomplete="email"
-      inputmode="email"
-      placeholder="login.emailPlaceholder"
-      [formField]="form.email"
-    />
-  </app-field-wrapper>
+  <app-input-text
+    label="login.email"
+    inputId="login-email"
+    type="email"
+    autocomplete="email"
+    inputmode="email"
+    placeholder="login.emailPlaceholder"
+    [errorMessages]="{ required: 'login.errors.emailRequired', email: 'login.errors.emailInvalid' }"
+    [formField]="form.email"
+  />
 
-  <app-field-wrapper
+  <app-input-password
     label="login.password"
     inputId="login-password"
-    [error]="passwordError()"
+    [errorMessages]="{
+      required: 'login.errors.passwordRequired',
+      minLength: 'login.errors.passwordMinLength',
+    }"
     [errorParams]="{ min: passwordMinLength }"
-  >
-    <app-input-password inputId="login-password" [formField]="form.password" />
-  </app-field-wrapper>
+    [formField]="form.password"
+  />
 
   <button appButton type="submit" [rounded]="true" class="mt-2 w-full">
     {{ 'login.submit' | transloco }}

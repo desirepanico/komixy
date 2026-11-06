@@ -1,18 +1,45 @@
-<input
-  #field
-  [id]="inputId()"
-  [type]="type()"
-  [value]="value()"
-  [disabled]="disabled()"
-  [attr.placeholder]="placeholder() ? (placeholder() | transloco) : null"
-  [attr.autocomplete]="autocomplete() || null"
-  [attr.inputmode]="inputmode() || null"
-  [attr.aria-invalid]="showError()"
-  [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
-  [class.pr-4]="!trailingSpace()"
-  [class.pr-14]="trailingSpace()"
-  (input)="value.set(field.value)"
-  (blur)="touch.emit()"
-  class="w-full rounded-xl border border-surface-700 bg-surface-950/60 py-2.5 pl-4 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
-/>
-<ng-content />
+<app-field-wrapper
+  [label]="label()"
+  [inputId]="inputId()"
+  [error]="error()"
+  [errorParams]="errorParams()"
+>
+  <div class="relative">
+    <input
+      #field
+      [id]="inputId()"
+      [type]="inputType()"
+      [value]="value()"
+      [disabled]="disabled()"
+      [attr.placeholder]="placeholder() ? (placeholder() | transloco) : null"
+      [attr.autocomplete]="autocomplete() || null"
+      [attr.inputmode]="inputmode() || null"
+      [attr.aria-invalid]="showError()"
+      [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
+      [class.pr-4]="!isPassword()"
+      [class.pr-14]="isPassword()"
+      (input)="value.set(field.value)"
+      (blur)="touch.emit()"
+      class="w-full rounded-xl border border-surface-700 bg-surface-950/60 py-2.5 pl-4 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
+    />
+    @if (isPassword()) {
+      <!-- L'etichetta non cambia: lo stato lo annuncia aria-pressed -->
+      <button
+        appButton
+        type="button"
+        variant="text"
+        severity="secondary"
+        [iconOnly]="true"
+        class="absolute right-1 top-1/2 -translate-y-1/2"
+        [attr.aria-pressed]="visible()"
+        [attr.aria-label]="'inputPassword.show' | transloco"
+        (click)="toggleVisible()"
+      >
+        <ng-icon
+          [name]="visible() ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
+          size="20"
+        />
+      </button>
+    }
+  </div>
+</app-field-wrapper>

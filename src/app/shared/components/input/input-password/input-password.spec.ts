@@ -7,7 +7,10 @@ import { InputPassword } from './input-password';
   imports: [InputPassword],
   template: `
     <app-input-password
+      label="login.password"
       inputId="password"
+      [errorMessages]="{ minLength: 'login.errors.passwordMinLength' }"
+      [errors]="errori()"
       [(value)]="testo"
       [invalid]="invalid()"
       [touched]="touched()"
@@ -17,6 +20,7 @@ import { InputPassword } from './input-password';
 })
 class Host {
   readonly testo = signal('');
+  readonly errori = signal<{ kind: string }[]>([]);
   readonly invalid = signal(false);
   readonly touched = signal(false);
   readonly tocchi = signal(0);
@@ -45,6 +49,11 @@ describe('InputPassword', () => {
 
   it('viene creato', async () => {
     expect((await crea()).fixture).toBeTruthy();
+  });
+
+  it('mostra il nome del campo', async () => {
+    const { fixture } = await crea();
+    expect(fixture.nativeElement.querySelector('label').textContent.trim()).toBe('login.password');
   });
 
   it('nasconde la password per default', async () => {
@@ -97,5 +106,16 @@ describe('InputPassword', () => {
     await fixture.whenStable();
     expect(campo.getAttribute('aria-invalid')).toBe('true');
     expect(campo.getAttribute('aria-describedby')).toBe('password-error');
+  });
+
+  it('mostra il messaggio dell’errore dopo il tocco', async () => {
+    const { fixture, host } = await crea();
+    host.invalid.set(true);
+    host.touched.set(true);
+    host.errori.set([{ kind: 'minLength' }]);
+    await fixture.whenStable();
+    const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
+    expect(messaggio.id).toBe('password-error');
+    expect(messaggio.textContent?.trim()).toBe('login.errors.passwordMinLength');
   });
 });

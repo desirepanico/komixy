@@ -18,8 +18,8 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 - `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`; severity `primary`, `secondary`, `success`, `info`, `warn`, `danger`, `contrast`, come nei set Severity, Outlined e Text di Figma)
 - `appToggleButton` (su `button`, 36px (un po' più grande dei 30px di Figma), solo tondo): bottone a due stati con `pressed`, usato per il segnalibro nelle card. Imposta da solo `aria-pressed`; l'`aria-label` lo passa chi lo usa
-- `app-field-wrapper`: nome del campo (`label`, chiave Transloco), controllo come contenuto e messaggio d'errore (`error`, chiave Transloco, con `errorParams`). `inputId` è lo stesso del controllo, così l'etichetta lo seleziona e `aria-describedby` punta al messaggio
-- `app-input-text` e `app-input-password` (cartella `shared/components/input/`): controlli per i Signal Forms, si legano con `[formField]`. Mostrano l'errore (`aria-invalid`, `aria-describedby`) solo dopo che il campo è stato toccato; la password ha il bottone occhio con `aria-pressed`. Si usano dentro `app-field-wrapper` (esempio: `login-form`)
+- `app-field-wrapper`: nome del campo (`label`, chiave Transloco), controllo come contenuto e messaggio d'errore (`error`, chiave Transloco, con `errorParams`). `inputId` è l'id del controllo, così l'etichetta lo seleziona e `aria-describedby` punta al messaggio. Lo usano i controlli sotto, senza `ng-content` propri
+- `app-input-text` e `app-input-password` (cartella `shared/components/input/`): campi completi (nome del campo, input ed errore) per i Signal Forms, si legano con `[formField]`. `label`, `placeholder` e i messaggi sono chiavi Transloco; `errorMessages` associa il `kind` di ogni errore alla sua chiave. L'errore e `aria-invalid` compaiono solo dopo che il campo è stato toccato. La password ha il bottone occhio con `aria-pressed` (è `app-input-text` con `type="password"`). Esempio: `login-form`
 - `app-horizontal-scroller`: liste che scorrono in orizzontale (scroll nativo, snap, frecce visibili col mouse e nascoste solo sui dispositivi touch, tasti freccia da tastiera)
 - Direttive `appSwipe` (swipe tra pagine) e `appInView`
 

@@ -3,12 +3,9 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Nome del campo e messaggio d'errore attorno a un controllo, che si passa come contenuto.
- * `label` e `error` sono chiavi Transloco; `inputId` è lo stesso `inputId` del controllo, così
- * l'etichetta lo seleziona e il controllo punta al messaggio con `aria-describedby`.
- *
- * <app-field-wrapper label="login.email" inputId="login-email" [error]="emailError()">
- *   <app-input-text inputId="login-email" [formField]="form.email" />
- * </app-field-wrapper>
+ * `label` e `error` sono chiavi Transloco; `inputId` è l'id del controllo, così l'etichetta lo
+ * seleziona e il controllo punta al messaggio con `aria-describedby`.
+ * Lo usano `app-input-text` e `app-input-password`: un nuovo tipo di campo lo usa allo stesso modo.
  */
 @Component({
   selector: 'app-field-wrapper',
