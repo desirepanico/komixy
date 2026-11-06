@@ -8,6 +8,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 - `public/theme/theme.css`: token, font, colore base del testo (`surface-100` sul `body`), colore dell'alt delle immagini che non caricano (`surface-400`), sfondo dell'app e focus ring.
 - `public/theme/glass.css`: effetto "glass".
 - `public/theme/page-transition.css`: transizione tra le pagine su mobile/tablet (view transition).
+- `public/theme/autofill.css`: i campi compilati dai suggerimenti del browser restano del colore del tema (il browser li colora di azzurro e mette il testo nero).
 - `src/styles.css`: entry degli stili globali. Importa i file di `public/theme/` e poi `tailwind.css`.
 
 ## Come funziona la cartella `public/theme/`

@@ -1,0 +1,28 @@
+/* =========================================
+   RIEMPIMENTO AUTOMATICO DEL BROWSER
+   =========================================
+   Scegliendo un suggerimento (email, password) il browser colora il campo di azzurro e forza il
+   testo nero, fuori dal tema scuro. Quei colori del browser sono !important e non si sovrascrivono:
+   una transition lunghissima lascia il campo com'era, e il colore del testo si fissa a parte. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: var(--color-surface-50);
+  caret-color: var(--color-surface-50);
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+/* Nome standard della pseudo-classe: regola a parte, perché un browser che non la conosce scarterebbe tutto il blocco */
+input:autofill,
+input:autofill:hover,
+input:autofill:focus,
+input:autofill:active {
+  -webkit-text-fill-color: var(--color-surface-50);
+  caret-color: var(--color-surface-50);
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}

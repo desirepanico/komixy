@@ -2,4 +2,5 @@
 @import '../public/theme/theme.css';
 @import '../public/theme/glass.css';
 @import '../public/theme/page-transition.css';
+@import '../public/theme/autofill.css';
 @import './tailwind.css';
