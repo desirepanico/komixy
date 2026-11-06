@@ -21,8 +21,9 @@
     }
     <img
       class="size-full object-cover"
+      [attr.loading]="priority() ? 'eager' : 'lazy'"
+      [attr.fetchpriority]="fetchPriority()"
       [src]="comic().coverUrl"
-      loading="lazy"
       (load)="coverLoaded.set(true)"
       (error)="coverLoaded.set(true)"
       [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"

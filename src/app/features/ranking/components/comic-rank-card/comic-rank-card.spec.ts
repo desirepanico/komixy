@@ -21,12 +21,14 @@ const fumetto: ComicItem = {
   template: `<app-comic-rank-card
     [comic]="fumetto()"
     [rank]="posizione()"
+    [priority]="priorita()"
     (bookmarkToggle)="toggle()"
   />`,
 })
 class Host {
   readonly fumetto = signal(fumetto);
   readonly posizione = signal(1);
+  readonly priorita = signal(false);
   toggle = vi.fn();
 }
 
@@ -54,6 +56,24 @@ describe('ComicRankCard', () => {
     html.querySelector('img')?.dispatchEvent(new Event('load'));
     await fixture.whenStable();
     expect(html.querySelector('app-skeleton')).toBeNull();
+  });
+
+  it('di default la copertina si carica in lazy', async () => {
+    const { html } = await crea();
+    const img = html.querySelector('img');
+    expect(img?.getAttribute('loading')).toBe('lazy');
+    expect(img?.getAttribute('fetchpriority')).toBe('auto');
+  });
+
+  it('con priorità la copertina è eager, e solo la prima ha fetchpriority alta', async () => {
+    const { fixture, html } = await crea();
+    fixture.componentInstance.priorita.set(true);
+    await fixture.whenStable();
+    expect(html.querySelector('img')?.getAttribute('loading')).toBe('eager');
+    expect(html.querySelector('img')?.getAttribute('fetchpriority')).toBe('high');
+    fixture.componentInstance.posizione.set(2);
+    await fixture.whenStable();
+    expect(html.querySelector('img')?.getAttribute('fetchpriority')).toBe('auto');
   });
 
   it('mostra la posizione, anche come testo per i lettori di schermo', async () => {

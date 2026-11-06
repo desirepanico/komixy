@@ -28,6 +28,8 @@ export class ComicRankCard {
   public readonly comic = input.required<ComicItem>();
   /** Posizione in classifica (1 = primo) */
   public readonly rank = input.required<number>();
+  /** Riga visibile senza scorrere: la copertina si scarica subito e non in lazy (migliora l'LCP) */
+  public readonly priority = input<boolean>(false);
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
@@ -35,6 +37,11 @@ export class ComicRankCard {
   protected readonly coverLoaded = signal(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
+  /** Solo la prima copertina ha la priorità più alta: è quasi sempre l'elemento più grande della pagina */
+  protected readonly fetchPriority = computed(() =>
+    this.priority() && this.rank() === 1 ? 'high' : 'auto',
+  );
+
   protected readonly severity = computed(() => editionSeverity(this.comic().editionType));
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */

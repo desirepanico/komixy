@@ -30,6 +30,7 @@
           <app-comic-rank-card
             [comic]="entry.comic"
             [rank]="entry.rank"
+            [priority]="entry.rank <= 5"
             [bookmarked]="selectedId() === entry.comic.id"
             (bookmarkToggle)="toggleBookmark(entry.comic.id)"
           />
