@@ -11,4 +11,4 @@ paths:
 - Si mostra con `@if` su un signal (`loaded`, `loading`) e sparisce quando il contenuto è pronto, anche in caso di errore: non resta mai acceso.
 - È solo decorativo (`aria-hidden`, già nel componente). Se serve annunciare il caricamento, lo fa il contenitore con `aria-busy`.
 - Non serve sulle pagine con contenuto statico o già in memoria (es. i segnaposto con `app-empty-state`): lo skeleton si aggiunge quando compare un caricamento vero.
-- Lo skeleton di avvio in `src/index.html` è HTML puro perché Angular non è ancora partito: usa gli stessi token (`bg-surface-800`) e la stessa animazione; la sua guida è nel commento in quel file.
+- Lo skeleton di avvio in `src/index.html` è HTML puro perché Angular non è ancora partito: usa gli stessi token (`bg-surface-800`) e la stessa animazione; sta fuori da `<app-root>` e lo toglie `provideBootSkeleton()` dopo la prima navigazione; la sua guida è nel commento in quel file.

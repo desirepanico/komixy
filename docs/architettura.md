@@ -55,7 +55,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 | Tipo | Dove | Esempio |
 |---|---|---|
 | Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
-| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()` |
+| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()` |
 | Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
 | Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
 
@@ -63,6 +63,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 
 - `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
 - `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
+- `provideBootSkeleton()` toglie lo skeleton di avvio di `index.html` (`#skeleton`, fuori da `<app-root>`) dopo la prima navigazione finita. Finché c'è, il CSS in `index.html` nasconde `<app-root>`: così, mentre arrivano i chunk lazy, non si vede lo sfondo viola vuoto.
 - `provideCore()` (`core/providers/core/core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
 
 `provideAppInitializer` esegue codice all'avvio; se restituisce una `Promise` o un `Observable`, Angular aspetta che finisca prima di mostrare l'app.

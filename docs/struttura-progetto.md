@@ -11,7 +11,7 @@ src/
 │   │   ├── guards/            user-role/ (user-role.guard + spec)
 │   │   ├── interceptors/      interceptor HTTP (si crea con il primo interceptor)
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), i18n/, nav-direction/
+│   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, library, not-found, profile, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
@@ -101,7 +101,7 @@ Per aggiungere una feature nuova:
 
 - **shared/constants**: costanti condivise, una cartella per costante con `.const.ts` (es. `app-routes/app-routes.const.ts` con i percorsi di tutte le rotte, `main-pages/main-pages.const.ts` con l'ordine delle pagine principali).
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
-- **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
+- **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
 - **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
 - **core/guards**: guard delle rotte (`*.guard.ts`).
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
