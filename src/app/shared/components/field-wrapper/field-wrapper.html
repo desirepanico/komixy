@@ -6,7 +6,7 @@
 @if (error(); as error) {
   <!-- L'icona affianca il rosso: l'errore non si riconosce solo dal colore -->
   <p [id]="inputId() + '-error'" class="flex items-start gap-1.5 text-sm text-red-400" role="alert">
-    <ng-icon name="matErrorOutline" size="18" class="mt-0.5 shrink-0" aria-hidden="true" />
+    <ng-icon name="matErrorOutline" size="18" class="mt-px shrink-0" aria-hidden="true" />
     <span>{{ error.key | transloco: { name: name, min: error.min } }}</span>
   </p>
 }
