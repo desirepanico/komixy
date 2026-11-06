@@ -8,6 +8,7 @@ CLAUDE.md                istruzioni sempre caricate: comandi, struttura, flusso 
 ├── settings.json        permessi e hook condivisi col team
 ├── rules/               una regola per argomento
 ├── skills/              procedure riusabili
+├── agents/              subagent (revisore)
 └── hooks/               script richiamati da settings.json
 docs/                    documentazione del progetto (questa cartella)
 ```
@@ -50,6 +51,10 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 - `shared-component`: crea o modifica un componente in `shared/components`. Si usa anche prima di duplicare markup: se esiste già lo si importa, se sta per comparire una seconda volta lo si estrae e lo si importa in entrambi i punti.
 - `use-shared`: usa un componente di `shared/components` indicandone il nome (`/use-shared <nome> [dove]`). Se il nome manca o è impreciso propone i componenti esistenti (elenco generato dalle cartelle). Legge selector e input dal codice del componente, lo importa e lo inserisce senza duplicare markup.
+
+## Subagent (`.claude/agents/`)
+
+- `reviewer`: revisore indipendente a sola lettura (`Read`, `Grep`, `Glob`). Non ha visto la conversazione, quindi giudica solo il codice: si invoca a lavoro finito, prima del commit, passandogli i file modificati (o il diff). Controlla bug, regole di `.claude/rules/`, accessibilità, traduzioni, test e confini tra aree; non segnala lo stile (lo fanno lint e Prettier) e non modifica nulla.
 
 ## Quando aggiungere cosa
 
