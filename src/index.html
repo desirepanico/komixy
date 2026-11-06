@@ -188,9 +188,10 @@
       </div>
     </div>
     <script>
-      // Sceglie lo skeleton dal primo segmento dell'indirizzo (rotte non in mappa = "list")
+      // Sceglie lo skeleton dal primo segmento dell'indirizzo (rotte non in mappa = "list"; la radice porta alla login)
       (function () {
         var variants = {
+          '': 'login',
           login: 'login',
           profile: 'placeholder',
           library: 'placeholder',

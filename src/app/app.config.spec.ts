@@ -21,7 +21,7 @@ describe('appConfig', () => {
 
     const router = TestBed.inject(Router);
     await router.navigateByUrl('/');
-    expect(router.url).toBe('/discover');
+    expect(router.url).toBe('/login');
     http.verify();
   });
 });

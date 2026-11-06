@@ -28,9 +28,15 @@ describe('routes', () => {
     };
   };
 
-  it('la radice porta a Scopri, dentro il layout', async () => {
+  it('la radice porta alla login, fuori dal layout', async () => {
     const { html, url } = await apri('/');
-    expect(url).toBe('/discover');
+    expect(url).toBe('/login');
+    expect(html.localName).toBe('app-login-page');
+    expect(html.querySelector('app-layout')).toBeNull();
+  });
+
+  it('discover mostra Scopri dentro il layout', async () => {
+    const { html } = await apri('/discover');
     expect(html.querySelector('app-layout app-discover-page')).not.toBeNull();
   });
 

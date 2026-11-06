@@ -3,15 +3,16 @@ import { AppRoutes } from '@shared/constants/navigation.const';
 
 /** Ogni feature porta le sue rotte (`routes/<nome>.routes.ts`, relative): qui si montano sui loro percorsi. */
 export const routes: Routes = [
+  // L'app parte dalla login; dopo l'accesso si arriva a Scopri (o alla pagina richiesta)
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: AppRoutes.Login,
+  },
   {
     path: '',
     loadComponent: () => import('@core/layout/layout').then((m) => m.Layout),
     children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: AppRoutes.Discover,
-      },
       {
         path: AppRoutes.Discover,
         children: [
