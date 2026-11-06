@@ -23,7 +23,7 @@ paths:
 - Template sempre in un file `.html` accanto al `.ts` (`templateUrl: './nome.html'`), anche per i componenti piccoli. Percorsi relativi al file `.ts`.
 - Niente `@HostBinding` e `@HostListener`: usa l'oggetto `host` del decorator.
 - `class` e `style` bindings, mai `ngClass` e `ngStyle`.
-- Form: preferisci i Reactive Forms.
+- Form: Signal Forms, regole in `.claude/rules/form.md`.
 - `NgOptimizedImage` per le immagini statiche (non funziona con base64 inline).
 
 ## Cartelle
