@@ -4,8 +4,8 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 | Pagina | Rotta | Feature | Stato |
 |---|---|---|---|
-| Scopri | `/discover` | `discover` | Attiva: manga da scoprire e Top 5 della settimana |
-| Classifica | `/discover/ranking` | `ranking` | Attiva: classifica settimanale completa |
+| Scopri | `/discover` | `discover` | Attiva: manga da scoprire e Top 5 della settimana; le copertine mostrano `app-skeleton` finché non arrivano |
+| Classifica | `/discover/ranking` | `ranking` | Attiva: classifica settimanale completa; le copertine mostrano `app-skeleton` finché non arrivano |
 | Uscite | `/releases` | `releases` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Fumetto | `/comic/:id` | `comics` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`); manca la pagina di dettaglio |
 | Libreria | `/library` | `library` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |

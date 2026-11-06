@@ -1,9 +1,10 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { InView } from '@shared/directives/in-view/in-view.directive';
@@ -16,7 +17,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
  */
 @Component({
   selector: 'app-comic-rank-card',
-  imports: [RouterLink, TranslocoPipe, Tag, ToggleButton, NgIcon, InView],
+  imports: [RouterLink, TranslocoPipe, Skeleton, Tag, ToggleButton, NgIcon, InView],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-rank-card.html',
   host: { class: 'block' },
@@ -29,6 +30,9 @@ export class ComicRankCard {
   public readonly rank = input.required<number>();
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
+
+  /** Finché la copertina non è arrivata si vede lo skeleton */
+  protected readonly coverLoaded = signal(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
   protected readonly severity = computed(() => editionSeverity(this.comic().editionType));

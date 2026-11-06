@@ -1,16 +1,17 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { EditionType } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 @Component({
   selector: 'app-comic-card',
-  imports: [TranslocoPipe, RouterLink, Tag, ToggleButton, NgIcon],
+  imports: [TranslocoPipe, RouterLink, Skeleton, Tag, ToggleButton, NgIcon],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-card.html',
 })
@@ -29,6 +30,9 @@ export class ComicCard {
 
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
+
+  /** Finché la copertina non è arrivata si vede lo skeleton */
+  protected readonly coverLoaded = signal(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.id()));
   protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));

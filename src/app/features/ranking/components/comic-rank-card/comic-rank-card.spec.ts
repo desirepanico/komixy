@@ -48,6 +48,14 @@ describe('ComicRankCard', () => {
     expect((await crea()).fixture.componentInstance).toBeTruthy();
   });
 
+  it('mostra lo skeleton finché la copertina non è caricata', async () => {
+    const { fixture, html } = await crea();
+    expect(html.querySelector('app-skeleton')).not.toBeNull();
+    html.querySelector('img')?.dispatchEvent(new Event('load'));
+    await fixture.whenStable();
+    expect(html.querySelector('app-skeleton')).toBeNull();
+  });
+
   it('mostra la posizione, anche come testo per i lettori di schermo', async () => {
     const { html } = await crea();
     expect(html.querySelector('[aria-hidden="true"]')?.textContent).toContain('1');

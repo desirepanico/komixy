@@ -54,6 +54,14 @@ describe('ComicCard', () => {
     expect(html.textContent).toContain('C. Arisato');
   });
 
+  it('mostra lo skeleton finché la copertina non è caricata', async () => {
+    const { fixture, html } = await crea();
+    expect(html.querySelector('app-skeleton')).not.toBeNull();
+    html.querySelector('img')?.dispatchEvent(new Event('load'));
+    await fixture.whenStable();
+    expect(html.querySelector('app-skeleton')).toBeNull();
+  });
+
   it('mostra volume e totale dei volumi', async () => {
     const { html } = await crea();
     expect(html.textContent).toContain('mangaCard.volumeLabel');
