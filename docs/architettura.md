@@ -46,7 +46,7 @@ Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>
 - **per andare in un'altra feature si inietta il suo servizio**: la pagina della classifica torna a Scopri con `DiscoverNavigationService`, la card di Scopri porta al fumetto con `ComicsNavigationService`, `AuthNavigationService` dopo il login usa `DiscoverNavigationService`. È l'unico import ammesso tra feature (oltre alla card della classifica per `discover`);
 - il test `app.routes.spec.ts` verifica che ogni link dei servizi porti alla pagina della sua feature.
 
-Così ogni percorso è scritto in un solo servizio, e pagine e componenti non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce, insieme agli import tra feature).
+Così ogni percorso è scritto in un solo servizio, e pagine e componenti delle feature non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce, insieme agli import tra feature). Il menu in `core/layout` è l'eccezione: `core` non può usare i servizi delle feature, quindi costruisce i suoi link con `AppRoutes` e `MAIN_PAGES`.
 
 ## Provider
 
