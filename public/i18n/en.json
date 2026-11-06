@@ -57,7 +57,7 @@
   },
   "validation": {
     "required": "The {{ name }} field is required.",
-    "email": "Enter a valid email address, for example mario.rossi@gmail.com.",
+    "email": "Enter a valid email address, for example mario@gmail.com.",
     "minLength": "The {{ name }} field must be at least {{ min }} characters long.",
     "invalid": "The {{ name }} field is not valid."
   },

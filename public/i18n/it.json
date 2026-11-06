@@ -56,7 +56,7 @@
   },
   "validation": {
     "required": "Il campo {{ name }} è obbligatorio.",
-    "email": "Inserisci un'email valida, ad esempio mario.rossi@gmail.it.",
+    "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
     "minLength": "Il campo {{ name }} deve contenere almeno {{ min }} caratteri.",
     "invalid": "Il campo {{ name }} non è valido."
   },
