@@ -36,6 +36,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 |---|---|---|
 | `SessionStart` | `setup-deps.sh` | lancia `scripts/ensure-deps.mjs`: `npm install` se `node_modules` manca o `package.json`/`package-lock.json` sono cambiati |
 | `PostToolUse` (Edit/Write) | `after-edit.sh` | se `package.json` è modificato installa le dipendenze (`scripts/ensure-deps.mjs`); controlla `it.json`/`en.json` se modificati; lancia ESLint sui file `.ts`/`.html` di `src/`; ricorda di creare lo spec se un `.ts` non ce l'ha. Gli errori sono mostrati a Claude |
+| `Stop` | `before-stop.sh` | se ci sono modifiche a `src/`, traduzioni, `scripts/` o configurazione, lancia `npm run lint`, `knip`, `build` e `npm test`; se uno fallisce esce con codice 2 e Claude continua a correggere. Dopo otto blocchi di fila Claude Code chiude comunque il turno |
 
 Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni che Claude può non rispettare. Ciò che si può far controllare a uno script va in un hook.
 
