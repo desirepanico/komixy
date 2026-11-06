@@ -20,7 +20,7 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
  * ai Signal Forms con `[formField]`. `label` è una chiave Transloco.
  *
  * <app-input-password
- *   label="login.password" inputId="login-password"
+ *   label="login.password" inputId="login-password" placeholder="login.passwordPlaceholder"
  *   [formField]="form.password" />
  */
 @Component({
@@ -34,8 +34,8 @@ export class InputPassword implements FormValueControl<string> {
   public readonly value = model('');
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
-  /** Chiave Transloco del segnaposto; vuota = nessun segnaposto */
-  public readonly placeholder = input('');
+  /** Chiave Transloco del segnaposto */
+  public readonly placeholder = input.required<string>();
   public readonly autocomplete = input('current-password');
 
   // Stato che `[formField]` scrive da solo

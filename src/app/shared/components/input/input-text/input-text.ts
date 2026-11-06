@@ -10,7 +10,7 @@ export type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
  * `[formField]`. `label` è una chiave Transloco; i messaggi d'errore li scrive il wrapper. Per le password c'è `app-input-password`.
  *
  * <app-input-text
- *   label="login.email" inputId="login-email" type="email"
+ *   label="login.email" inputId="login-email" type="email" placeholder="login.emailPlaceholder"
  *   [formField]="form.email" />
  */
 @Component({
@@ -24,8 +24,8 @@ export class InputText implements FormValueControl<string> {
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
   public readonly type = input<InputType>('text');
-  /** Chiave Transloco del segnaposto; vuota = nessun segnaposto */
-  public readonly placeholder = input('');
+  /** Chiave Transloco del segnaposto */
+  public readonly placeholder = input.required<string>();
   public readonly autocomplete = input('');
   public readonly inputmode = input('');
 

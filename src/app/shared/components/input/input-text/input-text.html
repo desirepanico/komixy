@@ -5,7 +5,7 @@
     [type]="type()"
     [value]="value()"
     [disabled]="disabled()"
-    [attr.placeholder]="placeholder() ? (placeholder() | transloco) : null"
+    [placeholder]="placeholder() | transloco"
     [attr.autocomplete]="autocomplete() || null"
     [attr.inputmode]="inputmode() || null"
     [attr.aria-invalid]="showError()"

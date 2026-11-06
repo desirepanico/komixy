@@ -9,7 +9,12 @@
     [formField]="form.email"
   />
 
-  <app-input-password label="login.password" inputId="login-password" [formField]="form.password" />
+  <app-input-password
+    label="login.password"
+    inputId="login-password"
+    placeholder="login.passwordPlaceholder"
+    [formField]="form.password"
+  />
 
   <button appButton type="submit" [rounded]="true" class="mt-2 w-full">
     {{ 'login.submit' | transloco }}

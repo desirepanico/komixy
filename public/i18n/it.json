@@ -66,6 +66,7 @@
     "email": "Email",
     "emailPlaceholder": "nome@esempio.it",
     "password": "Password",
+    "passwordPlaceholder": "Inserisci la tua password",
     "submit": "Accedi"
   },
   "releases": {

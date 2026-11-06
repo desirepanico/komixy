@@ -35,6 +35,11 @@ describe('LoginForm', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  it('mostra il segnaposto di email e password', () => {
+    expect(campo('login-email').getAttribute('placeholder')).toBe('login.emailPlaceholder');
+    expect(campo('login-password').getAttribute('placeholder')).toBe('login.passwordPlaceholder');
+  });
+
   it('non mostra errori prima del primo invio', () => {
     expect(errori()).toEqual([]);
   });

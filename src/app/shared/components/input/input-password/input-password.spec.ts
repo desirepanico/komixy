@@ -9,6 +9,7 @@ import { InputPassword } from './input-password';
     <app-input-password
       label="login.password"
       inputId="password"
+      placeholder="login.passwordPlaceholder"
       [errors]="errori()"
       [(value)]="testo"
       [invalid]="invalid()"
@@ -53,6 +54,11 @@ describe('InputPassword', () => {
   it('mostra il nome del campo', async () => {
     const { fixture } = await crea();
     expect(fixture.nativeElement.querySelector('label').textContent.trim()).toBe('login.password');
+  });
+
+  it('mostra il segnaposto tradotto', async () => {
+    const { campo } = await crea();
+    expect(campo.getAttribute('placeholder')).toBe('login.passwordPlaceholder');
   });
 
   it('nasconde la password per default', async () => {

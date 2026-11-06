@@ -16,14 +16,23 @@ Guida: https://angular.dev/guide/forms/signals/overview. API verificate sui tipi
 - Il modello è un `signal()` readonly con tutti i campi inizializzati (stringa vuota, non `undefined`). `form(model, schema)` non ne fa una copia: scrivere su un campo aggiorna il modello.
 - Il form è un `FieldTree`: `protected readonly form = form(this.model, (path) => { ... })`. Ogni campo è `form.email`, il suo stato si legge chiamandolo: `form.email()`.
 - Le regole di validazione stanno nello schema (secondo argomento di `form()`). Se si riusano, in un `schema()` condiviso; per liste e sotto-oggetti `applyEach()` e `apply()`.
-- Validatori pronti: `required`, `email`, `minLength`, `maxLength`, `min`, `max`, `pattern`, `validate` (personalizzato), `validateAsync`/`validateHttp` (asincroni). Lo stato dei campi si regola con `disabled`, `readonly`, `hidden`. Il messaggio non si scrive nello schema: lo mostra il template con una chiave Transloco (`.claude/rules/i18n.md`).
+- Validatori pronti: `required`, `email`, `minLength`, `maxLength`, `min`, `max`, `pattern`, `validate` (personalizzato), `validateAsync`/`validateHttp` (asincroni). Lo stato dei campi si regola con `disabled`, `readonly`, `hidden`. Il messaggio non si scrive nello schema né nel form: lo sceglie il controllo (sezione «Campi»).
 
 ## Template
 
 - `<form [formRoot]="form">`: `FormRoot` imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `(ngSubmit)`.
-- Ogni controllo si lega con `[formField]="form.email"` (direttiva `FormField`, in `imports`) su `<input>`, `<textarea>`, `<select>` o su un controllo custom (`FormValueControl`/`FormCheckboxControl`). Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
+- Ogni campo si lega con `[formField]="form.email"` (direttiva `FormField`, in `imports`) su un componente di `shared/components/input/` (`app-input-text`, `app-input-password`), mai su un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
 - Stato del campo, tutti signal: `value`, `errors`, `invalid`, `valid`, `touched`, `dirty`, `disabled`, `pending`, `submitting`. Errori di tutto il form: `form().errorSummary()`.
-- Gli errori compaiono solo dopo l'interazione: `@if (form.email().touched() && form.email().invalid())`. `kind` dell'errore (`required`, `email`, `minLength`, `pattern`, ...) sceglie la chiave di traduzione. Accessibilità: `aria-invalid`, `aria-describedby` e `role="alert"` come in `.claude/rules/accessibilita.md`.
+- Gli errori compaiono solo dopo l'interazione (campo toccato o form inviato): ci pensa già il controllo.
+
+## Campi
+
+Ogni campo di un form ha, sempre, tutte e quattro queste cose:
+
+- **Label**: il nome del campo, chiave Transloco (`label="login.email"`).
+- **Placeholder**: un esempio o un suggerimento, chiave Transloco (`placeholder="login.emailPlaceholder"`). `placeholder` e `label` sono `input.required()` dei controlli, quindi il build non passa senza.
+- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra label ed errore con l'`inputId` collegato (`for`, `aria-describedby`). Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form.
+- **Messaggio d'errore** per ogni validatore dello schema. Il testo è generico e sta in `validation.*` (`it.json` e `en.json`), scelto dal `kind` dell'errore con `VALIDATION_MESSAGES` (`shared/constants/validation.const.ts`) e con il nome del campo (`{{ name }}`, la label). Un validatore nuovo (`maxLength`, `pattern`, ...) aggiunge il suo `kind` a `VALIDATION_MESSAGES` e la sua chiave in tutte le lingue; non si scrivono messaggi nel singolo form.
 
 ## Invio
 
