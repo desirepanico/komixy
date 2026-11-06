@@ -6,18 +6,13 @@ import { FieldWrapper } from './field-wrapper';
 @Component({
   imports: [FieldWrapper],
   template: `
-    <app-field-wrapper
-      label="login.email"
-      inputId="campo"
-      [error]="error()"
-      [errorParams]="{ min: 6 }"
-    >
+    <app-field-wrapper label="login.email" inputId="campo" [errors]="errori()">
       <input id="campo" />
     </app-field-wrapper>
   `,
 })
 class Host {
-  readonly error = signal<string | null>(null);
+  readonly errori = signal<{ kind: string }[]>([]);
 }
 
 describe('FieldWrapper', () => {
@@ -51,19 +46,37 @@ describe('FieldWrapper', () => {
 
   it('con un errore mostra il messaggio con l’id atteso da aria-describedby', async () => {
     const fixture = await crea();
-    fixture.componentInstance.error.set('login.errors.emailRequired');
+    fixture.componentInstance.errori.set([{ kind: 'required' }]);
     await fixture.whenStable();
     const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
     expect(messaggio.id).toBe('campo-error');
-    expect(messaggio.textContent?.trim()).toBe('login.errors.emailRequired');
+    expect(messaggio.textContent?.trim()).toBe('validation.required');
   });
 
   it('toglie il messaggio quando l’errore sparisce', async () => {
     const fixture = await crea();
-    fixture.componentInstance.error.set('login.errors.emailRequired');
+    fixture.componentInstance.errori.set([{ kind: 'required' }]);
     await fixture.whenStable();
-    fixture.componentInstance.error.set(null);
+    fixture.componentInstance.errori.set([]);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeNull();
+  });
+
+  it('sceglie il messaggio dal tipo di errore', async () => {
+    const fixture = await crea();
+    fixture.componentInstance.errori.set([{ kind: 'email' }]);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe(
+      'validation.email',
+    );
+  });
+
+  it('per un tipo di errore sconosciuto usa il messaggio generico', async () => {
+    const fixture = await crea();
+    fixture.componentInstance.errori.set([{ kind: 'mai-visto' }]);
+    await fixture.whenStable();
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe(
+      'validation.invalid',
+    );
   });
 });

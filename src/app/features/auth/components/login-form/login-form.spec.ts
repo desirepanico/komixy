@@ -42,12 +42,12 @@ describe('LoginForm', () => {
   it('mostra l’errore di un campo quando si esce senza compilarlo', async () => {
     campo('login-email').dispatchEvent(new Event('blur'));
     await fixture.whenStable();
-    expect(errori()).toEqual(['login.errors.emailRequired']);
+    expect(errori()).toEqual(['validation.required']);
   });
 
   it('con il form vuoto mostra gli errori e non emette nulla', async () => {
     await invia();
-    expect(errori()).toEqual(['login.errors.emailRequired', 'login.errors.passwordRequired']);
+    expect(errori()).toEqual(['validation.required', 'validation.required']);
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('true');
     expect(emessi).toEqual([]);
   });
@@ -56,7 +56,7 @@ describe('LoginForm', () => {
     scrivi('login-email', 'non-una-email');
     scrivi('login-password', '123');
     await invia();
-    expect(errori()).toEqual(['login.errors.emailInvalid', 'login.errors.passwordMinLength']);
+    expect(errori()).toEqual(['validation.email', 'validation.minLength']);
     expect(emessi).toEqual([]);
   });
 
@@ -104,7 +104,7 @@ describe('LoginForm', () => {
     await invia();
     scrivi('login-email', 'a@b.it');
     await fixture.whenStable();
-    expect(errori()).toEqual(['login.errors.passwordRequired']);
+    expect(errori()).toEqual(['validation.required']);
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('false');
     expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
 

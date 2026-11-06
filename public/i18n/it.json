@@ -54,19 +54,19 @@
   "inputPassword": {
     "show": "Mostra password"
   },
+  "validation": {
+    "required": "Il campo {{ name }} è obbligatorio.",
+    "email": "Inserisci un'email valida, ad esempio mario.rossi@gmail.it.",
+    "minLength": "Il campo {{ name }} deve contenere almeno {{ min }} caratteri.",
+    "invalid": "Il campo {{ name }} non è valido."
+  },
   "login": {
     "title": "Accedi a Komixy",
     "subtitle": "Entra per gestire la tua collezione di fumetti e manga.",
     "email": "Email",
     "emailPlaceholder": "nome@esempio.it",
     "password": "Password",
-    "submit": "Accedi",
-    "errors": {
-      "emailRequired": "Inserisci la tua email.",
-      "emailInvalid": "Inserisci un indirizzo email valido.",
-      "passwordRequired": "Inserisci la password.",
-      "passwordMinLength": "La password deve avere almeno {{ min }} caratteri."
-    }
+    "submit": "Accedi"
   },
   "releases": {
     "title": "Uscite",

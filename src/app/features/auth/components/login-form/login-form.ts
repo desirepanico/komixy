@@ -36,6 +36,4 @@ export class LoginForm {
       },
     },
   );
-
-  protected readonly passwordMinLength = PASSWORD_MIN_LENGTH;
 }

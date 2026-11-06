@@ -31,7 +31,7 @@ describe('EmptyState', () => {
     expect(html().textContent).toContain('Descrizione');
   });
 
-  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+  it("nasconde l'icona decorativa ai lettori di schermo", () => {
     expect(html().querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

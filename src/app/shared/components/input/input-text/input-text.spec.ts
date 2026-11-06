@@ -10,7 +10,6 @@ import { InputText } from './input-text';
       label="login.email"
       inputId="campo"
       type="email"
-      [errorMessages]="{ required: 'login.errors.emailRequired' }"
       [errors]="errori()"
       placeholder="login.emailPlaceholder"
       autocomplete="email"
@@ -128,7 +127,7 @@ describe('InputText', () => {
     await fixture.whenStable();
     const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
     expect(messaggio.id).toBe('campo-error');
-    expect(messaggio.textContent?.trim()).toBe('login.errors.emailRequired');
+    expect(messaggio.textContent?.trim()).toBe('validation.required');
   });
 
   it('senza bottone occhio se non è una password', async () => {

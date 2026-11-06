@@ -9,7 +9,6 @@ import { InputPassword } from './input-password';
     <app-input-password
       label="login.password"
       inputId="password"
-      [errorMessages]="{ minLength: 'login.errors.passwordMinLength' }"
       [errors]="errori()"
       [(value)]="testo"
       [invalid]="invalid()"
@@ -116,6 +115,6 @@ describe('InputPassword', () => {
     await fixture.whenStable();
     const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
     expect(messaggio.id).toBe('password-error');
-    expect(messaggio.textContent?.trim()).toBe('login.errors.passwordMinLength');
+    expect(messaggio.textContent?.trim()).toBe('validation.minLength');
   });
 });

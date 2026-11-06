@@ -55,19 +55,19 @@
   "inputPassword": {
     "show": "Show password"
   },
+  "validation": {
+    "required": "The {{ name }} field is required.",
+    "email": "Enter a valid email address, for example mario.rossi@gmail.com.",
+    "minLength": "The {{ name }} field must be at least {{ min }} characters long.",
+    "invalid": "The {{ name }} field is not valid."
+  },
   "login": {
     "title": "Sign in to Komixy",
     "subtitle": "Sign in to manage your comic and manga collection.",
     "email": "Email",
     "emailPlaceholder": "name@example.com",
     "password": "Password",
-    "submit": "Sign in",
-    "errors": {
-      "emailRequired": "Enter your email.",
-      "emailInvalid": "Enter a valid email address.",
-      "passwordRequired": "Enter your password.",
-      "passwordMinLength": "The password must be at least {{ min }} characters long."
-    }
+    "submit": "Sign in"
   },
   "releases": {
     "title": "Releases",

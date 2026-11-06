@@ -17,11 +17,11 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
 
 /**
  * Campo password con nome del campo, errore (`app-field-wrapper`) e bottone per mostrarla; si lega
- * ai Signal Forms con `[formField]`. `label` e i messaggi sono chiavi Transloco.
+ * ai Signal Forms con `[formField]`. `label` è una chiave Transloco.
  *
  * <app-input-password
  *   label="login.password" inputId="login-password"
- *   [errorMessages]="{ required: 'login.errors.passwordRequired' }" [formField]="form.password" />
+ *   [formField]="form.password" />
  */
 @Component({
   selector: 'app-input-password',
@@ -37,9 +37,6 @@ export class InputPassword implements FormValueControl<string> {
   /** Chiave Transloco del segnaposto; vuota = nessun segnaposto */
   public readonly placeholder = input('');
   public readonly autocomplete = input('current-password');
-  /** Chiave del messaggio per ogni `kind` di errore (`required`, `minLength`, ...) */
-  public readonly errorMessages = input<Record<string, string>>({});
-  public readonly errorParams = input<Record<string, unknown>>({});
 
   // Stato che `[formField]` scrive da solo
   public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
@@ -54,9 +51,7 @@ export class InputPassword implements FormValueControl<string> {
 
   /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
   protected readonly showError = computed(() => this.touched() && this.invalid());
-  protected readonly error = computed(() =>
-    this.showError() ? (this.errorMessages()[this.errors()[0]?.kind ?? ''] ?? null) : null,
-  );
+  protected readonly visibleErrors = computed(() => (this.showError() ? this.errors() : []));
 
   public focus(options?: FocusOptions): void {
     this.field().nativeElement.focus(options);

@@ -9,7 +9,13 @@ import { Button } from './button';
     <button id="pieno" appButton>Ok</button>
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
     <button id="icona" appButton [iconOnly]="true" aria-label="Chiudi"></button>
-    <button id="testo-icona" appButton variant="text" [iconOnly]="true" aria-label="Mostra"></button>
+    <button
+      id="testo-icona"
+      appButton
+      variant="text"
+      [iconOnly]="true"
+      aria-label="Mostra"
+    ></button>
     <button id="testo" appButton variant="text" class="px-3">Ok</button>
     <button id="secondario" appButton severity="secondary">Ok</button>
     <button id="secondario-bordo" appButton severity="secondary" variant="outlined">Ok</button>
