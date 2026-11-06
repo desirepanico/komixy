@@ -19,6 +19,10 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
  * Campo password con nome del campo, errore (`app-field-wrapper`) e bottone per mostrarla; si lega
  * ai Signal Forms con `[formField]`. `label` è una chiave Transloco.
  *
+ * `implements FormValueControl` è il contratto dei controlli per `[formField]`: la direttiva scrive da sola
+ * in `value` (a due vie con il modello del form) e in `disabled`. A runtime l'interfaccia non c'è: la usa
+ * solo il compilatore, per controllare i tipi.
+ *
  * <app-input-password
  *   label="login.password" inputId="login-password" placeholder="login.passwordPlaceholder"
  *   [formField]="form.password" />
@@ -43,7 +47,10 @@ export class InputPassword implements FormValueControl<string> {
 
   protected readonly visible = signal(false);
 
-  /** Stato del campo: `touched` ed errori si leggono da qui e non da `input()`, che il form non userebbe mai */
+  /**
+   * `[formField]` sta sullo stesso elemento, quindi si può iniettare: da qui il componente legge lo stato
+   * del campo (`touched`, errori) e lo aggiorna (`markAsTouched()`), senza `input()` che il form non userebbe.
+   */
   private readonly formField = inject<FormField<string>>(FormField);
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 

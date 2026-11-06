@@ -9,6 +9,10 @@ type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
  * Campo di testo con nome del campo ed errore (`app-field-wrapper`), che si lega ai Signal Forms con
  * `[formField]`. `label` è una chiave Transloco; i messaggi d'errore li scrive il wrapper. Per le password c'è `app-input-password`.
  *
+ * `implements FormValueControl` è il contratto dei controlli per `[formField]`: la direttiva scrive da sola
+ * in `value` (a due vie con il modello del form) e in `disabled`. A runtime l'interfaccia non c'è: la usa
+ * solo il compilatore, per controllare i tipi.
+ *
  * <app-input-text
  *   label="login.email" inputId="login-email" type="email" placeholder="login.emailPlaceholder"
  *   [formField]="form.email" />
@@ -32,7 +36,10 @@ export class InputText implements FormValueControl<string> {
   // Stato che `[formField]` scrive da solo
   public readonly disabled = input(false);
 
-  /** Stato del campo: `touched` ed errori si leggono da qui e non da `input()`, che il form non userebbe mai */
+  /**
+   * `[formField]` sta sullo stesso elemento, quindi si può iniettare: da qui il componente legge lo stato
+   * del campo (`touched`, errori) e lo aggiorna (`markAsTouched()`), senza `input()` che il form non userebbe.
+   */
   private readonly formField = inject<FormField<string>>(FormField);
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 
