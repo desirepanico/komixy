@@ -4,9 +4,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matVisibilityOffOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
+import { PASSWORD_MIN_LENGTH } from '../../constants/auth.const';
 import { LoginCredentials } from '../../models/auth.model';
-
-const PASSWORD_MIN_LENGTH = 6;
 
 /** Form di accesso con email e password. Emette le credenziali solo se il form è valido. */
 @Component({

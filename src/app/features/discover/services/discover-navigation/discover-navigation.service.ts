@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { AppRoutes } from '@shared/constants/navigation.const';
 
 /** Rotte della feature discover: la pagina Scopri. */
 @Injectable({ providedIn: 'root' })

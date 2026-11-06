@@ -1,17 +1,6 @@
 import { DestroyRef, Directive, inject, input, output } from '@angular/core';
+import { IGNORED_TARGETS } from '../../constants/swipe.const';
 import { detectSwipe } from './detect-swipe/detect-swipe';
-
-/**
- * Elementi su cui un gesto non deve essere considerato uno swipe di pagina.
- * Link e bottoni non sono qui: le card sono link e coprono quasi tutta la pagina.
- */
-const IGNORED_TARGETS = [
-  'input',
-  'textarea',
-  'select',
-  '[role="slider"]',
-  '[data-no-swipe]',
-].join(',');
 
 /**
  * Emette `swipeLeft` e `swipeRight` sui gesti touch/penna (non col mouse).

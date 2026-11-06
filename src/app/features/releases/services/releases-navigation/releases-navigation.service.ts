@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { AppRoutes } from '@shared/constants/navigation.const';
 
 /** Rotte della feature releases: la pagina delle uscite. */
 @Injectable({ providedIn: 'root' })

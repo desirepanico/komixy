@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
-import { AppRoutes } from '@shared/constants/app-routes/app-routes.const';
+import { AppRoutes } from '@shared/constants/navigation.const';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { safeReturnUrl } from '../../utils/safe-return-url/safe-return-url';
 

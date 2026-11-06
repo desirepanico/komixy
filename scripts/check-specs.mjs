@@ -1,7 +1,7 @@
 // Controlla le regole sugli spec (vedi .claude/rules/test.md):
 // 1. ogni file .ts di src/ ha il suo spec accanto;
 // 2. ogni file con spec sta in una cartella propria, insieme al suo spec (e al suo .html se è un componente).
-// Esclusi: gli spec, i *.d.ts, i *.model.ts (solo tipi), main.ts e i file nella radice di src/app (app.ts, app.config.ts, app.routes.ts).
+// Esclusi: gli spec, i *.d.ts, i *.model.ts (solo tipi), i *.const.ts (costanti, vedi .claude/rules/costanti.md), main.ts e i file nella radice di src/app (app.ts, app.config.ts, app.routes.ts).
 import { existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
@@ -12,7 +12,7 @@ const walk = (dir) =>
 
 const sorgenti = walk('src')
   .filter((f) => f.endsWith('.ts') && !f.endsWith('.spec.ts') && !f.endsWith('.d.ts'))
-  .filter((f) => !f.endsWith('.model.ts') && !f.endsWith('/main.ts'));
+  .filter((f) => !/\.(model|const)\.ts$/.test(f) && !f.endsWith('/main.ts'));
 
 const senzaSpec = sorgenti.filter((f) => !existsSync(f.replace(/\.ts$/, '.spec.ts')));
 

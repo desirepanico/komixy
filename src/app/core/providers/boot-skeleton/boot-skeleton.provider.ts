@@ -1,9 +1,7 @@
 import { afterNextRender, inject, Injector, provideAppInitializer } from '@angular/core';
 import { NavigationEnd, NavigationError, Router } from '@angular/router';
 import { filter, take } from 'rxjs';
-
-/** Se la prima navigazione non finisce mai, lo skeleton non deve restare per sempre */
-const BOOT_SKELETON_TIMEOUT_MS = 10_000;
+import { BOOT_SKELETON_TIMEOUT_MS } from '../../constants/boot-skeleton.const';
 
 /**
  * Toglie lo skeleton di avvio di `index.html` (`#skeleton`) quando la prima pagina è già disegnata.

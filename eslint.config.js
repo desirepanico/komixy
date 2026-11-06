@@ -37,14 +37,13 @@ function regoleFeature(cartella, regexVietate) {
                 importNames: ['Router'],
                 message: 'Naviga con il servizio di navigazione, non con Router.',
               },
-            ],
-            patterns: [
-              ...patterns,
               {
-                group: ['@shared/constants/app-routes/*'],
+                name: '@shared/constants/navigation.const',
+                importNames: ['AppRoutes'],
                 message: 'I percorsi si costruiscono nei servizi di navigazione.',
               },
             ],
+            patterns,
           },
         ],
       },

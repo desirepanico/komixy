@@ -41,8 +41,8 @@ Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; pe
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` e il servizio di navigazione `services/<nome>-navigation/` (solo le rotte della feature; per le altre feature si inietta il loro servizio; regole in `.claude/rules/angular.md`).
-2. Aggiungi il valore in `AppRoutes` (`shared/constants/app-routes/app-routes.const.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, lazy) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione a `app.routes.spec.ts`.
-3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/main-pages/main-pages.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
+2. Aggiungi il valore in `AppRoutes` (`shared/constants/navigation.const.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, lazy) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione a `app.routes.spec.ts`.
+3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/navigation.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Convenzioni
@@ -52,7 +52,7 @@ Per aggiungere una feature nuova:
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
 - Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume e rimanda, `docs/` spiega ma non definisce regole.
 - Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.
-- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/main-pages/main-pages.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
+- Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/navigation.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
 ## Flusso git
 

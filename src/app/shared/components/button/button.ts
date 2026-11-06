@@ -1,47 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-
-export type ButtonVariant = 'filled' | 'outlined' | 'text';
-export type ButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'danger' | 'contrast';
-
-// Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
-const FILLED_TEXT = 'text-surface-800';
-const COLORS: Record<ButtonSeverity, Record<ButtonVariant, string>> = {
-  primary: {
-    filled: `bg-primary-300 ${FILLED_TEXT} hover:bg-primary-500`,
-    outlined: 'border border-primary-400 text-primary-300 hover:bg-primary-400/15',
-    text: 'text-primary-300 hover:bg-primary-400/15',
-  },
-  secondary: {
-    filled: 'border border-surface-700 bg-surface-800 text-primary-300 hover:border-surface-600 hover:bg-surface-700',
-    outlined: 'border border-surface-600 text-surface-400 hover:bg-surface-600/15',
-    text: 'text-surface-400 hover:bg-surface-600/15',
-  },
-  success: {
-    filled: `bg-green-400 ${FILLED_TEXT} hover:bg-green-300`,
-    outlined: 'border border-green-400 text-green-400 hover:bg-green-400/15',
-    text: 'text-green-400 hover:bg-green-400/15',
-  },
-  info: {
-    filled: `bg-blue-400 ${FILLED_TEXT} hover:bg-sky-300`,
-    outlined: 'border border-blue-400 text-blue-400 hover:bg-blue-400/15',
-    text: 'text-blue-400 hover:bg-blue-400/15',
-  },
-  warn: {
-    filled: `bg-orange-400 ${FILLED_TEXT} hover:bg-orange-300`,
-    outlined: 'border border-orange-300 text-orange-300 hover:bg-orange-300/15',
-    text: 'text-orange-300 hover:bg-orange-300/15',
-  },
-  danger: {
-    filled: `bg-rose-400 ${FILLED_TEXT} hover:bg-rose-300`,
-    outlined: 'border border-rose-300 text-rose-300 hover:bg-rose-300/15',
-    text: 'text-red-400 hover:bg-red-400/15',
-  },
-  contrast: {
-    filled: `bg-surface-100 ${FILLED_TEXT} hover:bg-surface-300`,
-    outlined: 'border border-surface-100 text-surface-100 hover:bg-surface-100/15',
-    text: 'text-surface-100 hover:bg-surface-100/15',
-  },
-};
+import { BUTTON_COLORS } from '../../constants/button.const';
+import { ButtonSeverity, ButtonVariant } from '../../models/button.model';
 
 /**
  * Bottone (ex p-button). Si applica a elementi nativi, così funzionano `routerLink`, `click` e `disabled`:
@@ -69,7 +28,7 @@ export class Button {
     const base =
       'inline-flex items-center cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-not-allowed disabled:opacity-40';
     const variant = this.variant();
-    const colors = COLORS[this.severity()][variant];
+    const colors = BUTTON_COLORS[this.severity()][variant];
     const radius = this.rounded() ? 'rounded-full' : 'rounded-sm';
     // il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {

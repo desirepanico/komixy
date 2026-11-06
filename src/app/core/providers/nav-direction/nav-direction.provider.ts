@@ -1,6 +1,6 @@
 import { inject, provideAppInitializer } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
-import { mainPageIndex } from '@shared/constants/main-pages/main-pages.const';
+import { mainPageIndex } from '@shared/constants/navigation.const';
 
 /**
  * Imposta `data-nav-direction` ("forward" | "back") su <html> quando si passa da una pagina
