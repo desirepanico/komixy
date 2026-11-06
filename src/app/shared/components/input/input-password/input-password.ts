@@ -5,7 +5,6 @@ import {
   inject,
   input,
   model,
-  output,
   signal,
   viewChild,
 } from '@angular/core';
@@ -41,7 +40,6 @@ export class InputPassword implements FormValueControl<string> {
 
   // Stato che `[formField]` scrive da solo
   public readonly disabled = input(false);
-  public readonly touch = output<void>();
 
   protected readonly visible = signal(false);
 
@@ -56,6 +54,11 @@ export class InputPassword implements FormValueControl<string> {
   protected readonly visibleErrors = computed(() =>
     this.showError() ? this.formField.errors() : [],
   );
+
+  /** All'uscita dal campo: da qui in poi gli errori si vedono */
+  protected markAsTouched(): void {
+    this.formField.state().markAsTouched();
+  }
 
   public focus(options?: FocusOptions): void {
     this.field().nativeElement.focus(options);

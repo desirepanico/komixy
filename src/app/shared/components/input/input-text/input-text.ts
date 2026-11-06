@@ -1,13 +1,4 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  model,
-  output,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, ElementRef, inject, input, model, viewChild } from '@angular/core';
 import { FormField, FormValueControl } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { FieldWrapper } from '../../field-wrapper/field-wrapper';
@@ -40,7 +31,6 @@ export class InputText implements FormValueControl<string> {
 
   // Stato che `[formField]` scrive da solo
   public readonly disabled = input(false);
-  public readonly touch = output<void>();
 
   /** Stato del campo: `touched` ed errori si leggono da qui e non da `input()`, che il form non userebbe mai */
   private readonly formField = inject<FormField<string>>(FormField);
@@ -53,6 +43,11 @@ export class InputText implements FormValueControl<string> {
   protected readonly visibleErrors = computed(() =>
     this.showError() ? this.formField.errors() : [],
   );
+
+  /** All'uscita dal campo: da qui in poi gli errori si vedono */
+  protected markAsTouched(): void {
+    this.formField.state().markAsTouched();
+  }
 
   public focus(options?: FocusOptions): void {
     this.field().nativeElement.focus(options);
