@@ -37,8 +37,9 @@ export class InputText implements FormValueControl<string> {
   public readonly disabled = input(false);
 
   /**
-   * `[formField]` sta sullo stesso elemento, quindi si può iniettare: da qui il componente legge lo stato
-   * del campo (`touched`, errori) e lo aggiorna (`markAsTouched()`), senza `input()` che il form non userebbe.
+   * La direttiva `[formField]` sta sullo stesso elemento di questo componente: iniettandola si ottiene
+   * lo stato del campo del form (es. `form.email`). Da qui si leggono gli errori e se il campo è stato
+   * toccato, così il form non deve passarli al componente.
    */
   private readonly formField = inject<FormField<string>>(FormField);
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
