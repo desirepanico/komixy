@@ -9,7 +9,7 @@
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center gap-6 px-6 py-6 lg:px-12 lg:py-16 xl:px-20"
+  class="relative flex h-full flex-col justify-center gap-6 px-6 py-6 lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
 >
   <div class="flex animate-fade-up items-center gap-3 motion-reduce:animate-none">
     <span
@@ -27,7 +27,7 @@
     class="max-w-xl animate-fade-up space-y-3 [animation-delay:120ms] motion-reduce:animate-none"
   >
     <p
-      class="text-2xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-5xl"
+      class="text-2xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
       {{ 'loginHero.title' | transloco }}
     </p>
@@ -38,12 +38,12 @@
 
   <!-- Volumi che fluttuano -->
   <div
-    class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-72 lg:justify-start lg:-space-x-5"
+    class="flex h-32 items-end justify-center -space-x-3 sm:h-40 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-5"
     aria-hidden="true"
   >
     @for (volume of volumes; track volume.icon) {
       <div
-        class="relative flex aspect-2/3 w-16 animate-float items-center justify-center rounded-lg border border-primary-300/30 bg-linear-to-br shadow-xl shadow-surface-950/60 motion-reduce:animate-none sm:w-20 lg:w-32 {{
+        class="relative flex aspect-2/3 w-16 animate-float items-center justify-center rounded-lg border border-primary-300/30 bg-linear-to-br shadow-xl shadow-surface-950/60 motion-reduce:animate-none sm:w-20 lg:w-[min(8rem,13dvh)] {{
           volume.colors
         }} {{ volume.motion }} {{ volume.offset }}"
       >

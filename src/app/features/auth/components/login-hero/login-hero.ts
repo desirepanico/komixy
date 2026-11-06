@@ -27,7 +27,7 @@ import {
       matStarOutline,
     }),
   ],
-  host: { class: 'relative block overflow-x-clip' },
+  host: { class: 'relative block' },
 })
 export class LoginHero {
   /** Ogni volume ha il suo colore, inclinazione, altezza e ritardo, così non si muovono all'unisono */
