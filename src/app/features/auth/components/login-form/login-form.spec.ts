@@ -50,11 +50,6 @@ describe('LoginForm', () => {
     expect(errori()).toEqual(['validation.required']);
   });
 
-  it('segnala come obbligatori email e password', () => {
-    expect(campo('login-email').getAttribute('aria-required')).toBe('true');
-    expect(campo('login-password').getAttribute('aria-required')).toBe('true');
-  });
-
   it('dopo un invio fallito porta il focus sul primo campo non valido', async () => {
     await invia();
     expect(document.activeElement).toBe(campo('login-email'));

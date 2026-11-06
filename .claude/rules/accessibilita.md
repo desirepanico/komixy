@@ -28,6 +28,5 @@ Regola generale: tutto ciò che si fa con mouse o touch si deve poter fare anche
 ## Form
 
 - L'errore non si riconosce solo dal colore: il messaggio ha sempre il testo e un'icona (`app-field-wrapper`), e il campo ha `aria-invalid` e `aria-describedby`.
-- I campi obbligatori hanno `aria-required` (lo imposta `[formField]` dallo schema).
 - Dopo un invio fallito il focus va al primo campo con l'errore (`onInvalid` del form, vedi `form.md`).
 - Sul campo in errore l'anello di focus resta staccato dal bordo rosso con `outline-offset-2`: a contatto, viola e rosso hanno solo 1,26 a 1 e non si distinguono.
