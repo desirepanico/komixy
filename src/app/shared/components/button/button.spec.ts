@@ -9,6 +9,7 @@ import { Button } from './button';
     <button id="pieno" appButton>Ok</button>
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
     <button id="icona" appButton [iconOnly]="true" aria-label="Chiudi"></button>
+    <button id="testo-icona" appButton variant="text" [iconOnly]="true" aria-label="Mostra"></button>
     <button id="testo" appButton variant="text" class="px-3">Ok</button>
     <button id="secondario" appButton severity="secondary">Ok</button>
     <button id="secondario-bordo" appButton severity="secondary" variant="outlined">Ok</button>
@@ -50,6 +51,13 @@ describe('Button', () => {
 
   it('con iconOnly è un quadrato di sola icona', async () => {
     expect((await el('icona')).classList).toContain('size-10');
+  });
+
+  it('con variant text e iconOnly mantiene dimensione e centratura dell icona', async () => {
+    const classi = (await el('testo-icona')).classList;
+    expect(classi).toContain('size-10');
+    expect(classi).toContain('justify-center');
+    expect(classi).not.toContain('bg-primary-300');
   });
 
   it('con variant text non ha sfondo né bordo e lascia le spaziature a chi lo usa', async () => {
