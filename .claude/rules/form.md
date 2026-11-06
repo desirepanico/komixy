@@ -20,7 +20,7 @@ Guida: https://angular.dev/guide/forms/signals/overview. API verificate sui tipi
 
 ## Template
 
-- `<form [formRoot]="form" novalidate>`: `FormRoot` imposta `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `(ngSubmit)`.
+- `<form [formRoot]="form">`: `FormRoot` imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `(ngSubmit)`.
 - Ogni controllo si lega con `[formField]="form.email"` (direttiva `FormField`, in `imports`) su `<input>`, `<textarea>`, `<select>` o su un controllo custom (`FormValueControl`/`FormCheckboxControl`). Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
 - Stato del campo, tutti signal: `value`, `errors`, `invalid`, `valid`, `touched`, `dirty`, `disabled`, `pending`, `submitting`. Errori di tutto il form: `form().errorSummary()`.
 - Gli errori compaiono solo dopo l'interazione: `@if (form.email().touched() && form.email().invalid())`. `kind` dell'errore (`required`, `email`, `minLength`, `pattern`, ...) sceglie la chiave di traduzione. Accessibilità: `aria-invalid`, `aria-describedby` e `role="alert"` come in `.claude/rules/accessibilita.md`.

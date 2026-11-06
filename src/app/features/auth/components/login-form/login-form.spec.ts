@@ -77,6 +77,11 @@ describe('LoginForm', () => {
     await fixture.whenStable();
     expect(campo('login-password').type).toBe('text');
     expect(occhio.getAttribute('aria-pressed')).toBe('true');
+
+    occhio.click();
+    await fixture.whenStable();
+    expect(campo('login-password').type).toBe('password');
+    expect(occhio.getAttribute('aria-pressed')).toBe('false');
   });
 
   it('l’occhio mantiene la stessa etichetta quando cambia stato', async () => {
@@ -86,10 +91,27 @@ describe('LoginForm', () => {
     expect(occhio.getAttribute('aria-label')).toBe('login.showPassword');
   });
 
+  it('collega ogni errore al suo campo con aria-describedby', async () => {
+    expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
+
+    await invia();
+    expect(campo('login-email').getAttribute('aria-describedby')).toBe('login-email-error');
+    expect(campo('login-password').getAttribute('aria-describedby')).toBe('login-password-error');
+    expect(html.querySelector('#login-email-error')).not.toBeNull();
+  });
+
   it('toglie l’errore man mano che i campi diventano validi', async () => {
     await invia();
     scrivi('login-email', 'a@b.it');
     await fixture.whenStable();
     expect(errori()).toEqual(['login.errors.passwordRequired']);
+    expect(campo('login-email').getAttribute('aria-invalid')).toBe('false');
+    expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
+
+    scrivi('login-password', '123456');
+    await fixture.whenStable();
+    expect(errori()).toEqual([]);
+    expect(campo('login-password').getAttribute('aria-invalid')).toBe('false');
+    expect(campo('login-password').getAttribute('aria-describedby')).toBeNull();
   });
 });
