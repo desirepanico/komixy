@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppRoutes } from '@shared/constants/navigation.const';
+import { AppRoutes } from '@shared/models/app-routes.model';
 
 /** Rotte della feature profile: la pagina del profilo. */
 @Injectable({ providedIn: 'root' })

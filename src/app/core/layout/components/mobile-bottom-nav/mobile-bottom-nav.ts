@@ -10,7 +10,8 @@ import {
   matHomeOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
-import { AppRoutes, MAIN_PAGES } from '@shared/constants/navigation.const';
+import { AppRoutes } from '@shared/models/app-routes.model';
+import { MAIN_PAGES } from '@shared/constants/navigation.const';
 import { NavItem } from '@shared/models/nav-item.model';
 
 @Component({

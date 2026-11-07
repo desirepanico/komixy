@@ -96,13 +96,13 @@ features/auth/
 Per aggiungere una feature nuova:
 
 1. Crea `features/<nome>/pages/<nome>-page/` e il servizio di navigazione `services/<nome>-navigation/` (le altre cartelle solo se servono).
-2. Aggiungi il valore in `AppRoutes` (`shared/constants/navigation.const.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, con `loadComponent`) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione ai casi di `app.routes.spec.ts`.
+2. Aggiungi il valore in `AppRoutes` (`shared/models/app-routes.model.ts`), le rotte della feature in `routes/<nome>.routes.ts` (relative, con `loadComponent`) e montale in `app.routes.ts` con `loadChildren`. Aggiungi i link del servizio di navigazione ai casi di `app.routes.spec.ts`.
 3. Se è una pagina principale della navigazione mobile, aggiungila a `MAIN_PAGES` (`shared/constants/navigation.const.ts`). Una sotto-pagina (es. `discover/ranking`) va come rotta figlia della pagina principale, così la voce di menu resta attiva.
 4. Aggiungi i testi in `public/i18n/it.json` e `en.json`.
 
 ## Dove vanno le altre cose
 
-- **shared/constants**: costanti condivise, un file `*.const.ts` per argomento e nessuna sottocartella (es. `navigation.const.ts` con i percorsi di tutte le rotte e l'ordine delle pagine principali). Ci stanno tutte le costanti dichiarate con `const`, anche quelle di una sola area. Regole in `.claude/rules/costanti.md`.
+- **shared/constants**: costanti condivise, un file `*.const.ts` per argomento e nessuna sottocartella (es. `navigation.const.ts` con l'ordine delle pagine principali). Ci stanno tutte le costanti dichiarate con `const`, anche quelle di una sola area. Regole in `.claude/rules/costanti.md`.
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
 - **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
 - **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.

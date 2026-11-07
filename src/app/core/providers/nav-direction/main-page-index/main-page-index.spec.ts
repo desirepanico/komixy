@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { AppRoutes } from '@shared/constants/navigation.const';
+import { AppRoutes } from '@shared/models/app-routes.model';
 import { mainPageIndex } from './main-page-index';
 
 describe('mainPageIndex', () => {

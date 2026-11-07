@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AppRoutes } from '@shared/constants/navigation.const';
+import { AppRoutes } from '@shared/models/app-routes.model';
 
 /** Ogni feature porta le sue rotte (`routes/<nome>.routes.ts`, relative): qui si montano sui loro percorsi. */
 export const routes: Routes = [
