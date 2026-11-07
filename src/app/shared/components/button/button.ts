@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { BUTTON_COLORS } from '../../constants/button.const';
+import { BUTTON_COLORS } from '../../constants/ui.const';
 import { ButtonSeverity, ButtonVariant } from '../../models/button.model';
 
 /**

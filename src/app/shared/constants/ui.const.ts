@@ -40,3 +40,6 @@ export const BUTTON_COLORS: Record<ButtonSeverity, Record<ButtonVariant, string>
     text: 'text-surface-100 hover:bg-surface-100/15',
   },
 };
+
+/** Se la prima navigazione non finisce mai, lo skeleton non deve restare per sempre */
+export const BOOT_SKELETON_TIMEOUT_MS = 10_000;

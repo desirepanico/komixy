@@ -3,7 +3,7 @@ import { ValidationError } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matErrorOutline } from '@ng-icons/material-symbols/outline';
-import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constants/validation.const';
+import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constants/form.const';
 
 /**
  * Nome del campo e messaggio d'errore attorno a un controllo, che si passa come contenuto.

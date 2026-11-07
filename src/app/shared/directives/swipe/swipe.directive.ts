@@ -1,5 +1,5 @@
 import { DestroyRef, Directive, inject, input, output } from '@angular/core';
-import { IGNORED_TARGETS } from '../../constants/swipe.const';
+import { IGNORED_TARGETS } from '../../constants/navigation.const';
 import { detectSwipe } from './detect-swipe/detect-swipe';
 
 /**

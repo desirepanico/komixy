@@ -1,3 +1,6 @@
+/** Lunghezza minima della password al login */
+export const PASSWORD_MIN_LENGTH = 6;
+
 /** Chiave di traduzione del messaggio per ogni tipo (`kind`) di errore di validazione */
 export const VALIDATION_MESSAGES: Readonly<Record<string, string>> = {
   required: 'validation.required',
