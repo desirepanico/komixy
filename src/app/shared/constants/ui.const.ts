@@ -2,7 +2,9 @@ import { ButtonSeverity, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
 const FILLED_TEXT = 'text-surface-800';
-export const BUTTON_COLORS: Record<ButtonSeverity, Record<ButtonVariant, string>> = {
+export const BUTTON_COLORS: Readonly<
+  Record<ButtonSeverity, Readonly<Record<ButtonVariant, string>>>
+> = {
   primary: {
     filled: `bg-primary-300 ${FILLED_TEXT} hover:bg-primary-500`,
     outlined: 'border border-primary-400 text-primary-300 hover:bg-primary-400/15',
