@@ -22,6 +22,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | File | Argomento | Si carica su (`paths:`) |
 |---|---|---|
 | `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
+| `signals.md` | Signal di Angular 22 | `src/app/**/*.ts` e `*.html` |
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
 | `costanti.md` | Costanti: in `shared/constants`, al massimo 3 file (uno per ambito), senza sottocartelle | `src/**/*.ts` |
