@@ -22,7 +22,7 @@ src/
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, ...
 │       ├── constants/         costanti condivise, un file `*.const.ts` per argomento, senza sottocartelle (navigation, button, swipe, auth, validation, boot-skeleton)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item) e edition-severity/
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
 │       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
@@ -86,7 +86,7 @@ features/auth/
 
 - **pages**: una cartella per pagina, collegata a una rotta in `routes/<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
 - **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
-- **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
+- **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec obbligatorio; uno spec accanto c'è solo se l'enum ha regole da verificare, come `app-routes.model.spec.ts`). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **routes**: `<nome>.routes.ts` (`export const NOME_ROUTES: Routes`): le rotte della feature, relative alla sua radice. In coppia con il servizio di navigazione.
 - **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found`, `releases`, `library` e `profile`), con **solo le rotte della propria feature**: percorsi per i template (`rankingNavigation.rankingLink`), metodi `goToXxx()` per il codice, `*UrlTree()` per i guard. Per andare in un'altra feature si inietta il suo servizio (è l'unico import ammesso tra feature). Pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
