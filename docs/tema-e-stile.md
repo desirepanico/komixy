@@ -28,7 +28,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 
 ## Tema
 
-Tema scuro viola. Il testo secondario non scende sotto `surface-500` per rispettare il contrasto (vedi `.claude/rules/accessibilita.md`).
+Tema scuro viola. Il testo secondario deve rispettare il contrasto WCAG AA, che dipende dallo sfondo: `surface-500` regge solo su `surface-900` e `surface-950` (vedi `.claude/rules/accessibilita.md`).
 
 ## Come aggiungere un valore
 
