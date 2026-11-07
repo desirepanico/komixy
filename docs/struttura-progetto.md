@@ -63,9 +63,9 @@ features/auth/
 │   ├── login-form/                  componente usato solo da questa feature
 │   │   ├── login-form.ts
 │   │   └── login-form.html
-│   └── login-hero/                  pannello di marca della login (copertine interattive e bagliori)
-│       ├── login-hero.ts
-│       └── login-hero.html
+│   └── hero/                        pannello di marca della login (copertine interattive e bagliori)
+│       ├── hero.ts
+│       └── hero.html
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── routes/

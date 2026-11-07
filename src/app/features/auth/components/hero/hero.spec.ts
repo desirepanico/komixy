@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { LoginHero } from './login-hero';
+import { Hero } from './hero';
 
-describe('LoginHero', () => {
-  let fixture: ComponentFixture<LoginHero>;
+describe('Hero', () => {
+  let fixture: ComponentFixture<Hero>;
   let html: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [LoginHero] }).compileComponents();
-    fixture = TestBed.createComponent(LoginHero);
+    await TestBed.configureTestingModule({ imports: [Hero] }).compileComponents();
+    fixture = TestBed.createComponent(Hero);
     html = fixture.nativeElement;
     await fixture.whenStable();
   });
@@ -19,9 +19,9 @@ describe('LoginHero', () => {
 
   it('mostra marchio, titolo e sottotitolo come chiavi di traduzione', () => {
     const testo = html.textContent ?? '';
-    expect(testo).toContain('loginHero.brand');
-    expect(testo).toContain('loginHero.title');
-    expect(testo).toContain('loginHero.subtitle');
+    expect(testo).toContain('hero.brand');
+    expect(testo).toContain('hero.title');
+    expect(testo).toContain('hero.subtitle');
   });
 
   const bottoni = () => Array.from(html.querySelectorAll('button'));
@@ -44,8 +44,8 @@ describe('LoginHero', () => {
     const testo = dietro(0).textContent ?? '';
     expect(testo).toContain('One Piece');
     expect(testo).toContain('Eiichiro Oda');
-    expect(testo).toContain('loginHero.kind.manga');
-    expect(dietro(1).textContent).toContain('loginHero.kind.comic');
+    expect(testo).toContain('hero.kind.manga');
+    expect(dietro(1).textContent).toContain('hero.kind.comic');
   });
 
   it('all’inizio il retro è nascosto agli screen reader', () => {
@@ -66,13 +66,22 @@ describe('LoginHero', () => {
     expect(dietro(0).getAttribute('aria-hidden')).toBe('true');
   });
 
+  it('la copertina girata passa in primo piano e, rigirata, torna al suo posto', async () => {
+    const carta = () => bottoni()[0].closest('li') as HTMLElement;
+    expect(carta().classList).not.toContain('z-20!');
+    await premi(0);
+    expect(carta().classList).toContain('z-20!');
+    await premi(0);
+    expect(carta().classList).not.toContain('z-20!');
+  });
+
   it('girare una copertina non cambia le altre', async () => {
     await premi(0);
     expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
   });
 
   it('invita a toccare una copertina', () => {
-    expect(html.textContent).toContain('loginHero.coversHint');
+    expect(html.textContent).toContain('hero.coversHint');
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {

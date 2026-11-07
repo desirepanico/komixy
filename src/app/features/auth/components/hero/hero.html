@@ -21,7 +21,7 @@
       <ng-icon name="matMenuBookOutline" size="1.5rem" />
     </span>
     <span class="text-xl font-bold tracking-tight text-surface-50">
-      {{ 'loginHero.brand' | transloco }}
+      {{ 'hero.brand' | transloco }}
     </span>
   </div>
 
@@ -31,10 +31,10 @@
     <p
       class="text-xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
-      {{ 'loginHero.title' | transloco }}
+      {{ 'hero.title' | transloco }}
     </p>
     <p class="hidden text-base leading-7 text-surface-300 lg:block">
-      {{ 'loginHero.subtitle' | transloco }}
+      {{ 'hero.subtitle' | transloco }}
     </p>
   </div>
 
@@ -47,7 +47,7 @@
       class="animate-pulse text-primary-300 motion-reduce:animate-none"
       aria-hidden="true"
     />
-    {{ 'loginHero.coversHint' | transloco }}
+    {{ 'hero.coversHint' | transloco }}
   </p>
 
   <ul
@@ -58,6 +58,7 @@
         class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
+        [class.z-20!]="flipped().has(cover.id)"
       >
         <!-- Il bottone gira come una carta: davanti la copertina, dietro titolo, autore e tipo -->
         <button
@@ -93,7 +94,7 @@
               <span class="text-[0.65rem] leading-tight text-surface-200 lg:text-xs">
                 {{ cover.author }}
               </span>
-              <app-tag>{{ 'loginHero.kind.' + cover.kind | transloco }}</app-tag>
+              <app-tag>{{ 'hero.kind.' + cover.kind | transloco }}</app-tag>
             </span>
           </span>
         </button>
