@@ -4,7 +4,7 @@ export interface NavItem {
   icon: string;
   label: string;
   route: string;
-  roles: UserRole[];
+  roles: readonly UserRole[];
 }
 export interface NavGroup {
   title: string;
