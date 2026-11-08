@@ -16,6 +16,7 @@ import { Button } from '../button/button';
 
 /**
  * Lista orizzontale con scroll nativo, snap e frecce.
+ * Accetta sia il pan orizzontale sia quello verticale (touch-pan-x e touch-pan-y): con solo touch-pan-x il dito sulle card bloccherebbe lo scroll della pagina.
  * Le frecce sono nascoste solo sui dispositivi touch (si scorre col dito); col mouse restano visibili anche a finestra stretta.
  * Da tastiera la lista non prende il focus: si naviga con Tab tra gli elementi, che il browser porta in vista; ← → scorrono.
  * Gli elementi si passano come contenuto e devono avere `shrink-0 snap-start` e una larghezza.
@@ -39,7 +40,7 @@ export class HorizontalScroller {
 
   protected readonly listClasses = computed(() => {
     const base =
-      'flex min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-3 pt-1 scrollbar-none';
+      'flex min-w-0 touch-pan-x touch-pan-y snap-x snap-mandatory overflow-x-auto overflow-y-hidden pb-3 pt-1 scrollbar-none';
     const bleed = '-mx-3 px-3 scroll-px-3 md:-mx-2 md:px-2 md:scroll-px-2';
     return this.bleed() ? `${base} ${bleed}` : base;
   });

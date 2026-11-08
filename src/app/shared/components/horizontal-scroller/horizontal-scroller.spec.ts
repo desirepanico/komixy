@@ -53,6 +53,11 @@ describe('HorizontalScroller', () => {
     expect(lista.hasAttribute('data-no-swipe')).toBe(true);
   });
 
+  it('lascia passare anche il pan verticale del dito, per scrollare la pagina', () => {
+    expect(lista.classList).toContain('touch-pan-x');
+    expect(lista.classList).toContain('touch-pan-y');
+  });
+
   it('parte con le frecce disattivate se non c’è niente da scorrere', () => {
     const [indietro, avanti] = frecce();
     expect(indietro.disabled).toBe(true);
