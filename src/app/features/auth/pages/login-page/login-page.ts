@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LoginForm } from '../../components/login-form/login-form';
-import { Hero } from '../../components/hero/hero';
+import { LoginVolumes } from '../../components/login-volumes/login-volumes';
 import { LoginCredentials } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth/auth.service';
 /** Pagina di accesso. Dopo il login torna alla pagina richiesta (`returnUrl`) o a Scopri. */
 @Component({
   selector: 'app-login-page',
-  imports: [LoginForm, Hero, TranslocoPipe],
+  imports: [LoginForm, LoginVolumes, TranslocoPipe],
   templateUrl: './login-page.html',
 })
 export class LoginPage {

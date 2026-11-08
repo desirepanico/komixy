@@ -50,7 +50,7 @@ describe('LoginPage', () => {
 
   it('mostra il pannello di marca accanto al form', async () => {
     const html = await apri('/login');
-    expect(html.querySelector('app-hero')).not.toBeNull();
+    expect(html.querySelector('app-login-volumes')).not.toBeNull();
     expect(html.querySelector('app-login-form')).not.toBeNull();
   });
 

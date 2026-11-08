@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { Hero } from './hero';
+import { LoginVolumes } from './login-volumes';
 
-describe('Hero', () => {
-  let fixture: ComponentFixture<Hero>;
+describe('LoginVolumes', () => {
+  let fixture: ComponentFixture<LoginVolumes>;
   let html: HTMLElement;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [Hero] }).compileComponents();
-    fixture = TestBed.createComponent(Hero);
+    await TestBed.configureTestingModule({ imports: [LoginVolumes] }).compileComponents();
+    fixture = TestBed.createComponent(LoginVolumes);
     html = fixture.nativeElement;
     await fixture.whenStable();
   });
@@ -19,9 +19,9 @@ describe('Hero', () => {
 
   it('mostra marchio, titolo e sottotitolo come chiavi di traduzione', () => {
     const testo = html.textContent ?? '';
-    expect(testo).toContain('hero.brand');
-    expect(testo).toContain('hero.title');
-    expect(testo).toContain('hero.subtitle');
+    expect(testo).toContain('loginVolumes.brand');
+    expect(testo).toContain('loginVolumes.title');
+    expect(testo).toContain('loginVolumes.subtitle');
   });
 
   const bottoni = () => Array.from(html.querySelectorAll('button'));
@@ -44,8 +44,8 @@ describe('Hero', () => {
     const testo = dietro(0).textContent ?? '';
     expect(testo).toContain('One Piece');
     expect(testo).toContain('Eiichiro Oda');
-    expect(testo).toContain('hero.kind.manga');
-    expect(dietro(1).textContent).toContain('hero.kind.comic');
+    expect(testo).toContain('loginVolumes.kind.manga');
+    expect(dietro(1).textContent).toContain('loginVolumes.kind.comic');
   });
 
   it('all’inizio il retro è nascosto agli screen reader', () => {
@@ -81,7 +81,7 @@ describe('Hero', () => {
   });
 
   it('invita a toccare una copertina', () => {
-    expect(html.textContent).toContain('hero.coversHint');
+    expect(html.textContent).toContain('loginVolumes.coversHint');
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {

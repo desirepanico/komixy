@@ -12,13 +12,13 @@ import { Tag } from '@shared/components/tag/tag';
  * (`aria-hidden`) e con `prefers-reduced-motion` le animazioni si fermano.
  */
 @Component({
-  selector: 'app-hero',
+  selector: 'app-login-volumes',
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
-  templateUrl: './hero.html',
+  templateUrl: './login-volumes.html',
   providers: [provideIcons({ matMenuBookOutline, matTouchAppOutline })],
   host: { class: 'relative block max-lg:contents' },
 })
-export class Hero {
+export class LoginVolumes {
   /** Ogni copertina ha la sua inclinazione, altezza e ritardo, così non si muovono all'unisono */
   protected readonly covers = [
     {

@@ -159,30 +159,30 @@
 
       <!-- login: sotto 1024px una colonna centrata senza card (marchio, titolo, invito, copertine, campi); da 1024px pannello di marca a sinistra e card a destra, senza menu -->
       <div
-        class="hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden px-6 py-6 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:gap-6 sm:py-8 lg:grid lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0"
+        class="hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden px-6 py-6 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:gap-6 sm:py-8 group-data-[variant=login]/skel:lg:grid lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0"
       >
-        <!-- Stesse misure di hero: marchio, titolo e sottotitolo (solo da 1024px), invito e copertine -->
+        <!-- Stesse misure di login-volumes: marchio, titolo e sottotitolo (solo da 1024px), invito e copertine -->
         <div
           class="flex flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
         >
           <div class="flex items-center justify-center gap-3 lg:justify-start">
             <div class="size-10 rounded-xl bg-surface-800"></div>
-            <div class="h-6 w-24 rounded-md bg-surface-800"></div>
+            <div class="h-6 w-16.5 rounded-md bg-surface-800"></div>
           </div>
           <div class="max-w-xl space-y-3 text-center">
             <div
-              class="flex h-12.5 flex-col items-center justify-center gap-2 sm:h-18.75 sm:gap-3 lg:h-45 lg:items-stretch"
+              class="flex h-12.5 flex-col items-center justify-center gap-2 sm:h-18.75 sm:gap-3 lg:h-[min(11.25rem,22.5dvh)] lg:items-stretch lg:gap-[min(0.75rem,1.5dvh)]"
             >
-              <div class="h-5 w-full rounded-md bg-surface-800 sm:h-9"></div>
-              <div class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9"></div>
-              <div class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block"></div>
+              <div class="h-5 w-full rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"></div>
+              <div class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"></div>
+              <div class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block lg:h-[min(2.25rem,4.5dvh)]"></div>
             </div>
             <div class="hidden h-14 flex-col justify-center gap-2 lg:flex">
               <div class="h-4 rounded-md bg-surface-800/70"></div>
               <div class="h-4 w-2/3 rounded-md bg-surface-800/70"></div>
             </div>
           </div>
-          <div class="h-5 w-56 rounded-md bg-surface-800/70"></div>
+          <div class="h-5 w-60.5 max-w-full rounded-md bg-surface-800/70 lg:self-start"></div>
           <div
             class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
           >
