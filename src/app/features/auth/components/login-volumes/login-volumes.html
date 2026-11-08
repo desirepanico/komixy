@@ -47,7 +47,8 @@
       class="animate-pulse text-primary-300 motion-reduce:animate-none"
       aria-hidden="true"
     />
-    {{ 'loginVolumes.coversHint' | transloco }}
+    <span class="pointer-coarse:hidden">{{ 'loginVolumes.coversHint' | transloco }}</span>
+    <span class="hidden pointer-coarse:inline">{{ 'loginVolumes.coversHintTouch' | transloco }}</span>
   </p>
 
   <ul
@@ -59,13 +60,16 @@
           cover.motion
         }} {{ cover.offset }}"
         [class.z-20!]="flipped().has(cover.id)"
+        [class.z-30!]="selected() === cover.id"
       >
         <!-- Il bottone gira come una carta: davanti la copertina, dietro titolo, autore e tipo -->
         <button
           type="button"
           class="group block size-full cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
+          [class.-translate-y-2]="selected() === cover.id"
+          [class.scale-110]="selected() === cover.id"
           [attr.aria-pressed]="flipped().has(cover.id)"
-          (click)="toggle(cover.id)"
+          (click)="onCover(cover.id, $event)"
         >
           <span
             class="relative block size-full transform-3d motion-safe:transition-transform motion-safe:duration-500"

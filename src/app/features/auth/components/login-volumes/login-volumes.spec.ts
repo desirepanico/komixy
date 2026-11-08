@@ -75,6 +75,43 @@ describe('LoginVolumes', () => {
     expect(carta().classList).not.toContain('z-20!');
   });
 
+  const tocca = async (indice: number) => {
+    const evento = new MouseEvent('click', { bubbles: true });
+    Object.defineProperty(evento, 'pointerType', { value: 'touch' });
+    bottoni()[indice].dispatchEvent(evento);
+    await fixture.whenStable();
+  };
+
+  it('con il dito il primo tocco porta il volume in avanti senza girarlo', async () => {
+    await tocca(0);
+    const carta = bottoni()[0].closest('li') as HTMLElement;
+    expect(carta.classList).toContain('z-30!');
+    expect(bottoni()[0].classList).toContain('scale-110');
+    expect(bottoni()[0].getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('con il dito il secondo tocco gira il volume e un terzo lo rigira', async () => {
+    await tocca(0);
+    await tocca(0);
+    expect(bottoni()[0].getAttribute('aria-pressed')).toBe('true');
+    await tocca(0);
+    expect(bottoni()[0].getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('con il dito toccare un altro volume sposta la selezione senza girarlo', async () => {
+    await tocca(0);
+    await tocca(1);
+    expect(bottoni()[0].classList).not.toContain('scale-110');
+    expect(bottoni()[1].classList).toContain('scale-110');
+    expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('con mouse e tastiera il clic gira subito e porta in avanti', async () => {
+    await premi(0);
+    expect(bottoni()[0].getAttribute('aria-pressed')).toBe('true');
+    expect((bottoni()[0].closest('li') as HTMLElement).classList).toContain('z-30!');
+  });
+
   it('girare una copertina non cambia le altre', async () => {
     await premi(0);
     expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
@@ -82,6 +119,7 @@ describe('LoginVolumes', () => {
 
   it('invita a toccare una copertina', () => {
     expect(html.textContent).toContain('loginVolumes.coversHint');
+    expect(html.textContent).toContain('loginVolumes.coversHintTouch');
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {

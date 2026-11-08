@@ -8,7 +8,7 @@ import { Tag } from '@shared/components/tag/tag';
 /**
  * Pannello di marca della login: logo, titolo e copertine vere che fluttuano su bagliori viola.
  * Ogni copertina è un bottone che la gira come una carta e mostra titolo, autore e tipo; un secondo
- * clic la rigira. È solo una curiosità: non aggiunge nulla alla libreria. I bagliori sono decorativi
+ * clic la rigira (con il dito il primo tocco la porta in avanti, il secondo la gira). È solo una curiosità: non aggiunge nulla alla libreria. I bagliori sono decorativi
  * (`aria-hidden`) e con `prefers-reduced-motion` le animazioni si fermano.
  */
 @Component({
@@ -60,8 +60,24 @@ export class LoginVolumes {
   ];
 
   protected readonly flipped = signal<ReadonlySet<string>>(new Set());
+  protected readonly selected = signal<string | null>(null);
 
-  protected toggle(id: string): void {
+  /**
+   * Con il dito il primo tocco porta il volume in avanti e solo il secondo lo gira, così si vede
+   * cosa si sta per girare. Con mouse e tastiera il clic gira subito (il volume va in avanti già
+   * con l'hover o il focus).
+   */
+  protected onCover(id: string, event: MouseEvent): void {
+    const isTouch = (event as PointerEvent).pointerType === 'touch';
+    if (isTouch && this.selected() !== id) {
+      this.selected.set(id);
+      return;
+    }
+    this.selected.set(id);
+    this.toggle(id);
+  }
+
+  private toggle(id: string): void {
     this.flipped.update((current) => {
       const next = new Set(current);
       if (!next.delete(id)) next.add(id);
