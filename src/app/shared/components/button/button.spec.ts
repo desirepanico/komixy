@@ -115,9 +115,12 @@ describe('Button', () => {
     expect((await el('testo')).classList).not.toContain('underline');
   });
 
-  it('con underline è sottolineato, anche con variant text', async () => {
+  it('con underline si sottolinea alla selezione (mouse, tastiera, tocco) e non a riposo', async () => {
     const classi = (await el('sottolineato')).classList;
-    expect(classi).toContain('underline');
+    expect(classi).not.toContain('underline');
+    expect(classi).toContain('hover:underline');
+    expect(classi).toContain('focus-visible:underline');
+    expect(classi).toContain('active:underline');
     expect(classi).toContain('underline-offset-4');
   });
 

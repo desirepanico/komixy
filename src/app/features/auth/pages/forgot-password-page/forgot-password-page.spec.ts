@@ -24,6 +24,6 @@ describe('ForgotPasswordPage', () => {
   it('ha un link sottolineato che torna al login', () => {
     const link = html.querySelector('a') as HTMLAnchorElement;
     expect(link.getAttribute('href')).toBe('/login');
-    expect(link.classList).toContain('underline');
+    expect(link.classList).toContain('hover:underline');
   });
 });

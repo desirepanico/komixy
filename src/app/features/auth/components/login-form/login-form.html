@@ -19,7 +19,7 @@
     appButton
     variant="text"
     [underline]="true"
-    class="-mt-2 self-end px-1 text-sm"
+    class="-mt-2 self-end px-1 text-sm max-sm:-mt-1"
     [routerLink]="navigation.forgotPasswordLink"
   >
     {{ 'login.forgotPassword' | transloco }}
@@ -32,7 +32,7 @@
 </form>
 
 <div
-  class="my-6 max-sm:my-(--s2) flex items-center gap-3 text-sm text-surface-400"
+  class="my-6 max-sm:my-(--s2) flex items-center gap-3 text-sm max-sm:text-xs text-surface-400"
   role="separator"
 >
   <span class="h-px flex-1 bg-surface-700"></span>

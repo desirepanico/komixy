@@ -15,7 +15,7 @@ export class Button {
   /** Solo icona: serve `aria-label` */
   public readonly iconOnly = input<boolean>(false);
   public readonly rounded = input<boolean>(false);
-  /** Aspetto da link: va su `<a href>` o `<a routerLink>` (anche `target="_blank"`), non su un `<button>` */
+  /** Aspetto da link: sottolineato alla selezione (mouse, tastiera, tocco). Va su `<a href>` o `<a routerLink>` (anche `target="_blank"`), non su un `<button>` */
   public readonly underline = input<boolean>(false);
 
   protected readonly classes = computed(() => {
@@ -24,7 +24,9 @@ export class Button {
     const variant = this.variant();
     const colors = BUTTON_COLORS[this.severity()][variant];
     const radius = this.rounded() ? 'rounded-full' : 'rounded-sm';
-    const decoration = this.underline() ? 'underline underline-offset-4' : '';
+    const decoration = this.underline()
+      ? 'underline-offset-4 hover:underline focus-visible:underline active:underline'
+      : '';
     // il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {
       return `${base} ${colors} ${radius} ${decoration}`;

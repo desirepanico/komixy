@@ -144,7 +144,7 @@ describe('LoginForm', () => {
       const register = pulsante('login.register');
       expect(forgot.getAttribute('href')).toBe('/login/forgot-password');
       expect(register.getAttribute('href')).toBe('/login/register');
-      expect([forgot, register].every((l) => l.classList.contains('underline'))).toBe(true);
+      expect([forgot, register].every((l) => l.classList.contains('hover:underline'))).toBe(true);
     });
 
     it('emette il provider scelto per Google e Apple', () => {

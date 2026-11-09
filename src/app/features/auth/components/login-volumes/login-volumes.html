@@ -3,7 +3,7 @@
 @let fadeUpAnimation =
   'animate-[login-fade-up_900ms_cubic-bezier(0.16,1,0.3,1)_var(--delay,0s)_both] motion-reduce:animate-none';
 @let floatAnimation =
-  'animate-[login-float_5s_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-[login-float-soft_5s_ease-in-out_var(--delay,0s)_infinite]';
+  'animate-[login-float_var(--float,5s)_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-[login-float-soft_var(--float,5s)_ease-in-out_var(--delay,0s)_infinite]';
 
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
@@ -64,7 +64,7 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="@container relative aspect-2/3 w-[min(5.5rem,12.5dvh)] max-sm:w-(--cw) {{
+        class="@container relative aspect-2/3 max-sm:[--float:8s] w-[min(5.5rem,12.5dvh)] max-sm:w-(--cw) {{
           floatAnimation
         }} sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
           cover.motion
