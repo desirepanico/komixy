@@ -14,7 +14,7 @@
 
   /* Pannello di marca della login: volumi che fluttuano, bagliori che pulsano, testo che sale */
   --animate-float: float 4s ease-in-out infinite;
-  --animate-float-soft: float-soft 4s ease-in-out 3 forwards;
+  --animate-float-soft: float-soft 4s ease-in-out infinite;
   --animate-orb: orb 10s ease-in-out infinite;
   --animate-fade-up: fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
 
@@ -28,7 +28,7 @@
     }
   }
 
-  /* Con prefers-reduced-motion: solo uno spostamento minimo, senza rotazione, per tre cicli e poi si ferma */
+  /* Con prefers-reduced-motion: solo uno spostamento minimo, senza rotazione, in loop; il bottone di pausa lo ferma */
   @keyframes float-soft {
     0%,
     100% {

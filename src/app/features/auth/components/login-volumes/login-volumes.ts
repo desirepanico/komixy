@@ -14,8 +14,8 @@ import { Tag } from '@shared/components/tag/tag';
  * Pannello di marca della login: logo, titolo e copertine vere che fluttuano su bagliori viola.
  * Ogni copertina è un bottone che la gira come una carta e mostra titolo, autore e tipo; un secondo
  * clic la rigira (con il dito il primo tocco la porta in avanti, il secondo la gira). È solo una curiosità: non aggiunge nulla alla libreria. I bagliori sono decorativi
- * (`aria-hidden`). Con `prefers-reduced-motion` le copertine fanno solo uno spostamento minimo, per tre cicli, e poi
- * si fermano; in ogni caso un bottone mette in pausa e riprende il movimento (WCAG 2.2.2).
+ * (`aria-hidden`). Con `prefers-reduced-motion` le copertine fanno solo uno spostamento minimo, sempre in loop;
+ * in ogni caso un bottone mette in pausa e riprende il movimento (WCAG 2.2.2).
  */
 @Component({
   selector: 'app-login-volumes',
