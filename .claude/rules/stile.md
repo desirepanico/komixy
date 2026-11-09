@@ -14,7 +14,7 @@ paths:
 - Nei file CSS usa `var(--color-<nome>)`.
 - Raggi dei bordi con le classi `rounded-*` (i valori sono definiti in `@theme` come `--radius-*`).
 - Niente classi CSS globali per i componenti: stile con Tailwind dentro il componente. Il CSS globale resta in `public/theme/` (sfondo, glass, token).
-- `src/tailwind.css` contiene solo ciò che serve a più punti dell'app (token, raggi, font, breakpoint). `@keyframes` e animazioni usati da un solo componente vanno nel `.css` del componente (`angular.md`, sezione «Componenti»), non nel tema; se un secondo componente li vuole, si spostano nel tema.
+- `src/tailwind.css` contiene solo ciò che serve a più punti dell'app (token, raggi, font, breakpoint). I `@keyframes` usati da un solo componente vanno nel `.css` del componente (`angular.md`, sezione «Componenti»), non nel tema; se un secondo componente li vuole, si spostano nel tema.
 - Se lo stesso markup compare, o sta per comparire, in più pagine o feature, non copiarlo: crea un componente shared con la skill `shared-component` e importalo (es. `app-tag`, `appButton`, `app-empty-state`).
 - Liste che scorrono in orizzontale: usa sempre `app-horizontal-scroller` (scroll nativo, snap, frecce, accessibilità), non riscrivere la logica nella pagina.
 - Icone solo con `ng-icon`. Niente `pi pi-*`.

@@ -1,10 +1,19 @@
+@let orbAnimation =
+  'animate-[login-orb_10s_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-none';
+@let fadeUpAnimation =
+  'animate-[login-fade-up_900ms_cubic-bezier(0.16,1,0.3,1)_var(--delay,0s)_both] motion-reduce:animate-none';
+@let floatAnimation =
+  'animate-[login-float_3s_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-[login-float-soft_3s_ease-in-out_var(--delay,0s)_infinite]';
+
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
-    class="absolute -left-16 top-1/4 size-56 orb rounded-full bg-primary-600/30 blur-3xl"
+    class="absolute -left-16 top-1/4 size-56 rounded-full bg-primary-600/30 blur-3xl"
+    [class]="orbAnimation"
     [style.animation-play-state]="playState()"
   ></div>
   <div
-    class="absolute -right-10 bottom-8 size-48 orb rounded-full bg-primary-400/20 blur-3xl [--delay:-4s]"
+    class="absolute -right-10 bottom-8 size-48 rounded-full bg-primary-400/20 blur-3xl [--delay:-4s]"
+    [class]="orbAnimation"
     [style.animation-play-state]="playState()"
   ></div>
 </div>
@@ -12,7 +21,7 @@
 <div
   class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
 >
-  <div class="flex fade-up items-center justify-center gap-3 lg:justify-start">
+  <div class="flex items-center justify-center gap-3 lg:justify-start" [class]="fadeUpAnimation">
     <span
       class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
       aria-hidden="true"
@@ -24,7 +33,10 @@
     </span>
   </div>
 
-  <div class="max-w-xl fade-up space-y-3 text-center lg:text-left [--delay:120ms]">
+  <div
+    class="max-w-xl space-y-3 text-center lg:text-left [--delay:120ms]"
+    [class]="fadeUpAnimation"
+  >
     <p
       class="text-xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
@@ -35,7 +47,10 @@
     </p>
   </div>
 
-  <p class="flex fade-up items-center gap-2 text-sm text-surface-200 [--delay:240ms]">
+  <p
+    class="flex items-center gap-2 text-sm text-surface-200 [--delay:240ms]"
+    [class]="fadeUpAnimation"
+  >
     <ng-icon
       name="matTouchAppOutline"
       size="1.25rem"
@@ -54,7 +69,9 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] float sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] {{
+          floatAnimation
+        }} sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
         [style.animation-play-state]="playState()"

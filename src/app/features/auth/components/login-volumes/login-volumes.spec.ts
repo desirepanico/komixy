@@ -130,15 +130,21 @@ describe('LoginVolumes', () => {
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {
-    expect(html.querySelector('.orb')?.parentElement?.getAttribute('aria-hidden')).toBe('true');
+    expect(
+      html
+        .querySelector('[class*="animate-[login-orb"]')
+        ?.parentElement?.getAttribute('aria-hidden'),
+    ).toBe('true');
   });
 
   const pausa = () =>
     html.querySelector('button[aria-pressed]:not(:has(img))') as HTMLButtonElement;
   const statiAnimazione = () =>
-    Array.from(html.querySelectorAll<HTMLElement>('.float, .orb')).map(
-      (el) => el.style.animationPlayState,
-    );
+    Array.from(
+      html.querySelectorAll<HTMLElement>(
+        '[class*="animate-[login-float"], [class*="animate-[login-orb"]',
+      ),
+    ).map((el) => el.style.animationPlayState);
 
   it('all’inizio le animazioni infinite sono in corso e il bottone offre di fermarle', () => {
     expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);

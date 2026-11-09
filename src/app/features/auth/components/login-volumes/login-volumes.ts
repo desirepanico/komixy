@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, ViewEncapsulation, computed, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -19,6 +19,7 @@ import { Tag } from '@shared/components/tag/tag';
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-volumes.html',
   styleUrl: './login-volumes.css',
+  encapsulation: ViewEncapsulation.None,
   providers: [
     provideIcons({ matMenuBookOutline, matPauseOutline, matPlayArrowOutline, matTouchAppOutline }),
   ],

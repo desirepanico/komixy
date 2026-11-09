@@ -66,7 +66,7 @@ features/auth/
 │   └── login-volumes/                 pannello di marca della login (copertine interattive e bagliori)
 │       ├── login-volumes.ts
 │       ├── login-volumes.html
-│       └── login-volumes.css            keyframes e animazioni dei volumi
+│       └── login-volumes.css            keyframes dei volumi
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── routes/
@@ -86,7 +86,7 @@ features/auth/
 ```
 
 - **pages**: una cartella per pagina, collegata a una rotta in `routes/<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
-- **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, più `<nome>.css` solo per le animazioni del componente; selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
+- **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, più `<nome>.css` solo per i keyframe del componente; selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
 - **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec obbligatorio; uno spec accanto c'è solo se l'enum ha regole da verificare, come `app-routes.model.spec.ts`). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **routes**: `<nome>.routes.ts` (`export const NOME_ROUTES: Routes`): le rotte della feature, relative alla sua radice. In coppia con il servizio di navigazione.
 - **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found`, `releases`, `library` e `profile`), con **solo le rotte della propria feature**: percorsi per i template (`rankingNavigation.rankingLink`), metodi `goToXxx()` per il codice, `*UrlTree()` per i guard. Per andare in un'altra feature si inietta il suo servizio (è l'unico import ammesso tra feature). Pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
