@@ -130,21 +130,13 @@ describe('LoginVolumes', () => {
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {
-    expect(html.querySelector('.animate-orb')?.parentElement?.getAttribute('aria-hidden')).toBe(
-      'true',
-    );
-  });
-
-  it('bagliori e testo si fermano con prefers-reduced-motion', () => {
-    const animati = html.querySelectorAll('.animate-orb, .animate-fade-up');
-    expect(animati.length).toBeGreaterThan(4);
-    animati.forEach((el) => expect(el.classList).toContain('motion-reduce:animate-none'));
+    expect(html.querySelector('.orb')?.parentElement?.getAttribute('aria-hidden')).toBe('true');
   });
 
   const pausa = () =>
     html.querySelector('button[aria-pressed]:not(:has(img))') as HTMLButtonElement;
   const statiAnimazione = () =>
-    Array.from(html.querySelectorAll<HTMLElement>('.animate-float, .animate-orb')).map(
+    Array.from(html.querySelectorAll<HTMLElement>('.float, .orb')).map(
       (el) => el.style.animationPlayState,
     );
 
@@ -172,17 +164,9 @@ describe('LoginVolumes', () => {
     expect(icona.style.animationPlayState).toBe('paused');
   });
 
-  it('con prefers-reduced-motion le copertine fanno un movimento minimo e limitato, e il bottone resta', () => {
-    html.querySelectorAll('li').forEach((li) => {
-      expect(li.classList).toContain('motion-reduce:animate-float-soft');
-      expect(li.classList).not.toContain('motion-reduce:animate-none');
-    });
-    expect(pausa().className).not.toContain('motion-reduce:hidden');
-  });
-
   it('le copertine si alternano: una sì e una no partono a metà ciclo', () => {
     const ritardi = Array.from(html.querySelectorAll('li')).map((li) =>
-      li.classList.contains('[animation-delay:-1.5s]') ? 'meta' : 'inizio',
+      li.classList.contains('[--delay:-1.5s]') ? 'meta' : 'inizio',
     );
     expect(ritardi).toEqual(['inizio', 'meta', 'inizio', 'meta']);
   });

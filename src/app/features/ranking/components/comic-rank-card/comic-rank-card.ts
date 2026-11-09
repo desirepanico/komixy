@@ -17,6 +17,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
   imports: [RouterLink, TranslocoPipe, Skeleton, Tag, ToggleButton, NgIcon, InView],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-rank-card.html',
+  styleUrl: './comic-rank-card.css',
   host: { class: 'block' },
 })
 export class ComicRankCard {
@@ -41,7 +42,7 @@ export class ComicRankCard {
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =
-    '-mr-1 flex w-12 shrink-0 justify-center motion-safe:opacity-0 motion-safe:data-in-view:animate-rank-in xs:w-15 md:-mr-2 md:w-20';
+    '-mr-1 flex w-12 shrink-0 justify-center rank-enter xs:w-15 md:-mr-2 md:w-20';
 
   /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
   protected readonly enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
@@ -52,7 +53,7 @@ export class ComicRankCard {
       'flex origin-center items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';
     const tone =
       this.rank() <= 3
-        ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)] motion-safe:animate-rank-glow'
+        ? 'bg-linear-to-b from-primary-200 to-primary-500 drop-shadow-[0_0_14px_color-mix(in_srgb,var(--color-primary-500)_45%,transparent)] rank-glow'
         : 'bg-linear-to-b from-surface-200 to-surface-500';
     return `${base} ${tone}`;
   });

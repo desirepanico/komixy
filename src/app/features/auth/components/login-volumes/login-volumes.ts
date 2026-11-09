@@ -18,6 +18,7 @@ import { Tag } from '@shared/components/tag/tag';
   selector: 'app-login-volumes',
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-volumes.html',
+  styleUrl: './login-volumes.css',
   providers: [
     provideIcons({ matMenuBookOutline, matPauseOutline, matPlayArrowOutline, matTouchAppOutline }),
   ],
@@ -32,7 +33,7 @@ export class LoginVolumes {
       author: 'Eiichiro Oda',
       kind: 'manga',
       src: 'img/covers/one-piece.webp',
-      motion: '[--tilt:-10deg] [animation-delay:0s]',
+      motion: '[--tilt:-10deg] [--delay:0s]',
       offset: 'mb-4 lg:mb-10',
     },
     {
@@ -41,7 +42,7 @@ export class LoginVolumes {
       author: 'Alan Moore, David Lloyd',
       kind: 'comic',
       src: 'img/covers/v-for-vendetta.webp',
-      motion: '[--tilt:-3deg] [animation-delay:-1.5s] motion-reduce:[animation-delay:-1.5s]',
+      motion: '[--tilt:-3deg] [--delay:-1.5s]',
       offset: 'mb-0',
     },
     {
@@ -50,7 +51,7 @@ export class LoginVolumes {
       author: 'Tatsuki Fujimoto',
       kind: 'manga',
       src: 'img/covers/chainsaw-man.webp',
-      motion: '[--tilt:4deg] [animation-delay:0s]',
+      motion: '[--tilt:4deg] [--delay:0s]',
       offset: 'mb-5 lg:mb-14',
     },
     {
@@ -59,7 +60,7 @@ export class LoginVolumes {
       author: 'Alan Moore, Dave Gibbons',
       kind: 'comic',
       src: 'img/covers/watchmen.webp',
-      motion: '[--tilt:11deg] [animation-delay:-1.5s] motion-reduce:[animation-delay:-1.5s]',
+      motion: '[--tilt:11deg] [--delay:-1.5s]',
       offset: 'mb-1 lg:mb-4',
     },
   ];

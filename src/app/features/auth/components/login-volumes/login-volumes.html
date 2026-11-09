@@ -1,10 +1,10 @@
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
-    class="absolute -left-16 top-1/4 size-56 animate-orb rounded-full bg-primary-600/30 blur-3xl motion-reduce:animate-none"
+    class="absolute -left-16 top-1/4 size-56 orb rounded-full bg-primary-600/30 blur-3xl"
     [style.animation-play-state]="playState()"
   ></div>
   <div
-    class="absolute -right-10 bottom-8 size-48 animate-orb rounded-full bg-primary-400/20 blur-3xl [animation-delay:-4s] motion-reduce:animate-none"
+    class="absolute -right-10 bottom-8 size-48 orb rounded-full bg-primary-400/20 blur-3xl [--delay:-4s]"
     [style.animation-play-state]="playState()"
   ></div>
 </div>
@@ -12,9 +12,7 @@
 <div
   class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
 >
-  <div
-    class="flex animate-fade-up items-center justify-center gap-3 motion-reduce:animate-none lg:justify-start"
-  >
+  <div class="flex fade-up items-center justify-center gap-3 lg:justify-start">
     <span
       class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
       aria-hidden="true"
@@ -26,9 +24,7 @@
     </span>
   </div>
 
-  <div
-    class="max-w-xl animate-fade-up space-y-3 text-center lg:text-left [animation-delay:120ms] motion-reduce:animate-none"
-  >
+  <div class="max-w-xl fade-up space-y-3 text-center lg:text-left [--delay:120ms]">
     <p
       class="text-xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
@@ -39,9 +35,7 @@
     </p>
   </div>
 
-  <p
-    class="flex animate-fade-up items-center gap-2 text-sm text-surface-200 [animation-delay:240ms] motion-reduce:animate-none"
-  >
+  <p class="flex fade-up items-center gap-2 text-sm text-surface-200 [--delay:240ms]">
     <ng-icon
       name="matTouchAppOutline"
       size="1.25rem"
@@ -60,7 +54,7 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-float-soft sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] float sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
         [style.animation-play-state]="playState()"
