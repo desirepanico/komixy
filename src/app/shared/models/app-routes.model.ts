@@ -5,6 +5,7 @@ export enum AppRoutes {
   Profile = 'profile',
   Discover = 'discover',
   Login = 'login',
+  Register = 'register',
   ForgotPassword = 'forgot-password',
   Comic = 'comic',
   Ranking = 'ranking',

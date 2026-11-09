@@ -139,17 +139,12 @@ describe('LoginForm', () => {
         b.textContent?.includes(testo),
       ) as HTMLElement;
 
-    it('ha il link sottolineato verso il recupero password', () => {
-      const link = pulsante('login.forgotPassword');
-      expect(link.getAttribute('href')).toBe('/login/forgot-password');
-      expect(link.classList).toContain('underline');
-    });
-
-    it('emette la registrazione', () => {
-      let registra = 0;
-      fixture.componentInstance.registerClick.subscribe(() => registra++);
-      pulsante('login.register').click();
-      expect(registra).toBe(1);
+    it('ha link sottolineati verso recupero password e registrazione', () => {
+      const forgot = pulsante('login.forgotPassword');
+      const register = pulsante('login.register');
+      expect(forgot.getAttribute('href')).toBe('/login/forgot-password');
+      expect(register.getAttribute('href')).toBe('/login/register');
+      expect([forgot, register].every((l) => l.classList.contains('underline'))).toBe(true);
     });
 
     it('emette il provider scelto per Google e Apple', () => {

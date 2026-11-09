@@ -10,6 +10,7 @@ export class AuthNavigationService {
   private readonly discoverNavigation = inject(DiscoverNavigationService);
 
   public readonly loginLink: readonly string[] = ['/', AppRoutes.Login];
+  public readonly registerLink: readonly string[] = ['/', AppRoutes.Login, AppRoutes.Register];
   public readonly forgotPasswordLink: readonly string[] = [
     '/',
     AppRoutes.Login,

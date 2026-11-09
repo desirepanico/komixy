@@ -113,6 +113,11 @@ describe('routes', () => {
         'app-profile-page',
       ],
       [
+        'auth → registerLink',
+        () => TestBed.inject(AuthNavigationService).registerLink,
+        'app-register-page',
+      ],
+      [
         'auth → forgotPasswordLink',
         () => TestBed.inject(AuthNavigationService).forgotPasswordLink,
         'app-forgot-password-page',

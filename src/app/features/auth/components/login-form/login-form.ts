@@ -28,7 +28,6 @@ import { AuthNavigationService } from '../../services/auth-navigation/auth-navig
 })
 export class LoginForm {
   public readonly loginSubmit = output<LoginCredentials>();
-  public readonly registerClick = output<void>();
   public readonly socialLogin = output<SocialProvider>();
   public readonly guestAccess = output<void>();
 

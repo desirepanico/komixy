@@ -99,13 +99,13 @@
 
 <p class="mt-6 text-center text-sm text-surface-300">
   {{ 'login.noAccount' | transloco }}
-  <button
+  <a
     appButton
-    type="button"
     variant="text"
+    [underline]="true"
     class="px-1 font-semibold"
-    (click)="registerClick.emit()"
+    [routerLink]="navigation.registerLink"
   >
     {{ 'login.register' | transloco }}
-  </button>
+  </a>
 </p>

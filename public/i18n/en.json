@@ -110,5 +110,9 @@
   "forgotPassword": {
     "title": "Forgot password",
     "comingSoonHint": "Here you will be able to set a new password."
+  },
+  "register": {
+    "title": "Sign up",
+    "comingSoonHint": "Here you will be able to create your account."
   }
 }

@@ -41,10 +41,6 @@ export class LoginPage {
     this.goAfterLogin();
   }
 
-  protected register(): void {
-    // TODO: aprire la registrazione quando ci sarà la pagina
-  }
-
   private goAfterLogin(): void {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     void this.navigation.goAfterLogin(returnUrl);
