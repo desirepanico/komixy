@@ -182,7 +182,7 @@ describe('LoginVolumes', () => {
 
   it('le copertine si alternano: una sì e una no partono a metà ciclo', () => {
     const ritardi = Array.from(html.querySelectorAll('li')).map((li) =>
-      li.classList.contains('[animation-delay:-2s]') ? 'meta' : 'inizio',
+      li.classList.contains('[animation-delay:-1.5s]') ? 'meta' : 'inizio',
     );
     expect(ritardi).toEqual(['inizio', 'meta', 'inizio', 'meta']);
   });

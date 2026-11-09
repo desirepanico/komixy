@@ -44,7 +44,7 @@ export class LoginVolumes {
       author: 'Alan Moore, David Lloyd',
       kind: 'comic',
       src: 'img/covers/v-for-vendetta.webp',
-      motion: '[--tilt:-3deg] [animation-delay:-2s] motion-reduce:[animation-delay:-2s]',
+      motion: '[--tilt:-3deg] [animation-delay:-1.5s] motion-reduce:[animation-delay:-1.5s]',
       offset: 'mb-0',
     },
     {
@@ -62,7 +62,7 @@ export class LoginVolumes {
       author: 'Alan Moore, Dave Gibbons',
       kind: 'comic',
       src: 'img/covers/watchmen.webp',
-      motion: '[--tilt:11deg] [animation-delay:-2s] motion-reduce:[animation-delay:-2s]',
+      motion: '[--tilt:11deg] [animation-delay:-1.5s] motion-reduce:[animation-delay:-1.5s]',
       offset: 'mb-1 lg:mb-4',
     },
   ];

@@ -13,8 +13,8 @@
   --animate-rank-glow: rank-glow 5s ease-in-out infinite;
 
   /* Pannello di marca della login: volumi che fluttuano, bagliori che pulsano, testo che sale */
-  --animate-float: float 4s ease-in-out infinite;
-  --animate-float-soft: float-soft 4s ease-in-out infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-float-soft: float-soft 3s ease-in-out infinite;
   --animate-orb: orb 10s ease-in-out infinite;
   --animate-fade-up: fade-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
 
