@@ -40,6 +40,13 @@ describe('LoginVolumes', () => {
     });
   });
 
+  it('le copertine si caricano subito perché una è sempre l’elemento più grande della pagina', () => {
+    html.querySelectorAll('img').forEach((img) => {
+      expect(img.getAttribute('fetchpriority')).toBe('high');
+      expect(img.getAttribute('loading')).toBe('eager');
+    });
+  });
+
   it('dietro ogni copertina ci sono titolo, autore e tipo', () => {
     const testo = dietro(0).textContent ?? '';
     expect(testo).toContain('One Piece');
