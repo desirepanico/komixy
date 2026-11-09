@@ -31,7 +31,7 @@ public/
 ├── img/
 │   ├── covers/                copertine della login
 │   └── logo/                  komixy-logo.png (solo la K-pianeta, da cui è ricavato `favicon.ico`), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
-├── favicon.ico                favicon: il logo `komixy-logo.png` senza modifiche, su un quadrato trasparente
+├── favicon.ico                favicon: il logo `komixy-logo.png` senza modifiche, grande, su un quadrato viola (`primary-600`) per farlo riconoscere nella scheda
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
