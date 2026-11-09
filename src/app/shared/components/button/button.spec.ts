@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter, RouterLink } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Button } from './button';
 
 @Component({
-  imports: [Button],
+  imports: [Button, RouterLink],
   template: `
     <button id="pieno" appButton>Ok</button>
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
@@ -23,13 +24,26 @@ import { Button } from './button';
     <button id="pericolo-bordo" appButton severity="danger" variant="outlined">Ok</button>
     <button id="pericolo-testo" appButton severity="danger" variant="text">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
+    <a id="sottolineato" appButton variant="text" [underline]="true" href="/x">Vai</a>
+    <a
+      id="rotta-nuova-scheda"
+      appButton
+      variant="text"
+      [underline]="true"
+      routerLink="/pagina"
+      target="_blank"
+      >Apri</a
+    >
   `,
 })
 class Host {}
 
 describe('Button', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [provideRouter([])],
+    }).compileComponents();
   });
 
   const el = async (id: string) => {
@@ -95,5 +109,22 @@ describe('Button', () => {
     const link = await el('link');
     expect(link.classList).toContain('bg-primary-300');
     expect(link.textContent?.trim()).toBe('Vai');
+  });
+
+  it('senza underline non è sottolineato', async () => {
+    expect((await el('testo')).classList).not.toContain('underline');
+  });
+
+  it('con underline è sottolineato, anche con variant text', async () => {
+    const classi = (await el('sottolineato')).classList;
+    expect(classi).toContain('underline');
+    expect(classi).toContain('underline-offset-4');
+  });
+
+  it('con underline e un link può aprirsi in un’altra scheda', async () => {
+    const link = (await el('rotta-nuova-scheda')) as HTMLAnchorElement;
+    expect(link.tagName).toBe('A');
+    expect(link.getAttribute('href')).toBe('/pagina');
+    expect(link.getAttribute('target')).toBe('_blank');
   });
 });

@@ -15,6 +15,8 @@ export class Button {
   /** Solo icona: serve `aria-label` */
   public readonly iconOnly = input<boolean>(false);
   public readonly rounded = input<boolean>(false);
+  /** Aspetto da link: va su `<a href>` o `<a routerLink>` (anche `target="_blank"`), non su un `<button>` */
+  public readonly underline = input<boolean>(false);
 
   protected readonly classes = computed(() => {
     const base =
@@ -22,11 +24,12 @@ export class Button {
     const variant = this.variant();
     const colors = BUTTON_COLORS[this.severity()][variant];
     const radius = this.rounded() ? 'rounded-full' : 'rounded-sm';
+    const decoration = this.underline() ? 'underline underline-offset-4' : '';
     // il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {
-      return `${base} ${colors} ${radius}`;
+      return `${base} ${colors} ${radius} ${decoration}`;
     }
     const size = this.iconOnly() ? 'size-10' : 'h-11 px-4 text-base';
-    return `${base} justify-center gap-2 font-semibold ${colors} ${size} ${radius}`;
+    return `${base} justify-center gap-2 font-semibold ${colors} ${size} ${radius} ${decoration}`;
   });
 }
