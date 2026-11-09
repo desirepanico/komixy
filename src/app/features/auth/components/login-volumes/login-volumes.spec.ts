@@ -143,8 +143,7 @@ describe('LoginVolumes', () => {
     ).toBe('true');
   });
 
-  const pausa = () =>
-    html.querySelector('button[aria-pressed]:not(:has(img))') as HTMLButtonElement;
+  const pausa = () => html.querySelector('button:not(:has(img))') as HTMLButtonElement;
   const statiAnimazione = () =>
     Array.from(
       html.querySelectorAll<HTMLElement>(
@@ -154,7 +153,6 @@ describe('LoginVolumes', () => {
 
   it('all’inizio le animazioni infinite sono in corso e il bottone offre di fermarle', () => {
     expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
-    expect(pausa().getAttribute('aria-pressed')).toBe('false');
     expect(pausa().textContent).toContain('loginVolumes.pauseAnimation');
   });
 
@@ -162,11 +160,17 @@ describe('LoginVolumes', () => {
     pausa().click();
     await fixture.whenStable();
     expect(statiAnimazione().every((stato) => stato === 'paused')).toBe(true);
-    expect(pausa().getAttribute('aria-pressed')).toBe('true');
     expect(pausa().textContent).toContain('loginVolumes.resumeAnimation');
     pausa().click();
     await fixture.whenStable();
     expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
+  });
+
+  it('il bottone di pausa non ha aria-pressed: lo stato lo dice il testo, che cambia', async () => {
+    expect(pausa().hasAttribute('aria-pressed')).toBe(false);
+    pausa().click();
+    await fixture.whenStable();
+    expect(pausa().hasAttribute('aria-pressed')).toBe(false);
   });
 
   it('la pausa ferma anche l’icona che pulsa', async () => {
