@@ -133,4 +133,11 @@ describe('LoginVolumes', () => {
     expect(animati.length).toBeGreaterThan(4);
     animati.forEach((el) => expect(el.classList).toContain('motion-reduce:animate-none'));
   });
+
+  it('con prefers-reduced-motion le copertine restano ferme ma mantengono l’inclinazione', () => {
+    html.querySelectorAll('li').forEach((li) => {
+      expect(li.classList).toContain('motion-reduce:animate-none');
+      expect(li.classList).toContain('motion-reduce:rotate-(--tilt)');
+    });
+  });
 });
