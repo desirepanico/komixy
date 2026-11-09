@@ -28,6 +28,7 @@ src/
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
+├── komixy-logo.png            logo (sidebar desktop e favicon)
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/

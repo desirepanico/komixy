@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -10,7 +11,6 @@ import {
   matHomeOutline,
   matChevronRightOutline,
   matKeyboardArrowDownOutline,
-  matMenuBookOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
@@ -19,7 +19,7 @@ import { UserRole } from '@shared/models/user-role.model';
 import { NavGroup } from '@shared/models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',
-  imports: [RouterLink, RouterLinkActive, NgIcon, TranslocoPipe, Button],
+  imports: [RouterLink, RouterLinkActive, NgIcon, NgOptimizedImage, TranslocoPipe, Button],
   templateUrl: './desktop-sidebar.html',
   providers: [
     provideIcons({
@@ -31,7 +31,6 @@ import { NavGroup } from '@shared/models/nav-item.model';
       matExploreOutline,
       matKeyboardArrowDownOutline,
       matChevronRightOutline,
-      matMenuBookOutline,
     }),
   ],
 })
