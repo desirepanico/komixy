@@ -180,6 +180,13 @@ describe('LoginVolumes', () => {
     expect(pausa().className).not.toContain('motion-reduce:hidden');
   });
 
+  it('le copertine si alternano: una sì e una no partono a metà ciclo', () => {
+    const ritardi = Array.from(html.querySelectorAll('li')).map((li) =>
+      li.classList.contains('[animation-delay:-2s]') ? 'meta' : 'inizio',
+    );
+    expect(ritardi).toEqual(['inizio', 'meta', 'inizio', 'meta']);
+  });
+
   it('la pausa non gira le copertine', async () => {
     pausa().click();
     await fixture.whenStable();
