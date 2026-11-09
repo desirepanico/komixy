@@ -24,9 +24,8 @@
       <app-login-form
         class="block w-full max-w-sm lg:max-w-none"
         (loginSubmit)="login($event)"
-        (forgotPassword)="forgotPassword()"
-        (registerClick)="register()"
         (socialLogin)="loginWithProvider($event)"
+        (registerClick)="register()"
         (guestAccess)="enterAsGuest()"
       />
     </section>

@@ -83,7 +83,8 @@
     "guest": "Entra come ospite",
     "guestHint": "Come ospite puoi solo guardare, non salvare né modificare.",
     "noAccount": "Non hai un account?",
-    "register": "Registrati"
+    "register": "Registrati",
+    "backToLogin": "Torna all'accesso"
   },
   "releases": {
     "subtitle": "I prossimi volumi in uscita",
@@ -105,5 +106,9 @@
     "subtitle": "Dettagli del volume",
     "comingSoon": "Dettaglio del fumetto in arrivo",
     "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
+  },
+  "forgotPassword": {
+    "title": "Password dimenticata",
+    "comingSoonHint": "Qui potrai impostare una nuova password."
   }
 }

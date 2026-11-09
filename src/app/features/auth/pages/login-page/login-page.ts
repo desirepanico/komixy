@@ -41,10 +41,6 @@ export class LoginPage {
     this.goAfterLogin();
   }
 
-  protected forgotPassword(): void {
-    // TODO: aprire il recupero della password quando ci sarà la pagina
-  }
-
   protected register(): void {
     // TODO: aprire la registrazione quando ci sarà la pagina
   }

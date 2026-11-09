@@ -10,6 +10,11 @@ export class AuthNavigationService {
   private readonly discoverNavigation = inject(DiscoverNavigationService);
 
   public readonly loginLink: readonly string[] = ['/', AppRoutes.Login];
+  public readonly forgotPasswordLink: readonly string[] = [
+    '/',
+    AppRoutes.Login,
+    AppRoutes.ForgotPassword,
+  ];
 
   /** Percorso del login che ricorda la pagina richiesta, per i guard. */
   public loginUrlTree(returnUrl: string): UrlTree {

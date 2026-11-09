@@ -15,15 +15,15 @@
     [formField]="form.password"
   />
 
-  <button
+  <a
     appButton
-    type="button"
     variant="text"
+    [underline]="true"
     class="-mt-2 self-end px-1 text-sm"
-    (click)="forgotPassword.emit()"
+    [routerLink]="navigation.forgotPasswordLink"
   >
     {{ 'login.forgotPassword' | transloco }}
-  </button>
+  </a>
 
   <button appButton type="submit" [rounded]="true" class="mt-2 w-full">
     <ng-icon name="matLoginOutline" size="20" aria-hidden="true" />

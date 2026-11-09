@@ -83,7 +83,8 @@
     "guest": "Continue as guest",
     "guestHint": "As a guest you can only browse, not save or edit.",
     "noAccount": "Don't have an account?",
-    "register": "Sign up"
+    "register": "Sign up",
+    "backToLogin": "Back to sign in"
   },
   "releases": {
     "subtitle": "Upcoming volumes",
@@ -105,5 +106,9 @@
     "subtitle": "Volume details",
     "comingSoon": "Comic details coming soon",
     "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "comingSoonHint": "Here you will be able to set a new password."
   }
 }

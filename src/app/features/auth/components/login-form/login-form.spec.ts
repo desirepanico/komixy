@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [LoginForm] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [LoginForm],
+      providers: [provideRouter([])],
+    }).compileComponents();
   });
 
   let fixture: ComponentFixture<LoginForm>;
@@ -131,18 +135,21 @@ describe('LoginForm', () => {
 
   describe('altre azioni', () => {
     const pulsante = (testo: string) =>
-      Array.from(html.querySelectorAll('button')).find((b) =>
+      Array.from(html.querySelectorAll('button, a')).find((b) =>
         b.textContent?.includes(testo),
-      ) as HTMLButtonElement;
+      ) as HTMLElement;
 
-    it('emette il recupero password e la registrazione', () => {
-      let password = 0;
+    it('ha il link sottolineato verso il recupero password', () => {
+      const link = pulsante('login.forgotPassword');
+      expect(link.getAttribute('href')).toBe('/login/forgot-password');
+      expect(link.classList).toContain('underline');
+    });
+
+    it('emette la registrazione', () => {
       let registra = 0;
-      fixture.componentInstance.forgotPassword.subscribe(() => password++);
       fixture.componentInstance.registerClick.subscribe(() => registra++);
-      pulsante('login.forgotPassword').click();
       pulsante('login.register').click();
-      expect([password, registra]).toEqual([1, 1]);
+      expect(registra).toBe(1);
     });
 
     it('emette il provider scelto per Google e Apple', () => {
