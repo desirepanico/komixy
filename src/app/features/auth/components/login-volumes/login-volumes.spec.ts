@@ -172,12 +172,12 @@ describe('LoginVolumes', () => {
     expect(icona.style.animationPlayState).toBe('paused');
   });
 
-  it('con prefers-reduced-motion le copertine restano ferme con l’inclinazione e il bottone sparisce', () => {
+  it('con prefers-reduced-motion le copertine fanno un movimento minimo e limitato, e il bottone resta', () => {
     html.querySelectorAll('li').forEach((li) => {
-      expect(li.classList).toContain('motion-reduce:animate-none');
-      expect(li.classList).toContain('motion-reduce:rotate-(--tilt)');
+      expect(li.classList).toContain('motion-reduce:animate-float-soft');
+      expect(li.classList).not.toContain('motion-reduce:animate-none');
     });
-    expect(pausa().classList).toContain('motion-reduce:hidden');
+    expect(pausa().className).not.toContain('motion-reduce:hidden');
   });
 
   it('la pausa non gira le copertine', async () => {
