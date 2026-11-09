@@ -60,7 +60,7 @@
   </p>
 
   <ul
-    class="xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] max-lg:[@media(max-height:54rem)]:h-[14dvh] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] max-lg:[@media(max-height:54rem)]:h-[14dvh] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
   >
     @for (cover of covers; track cover.id) {
       <li
@@ -75,7 +75,7 @@
       >
         <button
           type="button"
-          class="group block size-full max-lg:[@media(max-height:54rem)]:origin-bottom max-lg:[@media(max-height:54rem)]:aria-pressed:scale-[2.3] cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
+          class="group block size-full max-lg:[@media(max-height:54rem)]:origin-bottom max-lg:[@media(max-height:54rem)]:aria-pressed:scale-[1.8] cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
           [class.-translate-y-2]="selected() === cover.id"
           [class.scale-110]="selected() === cover.id"
           [attr.aria-pressed]="flipped().has(cover.id)"
@@ -100,22 +100,23 @@
               />
             </span>
             <span
-              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 max-lg:[@media(max-height:54rem)]:gap-0.5 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 max-lg:[@media(max-height:54rem)]:p-1 text-center shadow-xl shadow-primary-900/40 backface-hidden"
+              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 max-lg:[@media(max-height:54rem)]:gap-1 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 max-lg:[@media(max-height:54rem)]:p-1 text-center shadow-xl shadow-primary-900/40 backface-hidden"
               [attr.aria-hidden]="!flipped().has(cover.id)"
             >
               <span
-                class="text-xs font-bold leading-tight text-surface-50 max-lg:[@media(max-height:54rem)]:text-[0.5rem] lg:text-sm"
+                class="text-xs font-bold leading-tight text-surface-50 max-lg:[@media(max-height:54rem)]:text-[0.45rem] lg:text-sm"
               >
                 {{ cover.title }}
               </span>
               <span
-                class="text-[0.65rem] leading-tight text-surface-200 max-lg:[@media(max-height:54rem)]:text-[0.4rem] lg:text-xs"
+                class="text-[0.65rem] leading-tight text-surface-200 max-lg:[@media(max-height:54rem)]:text-[0.38rem] lg:text-xs"
               >
                 {{ cover.author }}
               </span>
-              <app-tag class="max-lg:[@media(max-height:54rem)]:hidden">{{
-                'loginVolumes.kind.' + cover.kind | transloco
-              }}</app-tag>
+              <app-tag
+                class="max-lg:[@media(max-height:54rem)]:[&_span]:px-1 max-lg:[@media(max-height:54rem)]:[&_span]:py-0 max-lg:[@media(max-height:54rem)]:[&_span]:text-[0.36rem]"
+                >{{ 'loginVolumes.kind.' + cover.kind | transloco }}</app-tag
+              >
             </span>
           </span>
         </button>
