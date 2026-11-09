@@ -47,6 +47,11 @@ describe('LoginVolumes', () => {
     });
   });
 
+  it('mostra il logo come immagine decorativa accanto al nome', () => {
+    const logo = html.querySelector('img[src*="komixy-logo"]');
+    expect(logo?.getAttribute('alt')).toBe('');
+  });
+
   it('dietro ogni copertina ci sono titolo, autore e tipo', () => {
     const testo = dietro(0).textContent ?? '';
     expect(testo).toContain('One Piece');

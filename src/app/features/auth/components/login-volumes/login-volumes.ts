@@ -3,7 +3,6 @@ import { Component, ViewEncapsulation, computed, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
-  matMenuBookOutline,
   matPauseOutline,
   matPlayArrowOutline,
   matTouchAppOutline,
@@ -20,9 +19,7 @@ import { Tag } from '@shared/components/tag/tag';
   templateUrl: './login-volumes.html',
   styleUrl: './login-volumes.css',
   encapsulation: ViewEncapsulation.None,
-  providers: [
-    provideIcons({ matMenuBookOutline, matPauseOutline, matPlayArrowOutline, matTouchAppOutline }),
-  ],
+  providers: [provideIcons({ matPauseOutline, matPlayArrowOutline, matTouchAppOutline })],
   host: { class: 'relative block max-lg:contents' },
 })
 export class LoginVolumes {
