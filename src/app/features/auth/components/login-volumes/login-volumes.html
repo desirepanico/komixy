@@ -21,7 +21,10 @@
 <div
   class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
 >
-  <div class="flex items-center justify-center gap-3 lg:justify-start" [class]="fadeUpAnimation">
+  <div
+    class="flex items-center justify-center gap-3 max-lg:[@media(max-height:54rem)]:[&_img]:h-9 lg:justify-start"
+    [class]="fadeUpAnimation"
+  >
     <app-brand />
   </div>
 
@@ -40,7 +43,7 @@
   </div>
 
   <p
-    class="flex items-center gap-2 text-sm text-surface-200 [--delay:240ms]"
+    class="flex items-center gap-2 text-sm text-surface-200 max-lg:[@media(max-height:54rem)]:hidden [--delay:240ms]"
     [class]="fadeUpAnimation"
   >
     <ng-icon
@@ -57,11 +60,11 @@
   </p>
 
   <ul
-    class="xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] max-lg:[@media(max-height:54rem)]:h-[14dvh] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] max-lg:[@media(max-height:54rem)]:w-[8dvh] {
           floatAnimation
         }} sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
           cover.motion
