@@ -75,4 +75,14 @@ describe('LoginPage', () => {
     accedi(await apri('/login?returnUrl=https%3A%2F%2Fsito.it'));
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
+
+  it('l’accesso come ospite registra un utente con ruolo Guest', async () => {
+    const html = await apri('/login');
+    const bottone = Array.from(html.querySelectorAll('button')).find((b) =>
+      b.textContent?.includes('login.guest'),
+    );
+    bottone?.click();
+    expect(auth.loggedUser()?.userRole).toBe(UserRole.Guest);
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
+  });
 });

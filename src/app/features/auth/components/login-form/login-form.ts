@@ -5,7 +5,7 @@ import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
 import { InputText } from '@shared/components/input/input-text/input-text';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
-import { LoginCredentials } from '../../models/auth.model';
+import { LoginCredentials, SocialProvider } from '../../models/auth.model';
 
 @Component({
   selector: 'app-login-form',
@@ -14,6 +14,12 @@ import { LoginCredentials } from '../../models/auth.model';
 })
 export class LoginForm {
   public readonly loginSubmit = output<LoginCredentials>();
+  public readonly forgotPassword = output<void>();
+  public readonly registerClick = output<void>();
+  public readonly socialLogin = output<SocialProvider>();
+  public readonly guestAccess = output<void>();
+
+  protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
   private readonly model = signal<LoginCredentials>({ email: '', password: '' });
 

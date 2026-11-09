@@ -128,4 +128,39 @@ describe('LoginForm', () => {
     expect(campo('login-password').getAttribute('aria-invalid')).toBe('false');
     expect(campo('login-password').getAttribute('aria-describedby')).toBeNull();
   });
+
+  describe('altre azioni', () => {
+    const pulsante = (testo: string) =>
+      Array.from(html.querySelectorAll('button')).find((b) =>
+        b.textContent?.includes(testo),
+      ) as HTMLButtonElement;
+
+    it('emette il recupero password e la registrazione', () => {
+      let password = 0;
+      let registra = 0;
+      fixture.componentInstance.forgotPassword.subscribe(() => password++);
+      fixture.componentInstance.registerClick.subscribe(() => registra++);
+      pulsante('login.forgotPassword').click();
+      pulsante('login.register').click();
+      expect([password, registra]).toEqual([1, 1]);
+    });
+
+    it('emette il provider scelto per Google e Apple', () => {
+      const provider: unknown[] = [];
+      fixture.componentInstance.socialLogin.subscribe((p) => provider.push(p));
+      pulsante('login.google').click();
+      pulsante('login.apple').click();
+      expect(provider).toEqual(['google', 'apple']);
+    });
+
+    it('emette l’accesso come ospite, visibile solo da desktop', () => {
+      let ospite = 0;
+      fixture.componentInstance.guestAccess.subscribe(() => ospite++);
+      const bottone = pulsante('login.guest');
+      bottone.click();
+      expect(ospite).toBe(1);
+      expect(bottone.parentElement?.classList).toContain('hidden');
+      expect(bottone.parentElement?.classList).toContain('lg:block');
+    });
+  });
 });

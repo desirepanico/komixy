@@ -21,7 +21,14 @@
         {{ 'login.subtitle' | transloco }}
       </p>
 
-      <app-login-form class="block w-full max-w-sm lg:max-w-none" (loginSubmit)="login($event)" />
+      <app-login-form
+        class="block w-full max-w-sm lg:max-w-none"
+        (loginSubmit)="login($event)"
+        (forgotPassword)="forgotPassword()"
+        (registerClick)="register()"
+        (socialLogin)="loginWithProvider($event)"
+        (guestAccess)="enterAsGuest()"
+      />
     </section>
   </div>
 </main>

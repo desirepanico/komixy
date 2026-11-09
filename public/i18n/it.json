@@ -75,7 +75,15 @@
     "emailPlaceholder": "Inserisci l'email",
     "password": "Password",
     "passwordPlaceholder": "Inserisci almeno 6 caratteri",
-    "submit": "Accedi"
+    "submit": "Accedi",
+    "forgotPassword": "Password dimenticata?",
+    "or": "oppure",
+    "google": "Continua con Google",
+    "apple": "Continua con Apple",
+    "guest": "Entra come ospite",
+    "guestHint": "Come ospite puoi solo guardare, non salvare né modificare.",
+    "noAccount": "Non hai un account?",
+    "register": "Registrati"
   },
   "releases": {
     "subtitle": "I prossimi volumi in uscita",

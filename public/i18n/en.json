@@ -75,7 +75,15 @@
     "emailPlaceholder": "Enter your email",
     "password": "Password",
     "passwordPlaceholder": "Enter at least 6 characters",
-    "submit": "Sign in"
+    "submit": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "or": "or",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "guest": "Continue as guest",
+    "guestHint": "As a guest you can only browse, not save or edit.",
+    "noAccount": "Don't have an account?",
+    "register": "Sign up"
   },
   "releases": {
     "subtitle": "Upcoming volumes",
