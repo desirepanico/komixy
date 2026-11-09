@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
-/** Rotte della feature discover: la pagina Scopri. */
 @Injectable({ providedIn: 'root' })
 export class DiscoverNavigationService {
   private readonly router = inject(Router);

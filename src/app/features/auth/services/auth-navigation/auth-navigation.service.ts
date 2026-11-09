@@ -4,7 +4,6 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { safeReturnUrl } from '../../utils/safe-return-url/safe-return-url';
 
-/** Rotte della feature auth: il login. Per andare altrove usa il servizio dell'altra feature. */
 @Injectable({ providedIn: 'root' })
 export class AuthNavigationService {
   private readonly router = inject(Router);

@@ -1,33 +1,10 @@
-/* =========================================================
-    KOMIXY — GLASS SYSTEM
-    Mobile + Desktop
-    ========================================================= */
-
-/* =========================================================
-   VARIABILI
-   ========================================================= */
-
 :root {
   --glass-blur: 20px;
   --glass-saturation: 140%;
   --glass-shadow: 55%;
 }
 
-/* =========================================================
-   GLASS
-   ========================================================= */
-
-/*
-  GLASS — DEFAULT
-
-  USALO PER:
-  - Card manga
-  - Card collezione
-  - Pannelli
-  - Sezioni
-  - Elementi principali
-*/
-
+/* Default: card, pannelli, sezioni */
 .glass {
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
@@ -38,21 +15,7 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 8%, transparent);
 }
 
-/* =========================================================
-   GLASS LIGHT
-   ========================================================= */
-
-/*
-  GLASS LIGHT
-
-  USALO PER:
-  - Filtri
-  - Toolbar
-  - Badge
-  - Piccoli pannelli
-  - Elementi secondari
-*/
-
+/* Più leggero: filtri, toolbar, badge */
 .glass-light {
   --glass-blur: 14px;
   --glass-saturation: 130%;
@@ -67,22 +30,7 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 6%, transparent);
 }
 
-/* =========================================================
-   GLASS STRONG
-   ========================================================= */
-
-/*
-  GLASS STRONG
-
-  USALO PER:
-  - Navbar
-  - Menu
-  - Drawer
-  - Modal
-  - Dialog
-  - Popup
-*/
-
+/* Più forte: navbar, menu, drawer, modal */
 .glass-strong {
   --glass-blur: 28px;
   --glass-saturation: 150%;
@@ -114,10 +62,7 @@
   }
 }
 
-/* =========================================================
-   serve a gestire la compatibilità con i browser che non supportano l'effetto di sfocatura dello sfondo (backdrop-filter)
-   ========================================================= */
-
+/* Browser senza backdrop-filter: niente sfocatura */
 @supports not (backdrop-filter: blur(1px)) {
   .glass,
   .glass-light,

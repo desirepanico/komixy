@@ -6,12 +6,8 @@ import { matErrorOutline } from '@ng-icons/material-symbols/outline';
 import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constants/form.const';
 
 /**
- * Nome del campo e messaggio d'errore attorno a un controllo, che si passa come contenuto.
- * `label` è una chiave Transloco; `inputId` è l'id del controllo, così l'etichetta lo seleziona e il
- * controllo punta al messaggio con `aria-describedby`.
- * `errors` sono gli errori da mostrare (vuoti = nessun messaggio): il wrapper scrive il primo con il
- * testo del suo tipo (`VALIDATION_MESSAGES`) e il nome del campo, uguale per tutti i form.
- * Lo usano `app-input-text` e `app-input-password`: un nuovo tipo di campo lo usa allo stesso modo.
+ * `errors` vuoto = nessun messaggio; altrimenti scrive il primo con il testo del suo tipo
+ * (`VALIDATION_MESSAGES`) e il nome del campo. `inputId` collega etichetta e `aria-describedby`.
  */
 @Component({
   selector: 'app-field-wrapper',
@@ -25,7 +21,6 @@ export class FieldWrapper {
   public readonly inputId = input.required<string>();
   public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
 
-  /** Chiave del messaggio e lunghezza minima richiesta (solo per `minLength`) */
   protected readonly error = computed(() => {
     const error = this.errors()[0];
     if (!error) return null;

@@ -18,7 +18,7 @@ export class RankingPage {
   protected readonly discoverNavigation = inject(DiscoverNavigationService);
   protected readonly ranking = inject(WeeklyRankingService);
 
-  public readonly selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti
+  public readonly selectedId = signal<string | null>(null);
 
   public toggleBookmark(id: string): void {
     this.selectedId.update((current) => (current === id ? null : id));

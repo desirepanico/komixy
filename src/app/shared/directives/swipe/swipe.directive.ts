@@ -2,12 +2,7 @@ import { DestroyRef, Directive, inject, input, output } from '@angular/core';
 import { IGNORED_TARGETS } from '../../constants/navigation.const';
 import { detectSwipe } from './detect-swipe/detect-swipe';
 
-/**
- * Emette `swipeLeft` e `swipeRight` sui gesti touch/penna (non col mouse).
- * Per escludere una zona (es. una lista che scorre) aggiungi `data-no-swipe`.
- *
- *   <main appSwipe (swipeLeft)="avanti()" (swipeRight)="indietro()">
- */
+/** Solo touch e penna, non il mouse. Una zona che scorre (es. una lista) si esclude con `data-no-swipe`. */
 @Directive({
   selector: '[appSwipe]',
   host: {
@@ -17,7 +12,6 @@ import { detectSwipe } from './detect-swipe/detect-swipe';
   },
 })
 export class Swipe {
-  /** Distanza minima in pixel per riconoscere lo swipe */
   public readonly swipeThreshold = input<number>(70);
 
   public readonly swipeLeft = output<void>();

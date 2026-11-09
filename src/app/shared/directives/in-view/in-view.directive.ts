@@ -8,18 +8,12 @@ import {
   signal,
 } from '@angular/core';
 
-/**
- * Aggiunge l'attributo `data-in-view` all'elemento la prima volta che entra nello schermo.
- * Serve a far partire le animazioni solo quando si vedono:
- *
- *   <span appInView class="opacity-0 data-in-view:animate-xxx">
- */
+/** Aggiunge `data-in-view` la prima volta che l'elemento entra nello schermo, per far partire le animazioni solo quando si vedono. */
 @Directive({
   selector: '[appInView]',
   host: { '[attr.data-in-view]': 'inView() ? "" : null' },
 })
 export class InView {
-  /** Quota dell'elemento che deve essere visibile (0-1) */
   public readonly inViewThreshold = input<number>(0.4);
 
   protected readonly inView = signal<boolean>(false);

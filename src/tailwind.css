@@ -8,11 +8,9 @@
   /* Telefoni stretti: sotto i 360px (es. 320px) le card della classifica si stringono */
   --breakpoint-xs: 22.5rem;
 
-  /* Animazioni del numero in classifica */
   --animate-rank-in: rank-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-rank-glow: rank-glow 5s ease-in-out infinite;
 
-  /* Pannello di marca della login: volumi che fluttuano, bagliori che pulsano, testo che sale */
   --animate-float: float 3s ease-in-out infinite;
   --animate-float-soft: float-soft 3s ease-in-out infinite;
   --animate-orb: orb 10s ease-in-out infinite;
@@ -28,7 +26,7 @@
     }
   }
 
-  /* Con prefers-reduced-motion: solo uno spostamento minimo, senza rotazione, in loop; il bottone di pausa lo ferma */
+  /* Con prefers-reduced-motion: solo uno spostamento minimo, senza rotazione */
   @keyframes float-soft {
     0%,
     100% {
@@ -83,7 +81,6 @@
     }
   }
 
-  /* Palette violet (dal vecchio preset PrimeNG) */
   --color-violet-50: #fcfaff;
   --color-violet-100: #f5f0ff;
   --color-violet-200: #e7dbff;
@@ -120,7 +117,6 @@
   --color-surface-900: #1b1f2d;
   --color-surface-950: #0e1017;
 
-  /* Border radius (dal vecchio preset PrimeNG) */
   --radius-xs: 4px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -129,7 +125,6 @@
   --radius-2xl: 32px;
   --radius-3xl: 48px;
 
-  /* Palette neutral (dal vecchio preset PrimeNG) */
   --color-neutral-50: #fcfbfc;
   --color-neutral-100: #f8f7fa;
   --color-neutral-200: #f0edf4;
@@ -143,7 +138,6 @@
   --color-neutral-950: #22192e;
 }
 
-/* Nasconde la scrollbar mantenendo lo scroll (usata dal carosello) */
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar {

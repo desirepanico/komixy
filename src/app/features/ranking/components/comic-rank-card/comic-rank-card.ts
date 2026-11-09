@@ -11,10 +11,7 @@ import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 
-/**
- * Riga di classifica: posizione, copertina e le stesse informazioni di `app-comic-card`,
- * in orizzontale. Tutta la riga è un link (titolo con link "stirato"); il segnalibro resta cliccabile.
- */
+/** Tutta la riga è un link (titolo con link "stirato"); il segnalibro resta cliccabile. */
 @Component({
   selector: 'app-comic-rank-card',
   imports: [RouterLink, TranslocoPipe, Skeleton, Tag, ToggleButton, NgIcon, InView],
@@ -26,14 +23,12 @@ export class ComicRankCard {
   private readonly comicsNavigation = inject(ComicsNavigationService);
 
   public readonly comic = input.required<ComicItem>();
-  /** Posizione in classifica (1 = primo) */
   public readonly rank = input.required<number>();
   /** Riga visibile senza scorrere: la copertina si scarica subito e non in lazy (migliora l'LCP) */
   public readonly priority = input<boolean>(false);
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
-  /** Finché la copertina non è arrivata si vede lo skeleton */
   protected readonly coverLoaded = signal<boolean>(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
@@ -51,7 +46,7 @@ export class ComicRankCard {
   /** Ritardo di entrata: 140ms per posizione, a gruppi di 5 (le righe visibili insieme si accendono in sequenza) */
   protected readonly enterDelay = computed(() => ((this.rank() - 1) % 5) * 140);
 
-  /** Numero grande con sfumatura. Il podio (1-3) è viola con alone che pulsa piano; si ingrandisce al passaggio sulla riga */
+  /** Il podio (1-3) è viola con alone che pulsa piano */
   protected readonly rankClasses = computed(() => {
     const base =
       'flex origin-center items-baseline gap-0.5 bg-clip-text font-black leading-none tracking-tighter text-transparent tabular-nums transition-transform duration-300 group-hover:scale-110';

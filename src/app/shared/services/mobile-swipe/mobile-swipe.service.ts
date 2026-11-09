@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { MAIN_PAGES } from '../../constants/navigation.const';
 
-/** Percorsi completi (es. "/discover") di tutte le rotte configurate. */
 function collectPaths(routes: Routes, prefix = ''): string[] {
   return routes.flatMap((route) => {
     const full = [prefix, route.path].filter(Boolean).join('/');
@@ -13,7 +12,6 @@ function collectPaths(routes: Routes, prefix = ''): string[] {
 @Injectable({
   providedIn: 'root',
 })
-/** Cambia pagina con lo swipe, seguendo l'ordine delle pagine principali che esistono davvero. */
 export class MobileSwipeService {
   private readonly router = inject(Router);
 

@@ -1,4 +1,3 @@
-<!-- Bagliori dietro ai volumi -->
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
     class="absolute -left-16 top-1/4 size-56 animate-orb rounded-full bg-primary-600/30 blur-3xl motion-reduce:animate-none"
@@ -68,7 +67,6 @@
         [class.z-20!]="flipped().has(cover.id)"
         [class.z-30!]="selected() === cover.id"
       >
-        <!-- Il bottone gira come una carta: davanti la copertina, dietro titolo, autore e tipo -->
         <button
           type="button"
           class="group block size-full cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"

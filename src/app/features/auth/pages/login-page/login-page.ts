@@ -8,7 +8,6 @@ import { UserRole } from '@shared/models/user-role.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
 import { AuthService } from '../../services/auth/auth.service';
 
-/** Pagina di accesso. Dopo il login torna alla pagina richiesta (`returnUrl`) o a Scopri. */
 @Component({
   selector: 'app-login-page',
   imports: [LoginForm, LoginVolumes, TranslocoPipe],

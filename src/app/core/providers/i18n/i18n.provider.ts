@@ -9,16 +9,15 @@ import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { lastValueFrom } from 'rxjs';
 import { TranslocoHttpLoader } from '@shared/services/transloco-http-loader/transloco-http-loader.service';
 
-/** Configura Transloco e carica le traduzioni prima dell'avvio dell'app. */
 export function provideI18n(): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideTransloco({
       config: {
         availableLangs: ['it'],
         reRenderOnLangChange: false,
-        fallbackLang: 'it', // lingua di riserva quando una chiave non esiste nella lingua attiva
+        fallbackLang: 'it',
         defaultLang: 'it',
-        prodMode: !isDevMode(), // warning in sviluppo, nessuno in produzione
+        prodMode: !isDevMode(),
         scopes: { autoPrefixKeys: false }, // niente prefissi di lingua nelle chiavi
       },
       loader: TranslocoHttpLoader,

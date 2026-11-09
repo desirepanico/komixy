@@ -14,7 +14,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 ## Come funziona la cartella `public/theme/`
 
 - È CSS globale, non legato a un componente (per lo stile dei componenti si usa Tailwind nel template, vedi `.claude/rules/stile.md`).
-- Ogni file tratta un solo argomento (token e sfondo, glass, transizione di pagina), con un commento d'intestazione che spiega a cosa serve.
+- Ogni file tratta un solo argomento (token e sfondo, glass, transizione di pagina).
 - I file non si caricano da soli: vanno importati in `src/styles.css` con `@import '../public/theme/<nome>.css';`, prima di `./tailwind.css`. Un file nuovo non importato non ha effetto.
 - Un nuovo argomento globale va in un file nuovo della cartella, non in coda a `theme.css`.
 

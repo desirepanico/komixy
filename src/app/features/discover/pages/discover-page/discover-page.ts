@@ -26,7 +26,7 @@ import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ran
   providers: [provideIcons({ matArrowForwardOutline })],
 })
 export class DiscoverPage {
-  protected readonly selectedId = signal<string | null>(null); // ID del fumetto attualmente selezionato nei preferiti
+  protected readonly selectedId = signal<string | null>(null);
   protected readonly comics = signal<ComicItem[]>([
     {
       id: '1',

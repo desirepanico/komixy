@@ -7,7 +7,6 @@ import { InputText } from '@shared/components/input/input-text/input-text';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
 import { LoginCredentials } from '../../models/auth.model';
 
-/** Form di accesso con email e password. Emette le credenziali solo se il form è valido. */
 @Component({
   selector: 'app-login-form',
   imports: [FormRoot, FormField, TranslocoPipe, Button, InputText, InputPassword],
@@ -18,7 +17,6 @@ export class LoginForm {
 
   private readonly model = signal<LoginCredentials>({ email: '', password: '' });
 
-  /** L'azione di invio parte solo se i campi sono validi; `submit` segna i campi come toccati e così compaiono gli errori */
   protected readonly form = form(
     this.model,
     (path) => {

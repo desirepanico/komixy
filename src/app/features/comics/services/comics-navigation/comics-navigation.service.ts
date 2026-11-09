@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
-/** Rotte della feature comics: l'elenco e la pagina di un fumetto. */
 @Injectable({ providedIn: 'root' })
 export class ComicsNavigationService {
   private readonly router = inject(Router);

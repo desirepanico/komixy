@@ -1,4 +1,3 @@
-/** Percorsi delle rotte dell'app (un solo posto, usato da rotte, guard e template). */
 export enum AppRoutes {
   Releases = 'releases',
   Scan = 'scan',
