@@ -19,7 +19,7 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, ...
+│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
@@ -28,7 +28,10 @@ src/
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
-├── komixy-logo.png            logo (sidebar desktop e favicon)
+├── img/
+│   ├── covers/                copertine della login
+│   └── logo/                  komixy-logo.png (solo la K-pianeta, da cui è ricavato `favicon.ico`), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
+├── favicon.ico                favicon (la K-pianeta)
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/

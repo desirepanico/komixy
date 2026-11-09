@@ -19,18 +19,9 @@ describe('Brand', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra il nome Komixy', () => {
-    expect(html.textContent?.trim()).toBe('Komixy');
-  });
-
-  it('ha la X in viola', () => {
-    expect(html.querySelector('span span')?.textContent).toBe('x');
-    expect(html.querySelector('span span')?.classList).toContain('text-primary-400');
-  });
-
-  it('mostra il logo come immagine decorativa', () => {
+  it('mostra il logo con il nome Komixy', () => {
     const logo = html.querySelector('img');
-    expect(logo?.getAttribute('src')).toContain('komixy-logo.png');
-    expect(logo?.getAttribute('alt')).toBe('');
+    expect(logo?.getAttribute('src')).toContain('komixy-logo-wordmark.png');
+    expect(logo?.getAttribute('alt')).toBe('Komixy');
   });
 });
