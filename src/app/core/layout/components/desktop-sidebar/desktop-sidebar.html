@@ -20,7 +20,7 @@
             type="button"
             variant="text"
             severity="secondary"
-            class="mb-2 w-full justify-between px-3 py-2 text-left text-xs font-bold uppercase tracking-wider hover:bg-surface-800/70"
+            class="mb-2 h-10 w-full justify-between rounded-lg! border border-transparent px-3 text-left text-xs font-bold uppercase tracking-wider hover:bg-surface-800/70"
             [attr.aria-expanded]="group.expandable"
             [attr.aria-controls]="'nav-group-' + group.title"
             (click)="toggleGroup(group)"
@@ -46,7 +46,7 @@
                     [routerLinkActive]="['bg-primary-500/15', 'text-primary-300']"
                     [class.hover:bg-surface-800/70]="!rla.isActive"
                     [class.hover:text-surface-100]="!rla.isActive"
-                    class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                    class="group flex h-10 w-full items-center gap-3 rounded-lg border border-transparent px-3 text-sm font-medium text-surface-400 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
                   >
                     <ng-icon [name]="item.icon" size="16" />
                     <span>{{ item.label | transloco }}</span>
