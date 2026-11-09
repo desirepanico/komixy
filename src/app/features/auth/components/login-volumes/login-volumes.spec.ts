@@ -119,6 +119,12 @@ describe('LoginVolumes', () => {
     expect((bottoni()[0].closest('li') as HTMLElement).classList).toContain('z-30!');
   });
 
+  it('con l’hover una copertina passa davanti anche a quella scelta con il clic', async () => {
+    await premi(0);
+    const carta = bottoni()[1].closest('li') as HTMLElement;
+    expect(carta.classList).toContain('hover:z-50!');
+  });
+
   it('girare una copertina non cambia le altre', async () => {
     await premi(0);
     expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
