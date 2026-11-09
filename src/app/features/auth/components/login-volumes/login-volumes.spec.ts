@@ -17,9 +17,8 @@ describe('LoginVolumes', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra marchio, titolo e sottotitolo come chiavi di traduzione', () => {
+  it('mostra titolo e sottotitolo come chiavi di traduzione', () => {
     const testo = html.textContent ?? '';
-    expect(testo).toContain('loginVolumes.brand');
     expect(testo).toContain('loginVolumes.title');
     expect(testo).toContain('loginVolumes.subtitle');
   });
@@ -47,9 +46,8 @@ describe('LoginVolumes', () => {
     });
   });
 
-  it('mostra il logo come immagine decorativa accanto al nome', () => {
-    const logo = html.querySelector('img[src*="komixy-logo"]');
-    expect(logo?.getAttribute('alt')).toBe('');
+  it('mostra il marchio', () => {
+    expect(html.querySelector('app-brand')).not.toBeNull();
   });
 
   it('dietro ogni copertina ci sono titolo, autore e tipo', () => {

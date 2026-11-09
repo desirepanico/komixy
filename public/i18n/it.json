@@ -58,7 +58,6 @@
     "invalid": "Il campo {{ name }} non è valido."
   },
   "loginVolumes": {
-    "brand": "Komixy",
     "title": "La tua collezione di fumetti e manga, sempre con te",
     "subtitle": "Tieni traccia dei volumi che possiedi, scopri le novità e non perdere nessuna uscita.",
     "coversHint": "Tocca una copertina per scoprirla",

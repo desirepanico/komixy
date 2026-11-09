@@ -7,6 +7,7 @@ import {
   matPlayArrowOutline,
   matTouchAppOutline,
 } from '@ng-icons/material-symbols/outline';
+import { Brand } from '@shared/components/brand/brand';
 import { Tag } from '@shared/components/tag/tag';
 
 /**
@@ -15,7 +16,7 @@ import { Tag } from '@shared/components/tag/tag';
  */
 @Component({
   selector: 'app-login-volumes',
-  imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
+  imports: [Brand, NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-volumes.html',
   styleUrl: './login-volumes.css',
   encapsulation: ViewEncapsulation.None,

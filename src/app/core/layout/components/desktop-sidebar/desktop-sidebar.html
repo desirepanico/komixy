@@ -7,9 +7,7 @@
       class="flex items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
       aria-label="Komixy"
     >
-      <img ngSrc="komixy-logo.png" width="40" height="40" priority alt="" class="size-10" />
-
-      <span class="text-xl font-bold tracking-tight text-surface-50"> Komixy </span>
+      <app-brand />
     </a>
   </div>
 
@@ -78,7 +76,9 @@
       >
 
       <div class="min-w-0 flex-1">
-        <p class="truncate text-sm font-semibold text-surface-100">{{ 'menu.myProfile' | transloco }}</p>
+        <p class="truncate text-sm font-semibold text-surface-100">
+          {{ 'menu.myProfile' | transloco }}
+        </p>
         <p class="truncate text-xs text-surface-500">{{ 'menu.viewProfile' | transloco }}</p>
       </div>
 
