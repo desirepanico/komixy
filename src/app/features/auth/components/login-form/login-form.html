@@ -1,4 +1,4 @@
-<form class="flex flex-col gap-5 max-lg:[@media(max-height:54rem)]:gap-3" [formRoot]="form">
+<form class="flex flex-col gap-5 max-sm:gap-(--s2)" [formRoot]="form">
   <app-input-text
     label="login.email"
     inputId="login-email"
@@ -32,7 +32,7 @@
 </form>
 
 <div
-  class="my-6 max-lg:[@media(min-height:44rem)_and_(max-height:54rem)]:my-4 max-lg:[@media(max-height:44rem)]:my-3 flex items-center gap-3 text-sm text-surface-400"
+  class="my-6 max-sm:my-(--s2) flex items-center gap-3 text-sm text-surface-400"
   role="separator"
 >
   <span class="h-px flex-1 bg-surface-700"></span>
@@ -100,9 +100,7 @@
   </p>
 </div>
 
-<p
-  class="mt-6 max-lg:[@media(min-height:44rem)_and_(max-height:54rem)]:mt-3 max-lg:[@media(max-height:44rem)]:mt-2 text-center text-sm text-surface-300"
->
+<p class="mt-6 max-sm:mt-(--s1) text-center text-sm text-surface-300">
   {{ 'login.noAccount' | transloco }}
   <a
     appButton
