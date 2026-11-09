@@ -36,14 +36,16 @@
   <span class="h-px flex-1 bg-surface-700"></span>
 </div>
 
-<div class="flex flex-col gap-3 sm:flex-row">
+<div class="flex justify-center gap-4">
   @for (provider of socialProviders; track provider) {
     <button
       appButton
       type="button"
       variant="outlined"
+      [iconOnly]="true"
       [rounded]="true"
-      class="w-full"
+      [attr.aria-label]="'login.' + provider | transloco"
+      [attr.title]="'login.' + provider | transloco"
       (click)="socialLogin.emit(provider)"
     >
       @if (provider === 'google') {
@@ -72,7 +74,6 @@
           />
         </svg>
       }
-      {{ 'login.' + provider | transloco }}
     </button>
   }
 </div>

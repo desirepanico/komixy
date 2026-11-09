@@ -148,8 +148,8 @@ describe('LoginForm', () => {
     it('emette il provider scelto per Google e Apple', () => {
       const provider: unknown[] = [];
       fixture.componentInstance.socialLogin.subscribe((p) => provider.push(p));
-      pulsante('login.google').click();
-      pulsante('login.apple').click();
+      (html.querySelector('[aria-label="login.google"]') as HTMLElement).click();
+      (html.querySelector('[aria-label="login.apple"]') as HTMLElement).click();
       expect(provider).toEqual(['google', 'apple']);
     });
 
