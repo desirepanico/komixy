@@ -19,14 +19,14 @@
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
+  class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
 >
   <div class="flex items-center justify-center gap-3 lg:justify-start" [class]="fadeUpAnimation">
     <app-brand />
   </div>
 
   <div
-    class="max-w-xl space-y-3 text-center lg:text-left [--delay:120ms]"
+    class="max-w-xl space-y-3 text-center 2xl:max-w-3xl lg:text-left [--delay:120ms]"
     [class]="fadeUpAnimation"
   >
     <p
@@ -57,7 +57,7 @@
   </p>
 
   <ul
-    class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
   >
     @for (cover of covers; track cover.id) {
       <li
