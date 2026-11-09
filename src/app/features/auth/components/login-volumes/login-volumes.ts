@@ -1,21 +1,29 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matMenuBookOutline, matTouchAppOutline } from '@ng-icons/material-symbols/outline';
+import {
+  matMenuBookOutline,
+  matPauseOutline,
+  matPlayArrowOutline,
+  matTouchAppOutline,
+} from '@ng-icons/material-symbols/outline';
 import { Tag } from '@shared/components/tag/tag';
 
 /**
  * Pannello di marca della login: logo, titolo e copertine vere che fluttuano su bagliori viola.
  * Ogni copertina è un bottone che la gira come una carta e mostra titolo, autore e tipo; un secondo
  * clic la rigira (con il dito il primo tocco la porta in avanti, il secondo la gira). È solo una curiosità: non aggiunge nulla alla libreria. I bagliori sono decorativi
- * (`aria-hidden`) e con `prefers-reduced-motion` le animazioni si fermano.
+ * (`aria-hidden`). Con `prefers-reduced-motion` le animazioni si fermano; altrimenti un bottone le mette
+ * in pausa e le riprende (WCAG 2.2.2: il movimento infinito deve potersi fermare).
  */
 @Component({
   selector: 'app-login-volumes',
   imports: [NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-volumes.html',
-  providers: [provideIcons({ matMenuBookOutline, matTouchAppOutline })],
+  providers: [
+    provideIcons({ matMenuBookOutline, matPauseOutline, matPlayArrowOutline, matTouchAppOutline }),
+  ],
   host: { class: 'relative block max-lg:contents' },
 })
 export class LoginVolumes {
@@ -61,6 +69,12 @@ export class LoginVolumes {
 
   protected readonly flipped = signal<ReadonlySet<string>>(new Set());
   protected readonly selected = signal<string | null>(null);
+  protected readonly paused = signal<boolean>(false);
+  protected readonly playState = computed(() => (this.paused() ? 'paused' : 'running'));
+
+  protected toggleAnimation(): void {
+    this.paused.update((value) => !value);
+  }
 
   /**
    * Con il dito il primo tocco porta il volume in avanti e solo il secondo lo gira, così si vede

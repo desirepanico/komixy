@@ -63,6 +63,8 @@
     "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release.",
     "coversHint": "Tap a cover to discover it",
     "coversHintTouch": "Tap a volume, then again to flip it",
+    "pauseAnimation": "Pause animation",
+    "resumeAnimation": "Resume animation",
     "kind": {
       "manga": "Manga",
       "comic": "Comic"

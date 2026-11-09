@@ -2,9 +2,11 @@
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
     class="absolute -left-16 top-1/4 size-56 animate-orb rounded-full bg-primary-600/30 blur-3xl motion-reduce:animate-none"
+    [style.animation-play-state]="playState()"
   ></div>
   <div
     class="absolute -right-10 bottom-8 size-48 animate-orb rounded-full bg-primary-400/20 blur-3xl [animation-delay:-4s] motion-reduce:animate-none"
+    [style.animation-play-state]="playState()"
   ></div>
 </div>
 
@@ -46,9 +48,12 @@
       size="1.25rem"
       class="animate-pulse text-primary-300 motion-reduce:animate-none"
       aria-hidden="true"
+      [style.animation-play-state]="playState()"
     />
     <span class="pointer-coarse:hidden">{{ 'loginVolumes.coversHint' | transloco }}</span>
-    <span class="hidden pointer-coarse:inline">{{ 'loginVolumes.coversHintTouch' | transloco }}</span>
+    <span class="hidden pointer-coarse:inline">{{
+      'loginVolumes.coversHintTouch' | transloco
+    }}</span>
   </p>
 
   <ul
@@ -56,9 +61,10 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none motion-reduce:rotate-(--tilt) sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
+        [style.animation-play-state]="playState()"
         [class.z-20!]="flipped().has(cover.id)"
         [class.z-30!]="selected() === cover.id"
       >
@@ -105,4 +111,18 @@
       </li>
     }
   </ul>
+
+  <button
+    type="button"
+    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm text-surface-200 outline-none hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 motion-reduce:hidden lg:self-start"
+    [attr.aria-pressed]="paused()"
+    (click)="toggleAnimation()"
+  >
+    <ng-icon
+      [name]="paused() ? 'matPlayArrowOutline' : 'matPauseOutline'"
+      size="1.25rem"
+      aria-hidden="true"
+    />
+    {{ (paused() ? 'loginVolumes.resumeAnimation' : 'loginVolumes.pauseAnimation') | transloco }}
+  </button>
 </div>

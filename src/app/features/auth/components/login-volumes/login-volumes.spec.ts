@@ -24,7 +24,7 @@ describe('LoginVolumes', () => {
     expect(testo).toContain('loginVolumes.subtitle');
   });
 
-  const bottoni = () => Array.from(html.querySelectorAll('button'));
+  const bottoni = () => Array.from(html.querySelectorAll<HTMLButtonElement>('button:has(img)'));
   const premi = async (indice: number) => {
     bottoni()[indice].click();
     await fixture.whenStable();
@@ -134,10 +134,48 @@ describe('LoginVolumes', () => {
     animati.forEach((el) => expect(el.classList).toContain('motion-reduce:animate-none'));
   });
 
-  it('le copertine fluttuano anche con prefers-reduced-motion', () => {
+  const pausa = () =>
+    html.querySelector('button[aria-pressed]:not(:has(img))') as HTMLButtonElement;
+  const statiAnimazione = () =>
+    Array.from(html.querySelectorAll<HTMLElement>('.animate-float, .animate-orb')).map(
+      (el) => el.style.animationPlayState,
+    );
+
+  it('all’inizio le animazioni infinite sono in corso e il bottone offre di fermarle', () => {
+    expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
+    expect(pausa().getAttribute('aria-pressed')).toBe('false');
+    expect(pausa().textContent).toContain('loginVolumes.pauseAnimation');
+  });
+
+  it('il bottone ferma le animazioni infinite e un secondo clic le riprende', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    expect(statiAnimazione().every((stato) => stato === 'paused')).toBe(true);
+    expect(pausa().getAttribute('aria-pressed')).toBe('true');
+    expect(pausa().textContent).toContain('loginVolumes.resumeAnimation');
+    pausa().click();
+    await fixture.whenStable();
+    expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
+  });
+
+  it('la pausa ferma anche l’icona che pulsa', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    const icona = html.querySelector('ng-icon.animate-pulse') as HTMLElement;
+    expect(icona.style.animationPlayState).toBe('paused');
+  });
+
+  it('con prefers-reduced-motion le copertine restano ferme con l’inclinazione e il bottone sparisce', () => {
     html.querySelectorAll('li').forEach((li) => {
-      expect(li.classList).toContain('animate-float');
-      expect(li.className).not.toContain('motion-reduce');
+      expect(li.classList).toContain('motion-reduce:animate-none');
+      expect(li.classList).toContain('motion-reduce:rotate-(--tilt)');
     });
+    expect(pausa().classList).toContain('motion-reduce:hidden');
+  });
+
+  it('la pausa non gira le copertine', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    bottoni().forEach((bottone) => expect(bottone.getAttribute('aria-pressed')).toBe('false'));
   });
 });

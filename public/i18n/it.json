@@ -63,6 +63,8 @@
     "subtitle": "Tieni traccia dei volumi che possiedi, scopri le novità e non perdere nessuna uscita.",
     "coversHint": "Tocca una copertina per scoprirla",
     "coversHintTouch": "Tocca un volume, poi ancora per girarlo",
+    "pauseAnimation": "Ferma animazione",
+    "resumeAnimation": "Riprendi animazione",
     "kind": {
       "manga": "Manga",
       "comic": "Fumetto"
