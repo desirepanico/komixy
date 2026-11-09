@@ -1,5 +1,7 @@
 import { Component, output, signal } from '@angular/core';
 import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matVisibilityOutline } from '@ng-icons/material-symbols/outline';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
@@ -9,7 +11,8 @@ import { LoginCredentials, SocialProvider } from '../../models/auth.model';
 
 @Component({
   selector: 'app-login-form',
-  imports: [FormRoot, FormField, TranslocoPipe, Button, InputText, InputPassword],
+  imports: [FormRoot, FormField, TranslocoPipe, Button, InputText, InputPassword, NgIcon],
+  providers: [provideIcons({ matVisibilityOutline })],
   templateUrl: './login-form.html',
 })
 export class LoginForm {

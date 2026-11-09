@@ -161,6 +161,9 @@ describe('LoginForm', () => {
       expect(ospite).toBe(1);
       expect(bottone.parentElement?.classList).toContain('hidden');
       expect(bottone.parentElement?.classList).toContain('lg:block');
+      expect(
+        html.querySelector(`#${bottone.getAttribute('aria-describedby')}`)?.textContent,
+      ).toContain('login.guestHint');
     });
   });
 });
