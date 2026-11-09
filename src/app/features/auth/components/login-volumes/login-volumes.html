@@ -56,7 +56,7 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none motion-reduce:rotate-(--tilt) sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
         [class.z-20!]="flipped().has(cover.id)"

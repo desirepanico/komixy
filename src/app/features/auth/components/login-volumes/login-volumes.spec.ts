@@ -128,16 +128,16 @@ describe('LoginVolumes', () => {
     );
   });
 
-  it('ogni animazione si ferma con prefers-reduced-motion', () => {
-    const animati = html.querySelectorAll('.animate-float, .animate-orb, .animate-fade-up');
+  it('bagliori e testo si fermano con prefers-reduced-motion', () => {
+    const animati = html.querySelectorAll('.animate-orb, .animate-fade-up');
     expect(animati.length).toBeGreaterThan(4);
     animati.forEach((el) => expect(el.classList).toContain('motion-reduce:animate-none'));
   });
 
-  it('con prefers-reduced-motion le copertine restano ferme ma mantengono l’inclinazione', () => {
+  it('le copertine fluttuano anche con prefers-reduced-motion', () => {
     html.querySelectorAll('li').forEach((li) => {
-      expect(li.classList).toContain('motion-reduce:animate-none');
-      expect(li.classList).toContain('motion-reduce:rotate-(--tilt)');
+      expect(li.classList).toContain('animate-float');
+      expect(li.className).not.toContain('motion-reduce');
     });
   });
 });
