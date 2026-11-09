@@ -146,6 +146,15 @@ describe('LoginVolumes', () => {
     ).toBe('true');
   });
 
+  it('ogni copertina fluttua e non ha parentesi graffe nelle classi', () => {
+    const copertine = Array.from(html.querySelectorAll<HTMLElement>('ul > li'));
+    expect(copertine.length).toBeGreaterThan(0);
+    for (const copertina of copertine) {
+      expect(copertina.className).toContain('animate-[login-float');
+      expect(copertina.className).not.toMatch(/[{}]/);
+    }
+  });
+
   const pausa = () => html.querySelector('button:not(:has(img))') as HTMLButtonElement;
   const statiAnimazione = () =>
     Array.from(

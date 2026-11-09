@@ -64,7 +64,7 @@
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] max-lg:[@media(max-height:54rem)]:w-[8dvh] {
+        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] max-lg:[@media(max-height:54rem)]:w-[8dvh] {{
           floatAnimation
         }} sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
           cover.motion
@@ -75,7 +75,7 @@
       >
         <button
           type="button"
-          class="group block size-full cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
+          class="group block size-full max-lg:[@media(max-height:54rem)]:origin-bottom max-lg:[@media(max-height:54rem)]:aria-pressed:scale-[2.3] cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
           [class.-translate-y-2]="selected() === cover.id"
           [class.scale-110]="selected() === cover.id"
           [attr.aria-pressed]="flipped().has(cover.id)"
@@ -100,16 +100,22 @@
               />
             </span>
             <span
-              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 text-center shadow-xl shadow-primary-900/40 backface-hidden"
+              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 max-lg:[@media(max-height:54rem)]:gap-0.5 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 max-lg:[@media(max-height:54rem)]:p-1 text-center shadow-xl shadow-primary-900/40 backface-hidden"
               [attr.aria-hidden]="!flipped().has(cover.id)"
             >
-              <span class="text-xs font-bold leading-tight text-surface-50 lg:text-sm">
+              <span
+                class="text-xs font-bold leading-tight text-surface-50 max-lg:[@media(max-height:54rem)]:text-[0.5rem] lg:text-sm"
+              >
                 {{ cover.title }}
               </span>
-              <span class="text-[0.65rem] leading-tight text-surface-200 lg:text-xs">
+              <span
+                class="text-[0.65rem] leading-tight text-surface-200 max-lg:[@media(max-height:54rem)]:text-[0.4rem] lg:text-xs"
+              >
                 {{ cover.author }}
               </span>
-              <app-tag>{{ 'loginVolumes.kind.' + cover.kind | transloco }}</app-tag>
+              <app-tag class="max-lg:[@media(max-height:54rem)]:hidden">{{
+                'loginVolumes.kind.' + cover.kind | transloco
+              }}</app-tag>
             </span>
           </span>
         </button>
