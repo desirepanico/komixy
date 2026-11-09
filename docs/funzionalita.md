@@ -16,7 +16,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 ## Componenti condivisi
 
-- `app-brand`: marchio, cioè il logo con la scritta (`public/img/logo/komixy-logo-wordmark.png`, per sfondi scuri). Il nome non si traduce: l'`alt` è «Komixy». Si usa nella sidebar desktop e nel pannello della login. Il favicon è la sola K-pianeta (`public/favicon.ico`, ricavato da `komixy-logo.png`)
+- `app-brand`: marchio, cioè il logo con la scritta (`public/img/logo/komixy-logo-wordmark.png`, per sfondi scuri). Il nome non si traduce: l'`alt` è «Komixy». Si usa nella sidebar desktop e nel pannello della login. Il favicon (`public/favicon.ico`) è la sola K su un quadrato viola, senza anello né stella: a 16px quelli non si leggono
 - `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`; severity `primary`, `secondary`, `success`, `info`, `warn`, `danger`, `contrast`, come nei set Severity, Outlined e Text di Figma)
 - `appToggleButton` (su `button`, 36px (un po' più grande dei 30px di Figma), solo tondo): bottone a due stati con `pressed`, usato per il segnalibro nelle card. Imposta da solo `aria-pressed`; l'`aria-label` lo passa chi lo usa
 - `app-field-wrapper`: nome del campo (`label`, chiave Transloco), controllo come contenuto e messaggio d'errore (`errors`, scelto dal tipo di errore). `inputId` è l'id del controllo, così l'etichetta lo seleziona e `aria-describedby` punta al messaggio. Lo usano, al loro interno, i controlli qui sotto

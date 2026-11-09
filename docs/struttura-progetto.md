@@ -30,8 +30,8 @@ src/
 public/
 ├── img/
 │   ├── covers/                copertine della login
-│   └── logo/                  komixy-logo.png (solo la K-pianeta, da cui è ricavato `favicon.ico`), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
-├── favicon.ico                favicon (la K-pianeta)
+│   └── logo/                  komixy-logo.png (solo la K-pianeta), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
+├── favicon.ico                favicon: la K su fondo viola (`primary-500`), senza anello, per leggersi a 16px
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
