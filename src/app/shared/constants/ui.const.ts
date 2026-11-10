@@ -57,28 +57,22 @@ export const TOAST_DURATION_MS: Readonly<Record<ToastSeverity, number>> = {
   error: 8000,
 };
 
-// Sfondo scuro con una punta del colore della severity: sul tema viola resta leggibile e distinguibile
-export const TOAST_STYLES: Readonly<
-  Record<ToastSeverity, { icon: string; iconColor: string; container: string }>
-> = {
+// Sfondo molto trasparente (10%) del colore della severity, con bordo, titolo, icona e chiusura dello stesso colore
+export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; container: string }>> = {
   success: {
     icon: 'matCheckCircleOutline',
-    iconColor: 'text-green-400',
-    container: 'border-green-400/60 bg-green-950',
+    container: 'border-green-500/40 bg-green-500/10 text-green-400',
   },
   info: {
     icon: 'matInfoOutline',
-    iconColor: 'text-blue-400',
-    container: 'border-blue-400/60 bg-blue-950',
+    container: 'border-blue-500/40 bg-blue-500/10 text-blue-400',
   },
   warn: {
     icon: 'matWarningOutline',
-    iconColor: 'text-orange-300',
-    container: 'border-orange-300/60 bg-orange-950',
+    container: 'border-amber-500/40 bg-amber-500/10 text-amber-400',
   },
   error: {
     icon: 'matErrorOutline',
-    iconColor: 'text-red-400',
-    container: 'border-red-400/60 bg-red-950',
+    container: 'border-red-500/40 bg-red-500/10 text-red-400',
   },
 };

@@ -29,15 +29,15 @@ describe('ToastService', () => {
     },
   );
 
-  it('traduce titolo e dettaglio', () => {
+  it('traduce titolo e dettaglio inserendo i parametri', () => {
     TestBed.inject(TranslocoService).setTranslation(
-      { libreria: { summaryOk: 'Aggiunto', detailOk: 'È nella libreria.' } },
+      { libreria: { summaryOk: 'Aggiunto', detailOk: '{{ title }} è nella libreria.' } },
       'it',
     );
-    service.success('libreria.summaryOk', 'libreria.detailOk');
+    service.success('libreria.summaryOk', 'libreria.detailOk', { title: 'One Piece' });
     expect(service.toasts()[0]).toMatchObject({
       summary: 'Aggiunto',
-      detail: 'È nella libreria.',
+      detail: 'One Piece è nella libreria.',
     });
   });
 
