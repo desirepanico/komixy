@@ -42,6 +42,7 @@
     "@jsverse/transloco": "^8.4.0",
     "@ng-icons/core": "^34.0.0",
     "@ng-icons/material-symbols": "^34.0.0",
+    "@ng-icons/simple-icons": "^34.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

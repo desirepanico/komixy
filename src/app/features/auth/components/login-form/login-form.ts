@@ -9,6 +9,7 @@ import {
 } from '@angular/forms/signals';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
+import { simpleApple, simpleGoogle } from '@ng-icons/simple-icons';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
@@ -23,7 +24,7 @@ import { ApiError, AuthService } from '../../services/auth/auth.service';
 @Component({
   selector: 'app-login-form',
   imports: [FormRoot, TranslocoPipe, Button, InputText, InputPassword, NgIcon, RouterLink],
-  providers: [provideIcons({ matLoginOutline, matVisibilityOutline })],
+  providers: [provideIcons({ matLoginOutline, matVisibilityOutline, simpleApple, simpleGoogle })],
   templateUrl: './login-form.html',
 })
 export class LoginForm {
