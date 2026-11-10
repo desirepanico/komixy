@@ -19,7 +19,7 @@
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center max-md:contents md:gap-[3dvh] md:px-6 md:py-[6dvh] md:[@media(max-height:40rem)]:py-2 md:[@media(max-height:40rem)]:py-2 lg:px-12 xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
+  class="relative flex h-full flex-col justify-center max-md:contents md:gap-[3dvh] md:px-6 md:py-[6dvh] md:[@media(max-height:40rem)]:py-2 lg:px-12 xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
 >
   <div
     class="flex items-center justify-center gap-3 max-sm:[&_img]:h-(--logo) md:justify-start"
@@ -33,7 +33,7 @@
     [class]="fadeUpAnimation"
   >
     <p
-      class="text-xl font-bold leading-tight tracking-tight text-balance text-surface-50 max-sm:text-[clamp(0.9375rem,calc(1.132dvh_+_0.466rem),1.125rem)] sm:text-3xl lg:text-[min(3rem,6dvh)]"
+      class="text-xl font-bold leading-tight tracking-tight text-balance text-surface-50 max-sm:text-[clamp(0.9375rem,calc(1.132dvh+0.466rem),1.125rem)] sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
       {{ 'loginVolumes.title' | transloco }}
     </p>
@@ -43,13 +43,13 @@
   </div>
 
   <p
-    class="flex items-center gap-2 max-sm:mt-(--s1) text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh_+_0.2156rem),0.875rem)] text-surface-200 [--delay:240ms]"
+    class="flex items-center gap-2 max-sm:mt-(--s1) text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)] text-surface-200 [--delay:240ms]"
     [class]="fadeUpAnimation"
   >
     <ng-icon
       name="matTouchAppOutline"
       size="1.25rem"
-      class="animate-pulse text-primary-300 max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh_+_0.37rem),1.25rem)]! motion-reduce:animate-none"
+      class="animate-pulse text-primary-300 max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh+0.37rem),1.25rem)]! motion-reduce:animate-none"
       aria-hidden="true"
       [style.animation-play-state]="playState()"
     />
@@ -60,7 +60,7 @@
   </p>
 
   <ul
-    class="max-sm:mt-[calc(var(--s1)_+_0.5rem)] max-sm:h-[calc(1.5*var(--cw)_+_1.25rem)] xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 md:h-[min(12.5rem,max(26dvh,9rem))] md:justify-start md:-space-x-5 lg:h-[min(18rem,32dvh)]"
+    class="max-sm:mt-[calc(var(--s1)+0.5rem)] max-sm:h-[calc(1.5*var(--cw)+1.25rem)] xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 md:h-[min(12.5rem,max(26dvh,9rem))] md:justify-start md:-space-x-5 lg:h-[min(18rem,32dvh)]"
   >
     @for (cover of covers; track cover.id) {
       <li
@@ -126,13 +126,13 @@
 
   <button
     type="button"
-    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh_+_0.2156rem),0.875rem)] text-surface-200 outline-none hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 lg:self-start"
+    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)] text-surface-200 outline-none hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 lg:self-start"
     (click)="toggleAnimation()"
   >
     <ng-icon
       [name]="paused() ? 'matPlayArrowOutline' : 'matPauseOutline'"
       size="1.25rem"
-      class="max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh_+_0.37rem),1.25rem)]!"
+      class="max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh+0.37rem),1.25rem)]!"
       aria-hidden="true"
     />
     {{ (paused() ? 'loginVolumes.resumeAnimation' : 'loginVolumes.pauseAnimation') | transloco }}
