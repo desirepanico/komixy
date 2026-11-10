@@ -60,6 +60,7 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 | Un servizio di cui non serve il codice vero | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova |
 | Un'API del browser con un comportamento diverso (`matchMedia` vero, `IntersectionObserver`) | `vi.stubGlobal(...)` dentro il test |
 | Un guard | `TestBed.runInInjectionContext(() => guard(...))` |
+| Un timer (`setTimeout`, come i toast che spariscono da soli) | `vi.useFakeTimers()` e `vi.advanceTimersByTime(...)`; i timer finti non si ripristinano da soli, quindi `afterEach(() => vi.useRealTimers())`. Negli spec di componenti con `whenStable()` si attiva dentro il test, non in `beforeEach`, che altrimenti non finisce |
 
 ## Lint
 

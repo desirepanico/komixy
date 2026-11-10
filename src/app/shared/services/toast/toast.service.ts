@@ -3,8 +3,8 @@ import { TOAST_DURATION_MS, TOAST_KEY_SUFFIX, TOAST_MAX_VISIBLE } from '../../co
 import { ToastMessage, ToastSeverity } from '../../models/toast.model';
 
 /**
- * `action` è il nome di ciò che si sta facendo (es. `login`): il toast mostra titolo e dettaglio di
- * `<action>.summaryOk` e `<action>.detailOk` (success), `...Ko` (error), `...Info` o `...Warn`.
+ * `messageKey` è il nome del messaggio, cioè di ciò che si sta facendo (es. `login`): il toast mostra titolo e dettaglio di
+ * `<messageKey>.summaryOk` e `<messageKey>.detailOk` (success), `...Ko` (error), `...Info` o `...Warn`.
  * `params` sono i valori da inserire nei testi (es. `{ title }` per «{{ title }}»).
  */
 @Injectable({ providedIn: 'root' })
@@ -15,20 +15,20 @@ export class ToastService {
 
   public readonly toasts = this.state.asReadonly();
 
-  public success(action: string, params?: ToastMessage['params']): void {
-    this.show('success', action, params);
+  public success(messageKey: string, params?: ToastMessage['params']): void {
+    this.show('success', messageKey, params);
   }
 
-  public info(action: string, params?: ToastMessage['params']): void {
-    this.show('info', action, params);
+  public info(messageKey: string, params?: ToastMessage['params']): void {
+    this.show('info', messageKey, params);
   }
 
-  public warn(action: string, params?: ToastMessage['params']): void {
-    this.show('warn', action, params);
+  public warn(messageKey: string, params?: ToastMessage['params']): void {
+    this.show('warn', messageKey, params);
   }
 
-  public error(action: string, params?: ToastMessage['params']): void {
-    this.show('error', action, params);
+  public error(messageKey: string, params?: ToastMessage['params']): void {
+    this.show('error', messageKey, params);
   }
 
   // Toglie il messaggio e ferma il suo timer, così un messaggio chiuso a mano non fa partire una chiusura inutile
@@ -39,11 +39,11 @@ export class ToastService {
   }
 
   // Aggiunge il messaggio, lo fa sparire da solo dopo la durata della sua severity e tiene al massimo TOAST_MAX_VISIBLE messaggi
-  private show(severity: ToastSeverity, action: string, params?: ToastMessage['params']): void {
+  private show(severity: ToastSeverity, messageKey: string, params?: ToastMessage['params']): void {
     const id = this.nextId++;
     const suffix = TOAST_KEY_SUFFIX[severity];
-    const summary = `${action}.summary${suffix}`;
-    const detail = `${action}.detail${suffix}`;
+    const summary = `${messageKey}.summary${suffix}`;
+    const detail = `${messageKey}.detail${suffix}`;
     this.state.update((toasts) => [...toasts, { id, severity, summary, detail, params }]);
     this.timers.set(
       id,
