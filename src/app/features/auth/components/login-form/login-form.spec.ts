@@ -22,6 +22,7 @@ describe('LoginForm', () => {
             email: 'email',
             minLength: 'minLength',
             generic: 'generic',
+            invalidCredentials: 'invalidCredentials',
           },
         },
       },
@@ -135,7 +136,7 @@ describe('LoginForm', () => {
       await compilaEInvia();
       risposta.error(new ApiError(401, 'Credenziali non valide'));
       await attendi();
-      expect(errori()).toEqual(['login.invalidCredentials']);
+      expect(errori()).toEqual(['invalidCredentials']);
       expect(successi).toBe(0);
       expect(bottone().disabled).toBe(false);
     });
@@ -147,15 +148,29 @@ describe('LoginForm', () => {
       expect(errori()).toEqual(['login.serverError']);
     });
 
-    it('toglie l’errore al nuovo tentativo', async () => {
+    it('dopo un errore del server si può riprovare senza modificare i campi', async () => {
       await compilaEInvia();
-      risposta.error(new ApiError(401, 'Credenziali non valide'));
+      risposta.error(new ApiError(500, 'Errore'));
       await attendi();
 
       risposta = new Subject<LoggedUser>();
       vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(risposta);
       await invia();
+      risposta.next(utente);
+      risposta.complete();
       await attendi();
+      expect(errori()).toEqual([]);
+      expect(successi).toBe(1);
+    });
+
+    it('toglie l’errore delle credenziali quando si modifica la password', async () => {
+      await compilaEInvia();
+      risposta.error(new ApiError(401, 'Credenziali non valide'));
+      await attendi();
+      expect(errori()).toEqual(['invalidCredentials']);
+
+      scrivi('login-password', '1234567');
+      await fixture.whenStable();
       expect(errori()).toEqual([]);
     });
   });

@@ -30,7 +30,8 @@
       "required": "The {{ field }} field is required.",
       "email": "Enter a valid email address, for example mario@gmail.com.",
       "minLength": "The {{ field }} field must be at least {{ minLength }} characters long.",
-      "generic": "The {{ field }} field is not valid."
+      "generic": "The {{ field }} field is not valid.",
+      "invalidCredentials": "Incorrect email or password."
     }
   },
   "scroller": {
@@ -77,7 +78,6 @@
     "passwordPlaceholder": "Enter at least 6 characters",
     "submit": "Sign in",
     "submitting": "Signing in…",
-    "invalidCredentials": "Incorrect email or password.",
     "serverError": "Unable to sign in, please try again shortly.",
     "demoHint": "Demo: demo@example.com / password1",
     "forgotPassword": "Forgot password?",
