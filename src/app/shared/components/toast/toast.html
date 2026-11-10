@@ -2,9 +2,12 @@
   <!-- Gli avvisi che chiedono attenzione sono annunciati subito (alert), gli altri con calma (status) -->
   <div
     [attr.role]="toast.severity === 'warn' || toast.severity === 'error' ? 'alert' : 'status'"
-    class="pointer-events-auto flex items-start gap-3 rounded-xl border border-surface-700 bg-surface-900 p-4 text-sm text-surface-50 shadow-lg"
+    [class]="
+      'pointer-events-auto flex items-start gap-3 rounded-xl border p-4 text-sm text-surface-50 shadow-lg ' +
+      styles[toast.severity].container
+    "
   >
-    <span [class]="'mt-px shrink-0 ' + styles[toast.severity].color">
+    <span [class]="'mt-px shrink-0 ' + styles[toast.severity].iconColor">
       <ng-icon [name]="styles[toast.severity].icon" size="22" aria-hidden="true" />
     </span>
     <p class="flex-1">{{ toast.key | transloco: toast.params }}</p>
