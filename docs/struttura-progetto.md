@@ -19,7 +19,7 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, ...
+│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-error-message, app-field-wrapper, app-input-text, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/

@@ -2,19 +2,6 @@
   {{ name() }}
 </label>
 <ng-content />
-@if (error(); as error) {
-  <!-- L'icona affianca il rosso: l'errore non si riconosce solo dal colore -->
-  <p
-    [id]="inputId() + '-error'"
-    class="flex items-start gap-1.5 text-sm text-red-400 max-sm:-mt-1 max-sm:gap-1 max-sm:text-xs max-sm:leading-snug"
-    role="alert"
-  >
-    <ng-icon
-      name="matErrorOutline"
-      size="18"
-      class="mt-px shrink-0 max-sm:[--ng-icon__size:0.875rem]!"
-      aria-hidden="true"
-    />
-    <span>{{ error }}</span>
-  </p>
+@if (errors().length) {
+  <app-error-message [id]="inputId() + '-error'" [errors]="errors()" [field]="fieldName()" />
 }

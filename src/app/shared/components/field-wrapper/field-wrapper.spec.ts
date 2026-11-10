@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { TranslocoService } from '@jsverse/transloco';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { provideTranslocoTesting } from '../../../../testing/test-providers/test-providers';
 import { FieldWrapper } from './field-wrapper';
@@ -28,14 +27,10 @@ describe('FieldWrapper', () => {
             common: {
               validation: {
                 required: 'required',
-                email: 'email',
-                minLength: 'minLength',
                 named: 'Il campo {{ field }} è obbligatorio.',
-                generic: 'generic',
               },
             },
           },
-          en: { common: { validation: { required: 'required-en', generic: 'generic-en' } } },
         }),
       ],
     }).compileComponents();
@@ -74,14 +69,6 @@ describe('FieldWrapper', () => {
     expect(messaggio.textContent?.trim()).toBe('required');
   });
 
-  it('affianca al messaggio un’icona nascosta agli screen reader', async () => {
-    const fixture = await crea();
-    fixture.componentInstance.errori.set([{ kind: 'required' }]);
-    await fixture.whenStable();
-    const icona = fixture.nativeElement.querySelector('[role="alert"] ng-icon') as HTMLElement;
-    expect(icona.getAttribute('aria-hidden')).toBe('true');
-  });
-
   it('toglie il messaggio quando l’errore sparisce', async () => {
     const fixture = await crea();
     fixture.componentInstance.errori.set([{ kind: 'required' }]);
@@ -99,34 +86,6 @@ describe('FieldWrapper', () => {
     expect(html.querySelector('label')?.textContent?.trim()).toBe('Email');
     expect(html.querySelector('[role="alert"]')?.textContent?.trim()).toBe(
       'Il campo email è obbligatorio.',
-    );
-  });
-
-  it('traduce di nuovo il messaggio quando cambia la lingua', async () => {
-    const fixture = await crea();
-    fixture.componentInstance.errori.set([{ kind: 'required' }]);
-    await fixture.whenStable();
-    const messaggio = () =>
-      fixture.nativeElement.querySelector('[role="alert"]').textContent.trim();
-    expect(messaggio()).toBe('required');
-    TestBed.inject(TranslocoService).setActiveLang('en');
-    await fixture.whenStable();
-    expect(messaggio()).toBe('required-en');
-  });
-
-  it('sceglie il messaggio dal tipo di errore', async () => {
-    const fixture = await crea();
-    fixture.componentInstance.errori.set([{ kind: 'email' }]);
-    await fixture.whenStable();
-    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe('email');
-  });
-
-  it('per un tipo di errore sconosciuto usa il messaggio generico', async () => {
-    const fixture = await crea();
-    fixture.componentInstance.errori.set([{ kind: 'mai-visto' }]);
-    await fixture.whenStable();
-    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe(
-      'generic',
     );
   });
 });
