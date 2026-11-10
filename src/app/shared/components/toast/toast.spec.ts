@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslocoService } from '@jsverse/transloco';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ToastService } from '../../services/toast/toast.service';
 import { Toast } from './toast';
@@ -34,16 +33,6 @@ describe('Toast', () => {
     const [titolo, dettaglio] = Array.from(html().querySelectorAll('p'));
     expect(titolo.textContent?.trim()).toBe('login.serverError.summaryKo');
     expect(dettaglio.textContent?.trim()).toBe('login.serverError.detailKo');
-  });
-
-  it('inserisce i parametri nel testo', async () => {
-    TestBed.inject(TranslocoService).setTranslation(
-      { libreria: { summaryOk: 'Aggiunto', detailOk: '{{ title }} è nella libreria.' } },
-      'it',
-    );
-    service.success('libreria.summaryOk', 'libreria.detailOk', { title: 'One Piece' });
-    await fixture.whenStable();
-    expect(html().querySelectorAll('p')[1].textContent?.trim()).toBe('One Piece è nella libreria.');
   });
 
   it.each([

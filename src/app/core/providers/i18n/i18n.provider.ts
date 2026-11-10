@@ -23,10 +23,10 @@ export function provideI18n(): EnvironmentProviders {
       loader: TranslocoHttpLoader,
     }),
     provideAppInitializer(() => {
-      const transloco = inject(TranslocoService);
-      const lang = transloco.getDefaultLang();
-      transloco.setActiveLang(lang);
-      return lastValueFrom(transloco.load(lang));
+      const translateService = inject(TranslocoService);
+      const lang = translateService.getDefaultLang();
+      translateService.setActiveLang(lang);
+      return lastValueFrom(translateService.load(lang));
     }),
   ]);
 }

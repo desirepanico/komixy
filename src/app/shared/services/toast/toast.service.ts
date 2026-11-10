@@ -1,32 +1,32 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { TOAST_DURATION_MS, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
-import { ToastMessage, ToastParams, ToastSeverity } from '../../models/toast.model';
+import { ToastMessage, ToastSeverity } from '../../models/toast.model';
 
-/** `summary` e `detail` sono chiavi Transloco; `params` sono i valori da inserire nei testi (es. `{ title }` per «{{ title }}»). I testi si traducono qui, quando il toast compare. */
+/** `summary` e `detail` sono chiavi Transloco: si traducono qui, quando il toast compare. */
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  private readonly transloco = inject(TranslocoService);
+  private readonly translateService = inject(TranslocoService);
   private readonly state = signal<readonly ToastMessage[]>([]);
   private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
   private nextId = 0;
 
   public readonly toasts = this.state.asReadonly();
 
-  public success(summary: string, detail: string, params?: ToastParams): void {
-    this.show('success', summary, detail, params);
+  public success(summary: string, detail: string): void {
+    this.show('success', summary, detail);
   }
 
-  public info(summary: string, detail: string, params?: ToastParams): void {
-    this.show('info', summary, detail, params);
+  public info(summary: string, detail: string): void {
+    this.show('info', summary, detail);
   }
 
-  public warn(summary: string, detail: string, params?: ToastParams): void {
-    this.show('warn', summary, detail, params);
+  public warn(summary: string, detail: string): void {
+    this.show('warn', summary, detail);
   }
 
-  public error(summary: string, detail: string, params?: ToastParams): void {
-    this.show('error', summary, detail, params);
+  public error(summary: string, detail: string): void {
+    this.show('error', summary, detail);
   }
 
   // Toglie il messaggio e ferma il suo timer, così un messaggio chiuso a mano non fa partire una chiusura inutile
@@ -37,20 +37,15 @@ export class ToastService {
   }
 
   // Aggiunge il messaggio, lo fa sparire da solo dopo la durata della sua severity e tiene al massimo TOAST_MAX_VISIBLE messaggi
-  private show(
-    severity: ToastSeverity,
-    summary: string,
-    detail: string,
-    params?: ToastParams,
-  ): void {
+  private show(severity: ToastSeverity, summary: string, detail: string): void {
     const id = this.nextId++;
     this.state.update((toasts) => [
       ...toasts,
       {
         id,
         severity,
-        summary: this.transloco.translate(summary, params),
-        detail: this.transloco.translate(detail, params),
+        summary: this.translateService.translate(summary),
+        detail: this.translateService.translate(detail),
       },
     ]);
     this.timers.set(
