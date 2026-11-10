@@ -26,7 +26,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
 | `costanti.md` | Costanti: in `shared/constants`, al massimo 3 file (uno per ambito), senza sottocartelle | `src/**/*.ts` |
-| `form.md` | Form con i Signal Forms (Angular 22): modello, template, invio, campi con label, placeholder, `app-field-wrapper`, `app-error-message`, messaggi d'errore e toast per gli errori dell'API | `src/app/**/*.ts` e `*.html` |
+| `form.md` | Form con i Signal Forms (Angular 22): modello e schema, regole di validazione (pronte, condizionali, date, array, personalizzate, asincrone), template, campi con label, placeholder, `app-field-wrapper`, `app-error-message`, messaggi d'errore, invio e toast per gli errori dell'API | `src/app/**/*.ts` e `*.html` |
 | `skeleton.md` | Quando e come usare `app-skeleton` | `src/**/*.html` |
 | `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
 | `i18n.md` | Traduzioni e chiavi dei toast (`<nome>.summaryOk`, `detailKo`...) | `public/i18n/**`, `src/app/**` |

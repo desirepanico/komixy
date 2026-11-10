@@ -8,6 +8,7 @@ Indice della documentazione del progetto. `CLAUDE.md` resta breve e rimanda qui 
 | [struttura-progetto.md](struttura-progetto.md) | Albero completo delle cartelle, esempio di feature, dove vanno i file |
 | [funzionalita.md](funzionalita.md) | Pagine e funzionalità dell'app, stato di avanzamento |
 | [tema-e-stile.md](tema-e-stile.md) | Tailwind, token del tema, effetto glass |
+| [signal-forms.md](signal-forms.md) | Come funzionano i Signal Forms: schema, `FormField` e `FormRoot`, validazione, `novalidate`, esempio del login |
 | [traduzioni.md](traduzioni.md) | Transloco, file `it.json`/`en.json`, controllo automatico |
 | [sviluppo.md](sviluppo.md) | Comandi, flusso git, come funzionano i test (spec), lint, Knip, CI, deploy su Vercel |
 | [claude-code.md](claude-code.md) | Come è configurato Claude Code: rules, hooks, skills, permessi |
