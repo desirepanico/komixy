@@ -4,9 +4,9 @@ paths:
   - "src/app/**/*.html"
 ---
 
-# Campi dei form (`shared/components/input/`)
+# Input condivisi (`shared/components/input/`)
 
-Come si scrive un campo dentro un form. Le regole dei Signal Forms (schema, validazione, invio) sono in `.claude/rules/form.md`.
+I componenti `app-input-*` e come si scrive un campo dentro un form. Le regole dei Signal Forms (schema, validazione, invio) sono in `.claude/rules/form.md`.
 
 ## Quale componente usare
 
