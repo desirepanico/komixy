@@ -1,11 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { disabled, form, FormField, minLength, required } from '@angular/forms/signals';
+import { disabled, form, minLength, required } from '@angular/forms/signals';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InputText } from './input-text';
 
 @Component({
-  imports: [InputText, FormField],
+  imports: [InputText],
   template: `
     <app-input-text
       label="login.email"
@@ -13,7 +13,7 @@ import { InputText } from './input-text';
       type="email"
       placeholder="login.emailPlaceholder"
       autocomplete="email"
-      [formField]="campoForm"
+      [field]="campoForm"
     />
   `,
 })
@@ -25,6 +25,23 @@ class Host {
     minLength(path, 3);
     disabled(path, { when: () => this.spento() });
   });
+}
+
+@Component({
+  imports: [InputText],
+  template: `
+    <app-input-text
+      label="login.email"
+      inputId="numero"
+      type="number"
+      placeholder="login.emailPlaceholder"
+      [field]="campoForm"
+    />
+  `,
+})
+class HostNumero {
+  readonly numero = signal<number | null>(null);
+  readonly campoForm = form(this.numero);
 }
 
 describe('InputText', () => {
@@ -111,6 +128,17 @@ describe('InputText', () => {
     await scrivi('abc');
     expect(messaggio()).toBeUndefined();
     expect(campo.getAttribute('aria-invalid')).toBe('false');
+  });
+
+  it('con type number scrive nel modello un numero', async () => {
+    const fixture = TestBed.createComponent(HostNumero);
+    await fixture.whenStable();
+    const campo = (fixture.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement;
+    expect(campo.type).toBe('number');
+    campo.value = '42';
+    campo.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.numero()).toBe(42);
   });
 
   it('si disabilita quando il campo è disabilitato', async () => {

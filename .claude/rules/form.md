@@ -21,7 +21,7 @@ Guida: https://angular.dev/guide/forms/signals/overview. API verificate sui tipi
 ## Template
 
 - `<form [formRoot]="form">`: `FormRoot` imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `(ngSubmit)`.
-- Ogni campo si lega con `[formField]="form.email"` (direttiva `FormField`, in `imports`) su un componente di `shared/components/input/` (`app-input-text`, `app-input-password`), mai su un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
+- Ogni campo sta in un componente di `shared/components/input/`, mai in un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. `app-input-text` riceve il campo con `[field]="form.email"` e il suo `<input>` lo lega con `[formField]`; `app-input-password` si lega con `[formField]="form.password"` (direttiva `FormField`, in `imports`). Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
 - Stato del campo, tutti signal: `value`, `errors`, `invalid`, `valid`, `touched`, `dirty`, `disabled`, `pending`, `submitting`. Errori di tutto il form: `form().errorSummary()`.
 - Gli errori compaiono solo dopo l'interazione (campo toccato o form inviato): ci pensa già il controllo.
 

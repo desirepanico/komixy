@@ -1,16 +1,43 @@
+@let inputClass =
+  'w-full rounded-xl border border-surface-700 bg-surface-950/60 px-4 py-2.5 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400 disabled:cursor-not-allowed disabled:opacity-50';
+
 <app-field-wrapper [label]="label()" [inputId]="inputId()" [errors]="visibleErrors()">
-  <input
-    #field
-    [id]="inputId()"
-    [type]="type()"
-    [value]="value()"
-    [disabled]="disabled()"
-    [placeholder]="placeholder() | transloco"
-    [attr.autocomplete]="autocomplete() || null"
-    [attr.aria-invalid]="showError()"
-    [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
-    (input)="value.set(field.value)"
-    (blur)="markAsTouched()"
-    class="w-full rounded-xl border border-surface-700 bg-surface-950/60 px-4 py-2.5 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
-  />
+  @switch (type()) {
+    @case ('number') {
+      <input
+        type="number"
+        [id]="inputId()"
+        [formField]="asNumber()"
+        [placeholder]="placeholder() | transloco"
+        [attr.autocomplete]="autocomplete() || null"
+        [attr.aria-invalid]="showError()"
+        [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
+        [class]="inputClass"
+      />
+    }
+    @case ('date') {
+      <input
+        type="date"
+        [id]="inputId()"
+        [formField]="asDate()"
+        [placeholder]="placeholder() | transloco"
+        [attr.autocomplete]="autocomplete() || null"
+        [attr.aria-invalid]="showError()"
+        [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
+        [class]="inputClass"
+      />
+    }
+    @default {
+      <input
+        [type]="type()"
+        [id]="inputId()"
+        [formField]="asString()"
+        [placeholder]="placeholder() | transloco"
+        [attr.autocomplete]="autocomplete() || null"
+        [attr.aria-invalid]="showError()"
+        [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
+        [class]="inputClass"
+      />
+    }
+  }
 </app-field-wrapper>

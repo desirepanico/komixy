@@ -1,48 +1,45 @@
-import { Component, computed, ElementRef, inject, input, model, viewChild } from '@angular/core';
-import { FormField, FormValueControl } from '@angular/forms/signals';
+import { Component, computed, input } from '@angular/core';
+import { FieldTree, FormField } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { FieldWrapper } from '../../field-wrapper/field-wrapper';
 
-type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
+type InputType = 'text' | 'email' | 'tel' | 'url' | 'search' | 'number' | 'date';
 
 /**
- * `implements FormValueControl` è il contratto dei controlli per `[formField]`, che scrive da solo in
- * `value` e `disabled`: a runtime l'interfaccia non c'è, la usa solo il compilatore.
+ * Campo di testo con nome del campo ed errore (`app-field-wrapper`). Riceve il campo del form come `field`
+ * e lo lega al suo `<input>` con `[formField]`. `label` e `placeholder` sono chiavi Transloco.
+ * Per le password c'è `app-input-password`.
+ *
+ * <app-input-text
+ *   label="login.email" inputId="login-email" type="email" placeholder="login.emailPlaceholder"
+ *   [field]="form.email" />
  */
 @Component({
   selector: 'app-input-text',
-  imports: [FieldWrapper, TranslocoPipe],
+  imports: [FormField, FieldWrapper, TranslocoPipe],
   templateUrl: './input-text.html',
   host: { class: 'block' },
 })
-export class InputText implements FormValueControl<string> {
-  public readonly value = model<string>('');
+export class InputText {
+  public readonly field = input.required<
+    FieldTree<string> | FieldTree<number | null> | FieldTree<Date | null>
+  >();
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
   public readonly type = input<InputType>('text');
   public readonly placeholder = input.required<string>();
   public readonly autocomplete = input<string>('');
 
-  // Stato che `[formField]` scrive da solo
-  public readonly disabled = input<boolean>(false);
+  // `type` decide il tipo del campo: i cast servono solo al type-check del template
+  protected readonly asString = computed(() => this.field() as FieldTree<string>);
+  protected readonly asNumber = computed(() => this.field() as FieldTree<number | null>);
+  protected readonly asDate = computed(() => this.field() as FieldTree<Date | null>);
 
-  // Stessa direttiva `[formField]` del form: da qui si leggono gli errori e se il campo è stato toccato
-  private readonly formField = inject<FormField<string>>(FormField);
-  private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
-
-  /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
-  protected readonly showError = computed(
-    () => this.formField.state().touched() && this.formField.errors().length > 0,
-  );
+  protected readonly showError = computed(() => {
+    const state = this.field()();
+    return state.touched() && state.invalid();
+  });
   protected readonly visibleErrors = computed(() =>
-    this.showError() ? this.formField.errors() : [],
+    this.showError() ? this.field()().errors() : [],
   );
-
-  protected markAsTouched(): void {
-    this.formField.state().markAsTouched();
-  }
-
-  public focus(options?: FocusOptions): void {
-    this.field().nativeElement.focus(options);
-  }
 }
