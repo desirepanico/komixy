@@ -109,7 +109,7 @@ describe('LoginForm', () => {
     };
     const compilaEInvia = async () => {
       scrivi('login-email', 'a@b.it');
-      scrivi('login-password', '123456');
+      scrivi('login-password', '12345678');
       await invia();
     };
 
@@ -212,7 +212,7 @@ describe('LoginForm', () => {
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('false');
     expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
 
-    scrivi('login-password', '123456');
+    scrivi('login-password', '12345678');
     await fixture.whenStable();
     expect(errori()).toEqual([]);
     expect(campo('login-password').getAttribute('aria-invalid')).toBe('false');

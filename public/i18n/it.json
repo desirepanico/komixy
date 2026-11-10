@@ -75,7 +75,7 @@
     "email": "Email",
     "emailPlaceholder": "Inserisci l'email",
     "password": "Password",
-    "passwordPlaceholder": "Inserisci almeno 6 caratteri",
+    "passwordPlaceholder": "Inserisci almeno 8 caratteri",
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
     "invalidCredentials": {
