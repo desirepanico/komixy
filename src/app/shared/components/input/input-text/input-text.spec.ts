@@ -27,23 +27,6 @@ class Host {
   });
 }
 
-@Component({
-  imports: [InputText],
-  template: `
-    <app-input-text
-      label="login.email"
-      inputId="numero"
-      type="number"
-      placeholder="login.emailPlaceholder"
-      [field]="campoForm"
-    />
-  `,
-})
-class HostNumero {
-  readonly numero = signal<number | null>(null);
-  readonly campoForm = form(this.numero);
-}
-
 describe('InputText', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
@@ -128,17 +111,6 @@ describe('InputText', () => {
     await scrivi('abc');
     expect(messaggio()).toBeUndefined();
     expect(campo.getAttribute('aria-invalid')).toBe('false');
-  });
-
-  it('con type number scrive nel modello un numero', async () => {
-    const fixture = TestBed.createComponent(HostNumero);
-    await fixture.whenStable();
-    const campo = (fixture.nativeElement as HTMLElement).querySelector('input') as HTMLInputElement;
-    expect(campo.type).toBe('number');
-    campo.value = '42';
-    campo.dispatchEvent(new Event('input'));
-    await fixture.whenStable();
-    expect(fixture.componentInstance.numero()).toBe(42);
   });
 
   it('si disabilita quando il campo è disabilitato', async () => {

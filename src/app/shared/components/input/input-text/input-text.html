@@ -7,7 +7,7 @@
   [errors]="showError() ? field()().errors() : []"
 >
   <input
-    type="text"
+    [type]="type()"
     [id]="inputId()"
     [formField]="field()"
     [placeholder]="placeholder() | transloco"

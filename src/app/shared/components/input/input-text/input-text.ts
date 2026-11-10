@@ -17,7 +17,7 @@ export class InputText {
   public readonly placeholder = input.required<string>();
   public readonly field = input.required<FieldTree<string>>();
   public readonly autocomplete = input<string>('');
-  public readonly type = input<InputType>();
+  public readonly type = input<InputType>('text');
 
   protected readonly showError = computed(() => {
     const state = this.field()();
