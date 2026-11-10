@@ -21,11 +21,14 @@ export class ErrorMessage {
   public readonly field = input<string>('');
 
   private readonly firstError = computed(() => this.errors()[0]);
+  // Parametri del testo: le proprietà dell'errore (es. `minLength`) e il nome del campo (`field`)
   private readonly params = computed(() => ({ ...this.firstError(), field: this.field() }));
+  // Testo del tipo di errore; se non esiste Transloco restituisce la chiave stessa
   private readonly known = translateSignal(
     computed(() => `common.validation.${this.firstError()?.kind}`),
     this.params,
   );
+  // Testo di riserva per i tipi di errore senza un messaggio
   private readonly generic = translateSignal('common.validation.generic', this.params);
 
   protected readonly message = computed(() => {
