@@ -4,8 +4,6 @@
 </label>
 <ng-content />
 @if (error(); as error) {
-  <!-- Nel messaggio il nome sta a metà frase: iniziale minuscola («Il campo email è obbligatorio») -->
-  @let nameInMessage = name.charAt(0).toLowerCase() + name.slice(1);
   <!-- L'icona affianca il rosso: l'errore non si riconosce solo dal colore -->
   <p
     [id]="inputId() + '-error'"
@@ -18,6 +16,6 @@
       class="mt-px shrink-0 max-sm:[--ng-icon__size:0.875rem]!"
       aria-hidden="true"
     />
-    <span>{{ error.key | transloco: { name: nameInMessage, min: error.min } }}</span>
+    <span>{{ error }}</span>
   </p>
 }

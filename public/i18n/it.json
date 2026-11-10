@@ -36,7 +36,13 @@
     "back": "Indietro",
     "releases": "Uscite",
     "library": "Libreria",
-    "profile": "Profilo"
+    "profile": "Profilo",
+    "validation": {
+      "required": "Il campo {{ field }} è obbligatorio.",
+      "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
+      "minLength": "Il campo {{ field }} deve contenere almeno {{ minLength }} caratteri.",
+      "generic": "Il campo {{ field }} non è valido."
+    }
   },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
@@ -50,12 +56,6 @@
   },
   "inputPassword": {
     "show": "Mostra password"
-  },
-  "validation": {
-    "required": "Il campo {{ name }} è obbligatorio.",
-    "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
-    "minLength": "Il campo {{ name }} deve contenere almeno {{ min }} caratteri.",
-    "invalid": "Il campo {{ name }} non è valido."
   },
   "loginVolumes": {
     "title": "La tua collezione di fumetti e manga, sempre con te",

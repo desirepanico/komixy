@@ -19,6 +19,19 @@ class Host {
 describe('FieldWrapper', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+    TestBed.inject(TranslocoService).setTranslation(
+      {
+        common: {
+          validation: {
+            required: 'required',
+            email: 'email',
+            minLength: 'minLength',
+            generic: 'generic',
+          },
+        },
+      },
+      'it',
+    );
   });
 
   const crea = async () => {
@@ -51,7 +64,7 @@ describe('FieldWrapper', () => {
     await fixture.whenStable();
     const messaggio = fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
     expect(messaggio.id).toBe('campo-error');
-    expect(messaggio.textContent?.trim()).toBe('validation.required');
+    expect(messaggio.textContent?.trim()).toBe('required');
   });
 
   it('affianca al messaggio un’icona nascosta agli screen reader', async () => {
@@ -75,7 +88,7 @@ describe('FieldWrapper', () => {
     TestBed.inject(TranslocoService).setTranslation(
       {
         login: { email: 'Email' },
-        validation: { required: 'Il campo {{ name }} è obbligatorio.' },
+        common: { validation: { required: 'Il campo {{ field }} è obbligatorio.' } },
       },
       'it',
     );
@@ -93,9 +106,7 @@ describe('FieldWrapper', () => {
     const fixture = await crea();
     fixture.componentInstance.errori.set([{ kind: 'email' }]);
     await fixture.whenStable();
-    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe(
-      'validation.email',
-    );
+    expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe('email');
   });
 
   it('per un tipo di errore sconosciuto usa il messaggio generico', async () => {
@@ -103,7 +114,7 @@ describe('FieldWrapper', () => {
     fixture.componentInstance.errori.set([{ kind: 'mai-visto' }]);
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('[role="alert"]').textContent.trim()).toBe(
-      'validation.invalid',
+      'generic',
     );
   });
 });

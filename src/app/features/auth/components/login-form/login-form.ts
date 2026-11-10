@@ -15,15 +15,7 @@ import { ApiError, AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login-form',
-  imports: [
-    FormRoot,
-    TranslocoPipe,
-    Button,
-    InputText,
-    InputPassword,
-    NgIcon,
-    RouterLink,
-  ],
+  imports: [FormRoot, TranslocoPipe, Button, InputText, InputPassword, NgIcon, RouterLink],
   providers: [provideIcons({ matLoginOutline, matVisibilityOutline })],
   templateUrl: './login-form.html',
 })

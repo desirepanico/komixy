@@ -25,7 +25,13 @@
     "back": "Back",
     "releases": "Releases",
     "library": "Library",
-    "profile": "Profile"
+    "profile": "Profile",
+    "validation": {
+      "required": "The {{ field }} field is required.",
+      "email": "Enter a valid email address, for example mario@gmail.com.",
+      "minLength": "The {{ field }} field must be at least {{ minLength }} characters long.",
+      "generic": "The {{ field }} field is not valid."
+    }
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -50,12 +56,6 @@
   },
   "inputPassword": {
     "show": "Show password"
-  },
-  "validation": {
-    "required": "The {{ name }} field is required.",
-    "email": "Enter a valid email address, for example mario@gmail.com.",
-    "minLength": "The {{ name }} field must be at least {{ min }} characters long.",
-    "invalid": "The {{ name }} field is not valid."
   },
   "loginVolumes": {
     "title": "Your comic and manga collection, always with you",

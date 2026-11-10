@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslocoService } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';
 import { UserRole } from '@shared/models/user-role.model';
 import { Subject } from 'rxjs';
@@ -13,6 +14,19 @@ describe('LoginForm', () => {
       imports: [LoginForm],
       providers: [provideRouter([])],
     }).compileComponents();
+    TestBed.inject(TranslocoService).setTranslation(
+      {
+        common: {
+          validation: {
+            required: 'required',
+            email: 'email',
+            minLength: 'minLength',
+            generic: 'generic',
+          },
+        },
+      },
+      'it',
+    );
   });
 
   let fixture: ComponentFixture<LoginForm>;
@@ -55,7 +69,7 @@ describe('LoginForm', () => {
   it('mostra l’errore di un campo quando si esce senza compilarlo', async () => {
     campo('login-email').dispatchEvent(new Event('blur'));
     await fixture.whenStable();
-    expect(errori()).toEqual(['validation.required']);
+    expect(errori()).toEqual(['required']);
   });
 
   it('dopo un invio fallito porta il focus sul primo campo non valido', async () => {
@@ -69,7 +83,7 @@ describe('LoginForm', () => {
 
   it('con il form vuoto mostra gli errori e non emette nulla', async () => {
     await invia();
-    expect(errori()).toEqual(['validation.required', 'validation.required']);
+    expect(errori()).toEqual(['required', 'required']);
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('true');
     expect(successi).toBe(0);
   });
@@ -78,7 +92,7 @@ describe('LoginForm', () => {
     scrivi('login-email', 'non-una-email');
     scrivi('login-password', '123');
     await invia();
-    expect(errori()).toEqual(['validation.email', 'validation.minLength']);
+    expect(errori()).toEqual(['email', 'minLength']);
     expect(successi).toBe(0);
   });
 
@@ -182,7 +196,7 @@ describe('LoginForm', () => {
     await invia();
     scrivi('login-email', 'a@b.it');
     await fixture.whenStable();
-    expect(errori()).toEqual(['validation.required']);
+    expect(errori()).toEqual(['required']);
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('false');
     expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
 
