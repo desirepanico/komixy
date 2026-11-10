@@ -61,10 +61,6 @@ Lo stato dei campi si regola con `disabled`, `readonly`, `hidden`.
 - `validateHttp(path.campo, { request, onSuccess, onError })` (o `validateAsync`) parte a ogni cambio di valore, solo dopo che le regole sincrone sono passate. `onSuccess` restituisce un errore con `kind` o `null`; `onError` restituisce un errore proprio (es. `networkError`), così l'utente sa che non è stato possibile verificare.
 - Mentre `pending()` è `true` il campo non è ancora valido: il bottone di invio resta disabilitato (come con `submitting()`) e si dice che la verifica è in corso. Per ridurre le richieste: `debounce(path.campo, 300)`.
 
-### Librerie con Standard Schema
-
-- Se il progetto ha già Zod o Valibot, lo schema si collega con `validateStandardSchema(path, schema)`. Non sono installati: aggiungerli lo decide l'utente.
-
 ## Template
 
 - `<form [formRoot]="form">`: `FormRoot` imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `novalidate` né `(ngSubmit)`. Va in `imports` del componente del form.
