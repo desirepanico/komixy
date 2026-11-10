@@ -77,9 +77,13 @@
     "passwordPlaceholder": "Inserisci almeno 6 caratteri",
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
-    "errors": {
-      "invalidCredentials": "Email o password non corrette.",
-      "serverError": "Impossibile accedere, riprova tra poco."
+    "invalidCredentials": {
+      "summaryKo": "Credenziali non valide",
+      "detailKo": "Email o password non corrette."
+    },
+    "serverError": {
+      "summaryKo": "Accesso non disponibile",
+      "detailKo": "Impossibile accedere, riprova tra poco."
     },
     "demoHint": "Demo: demo@example.com / password1",
     "forgotPassword": "Password dimenticata?",

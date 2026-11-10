@@ -3,7 +3,8 @@ export type ToastSeverity = 'success' | 'info' | 'warn' | 'error';
 export interface ToastMessage {
   id: number;
   severity: ToastSeverity;
-  /** Chiave Transloco del messaggio */
-  key: string;
+  /** Chiavi Transloco del titolo e del dettaglio */
+  summary: string;
+  detail: string;
   params?: Readonly<Record<string, unknown>>;
 }

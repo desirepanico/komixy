@@ -18,12 +18,23 @@ describe('ToastService', () => {
     expect(service.toasts()).toEqual([]);
   });
 
-  it.each(['success', 'info', 'warn', 'error'] as const)(
-    '%s aggiunge un messaggio con quella severity, la chiave e i parametri',
-    (severity) => {
-      service[severity]('chiave', { nome: 'Mario' });
+  it.each([
+    ['success', 'Ok'],
+    ['info', 'Info'],
+    ['warn', 'Warn'],
+    ['error', 'Ko'],
+  ] as const)(
+    '%s usa le chiavi del titolo e del dettaglio con il suffisso %s',
+    (severity, suffisso) => {
+      service[severity]('salvataggio', { nome: 'Mario' });
       expect(service.toasts()).toEqual([
-        { id: 0, severity, key: 'chiave', params: { nome: 'Mario' } },
+        {
+          id: 0,
+          severity,
+          summary: `salvataggio.summary${suffisso}`,
+          detail: `salvataggio.detail${suffisso}`,
+          params: { nome: 'Mario' },
+        },
       ]);
     },
   );
@@ -39,7 +50,7 @@ describe('ToastService', () => {
     service.info('a');
     service.info('b');
     service.dismiss(service.toasts()[0].id);
-    expect(service.toasts().map((toast) => toast.key)).toEqual(['b']);
+    expect(service.toasts().map((toast) => toast.summary)).toEqual(['b.summaryInfo']);
   });
 
   it('il messaggio sparisce da solo dopo la durata della sua severity', () => {
@@ -57,6 +68,6 @@ describe('ToastService', () => {
   it('oltre il limite toglie il messaggio più vecchio', () => {
     for (let i = 0; i <= TOAST_MAX_VISIBLE; i++) service.info(`m${i}`);
     expect(service.toasts()).toHaveLength(TOAST_MAX_VISIBLE);
-    expect(service.toasts()[0].key).toBe('m1');
+    expect(service.toasts()[0].summary).toBe('m1.summaryInfo');
   });
 });

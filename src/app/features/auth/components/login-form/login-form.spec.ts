@@ -137,7 +137,7 @@ describe('LoginForm', () => {
       await compilaEInvia();
       risposta.error(new ApiError(401, 'Credenziali non valide'));
       await attendi();
-      expect(errore).toHaveBeenCalledWith('login.errors.invalidCredentials');
+      expect(errore).toHaveBeenCalledWith('login.invalidCredentials');
       expect(errori()).toEqual([]);
       expect(successi).toBe(0);
       expect(bottone().disabled).toBe(false);
@@ -148,7 +148,7 @@ describe('LoginForm', () => {
       await compilaEInvia();
       risposta.error(new ApiError(500, 'Errore'));
       await attendi();
-      expect(errore).toHaveBeenCalledWith('login.errors.serverError');
+      expect(errore).toHaveBeenCalledWith('login.serverError');
     });
 
     it('dopo un errore si può riprovare senza modificare i campi', async () => {

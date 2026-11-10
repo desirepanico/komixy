@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslocoService } from '@jsverse/transloco';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ToastService } from '../../services/toast/toast.service';
 import { Toast } from './toast';
@@ -27,10 +28,22 @@ describe('Toast', () => {
     expect(messaggi()).toEqual([]);
   });
 
-  it('mostra la chiave del messaggio', async () => {
-    service.success('login.errors.serverError');
+  it('mostra il titolo e il dettaglio del messaggio', async () => {
+    service.error('login.serverError');
     await fixture.whenStable();
-    expect(html().querySelector('p')?.textContent?.trim()).toBe('login.errors.serverError');
+    const [titolo, dettaglio] = Array.from(html().querySelectorAll('p'));
+    expect(titolo.textContent?.trim()).toBe('login.serverError.summaryKo');
+    expect(dettaglio.textContent?.trim()).toBe('login.serverError.detailKo');
+  });
+
+  it('inserisce i parametri nel testo', async () => {
+    TestBed.inject(TranslocoService).setTranslation(
+      { libreria: { summaryOk: 'Aggiunto', detailOk: '{{ title }} è nella libreria.' } },
+      'it',
+    );
+    service.success('libreria', { title: 'One Piece' });
+    await fixture.whenStable();
+    expect(html().querySelectorAll('p')[1].textContent?.trim()).toBe('One Piece è nella libreria.');
   });
 
   it.each([

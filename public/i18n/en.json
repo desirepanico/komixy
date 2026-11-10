@@ -77,9 +77,13 @@
     "passwordPlaceholder": "Enter at least 6 characters",
     "submit": "Sign in",
     "submitting": "Signing in…",
-    "errors": {
-      "invalidCredentials": "Incorrect email or password.",
-      "serverError": "Unable to sign in, please try again shortly."
+    "invalidCredentials": {
+      "summaryKo": "Invalid credentials",
+      "detailKo": "Incorrect email or password."
+    },
+    "serverError": {
+      "summaryKo": "Sign-in unavailable",
+      "detailKo": "Unable to sign in, please try again shortly."
     },
     "demoHint": "Demo: demo@example.com / password1",
     "forgotPassword": "Forgot password?",

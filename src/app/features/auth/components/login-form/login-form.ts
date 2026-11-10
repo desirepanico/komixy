@@ -75,8 +75,8 @@ export class LoginForm {
   private onLoginError(error: unknown): void {
     const key =
       error instanceof ApiError && error.status === 401
-        ? 'login.errors.invalidCredentials'
-        : 'login.errors.serverError';
+        ? 'login.invalidCredentials'
+        : 'login.serverError';
     this.toastService.error(key);
   }
 }

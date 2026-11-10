@@ -1,8 +1,12 @@
 import { Injectable, signal } from '@angular/core';
-import { TOAST_DURATION_MS, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
+import { TOAST_DURATION_MS, TOAST_KEY_SUFFIX, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
 import { ToastMessage, ToastSeverity } from '../../models/toast.model';
 
-/** I messaggi sono chiavi Transloco: il testo lo traduce `app-toast`. */
+/**
+ * `action` è il nome di ciò che si sta facendo (es. `login`): il toast mostra titolo e dettaglio di
+ * `<action>.summaryOk` e `<action>.detailOk` (success), `...Ko` (error), `...Info` o `...Warn`.
+ * `params` sono i valori da inserire nei testi (es. `{ title }` per «{{ title }}»).
+ */
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   private readonly state = signal<readonly ToastMessage[]>([]);
@@ -11,31 +15,36 @@ export class ToastService {
 
   public readonly toasts = this.state.asReadonly();
 
-  public success(key: string, params?: ToastMessage['params']): void {
-    this.show('success', key, params);
+  public success(action: string, params?: ToastMessage['params']): void {
+    this.show('success', action, params);
   }
 
-  public info(key: string, params?: ToastMessage['params']): void {
-    this.show('info', key, params);
+  public info(action: string, params?: ToastMessage['params']): void {
+    this.show('info', action, params);
   }
 
-  public warn(key: string, params?: ToastMessage['params']): void {
-    this.show('warn', key, params);
+  public warn(action: string, params?: ToastMessage['params']): void {
+    this.show('warn', action, params);
   }
 
-  public error(key: string, params?: ToastMessage['params']): void {
-    this.show('error', key, params);
+  public error(action: string, params?: ToastMessage['params']): void {
+    this.show('error', action, params);
   }
 
+  // Toglie il messaggio e ferma il suo timer, così un messaggio chiuso a mano non fa partire una chiusura inutile
   public dismiss(id: number): void {
     clearTimeout(this.timers.get(id));
     this.timers.delete(id);
     this.state.update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
-  private show(severity: ToastSeverity, key: string, params?: ToastMessage['params']): void {
+  // Aggiunge il messaggio, lo fa sparire da solo dopo la durata della sua severity e tiene al massimo TOAST_MAX_VISIBLE messaggi
+  private show(severity: ToastSeverity, action: string, params?: ToastMessage['params']): void {
     const id = this.nextId++;
-    this.state.update((toasts) => [...toasts, { id, severity, key, params }]);
+    const suffix = TOAST_KEY_SUFFIX[severity];
+    const summary = `${action}.summary${suffix}`;
+    const detail = `${action}.detail${suffix}`;
+    this.state.update((toasts) => [...toasts, { id, severity, summary, detail, params }]);
     this.timers.set(
       id,
       setTimeout(() => this.dismiss(id), TOAST_DURATION_MS[severity]),

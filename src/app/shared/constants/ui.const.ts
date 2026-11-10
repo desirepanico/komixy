@@ -57,6 +57,14 @@ export const TOAST_DURATION_MS: Readonly<Record<ToastSeverity, number>> = {
   error: 8000,
 };
 
+/** Fine delle chiavi del titolo e del dettaglio: `<azione>.summaryOk` e `<azione>.detailOk`, `summaryKo`/`detailKo`... */
+export const TOAST_KEY_SUFFIX: Readonly<Record<ToastSeverity, string>> = {
+  success: 'Ok',
+  info: 'Info',
+  warn: 'Warn',
+  error: 'Ko',
+};
+
 // Sfondo scuro con una punta del colore della severity: sul tema viola resta leggibile e distinguibile
 export const TOAST_STYLES: Readonly<
   Record<ToastSeverity, { icon: string; iconColor: string; container: string }>
