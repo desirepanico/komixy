@@ -36,3 +36,7 @@ Tema scuro viola. Il testo secondario deve rispettare il contrasto WCAG AA, che 
 2. Se manca, usa la scala o i colori di default di Tailwind.
 3. Se lo stesso valore serve in più punti, aggiungilo al tema in `@theme`.
 4. Il valore arbitrario (`p-[13px]`) solo se nessun valore di Tailwind va bene e serve in un solo punto.
+
+## Editor (VS Code)
+
+`.vscode/extensions.json` consiglia l'estensione «Tailwind CSS IntelliSense» (`bradlc.vscode-tailwindcss`) e `.vscode/settings.json` la configura: legge il tema da `src/tailwind.css` e segnala come avviso le classi non canoniche (es. `w-[3rem]` invece di `w-12`), i conflitti tra classi e l'ordine non consigliato delle varianti. Il fix rapido (la lampadina) le corregge. Le regole di scrittura restano in `.claude/rules/stile.md`.
