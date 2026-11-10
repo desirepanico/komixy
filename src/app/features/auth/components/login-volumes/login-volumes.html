@@ -19,17 +19,17 @@
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
+  class="relative flex h-full flex-col justify-center max-md:contents md:gap-[3dvh] md:px-8 md:py-[6dvh] lg:px-12 xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
 >
   <div
-    class="flex items-center justify-center gap-3 max-sm:[&_img]:h-(--logo) lg:justify-start"
+    class="flex items-center justify-center gap-3 max-sm:[&_img]:h-(--logo) md:justify-start"
     [class]="fadeUpAnimation"
   >
     <app-brand />
   </div>
 
   <div
-    class="max-w-xl space-y-3 max-sm:space-y-0 text-center 2xl:max-w-3xl lg:text-left [--delay:120ms]"
+    class="max-w-xl space-y-3 max-sm:space-y-0 text-center 2xl:max-w-3xl md:text-left [--delay:120ms]"
     [class]="fadeUpAnimation"
   >
     <p
@@ -60,13 +60,13 @@
   </p>
 
   <ul
-    class="max-sm:mt-[calc(var(--s1)_+_0.5rem)] max-sm:h-[calc(1.5*var(--cw)_+_1.25rem)] xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="max-sm:mt-[calc(var(--s1)_+_0.5rem)] max-sm:h-[calc(1.5*var(--cw)_+_1.25rem)] xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 md:h-[min(14rem,28dvh)] md:justify-start md:-space-x-3 lg:h-[min(18rem,32dvh)]"
   >
     @for (cover of covers; track cover.id) {
       <li
         class="@container relative aspect-2/3 max-sm:[--float:8s] w-[min(5.5rem,12.5dvh)] max-sm:w-(--cw) {{
           floatAnimation
-        }} sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
+        }} sm:w-[min(11rem,17dvh)] md:w-[min(5rem,15dvh)] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
         [style.animation-play-state]="playState()"
