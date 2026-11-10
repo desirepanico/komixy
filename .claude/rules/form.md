@@ -6,7 +6,7 @@ paths:
 
 # Form con i Signal Forms (Angular 22)
 
-Guide: https://angular.dev/guide/forms/signals/overview e https://angular.dev/guide/forms/signals/validation. API verificate sui tipi di `@angular/forms` 22.2.4 (`node_modules/@angular/forms/types/signals.d.ts`): se l'aggiornamento di Angular cambia un nome, correggi qui. Come funziona la validazione e perché: `docs/signal-forms.md`.
+Guide: https://angular.dev/guide/forms/signals/overview e https://angular.dev/guide/forms/signals/validation. API verificate sui tipi di `@angular/forms` 22.2.4 (`node_modules/@angular/forms/types/signals.d.ts`): se l'aggiornamento di Angular cambia un nome, correggi qui.
 
 Dove sta cosa: qui le regole dei Signal Forms (schema, validazione, template, invio, test); i campi (`app-input-*`, label, placeholder, messaggi d'errore) in `.claude/rules/campi-form.md`.
 
