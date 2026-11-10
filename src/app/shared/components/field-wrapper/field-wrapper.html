@@ -1,6 +1,5 @@
-@let name = label() | transloco;
 <label [attr.for]="inputId()" class="text-sm font-semibold text-surface-100">
-  {{ name }}
+  {{ name() }}
 </label>
 <ng-content />
 @if (error(); as error) {

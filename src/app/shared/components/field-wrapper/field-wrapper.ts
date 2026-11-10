@@ -1,16 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { ValidationError } from '@angular/forms/signals';
-import { TranslocoPipe, translateSignal } from '@jsverse/transloco';
+import { translateSignal } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matErrorOutline } from '@ng-icons/material-symbols/outline';
 
-/**
- * `errors` vuoto = nessun messaggio; altrimenti scrive il primo con `common.validation.<kind>` e il nome
- * del campo, o `common.validation.generic` se quel tipo non ha un testo. `inputId` collega etichetta e `aria-describedby`.
- */
+/** Mostra il primo errore con `common.validation.<kind>`, o `common.validation.generic` se manca. */
 @Component({
   selector: 'app-field-wrapper',
-  imports: [TranslocoPipe, NgIcon],
+  imports: [NgIcon],
   templateUrl: './field-wrapper.html',
   providers: [provideIcons({ matErrorOutline })],
   host: { class: 'flex flex-col gap-2' },
@@ -21,11 +18,11 @@ export class FieldWrapper {
   public readonly errors = input<readonly ValidationError[]>([]);
 
   private readonly firstError = computed(() => this.errors()[0]);
-  private readonly labelText = translateSignal(this.label);
+  protected readonly name = translateSignal(this.label);
 
   // Nel messaggio il nome sta a metà frase: iniziale minuscola («Il campo email è obbligatorio»)
   private readonly params = computed(() => {
-    const name = this.labelText();
+    const name = this.name();
     return { ...this.firstError(), field: name.charAt(0).toLowerCase() + name.slice(1) };
   });
   private readonly known = translateSignal(
