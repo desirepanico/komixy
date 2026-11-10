@@ -69,13 +69,14 @@
   }
 </div>
 
-<div class="mt-6 hidden lg:block">
+<div class="mt-4 hidden text-center lg:block">
   <button
     appButton
     type="button"
-    variant="outlined"
+    variant="text"
+    severity="secondary"
     [rounded]="true"
-    class="w-full"
+    class="h-11 justify-center gap-2 px-4 text-sm font-semibold"
     aria-describedby="login-guest-hint"
     (click)="guestAccess.emit()"
   >
