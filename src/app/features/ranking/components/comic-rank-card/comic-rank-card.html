@@ -15,20 +15,13 @@
   </span>
   <span class="sr-only">{{ 'weeklyManga.rank' | transloco: { rank: rank() } }}</span>
 
-  <div class="relative aspect-2/3 h-20 shrink-0 overflow-hidden rounded-lg xs:h-24 md:h-28">
-    @if (!coverLoaded()) {
-      <app-skeleton class="absolute inset-0 rounded-none" />
-    }
-    <img
-      class="size-full object-cover"
-      [attr.loading]="priority() ? 'eager' : 'lazy'"
-      [attr.fetchpriority]="fetchPriority()"
-      [src]="comic().coverUrl"
-      (load)="coverLoaded.set(true)"
-      (error)="coverLoaded.set(true)"
-      [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
-    />
-  </div>
+  <app-comic-cover
+    class="aspect-2/3 h-20 shrink-0 rounded-lg xs:h-24 md:h-28"
+    [src]="comic().coverUrl"
+    [title]="comic().title"
+    [eager]="priority()"
+    [fetchPriority]="fetchPriority()"
+  />
 
   <div class="flex min-w-0 flex-1 flex-col gap-1.5 md:pl-1">
     <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->

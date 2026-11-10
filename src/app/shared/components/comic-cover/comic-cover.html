@@ -1,0 +1,22 @@
+@if (failed()) {
+  <span
+    class="absolute inset-0 flex items-center justify-center bg-surface-800 text-surface-400"
+    role="img"
+    [attr.aria-label]="'mangaCard.coverUnavailable' | transloco: { title: title() }"
+  >
+    <ng-icon name="matBrokenImageOutline" size="32" aria-hidden="true" />
+  </span>
+} @else {
+  @if (!loaded()) {
+    <app-skeleton class="absolute inset-0 rounded-none" />
+  }
+  <img
+    [class]="imageClasses()"
+    [attr.loading]="eager() ? 'eager' : 'lazy'"
+    [attr.fetchpriority]="fetchPriority()"
+    [src]="src()"
+    (load)="onLoad()"
+    (error)="onError()"
+    [alt]="'mangaCard.coverAlt' | transloco: { title: title() }"
+  />
+}

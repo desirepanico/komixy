@@ -9,6 +9,7 @@
   },
   "mangaCard": {
     "coverAlt": "Copertina di {{ title }}",
+    "coverUnavailable": "Copertina di {{ title }} non disponibile",
     "singleVolume": "Volume Unico",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",

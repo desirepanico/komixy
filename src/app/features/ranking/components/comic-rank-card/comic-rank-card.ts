@@ -1,18 +1,10 @@
-import {
-  Component,
-  ViewEncapsulation,
-  computed,
-  inject,
-  input,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, ViewEncapsulation, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
-import { Skeleton } from '@shared/components/skeleton/skeleton';
+import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { InView } from '@shared/directives/in-view/in-view.directive';
@@ -22,7 +14,7 @@ import { editionSeverity } from '@shared/models/edition-severity/edition-severit
 /** Tutta la riga è un link (titolo con link "stirato"); il segnalibro resta cliccabile. */
 @Component({
   selector: 'app-comic-rank-card',
-  imports: [RouterLink, TranslocoPipe, Skeleton, Tag, ToggleButton, NgIcon, InView],
+  imports: [RouterLink, TranslocoPipe, ComicCover, Tag, ToggleButton, NgIcon, InView],
   providers: [provideIcons({ matBookmarkOutline })],
   templateUrl: './comic-rank-card.html',
   styleUrl: './comic-rank-card.css',
@@ -38,8 +30,6 @@ export class ComicRankCard {
   public readonly priority = input<boolean>(false);
   public readonly bookmarked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
-
-  protected readonly coverLoaded = signal<boolean>(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
   /** Solo la prima copertina ha la priorità più alta: è quasi sempre l'elemento più grande della pagina */

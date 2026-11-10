@@ -3,23 +3,18 @@
   class="group relative flex h-full min-w-0 cursor-pointer flex-col gap-1 overflow-hidden rounded-xl border border-primary-400/20 bg-surface-900 p-2 shadow-lg shadow-surface-950/50 outline-none transition duration-200 hover:border-primary-400/50 has-[a:focus-visible]:border-primary-400/50 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-400 has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-surface-950 active:scale-[0.98]"
 >
   <div class="relative w-full shrink-0 overflow-hidden rounded-xl">
-    @if (!coverLoaded()) {
-      <app-skeleton class="absolute inset-0 rounded-none" />
-    }
-    <img
-      class="block h-40 w-full aspect-2/3 object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+    <app-comic-cover
+      class="h-40 w-full aspect-2/3"
       [src]="coverUrl()"
-      loading="lazy"
-      (load)="coverLoaded.set(true)"
-      (error)="coverLoaded.set(true)"
-      [alt]="'mangaCard.coverAlt' | transloco: { title: title() }"
+      [title]="title()"
+      [zoom]="true"
     />
 
     <button
       appToggleButton
       type="button"
       [pressed]="bookmarked()"
-        class="absolute right-2 top-2 z-10"
+      class="absolute right-2 top-2 z-10"
       [attr.aria-label]="(bookmarked() ? 'bookmark.remove' : 'bookmark.add') | transloco"
       (click)="handleBookmarkClick($event)"
     >

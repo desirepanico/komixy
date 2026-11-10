@@ -39,6 +39,7 @@
   },
   "mangaCard": {
     "coverAlt": "Cover of {{ title }}",
+    "coverUnavailable": "Cover of {{ title }} unavailable",
     "singleVolume": "Single Volume",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
