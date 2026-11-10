@@ -23,7 +23,7 @@
 
       <app-login-form
         class="block w-full max-w-sm lg:max-w-none"
-        (loginSubmit)="login($event)"
+        (loginSuccess)="goAfterLogin()"
         (socialLogin)="loginWithProvider($event)"
         (guestAccess)="enterAsGuest()"
       />

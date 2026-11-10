@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LoginForm } from '../../components/login-form/login-form';
 import { LoginVolumes } from '../../components/login-volumes/login-volumes';
-import { LoginCredentials, SocialProvider } from '../../models/auth.model';
+import { SocialProvider } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -18,17 +18,6 @@ export class LoginPage {
   private readonly navigation = inject(AuthNavigationService);
   private readonly route = inject(ActivatedRoute);
 
-  protected login(credentials: LoginCredentials): void {
-    // TODO: sostituire con la chiamata all'API di autenticazione
-    this.authService.login({
-      id: credentials.email,
-      email: credentials.email,
-      userRole: UserRole.User,
-    });
-
-    this.goAfterLogin();
-  }
-
   protected loginWithProvider(provider: SocialProvider): void {
     // TODO: sostituire con l'accesso reale con Google o Apple
     this.authService.login({ id: provider, email: '', userRole: UserRole.User });
@@ -41,7 +30,7 @@ export class LoginPage {
     this.goAfterLogin();
   }
 
-  private goAfterLogin(): void {
+  protected goAfterLogin(): void {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     void this.navigation.goAfterLogin(returnUrl);
   }

@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { UserRole } from '@shared/models/user-role.model';
+import { Subject } from 'rxjs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { LoggedUser } from '../../models/auth.model';
+import { ApiError, AuthService } from '../../services/auth/auth.service';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {
@@ -13,7 +17,7 @@ describe('LoginForm', () => {
 
   let fixture: ComponentFixture<LoginForm>;
   let html: HTMLElement;
-  const emessi: unknown[] = [];
+  let successi = 0;
 
   const campo = (id: string) => html.querySelector(`#${id}`) as HTMLInputElement;
   const scrivi = (id: string, valore: string) => {
@@ -28,9 +32,9 @@ describe('LoginForm', () => {
     Array.from(html.querySelectorAll('[role="alert"]')).map((e) => e.textContent?.trim());
 
   beforeEach(async () => {
-    emessi.length = 0;
+    successi = 0;
     fixture = TestBed.createComponent(LoginForm);
-    fixture.componentInstance.loginSubmit.subscribe((c) => emessi.push(c));
+    fixture.componentInstance.loginSuccess.subscribe(() => successi++);
     html = fixture.nativeElement;
     await fixture.whenStable();
   });
@@ -67,7 +71,7 @@ describe('LoginForm', () => {
     await invia();
     expect(errori()).toEqual(['validation.required', 'validation.required']);
     expect(campo('login-email').getAttribute('aria-invalid')).toBe('true');
-    expect(emessi).toEqual([]);
+    expect(successi).toBe(0);
   });
 
   it('segnala email non valida e password troppo corta', async () => {
@@ -75,15 +79,71 @@ describe('LoginForm', () => {
     scrivi('login-password', '123');
     await invia();
     expect(errori()).toEqual(['validation.email', 'validation.minLength']);
-    expect(emessi).toEqual([]);
+    expect(successi).toBe(0);
   });
 
-  it('con credenziali valide emette email e password', async () => {
-    scrivi('login-email', 'a@b.it');
-    scrivi('login-password', '123456');
-    await invia();
-    expect(errori()).toEqual([]);
-    expect(emessi).toEqual([{ email: 'a@b.it', password: '123456' }]);
+  describe('chiamata di accesso', () => {
+    const utente: LoggedUser = { id: 'a@b.it', email: 'a@b.it', userRole: UserRole.User };
+    let risposta: Subject<LoggedUser>;
+
+    const bottone = () => html.querySelector('button[type="submit"]') as HTMLButtonElement;
+    // La risposta passa da una Promise: serve un giro del loop prima che il form aggiorni lo stato
+    const attendi = async () => {
+      await new Promise((resolve) => setTimeout(resolve));
+      await fixture.whenStable();
+    };
+    const compilaEInvia = async () => {
+      scrivi('login-email', 'a@b.it');
+      scrivi('login-password', '123456');
+      await invia();
+    };
+
+    beforeEach(() => {
+      risposta = new Subject<LoggedUser>();
+      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(risposta);
+    });
+
+    it('finché attende disattiva il bottone, poi emette loginSuccess', async () => {
+      await compilaEInvia();
+      expect(bottone().disabled).toBe(true);
+      expect(bottone().textContent).toContain('login.submitting');
+      expect(successi).toBe(0);
+
+      risposta.next(utente);
+      risposta.complete();
+      await attendi();
+      expect(successi).toBe(1);
+      expect(bottone().disabled).toBe(false);
+      expect(errori()).toEqual([]);
+    });
+
+    it('con credenziali sbagliate mostra l’errore e non emette nulla', async () => {
+      await compilaEInvia();
+      risposta.error(new ApiError(401, 'Credenziali non valide'));
+      await attendi();
+      expect(errori()).toEqual(['login.invalidCredentials']);
+      expect(successi).toBe(0);
+      expect(bottone().disabled).toBe(false);
+    });
+
+    it('con un errore diverso da 401 mostra l’errore del server', async () => {
+      await compilaEInvia();
+      risposta.error(new ApiError(500, 'Errore'));
+      await attendi();
+      expect(errori()).toEqual(['login.serverError']);
+    });
+
+    it('toglie l’errore al nuovo tentativo', async () => {
+      await compilaEInvia();
+      risposta.error(new ApiError(401, 'Credenziali non valide'));
+      await attendi();
+
+      risposta = new Subject<LoggedUser>();
+      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(risposta);
+      await invia();
+      await attendi();
+      expect(errori()).toEqual([]);
+    });
   });
 
   it('mostra e nasconde la password', async () => {

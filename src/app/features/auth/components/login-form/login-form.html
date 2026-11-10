@@ -25,10 +25,22 @@
     {{ 'login.forgotPassword' | transloco }}
   </a>
 
-  <button appButton type="submit" [rounded]="true" class="mt-2 w-full">
+  @if (apiError()) {
+    <p role="alert" class="text-sm max-sm:text-xs text-red-400">{{ apiError() | transloco }}</p>
+  }
+
+  <button
+    appButton
+    type="submit"
+    [rounded]="true"
+    [disabled]="form().submitting()"
+    class="mt-2 w-full"
+  >
     <ng-icon name="matLoginOutline" size="20" aria-hidden="true" />
-    {{ 'login.submit' | transloco }}
+    {{ (form().submitting() ? 'login.submitting' : 'login.submit') | transloco }}
   </button>
+
+  <p class="text-center text-xs text-surface-400">{{ 'login.demoHint' | transloco }}</p>
 </form>
 
 <div
