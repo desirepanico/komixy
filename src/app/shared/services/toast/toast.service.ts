@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { TOAST_DURATION_MS, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
 import { ToastMessage, ToastParams, ToastSeverity } from '../../models/toast.model';
@@ -8,10 +8,13 @@ import { ToastMessage, ToastParams, ToastSeverity } from '../../models/toast.mod
 export class ToastService {
   private readonly translateService = inject(TranslocoService);
   private readonly state = signal<readonly ToastMessage[]>([]);
-  private readonly timers = new Map<number, ReturnType<typeof setTimeout>>();
+  private readonly timers = new Map<number, ToastTimer>();
   private nextId = 0;
 
   public readonly toasts = this.state.asReadonly();
+  /** Messaggi annunciati con calma (success, info) e subito (warn, error) */
+  public readonly polite = computed(() => this.state().filter((t) => !isAssertive(t.severity)));
+  public readonly assertive = computed(() => this.state().filter((t) => isAssertive(t.severity)));
 
   public success(summary: string, detail: string, params?: ToastParams): void {
     this.show('success', summary, detail, params);
@@ -29,9 +32,25 @@ export class ToastService {
     this.show('error', summary, detail, params);
   }
 
+  /** Ferma la chiusura automatica (hover, focus): serve a chi legge lentamente o usa la tastiera. Ogni `pause` va chiusa da un `resume` */
+  public pause(id: number): void {
+    const timer = this.timers.get(id);
+    if (!timer) return;
+    if (timer.holds++ > 0) return;
+    clearTimeout(timer.handle);
+    timer.remaining -= Date.now() - timer.startedAt;
+  }
+
+  /** Riprende la chiusura automatica col tempo rimasto, quando non resta nessuna pausa attiva */
+  public resume(id: number): void {
+    const timer = this.timers.get(id);
+    if (!timer || timer.holds === 0) return;
+    if (--timer.holds === 0) this.schedule(id, timer.remaining);
+  }
+
   // Toglie il messaggio e ferma il suo timer, così un messaggio chiuso a mano non fa partire una chiusura inutile
   public dismiss(id: number): void {
-    clearTimeout(this.timers.get(id));
+    clearTimeout(this.timers.get(id)?.handle);
     this.timers.delete(id);
     this.state.update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
@@ -53,12 +72,32 @@ export class ToastService {
         detail: this.translateService.translate(detail, params),
       },
     ]);
-    this.timers.set(
-      id,
-      setTimeout(() => this.dismiss(id), TOAST_DURATION_MS[severity]),
-    );
+    this.schedule(id, TOAST_DURATION_MS[severity]);
     // Oltre il limite sparisce il più vecchio
     const [oldest] = this.state();
     if (this.state().length > TOAST_MAX_VISIBLE) this.dismiss(oldest.id);
   }
+
+  // Fa partire (o ripartire) il timer di chiusura con il tempo indicato
+  private schedule(id: number, remaining: number): void {
+    const holds = this.timers.get(id)?.holds ?? 0;
+    this.timers.set(id, {
+      handle: setTimeout(() => this.dismiss(id), remaining),
+      startedAt: Date.now(),
+      remaining,
+      holds,
+    });
+  }
+}
+
+interface ToastTimer {
+  handle: ReturnType<typeof setTimeout>;
+  startedAt: number;
+  remaining: number;
+  /** Quante pause sono attive (hover e focus contano separatamente) */
+  holds: number;
+}
+
+function isAssertive(severity: ToastSeverity): boolean {
+  return severity === 'warn' || severity === 'error';
 }

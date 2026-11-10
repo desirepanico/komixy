@@ -1,13 +1,29 @@
-@for (toast of toastService.toasts(); track toast.id) {
-  <!-- Gli avvisi che chiedono attenzione sono annunciati subito (alert), gli altri con calma (status) -->
+<!-- Le due zone live restano sempre nel DOM: uno screen reader annuncia solo il contenuto aggiunto a una zona già esistente. Gli avvisi che chiedono attenzione (warn, error) sono annunciati subito, gli altri con calma -->
+<div role="status" aria-live="polite" aria-atomic="false">
+  @for (toast of toastService.polite(); track toast.id) {
+    <ng-container [ngTemplateOutlet]="messaggio" [ngTemplateOutletContext]="{ $implicit: toast }" />
+  }
+</div>
+<div role="alert" aria-live="assertive" aria-atomic="false">
+  @for (toast of toastService.assertive(); track toast.id) {
+    <ng-container [ngTemplateOutlet]="messaggio" [ngTemplateOutletContext]="{ $implicit: toast }" />
+  }
+</div>
+
+<ng-template #messaggio let-toast>
+  <!-- Il messaggio è letto per intero (titolo e dettaglio insieme); il timer si ferma su hover e focus -->
   <div
-    [attr.role]="toast.severity === 'warn' || toast.severity === 'error' ? 'alert' : 'status'"
+    aria-atomic="true"
     [class]="
-      'glass-strong pointer-events-auto grid grid-cols-[auto_1fr_auto] items-center gap-x-2 rounded-md border px-3 py-2.5 ' +
-      styles[toast.severity].container
+      'glass-strong pointer-events-auto mb-2 grid grid-cols-[auto_1fr_auto] items-center gap-x-2 rounded-md border px-3 py-2.5 ' +
+      estilo(toast.severity).container
     "
+    (pointerenter)="toastService.pause(toast.id)"
+    (pointerleave)="toastService.resume(toast.id)"
+    (focusin)="toastService.pause(toast.id)"
+    (focusout)="toastService.resume(toast.id)"
   >
-    <ng-icon [name]="styles[toast.severity].icon" size="18" aria-hidden="true" />
+    <ng-icon [name]="estilo(toast.severity).icon" size="18" aria-hidden="true" />
     <p class="text-base font-semibold">{{ toast.summary }}</p>
     <button
       type="button"
@@ -19,4 +35,4 @@
     </button>
     <p class="col-start-2 text-sm font-semibold text-surface-50">{{ toast.detail }}</p>
   </div>
-}
+</ng-template>

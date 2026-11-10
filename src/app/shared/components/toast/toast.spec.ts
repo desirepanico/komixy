@@ -7,7 +7,7 @@ describe('Toast', () => {
   let fixture: ComponentFixture<Toast>;
   let service: ToastService;
   const html = () => fixture.nativeElement as HTMLElement;
-  const messaggi = () => Array.from(html().querySelectorAll('div[role]'));
+  const messaggi = () => Array.from(html().querySelectorAll('div[aria-atomic="true"]'));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Toast] }).compileComponents();
@@ -35,15 +35,47 @@ describe('Toast', () => {
     expect(dettaglio.textContent?.trim()).toBe('login.serverError.detailKo');
   });
 
+  it('le zone live esistono anche senza messaggi', () => {
+    expect(html().querySelector('[role="status"][aria-live="polite"]')).not.toBeNull();
+    expect(html().querySelector('[role="alert"][aria-live="assertive"]')).not.toBeNull();
+  });
+
   it.each([
-    ['error', 'alert'],
-    ['warn', 'alert'],
-    ['success', 'status'],
-    ['info', 'status'],
-  ] as const)('%s è annunciato con role %s', async (severity, role) => {
+    ['error', '[role="alert"]'],
+    ['warn', '[role="alert"]'],
+    ['success', '[role="status"]'],
+    ['info', '[role="status"]'],
+  ] as const)('%s compare nella zona %s', async (severity, zona) => {
     service[severity]('a', 'b');
     await fixture.whenStable();
-    expect(messaggi()[0].getAttribute('role')).toBe(role);
+    expect(html().querySelector(zona)?.querySelectorAll('div[aria-atomic="true"]')).toHaveLength(1);
+  });
+
+  it('il messaggio è letto per intero', async () => {
+    service.info('a', 'b');
+    await fixture.whenStable();
+    expect(messaggi()[0].getAttribute('aria-atomic')).toBe('true');
+  });
+
+  it('con il mouse sopra il messaggio non sparisce', async () => {
+    vi.useFakeTimers();
+    service.success('a', 'b');
+    await vi.advanceTimersByTimeAsync(0);
+    messaggi()[0].dispatchEvent(new Event('pointerenter'));
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(messaggi()).toHaveLength(1);
+  });
+
+  it('con il focus dentro il messaggio non sparisce e poi riparte', async () => {
+    vi.useFakeTimers();
+    service.success('a', 'b');
+    await vi.advanceTimersByTimeAsync(0);
+    messaggi()[0].dispatchEvent(new Event('focusin'));
+    await vi.advanceTimersByTimeAsync(10_000);
+    messaggi()[0].dispatchEvent(new Event('focusout'));
+    await vi.advanceTimersByTimeAsync(10_000);
+    await fixture.whenStable();
+    expect(messaggi()).toEqual([]);
   });
 
   it('l’icona è nascosta agli screen reader', async () => {

@@ -63,6 +63,45 @@ describe('ToastService', () => {
     expect(service.toasts()).toEqual([]);
   });
 
+  it('in pausa il messaggio non sparisce', () => {
+    service.success('a', 'd');
+    service.pause(0);
+    vi.advanceTimersByTime(TOAST_DURATION_MS.success * 3);
+    expect(service.toasts()).toHaveLength(1);
+  });
+
+  it('dopo la pausa sparisce col tempo rimasto', () => {
+    service.success('a', 'd');
+    vi.advanceTimersByTime(1000);
+    service.pause(0);
+    vi.advanceTimersByTime(60_000);
+    service.resume(0);
+    vi.advanceTimersByTime(TOAST_DURATION_MS.success - 1000 - 1);
+    expect(service.toasts()).toHaveLength(1);
+    vi.advanceTimersByTime(1);
+    expect(service.toasts()).toEqual([]);
+  });
+
+  it('riprende solo quando tutte le pause sono finite', () => {
+    service.success('a', 'd');
+    service.pause(0);
+    service.pause(0);
+    service.resume(0);
+    vi.advanceTimersByTime(TOAST_DURATION_MS.success * 2);
+    expect(service.toasts()).toHaveLength(1);
+    service.resume(0);
+    vi.advanceTimersByTime(TOAST_DURATION_MS.success);
+    expect(service.toasts()).toEqual([]);
+  });
+
+  it('success è polite, warn ed error assertive', () => {
+    service.success('a', 'd');
+    service.warn('a', 'd');
+    service.error('a', 'd');
+    expect(service.polite().map((t) => t.severity)).toEqual(['success']);
+    expect(service.assertive().map((t) => t.severity)).toEqual(['warn', 'error']);
+  });
+
   it('un errore resta più a lungo di una conferma', () => {
     expect(TOAST_DURATION_MS.error).toBeGreaterThan(TOAST_DURATION_MS.success);
   });
