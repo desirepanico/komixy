@@ -7,9 +7,9 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
+import { EDITION_SEVERITY } from '@shared/constants/ui.const';
 import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
-import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 
 /** Tutta la riga è un link (titolo con link "stirato"); il segnalibro resta cliccabile. */
 @Component({
@@ -37,7 +37,7 @@ export class ComicRankCard {
     this.priority() && this.rank() === 1 ? 'high' : 'auto',
   );
 
-  protected readonly severity = computed(() => editionSeverity(this.comic().editionType));
+  protected readonly severity = computed(() => EDITION_SEVERITY[this.comic().editionType ?? 'none']);
 
   /** Entrata del numero: parte quando entra nello schermo (solo senza "riduci movimento") */
   protected enterClasses =

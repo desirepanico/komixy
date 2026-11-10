@@ -1,5 +1,6 @@
 import { ToastSeverity } from '../models/toast.model';
 import { ButtonSeverity, ButtonVariant } from '../models/button.model';
+import { EditionType } from '../models/comic.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
 const FILLED_TEXT = 'text-surface-800';
@@ -75,4 +76,12 @@ export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; contai
     icon: 'matErrorOutline',
     container: 'border-red-500/40 bg-red-500/10 text-red-400',
   },
+};
+
+/** Solo l'edizione limitata si evidenzia in viola; deluxe, variant e nessuna edizione restano neutre */
+export const EDITION_SEVERITY: Readonly<Record<EditionType | 'none', 'primary' | 'secondary'>> = {
+  limited: 'primary',
+  deluxe: 'secondary',
+  variant: 'secondary',
+  none: 'secondary',
 };

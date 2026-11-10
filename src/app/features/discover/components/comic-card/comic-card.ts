@@ -7,8 +7,8 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
+import { EDITION_SEVERITY } from '@shared/constants/ui.const';
 import { EditionType } from '@shared/models/comic.model';
-import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 @Component({
   selector: 'app-comic-card',
   imports: [TranslocoPipe, RouterLink, ComicCover, Tag, ToggleButton, NgIcon],
@@ -32,7 +32,7 @@ export class ComicCard {
   public readonly bookmarkToggle = output<void>();
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.id()));
-  protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));
+  protected readonly editionSeverity = computed(() => EDITION_SEVERITY[this.editionType() ?? 'none']);
 
   public handleBookmarkClick(event: MouseEvent): void {
     event.preventDefault();
