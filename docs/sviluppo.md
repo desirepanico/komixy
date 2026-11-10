@@ -38,7 +38,7 @@ Le regole (cosa testare, un file di spec per ogni file `.ts`, una cartella per f
 
 | Opzione | File | Cosa fa |
 |---|---|---|
-| `providersFile` | `src/testing/test-providers/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test |
+| `providersFile` | `src/testing/test-providers/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test (serve per i messaggi d'errore dei form: con traduzioni vuote `app-error-message` mostra sempre `common.validation.generic`, quindi lo spec fornisce le chiavi `common.validation.*` che controlla) |
 | `setupFiles` | `src/testing/test-setup/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha |
 | `runnerConfig` | `vitest-base.config.mts` | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima |
 
