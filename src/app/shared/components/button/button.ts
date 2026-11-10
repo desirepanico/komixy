@@ -25,7 +25,7 @@ export class Button {
     const colors = BUTTON_COLORS[this.severity()][variant];
     const radius = this.rounded() ? 'rounded-full' : 'rounded-sm';
     const decoration = this.underline()
-      ? 'underline-offset-4 hover:underline focus-visible:underline active:underline'
+      ? 'decoration-current underline-offset-4 hover:underline focus-visible:underline active:underline'
       : '';
     // il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {
