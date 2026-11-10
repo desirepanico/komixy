@@ -1,0 +1,24 @@
+@for (toast of toastService.toasts(); track toast.id) {
+  <!-- Gli avvisi che chiedono attenzione sono annunciati subito (alert), gli altri con calma (status) -->
+  <div
+    [attr.role]="toast.severity === 'warn' || toast.severity === 'error' ? 'alert' : 'status'"
+    class="pointer-events-auto flex items-start gap-3 rounded-xl border border-surface-700 bg-surface-900 p-4 text-sm text-surface-50 shadow-lg"
+  >
+    <span [class]="'mt-px shrink-0 ' + styles[toast.severity].color">
+      <ng-icon [name]="styles[toast.severity].icon" size="22" aria-hidden="true" />
+    </span>
+    <p class="flex-1">{{ toast.key | transloco: toast.params }}</p>
+    <button
+      appButton
+      type="button"
+      variant="text"
+      severity="secondary"
+      [iconOnly]="true"
+      class="-m-2 size-8! shrink-0 rounded-lg!"
+      [attr.aria-label]="'toast.close' | transloco"
+      (click)="toastService.dismiss(toast.id)"
+    >
+      <ng-icon name="matCloseOutline" size="18" />
+    </button>
+  </div>
+}

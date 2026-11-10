@@ -25,10 +25,6 @@
     {{ 'login.forgotPassword' | transloco }}
   </a>
 
-  @if (apiError()) {
-    <p role="alert" class="text-sm max-sm:text-xs text-red-400">{{ apiError() | transloco }}</p>
-  }
-
   <button
     appButton
     type="submit"

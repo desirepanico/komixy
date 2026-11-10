@@ -1,3 +1,4 @@
+import { ToastSeverity } from '../models/toast.model';
 import { ButtonSeverity, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
@@ -45,3 +46,20 @@ export const BUTTON_COLORS: Readonly<
 
 /** Se la prima navigazione non finisce mai, lo skeleton non deve restare per sempre */
 export const BOOT_SKELETON_TIMEOUT_MS = 10_000;
+
+export const TOAST_MAX_VISIBLE = 3;
+
+/** Gli avvisi che chiedono un'azione restano più a lungo dei messaggi di conferma */
+export const TOAST_DURATION_MS: Readonly<Record<ToastSeverity, number>> = {
+  success: 4000,
+  info: 5000,
+  warn: 7000,
+  error: 8000,
+};
+
+export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; color: string }>> = {
+  success: { icon: 'matCheckCircleOutline', color: 'text-green-400' },
+  info: { icon: 'matInfoOutline', color: 'text-blue-400' },
+  warn: { icon: 'matWarningOutline', color: 'text-orange-300' },
+  error: { icon: 'matErrorOutline', color: 'text-red-400' },
+};

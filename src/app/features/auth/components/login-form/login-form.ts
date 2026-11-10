@@ -1,7 +1,6 @@
 import { Component, inject, output, signal } from '@angular/core';
 import {
   email,
-  FieldTree,
   form,
   FormRoot,
   minLength,
@@ -15,6 +14,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
 import { InputText } from '@shared/components/input/input-text/input-text';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
 import { LoginCredentials, SocialProvider } from '../../models/auth.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
@@ -33,12 +33,11 @@ export class LoginForm {
 
   protected readonly navigation = inject(AuthNavigationService);
   private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
 
   protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
   private readonly model = signal<LoginCredentials>({ email: '', password: '' });
-
-  protected readonly apiError = signal<string>('');
 
   protected readonly form = form(
     this.model,
@@ -50,15 +49,17 @@ export class LoginForm {
     },
     {
       submission: {
-        action: (field) =>
+        action: () =>
           new Promise<TreeValidationResult>((resolve) => {
-            this.apiError.set('');
             this.authService.authenticate(this.model()).subscribe({
               next: () => {
                 this.onLoginSuccess();
                 resolve(undefined);
               },
-              error: (error: unknown) => resolve(this.onLoginError(error, field)),
+              error: (error: unknown) => {
+                this.onLoginError(error);
+                resolve(undefined);
+              },
             });
           }),
         // Dopo un invio fallito il focus va al primo campo con l'errore, così lo trovano anche tastiera e screen reader
@@ -70,12 +71,12 @@ export class LoginForm {
     this.loginSuccess.emit();
   }
 
-  // Le credenziali sbagliate stanno sul campo; un errore del server no, così si può riprovare senza modificare nulla
-  private onLoginError(error: unknown, field: FieldTree<LoginCredentials>): TreeValidationResult {
-    if (error instanceof ApiError && error.status === 401) {
-      return { kind: 'invalidCredentials', fieldTree: field.password };
-    }
-    this.apiError.set('login.serverError');
-    return undefined;
+  // L'errore dell'API non è di un campo: si mostra in un toast
+  private onLoginError(error: unknown): void {
+    const key =
+      error instanceof ApiError && error.status === 401
+        ? 'login.errors.invalidCredentials'
+        : 'login.errors.serverError';
+    this.toastService.error(key);
   }
 }

@@ -19,11 +19,11 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-error-message, app-field-wrapper, app-input-text, ...
+│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-toast, app-error-message, app-field-wrapper, app-input-text, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
-│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, transloco-http-loader/)
+│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, toast/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali

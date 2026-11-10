@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { UserRole } from '@shared/models/user-role.model';
 import { Subject } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
@@ -22,7 +23,6 @@ describe('LoginForm', () => {
             email: 'email',
             minLength: 'minLength',
             generic: 'generic',
-            invalidCredentials: 'invalidCredentials',
           },
         },
       },
@@ -132,23 +132,26 @@ describe('LoginForm', () => {
       expect(errori()).toEqual([]);
     });
 
-    it('con credenziali sbagliate mostra l’errore e non emette nulla', async () => {
+    it('con credenziali sbagliate mostra un toast e non emette nulla', async () => {
+      const errore = vi.spyOn(TestBed.inject(ToastService), 'error');
       await compilaEInvia();
       risposta.error(new ApiError(401, 'Credenziali non valide'));
       await attendi();
-      expect(errori()).toEqual(['invalidCredentials']);
+      expect(errore).toHaveBeenCalledWith('login.errors.invalidCredentials');
+      expect(errori()).toEqual([]);
       expect(successi).toBe(0);
       expect(bottone().disabled).toBe(false);
     });
 
-    it('con un errore diverso da 401 mostra l’errore del server', async () => {
+    it('con un errore diverso da 401 mostra il toast dell’errore del server', async () => {
+      const errore = vi.spyOn(TestBed.inject(ToastService), 'error');
       await compilaEInvia();
       risposta.error(new ApiError(500, 'Errore'));
       await attendi();
-      expect(errori()).toEqual(['login.serverError']);
+      expect(errore).toHaveBeenCalledWith('login.errors.serverError');
     });
 
-    it('dopo un errore del server si può riprovare senza modificare i campi', async () => {
+    it('dopo un errore si può riprovare senza modificare i campi', async () => {
       await compilaEInvia();
       risposta.error(new ApiError(500, 'Errore'));
       await attendi();
@@ -159,19 +162,7 @@ describe('LoginForm', () => {
       risposta.next(utente);
       risposta.complete();
       await attendi();
-      expect(errori()).toEqual([]);
       expect(successi).toBe(1);
-    });
-
-    it('toglie l’errore delle credenziali quando si modifica la password', async () => {
-      await compilaEInvia();
-      risposta.error(new ApiError(401, 'Credenziali non valide'));
-      await attendi();
-      expect(errori()).toEqual(['invalidCredentials']);
-
-      scrivi('login-password', '1234567');
-      await fixture.whenStable();
-      expect(errori()).toEqual([]);
     });
   });
 

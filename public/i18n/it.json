@@ -41,8 +41,7 @@
       "required": "Il campo {{ field }} è obbligatorio.",
       "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
       "minLength": "Il campo {{ field }} deve contenere almeno {{ minLength }} caratteri.",
-      "generic": "Il campo {{ field }} non è valido.",
-      "invalidCredentials": "Email o password non corrette."
+      "generic": "Il campo {{ field }} non è valido."
     }
   },
   "scroller": {
@@ -78,7 +77,10 @@
     "passwordPlaceholder": "Inserisci almeno 6 caratteri",
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
-    "serverError": "Impossibile accedere, riprova tra poco.",
+    "errors": {
+      "invalidCredentials": "Email o password non corrette.",
+      "serverError": "Impossibile accedere, riprova tra poco."
+    },
     "demoHint": "Demo: demo@example.com / password1",
     "forgotPassword": "Password dimenticata?",
     "or": "oppure continua con",
@@ -118,5 +120,8 @@
   "register": {
     "title": "Registrati",
     "comingSoonHint": "Qui potrai creare il tuo account."
+  },
+  "toast": {
+    "close": "Chiudi notifica"
   }
 }

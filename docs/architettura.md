@@ -56,7 +56,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 |---|---|---|
 | Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
 | Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()` |
-| Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
+| Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `ToastService`, `AuthService`, `WeeklyRankingService` |
 | Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
 
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
