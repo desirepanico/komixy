@@ -18,43 +18,32 @@ describe('ToastService', () => {
     expect(service.toasts()).toEqual([]);
   });
 
-  it.each([
-    ['success', 'Ok'],
-    ['info', 'Info'],
-    ['warn', 'Warn'],
-    ['error', 'Ko'],
-  ] as const)(
-    '%s usa le chiavi del titolo e del dettaglio con il suffisso %s',
-    (severity, suffisso) => {
-      service[severity]('salvataggio', { nome: 'Mario' });
+  it.each(['success', 'info', 'warn', 'error'] as const)(
+    '%s aggiunge un messaggio con quella severity, le chiavi del titolo e del dettaglio e i parametri',
+    (severity) => {
+      service[severity]('titolo', 'dettaglio', { nome: 'Mario' });
       expect(service.toasts()).toEqual([
-        {
-          id: 0,
-          severity,
-          summary: `salvataggio.summary${suffisso}`,
-          detail: `salvataggio.detail${suffisso}`,
-          params: { nome: 'Mario' },
-        },
+        { id: 0, severity, summary: 'titolo', detail: 'dettaglio', params: { nome: 'Mario' } },
       ]);
     },
   );
 
   it('dà un id diverso a ogni messaggio', () => {
-    service.info('a');
-    service.info('b');
+    service.info('a', 'd');
+    service.info('b', 'd');
     const [primo, secondo] = service.toasts();
     expect(primo.id).not.toBe(secondo.id);
   });
 
   it('dismiss toglie solo il messaggio indicato', () => {
-    service.info('a');
-    service.info('b');
+    service.info('a', 'd');
+    service.info('b', 'd');
     service.dismiss(service.toasts()[0].id);
-    expect(service.toasts().map((toast) => toast.summary)).toEqual(['b.summaryInfo']);
+    expect(service.toasts().map((toast) => toast.summary)).toEqual(['b']);
   });
 
   it('il messaggio sparisce da solo dopo la durata della sua severity', () => {
-    service.success('a');
+    service.success('a', 'd');
     vi.advanceTimersByTime(TOAST_DURATION_MS.success - 1);
     expect(service.toasts()).toHaveLength(1);
     vi.advanceTimersByTime(1);
@@ -66,8 +55,8 @@ describe('ToastService', () => {
   });
 
   it('oltre il limite toglie il messaggio più vecchio', () => {
-    for (let i = 0; i <= TOAST_MAX_VISIBLE; i++) service.info(`m${i}`);
+    for (let i = 0; i <= TOAST_MAX_VISIBLE; i++) service.info(`m${i}`, 'd');
     expect(service.toasts()).toHaveLength(TOAST_MAX_VISIBLE);
-    expect(service.toasts()[0].summary).toBe('m1.summaryInfo');
+    expect(service.toasts()[0].summary).toBe('m1');
   });
 });

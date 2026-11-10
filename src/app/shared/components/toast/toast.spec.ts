@@ -29,7 +29,7 @@ describe('Toast', () => {
   });
 
   it('mostra il titolo e il dettaglio del messaggio', async () => {
-    service.error('login.serverError');
+    service.error('login.serverError.summaryKo', 'login.serverError.detailKo');
     await fixture.whenStable();
     const [titolo, dettaglio] = Array.from(html().querySelectorAll('p'));
     expect(titolo.textContent?.trim()).toBe('login.serverError.summaryKo');
@@ -41,7 +41,7 @@ describe('Toast', () => {
       { libreria: { summaryOk: 'Aggiunto', detailOk: '{{ title }} è nella libreria.' } },
       'it',
     );
-    service.success('libreria', { title: 'One Piece' });
+    service.success('libreria.summaryOk', 'libreria.detailOk', { title: 'One Piece' });
     await fixture.whenStable();
     expect(html().querySelectorAll('p')[1].textContent?.trim()).toBe('One Piece è nella libreria.');
   });
@@ -52,19 +52,19 @@ describe('Toast', () => {
     ['success', 'status'],
     ['info', 'status'],
   ] as const)('%s è annunciato con role %s', async (severity, role) => {
-    service[severity]('a');
+    service[severity]('a', 'b');
     await fixture.whenStable();
     expect(messaggi()[0].getAttribute('role')).toBe(role);
   });
 
   it('l’icona è nascosta agli screen reader', async () => {
-    service.info('a');
+    service.info('a', 'b');
     await fixture.whenStable();
     expect(html().querySelector('ng-icon')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('il bottone ha l’etichetta tradotta e chiude il messaggio', async () => {
-    service.info('a');
+    service.info('a', 'b');
     await fixture.whenStable();
     const chiudi = html().querySelector('button') as HTMLButtonElement;
     expect(chiudi.getAttribute('aria-label')).toBe('toast.close');
@@ -75,7 +75,7 @@ describe('Toast', () => {
 
   it('il messaggio sparisce da solo', async () => {
     vi.useFakeTimers();
-    service.success('a');
+    service.success('a', 'b');
     await vi.advanceTimersByTimeAsync(10_000);
     await fixture.whenStable();
     expect(messaggi()).toEqual([]);

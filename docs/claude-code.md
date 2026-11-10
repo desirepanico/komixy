@@ -29,7 +29,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 | `form.md` | Form con i Signal Forms (Angular 22): modello, template, invio, campi con label, placeholder, `app-field-wrapper`, `app-error-message`, messaggi d'errore e toast per gli errori dell'API | `src/app/**/*.ts` e `*.html` |
 | `skeleton.md` | Quando e come usare `app-skeleton` | `src/**/*.html` |
 | `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
-| `i18n.md` | Traduzioni e chiavi dei toast (`<azione>.summaryOk`, `detailKo`...) | `public/i18n/**`, `src/app/**` |
+| `i18n.md` | Traduzioni e chiavi dei toast (`<nome>.summaryOk`, `detailKo`...) | `public/i18n/**`, `src/app/**` |
 | `commenti.md` | Commenti nel codice: pochi, solo dove non si capisce, in italiano | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
 | `knip.md` | Codice inutilizzato: si toglie, non si nasconde in `knip.json` | `src/**/*.ts`, `knip.json`, `scripts/*.mjs` |
 | `git.md` | Branch | sempre |

@@ -73,10 +73,13 @@ export class LoginForm {
 
   // L'errore dell'API non è di un campo: si mostra in un toast
   private onLoginError(error: unknown): void {
-    const key =
-      error instanceof ApiError && error.status === 401
-        ? 'login.invalidCredentials'
-        : 'login.serverError';
-    this.toastService.error(key);
+    if (error instanceof ApiError && error.status === 401) {
+      this.toastService.error(
+        'login.invalidCredentials.summaryKo',
+        'login.invalidCredentials.detailKo',
+      );
+    } else {
+      this.toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
+    }
   }
 }
