@@ -8,6 +8,8 @@ paths:
 
 Guide: https://angular.dev/guide/forms/signals/overview e https://angular.dev/guide/forms/signals/validation. API verificate sui tipi di `@angular/forms` 22.2.4 (`node_modules/@angular/forms/types/signals.d.ts`): se l'aggiornamento di Angular cambia un nome, correggi qui. Come funziona la validazione e perché: `docs/signal-forms.md`.
 
+Dove sta cosa: qui le regole dei Signal Forms (schema, validazione, template, invio, test); i campi (`app-input-*`, label, placeholder, messaggi d'errore) in `.claude/rules/campi-form.md`.
+
 ## Principi
 
 - I form nuovi usano i **Signal Forms**, import da `@angular/forms/signals`. Niente `FormBuilder`, `FormGroup`, `FormControl`, `ReactiveFormsModule`, `FormsModule` né `ngModel`.
@@ -17,7 +19,7 @@ Guide: https://angular.dev/guide/forms/signals/overview e https://angular.dev/gu
 
 - Il modello è un `signal()` readonly con solo i dati e tutti i campi inizializzati (stringa vuota, non `undefined`: vorrebbe dire campo assente). `form(model, schema)` non ne fa una copia: scrivere su un campo aggiorna il modello.
 - Il form è un `FieldTree`: `protected readonly form = form(this.model, (path) => { ... })`. Ogni campo è `form.email`, il suo stato si legge chiamandolo: `form.email()`.
-- Le regole stanno **tutte** nello schema (secondo argomento di `form()`), legate ai percorsi dei campi (`path.email`). Niente `message` nelle regole: il testo lo sceglie il controllo dal `kind` (sezione «Campi»).
+- Le regole stanno **tutte** nello schema (secondo argomento di `form()`), legate ai percorsi dei campi (`path.email`). Niente `message` nelle regole: il testo lo sceglie il controllo dal `kind` (`campi-form.md`).
 
 ## Regole di validazione
 
@@ -25,24 +27,15 @@ Guide: https://angular.dev/guide/forms/signals/overview e https://angular.dev/gu
 - **Condizionali**: una regola con una condizione ha `when: ({ valueOf }) => valueOf(path.altroCampo)`. Più regole con la stessa condizione stanno in un blocco: `applyWhen(path, ({ valueOf }) => ..., (p) => { ... })` se i campi esistono sempre e cambia solo se contano (newsletter → email obbligatoria); `applyWhenValue(path.cliente, (c): c is Azienda => ..., (azienda) => { ... })` se cambia la forma dei dati (privato/azienda).
 - **Date**: i limiti di `minDate` e `maxDate` in UTC (`new Date('2026-06-01')` o `Date.UTC(...)`), mai `new Date(anno, mese, giorno)` né `new Date()`. «Da oggi in poi» si ricompone in UTC: `Date.UTC(oggi.getFullYear(), oggi.getMonth(), oggi.getDate())`.
 - **Array e sotto-oggetti**: `applyEach(path.items, ItemSchema)` per ogni elemento (`ItemSchema(item: SchemaPathTree<Item>)`), `apply(path.indirizzo, schema)` per un sotto-oggetto.
-- **Personalizzate**: `validate(path.campo, ({ value, valueOf }) => ok ? null : { kind: 'nomeRegola' })`; per un controllo tra più campi si leggono gli altri con `valueOf`. Su un gruppo di campi (data di fine dopo quella di inizio, password e conferma) `validateTree(path, (ctx) => ...)` restituisce `{ kind, fieldTree: ctx.fieldTree.conferma }` (o un array) per attaccare l'errore al campo giusto. Una regola riusata in più form è una funzione che incapsula `validate` o uno `schema()` applicato con `apply()`. Ogni `kind` nuovo ha il suo testo in `common.validation.<kind>`.
+- **Personalizzate**: `validate(path.campo, ({ value, valueOf }) => ok ? null : { kind: 'nomeRegola' })`; per un controllo tra più campi si leggono gli altri con `valueOf`. Su un gruppo di campi (data di fine dopo quella di inizio, password e conferma) `validateTree(path, (ctx) => ...)` restituisce `{ kind, fieldTree: ctx.fieldTree.conferma }` (o un array) per attaccare l'errore al campo giusto. Una regola riusata in più form è una funzione che incapsula `validate` o uno `schema()` applicato con `apply()`. Ogni `kind` nuovo ha il suo testo in `common.validation.<kind>` (`campi-form.md`).
 - **Asincrone**: `validateHttp(path.campo, { request, onSuccess, onError })` (o `validateAsync`); `onSuccess` restituisce un errore con `kind` o `null`, `onError` un errore proprio (es. `networkError`). Parte solo dopo le sincrone e a ogni modifica: `debounce(path.campo, 300)` riduce le richieste. Con `pending()` a `true` l'invio resta disabilitato e si dice che la verifica è in corso.
 
 ## Template
 
 - `<form [formRoot]="form">`: `FormRoot` (in `imports`) imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `novalidate` né `(ngSubmit)`.
-- Ogni campo sta in un componente di `shared/components/input/`, mai in un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. Solo lì dentro si usa `FormField` (`[formField]`), che imposta valore, `disabled` e attributi nativi dallo stato: non aggiungere `[value]`, `[disabled]` o `[required]`. `app-input-text` riceve il campo con `[field]="form.email"` (`type` `text` o `email`, `autocomplete` opzionale), `app-input-password` con `[field]="form.password"`.
-- Stato del campo, tutti signal: `value`, `errors`, `valid`, `invalid`, `pending`, `touched`, `dirty`, `disabled`, `submitting`. Errori di tutto il form: `form().errorSummary()`. Gli errori compaiono solo dopo l'interazione (`touched() && invalid()`): ci pensa il controllo.
+- Ogni campo sta in un componente di `shared/components/input/` (regole in `campi-form.md`), mai in un `<input>`, `<textarea>` o `<select>` scritto a mano nel form.
+- Stato del campo, tutti signal: `value`, `errors`, `valid`, `invalid`, `pending`, `touched`, `dirty`, `disabled`, `submitting`. Errori di tutto il form: `form().errorSummary()`. Gli errori compaiono solo dopo l'interazione (`touched() && invalid()`): ci pensa il controllo (`campi-form.md`).
 - Lo stile non si lega a `:valid`, `:invalid`, `validity` o `validationMessage` del browser, ma ai signal di stato.
-
-## Campi
-
-Ogni campo di un form ha, sempre, tutte e quattro queste cose:
-
-- **Label**: il nome del campo, chiave Transloco (`label="login.email"`).
-- **Placeholder**: un esempio o un suggerimento, chiave Transloco (`placeholder="login.emailPlaceholder"`). `placeholder` e `label` sono `input.required()` dei controlli, quindi il build non passa senza.
-- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra la label e, con `errors` non vuoto, `app-error-message`, con l'`inputId` collegato (`for`, `aria-describedby` sull'id `<inputId>-error`). Il controllo riceve il campo come `field` (`input.required<FieldTree<string>>()`), legge `touched` ed errori da lì (`field()()`) e passa `errors` solo se il campo è toccato e non valido (`showError`); `[formField]` sul suo `<input>` scrive il valore e segna il campo come toccato all'uscita, quindi non ha `value`, `model()` né `markAsTouched()`. Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form.
-- **Messaggio d'errore** per ogni validatore dello schema. Il testo è generico e sta in `common.validation.<kind>` (`it.json` e `en.json`), scelto da `app-error-message` dal `kind` dell'errore, e segue il cambio lingua; nel testo `{{ field }}` è il nome del campo (la label) e le proprietà dell'errore (es. `{{ minLength }}`) sono parametri. Un `kind` senza testo usa `common.validation.generic`. Un validatore nuovo aggiunge la sua chiave in tutte le lingue; non si scrivono messaggi nel singolo form.
 
 ## Invio
 

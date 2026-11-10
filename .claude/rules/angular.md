@@ -22,7 +22,7 @@ paths:
 - Un `.css` accanto al componente (`styleUrl: './nome.css'`) solo per i `@keyframes` che usa quel componente soltanto: dentro ci sono solo i keyframe, con il nome prefissato dal componente (`login-float`). Il componente ha `encapsulation: ViewEncapsulation.None`, altrimenti Angular rinomina i keyframe e Tailwind non li trova. L'animazione si applica nel template con Tailwind (`animate-[login-float_3s_ease-in-out_infinite]`, con `motion-reduce:`); una stringa lunga ripetuta si scrive una volta con `@let animazione = '...'`. Niente `.css` per lo stile normale.
 - Niente `@HostBinding` e `@HostListener`: usa l'oggetto `host` del decorator.
 - `class` e `style` bindings, mai `ngClass` e `ngStyle`.
-- Form: Signal Forms, regole in `.claude/rules/form.md`.
+- Form: Signal Forms, regole in `.claude/rules/form.md`; campi in `.claude/rules/campi-form.md`.
 - `NgOptimizedImage` per le immagini statiche (non funziona con base64 inline).
 
 ## Cartelle

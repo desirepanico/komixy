@@ -12,7 +12,7 @@ Prima di toccare questi temi, leggi il file relativo:
 - Pagine, funzionalità, stato di avanzamento: `docs/funzionalita.md`
 - Tailwind, token del tema, effetto glass: `docs/tema-e-stile.md`
 - Testi e traduzioni: `docs/traduzioni.md`
-- Form e Signal Forms (come funzionano; le regole sono in `.claude/rules/form.md`): `docs/signal-forms.md`
+- Form e Signal Forms (come funzionano; le regole sono in `.claude/rules/form.md` e `campi-form.md`): `docs/signal-forms.md`
 - Comandi, test (come funzionano gli spec), lint, deploy: `docs/sviluppo.md`
 - Rules, hooks, skills, permessi di Claude Code: `docs/claude-code.md`
 

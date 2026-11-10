@@ -1,6 +1,6 @@
 # Signal Forms
 
-Come funzionano i Signal Forms (`@angular/forms/signals`) e perché le regole del progetto sono quelle. Le **regole** sono in `.claude/rules/form.md` e qui non si ripetono. Guide: <https://angular.dev/guide/forms/signals/validation> e <https://angular.dev/guide/forms/signals/comparison>. Il form di riferimento è `features/auth/components/login-form`.
+Come funzionano i Signal Forms (`@angular/forms/signals`) e perché le regole del progetto sono quelle. Le **regole** sono in `.claude/rules/form.md` (Signal Forms) e `.claude/rules/campi-form.md` (campi) e qui non si ripetono. Guide: <https://angular.dev/guide/forms/signals/validation> e <https://angular.dev/guide/forms/signals/comparison>. Il form di riferimento è `features/auth/components/login-form`.
 
 ## Le tre parti
 
@@ -32,3 +32,15 @@ Senza `novalidate` il browser valida per conto suo, annulla l'invio e mostra la 
 ## Perché le date vanno in UTC
 
 `<input type="date">` non ha un'ora, ma una `Date` sì: il browser usa sempre la mezzanotte UTC. Un limite con `new Date(2026, 5, 1)` è la mezzanotte locale e slitta di qualche ora, quindi la data limite stessa può essere rifiutata; `new Date()` ha l'ora corrente e rifiuterebbe come passata la data di oggi.
+
+## Come si compone un campo
+
+Nel template il form non ha `<input>`: ogni campo è un controllo di `shared/components/input/` e ogni controllo ha lo stesso scheletro.
+
+```
+app-input-text / app-input-password   riceve il campo con [field], lo lega al suo <input> con [formField]
+└── app-field-wrapper                  label + id collegati (for, aria-describedby)
+    └── app-error-message              primo errore, solo se il campo è toccato e non valido
+```
+
+L'errore parte dallo schema come `kind` (`required`, `minLength`...). `app-error-message` lo traduce con `common.validation.<kind>` e il nome del campo, quindi lo stesso testo vale per tutti i form (vedi `docs/traduzioni.md`).
