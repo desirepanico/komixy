@@ -23,10 +23,7 @@ Non serve lanciare `npm install` a mano dopo un `git pull`. Prima di `npm start`
 
 ## Flusso git
 
-- Le regole sui branch sono in `.claude/rules/git.md`: si lavora su `develop`, nessun branch nuovo di iniziativa (il nome lo sceglie l'utente), `master` è la produzione e si aggiorna solo con una pull request da `develop`.
-- Messaggi di commit in italiano con prefisso `feat:`, `fix:`, `refactor:`, `test:` (solo test), `chore:`, `docs:`.
-- Prima del push: `git pull --rebase origin develop`.
-- Prima di ogni commit lancia `npm run lint`, `npm run knip`, `npm run build` e `npm test`.
+Regole su branch, messaggi di commit e controlli prima del commit: `.claude/rules/git.md` e `CLAUDE.md` (sezione «Flusso git»).
 
 ## Test
 
@@ -149,4 +146,4 @@ git checkout develop
 
 ## Sicurezza
 
-Non leggere né committare file con segreti (`.env*`, `environment.local.ts`, chiavi). I permessi sono in `.claude/settings.json`, le esclusioni in `.gitignore`.
+Vedi `CLAUDE.md`, sezione «Sicurezza».

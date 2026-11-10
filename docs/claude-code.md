@@ -19,21 +19,7 @@ Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUD
 
 ## Rules (`.claude/rules/`)
 
-| File | Argomento | Si carica su (`paths:`) |
-|---|---|---|
-| `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
-| `signals.md` | Signal di Angular 22 | `src/app/**/*.ts` e `*.html` |
-| `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
-| `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
-| `costanti.md` | Costanti: in `shared/constants`, al massimo 3 file (uno per ambito), senza sottocartelle | `src/**/*.ts` |
-| `form.md` | Signal Forms (Angular 22): modello e schema, regole di validazione (pronte, condizionali, date, array, personalizzate, asincrone), template, invio, toast per gli errori dell'API e test | `src/app/**/*.ts` e `*.html` |
-| `campi-form.md` | Campi dei form: `app-input-*`, label, placeholder, `app-field-wrapper`, `app-error-message` e messaggi d'errore | `src/app/**/*.ts` e `*.html` |
-| `skeleton.md` | Quando e come usare `app-skeleton` | `src/**/*.html` |
-| `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
-| `i18n.md` | Traduzioni e chiavi dei toast (`<nome>.summaryOk`, `detailKo`...) | `public/i18n/**`, `src/app/**` |
-| `commenti.md` | Commenti nel codice: pochi, solo dove non si capisce, in italiano | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
-| `knip.md` | Codice inutilizzato: si toglie, non si nasconde in `knip.json` | `src/**/*.ts`, `knip.json`, `scripts/*.mjs` |
-| `git.md` | Branch | sempre |
+Una rule per argomento, scritta in un solo posto: se esiste già una regola, gli altri file la richiamano senza ripeterla. Il frontmatter `paths:` di ogni file dice su quali file di `src/` si carica; `git.md` si carica sempre. L'elenco e l'argomento di ciascuna sono nella cartella.
 
 ## Hooks (`.claude/hooks/`, registrati in `settings.json`)
 

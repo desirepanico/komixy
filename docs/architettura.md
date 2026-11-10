@@ -2,24 +2,11 @@
 
 ## Stack
 
-- Angular 22: componenti standalone, signals, `OnPush` (default), zoneless, control flow nativo
-- Tailwind CSS v4 (tema in `src/tailwind.css`)
-- Transloco per le traduzioni
-- Icone con `@ng-icons/material-symbols`
-- Test con Vitest (`ng test`)
-- Hosting su Vercel (single page app, vedi [sviluppo.md](sviluppo.md))
-
-PrimeNG è stato rimosso e non va reintrodotto.
+Versioni e librerie sono in `package.json`; l'hosting è su Vercel (single page app, vedi [sviluppo.md](sviluppo.md)). PrimeNG è stato rimosso e non va reintrodotto.
 
 ## Struttura di `src/app`
 
-```
-core/       shell dell'app: guards, interceptors, layout, providers (provideCore)
-features/   una cartella per area: auth, comics, discover, library, not-found, profile, ranking, releases
-shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
-```
-
-Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea solo quello che serve. Ogni file `.ts` ha il suo `*.spec.ts` accanto (vedi `docs/sviluppo.md`).
+Tre aree: `core`, `features`, `shared`. L'albero completo e dove vanno i file: [struttura-progetto.md](struttura-progetto.md).
 
 ### Regole sulle dipendenze
 
