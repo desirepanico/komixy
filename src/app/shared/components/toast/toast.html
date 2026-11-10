@@ -11,8 +11,8 @@
       <ng-icon [name]="styles[toast.severity].icon" size="22" aria-hidden="true" />
     </span>
     <div class="flex-1">
-      <p class="font-semibold">{{ toast.summary | transloco: toast.params }}</p>
-      <p class="text-surface-200">{{ toast.detail | transloco: toast.params }}</p>
+      <p class="font-semibold">{{ toast.summary }}</p>
+      <p class="text-surface-200">{{ toast.detail }}</p>
     </div>
     <button
       appButton

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { TranslocoService } from '@jsverse/transloco';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TOAST_DURATION_MS, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
 import { ToastService } from './toast.service';
@@ -19,14 +20,26 @@ describe('ToastService', () => {
   });
 
   it.each(['success', 'info', 'warn', 'error'] as const)(
-    '%s aggiunge un messaggio con quella severity, le chiavi del titolo e del dettaglio e i parametri',
+    '%s aggiunge un messaggio con quella severity, il titolo e il dettaglio',
     (severity) => {
-      service[severity]('titolo', 'dettaglio', { nome: 'Mario' });
+      service[severity]('titolo', 'dettaglio');
       expect(service.toasts()).toEqual([
-        { id: 0, severity, summary: 'titolo', detail: 'dettaglio', params: { nome: 'Mario' } },
+        { id: 0, severity, summary: 'titolo', detail: 'dettaglio' },
       ]);
     },
   );
+
+  it('traduce titolo e dettaglio inserendo i parametri', () => {
+    TestBed.inject(TranslocoService).setTranslation(
+      { libreria: { summaryOk: 'Aggiunto', detailOk: '{{ title }} è nella libreria.' } },
+      'it',
+    );
+    service.success('libreria.summaryOk', 'libreria.detailOk', { title: 'One Piece' });
+    expect(service.toasts()[0]).toMatchObject({
+      summary: 'Aggiunto',
+      detail: 'One Piece è nella libreria.',
+    });
+  });
 
   it('dà un id diverso a ogni messaggio', () => {
     service.info('a', 'd');

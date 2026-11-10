@@ -1,10 +1,12 @@
 export type ToastSeverity = 'success' | 'info' | 'warn' | 'error';
 
+/** Valori da inserire nei testi (es. `{ title }` per «{{ title }}») */
+export type ToastParams = Readonly<Record<string, unknown>>;
+
 export interface ToastMessage {
   id: number;
   severity: ToastSeverity;
-  /** Chiavi Transloco del titolo e del dettaglio */
+  /** Titolo e dettaglio, già tradotti */
   summary: string;
   detail: string;
-  params?: Readonly<Record<string, unknown>>;
 }
