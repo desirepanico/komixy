@@ -1,17 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { form, FormField, minLength, required } from '@angular/forms/signals';
+import { form, minLength, required } from '@angular/forms/signals';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InputPassword } from './input-password';
 
 @Component({
-  imports: [InputPassword, FormField],
+  imports: [InputPassword],
   template: `
     <app-input-password
       label="login.password"
       inputId="password"
       placeholder="login.passwordPlaceholder"
-      [formField]="campoForm"
+      [field]="campoForm"
     />
   `,
 })

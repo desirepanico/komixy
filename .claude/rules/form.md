@@ -21,7 +21,7 @@ Guida: https://angular.dev/guide/forms/signals/overview. API verificate sui tipi
 ## Template
 
 - `<form [formRoot]="form">`: `FormRoot` imposta da solo `novalidate`, blocca il submit nativo e chiama `submit()`. Non scrivere `(ngSubmit)`.
-- Ogni campo sta in un componente di `shared/components/input/`, mai in un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. `app-input-text` riceve il campo con `[field]="form.email"` e il suo `<input>` lo lega con `[formField]`; `app-input-password` si lega con `[formField]="form.password"` (direttiva `FormField`, in `imports`). Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
+- Ogni campo sta in un componente di `shared/components/input/`, mai in un `<input>`, `<textarea>` o `<select>` scritto a mano nel form. `app-input-text` riceve il campo con `[field]="form.email"` e il suo `<input>` lo lega con `[formField]`; `app-input-password` fa lo stesso con `[field]="form.password"`. Non aggiungere `[value]`, `[disabled]` o `[required]`: li imposta la direttiva dallo stato.
 - Stato del campo, tutti signal: `value`, `errors`, `invalid`, `valid`, `touched`, `dirty`, `disabled`, `pending`, `submitting`. Errori di tutto il form: `form().errorSummary()`.
 - Gli errori compaiono solo dopo l'interazione (campo toccato o form inviato): ci pensa già il controllo.
 
@@ -31,7 +31,7 @@ Ogni campo di un form ha, sempre, tutte e quattro queste cose:
 
 - **Label**: il nome del campo, chiave Transloco (`label="login.email"`).
 - **Placeholder**: un esempio o un suggerimento, chiave Transloco (`placeholder="login.emailPlaceholder"`). `placeholder` e `label` sono `input.required()` dei controlli, quindi il build non passa senza.
-- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra label ed errore con l'`inputId` collegato (`for`, `aria-describedby`). Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form. Il controllo legge `touched` ed errori iniettando `FormField` (`inject(FormField)`, poi `state().touched()` ed `errors()`) e non li dichiara come `input()`: sono pubblici e il form non li userebbe mai. All'uscita dal campo chiama `state().markAsTouched()` (niente `output()` `touch`). Servono solo `value` (`model()`) e gli input che il controllo usa davvero (es. `disabled`).
+- **`app-field-wrapper`**: sta dentro ogni controllo (`app-input-*`) e mostra label ed errore con l'`inputId` collegato (`for`, `aria-describedby`). Un nuovo tipo di campo (select, checkbox, textarea...) è un componente in `shared/components/input/` che usa `app-field-wrapper`: mai un controllo nudo nel form. Il controllo riceve il campo come `field` (`input.required<FieldTree<string>>()`) e legge `touched` e gli errori da lì (`field()()`); `[formField]` sul suo `<input>` scrive il valore e segna il campo come toccato all'uscita, quindi il controllo non ha `value`, `model()` né `markAsTouched()`.
 - **Messaggio d'errore** per ogni validatore dello schema. Il testo è generico e sta in `validation.*` (`it.json` e `en.json`), scelto dal `kind` dell'errore con `VALIDATION_MESSAGES` (`shared/constants/form.const.ts`) e con il nome del campo (`{{ name }}`, la label). Un validatore nuovo (`maxLength`, `pattern`, ...) aggiunge il suo `kind` a `VALIDATION_MESSAGES` e la sua chiave in tutte le lingue; non si scrivono messaggi nel singolo form.
 
 ## Invio

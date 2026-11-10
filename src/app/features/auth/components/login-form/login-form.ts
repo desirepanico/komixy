@@ -1,5 +1,5 @@
 import { Component, inject, output, signal } from '@angular/core';
-import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { email, form, FormRoot, minLength, required } from '@angular/forms/signals';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
 import { RouterLink } from '@angular/router';
@@ -17,7 +17,6 @@ import { ApiError, AuthService } from '../../services/auth/auth.service';
   selector: 'app-login-form',
   imports: [
     FormRoot,
-    FormField,
     TranslocoPipe,
     Button,
     InputText,
