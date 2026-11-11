@@ -14,12 +14,16 @@
   "weeklyManga": {
     "title": "Manga of the week",
     "subtitle": "The most read this week",
-    "rank": "Rank {{ rank }}",
-    "seeAll": "See the full ranking"
+    "rank": "Rank {{ rank }}"
   },
   "bookmark": {
     "add": "Add to bookmarks",
-    "remove": "Remove from bookmarks"
+    "remove": "Remove from bookmarks",
+    "locked": "Saving to lists is for registered users only",
+    "guestLocked": {
+      "summaryInfo": "Registered users only",
+      "detailInfo": "Sign up to save volumes to your lists."
+    }
   },
   "common": {
     "back": "Back",
@@ -128,5 +132,75 @@
   },
   "toast": {
     "close": "Close notification"
+  },
+  "weeklyPack": {
+    "week": "Week {{ week }}",
+    "tagline": "BOOSTER · {{ count }} CARDS",
+    "openNow": "Open the pack",
+    "skip": "Skip the animation",
+    "dialogTitle": "Pack of the week",
+    "close": "Close",
+    "counter": "Cards flipped: {{ revealed }} / {{ total }}",
+    "pickCard": "Pick a card",
+    "cardLabel": "Card {{ rank }}: {{ title }}",
+    "sealed": {
+      "title": "Your pack is ready",
+      "titleGuest": "Open the pack of the week",
+      "description": "{{ count }} cards: the most read volumes of the week. Open it to reveal the ranking.",
+      "descriptionGuest": "You can open it without an account. To save cards to a list you need to sign up."
+    },
+    "opened": {
+      "title": "Pack of the week opened",
+      "nextPackOne": "New pack in 1 day",
+      "nextPackOther": "New pack in {{ days }} days",
+      "review": "Review the week"
+    },
+    "guest": {
+      "signUp": "Sign up",
+      "note": "As a guest you can't save to lists."
+    },
+    "hint": {
+      "tear": "Drag to the right along the top edge to tear the pack open",
+      "opening": "Opening…",
+      "deck": "Tap the card to flip it",
+      "shown": "Tap to continue",
+      "shownRare": "Rare card! Tap to continue",
+      "collection": "Collection complete: tap a card to see it",
+      "inspecting": "#{{ rank }} {{ title }}"
+    },
+    "action": {
+      "tear": "Open the pack",
+      "flip": "Flip the card",
+      "next": "Next card",
+      "showAll": "Show all",
+      "finish": "Review the week",
+      "backToCollection": "Back to the collection",
+      "detail": "See details",
+      "addToList": "Add to list"
+    },
+    "openError": {
+      "summaryKo": "Could not open the pack",
+      "detailKo": "The pack could not be opened, please try again shortly."
+    },
+    "sceneUnavailable": {
+      "summaryWarn": "Animation unavailable",
+      "detailWarn": "The pack was opened without the animation."
+    }
+  },
+  "rankingPage": {
+    "title": "Review the week",
+    "view": {
+      "label": "View",
+      "list": "List",
+      "cards": "Cards"
+    },
+    "sealed": {
+      "title": "The ranking is revealed when you open the pack",
+      "description": "While the pack is sealed the ranking can't be viewed."
+    },
+    "sceneUnavailable": {
+      "summaryWarn": "Cards view unavailable",
+      "detailWarn": "Showing the ranking as a list instead."
+    }
   }
 }

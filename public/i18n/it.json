@@ -26,12 +26,16 @@
   "weeklyManga": {
     "title": "Manga della settimana",
     "subtitle": "I più letti della settimana",
-    "rank": "Posizione {{ rank }}",
-    "seeAll": "Vedi tutta la classifica"
+    "rank": "Posizione {{ rank }}"
   },
   "bookmark": {
     "add": "Aggiungi ai segnalibri",
-    "remove": "Rimuovi dai segnalibri"
+    "remove": "Rimuovi dai segnalibri",
+    "locked": "Salvare in lista è riservato agli iscritti",
+    "guestLocked": {
+      "summaryInfo": "Solo per gli iscritti",
+      "detailInfo": "Iscriviti per salvare i volumi nelle tue liste."
+    }
   },
   "common": {
     "back": "Indietro",
@@ -128,5 +132,75 @@
   },
   "toast": {
     "close": "Chiudi notifica"
+  },
+  "weeklyPack": {
+    "week": "Settimana {{ week }}",
+    "tagline": "BOOSTER · {{ count }} CARTE",
+    "openNow": "Apri la busta",
+    "skip": "Salta l'animazione",
+    "dialogTitle": "Busta della settimana",
+    "close": "Chiudi",
+    "counter": "Carte girate: {{ revealed }} / {{ total }}",
+    "pickCard": "Scegli una carta",
+    "cardLabel": "Carta {{ rank }}: {{ title }}",
+    "sealed": {
+      "title": "La tua busta è pronta",
+      "titleGuest": "Apri la busta della settimana",
+      "description": "{{ count }} carte: i volumi più letti della settimana. Aprila per scoprire la classifica.",
+      "descriptionGuest": "Puoi aprirla anche senza account. Per salvare le carte in lista serve iscriversi."
+    },
+    "opened": {
+      "title": "Busta della settimana aperta",
+      "nextPackOne": "Nuova busta tra 1 giorno",
+      "nextPackOther": "Nuova busta tra {{ days }} giorni",
+      "review": "Rivedi la settimana"
+    },
+    "guest": {
+      "signUp": "Iscriviti",
+      "note": "Come ospite non puoi salvare nelle liste."
+    },
+    "hint": {
+      "tear": "Trascina verso destra sul bordo superiore per strappare la busta",
+      "opening": "Si apre…",
+      "deck": "Tocca la carta per girarla",
+      "shown": "Tocca per continuare",
+      "shownRare": "Carta rara! Tocca per continuare",
+      "collection": "Raccolta completa: tocca una carta per vederla",
+      "inspecting": "#{{ rank }} {{ title }}"
+    },
+    "action": {
+      "tear": "Apri la busta",
+      "flip": "Gira la carta",
+      "next": "Prossima carta",
+      "showAll": "Vedi tutte",
+      "finish": "Rivedi la settimana",
+      "backToCollection": "Torna alla raccolta",
+      "detail": "Vedi dettaglio",
+      "addToList": "In lista"
+    },
+    "openError": {
+      "summaryKo": "Apertura non riuscita",
+      "detailKo": "Non è stato possibile aprire la busta, riprova tra poco."
+    },
+    "sceneUnavailable": {
+      "summaryWarn": "Animazione non disponibile",
+      "detailWarn": "La busta è stata aperta senza animazione."
+    }
+  },
+  "rankingPage": {
+    "title": "Rivedi la settimana",
+    "view": {
+      "label": "Vista",
+      "list": "Elenco",
+      "cards": "Carte"
+    },
+    "sealed": {
+      "title": "La classifica si svela aprendo la busta",
+      "description": "Finché la busta è sigillata la classifica non è consultabile."
+    },
+    "sceneUnavailable": {
+      "summaryWarn": "Vista Carte non disponibile",
+      "detailWarn": "Ti mostro la classifica come elenco."
+    }
   }
 }
