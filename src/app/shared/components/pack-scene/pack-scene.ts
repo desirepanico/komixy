@@ -42,7 +42,8 @@ import { PackRendererLoader } from './pack-renderer-loader/pack-renderer-loader.
   imports: [Button, NgIcon, RouterLink, TranslocoPipe],
   providers: [provideIcons({ matAddOutline, matCheckOutline, matLockOutline })],
   templateUrl: './pack-scene.html',
-  host: { class: 'flex h-full min-h-0 flex-col' },
+  // Il trascinamento per strappare la busta e i gesti sulle carte non devono cambiare pagina (appSwipe)
+  host: { class: 'flex h-full min-h-0 flex-col', 'data-no-swipe': '' },
 })
 export class PackScene {
   private readonly destroyRef = inject(DestroyRef);

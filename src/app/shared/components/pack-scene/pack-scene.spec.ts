@@ -124,6 +124,11 @@ describe('PackScene', () => {
     }).compileComponents();
   });
 
+  it('è escluso dallo swipe tra pagine, così i gesti sulla scena non cambiano pagina', async () => {
+    await crea();
+    expect(html.querySelector('app-pack-scene')?.hasAttribute('data-no-swipe')).toBe(true);
+  });
+
   it('viene creato con un canvas nascosto agli screen reader', async () => {
     await crea();
     const canvas = html.querySelector('canvas');
