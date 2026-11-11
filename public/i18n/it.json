@@ -30,7 +30,19 @@
   "bookmark": {
     "add": "Aggiungi ai segnalibri",
     "remove": "Rimuovi dai segnalibri",
-    "signUp": "Iscriviti per salvare nelle liste"
+    "signUp": "Iscriviti per salvare nelle liste",
+    "guestLocked": {
+      "summaryInfo": "Solo per gli iscritti",
+      "detailInfo": "Iscriviti per salvare i volumi nelle tue liste."
+    },
+    "added": {
+      "summaryOk": "Volume salvato",
+      "detailOk": "Lo trovi nelle tue liste."
+    },
+    "removed": {
+      "summaryOk": "Volume rimosso",
+      "detailOk": "Non è più nelle tue liste."
+    }
   },
   "common": {
     "back": "Indietro",

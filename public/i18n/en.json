@@ -19,7 +19,19 @@
   "bookmark": {
     "add": "Add to bookmarks",
     "remove": "Remove from bookmarks",
-    "signUp": "Sign up to save to your lists"
+    "signUp": "Sign up to save to your lists",
+    "guestLocked": {
+      "summaryInfo": "Registered users only",
+      "detailInfo": "Sign up to save volumes to your lists."
+    },
+    "added": {
+      "summaryOk": "Volume saved",
+      "detailOk": "You can find it in your lists."
+    },
+    "removed": {
+      "summaryOk": "Volume removed",
+      "detailOk": "It is no longer in your lists."
+    }
   },
   "common": {
     "back": "Back",
