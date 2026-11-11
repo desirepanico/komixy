@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
+import { matBookmarkOutline, matLockOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
@@ -12,7 +12,7 @@ import { EditionType } from '@shared/models/comic.model';
 @Component({
   selector: 'app-comic-card',
   imports: [TranslocoPipe, RouterLink, ComicCover, Tag, ToggleButton, NgIcon],
-  providers: [provideIcons({ matBookmarkOutline })],
+  providers: [provideIcons({ matBookmarkOutline, matLockOutline })],
   templateUrl: './comic-card.html',
 })
 export class ComicCard {
@@ -29,9 +29,15 @@ export class ComicCard {
   public readonly totalVolumes = input<number | null>(null);
 
   public readonly bookmarked = input<boolean>(false);
+  /** L'ospite non può salvare: il segnalibro mostra il lucchetto e il tocco porta all'invito a iscriversi */
+  public readonly locked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.id()));
+  protected readonly bookmarkLabel = computed(() => {
+    if (this.locked()) return 'bookmark.locked';
+    return this.bookmarked() ? 'bookmark.remove' : 'bookmark.add';
+  });
   protected readonly editionSeverity = computed(() => EDITION_SEVERITY[this.editionType() ?? 'none']);
 
   public handleBookmarkClick(event: MouseEvent): void {

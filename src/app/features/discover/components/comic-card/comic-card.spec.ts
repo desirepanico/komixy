@@ -16,6 +16,8 @@ import { ComicCard } from './comic-card';
       [totalVolumes]="12"
       [isSingleVolume]="unico()"
       [editionType]="edizione()"
+      [bookmarked]="inLista()"
+      [locked]="bloccata()"
       (bookmarkToggle)="toggle()"
     />
   `,
@@ -23,14 +25,20 @@ import { ComicCard } from './comic-card';
 class Host {
   readonly unico = signal(false);
   readonly edizione = signal<EditionType | null>(null);
+  readonly inLista = signal(false);
+  readonly bloccata = signal(false);
   toggle = vi.fn();
 }
 
 describe('ComicCard', () => {
-  const crea = async (impostazioni: { unico?: boolean; edizione?: EditionType | null } = {}) => {
+  const crea = async (
+    impostazioni: { unico?: boolean; edizione?: EditionType | null; inLista?: boolean; bloccata?: boolean } = {},
+  ) => {
     const fixture = TestBed.createComponent(Host);
     fixture.componentInstance.unico.set(impostazioni.unico ?? false);
     fixture.componentInstance.edizione.set(impostazioni.edizione ?? null);
+    fixture.componentInstance.inLista.set(impostazioni.inLista ?? false);
+    fixture.componentInstance.bloccata.set(impostazioni.bloccata ?? false);
     await fixture.whenStable();
     return { fixture, html: fixture.nativeElement as HTMLElement };
   };
@@ -91,5 +99,26 @@ describe('ComicCard', () => {
 
     expect(fixture.componentInstance.toggle).toHaveBeenCalledOnce();
     expect(evento.defaultPrevented).toBe(true);
+  });
+
+  it('il segnalibro è premuto e usa l’etichetta «rimuovi» quando il fumetto è in lista', async () => {
+    const { html } = await crea({ inLista: true });
+    const segnalibro = html.querySelector('button') as HTMLButtonElement;
+    expect(segnalibro.getAttribute('aria-pressed')).toBe('true');
+    expect(segnalibro.getAttribute('aria-label')).toBe('bookmark.remove');
+  });
+
+  it('per l’ospite il segnalibro ha il lucchetto, non è premuto e lo dice con aria-disabled', async () => {
+    const { html } = await crea({ inLista: true, bloccata: true });
+    const segnalibro = html.querySelector('button') as HTMLButtonElement;
+    expect(segnalibro.getAttribute('aria-label')).toBe('bookmark.locked');
+    expect(segnalibro.getAttribute('aria-pressed')).toBe('false');
+    expect(segnalibro.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('per l’ospite il tocco sul segnalibro emette comunque, così arriva l’invito a iscriversi', async () => {
+    const { fixture, html } = await crea({ bloccata: true });
+    (html.querySelector('button') as HTMLButtonElement).click();
+    expect(fixture.componentInstance.toggle).toHaveBeenCalledOnce();
   });
 });

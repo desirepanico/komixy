@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, computed, inject, input, output } from '@
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
+import { matBookmarkOutline, matLockOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
@@ -15,7 +15,7 @@ import { ComicItem } from '@shared/models/comic.model';
 @Component({
   selector: 'app-comic-rank-card',
   imports: [RouterLink, TranslocoPipe, ComicCover, Tag, ToggleButton, NgIcon, InView],
-  providers: [provideIcons({ matBookmarkOutline })],
+  providers: [provideIcons({ matBookmarkOutline, matLockOutline })],
   templateUrl: './comic-rank-card.html',
   styleUrl: './comic-rank-card.css',
   encapsulation: ViewEncapsulation.None,
@@ -29,6 +29,8 @@ export class ComicRankCard {
   /** Riga visibile senza scorrere: la copertina si scarica subito e non in lazy (migliora l'LCP) */
   public readonly priority = input<boolean>(false);
   public readonly bookmarked = input<boolean>(false);
+  /** L'ospite non può salvare: il segnalibro mostra il lucchetto e il tocco porta all'invito a iscriversi */
+  public readonly locked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
@@ -36,6 +38,11 @@ export class ComicRankCard {
   protected readonly fetchPriority = computed(() =>
     this.priority() && this.rank() === 1 ? 'high' : 'auto',
   );
+
+  protected readonly bookmarkLabel = computed(() => {
+    if (this.locked()) return 'bookmark.locked';
+    return this.bookmarked() ? 'bookmark.remove' : 'bookmark.add';
+  });
 
   protected readonly severity = computed(() => EDITION_SEVERITY[this.comic().editionType ?? 'none']);
 

@@ -63,11 +63,12 @@
   <button
     appToggleButton
     type="button"
-    [pressed]="bookmarked()"
+    [pressed]="bookmarked() && !locked()"
     class="relative z-10"
-    [attr.aria-label]="(bookmarked() ? 'bookmark.remove' : 'bookmark.add') | transloco"
+    [attr.aria-label]="bookmarkLabel() | transloco"
+    [attr.aria-disabled]="locked() ? 'true' : null"
     (click)="bookmarkToggle.emit()"
   >
-    <ng-icon name="matBookmarkOutline" size="18" />
+    <ng-icon [name]="locked() ? 'matLockOutline' : 'matBookmarkOutline'" size="18" />
   </button>
 </div>
