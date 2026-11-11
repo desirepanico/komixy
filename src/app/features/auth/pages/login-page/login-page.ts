@@ -25,7 +25,7 @@ export class LoginPage {
   }
 
   protected enterAsGuest(): void {
-    // TODO: bloccare modifica, aggiunta ed eliminazione per UserRole.Guest e mostrare l'invito «Iscriviti all'applicazione»
+    // TODO: bloccare anche modifica ed eliminazione per UserRole.Guest (l'aggiunta in lista è già bloccata)
     this.authService.login({ id: 'guest', email: '', userRole: UserRole.Guest });
     this.goAfterLogin();
   }

@@ -85,3 +85,5 @@ export const EDITION_SEVERITY: Readonly<Record<EditionType | 'none', 'primary' |
   variant: 'secondary',
   none: 'secondary',
 };
+
+export const WEEKLY_PACK_STORAGE_KEY = 'komixy.weeklyPack';

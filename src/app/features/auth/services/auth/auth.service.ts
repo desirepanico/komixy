@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
 import { UserRole } from '@shared/models/user-role.model';
+import { SessionService } from '@shared/services/session/session.service';
 import { delay, Observable, of, tap, throwError } from 'rxjs';
 import { LoggedUser, LoginCredentials } from '../../models/auth.model';
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
@@ -19,6 +20,7 @@ export class ApiError extends Error {
 })
 export class AuthService {
   private readonly navigation = inject(AuthNavigationService);
+  private readonly session = inject(SessionService);
 
   private readonly _loggedUser = signal<LoggedUser | null>(null);
 
@@ -28,6 +30,7 @@ export class AuthService {
 
   public login(user: LoggedUser): void {
     this._loggedUser.set(user);
+    this.session.start({ id: user.id, role: user.userRole });
   }
 
   // TODO: sostituire con la chiamata all'API di autenticazione
@@ -46,6 +49,7 @@ export class AuthService {
 
   public logout(): void {
     this._loggedUser.set(null);
+    this.session.end();
     void this.navigation.goToLogin();
   }
 }

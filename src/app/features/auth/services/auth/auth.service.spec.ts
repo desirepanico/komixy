@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
+import { SessionService } from '@shared/services/session/session.service';
 import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
 import { ApiError, AuthService } from './auth.service';
 
@@ -29,6 +30,19 @@ describe('AuthService', () => {
     service.login(utente);
     expect(service.loggedUser()).toEqual(utente);
     expect(service.isAuthenticated()).toBe(true);
+  });
+
+  it('dopo il login la sessione condivisa conosce utente e ruolo', () => {
+    service.login({ id: 'guest', email: '', userRole: UserRole.Guest });
+    const sessione = TestBed.inject(SessionService);
+    expect(sessione.user()).toEqual({ id: 'guest', role: UserRole.Guest });
+    expect(sessione.isGuest()).toBe(true);
+  });
+
+  it('dopo il logout la sessione condivisa si svuota', () => {
+    service.login(utente);
+    service.logout();
+    expect(TestBed.inject(SessionService).user()).toBeNull();
   });
 
   it("dopo il logout cancella l'utente e va al login", () => {
