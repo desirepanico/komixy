@@ -14,6 +14,8 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
 import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
@@ -34,7 +36,8 @@ type Phase = 'sealed' | 'cards' | 'collection';
  */
 @Component({
   selector: 'app-pack-opening-page',
-  imports: [PackTear, CardSpotlight, CardFan, PackCard, Button, RouterLink, TranslocoPipe],
+  imports: [PackTear, CardSpotlight, CardFan, PackCard, Button, RouterLink, TranslocoPipe, NgIcon],
+  providers: [provideIcons({ matArrowBackOutline })],
   templateUrl: './pack-opening-page.html',
   host: { class: 'block', '(document:keydown.escape)': 'close()' },
 })
@@ -44,7 +47,7 @@ export class PackOpeningPage {
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly rankingNavigation = inject(RankingNavigationService);
   private readonly comicsNavigation = inject(ComicsNavigationService);
-  private readonly discoverNavigation = inject(DiscoverNavigationService);
+  protected readonly discoverNavigation = inject(DiscoverNavigationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = inject(Injector);
 

@@ -1,11 +1,26 @@
 @if (!alreadyOpened) {
   <main class="relative flex min-h-dvh flex-col px-4 pt-5 pb-8">
     <header class="relative z-20 flex items-start justify-between gap-3">
-      <div class="min-w-0">
-        <h1 class="text-lg font-bold text-surface-50">{{ 'weeklyPack.title' | transloco }}</h1>
-        <p class="text-sm text-surface-400">
-          {{ (session.isGuest() ? 'weeklyPack.guestSubtitle' : 'weeklyPack.subtitle') | transloco }}
-        </p>
+      <div class="flex min-w-0 items-center gap-3">
+        <a
+          appButton
+          variant="outlined"
+          [iconOnly]="true"
+          [rounded]="true"
+          [routerLink]="discoverNavigation.discoverLink"
+          [attr.aria-label]="'common.back' | transloco"
+        >
+          <ng-icon name="matArrowBackOutline" size="20" />
+        </a>
+
+        <div class="min-w-0">
+          <h1 class="text-lg font-bold text-surface-50">{{ 'weeklyPack.title' | transloco }}</h1>
+          <p class="text-sm text-surface-400">
+            {{
+              (session.isGuest() ? 'weeklyPack.guestSubtitle' : 'weeklyPack.subtitle') | transloco
+            }}
+          </p>
+        </div>
       </div>
       <p
         class="shrink-0 rounded-full border border-surface-700 bg-surface-900/70 px-3 py-1.5 text-[13px] font-bold text-primary-300"

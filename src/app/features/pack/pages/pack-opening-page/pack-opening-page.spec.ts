@@ -141,6 +141,13 @@ describe('PackOpeningPage', () => {
     expect(html.querySelector('app-card-fan')).not.toBeNull();
   });
 
+  it('ha il pulsante per tornare indietro a Scopri', async () => {
+    await crea();
+    const indietro = html.querySelector('header a[aria-label="common.back"]') as HTMLAnchorElement;
+    expect(indietro).not.toBeNull();
+    expect(indietro.getAttribute('href')).toBe('/discover');
+  });
+
   it('Esc riporta a Scopri', async () => {
     await crea();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
