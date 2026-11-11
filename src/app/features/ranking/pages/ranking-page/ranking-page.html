@@ -11,28 +11,84 @@
       <ng-icon name="matArrowBackOutline" size="20" />
     </a>
 
-    <div class="min-w-0">
+    <div class="min-w-0 flex-1">
       <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
-        {{ 'weeklyManga.title' | transloco }}
+        {{ 'rankingPage.title' | transloco }}
       </h1>
       <p class="text-sm text-surface-400">
         {{ 'weeklyManga.subtitle' | transloco }}
       </p>
     </div>
+
+    @if (weeklyPack.status() === 'opened' && canChoose) {
+      <div
+        role="group"
+        [attr.aria-label]="'rankingPage.view.label' | transloco"
+        class="flex shrink-0 gap-0.5 rounded-full border border-primary-400/40 bg-surface-900/80 p-0.5"
+      >
+        <button
+          type="button"
+          class="cursor-pointer rounded-full px-3.5 py-1.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          [class.bg-primary-600]="view() === 'list'"
+          [class.text-surface-50]="view() === 'list'"
+          [class.text-primary-300]="view() !== 'list'"
+          [attr.aria-pressed]="view() === 'list'"
+          (click)="setView('list')"
+        >
+          {{ 'rankingPage.view.list' | transloco }}
+        </button>
+        <button
+          type="button"
+          class="cursor-pointer rounded-full px-3.5 py-1.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          [class.bg-primary-600]="view() === 'cards'"
+          [class.text-surface-50]="view() === 'cards'"
+          [class.text-primary-300]="view() !== 'cards'"
+          [attr.aria-pressed]="view() === 'cards'"
+          (click)="setView('cards')"
+        >
+          {{ 'rankingPage.view.cards' | transloco }}
+        </button>
+      </div>
+    }
   </div>
 
-  <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
-  <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
-    @for (entry of ranking.entries(); track entry.comic.id) {
-      <li>
-        <app-comic-rank-card
-          [comic]="entry.comic"
-          [rank]="entry.rank"
-          [priority]="entry.rank <= 5"
-          [bookmarked]="selectedId() === entry.comic.id"
-          (bookmarkToggle)="toggleBookmark(entry.comic.id)"
-        />
-      </li>
-    }
-  </ol>
+  @if (weeklyPack.status() === 'sealed') {
+    <div
+      class="mx-auto flex max-w-md flex-col items-center gap-3 rounded-2xl border border-primary-400/30 bg-linear-to-br from-primary-900/50 to-surface-900 p-6 text-center shadow-lg shadow-surface-950/50"
+    >
+      <h2 class="text-lg font-bold text-surface-50">{{ 'rankingPage.sealed.title' | transloco }}</h2>
+      <p class="text-sm text-surface-400">{{ 'rankingPage.sealed.description' | transloco }}</p>
+      <a appButton [rounded]="true" [routerLink]="discoverNavigation.discoverLink">
+        {{ 'weeklyPack.openNow' | transloco }}
+      </a>
+    </div>
+  } @else if (view() === 'cards') {
+    <div class="h-[75dvh] min-h-[32rem]">
+      <app-pack-scene
+        mode="review"
+        [cards]="cards()"
+        [count]="cards().length"
+        [bookmarkedIds]="bookmarks.ids()"
+        [locked]="bookmarks.locked()"
+        (bookmarkToggle)="bookmarks.toggle($event)"
+        (failed)="onSceneFailed()"
+      />
+    </div>
+  } @else {
+    <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
+    <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
+      @for (entry of weeklyPack.entries(); track entry.comic.id) {
+        <li>
+          <app-comic-rank-card
+            [comic]="entry.comic"
+            [rank]="entry.rank"
+            [priority]="entry.rank <= 5"
+            [bookmarked]="bookmarks.isBookmarked(entry.comic.id)"
+            [locked]="bookmarks.locked()"
+            (bookmarkToggle)="bookmarks.toggle(entry.comic.id)"
+          />
+        </li>
+      }
+    </ol>
+  }
 </section>

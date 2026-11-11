@@ -170,6 +170,7 @@ export const PACK_ASSETS = {
 } as const;
 
 export const WEEKLY_PACK_STORAGE_KEY = 'komixy.weeklyPack';
+export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';
 
 /** Dimensioni in pixel delle texture disegnate su canvas */
 export const PACK_TEXTURE = {
