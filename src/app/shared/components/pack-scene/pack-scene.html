@@ -16,6 +16,8 @@
 </div>
 
 <div class="flex shrink-0 flex-col items-center gap-3 px-4 pb-4 pt-2 text-center">
+  <p class="sr-only" aria-live="polite">{{ focusSummary() }}</p>
+
   <p class="min-h-5 text-sm text-surface-400" aria-live="polite">
     @if (hint(); as text) {
       {{ text.key | transloco: text.params }}

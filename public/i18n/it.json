@@ -185,7 +185,8 @@
     "sceneUnavailable": {
       "summaryWarn": "Animazione non disponibile",
       "detailWarn": "La busta è stata aperta senza animazione."
-    }
+    },
+    "cardSummary": "Carta {{ rank }}: {{ title }}, di {{ author }}. {{ details }}."
   },
   "rankingPage": {
     "title": "Rivedi la settimana",

@@ -1,6 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   PackCard,
@@ -12,6 +14,7 @@ import {
 import { PackRendererLoader } from './pack-renderer-loader/pack-renderer-loader.service';
 import { PackScene } from './pack-scene';
 import { stubImage } from '@testing/image-stub/image-stub';
+import { provideTranslocoTesting } from '@testing/test-providers/test-providers';
 
 // Si prova il componente, non il 3D: la scena vera è finta e si comanda a mano
 class SceneFinta implements PackSceneApi {
@@ -223,6 +226,19 @@ describe('PackScene', () => {
     expect(principale()?.textContent).toContain('weeklyPack.action.showAll');
   });
 
+  it('la carta girata è annunciata agli screen reader, perché il canvas è nascosto', async () => {
+    await crea('open', { carte: tre() });
+    expect(html.querySelector('p.sr-only')?.textContent?.trim()).toBe('');
+    await stato({ phase: 'shown', focus: 1 });
+    expect(html.querySelector('p.sr-only')?.textContent).toContain('weeklyPack.cardSummary');
+  });
+
+  it('l’annuncio non c’è quando nessuna carta è in primo piano', async () => {
+    await crea('open', { carte: tre() });
+    await stato({ phase: 'deck' });
+    expect(html.querySelector('p.sr-only')?.textContent?.trim()).toBe('');
+  });
+
   it('una carta rara ha il suo suggerimento', async () => {
     await crea('open', { carte: [carta(1, 'deluxe'), carta(2), carta(3)] });
     await stato({ phase: 'shown', focus: 0 });
@@ -286,5 +302,38 @@ describe('PackScene', () => {
     const istanza = scena();
     fixture.destroy();
     expect(istanza.dispose).toHaveBeenCalledOnce();
+  });
+});
+
+describe('PackScene · annuncio della carta con traduzioni vere', () => {
+  it('dice posizione, titolo, autore, volume ed edizione', async () => {
+    stubImage();
+    await TestBed.configureTestingModule({
+      imports: [Host],
+      providers: [
+        provideRouter([]),
+        { provide: PackRendererLoader, useValue: caricatoreFinto },
+        ...provideTranslocoTesting({
+          it: {
+            weeklyPack: { cardSummary: 'Carta {{ rank }}: {{ title }}, di {{ author }}. {{ details }}.' },
+            mangaCard: {
+              volumeLabel: 'Vol.',
+              singleVolume: 'Volume Unico',
+              editions: { variant: 'Cover variant', deluxe: 'Deluxe', limited: 'Limitata' },
+            },
+          },
+        }),
+      ],
+    }).compileComponents();
+    await firstValueFrom(TestBed.inject(TranslocoService).load('it'));
+    istanza = null;
+    const fixture = TestBed.createComponent(Host);
+    fixture.componentInstance.carte.set([carta(1, 'deluxe'), carta(2), carta(3)]);
+    await fixture.whenStable();
+    await vi.waitFor(() => expect(istanza).not.toBeNull());
+    istanza!.opzioni.onState({ phase: 'shown', revealed: 0, focus: 0 });
+    await fixture.whenStable();
+    const annuncio = (fixture.nativeElement as HTMLElement).querySelector('p.sr-only');
+    expect(annuncio?.textContent).toBe('Carta 1: Titolo 1, di Autore. Vol. 1, Deluxe.');
   });
 });

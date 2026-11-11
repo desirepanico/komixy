@@ -21,7 +21,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 - **Rito**: una finestra a schermo intero. Si strappa il bordo superiore trascinando verso destra (o con il pulsante), poi si girano le carte una alla volta dalla 10ª alla 1ª. Con «Vedi dettaglio» (porta a `/comic/:id`) e «In lista» sulla carta girata. A 10/10 la raccolta si dispone a ventaglio: si sceglie una carta dai pulsanti numerati o toccandola. La busta si considera aperta solo quando il server risponde.
 - **Rivedi la settimana**: due viste, Elenco e Carte (la scelta si ricorda); senza 3D c'è solo l'elenco. Con la busta sigillata la classifica non si vede.
 - **Ospite**: può aprire la busta; ogni aggiunta in lista è bloccata (lucchetto sui segnalibri, invito «Iscriviti» al tocco). Il dettaglio resta visibile.
-- **Accessibilità**: tutto si fa da tastiera con i pulsanti sotto la scena (il canvas è nascosto agli screen reader); con «riduci movimento» o senza WebGL la scena non si usa.
+- **Accessibilità**: tutto si fa da tastiera con i pulsanti sotto la scena. Il canvas è nascosto agli screen reader, quindi la carta girata è annunciata da un testo (`aria-live`) con posizione, titolo, autore, volume ed edizione. La scena ha `data-no-swipe`: i gesti sul canvas non cambiano pagina. Con «riduci movimento» o senza WebGL 2 la scena non si usa.
 - **Da fare**: la finta API (`WeeklyPackService.open`, `BookmarksService.toggle`) va sostituita con quella vera; le copertine devono arrivare con le intestazioni CORS, altrimenti la scena usa un segnaposto.
 
 ## Componenti condivisi

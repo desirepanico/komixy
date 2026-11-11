@@ -185,7 +185,8 @@
     "sceneUnavailable": {
       "summaryWarn": "Animation unavailable",
       "detailWarn": "The pack was opened without the animation."
-    }
+    },
+    "cardSummary": "Card {{ rank }}: {{ title }} by {{ author }}. {{ details }}."
   },
   "rankingPage": {
     "title": "Review the week",

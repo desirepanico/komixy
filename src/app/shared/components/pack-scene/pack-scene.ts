@@ -86,6 +86,24 @@ export class PackScene {
     return !!this.focusCard() && (phase === 'shown' || phase === 'inspecting');
   });
 
+  // Il canvas è nascosto agli screen reader: la carta girata la annuncia questo testo
+  protected readonly focusSummary = computed(() => {
+    const card = this.focusCard();
+    if (!card || !this.showActions()) return '';
+    const { comic } = card;
+    const t = (key: string) => this.transloco.translate(key);
+    const volume = comic.isSingleVolume
+      ? t('mangaCard.singleVolume')
+      : `${t('mangaCard.volumeLabel')} ${comic.volume}`;
+    const edition = comic.editionType ? t(`mangaCard.editions.${comic.editionType}`) : '';
+    return this.transloco.translate('weeklyPack.cardSummary', {
+      rank: card.rank,
+      title: comic.title,
+      author: comic.author,
+      details: [volume, edition].filter(Boolean).join(', '),
+    });
+  });
+
   protected readonly showCounter = computed(() => {
     const phase = this.state().phase;
     return (
