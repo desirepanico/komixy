@@ -148,6 +148,13 @@ describe('PackOpeningPage', () => {
     expect(indietro.getAttribute('href')).toBe('/discover');
   });
 
+  it('il contatore delle carte girate è un tag', async () => {
+    await crea();
+    const tag = html.querySelector('header app-tag');
+    expect(tag?.textContent).toContain('weeklyPack.cardsFlipped');
+    expect(tag?.getAttribute('aria-live')).toBe('polite');
+  });
+
   it('Esc riporta a Scopri', async () => {
     await crea();
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));

@@ -1,10 +1,11 @@
 @if (!alreadyOpened) {
   <main class="relative flex min-h-dvh flex-col px-4 pt-5 pb-8">
     <header class="relative z-20 flex items-start justify-between gap-3">
-      <div class="flex min-w-0 items-center gap-3">
+      <div class="flex min-w-0 items-start gap-3">
         <a
           appButton
           variant="outlined"
+          class="shrink-0"
           [iconOnly]="true"
           [rounded]="true"
           [routerLink]="discoverNavigation.discoverLink"
@@ -22,12 +23,9 @@
           </p>
         </div>
       </div>
-      <p
-        class="shrink-0 rounded-full border border-surface-700 bg-surface-900/70 px-3 py-1.5 text-[13px] font-bold text-primary-300"
-        aria-live="polite"
-      >
+      <app-tag severity="secondary" class="shrink-0" aria-live="polite">
         {{ 'weeklyPack.cardsFlipped' | transloco: { flipped: flippedCount(), total: total() } }}
-      </p>
+      </app-tag>
     </header>
 
     @switch (phase()) {
