@@ -14,7 +14,7 @@ import {
 } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
 import { EmptyState } from '@shared/components/empty-state/empty-state';
-import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
+import { Message } from '@shared/components/message/message';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
 import { map } from 'rxjs';
@@ -32,7 +32,7 @@ import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ran
  */
 @Component({
   selector: 'app-comic-detail-page',
-  imports: [RouterLink, TranslocoPipe, NgIcon, Button, EmptyState, GuestNotice, Skeleton, Tag],
+  imports: [RouterLink, TranslocoPipe, NgIcon, Button, EmptyState, Message, Skeleton, Tag],
   providers: [
     provideIcons({
       matAddOutline,

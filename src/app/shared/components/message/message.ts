@@ -12,12 +12,14 @@ import { MessageSeverity } from '../../models/message.model';
 
 /**
  * Messaggio fisso (non sparisce da solo, a differenza del toast) per info, successo, avvisi ed errori.
- * Il testo è il contenuto, già tradotto; `label` è un titolo facoltativo in grassetto. L'icona dipende
- * dal tono, ma si può cambiare con `icon`: in quel caso va registrata con `provideIcons` da chi lo usa.
- * Errori e avvisi sono annunciati subito (`role="alert"`), gli altri con calma (`role="status"`).
+ * Input: `severity` (il tono), `label` (il testo, già tradotto) e `icon` (se si vuole un'icona diversa
+ * da quella del tono: va registrata con `provideIcons` da chi lo usa). Se serve altro, per esempio un
+ * link dopo il testo, si mette come contenuto. Errori e avvisi sono annunciati subito (`role="alert"`),
+ * gli altri con calma (`role="status"`).
  *
- *   <app-message severity="warn" [label]="'form.warnTitle' | transloco">
- *     {{ 'form.warnText' | transloco }}
+ *   <app-message severity="warn" [label]="'form.warnText' | transloco" />
+ *   <app-message severity="primary" icon="matLockOutline" [label]="testo">
+ *     <a routerLink="/login">Iscriviti</a>
  *   </app-message>
  */
 @Component({
@@ -32,7 +34,7 @@ import { MessageSeverity } from '../../models/message.model';
 export class Message {
   /** primary = tono del marchio (inviti), info, success, warn, error */
   public readonly severity = input<MessageSeverity>('info');
-  /** Titolo in grassetto sopra il testo, già tradotto */
+  /** Il testo del messaggio, già tradotto; il contenuto del componente viene dopo */
   public readonly label = input<string>();
   /** Nome di un'altra icona al posto di quella del tono */
   public readonly icon = input<string>();

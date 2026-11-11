@@ -74,13 +74,13 @@ describe('RankingPage', () => {
 
     it("per un ospite avvisa che non può salvare nelle liste", async () => {
       await crea({ iscritto: false });
-      expect(html.querySelector('app-guest-notice')).not.toBeNull();
+      expect(html.querySelector('app-message')).not.toBeNull();
       expect(html.querySelector('app-comic-rank-card app-bookmark-button a')).not.toBeNull();
     });
 
     it("un iscritto non vede l'avviso e salva più righe in lista", async () => {
       await crea();
-      expect(html.querySelector('app-guest-notice')).toBeNull();
+      expect(html.querySelector('app-message')).toBeNull();
       const segnalibri = () =>
         Array.from(html.querySelectorAll('app-comic-rank-card button[aria-pressed]')) as HTMLButtonElement[];
       segnalibri()[0].click();

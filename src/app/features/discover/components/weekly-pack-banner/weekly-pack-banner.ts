@@ -2,11 +2,13 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { provideIcons } from '@ng-icons/core';
+import { matLockOutline } from '@ng-icons/material-symbols/outline';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { PackNavigationService } from '@features/pack/services/pack-navigation/pack-navigation.service';
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
 import { Button } from '@shared/components/button/button';
-import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
+import { Message } from '@shared/components/message/message';
 import { PACK_IMAGE_URL } from '@shared/constants/ui.const';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
@@ -19,7 +21,8 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
  */
 @Component({
   selector: 'app-weekly-pack-banner',
-  imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, GuestNotice],
+  imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, Message],
+  providers: [provideIcons({ matLockOutline })],
   templateUrl: './weekly-pack-banner.html',
   host: { class: 'block' },
 })

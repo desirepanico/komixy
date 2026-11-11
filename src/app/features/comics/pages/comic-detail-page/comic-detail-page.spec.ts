@@ -99,7 +99,7 @@ describe('ComicDetailPage', () => {
 
     it("non vede l'avviso per gli ospiti", async () => {
       await crea('w1');
-      expect(html.querySelector('app-guest-notice')).toBeNull();
+      expect(html.querySelector('app-message')).toBeNull();
     });
   });
 
@@ -114,7 +114,7 @@ describe('ComicDetailPage', () => {
     it('vede il dettaglio con l\'avviso che non può salvare', async () => {
       await crea('w1', false);
       expect(html.querySelector('h2')?.textContent).toContain('One Piece');
-      expect(html.querySelector('app-guest-notice')).not.toBeNull();
+      expect(html.querySelector('app-message')).not.toBeNull();
     });
   });
 

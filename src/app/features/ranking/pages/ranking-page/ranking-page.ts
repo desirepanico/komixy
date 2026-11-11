@@ -2,14 +2,14 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
+import { matArrowBackOutline, matLockOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { Button } from '@shared/components/button/button';
 import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
 import { Hint } from '@shared/components/hint/hint';
-import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
+import { Message } from '@shared/components/message/message';
 import { RankingEntry } from '@shared/models/ranking-entry.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
@@ -32,7 +32,7 @@ import { RankingViewService } from '../../services/ranking-view/ranking-view.ser
     RankingViewSwitch,
     CardFan,
     CardSpotlight,
-    GuestNotice,
+    Message,
     Hint,
     Button,
     RouterLink,
@@ -40,7 +40,7 @@ import { RankingViewService } from '../../services/ranking-view/ranking-view.ser
     TranslocoPipe,
   ],
   templateUrl: './ranking-page.html',
-  providers: [provideIcons({ matArrowBackOutline })],
+  providers: [provideIcons({ matArrowBackOutline, matLockOutline })],
 })
 export class RankingPage {
   protected readonly discoverNavigation = inject(DiscoverNavigationService);

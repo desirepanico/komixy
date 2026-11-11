@@ -84,12 +84,12 @@ describe('WeeklyPackBanner', () => {
 
     it("l'ospite vede anche l'avviso che non può salvare nelle liste", async () => {
       await crea(false, true);
-      expect(html.querySelector('app-guest-notice')).not.toBeNull();
+      expect(html.querySelector('app-message')).not.toBeNull();
     });
 
     it("l'iscritto non vede l'avviso", async () => {
       await crea(true, true);
-      expect(html.querySelector('app-guest-notice')).toBeNull();
+      expect(html.querySelector('app-message')).toBeNull();
     });
   });
 });

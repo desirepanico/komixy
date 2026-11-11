@@ -8,13 +8,16 @@ import { Message } from './message';
 
 @Component({
   imports: [Message],
-  template: `<app-message [severity]="tono()" [label]="titolo()" [icon]="icona()"
-    >Testo del messaggio</app-message
-  >`,
+  template: `<app-message [severity]="tono()" [label]="testo()" [icon]="icona()">
+    @if (conLink()) {
+      <a href="/login">Iscriviti</a>
+    }
+  </app-message>`,
 })
 class Host {
   readonly tono = signal<MessageSeverity>('info');
-  readonly titolo = signal<string | undefined>(undefined);
+  readonly testo = signal<string | undefined>('Testo del messaggio');
+  readonly conLink = signal(false);
   readonly icona = signal<string | undefined>(undefined);
 }
 
@@ -43,7 +46,7 @@ describe('Message', () => {
     expect(html.querySelector('app-message')).not.toBeNull();
   });
 
-  it('mostra il testo ricevuto come contenuto', () => {
+  it('mostra il testo ricevuto in label', () => {
     expect(html.textContent).toContain('Testo del messaggio');
   });
 
@@ -77,11 +80,26 @@ describe('Message', () => {
     expect(icona().getAttribute('aria-hidden')).toBe('true');
   });
 
-  it('mostra il titolo in grassetto solo se c’è', async () => {
-    expect(html.querySelector('p.font-bold')).toBeNull();
-    host().titolo.set('Attenzione ai dati');
+  it('se serve, mostra anche il contenuto dopo il testo, per esempio un link', async () => {
+    host().conLink.set(true);
     await fixture.whenStable();
-    expect(html.querySelector('p.font-bold')?.textContent).toContain('Attenzione ai dati');
+    const paragrafo = html.querySelector('p') as HTMLElement;
+    expect(paragrafo.textContent).toContain('Testo del messaggio');
+    expect(paragrafo.querySelector('a')?.textContent).toContain('Iscriviti');
+  });
+
+  it('funziona anche con il solo contenuto, senza label', async () => {
+    host().testo.set(undefined);
+    host().conLink.set(true);
+    await fixture.whenStable();
+    expect(html.querySelector('p a')?.textContent).toContain('Iscriviti');
+  });
+
+  it('mostra il testo cambiando label', async () => {
+    host().testo.set('Un altro testo');
+    await fixture.whenStable();
+    expect(html.textContent).toContain('Un altro testo');
+    expect(html.textContent).not.toContain('Testo del messaggio');
   });
 
   it('errori e avvisi sono annunciati subito, gli altri con calma', async () => {

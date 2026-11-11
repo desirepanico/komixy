@@ -7,13 +7,11 @@
   <span class="mt-0.5 shrink-0" [class]="styles().iconColor">
     <ng-icon [name]="iconName()" size="18" aria-hidden="true" />
   </span>
-  <div class="min-w-0 flex-1">
+  <p class="min-w-0 flex-1">
     @if (toneKey(); as key) {
       <span class="sr-only">{{ key | transloco }}: </span>
     }
-    @if (label(); as label) {
-      <p class="font-bold text-surface-50">{{ label }}</p>
-    }
-    <div><ng-content /></div>
-  </div>
+    {{ label() }}
+    <ng-content />
+  </p>
 </div>
