@@ -29,14 +29,14 @@ Regole su branch, messaggi di commit e controlli prima del commit: `.claude/rule
 
 Le regole (cosa testare, un file di spec per ogni file `.ts`, una cartella per file) sono in `.claude/rules/test.md` e `.claude/rules/angular.md`. Qui come funziona.
 
-**Come girano.** `npm test` usa il builder `@angular/build:unit-test`: compila gli `*.spec.ts` come l'app (con gli stessi alias `@core`, `@shared`, `@features`) e li esegue con Vitest in un browser simulato (jsdom). Lo spec sta accanto al file, nella sua stessa cartella (`services/auth/auth.service.ts` → `services/auth/auth.service.spec.ts`).
+**Come girano.** `npm test` usa il builder `@angular/build:unit-test`: compila gli `*.spec.ts` come l'app (con gli stessi alias `@core`, `@shared`, `@features`, più `@testing` per gli aiuti di `src/testing`) e li esegue con Vitest in un browser simulato (jsdom). Lo spec sta accanto al file, nella sua stessa cartella (`services/auth/auth.service.ts` → `services/auth/auth.service.spec.ts`).
 
 **Cosa è già pronto in ogni test.** Le opzioni del builder in `angular.json` caricano tre cose, così gli spec non le ripetono:
 
 | Opzione | File | Cosa fa |
 |---|---|---|
 | `providersFile` | `src/testing/test-providers/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test (serve per i messaggi d'errore dei form: con traduzioni vuote `app-error-message` mostra sempre `common.validation.generic`, quindi lo spec fornisce le chiavi `common.validation.*` che controlla) |
-| `setupFiles` | `src/testing/test-setup/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha |
+| `setupFiles` | `src/testing/test-setup/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha, e fa restituire `null` a `getContext()` del canvas (senza, jsdom stampa un errore a ogni chiamata) |
 | `runnerConfig` | `vitest-base.config.mts` | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima |
 
 **A cosa serve `src/testing/`.** jsdom simula il browser ma non lo replica del tutto: se un componente usa una funzione che jsdom non ha, il test si rompe con errori come "ResizeObserver is not defined". I finti in `src/testing/` sono scritti una volta sola e caricati prima di ogni test, così gli spec restano brevi. Le traduzioni sono finte perché il test controlla il comportamento del componente, non il testo italiano.
@@ -57,6 +57,11 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 | Un servizio di cui non serve il codice vero | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova |
 | Un'API del browser con un comportamento diverso (`matchMedia` vero, `IntersectionObserver`) | `vi.stubGlobal(...)` dentro il test |
 | Un guard | `TestBed.runInInjectionContext(() => guard(...))` |
+| Un timer di RxJS (`delay`, `timer`) | `vi.useFakeTimers({ toFake: ['Date', 'setInterval', 'clearInterval'] })` e `vi.advanceTimersByTimeAsync(...)`: RxJS usa `setInterval`. Non fingere anche `setTimeout`, altrimenti `fixture.whenStable()` non si risolve |
+| Immagini (`new Image()`) | `stubImage()` da `@testing/image-stub/image-stub`: jsdom non le carica e chi le aspetta resterebbe in attesa |
+| Codice che si importa in modo lazy (la scena 3D) | un provider finto del servizio che lo importa (`{ provide: PackRendererLoader, useValue: ... }`): con questo builder `vi.mock` non funziona sugli import relativi |
+| Una classe che crea oggetti non disponibili in jsdom (il renderer WebGL) | una sottoclasse nello spec che sostituisce i metodi `protected` che li creano (`createGl`, `createEnvironment`), senza toccare il resto |
+| Codice che disegna su canvas | in jsdom `getContext()` dà `null`: per provare cosa si disegna, un contesto finto che ricorda le chiamate (vedi `pack-art.spec.ts`) |
 | Un timer (`setTimeout`, come i toast che spariscono da soli) | `vi.useFakeTimers()` e `vi.advanceTimersByTime(...)`; i timer finti non si ripristinano da soli, quindi `afterEach(() => vi.useRealTimers())`. Negli spec di componenti con `whenStable()` si attiva dentro il test, non in `beforeEach`, che altrimenti non finisce |
 
 ## Lint
@@ -65,7 +70,7 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 
 - `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`).
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
-- Nelle feature `no-restricted-imports` vieta di importare da un'altra feature (tranne i servizi `<nome>-navigation` e la card della classifica per `discover`) e, in `pages` e `components`, anche `Router` e `AppRoutes`: la navigazione passa dai servizi di navigazione.
+- Nelle feature `no-restricted-imports` vieta di importare da un'altra feature (tranne i servizi `<nome>-navigation`) e, in `pages` e `components`, anche `Router` e `AppRoutes`: la navigazione passa dai servizi di navigazione.
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 

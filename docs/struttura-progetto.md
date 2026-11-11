@@ -19,17 +19,18 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-toast, app-error-message, app-field-wrapper, app-input-text, ...
+│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-toast, app-error-message, app-field-wrapper, app-input-text, app-pack-scene (scena 3D della busta, con le cartelle pack-math/, pack-flow/, pack-art/, pack-renderer/, pack-renderer-loader/), ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button)
-│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, toast/, transloco-http-loader/)
-├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
+│       ├── models/            modelli condivisi (comic, ranking-entry, pack, session-user, user-role, nav-item, app-routes, button)
+│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, session/, bookmarks/, safe-storage/, pack-support/, viewport/, mobile-swipe/, toast/, transloco-http-loader/)
+├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom), image-stub/ (immagini che si caricano o falliscono subito)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
 ├── img/
 │   ├── covers/                copertine della login
+│   ├── pack/                  pack-sealed.webp e pack-opened.webp: la busta, ritagliata dalla scena 3D (usate da app-weekly-pack)
 │   └── logo/                  komixy-logo.png (solo la K-pianeta, da cui è ricavato `favicon.ico`), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
 ├── favicon.ico                favicon: il logo `komixy-logo.png` intero (K, anello e stella) senza il bordo bianco esterno, in un cerchio `surface-950` senza bordo, così il logo può essere più grande
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
@@ -49,7 +50,6 @@ Dove mettere le cose:
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti, direttive, modelli, servizi, costanti).
   - **Eccezione**: `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`. La dipendenza è a senso unico: `auth` non importa da `core`.
   - **Eccezione**: i servizi di navigazione: per andare in un'altra feature si inietta il suo `<nome>-navigation.service` (`DiscoverNavigationService`, `ComicsNavigationService`, ...).
-  - **Eccezione**: `discover` mostra la Top 5 usando la card della feature `ranking` (`features/ranking/components`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: componenti, direttive, modelli, servizi e costanti usati da più feature (o da `core`). Può essere importato da qualsiasi parte, ma non dipende da `features` né da `core`. Un servizio qui è un singleton come quelli di `core`: la differenza è che serve alle feature, non alla shell dell'app.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`, e `shared` non dipende da `core`.
 

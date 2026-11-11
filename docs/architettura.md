@@ -11,7 +11,7 @@ Tre aree: `core`, `features`, `shared`. L'albero completo e dove vanno i file: [
 ### Regole sulle dipendenze
 
 - `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: il guard `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`; la dipendenza è a senso unico e `auth` non importa da `core`.
-- Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature") e la card di `ranking` usata da `discover`. `WeeklyRankingService` è in `shared/services`.
+- Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature") (le feature non condividono componenti: ciò che serve a più feature sta in `shared`). `WeeklyRankingService` è in `shared/services`.
 - Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
 
 ## Routing
@@ -69,9 +69,19 @@ Regole:
 
 ## Accesso e ruoli
 
-- `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
+- `AuthService` (`features/auth`) tiene l'utente loggato in un signal e, a login e logout, aggiorna `SessionService` (`shared/services/session`), che espone utente e ruolo (`isGuest`) alle altre feature: loro non possono importare `AuthService`.
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
 
 ## Dati
 
 I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale).
+
+## Busta settimanale
+
+La classifica della settimana si scopre aprendo una busta, una sola volta a settimana per utente (e per ospite). Le 10 carte sono le 10 voci della classifica.
+
+- **Dominio** (`shared/services`): `WeeklyPackService` (stato `sealed` o `opened` per utente e settimana, apertura idempotente con una finta API e `TODO` per `POST /weekly-pack/open`, memoria in `localStorage` via `SafeStorage`), `BookmarksService` («In lista»: l'ospite non può aggiungere, riceve un toast che lo invita a iscriversi), `SessionService`, `PackSupportService` (il 3D c'è se il browser ha WebGL e l'utente non ha chiesto «riduci movimento»; altrimenti la busta si apre senza animazione e la classifica è sempre l'elenco).
+- **Scena 3D** (`shared/components/pack-scene`): `app-pack-scene` mostra la scena e i controlli (pulsanti, «Vedi dettaglio», «In lista», selettore delle carte). La scena è `PackRenderer` (three), una classe senza Angular, creata solo da `PackRendererLoader` con un `import()`: `three` finisce in un chunk lazy (circa 118 KB trasferiti) scaricato alla prima busta, non nel bundle iniziale. Il resto è separato per poterlo provare senza WebGL: `pack-math` (posizioni e animazioni, funzioni pure), `pack-flow` (le regole del rito: quale passo segue quale), `pack-art` (disegno delle texture su canvas, con i colori letti dai token del tema).
+- **Pagine**: `app-weekly-pack` (feature `discover`) è la busta in Scopri: sigillata, con la finestra a schermo intero (`<dialog>`) per il rito, oppure aperta, con il collegamento a «Rivedi la settimana». `ranking-page` è la pagina «Rivedi la settimana» con le viste Elenco e Carte (`RankingViewService` ricorda la scelta) e il blocco a busta sigillata.
+- **Ospite**: può aprire la busta, ma ogni aggiunta in lista è bloccata: i segnalibri di `app-comic-card` e `app-comic-rank-card` hanno il lucchetto (`locked`) e il tocco mostra l'invito.
+- **Tra frontend e backend**: la busta si considera aperta solo quando il server risponde; la classifica nascosta lo è solo nell'interfaccia, finché l'API la consegna a tutti.
