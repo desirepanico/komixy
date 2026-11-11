@@ -29,7 +29,7 @@ import { MessageSeverity } from '../../models/message.model';
     provideIcons({ matCheckCircleOutline, matErrorOutline, matInfoOutline, matWarningOutline }),
   ],
   templateUrl: './message.html',
-  host: { class: 'block' },
+  host: { class: 'block w-fit max-w-full' },
 })
 export class Message {
   /** primary = tono del marchio (inviti), info, success, warn, error */
