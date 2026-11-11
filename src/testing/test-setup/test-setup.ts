@@ -16,3 +16,6 @@ window.matchMedia ??= (query: string) =>
   }) as unknown as MediaQueryList;
 
 Element.prototype.scrollBy ??= () => {};
+
+// jsdom non disegna: getContext esiste ma stampa un errore a ogni chiamata invece di restituire null
+HTMLCanvasElement.prototype.getContext = () => null;
