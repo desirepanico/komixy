@@ -1,0 +1,19 @@
+<div
+  class="flex items-start gap-2.5 rounded-xl border px-3 py-2.5 text-sm leading-snug text-surface-100"
+  [class]="styles().container"
+  [attr.role]="role()"
+>
+  <!-- Il colore sta sul contenitore: lo stile interno di ng-icon batte le classi text-* messe sull'icona -->
+  <span class="mt-0.5 shrink-0" [class]="styles().iconColor">
+    <ng-icon [name]="iconName()" size="18" aria-hidden="true" />
+  </span>
+  <div class="min-w-0 flex-1">
+    @if (toneKey(); as key) {
+      <span class="sr-only">{{ key | transloco }}: </span>
+    }
+    @if (label(); as label) {
+      <p class="font-bold text-surface-50">{{ label }}</p>
+    }
+    <div><ng-content /></div>
+  </div>
+</div>

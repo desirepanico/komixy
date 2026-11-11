@@ -202,5 +202,11 @@
   },
   "toast": {
     "close": "Close notification"
+  },
+  "message": {
+    "info": "Information",
+    "success": "Success",
+    "warn": "Warning",
+    "error": "Error"
   }
 }

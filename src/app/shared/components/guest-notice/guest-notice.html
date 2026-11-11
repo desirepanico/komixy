@@ -1,14 +1,9 @@
-<div
-  class="flex items-start gap-2.5 rounded-xl border border-primary-400/30 bg-primary-500/10 px-3 py-2.5 text-sm leading-snug text-surface-100"
->
-  <ng-icon name="matLockOutline" size="16" class="mt-0.5 shrink-0 text-primary-300" aria-hidden="true" />
-  <p>
-    {{ message() }}
-    <a
-      [routerLink]="session.signUpLink"
-      class="rounded-xs font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-    >
-      {{ 'guestNotice.signUp' | transloco }}
-    </a>
-  </p>
-</div>
+<app-message severity="primary" icon="matLockOutline">
+  {{ message() }}
+  <a
+    [routerLink]="session.signUpLink"
+    class="rounded-xs font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+  >
+    {{ 'guestNotice.signUp' | transloco }}
+  </a>
+</app-message>

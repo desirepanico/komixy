@@ -1,3 +1,4 @@
+import { MessageSeverity } from '@shared/models/message.model';
 import { ToastSeverity } from '@shared/models/toast.model';
 import { EditionType } from '@shared/models/comic.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
@@ -86,6 +87,37 @@ export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; contai
   error: {
     icon: 'matErrorOutline',
     container: 'border-red-500/40 bg-red-500/10 text-red-400',
+  },
+};
+
+/** Stile di un messaggio fisso (`app-message`): icona predefinita, bordo e sfondo al 10%, colore dell'icona */
+export const MESSAGE_STYLES: Readonly<
+  Record<MessageSeverity, { icon: string; container: string; iconColor: string }>
+> = {
+  primary: {
+    icon: 'matInfoOutline',
+    container: 'border-primary-400/30 bg-primary-500/10',
+    iconColor: 'text-primary-300',
+  },
+  info: {
+    icon: 'matInfoOutline',
+    container: 'border-blue-500/40 bg-blue-500/10',
+    iconColor: 'text-blue-400',
+  },
+  success: {
+    icon: 'matCheckCircleOutline',
+    container: 'border-green-500/40 bg-green-500/10',
+    iconColor: 'text-green-400',
+  },
+  warn: {
+    icon: 'matWarningOutline',
+    container: 'border-amber-500/40 bg-amber-500/10',
+    iconColor: 'text-amber-400',
+  },
+  error: {
+    icon: 'matErrorOutline',
+    container: 'border-red-500/40 bg-red-500/10',
+    iconColor: 'text-red-400',
   },
 };
 
