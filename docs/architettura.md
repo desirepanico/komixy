@@ -48,7 +48,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
 
-- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
+- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta, e tiene l'attributo `lang` di `<html>` uguale alla lingua attiva (gli screen reader scelgono la voce da lì).
 - `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
 - `provideBootSkeleton()` toglie lo skeleton di avvio di `index.html` (`#skeleton`, fuori da `<app-root>`) dopo la prima navigazione finita. Finché c'è, il CSS in `index.html` nasconde `<app-root>`: così, mentre arrivano i chunk lazy, non si vede lo sfondo viola vuoto.
 - `provideCore()` (`core/providers/core/core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
