@@ -116,9 +116,15 @@ export class PackOpeningPage {
 
   protected backToCollection(): void {
     this.selected.set(null);
+    this.focusPrimary();
   }
 
+  /** Esc chiude un livello alla volta: prima il dettaglio della carta scelta, poi la pagina */
   protected close(): void {
+    if (this.selected()) {
+      this.backToCollection();
+      return;
+    }
     void this.discoverNavigation.goToDiscover();
   }
 

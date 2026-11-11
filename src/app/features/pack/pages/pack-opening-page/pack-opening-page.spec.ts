@@ -147,6 +147,18 @@ describe('PackOpeningPage', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 
+  it('Esc dal dettaglio di una carta torna alla raccolta senza lasciare la pagina', async () => {
+    await crea();
+    await apriTutteLeCarte();
+    (html.querySelectorAll('app-card-fan button')[0] as HTMLButtonElement).click();
+    await fixture.whenStable();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await fixture.whenStable();
+    expect(html.querySelector('app-card-spotlight')).toBeNull();
+    expect(router.navigate).not.toHaveBeenCalled();
+  });
+
   it('una busta già aperta non si riapre: porta alla revisione della settimana', async () => {
     localStorage.setItem(
       WEEKLY_PACK_STORAGE_KEY,
