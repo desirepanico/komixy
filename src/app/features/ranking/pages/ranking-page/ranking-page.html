@@ -71,7 +71,7 @@
     </ol>
   } @else if (selected(); as entry) {
     <app-card-spotlight [entry]="entry" [detailLink]="detailLink(entry)" [summary]="true">
-      <app-card-fan behindCard [entries]="ranking.entries()" />
+      <app-card-fan behindCard class="w-full" [entries]="ranking.entries()" />
       <button
         type="button"
         appButton

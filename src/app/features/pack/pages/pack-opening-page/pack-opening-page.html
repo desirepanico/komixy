@@ -106,7 +106,7 @@
       @case ('collection') {
         @if (selected(); as entry) {
           <app-card-spotlight [entry]="entry" [detailLink]="selectedLink()" [summary]="true">
-            <app-card-fan behindCard [entries]="pack.deck()" />
+            <app-card-fan behindCard class="w-full" [entries]="pack.deck()" />
             <button
               #primary
               type="button"
