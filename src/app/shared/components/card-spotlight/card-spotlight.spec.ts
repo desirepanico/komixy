@@ -152,4 +152,21 @@ describe('CardSpotlight', () => {
     await crea(true);
     expect(html.querySelector('button[aria-label]')).toBeNull();
   });
+
+  it('passando alla carta successiva la carta girevole nasce nuova, già di spalle e senza girare', async () => {
+    await crea(true);
+    host().interattiva.set(true);
+    host().davanti.set(true);
+    await fixture.whenStable();
+    const bottone = html.querySelector('app-card-spotlight button[aria-label]') as HTMLElement;
+    const prima = html.querySelector('app-card-spotlight app-pack-card');
+
+    host().carta.set(carta('w3', 3));
+    host().davanti.set(false);
+    await fixture.whenStable();
+    const dopo = html.querySelector('app-card-spotlight app-pack-card');
+    expect(dopo).not.toBe(prima);
+    expect(html.querySelector('app-card-spotlight button[aria-label]')).toBe(bottone);
+    expect(dopo?.querySelector('.rotate-y-180.size-full')).not.toBeNull();
+  });
 });

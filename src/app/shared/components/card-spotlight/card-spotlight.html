@@ -32,7 +32,10 @@
       [attr.aria-label]="(faceUp() ? 'weeklyPack.nextCard' : 'weeklyPack.flipCard') | transloco"
       (click)="cardPress.emit()"
     >
-      <app-pack-card [entry]="entry()" [faceUp]="faceUp()" [flippable]="true" [decorative]="true" />
+      <!-- Una carta nuova nasce già nel suo verso: se si riusasse la stessa carta, passando alla prossima si vedrebbe il suo fronte girare verso il dorso -->
+      @for (item of [entry()]; track item.comic.id) {
+        <app-pack-card [entry]="item" [faceUp]="faceUp()" [flippable]="true" [decorative]="true" />
+      }
     </button>
   } @else {
     <app-pack-card class="relative z-10" [entry]="entry()" [faceUp]="faceUp()" />
