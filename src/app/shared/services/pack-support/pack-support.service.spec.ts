@@ -16,7 +16,14 @@ describe('PackSupportService', () => {
     expect(TestBed.inject(PackSupportService).supports3d).toBe(false);
   });
 
-  it('con WebGL e movimento normale il 3D è supportato', () => {
+  it('con solo WebGL 1 il 3D non è supportato: three richiede WebGL 2', () => {
+    conMovimentoRidotto(false);
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockImplementation(((tipo: string) =>
+      tipo === 'webgl' ? {} : null) as typeof HTMLCanvasElement.prototype.getContext);
+    expect(TestBed.inject(PackSupportService).supports3d).toBe(false);
+  });
+
+  it('con WebGL 2 e movimento normale il 3D è supportato', () => {
     conMovimentoRidotto(false);
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({} as RenderingContext);
     expect(TestBed.inject(PackSupportService).supports3d).toBe(true);
