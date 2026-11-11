@@ -40,4 +40,16 @@ describe('Tag', () => {
     expect(span.classList).toContain('bg-surface-700');
     expect(span.classList).not.toContain('bg-primary-500');
   });
+
+  it('con severity accent è viola trasparente con un anello, senza cambiare dimensioni', async () => {
+    const fixture = await crea();
+    fixture.componentInstance.severity.set('accent');
+    await fixture.whenStable();
+    const span = fixture.nativeElement.querySelector('span') as HTMLElement;
+    expect(span.classList).toContain('bg-primary-500/20');
+    expect(span.classList).toContain('text-primary-300');
+    expect(span.classList).toContain('ring-primary-400/35');
+    expect(span.classList).not.toContain('bg-primary-500');
+    expect(span.classList).not.toContain('bg-surface-700');
+  });
 });

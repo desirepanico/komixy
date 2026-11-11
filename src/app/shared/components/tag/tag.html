@@ -4,6 +4,11 @@
   [class.text-surface-900]="severity() === 'primary'"
   [class.bg-surface-700]="severity() === 'secondary'"
   [class.text-surface-100]="severity() === 'secondary'"
+  [class.bg-primary-500/20]="severity() === 'accent'"
+  [class.text-primary-300]="severity() === 'accent'"
+  [class.ring-1]="severity() === 'accent'"
+  [class.ring-inset]="severity() === 'accent'"
+  [class.ring-primary-400/35]="severity() === 'accent'"
 >
   <ng-content />
 </span>

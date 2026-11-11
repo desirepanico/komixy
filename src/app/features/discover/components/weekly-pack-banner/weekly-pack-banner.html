@@ -12,7 +12,7 @@
     />
 
     <div class="flex min-w-0 flex-col items-start gap-1.5">
-      <app-tag>
+      <app-tag severity="accent">
         {{
           (session.isGuest() ? 'weeklyPack.guestWeek' : 'weeklyPack.week')
             | transloco: { week: pack.weekNumber }
