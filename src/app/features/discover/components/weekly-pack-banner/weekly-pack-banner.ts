@@ -9,6 +9,7 @@ import { PackNavigationService } from '@features/pack/services/pack-navigation/p
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
 import { Button } from '@shared/components/button/button';
 import { Message } from '@shared/components/message/message';
+import { Tag } from '@shared/components/tag/tag';
 import { PACK_IMAGE_URL } from '@shared/constants/ui.const';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
@@ -21,7 +22,7 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
  */
 @Component({
   selector: 'app-weekly-pack-banner',
-  imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, Message],
+  imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, Message, Tag],
   providers: [provideIcons({ matLockOutline })],
   templateUrl: './weekly-pack-banner.html',
   host: { class: 'block' },

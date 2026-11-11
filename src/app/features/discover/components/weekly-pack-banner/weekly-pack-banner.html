@@ -12,14 +12,12 @@
     />
 
     <div class="flex min-w-0 flex-col items-start gap-1.5">
-      <span
-        class="rounded-full border border-primary-400/35 bg-primary-500/20 px-2.5 py-0.5 text-xs font-extrabold tracking-widest text-primary-300 uppercase"
-      >
+      <app-tag>
         {{
           (session.isGuest() ? 'weeklyPack.guestWeek' : 'weeklyPack.week')
             | transloco: { week: pack.weekNumber }
         }}
-      </span>
+      </app-tag>
       <h2 class="text-lg leading-tight font-bold text-surface-50">
         {{ (session.isGuest() ? 'weeklyPack.guestTitle' : 'weeklyPack.readyTitle') | transloco }}
       </h2>
