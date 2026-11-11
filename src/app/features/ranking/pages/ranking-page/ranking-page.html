@@ -29,10 +29,12 @@
     </div>
 
     @if (pack.isOpened()) {
-      <app-ranking-view-switch
+      <app-select-button
         class="ml-auto shrink-0"
-        [view]="views.view()"
-        (viewChange)="changeView($event)"
+        label="ranking.viewLabel"
+        [options]="viewOptions"
+        [value]="views.view()"
+        (valueChange)="changeView($event)"
       />
     }
   </div>

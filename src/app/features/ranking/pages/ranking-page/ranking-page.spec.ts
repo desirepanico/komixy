@@ -18,7 +18,7 @@ describe('RankingPage', () => {
     html = fixture.nativeElement;
     await fixture.whenStable();
   };
-  const voce = (n: number) => html.querySelectorAll('app-ranking-view-switch button')[n] as HTMLButtonElement;
+  const voce = (n: number) => html.querySelectorAll('app-select-button button')[n] as HTMLButtonElement;
   const apriCarte = async () => {
     voce(1).click();
     await fixture.whenStable();
@@ -50,7 +50,7 @@ describe('RankingPage', () => {
       expect(html.querySelector('app-ranking-locked')).not.toBeNull();
       expect(html.querySelector('app-comic-rank-card')).toBeNull();
       expect(html.querySelector('app-card-fan')).toBeNull();
-      expect(html.querySelector('app-ranking-view-switch')).toBeNull();
+      expect(html.querySelector('app-select-button')).toBeNull();
       expect(html.querySelector('h1')?.textContent).toContain('ranking.title');
       expect(html.querySelector('p')?.textContent).toContain('ranking.subtitleSealed');
     });

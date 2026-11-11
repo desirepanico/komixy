@@ -10,13 +10,14 @@ import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
 import { Hint } from '@shared/components/hint/hint';
 import { Message } from '@shared/components/message/message';
+import { SelectButton } from '@shared/components/select-button/select-button';
 import { RankingEntry } from '@shared/models/ranking-entry.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ranking.service';
 import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card';
 import { RankingLocked } from '../../components/ranking-locked/ranking-locked';
-import { RankingViewSwitch } from '../../components/ranking-view-switch/ranking-view-switch';
+import { SelectButtonOption } from '@shared/models/select-button.model';
 import { RankingView } from '../../models/ranking-view.model';
 import { RankingViewService } from '../../services/ranking-view/ranking-view.service';
 
@@ -29,7 +30,7 @@ import { RankingViewService } from '../../services/ranking-view/ranking-view.ser
   imports: [
     ComicRankCard,
     RankingLocked,
-    RankingViewSwitch,
+    SelectButton,
     CardFan,
     CardSpotlight,
     Message,
@@ -49,6 +50,10 @@ export class RankingPage {
   protected readonly pack = inject(WeeklyPackService);
   protected readonly session = inject(SessionService);
   protected readonly views = inject(RankingViewService);
+  protected readonly viewOptions: readonly SelectButtonOption<RankingView>[] = [
+    { value: 'list', label: 'ranking.list' },
+    { value: 'cards', label: 'ranking.cards' },
+  ];
 
   /** Carta scelta nella vista Carte */
   protected readonly selected = signal<RankingEntry | null>(null);
