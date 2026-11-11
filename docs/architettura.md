@@ -2,7 +2,14 @@
 
 ## Stack
 
-Versioni e librerie sono in `package.json`; l'hosting è su Vercel (single page app, vedi [sviluppo.md](sviluppo.md)). PrimeNG è stato rimosso e non va reintrodotto.
+- Angular 22: componenti standalone, signals, `OnPush` (default), zoneless, control flow nativo
+- Tailwind CSS v4 (tema in `src/tailwind.css`)
+- Transloco per le traduzioni
+- Icone con `@ng-icons/material-symbols`
+- Test con Vitest (`ng test`)
+- Hosting su Vercel (single page app, vedi [sviluppo.md](sviluppo.md))
+
+PrimeNG è stato rimosso e non va reintrodotto.
 
 ## Struttura di `src/app`
 
@@ -45,16 +52,16 @@ Così ogni percorso è scritto in un solo servizio, e pagine e componenti delle 
 
 Un provider dice al sistema di dependency injection di Angular come creare o configurare qualcosa (un servizio, un'opzione, un'operazione da fare all'avvio). Nel progetto ce ne sono di quattro tipi, dal più globale al più locale:
 
-| Tipo                             | Dove                                       | Esempio                                                                       |
-| -------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------- |
-| Configurazione dell'app          | `app.config.ts`                            | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
-| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`             |
-| Servizi `providedIn: 'root'`     | `shared/services`, `features/*/services`   | `ViewportService`, `ToastService`, `AuthService`, `WeeklyRankingService`      |
-| Provider di componente           | `providers: [...]` nel decorator           | `provideIcons({ matXxxOutline })`                                             |
+| Tipo | Dove | Esempio |
+|---|---|---|
+| Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
+| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()` |
+| Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
+| Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
 
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
 
-- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta, e tiene l'attributo `lang` di `<html>` uguale alla lingua attiva (gli screen reader scelgono la voce da lì).
+- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
 - `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
 - `provideBootSkeleton()` toglie lo skeleton di avvio di `index.html` (`#skeleton`, fuori da `<app-root>`) dopo la prima navigazione finita. Finché c'è, il CSS in `index.html` nasconde `<app-root>`: così, mentre arrivano i chunk lazy, non si vede lo sfondo viola vuoto.
 - `provideCore()` (`core/providers/core/core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
@@ -75,19 +82,9 @@ Regole:
 
 ## Accesso e ruoli
 
-- `AuthService` (`features/auth`) tiene l'utente loggato in un signal e, a login e logout, aggiorna `SessionService` (`shared/services/session`), che espone utente e ruolo (`isGuest`) alle altre feature: loro non possono importare `AuthService`.
+- `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
 
 ## Dati
 
 I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale).
-
-## Busta settimanale
-
-La classifica della settimana si scopre aprendo una busta, una sola volta a settimana per utente (e per ospite). Le 10 carte sono le 10 voci della classifica.
-
-- **Dominio** (`shared/services`): `WeeklyPackService` (stato `sealed` o `opened` per utente e settimana, apertura idempotente con una finta API e `TODO` per `POST /weekly-pack/open`, memoria in `localStorage` via `SafeStorage`), `BookmarksService` («In lista»: l'ospite non può aggiungere, riceve un toast che lo invita a iscriversi), `SessionService`, `PackSupportService` (il 3D c'è se il browser ha WebGL 2, che `three` richiede, e l'utente non ha chiesto «riduci movimento»; altrimenti la busta si apre senza animazione e la classifica è sempre l'elenco).
-- **Scena 3D** (`shared/components/pack-scene`): `app-pack-scene` mostra la scena e i controlli (pulsanti, «Vedi dettaglio», «In lista», selettore delle carte). La scena è `PackRenderer` (three), una classe senza Angular, creata solo da `PackRendererLoader` con un `import()`: `three` finisce in un chunk lazy (circa 118 KB trasferiti) scaricato alla prima busta, non nel bundle iniziale. Il resto è separato per poterlo provare senza WebGL: `pack-math` (posizioni e animazioni, funzioni pure), `pack-flow` (le regole del rito: quale passo segue quale), `pack-art` (disegno delle texture su canvas, con i colori letti dai token del tema).
-- **Pagine**: `app-weekly-pack` (feature `discover`) è la busta in Scopri: sigillata, con la finestra a schermo intero (`<dialog>`) per il rito, oppure aperta, con il collegamento a «Rivedi la settimana». `ranking-page` è la pagina «Rivedi la settimana» con le viste Elenco e Carte (`RankingViewService` ricorda la scelta) e il blocco a busta sigillata.
-- **Ospite**: può aprire la busta, ma ogni aggiunta in lista è bloccata: i segnalibri di `app-comic-card` e `app-comic-rank-card` hanno il lucchetto (`locked`) e il tocco mostra l'invito.
-- **Tra frontend e backend**: la busta si considera aperta solo quando il server risponde; la classifica nascosta lo è solo nell'interfaccia, finché l'API la consegna a tutti.

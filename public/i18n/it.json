@@ -9,7 +9,6 @@
   },
   "mangaCard": {
     "coverAlt": "Copertina di {{ title }}",
-    "coverUnavailable": "Copertina di {{ title }} non disponibile",
     "singleVolume": "Volume Unico",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
@@ -31,31 +30,14 @@
   "bookmark": {
     "add": "Aggiungi ai segnalibri",
     "remove": "Rimuovi dai segnalibri",
-<<<<<<< HEAD
-    "locked": "Salvare in lista è riservato agli iscritti",
-    "guestLocked": {
-      "summaryInfo": "Solo per gli iscritti",
-      "detailInfo": "Iscriviti per salvare i volumi nelle tue liste."
-    }
-=======
     "signUp": "Iscriviti per salvare nelle liste"
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "common": {
     "back": "Indietro",
     "releases": "Uscite",
     "library": "Libreria",
     "profile": "Profilo",
-<<<<<<< HEAD
-    "validation": {
-      "required": "Il campo {{ field }} è obbligatorio.",
-      "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
-      "minLength": "Il campo {{ field }} deve contenere almeno {{ minLength }} caratteri.",
-      "generic": "Il campo {{ field }} non è valido."
-    }
-=======
     "inList": "In lista"
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
@@ -70,13 +52,18 @@
   "inputPassword": {
     "show": "Mostra password"
   },
+  "validation": {
+    "required": "Il campo {{ name }} è obbligatorio.",
+    "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
+    "minLength": "Il campo {{ name }} deve contenere almeno {{ min }} caratteri.",
+    "invalid": "Il campo {{ name }} non è valido."
+  },
   "loginVolumes": {
+    "brand": "Komixy",
     "title": "La tua collezione di fumetti e manga, sempre con te",
     "subtitle": "Tieni traccia dei volumi che possiedi, scopri le novità e non perdere nessuna uscita.",
     "coversHint": "Tocca una copertina per scoprirla",
     "coversHintTouch": "Tocca un volume, poi ancora per girarlo",
-    "pauseAnimation": "Ferma animazione",
-    "resumeAnimation": "Riprendi animazione",
     "kind": {
       "manga": "Manga",
       "comic": "Fumetto"
@@ -87,27 +74,8 @@
     "email": "Email",
     "emailPlaceholder": "Inserisci l'email",
     "password": "Password",
-    "passwordPlaceholder": "Inserisci almeno 8 caratteri",
-    "submit": "Accedi",
-    "submitting": "Accesso in corso…",
-    "invalidCredentials": {
-      "summaryKo": "Credenziali non valide",
-      "detailKo": "Email o password non corrette."
-    },
-    "serverError": {
-      "summaryKo": "Accesso non disponibile",
-      "detailKo": "Impossibile accedere, riprova tra poco."
-    },
-    "demoHint": "Demo: demo@example.com / password1",
-    "forgotPassword": "Password dimenticata?",
-    "or": "oppure continua con",
-    "google": "Continua con Google",
-    "apple": "Continua con Apple",
-    "guest": "Entra come ospite",
-    "guestHint": "Come ospite puoi solo guardare, non salvare né modificare.",
-    "noAccount": "Non hai un account?",
-    "register": "Registrati",
-    "backToLogin": "Torna all'accesso"
+    "passwordPlaceholder": "Inserisci almeno 6 caratteri",
+    "submit": "Accedi"
   },
   "releases": {
     "subtitle": "I prossimi volumi in uscita",
@@ -130,89 +98,6 @@
     "comingSoon": "Dettaglio del fumetto in arrivo",
     "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
   },
-<<<<<<< HEAD
-  "forgotPassword": {
-    "title": "Password dimenticata",
-    "comingSoonHint": "Qui potrai impostare una nuova password."
-  },
-  "register": {
-    "title": "Registrati",
-    "comingSoonHint": "Qui potrai creare il tuo account."
-  },
-  "toast": {
-    "close": "Chiudi notifica"
-  },
-  "weeklyPack": {
-    "week": "Settimana {{ week }}",
-    "tagline": "BOOSTER · {{ count }} CARTE",
-    "openNow": "Apri la busta",
-    "skip": "Salta l'animazione",
-    "dialogTitle": "Busta della settimana",
-    "close": "Chiudi",
-    "counter": "Carte girate: {{ revealed }} / {{ total }}",
-    "pickCard": "Scegli una carta",
-    "cardLabel": "Carta {{ rank }}: {{ title }}",
-    "sealed": {
-      "title": "La tua busta è pronta",
-      "titleGuest": "Apri la busta della settimana",
-      "description": "{{ count }} carte: i volumi più letti della settimana. Aprila per scoprire la classifica.",
-      "descriptionGuest": "Puoi aprirla anche senza account. Per salvare le carte in lista serve iscriversi."
-    },
-    "opened": {
-      "title": "Busta della settimana aperta",
-      "nextPackOne": "Nuova busta tra 1 giorno",
-      "nextPackOther": "Nuova busta tra {{ days }} giorni",
-      "review": "Rivedi la settimana"
-    },
-    "guest": {
-      "signUp": "Iscriviti",
-      "note": "Come ospite non puoi salvare nelle liste."
-    },
-    "hint": {
-      "tear": "Trascina verso destra sul bordo superiore per strappare la busta",
-      "opening": "Si apre…",
-      "deck": "Tocca la carta per girarla",
-      "shown": "Tocca per continuare",
-      "shownRare": "Carta rara! Tocca per continuare",
-      "collection": "Raccolta completa: tocca una carta per vederla",
-      "inspecting": "#{{ rank }} {{ title }}"
-    },
-    "action": {
-      "tear": "Apri la busta",
-      "flip": "Gira la carta",
-      "next": "Prossima carta",
-      "showAll": "Vedi tutte",
-      "finish": "Rivedi la settimana",
-      "backToCollection": "Torna alla raccolta",
-      "detail": "Vedi dettaglio",
-      "addToList": "In lista"
-    },
-    "openError": {
-      "summaryKo": "Apertura non riuscita",
-      "detailKo": "Non è stato possibile aprire la busta, riprova tra poco."
-    },
-    "sceneUnavailable": {
-      "summaryWarn": "Animazione non disponibile",
-      "detailWarn": "La busta è stata aperta senza animazione."
-    },
-    "cardSummary": "Carta {{ rank }}: {{ title }}, di {{ author }}. {{ details }}."
-  },
-  "rankingPage": {
-    "title": "Rivedi la settimana",
-    "view": {
-      "label": "Vista",
-      "list": "Elenco",
-      "cards": "Carte"
-    },
-    "sealed": {
-      "title": "La classifica si svela aprendo la busta",
-      "description": "Finché la busta è sigillata la classifica non è consultabile."
-    },
-    "sceneUnavailable": {
-      "summaryWarn": "Vista Carte non disponibile",
-      "detailWarn": "Ti mostro la classifica come elenco."
-    }
-=======
   "guestNotice": {
     "list": "Come ospite non puoi salvare nelle liste.",
     "detail": "Come ospite puoi vedere il dettaglio, ma non salvare nelle liste.",
@@ -273,6 +158,5 @@
     "linkCopied": "Link copiato",
     "notFound": "Fumetto non trovato",
     "notFoundHint": "Questo volume non esiste o non è più disponibile."
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   }
 }

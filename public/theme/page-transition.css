@@ -1,5 +1,8 @@
-/* La pagina ha view-transition-name "page", la nav in basso "mobile-nav" (resta ferma).
-   La direzione arriva da <html data-nav-direction="forward|back"> (core/providers/nav-direction). */
+/* =========================================
+   TRANSIZIONE TRA LE PAGINE (mobile/tablet)
+   La pagina ha view-transition-name "page", la nav in basso "mobile-nav" (resta ferma).
+   La direzione arriva da <html data-nav-direction="forward|back"> (core/navigation/nav-direction.ts).
+   ========================================= */
 
 @keyframes page-out-left {
   to {

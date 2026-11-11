@@ -19,31 +19,14 @@
   "bookmark": {
     "add": "Add to bookmarks",
     "remove": "Remove from bookmarks",
-<<<<<<< HEAD
-    "locked": "Saving to lists is for registered users only",
-    "guestLocked": {
-      "summaryInfo": "Registered users only",
-      "detailInfo": "Sign up to save volumes to your lists."
-    }
-=======
     "signUp": "Sign up to save to your lists"
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "common": {
     "back": "Back",
     "releases": "Releases",
     "library": "Library",
     "profile": "Profile",
-<<<<<<< HEAD
-    "validation": {
-      "required": "The {{ field }} field is required.",
-      "email": "Enter a valid email address, for example mario@gmail.com.",
-      "minLength": "The {{ field }} field must be at least {{ minLength }} characters long.",
-      "generic": "The {{ field }} field is not valid."
-    }
-=======
     "inList": "In list"
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -51,7 +34,6 @@
   },
   "mangaCard": {
     "coverAlt": "Cover of {{ title }}",
-    "coverUnavailable": "Cover of {{ title }} unavailable",
     "singleVolume": "Single Volume",
     "volumeLabel": "Vol.",
     "volume": "Vol. {{ volume }}",
@@ -70,13 +52,18 @@
   "inputPassword": {
     "show": "Show password"
   },
+  "validation": {
+    "required": "The {{ name }} field is required.",
+    "email": "Enter a valid email address, for example mario@gmail.com.",
+    "minLength": "The {{ name }} field must be at least {{ min }} characters long.",
+    "invalid": "The {{ name }} field is not valid."
+  },
   "loginVolumes": {
+    "brand": "Komixy",
     "title": "Your comic and manga collection, always with you",
     "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release.",
     "coversHint": "Tap a cover to discover it",
     "coversHintTouch": "Tap a volume, then again to flip it",
-    "pauseAnimation": "Pause animation",
-    "resumeAnimation": "Resume animation",
     "kind": {
       "manga": "Manga",
       "comic": "Comic"
@@ -87,27 +74,8 @@
     "email": "Email",
     "emailPlaceholder": "Enter your email",
     "password": "Password",
-    "passwordPlaceholder": "Enter at least 8 characters",
-    "submit": "Sign in",
-    "submitting": "Signing in…",
-    "invalidCredentials": {
-      "summaryKo": "Invalid credentials",
-      "detailKo": "Incorrect email or password."
-    },
-    "serverError": {
-      "summaryKo": "Sign-in unavailable",
-      "detailKo": "Unable to sign in, please try again shortly."
-    },
-    "demoHint": "Demo: demo@example.com / password1",
-    "forgotPassword": "Forgot password?",
-    "or": "or continue with",
-    "google": "Continue with Google",
-    "apple": "Continue with Apple",
-    "guest": "Continue as guest",
-    "guestHint": "As a guest you can only browse, not save or edit.",
-    "noAccount": "Don't have an account?",
-    "register": "Sign up",
-    "backToLogin": "Back to sign in"
+    "passwordPlaceholder": "Enter at least 6 characters",
+    "submit": "Sign in"
   },
   "releases": {
     "subtitle": "Upcoming volumes",
@@ -130,89 +98,6 @@
     "comingSoon": "Comic details coming soon",
     "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
   },
-<<<<<<< HEAD
-  "forgotPassword": {
-    "title": "Forgot password",
-    "comingSoonHint": "Here you will be able to set a new password."
-  },
-  "register": {
-    "title": "Sign up",
-    "comingSoonHint": "Here you will be able to create your account."
-  },
-  "toast": {
-    "close": "Close notification"
-  },
-  "weeklyPack": {
-    "week": "Week {{ week }}",
-    "tagline": "BOOSTER · {{ count }} CARDS",
-    "openNow": "Open the pack",
-    "skip": "Skip the animation",
-    "dialogTitle": "Pack of the week",
-    "close": "Close",
-    "counter": "Cards flipped: {{ revealed }} / {{ total }}",
-    "pickCard": "Pick a card",
-    "cardLabel": "Card {{ rank }}: {{ title }}",
-    "sealed": {
-      "title": "Your pack is ready",
-      "titleGuest": "Open the pack of the week",
-      "description": "{{ count }} cards: the most read volumes of the week. Open it to reveal the ranking.",
-      "descriptionGuest": "You can open it without an account. To save cards to a list you need to sign up."
-    },
-    "opened": {
-      "title": "Pack of the week opened",
-      "nextPackOne": "New pack in 1 day",
-      "nextPackOther": "New pack in {{ days }} days",
-      "review": "Review the week"
-    },
-    "guest": {
-      "signUp": "Sign up",
-      "note": "As a guest you can't save to lists."
-    },
-    "hint": {
-      "tear": "Drag to the right along the top edge to tear the pack open",
-      "opening": "Opening…",
-      "deck": "Tap the card to flip it",
-      "shown": "Tap to continue",
-      "shownRare": "Rare card! Tap to continue",
-      "collection": "Collection complete: tap a card to see it",
-      "inspecting": "#{{ rank }} {{ title }}"
-    },
-    "action": {
-      "tear": "Open the pack",
-      "flip": "Flip the card",
-      "next": "Next card",
-      "showAll": "Show all",
-      "finish": "Review the week",
-      "backToCollection": "Back to the collection",
-      "detail": "See details",
-      "addToList": "Add to list"
-    },
-    "openError": {
-      "summaryKo": "Could not open the pack",
-      "detailKo": "The pack could not be opened, please try again shortly."
-    },
-    "sceneUnavailable": {
-      "summaryWarn": "Animation unavailable",
-      "detailWarn": "The pack was opened without the animation."
-    },
-    "cardSummary": "Card {{ rank }}: {{ title }} by {{ author }}. {{ details }}."
-  },
-  "rankingPage": {
-    "title": "Review the week",
-    "view": {
-      "label": "View",
-      "list": "List",
-      "cards": "Cards"
-    },
-    "sealed": {
-      "title": "The ranking is revealed when you open the pack",
-      "description": "While the pack is sealed the ranking can't be viewed."
-    },
-    "sceneUnavailable": {
-      "summaryWarn": "Cards view unavailable",
-      "detailWarn": "Showing the ranking as a list instead."
-    }
-=======
   "guestNotice": {
     "list": "As a guest you can't save to your lists.",
     "detail": "As a guest you can see the details, but you can't save to your lists.",
@@ -273,6 +158,5 @@
     "linkCopied": "Link copied",
     "notFound": "Comic not found",
     "notFoundHint": "This volume doesn't exist or is no longer available."
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   }
 }

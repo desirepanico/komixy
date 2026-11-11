@@ -33,14 +33,10 @@ Se la modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti 
 Albero completo delle cartelle ed esempio di feature in `docs/struttura-progetto.md`. In breve, `src/app` ha tre aree:
 
 - **core**: `guards`, `interceptors`, `layout`, `providers` (provider di avvio). Non importa da `features`. Eccezione: `userRoleGuard` usa `AuthService` di `features/auth`, a senso unico.
-<<<<<<< HEAD
-- **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Eccezione, a senso unico: i servizi di navigazione (`<nome>-navigation`).
-=======
 - **features**: una cartella per area (`pages/`, `components/`, `models/`, `services/`, solo quelle che servono). Una feature non importa da un'altra. Unica eccezione, a senso unico: i servizi di navigazione (`<nome>-navigation`).
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 - **shared**: `components`, `directives`, `models`, `services`, `constants` (tutte le costanti dichiarate con `const`, file `*.const.ts`) usati da più feature o da `core`. Non dipende da `features` né da `core`.
 
-Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree (e `@testing/*` negli spec, per gli aiuti di `src/testing`); percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`; funzionamento degli spec in `docs/sviluppo.md`). Nuovi componenti riutilizzabili: skill `shared-component`.
+Import: alias `@core/*`, `@shared/*`, `@features/*` per attraversare le aree; percorsi relativi dentro la stessa area o feature. Le dipendenze vanno in una direzione: `features` → `shared` e `core`. Se due feature condividono qualcosa, spostalo in `shared`. Ogni file `.ts` sta in una cartella propria insieme al suo `*.spec.ts` (regole in `.claude/rules/angular.md`, sezione "Cartelle", e `test.md`; funzionamento degli spec in `docs/sviluppo.md`). Nuovi componenti riutilizzabili: skill `shared-component`.
 
 Per aggiungere una feature nuova:
 
@@ -52,7 +48,7 @@ Per aggiungere una feature nuova:
 ## Convenzioni
 
 - **PrimeNG è stato rimosso**: non reintrodurlo. Usa elementi HTML nativi + classi Tailwind.
-- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`); i loghi dei marchi (Google, Apple) da `@ng-icons/simple-icons` (`simpleGoogle`, `simpleApple`), mai SVG scritti a mano nei template.
+- Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`).
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
 - Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume e rimanda, `docs/` spiega ma non definisce regole.
 - Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.

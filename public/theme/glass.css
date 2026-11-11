@@ -1,10 +1,33 @@
+/* =========================================================
+    KOMIXY — GLASS SYSTEM
+    Mobile + Desktop
+    ========================================================= */
+
+/* =========================================================
+   VARIABILI
+   ========================================================= */
+
 :root {
   --glass-blur: 20px;
   --glass-saturation: 140%;
   --glass-shadow: 55%;
 }
 
-/* Default: card, pannelli, sezioni */
+/* =========================================================
+   GLASS
+   ========================================================= */
+
+/*
+  GLASS — DEFAULT
+
+  USALO PER:
+  - Card manga
+  - Card collezione
+  - Pannelli
+  - Sezioni
+  - Elementi principali
+*/
+
 .glass {
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
@@ -15,7 +38,21 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 8%, transparent);
 }
 
-/* Più leggero: filtri, toolbar, badge */
+/* =========================================================
+   GLASS LIGHT
+   ========================================================= */
+
+/*
+  GLASS LIGHT
+
+  USALO PER:
+  - Filtri
+  - Toolbar
+  - Badge
+  - Piccoli pannelli
+  - Elementi secondari
+*/
+
 .glass-light {
   --glass-blur: 14px;
   --glass-saturation: 130%;
@@ -30,7 +67,22 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 6%, transparent);
 }
 
-/* Più forte: navbar, menu, drawer, modal */
+/* =========================================================
+   GLASS STRONG
+   ========================================================= */
+
+/*
+  GLASS STRONG
+
+  USALO PER:
+  - Navbar
+  - Menu
+  - Drawer
+  - Modal
+  - Dialog
+  - Popup
+*/
+
 .glass-strong {
   --glass-blur: 28px;
   --glass-saturation: 150%;
@@ -45,9 +97,9 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
 }
 
-/* Come .glass-strong ma solo da 768px: sotto la card della login non esiste e il form sta sullo sfondo */
-@media (min-width: 48rem) {
-  .glass-strong-from-md {
+/* Come .glass-strong ma solo da 1024px: sotto la card della login non esiste e il form sta sullo sfondo */
+@media (min-width: 64rem) {
+  .glass-strong-from-lg {
     --glass-blur: 28px;
     --glass-saturation: 150%;
     --glass-shadow: 70%;
@@ -62,12 +114,15 @@
   }
 }
 
-/* Browser senza backdrop-filter: niente sfocatura */
+/* =========================================================
+   serve a gestire la compatibilità con i browser che non supportano l'effetto di sfocatura dello sfondo (backdrop-filter)
+   ========================================================= */
+
 @supports not (backdrop-filter: blur(1px)) {
   .glass,
   .glass-light,
   .glass-strong,
-  .glass-strong-from-md {
+  .glass-strong-from-lg {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

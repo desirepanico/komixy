@@ -19,29 +19,15 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-<<<<<<< HEAD
-│       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-toast, app-error-message, app-field-wrapper, app-input-text, app-pack-scene (scena 3D della busta, con le cartelle pack-math/, pack-flow/, pack-art/, pack-renderer/, pack-renderer-loader/), ...
-│       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
-│       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, pack, session-user, user-role, nav-item, app-routes, button)
-│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, session/, bookmarks/, safe-storage/, pack-support/, viewport/, mobile-swipe/, toast/, transloco-http-loader/)
-├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom), image-stub/ (immagini che si caricano o falliscono subito)
-=======
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-pack-card, app-card-fan, app-card-spotlight, app-guest-notice, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
 │       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/
-├── img/
-│   ├── covers/                copertine della login
-│   ├── pack/                  pack-sealed.webp e pack-opened.webp: la busta, ritagliata dalla scena 3D (usate da app-weekly-pack)
-│   └── logo/                  komixy-logo.png (solo la K-pianeta, da cui è ricavato `favicon.ico`), komixy-logo-wordmark.png (K-pianeta con «omixy», usato da app-brand; per sfondi scuri)
-├── favicon.ico                favicon: il logo `komixy-logo.png` intero (K, anello e stella) senza il bordo bianco esterno, in un cerchio `surface-950` senza bordo, così il logo può essere più grande
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 ├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
@@ -78,8 +64,7 @@ features/auth/
 │   │   └── login-form.html
 │   └── login-volumes/                 pannello di marca della login (copertine interattive e bagliori)
 │       ├── login-volumes.ts
-│       ├── login-volumes.html
-│       └── login-volumes.css            keyframes dei volumi
+│       └── login-volumes.html
 ├── models/
 │   └── auth.model.ts                tipi e interfacce della feature (LoggedUser, LoginCredentials)
 ├── routes/
@@ -99,8 +84,8 @@ features/auth/
 ```
 
 - **pages**: una cartella per pagina, collegata a una rotta in `routes/<nome>.routes.ts` della feature. Contiene solo composizione e stato della pagina; il markup ripetuto va in `components`.
-- **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, più `<nome>.css` solo per i keyframe del componente; selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
-- **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec obbligatorio; uno spec accanto c'è solo se l'enum ha regole da verificare, come `app-routes.model.spec.ts`). Una funzione collegata sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
+- **components**: componenti della feature, un componente per cartella (`<nome>.ts` + `<nome>.html`, selector `app-<nome>`). Se servono a più feature, vanno in `shared/components`.
+- **models**: `*.model.ts`, solo tipi, interfacce ed enum (senza codice da eseguire, quindi senza spec obbligatorio; uno spec accanto c'è solo se l'enum ha regole da verificare, come `app-routes.model.spec.ts`). Una funzione collegata (es. `editionSeverity()`) sta in un file a parte, con il suo spec. Se un modello serve a più feature, vai in `shared/models` (es. `ComicItem`).
 - **routes**: `<nome>.routes.ts` (`export const NOME_ROUTES: Routes`): le rotte della feature, relative alla sua radice. In coppia con il servizio di navigazione.
 - **services/<nome>-navigation**: il servizio di navigazione, uno per ogni feature (anche `not-found`, `releases`, `library` e `profile`), con **solo le rotte della propria feature**: percorsi per i template (`rankingNavigation.rankingLink`), metodi `goToXxx()` per il codice, `*UrlTree()` per i guard. Per andare in un'altra feature si inietta il suo servizio (è l'unico import ammesso tra feature). Pagine e componenti non scrivono percorsi né usano `Router`. Regole in `.claude/rules/angular.md`, sezione "Routing".
 - **services**: `*.service.ts`, `providedIn: 'root'`, con `inject()`. Se il servizio serve a più feature, vai in `shared/services` (es. `WeeklyRankingService`).
@@ -116,7 +101,7 @@ Per aggiungere una feature nuova:
 
 ## Dove vanno le altre cose
 
-- **shared/constants**: costanti condivise, tre file `*.const.ts` e nessuna sottocartella: `navigation.const.ts` (ordine delle pagine principali e gesti di swipe), `ui.const.ts` (colori dei bottoni, stile del tag per tipo di edizione, skeleton di avvio), `form.const.ts` (validazione). Ci stanno tutte le costanti dichiarate con `const`, anche quelle di una sola area. Regole in `.claude/rules/costanti.md`.
+- **shared/constants**: costanti condivise, tre file `*.const.ts` e nessuna sottocartella: `navigation.const.ts` (ordine delle pagine principali e gesti di swipe), `ui.const.ts` (colori dei bottoni, skeleton di avvio), `form.const.ts` (validazione). Ci stanno tutte le costanti dichiarate con `const`, anche quelle di una sola area. Regole in `.claude/rules/costanti.md`.
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
 - **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
 - **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.

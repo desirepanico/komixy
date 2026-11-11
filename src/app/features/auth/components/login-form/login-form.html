@@ -1,102 +1,21 @@
-<form class="flex flex-col gap-5 max-sm:gap-(--s2)" [formRoot]="form">
+<form class="flex flex-col gap-5" [formRoot]="form">
   <app-input-text
     label="login.email"
     inputId="login-email"
     type="email"
     autocomplete="email"
     placeholder="login.emailPlaceholder"
-    [field]="form.email"
+    [formField]="form.email"
   />
 
   <app-input-password
     label="login.password"
     inputId="login-password"
     placeholder="login.passwordPlaceholder"
-    [field]="form.password"
+    [formField]="form.password"
   />
 
-  <a
-    appButton
-    variant="text"
-    [underline]="true"
-    class="-mt-2 self-end px-1 text-sm max-sm:-mt-1"
-    [routerLink]="navigation.forgotPasswordLink"
-  >
-    {{ 'login.forgotPassword' | transloco }}
-  </a>
-
-  <button
-    appButton
-    type="submit"
-    [rounded]="true"
-    [disabled]="form().submitting()"
-    class="mt-2 w-full"
-  >
-    <ng-icon name="matLoginOutline" size="20" aria-hidden="true" />
-    {{ (form().submitting() ? 'login.submitting' : 'login.submit') | transloco }}
+  <button appButton type="submit" [rounded]="true" class="mt-2 w-full">
+    {{ 'login.submit' | transloco }}
   </button>
-
-  <p class="text-center text-xs text-surface-400">{{ 'login.demoHint' | transloco }}</p>
 </form>
-
-<div
-  class="my-6 max-sm:my-(--s2) flex items-center gap-3 text-sm max-sm:text-xs text-surface-400"
-  role="separator"
->
-  <span class="h-px flex-1 bg-surface-700"></span>
-  {{ 'login.or' | transloco }}
-  <span class="h-px flex-1 bg-surface-700"></span>
-</div>
-
-<div class="flex justify-center gap-4">
-  @for (provider of socialProviders; track provider) {
-    <button
-      appButton
-      type="button"
-      variant="outlined"
-      severity="secondary"
-      [iconOnly]="true"
-      [rounded]="true"
-      [attr.aria-label]="'login.' + provider | transloco"
-      [attr.title]="'login.' + provider | transloco"
-      (click)="socialLogin.emit(provider)"
-    >
-      <ng-icon
-        [name]="provider === 'google' ? 'simpleGoogle' : 'simpleApple'"
-        size="20"
-        aria-hidden="true"
-      />
-    </button>
-  }
-</div>
-
-<div class="mt-4 hidden text-center md:block">
-  <button
-    appButton
-    type="button"
-    variant="text"
-    [rounded]="true"
-    class="h-11 justify-center gap-2 px-4 text-sm font-semibold"
-    aria-describedby="login-guest-hint"
-    (click)="guestAccess.emit()"
-  >
-    <ng-icon name="matVisibilityOutline" size="20" aria-hidden="true" />
-    {{ 'login.guest' | transloco }}
-  </button>
-  <p id="login-guest-hint" class="mt-2 text-center text-xs text-surface-400">
-    {{ 'login.guestHint' | transloco }}
-  </p>
-</div>
-
-<p class="mt-6 max-sm:mt-(--s1) text-center text-sm text-surface-300">
-  {{ 'login.noAccount' | transloco }}
-  <a
-    appButton
-    variant="text"
-    [underline]="true"
-    class="px-1 font-semibold"
-    [routerLink]="navigation.registerLink"
-  >
-    {{ 'login.register' | transloco }}
-  </a>
-</p>

@@ -1,4 +1,7 @@
-/* Scegliendo un suggerimento (email, password) il browser colora il campo di azzurro e forza il
+/* =========================================
+   RIEMPIMENTO AUTOMATICO DEL BROWSER
+   =========================================
+   Scegliendo un suggerimento (email, password) il browser colora il campo di azzurro e forza il
    testo nero, fuori dal tema scuro. Quei colori del browser sono !important e non si sovrascrivono:
    una transition lunghissima lascia il campo com'era, e il colore del testo si fissa a parte. */
 input:-webkit-autofill,

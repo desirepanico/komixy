@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { provideRouter, RouterLink } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Button } from './button';
 
 @Component({
-  imports: [Button, RouterLink],
+  imports: [Button],
   template: `
     <button id="pieno" appButton>Ok</button>
     <button id="bordo" appButton variant="outlined" [rounded]="true">Ok</button>
@@ -26,26 +25,13 @@ import { Button } from './button';
     <button id="accento" appButton severity="accent">Ok</button>
     <button id="piccolo" appButton size="sm">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
-    <a id="sottolineato" appButton variant="text" [underline]="true" href="/x">Vai</a>
-    <a
-      id="rotta-nuova-scheda"
-      appButton
-      variant="text"
-      [underline]="true"
-      routerLink="/pagina"
-      target="_blank"
-      >Apri</a
-    >
   `,
 })
 class Host {}
 
 describe('Button', () => {
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Host],
-      providers: [provideRouter([])],
-    }).compileComponents();
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
   });
 
   const el = async (id: string) => {
@@ -113,26 +99,6 @@ describe('Button', () => {
     expect(link.textContent?.trim()).toBe('Vai');
   });
 
-<<<<<<< HEAD
-  it('senza underline non è sottolineato', async () => {
-    expect((await el('testo')).classList).not.toContain('underline');
-  });
-
-  it('con underline si sottolinea alla selezione (mouse, tastiera, tocco) e non a riposo', async () => {
-    const classi = (await el('sottolineato')).classList;
-    expect(classi).not.toContain('underline');
-    expect(classi).toContain('hover:underline');
-    expect(classi).toContain('focus-visible:underline');
-    expect(classi).toContain('active:underline');
-    expect(classi).toContain('underline-offset-4');
-  });
-
-  it('con underline e un link può aprirsi in un’altra scheda', async () => {
-    const link = (await el('rotta-nuova-scheda')) as HTMLAnchorElement;
-    expect(link.tagName).toBe('A');
-    expect(link.getAttribute('href')).toBe('/pagina');
-    expect(link.getAttribute('target')).toBe('_blank');
-=======
   it('la variante accent è viola scuro con testo chiaro', async () => {
     const classi = (await el('accento')).classList;
     expect(classi).toContain('bg-primary-600');
@@ -142,6 +108,5 @@ describe('Button', () => {
   it('la dimensione sm è più bassa di quella di default', async () => {
     expect((await el('piccolo')).classList).toContain('h-9');
     expect((await el('pieno')).classList).toContain('h-11');
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   });
 });

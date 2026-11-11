@@ -1,7 +1,14 @@
+@let name = label() | transloco;
 <label [attr.for]="inputId()" class="text-sm font-semibold text-surface-100">
-  {{ name() }}
+  {{ name }}
 </label>
 <ng-content />
-@if (errors().length) {
-  <app-error-message [id]="inputId() + '-error'" [errors]="errors()" [field]="fieldName()" />
+@if (error(); as error) {
+  <!-- Nel messaggio il nome sta a metà frase: iniziale minuscola («Il campo email è obbligatorio») -->
+  @let nameInMessage = name.charAt(0).toLowerCase() + name.slice(1);
+  <!-- L'icona affianca il rosso: l'errore non si riconosce solo dal colore -->
+  <p [id]="inputId() + '-error'" class="flex items-start gap-1.5 text-sm text-red-400" role="alert">
+    <ng-icon name="matErrorOutline" size="18" class="mt-px shrink-0" aria-hidden="true" />
+    <span>{{ error.key | transloco: { name: nameInMessage, min: error.min } }}</span>
+  </p>
 }

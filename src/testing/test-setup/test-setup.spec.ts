@@ -7,10 +7,6 @@ describe('test-setup', () => {
     expect(typeof document.createElement('div').scrollBy).toBe('function');
   });
 
-  it('il canvas non disegna: getContext restituisce null senza errori', () => {
-    expect(document.createElement('canvas').getContext('2d')).toBeNull();
-  });
-
   it('i finti osservatori non fanno nulla ma si possono usare', () => {
     const osservatore = new ResizeObserver(() => {});
     expect(() => {

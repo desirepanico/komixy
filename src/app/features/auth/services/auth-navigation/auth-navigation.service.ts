@@ -4,18 +4,13 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { safeReturnUrl } from '../../utils/safe-return-url/safe-return-url';
 
+/** Rotte della feature auth: il login. Per andare altrove usa il servizio dell'altra feature. */
 @Injectable({ providedIn: 'root' })
 export class AuthNavigationService {
   private readonly router = inject(Router);
   private readonly discoverNavigation = inject(DiscoverNavigationService);
 
   public readonly loginLink: readonly string[] = ['/', AppRoutes.Login];
-  public readonly registerLink: readonly string[] = ['/', AppRoutes.Login, AppRoutes.Register];
-  public readonly forgotPasswordLink: readonly string[] = [
-    '/',
-    AppRoutes.Login,
-    AppRoutes.ForgotPassword,
-  ];
 
   /** Percorso del login che ricorda la pagina richiesta, per i guard. */
   public loginUrlTree(returnUrl: string): UrlTree {

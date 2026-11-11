@@ -19,10 +19,6 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('contiene i messaggi toast una sola volta', () => {
-    expect(fixture.nativeElement.querySelectorAll('app-toast')).toHaveLength(1);
-  });
-
   it("contiene l'area dove il router mostra le pagine", () => {
     expect(fixture.nativeElement.querySelector('router-outlet')).not.toBeNull();
   });

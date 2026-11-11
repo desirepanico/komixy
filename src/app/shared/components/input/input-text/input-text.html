@@ -1,19 +1,16 @@
-@let inputClass =
-  'w-full rounded-xl border border-surface-700 bg-surface-950/60 px-4 py-2.5 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400 disabled:cursor-not-allowed disabled:opacity-50';
-
-<app-field-wrapper
-  [label]="label()"
-  [inputId]="inputId()"
-  [errors]="showError() ? field()().errors() : []"
->
+<app-field-wrapper [label]="label()" [inputId]="inputId()" [errors]="visibleErrors()">
   <input
-    [type]="type()"
+    #field
     [id]="inputId()"
-    [formField]="field()"
+    [type]="type()"
+    [value]="value()"
+    [disabled]="disabled()"
     [placeholder]="placeholder() | transloco"
-    [attr.aria-invalid]="showError()"
     [attr.autocomplete]="autocomplete() || null"
+    [attr.aria-invalid]="showError()"
     [attr.aria-describedby]="showError() ? inputId() + '-error' : null"
-    [class]="inputClass"
+    (input)="value.set(field.value)"
+    (blur)="markAsTouched()"
+    class="w-full rounded-xl border border-surface-700 bg-surface-950/60 px-4 py-2.5 text-sm text-surface-50 placeholder:text-surface-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-invalid:border-red-400"
   />
 </app-field-wrapper>

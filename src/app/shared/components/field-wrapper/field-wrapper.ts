@@ -1,24 +1,35 @@
 import { Component, computed, input } from '@angular/core';
 import { ValidationError } from '@angular/forms/signals';
-import { translateSignal } from '@jsverse/transloco';
-import { ErrorMessage } from '../error-message/error-message';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matErrorOutline } from '@ng-icons/material-symbols/outline';
+import { VALIDATION_FALLBACK_MESSAGE, VALIDATION_MESSAGES } from '../../constants/form.const';
 
+/**
+ * Nome del campo e messaggio d'errore attorno a un controllo, che si passa come contenuto.
+ * `label` è una chiave Transloco; `inputId` è l'id del controllo, così l'etichetta lo seleziona e il
+ * controllo punta al messaggio con `aria-describedby`.
+ * `errors` sono gli errori da mostrare (vuoti = nessun messaggio): il wrapper scrive il primo con il
+ * testo del suo tipo (`VALIDATION_MESSAGES`) e il nome del campo, uguale per tutti i form.
+ * Lo usano `app-input-text` e `app-input-password`: un nuovo tipo di campo lo usa allo stesso modo.
+ */
 @Component({
   selector: 'app-field-wrapper',
-  imports: [ErrorMessage],
+  imports: [TranslocoPipe, NgIcon],
   templateUrl: './field-wrapper.html',
+  providers: [provideIcons({ matErrorOutline })],
   host: { class: 'flex flex-col gap-2' },
 })
 export class FieldWrapper {
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
-  public readonly errors = input<readonly ValidationError[]>([]);
+  public readonly errors = input<readonly ValidationError.WithOptionalFieldTree[]>([]);
 
-  protected readonly name = translateSignal(this.label);
-
-  // Nel messaggio il nome sta a metà frase: iniziale minuscola («Il campo email è obbligatorio»)
-  protected readonly fieldName = computed(() => {
-    const name = this.name();
-    return name.charAt(0).toLowerCase() + name.slice(1);
+  /** Chiave del messaggio e lunghezza minima richiesta (solo per `minLength`) */
+  protected readonly error = computed(() => {
+    const error = this.errors()[0];
+    if (!error) return null;
+    const min = 'minLength' in error && typeof error.minLength === 'number' ? error.minLength : 0;
+    return { key: VALIDATION_MESSAGES[error.kind] ?? VALIDATION_FALLBACK_MESSAGE, min };
   });
 }

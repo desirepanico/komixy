@@ -1,5 +1,10 @@
 import { Component, computed, input } from '@angular/core';
 
+/**
+ * Bottone tondo a due stati (ToggleButton di Figma), per azioni come il segnalibro. Si applica a un `button`;
+ * il contenuto è l'icona e l'`aria-label` lo passa chi lo usa:
+ *   <button appToggleButton type="button" [pressed]="salvato()" aria-label="..."><ng-icon .../></button>
+ */
 @Component({
   selector: 'button[appToggleButton]',
   host: {
@@ -9,6 +14,7 @@ import { Component, computed, input } from '@angular/core';
   templateUrl: './toggle-button.html',
 })
 export class ToggleButton {
+  /** true = attivo (sfondo viola scuro e bordo viola) */
   public readonly pressed = input<boolean>(false);
 
   protected readonly classes = computed(() => {

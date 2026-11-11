@@ -17,8 +17,3 @@ Le regole sono in `.claude/rules/i18n.md`. Qui il funzionamento.
 - dopo ogni modifica a un file in `public/i18n/` (hook `PostToolUse`).
 
 Per lanciarlo a mano: `node .claude/hooks/check-i18n.mjs`.
-
-## Chiavi dei messaggi
-
-- **Validazione dei form**: `common.validation.<kind>` (es. `required`, `minLength`), con `{{ field }}` per il nome del campo e le proprietà dell'errore come parametri (`{{ minLength }}`). `common.validation.generic` vale per i tipi di errore senza testo.
-- **Toast**: titolo e dettaglio sono due chiavi passate per intero a `ToastService` (`toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo')`). I nomi seguono lo schema `<nome>.summaryOk` / `<nome>.detailOk` (`success`), `summaryKo` / `detailKo` (`error`), `summaryInfo` / `detailInfo` (`info`), `summaryWarn` / `detailWarn` (`warn`); i valori variabili si passano come terzo argomento (`toastService.success('library.summaryOk', 'library.detailOk', { title: 'One Piece' })` per «{{ title }}»). Un messaggio con più esiti di errore ha un nome per ciascuno (`login.invalidCredentials`, `login.serverError`).

@@ -24,11 +24,6 @@ describe('AuthNavigationService', () => {
     expect(router.serializeUrl(service.loginUrlTree('/admin'))).toBe('/login?returnUrl=%2Fadmin');
   });
 
-  it('espone i link di registrazione e recupero password', () => {
-    expect(service.registerLink).toEqual(['/', 'login', 'register']);
-    expect(service.forgotPasswordLink).toEqual(['/', 'login', 'forgot-password']);
-  });
-
   it('va al login', async () => {
     await service.goToLogin();
     expect(router.navigate).toHaveBeenCalledWith(['/', 'login']);

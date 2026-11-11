@@ -129,16 +129,6 @@ describe('routes', () => {
         () => TestBed.inject(ProfileNavigationService).profileLink,
         'app-profile-page',
       ],
-      [
-        'auth → registerLink',
-        () => TestBed.inject(AuthNavigationService).registerLink,
-        'app-register-page',
-      ],
-      [
-        'auth → forgotPasswordLink',
-        () => TestBed.inject(AuthNavigationService).forgotPasswordLink,
-        'app-forgot-password-page',
-      ],
       ['auth → loginLink', () => TestBed.inject(AuthNavigationService).loginLink, 'app-login-page'],
       [
         'not-found → notFoundLink',

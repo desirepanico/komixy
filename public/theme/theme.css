@@ -1,8 +1,12 @@
+/* =========================================
+   TEMA GENERALE
+   ========================================= */
+
 @font-face {
   font-family: 'Mulish';
   src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
   font-style: normal;
-  font-weight: 200 1000;
+  font-weight: 200 1000; /*contiene tutti i pesi disponibili tra 200 e 1000.*/
   font-display: swap;
 }
 
@@ -11,7 +15,7 @@ body {
   /* Colore base del testo (tema scuro): chi non imposta un colore lo eredita da qui, senza finire nero su sfondo scuro */
   color: var(--color-surface-100);
   overflow-x: clip;
-}
+} /*serve a tagliare (nascondere) tutto il contenuto che fuoriesce orizzontalmente dal contenitore*/
 
 /* Testo alternativo (alt) mostrato quando l'immagine non si carica: leggibile sul tema scuro */
 img {
@@ -22,6 +26,12 @@ img {
 }
 #komixy {
   &.dark {
+    /* Sfondo dark Komixy:
+   - Base: surface-950
+   - 1° gradiente: primary-700, bagliore principale a sinistra
+   - 2° gradiente: primary-600, bagliore secondario in alto a destra
+   - 3° gradiente: primary-800, bagliore secondario in basso al centro
+*/
     background-color: var(--color-surface-950);
     background-image:
       radial-gradient(
@@ -40,16 +50,23 @@ img {
         color-mix(in srgb, var(--color-primary-800) 15%, transparent),
         transparent 60%
       );
-    background-attachment: fixed;
+    background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scroll */
   }
 }
 
+/* =========================================
+   TOKEN SEMANTICI (dal vecchio preset PrimeNG)
+   I colori primary/surface/neutral e i radius sono in src/tailwind.css (@theme)
+   ========================================= */
+
 :root {
+  /* Colori semantici del primary (tema scuro) */
   --primary-color: var(--color-primary-500);
   --primary-contrast-color: var(--color-surface-900);
   --primary-hover-color: var(--color-primary-300);
   --primary-active-color: var(--color-primary-200);
 
+  /* Focus ring */
   --focus-ring-width: 2px;
   --focus-ring-style: solid;
   --focus-ring-color: var(--color-primary-400);

@@ -24,24 +24,12 @@ const fumetto: ComicItem = {
     [comic]="fumetto()"
     [rank]="posizione()"
     [priority]="priorita()"
-<<<<<<< HEAD
-    [bookmarked]="inLista()"
-    [locked]="bloccata()"
-    (bookmarkToggle)="toggle()"
-=======
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   />`,
 })
 class Host {
   readonly fumetto = signal(fumetto);
   readonly posizione = signal(1);
   readonly priorita = signal(false);
-<<<<<<< HEAD
-  readonly inLista = signal(false);
-  readonly bloccata = signal(false);
-  toggle = vi.fn();
-=======
->>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 }
 
 describe('ComicRankCard', () => {
@@ -145,33 +133,5 @@ describe('ComicRankCard', () => {
     const { html } = await crea();
     expect(html.querySelector('button')).toBeNull();
     expect(html.querySelector('app-bookmark-button a')?.getAttribute('href')).toBe('/login');
-  });
-
-  it('il segnalibro è premuto quando il fumetto è in lista', async () => {
-    const { fixture, html } = await crea();
-    fixture.componentInstance.inLista.set(true);
-    await fixture.whenStable();
-    const segnalibro = html.querySelector('button') as HTMLButtonElement;
-    expect(segnalibro.getAttribute('aria-pressed')).toBe('true');
-    expect(segnalibro.getAttribute('aria-label')).toBe('bookmark.remove');
-  });
-
-  it('per l’ospite il segnalibro ha il lucchetto e non risulta premuto', async () => {
-    const { fixture, html } = await crea();
-    fixture.componentInstance.inLista.set(true);
-    fixture.componentInstance.bloccata.set(true);
-    await fixture.whenStable();
-    const segnalibro = html.querySelector('button') as HTMLButtonElement;
-    expect(segnalibro.getAttribute('aria-label')).toBe('bookmark.locked');
-    expect(segnalibro.getAttribute('aria-pressed')).toBe('false');
-    expect(segnalibro.getAttribute('aria-disabled')).toBe('true');
-  });
-
-  it('per l’ospite il tocco sul segnalibro emette comunque, così arriva l’invito a iscriversi', async () => {
-    const { fixture, html } = await crea();
-    fixture.componentInstance.bloccata.set(true);
-    await fixture.whenStable();
-    (html.querySelector('button') as HTMLButtonElement).click();
-    expect(fixture.componentInstance.toggle).toHaveBeenCalledOnce();
   });
 });

@@ -1,12 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { disabled, form, minLength, required } from '@angular/forms/signals';
-import { TranslocoService } from '@jsverse/transloco';
+import { disabled, form, FormField, minLength, required } from '@angular/forms/signals';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InputText } from './input-text';
 
 @Component({
-  imports: [InputText],
+  imports: [InputText, FormField],
   template: `
     <app-input-text
       label="login.email"
@@ -14,7 +13,7 @@ import { InputText } from './input-text';
       type="email"
       placeholder="login.emailPlaceholder"
       autocomplete="email"
-      [field]="campoForm"
+      [formField]="campoForm"
     />
   `,
 })
@@ -31,19 +30,6 @@ class Host {
 describe('InputText', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
-    TestBed.inject(TranslocoService).setTranslation(
-      {
-        common: {
-          validation: {
-            required: 'required',
-            email: 'email',
-            minLength: 'minLength',
-            generic: 'generic',
-          },
-        },
-      },
-      'it',
-    );
   });
 
   const crea = async () => {
@@ -106,7 +92,7 @@ describe('InputText', () => {
   it('dopo l’uscita dal campo mostra il messaggio e lo collega al campo', async () => {
     const { html, campo, esci, messaggio } = await crea();
     await esci();
-    expect(messaggio()).toBe('required');
+    expect(messaggio()).toBe('validation.required');
     expect(html.querySelector('[role="alert"]')?.id).toBe('campo-error');
     expect(campo.getAttribute('aria-invalid')).toBe('true');
     expect(campo.getAttribute('aria-describedby')).toBe('campo-error');
@@ -116,7 +102,7 @@ describe('InputText', () => {
     const { scrivi, esci, messaggio } = await crea();
     await scrivi('ab');
     await esci();
-    expect(messaggio()).toBe('minLength');
+    expect(messaggio()).toBe('validation.minLength');
   });
 
   it('toglie il messaggio quando il valore diventa valido', async () => {

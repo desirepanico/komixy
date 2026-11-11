@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { LoginForm } from '../../components/login-form/login-form';
 import { LoginVolumes } from '../../components/login-volumes/login-volumes';
-import { SocialProvider } from '../../models/auth.model';
+import { LoginCredentials } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
 import { AuthService } from '../../services/auth/auth.service';
 
+/** Pagina di accesso. Dopo il login torna alla pagina richiesta (`returnUrl`) o a Scopri. */
 @Component({
   selector: 'app-login-page',
   imports: [LoginForm, LoginVolumes, TranslocoPipe],
@@ -18,19 +19,14 @@ export class LoginPage {
   private readonly navigation = inject(AuthNavigationService);
   private readonly route = inject(ActivatedRoute);
 
-  protected loginWithProvider(provider: SocialProvider): void {
-    // TODO: sostituire con l'accesso reale con Google o Apple
-    this.authService.login({ id: provider, email: '', userRole: UserRole.User });
-    this.goAfterLogin();
-  }
+  protected login(credentials: LoginCredentials): void {
+    // TODO: sostituire con la chiamata all'API di autenticazione
+    this.authService.login({
+      id: credentials.email,
+      email: credentials.email,
+      userRole: UserRole.User,
+    });
 
-  protected enterAsGuest(): void {
-    // TODO: bloccare anche modifica ed eliminazione per UserRole.Guest (l'aggiunta in lista è già bloccata)
-    this.authService.login({ id: 'guest', email: '', userRole: UserRole.Guest });
-    this.goAfterLogin();
-  }
-
-  protected goAfterLogin(): void {
     const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
     void this.navigation.goAfterLogin(returnUrl);
   }

@@ -1,18 +1,17 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { form, minLength, required } from '@angular/forms/signals';
-import { TranslocoService } from '@jsverse/transloco';
+import { form, FormField, minLength, required } from '@angular/forms/signals';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InputPassword } from './input-password';
 
 @Component({
-  imports: [InputPassword],
+  imports: [InputPassword, FormField],
   template: `
     <app-input-password
       label="login.password"
       inputId="password"
       placeholder="login.passwordPlaceholder"
-      [field]="campoForm"
+      [formField]="campoForm"
     />
   `,
 })
@@ -27,19 +26,6 @@ class Host {
 describe('InputPassword', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
-    TestBed.inject(TranslocoService).setTranslation(
-      {
-        common: {
-          validation: {
-            required: 'required',
-            email: 'email',
-            minLength: 'minLength',
-            generic: 'generic',
-          },
-        },
-      },
-      'it',
-    );
   });
 
   const crea = async () => {
@@ -124,7 +110,7 @@ describe('InputPassword', () => {
   it('dopo l’uscita dal campo mostra il messaggio e lo collega al campo', async () => {
     const { html, campo, esci, messaggio } = await crea();
     await esci();
-    expect(messaggio()).toBe('required');
+    expect(messaggio()).toBe('validation.required');
     expect(html.querySelector('[role="alert"]')?.id).toBe('password-error');
     expect(campo.getAttribute('aria-invalid')).toBe('true');
     expect(campo.getAttribute('aria-describedby')).toBe('password-error');
@@ -134,6 +120,6 @@ describe('InputPassword', () => {
     const { scrivi, esci, messaggio } = await crea();
     await scrivi('123');
     await esci();
-    expect(messaggio()).toBe('minLength');
+    expect(messaggio()).toBe('validation.minLength');
   });
 });

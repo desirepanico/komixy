@@ -14,7 +14,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 ## Come funziona la cartella `public/theme/`
 
 - È CSS globale, non legato a un componente (per lo stile dei componenti si usa Tailwind nel template, vedi `.claude/rules/stile.md`).
-- Ogni file tratta un solo argomento (token e sfondo, glass, transizione di pagina).
+- Ogni file tratta un solo argomento (token e sfondo, glass, transizione di pagina), con un commento d'intestazione che spiega a cosa serve.
 - I file non si caricano da soli: vanno importati in `src/styles.css` con `@import '../public/theme/<nome>.css';`, prima di `./tailwind.css`. Un file nuovo non importato non ha effetto.
 - Un nuovo argomento globale va in un file nuovo della cartella, non in coda a `theme.css`.
 
@@ -36,7 +36,3 @@ Tema scuro viola. Il testo secondario deve rispettare il contrasto WCAG AA, che 
 2. Se manca, usa la scala o i colori di default di Tailwind.
 3. Se lo stesso valore serve in più punti, aggiungilo al tema in `@theme`.
 4. Il valore arbitrario (`p-[13px]`) solo se nessun valore di Tailwind va bene e serve in un solo punto.
-
-## Editor (VS Code)
-
-`.vscode/extensions.json` consiglia l'estensione «Tailwind CSS IntelliSense» (`bradlc.vscode-tailwindcss`) e `.vscode/settings.json` la configura: legge il tema da `src/tailwind.css` e segnala come avviso le classi non canoniche (es. `w-[3rem]` invece di `w-12`), i conflitti tra classi e l'ordine non consigliato delle varianti. Il fix rapido (la lampadina) le corregge. Le regole di scrittura restano in `.claude/rules/stile.md`.

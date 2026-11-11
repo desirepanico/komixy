@@ -5,13 +5,6 @@
     "source.organizeImports": "explicit"
   },
 
-  "tailwindCSS.lint.suggestCanonicalClasses": "warning",
-  "tailwindCSS.lint.cssConflict": "warning",
-  "tailwindCSS.lint.invalidApply": "error",
-  "tailwindCSS.lint.recommendedVariantOrder": "warning",
-  "tailwindCSS.experimental.configFile": "src/tailwind.css",
-  "tailwindCSS.emmetCompletions": false,
-
   "i18n-ally.sourceLanguage": "it",
   "i18n-ally.displayLanguage": "it",
   "i18n-ally.sortKeys": true,

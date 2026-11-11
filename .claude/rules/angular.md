@@ -19,15 +19,14 @@ paths:
 - `OnPush` è il default da Angular 22: non scrivere `changeDetection`. Mai `ChangeDetectionStrategy.Eager`.
 - App zoneless (senza zone.js): regole sui signal in `signals.md`.
 - Template sempre in un file `.html` accanto al `.ts` (`templateUrl: './nome.html'`), anche per i componenti piccoli. Percorsi relativi al file `.ts`.
-- Un `.css` accanto al componente (`styleUrl: './nome.css'`) solo per i `@keyframes` che usa quel componente soltanto: dentro ci sono solo i keyframe, con il nome prefissato dal componente (`login-float`). Il componente ha `encapsulation: ViewEncapsulation.None`, altrimenti Angular rinomina i keyframe e Tailwind non li trova. L'animazione si applica nel template con Tailwind (`animate-[login-float_3s_ease-in-out_infinite]`, con `motion-reduce:`); una stringa lunga ripetuta si scrive una volta con `@let animazione = '...'`. Niente `.css` per lo stile normale.
 - Niente `@HostBinding` e `@HostListener`: usa l'oggetto `host` del decorator.
 - `class` e `style` bindings, mai `ngClass` e `ngStyle`.
-- Form: Signal Forms, regole in `.claude/rules/form.md`; campi in `.claude/rules/shared-inputs.md`.
+- Form: Signal Forms, regole in `.claude/rules/form.md`.
 - `NgOptimizedImage` per le immagini statiche (non funziona con base64 inline).
 
 ## Cartelle
 
-- Ogni file `.ts` con il suo spec sta in una **cartella propria**, con dentro solo lui, il suo `*.spec.ts` e, per un componente, il suo `.html` (e il suo `.css`, se ne ha uno). La cartella ha il nome del file senza il tipo: `services/viewport/viewport.service.ts` + `viewport.service.spec.ts`, `guards/user-role/user-role.guard.ts`, `providers/i18n/i18n.provider.ts`.
+- Ogni file `.ts` con il suo spec sta in una **cartella propria**, con dentro solo lui, il suo `*.spec.ts` e, per un componente, il suo `.html`. La cartella ha il nome del file senza il tipo: `services/viewport/viewport.service.ts` + `viewport.service.spec.ts`, `guards/user-role/user-role.guard.ts`, `providers/i18n/i18n.provider.ts`.
 - Un file di logica che serve solo a un altro (es. `detect-swipe`) ha la sua cartella dentro quella del file che lo usa: `directives/swipe/detect-swipe/`.
 - Le rotte di una feature stanno in `routes/<nome>.routes.ts`.
 - Eccezioni: i file `*.model.ts` (nessuno spec) restano nella cartella del loro tipo (`models/`) e i `*.const.ts` in `shared/constants/`, tutti insieme; `main.ts` e i file nella radice di `src/app` (`app.ts`, `app.config.ts`, `app.routes.ts`) restano dove sono. Lo controlla `npm run lint` (`scripts/check-specs.mjs`).
@@ -57,7 +56,7 @@ paths:
 
 ## Import
 
-- Alias `@core/*`, `@shared/*`, `@features/*` (definiti in `tsconfig.json`, come `@testing/*`, che si usa solo negli spec per gli aiuti di `src/testing`) per importare da un'altra area; percorsi relativi dentro la stessa area o feature. Mai `../../../`.
+- Alias `@core/*`, `@shared/*`, `@features/*` (definiti in `tsconfig.json`) per importare da un'altra area; percorsi relativi dentro la stessa area o feature. Mai `../../../`.
 
 ## Routing
 
