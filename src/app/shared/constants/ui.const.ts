@@ -94,8 +94,8 @@ export const PACK_GEOMETRY = {
   tearAt: 0.78,
   cardWidth: 1.4,
   cardHeight: 2.304,
-  segmentsX: 90,
-  segmentsY: 240,
+  segmentsX: 56,
+  segmentsY: 170,
   seamTeeth: 15,
 } as const;
 
