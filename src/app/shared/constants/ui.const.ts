@@ -1,3 +1,4 @@
+import { ToastSeverity } from '@shared/models/toast.model';
 import { EditionType } from '@shared/models/comic.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
 
@@ -57,6 +58,36 @@ export const BUTTON_SIZES: Readonly<Record<ButtonSize, string>> = {
 
 /** Se la prima navigazione non finisce mai, lo skeleton non deve restare per sempre */
 export const BOOT_SKELETON_TIMEOUT_MS = 10_000;
+
+export const TOAST_MAX_VISIBLE = 3;
+
+/** Gli avvisi che chiedono un'azione restano più a lungo dei messaggi di conferma */
+export const TOAST_DURATION_MS: Readonly<Record<ToastSeverity, number>> = {
+  success: 4000,
+  info: 5000,
+  warn: 7000,
+  error: 8000,
+};
+
+// Sfondo molto trasparente (10%) del colore della severity, con bordo, titolo, icona e chiusura dello stesso colore
+export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; container: string }>> = {
+  success: {
+    icon: 'matCheckCircleOutline',
+    container: 'border-green-500/40 bg-green-500/10 text-green-400',
+  },
+  info: {
+    icon: 'matInfoOutline',
+    container: 'border-blue-500/40 bg-blue-500/10 text-blue-400',
+  },
+  warn: {
+    icon: 'matWarningOutline',
+    container: 'border-amber-500/40 bg-amber-500/10 text-amber-400',
+  },
+  error: {
+    icon: 'matErrorOutline',
+    container: 'border-red-500/40 bg-red-500/10 text-red-400',
+  },
+};
 
 /** Dove si ricorda la settimana della busta già aperta (TODO: lo registra il server per utente o ospite) */
 export const WEEKLY_PACK_STORAGE_KEY = 'komixy.weeklyPack';

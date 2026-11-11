@@ -1,71 +1,81 @@
-<!-- Bagliori dietro ai volumi -->
+@let orbAnimation =
+  'animate-[login-orb_10s_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-none';
+@let fadeUpAnimation =
+  'animate-[login-fade-up_900ms_cubic-bezier(0.16,1,0.3,1)_var(--delay,0s)_both] motion-reduce:animate-none';
+@let floatAnimation =
+  'animate-[login-float_var(--float,5s)_ease-in-out_var(--delay,0s)_infinite] motion-reduce:animate-[login-float-soft_var(--float,5s)_ease-in-out_var(--delay,0s)_infinite]';
+
 <div class="pointer-events-none absolute inset-0" aria-hidden="true">
   <div
-    class="absolute -left-16 top-1/4 size-56 animate-orb rounded-full bg-primary-600/30 blur-3xl motion-reduce:animate-none"
+    class="absolute -left-16 top-1/4 size-56 rounded-full bg-primary-600/30 blur-3xl"
+    [class]="orbAnimation"
+    [style.animation-play-state]="playState()"
   ></div>
   <div
-    class="absolute -right-10 bottom-8 size-48 animate-orb rounded-full bg-primary-400/20 blur-3xl [animation-delay:-4s] motion-reduce:animate-none"
+    class="absolute -right-10 bottom-8 size-48 rounded-full bg-primary-400/20 blur-3xl [--delay:-4s]"
+    [class]="orbAnimation"
+    [style.animation-play-state]="playState()"
   ></div>
 </div>
 
 <div
-  class="relative flex h-full flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
+  class="relative flex h-full flex-col justify-center max-md:contents md:gap-[3dvh] md:px-6 md:py-[6dvh] md:[@media(max-height:40rem)]:py-2 lg:px-12 xl:px-20 xl:[@media(max-height:40rem)]:grid xl:[@media(max-height:40rem)]:grid-cols-[minmax(0,1fr)_auto] xl:[@media(max-height:40rem)]:content-center xl:[@media(max-height:40rem)]:gap-x-8 xl:[@media(max-height:40rem)]:gap-y-2 xl:[@media(max-height:40rem)]:*:col-start-1"
 >
   <div
-    class="flex animate-fade-up items-center justify-center gap-3 motion-reduce:animate-none lg:justify-start"
+    class="flex items-center justify-center gap-3 max-sm:[&_img]:h-(--logo) md:justify-start"
+    [class]="fadeUpAnimation"
   >
-    <span
-      class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
-      aria-hidden="true"
-    >
-      <ng-icon name="matMenuBookOutline" size="1.5rem" />
-    </span>
-    <span class="text-xl font-bold tracking-tight text-surface-50">
-      {{ 'loginVolumes.brand' | transloco }}
-    </span>
+    <app-brand />
   </div>
 
   <div
-    class="max-w-xl animate-fade-up space-y-3 text-center lg:text-left [animation-delay:120ms] motion-reduce:animate-none"
+    class="max-w-xl space-y-3 max-sm:space-y-0 text-center 2xl:max-w-3xl md:text-left [--delay:120ms]"
+    [class]="fadeUpAnimation"
   >
     <p
-      class="text-xl font-bold leading-tight tracking-tight text-surface-50 sm:text-3xl lg:text-[min(3rem,6dvh)]"
+      class="text-xl font-bold leading-tight tracking-tight text-balance text-surface-50 max-sm:text-[clamp(0.9375rem,calc(1.132dvh+0.466rem),1.125rem)] sm:text-3xl lg:text-[min(3rem,6dvh)]"
     >
       {{ 'loginVolumes.title' | transloco }}
     </p>
-    <p class="hidden text-base leading-7 text-surface-300 lg:block">
+    <p class="hidden text-base leading-7 text-surface-300 md:[@media(min-height:40rem)]:block">
       {{ 'loginVolumes.subtitle' | transloco }}
     </p>
   </div>
 
   <p
-    class="flex animate-fade-up items-center gap-2 text-sm text-surface-200 [animation-delay:240ms] motion-reduce:animate-none"
+    class="flex items-center gap-2 max-sm:mt-(--s1) text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)] text-surface-200 [--delay:240ms]"
+    [class]="fadeUpAnimation"
   >
     <ng-icon
       name="matTouchAppOutline"
       size="1.25rem"
-      class="animate-pulse text-primary-300 motion-reduce:animate-none"
+      class="animate-pulse text-primary-300 max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh+0.37rem),1.25rem)]! motion-reduce:animate-none"
       aria-hidden="true"
+      [style.animation-play-state]="playState()"
     />
     <span class="pointer-coarse:hidden">{{ 'loginVolumes.coversHint' | transloco }}</span>
-    <span class="hidden pointer-coarse:inline">{{ 'loginVolumes.coversHintTouch' | transloco }}</span>
+    <span class="hidden pointer-coarse:inline">{{
+      'loginVolumes.coversHintTouch' | transloco
+    }}</span>
   </p>
 
   <ul
-    class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
+    class="max-sm:mt-[calc(var(--s1)+0.5rem)] max-sm:h-[calc(1.5*var(--cw)+1.25rem)] xl:[@media(max-height:40rem)]:col-start-2! xl:[@media(max-height:40rem)]:row-span-4 xl:[@media(max-height:40rem)]:row-start-1 flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 md:h-[min(12.5rem,max(26dvh,9rem))] md:justify-start md:-space-x-5 lg:h-[min(18rem,32dvh)]"
   >
     @for (cover of covers; track cover.id) {
       <li
-        class="relative aspect-2/3 w-[min(5.5rem,12.5dvh)] animate-float motion-reduce:animate-none sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)] hover:z-10 focus-within:z-10 {{
+        class="@container relative aspect-2/3 max-sm:[--float:8s] w-[min(5.5rem,12.5dvh)] max-sm:w-(--cw) {{
+          floatAnimation
+        }} sm:w-[min(11rem,17dvh)] md:w-[max(4rem,min(6rem,15dvh))] lg:w-[min(9rem,15dvh)] hover:z-50! focus-within:z-10 {{
           cover.motion
         }} {{ cover.offset }}"
+        [style.animation-play-state]="playState()"
         [class.z-20!]="flipped().has(cover.id)"
         [class.z-30!]="selected() === cover.id"
       >
-        <!-- Il bottone gira come una carta: davanti la copertina, dietro titolo, autore e tipo -->
         <button
           type="button"
-          class="group block size-full cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
+          class="group block size-full max-lg:scale-100 max-lg:hover:scale-100 cursor-pointer rounded-lg outline-none perspective-distant hover:-translate-y-2 hover:scale-110 focus-visible:-translate-y-2 focus-visible:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400 motion-safe:transition motion-safe:duration-300"
           [class.-translate-y-2]="selected() === cover.id"
           [class.scale-110]="selected() === cover.id"
           [attr.aria-pressed]="flipped().has(cover.id)"
@@ -81,6 +91,7 @@
             >
               <img
                 [ngSrc]="cover.src"
+                priority
                 width="240"
                 height="360"
                 [alt]="'mangaCard.coverAlt' | transloco: { title: cover.title }"
@@ -89,20 +100,41 @@
               />
             </span>
             <span
-              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-1.5 rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-2 text-center shadow-xl shadow-primary-900/40 backface-hidden"
+              class="absolute inset-0 flex rotate-y-180 flex-col items-center justify-center gap-[min(0.375rem,3cqw)] rounded-lg border border-primary-300/40 bg-linear-to-br from-primary-700 to-surface-900 p-[min(0.5rem,6cqw)] text-center shadow-xl shadow-primary-900/40 backface-hidden"
               [attr.aria-hidden]="!flipped().has(cover.id)"
             >
-              <span class="text-xs font-bold leading-tight text-surface-50 lg:text-sm">
+              <span
+                class="text-[min(0.75rem,18cqw)] font-bold leading-tight text-surface-50 lg:text-[min(0.875rem,18cqw)]"
+              >
                 {{ cover.title }}
               </span>
-              <span class="text-[0.65rem] leading-tight text-surface-200 lg:text-xs">
+              <span
+                class="text-[min(0.65rem,14cqw)] leading-tight text-surface-200 lg:text-[min(0.75rem,14cqw)]"
+              >
                 {{ cover.author }}
               </span>
-              <app-tag>{{ 'loginVolumes.kind.' + cover.kind | transloco }}</app-tag>
+              <app-tag
+                class="[&_span]:px-[min(0.5rem,5cqw)] [&_span]:py-0 [&_span]:text-[min(0.75rem,11cqw)]"
+                >{{ 'loginVolumes.kind.' + cover.kind | transloco }}</app-tag
+              >
             </span>
           </span>
         </button>
       </li>
     }
   </ul>
+
+  <button
+    type="button"
+    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)] text-surface-200 outline-none hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 lg:self-start"
+    (click)="toggleAnimation()"
+  >
+    <ng-icon
+      [name]="paused() ? 'matPlayArrowOutline' : 'matPauseOutline'"
+      size="1.25rem"
+      class="max-sm:[--ng-icon__size:clamp(1rem,calc(1.51dvh+0.37rem),1.25rem)]!"
+      aria-hidden="true"
+    />
+    {{ (paused() ? 'loginVolumes.resumeAnimation' : 'loginVolumes.pauseAnimation') | transloco }}
+  </button>
 </div>

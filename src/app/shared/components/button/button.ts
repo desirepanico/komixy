@@ -25,6 +25,8 @@ export class Button {
   public readonly iconOnly = input<boolean>(false);
   /** true = bordi completamente tondi (pillola/cerchio, come `rounded` di PrimeNG); false = angoli arrotondati (rounded-sm) */
   public readonly rounded = input<boolean>(false);
+  /** Aspetto da link: sottolineato alla selezione (mouse, tastiera, tocco). Va su `<a href>` o `<a routerLink>`, non su un `<button>` */
+  public readonly underline = input<boolean>(false);
 
   protected readonly classes = computed(() => {
     const base =
@@ -32,11 +34,14 @@ export class Button {
     const variant = this.variant();
     const colors = BUTTON_COLORS[this.severity()][variant];
     const radius = this.rounded() ? 'rounded-full' : 'rounded-sm';
+    const decoration = this.underline()
+      ? 'decoration-current underline-offset-4 hover:underline focus-visible:underline active:underline'
+      : '';
     // il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {
-      return `${base} ${colors} ${radius}`;
+      return `${base} ${colors} ${radius} ${decoration}`;
     }
     const size = this.iconOnly() ? 'size-10' : BUTTON_SIZES[this.size()];
-    return `${base} justify-center gap-2 font-semibold ${colors} ${size} ${radius}`;
+    return `${base} justify-center gap-2 font-semibold ${colors} ${size} ${radius} ${decoration}`;
   });
 }

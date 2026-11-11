@@ -17,14 +17,13 @@ describe('LoginVolumes', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra marchio, titolo e sottotitolo come chiavi di traduzione', () => {
+  it('mostra titolo e sottotitolo come chiavi di traduzione', () => {
     const testo = html.textContent ?? '';
-    expect(testo).toContain('loginVolumes.brand');
     expect(testo).toContain('loginVolumes.title');
     expect(testo).toContain('loginVolumes.subtitle');
   });
 
-  const bottoni = () => Array.from(html.querySelectorAll('button'));
+  const bottoni = () => Array.from(html.querySelectorAll<HTMLButtonElement>('button:has(img)'));
   const premi = async (indice: number) => {
     bottoni()[indice].click();
     await fixture.whenStable();
@@ -38,6 +37,17 @@ describe('LoginVolumes', () => {
       expect(bottone.querySelector('img')?.getAttribute('alt')).toBe('mangaCard.coverAlt');
       expect(bottone.getAttribute('aria-pressed')).toBe('false');
     });
+  });
+
+  it('le copertine si caricano subito perché una è sempre l’elemento più grande della pagina', () => {
+    html.querySelectorAll('img').forEach((img) => {
+      expect(img.getAttribute('fetchpriority')).toBe('high');
+      expect(img.getAttribute('loading')).toBe('eager');
+    });
+  });
+
+  it('mostra il marchio', () => {
+    expect(html.querySelector('app-brand')).not.toBeNull();
   });
 
   it('dietro ogni copertina ci sono titolo, autore e tipo', () => {
@@ -112,6 +122,12 @@ describe('LoginVolumes', () => {
     expect((bottoni()[0].closest('li') as HTMLElement).classList).toContain('z-30!');
   });
 
+  it('con l’hover una copertina passa davanti anche a quella scelta con il clic', async () => {
+    await premi(0);
+    const carta = bottoni()[1].closest('li') as HTMLElement;
+    expect(carta.classList).toContain('hover:z-50!');
+  });
+
   it('girare una copertina non cambia le altre', async () => {
     await premi(0);
     expect(bottoni()[1].getAttribute('aria-pressed')).toBe('false');
@@ -123,14 +139,69 @@ describe('LoginVolumes', () => {
   });
 
   it('i bagliori sono nascosti agli screen reader', () => {
-    expect(html.querySelector('.animate-orb')?.parentElement?.getAttribute('aria-hidden')).toBe(
-      'true',
-    );
+    expect(
+      html
+        .querySelector('[class*="animate-[login-orb"]')
+        ?.parentElement?.getAttribute('aria-hidden'),
+    ).toBe('true');
   });
 
-  it('ogni animazione si ferma con prefers-reduced-motion', () => {
-    const animati = html.querySelectorAll('.animate-float, .animate-orb, .animate-fade-up');
-    expect(animati.length).toBeGreaterThan(4);
-    animati.forEach((el) => expect(el.classList).toContain('motion-reduce:animate-none'));
+  it('ogni copertina fluttua e non ha parentesi graffe nelle classi', () => {
+    const copertine = Array.from(html.querySelectorAll<HTMLElement>('ul > li'));
+    expect(copertine.length).toBeGreaterThan(0);
+    for (const copertina of copertine) {
+      expect(copertina.className).toContain('animate-[login-float');
+      expect(copertina.className).not.toMatch(/[{}]/);
+    }
+  });
+
+  const pausa = () => html.querySelector('button:not(:has(img))') as HTMLButtonElement;
+  const statiAnimazione = () =>
+    Array.from(
+      html.querySelectorAll<HTMLElement>(
+        '[class*="animate-[login-float"], [class*="animate-[login-orb"]',
+      ),
+    ).map((el) => el.style.animationPlayState);
+
+  it('all’inizio le animazioni infinite sono in corso e il bottone offre di fermarle', () => {
+    expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
+    expect(pausa().textContent).toContain('loginVolumes.pauseAnimation');
+  });
+
+  it('il bottone ferma le animazioni infinite e un secondo clic le riprende', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    expect(statiAnimazione().every((stato) => stato === 'paused')).toBe(true);
+    expect(pausa().textContent).toContain('loginVolumes.resumeAnimation');
+    pausa().click();
+    await fixture.whenStable();
+    expect(statiAnimazione().every((stato) => stato === 'running')).toBe(true);
+  });
+
+  it('il bottone di pausa non ha aria-pressed: lo stato lo dice il testo, che cambia', async () => {
+    expect(pausa().hasAttribute('aria-pressed')).toBe(false);
+    pausa().click();
+    await fixture.whenStable();
+    expect(pausa().hasAttribute('aria-pressed')).toBe(false);
+  });
+
+  it('la pausa ferma anche l’icona che pulsa', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    const icona = html.querySelector('ng-icon.animate-pulse') as HTMLElement;
+    expect(icona.style.animationPlayState).toBe('paused');
+  });
+
+  it('le copertine si alternano: una sì e una no partono a metà ciclo', () => {
+    const ritardi = Array.from(html.querySelectorAll('li')).map((li) =>
+      li.classList.contains('[--delay:calc(var(--float,5s)*-0.5)]') ? 'meta' : 'inizio',
+    );
+    expect(ritardi).toEqual(['inizio', 'meta', 'inizio', 'meta']);
+  });
+
+  it('la pausa non gira le copertine', async () => {
+    pausa().click();
+    await fixture.whenStable();
+    bottoni().forEach((bottone) => expect(bottone.getAttribute('aria-pressed')).toBe('false'));
   });
 });

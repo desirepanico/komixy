@@ -19,7 +19,7 @@ src/
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-pack-card, app-card-fan, app-card-spotlight, app-guest-notice, ...
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-brand, app-toast, app-pack-card, app-card-fan, app-card-spotlight, app-guest-notice, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
@@ -55,9 +55,11 @@ Si crea solo la cartella che serve. Esempio completo, la feature `auth` (modelli
 ```
 features/auth/
 ├── pages/
-│   └── login-page/
-│       ├── login-page.ts            componente della rotta (lazy), orchestra la pagina
-│       └── login-page.html
+│   ├── login-page/
+│   │   ├── login-page.ts            componente della rotta (lazy), orchestra la pagina
+│   │   └── login-page.html
+│   ├── register-page/               segnaposto della registrazione (/login/register)
+│   └── forgot-password-page/        segnaposto di «Password dimenticata» (/login/forgot-password)
 ├── components/
 │   ├── login-form/                  componente usato solo da questa feature
 │   │   ├── login-form.ts

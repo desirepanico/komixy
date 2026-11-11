@@ -67,7 +67,9 @@
     "kind": {
       "manga": "Manga",
       "comic": "Comic"
-    }
+    },
+    "pauseAnimation": "Pause animation",
+    "resumeAnimation": "Resume animation"
   },
   "login": {
     "subtitle": "Sign in to manage your comic and manga collection.",
@@ -75,7 +77,26 @@
     "emailPlaceholder": "Enter your email",
     "password": "Password",
     "passwordPlaceholder": "Enter at least 6 characters",
-    "submit": "Sign in"
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invalidCredentials": {
+      "summaryKo": "Invalid credentials",
+      "detailKo": "Incorrect email or password."
+    },
+    "serverError": {
+      "summaryKo": "Sign-in unavailable",
+      "detailKo": "Unable to sign in, please try again shortly."
+    },
+    "demoHint": "Demo: demo@example.com / password1",
+    "forgotPassword": "Forgot password?",
+    "or": "or continue with",
+    "google": "Continue with Google",
+    "apple": "Continue with Apple",
+    "guest": "Continue as guest",
+    "guestHint": "As a guest you can only browse, not save or edit.",
+    "noAccount": "Don't have an account?",
+    "register": "Sign up",
+    "backToLogin": "Back to sign in"
   },
   "releases": {
     "subtitle": "Upcoming volumes",
@@ -158,5 +179,16 @@
     "linkCopied": "Link copied",
     "notFound": "Comic not found",
     "notFoundHint": "This volume doesn't exist or is no longer available."
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "comingSoonHint": "Here you will be able to set a new password."
+  },
+  "register": {
+    "title": "Sign up",
+    "comingSoonHint": "Here you will be able to create your account."
+  },
+  "toast": {
+    "close": "Close notification"
   }
 }

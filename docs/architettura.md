@@ -5,7 +5,7 @@
 - Angular 22: componenti standalone, signals, `OnPush` (default), zoneless, control flow nativo
 - Tailwind CSS v4 (tema in `src/tailwind.css`)
 - Transloco per le traduzioni
-- Icone con `@ng-icons/material-symbols`
+- Icone con `@ng-icons/material-symbols`; i loghi dei marchi (Google, Apple) con `@ng-icons/simple-icons`
 - Test con Vitest (`ng test`)
 - Hosting su Vercel (single page app, vedi [sviluppo.md](sviluppo.md))
 

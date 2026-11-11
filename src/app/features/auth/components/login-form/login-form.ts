@@ -1,24 +1,46 @@
-import { Component, output, signal } from '@angular/core';
-import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { Component, inject, output, signal } from '@angular/core';
+import {
+  email,
+  form,
+  FormField,
+  FormRoot,
+  minLength,
+  required,
+  TreeValidationResult,
+} from '@angular/forms/signals';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matLoginOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
+import { simpleApple, simpleGoogle } from '@ng-icons/simple-icons';
+import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
 import { InputText } from '@shared/components/input/input-text/input-text';
+import { ToastService } from '@shared/services/toast/toast.service';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
-import { LoginCredentials } from '../../models/auth.model';
+import { LoginCredentials, SocialProvider } from '../../models/auth.model';
+import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
+import { ApiError, AuthService } from '../../services/auth/auth.service';
 
-/** Form di accesso con email e password. Emette le credenziali solo se il form è valido. */
 @Component({
   selector: 'app-login-form',
-  imports: [FormRoot, FormField, TranslocoPipe, Button, InputText, InputPassword],
+  imports: [FormRoot, FormField, TranslocoPipe, Button, InputText, InputPassword, NgIcon, RouterLink],
+  providers: [provideIcons({ matLoginOutline, matVisibilityOutline, simpleApple, simpleGoogle })],
   templateUrl: './login-form.html',
 })
 export class LoginForm {
-  public readonly loginSubmit = output<LoginCredentials>();
+  public readonly loginSuccess = output<void>();
+  public readonly socialLogin = output<SocialProvider>();
+  public readonly guestAccess = output<void>();
+
+  protected readonly navigation = inject(AuthNavigationService);
+  private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
+
+  protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
   private readonly model = signal<LoginCredentials>({ email: '', password: '' });
 
-  /** L'azione di invio parte solo se i campi sono validi; `submit` segna i campi come toccati e così compaiono gli errori */
   protected readonly form = form(
     this.model,
     (path) => {
@@ -29,13 +51,37 @@ export class LoginForm {
     },
     {
       submission: {
-        action: async () => {
-          this.loginSubmit.emit(this.model());
-          return undefined;
-        },
+        action: () =>
+          new Promise<TreeValidationResult>((resolve) => {
+            this.authService.authenticate(this.model()).subscribe({
+              next: () => {
+                this.onLoginSuccess();
+                resolve(undefined);
+              },
+              error: (error: unknown) => {
+                this.onLoginError(error);
+                resolve(undefined);
+              },
+            });
+          }),
         // Dopo un invio fallito il focus va al primo campo con l'errore, così lo trovano anche tastiera e screen reader
         onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
       },
     },
   );
+  private onLoginSuccess(): void {
+    this.loginSuccess.emit();
+  }
+
+  // L'errore dell'API non è di un campo: si mostra in un toast
+  private onLoginError(error: unknown): void {
+    if (error instanceof ApiError && error.status === 401) {
+      this.toastService.error(
+        'login.invalidCredentials.summaryKo',
+        'login.invalidCredentials.detailKo',
+      );
+    } else {
+      this.toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
+    }
+  }
 }
