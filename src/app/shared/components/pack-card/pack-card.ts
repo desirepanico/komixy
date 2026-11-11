@@ -19,7 +19,8 @@ import { RankingEntry } from '../../models/ranking-entry.model';
   imports: [TranslocoPipe, NgOptimizedImage],
   templateUrl: './pack-card.html',
   host: {
-    class: 'block shrink-0 perspective-distant',
+    class: 'block shrink-0',
+    '[class.perspective-distant]': 'flippable()',
     '[style.width.px]': 'width()',
     '[style.height.px]': 'height()',
     '[attr.aria-hidden]': 'decorative() ? "true" : null',
@@ -31,6 +32,11 @@ export class PackCard {
   public readonly scale = input<number>(1);
   /** false = si vede il dorso: la carta gira per mostrare il fronte */
   public readonly faceUp = input<boolean>(true);
+  /**
+   * true se la carta può girarsi (anima il passaggio dal dorso al fronte, con il 3D). Altrimenti è piatta:
+   * il 3D del browser non allinea il testo ai pixel e lo rende sfocato.
+   */
+  public readonly flippable = input<boolean>(false);
   /** true quando chi la contiene (es. un bottone con la sua etichetta) descrive già la carta */
   public readonly decorative = input<boolean>(false);
 

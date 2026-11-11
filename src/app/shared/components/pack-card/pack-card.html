@@ -1,16 +1,22 @@
 <!-- La carta è sempre disegnata a 192×320 px e poi rimpicciolita: così i testi in scala restano nelle stesse proporzioni -->
 <div
-  class="relative origin-top-left text-left transform-3d"
+  class="relative origin-top-left text-left"
+  [class.transform-3d]="flippable()"
   [style.width.px]="baseWidth"
   [style.height.px]="baseHeight"
-  [style.transform]="'scale(' + scale() + ')'"
+  [style.transform]="scale() === 1 ? null : 'scale(' + scale() + ')'"
 >
   <div
-    class="relative size-full transform-3d motion-safe:transition-transform motion-safe:duration-700"
-    [class.rotate-y-180]="!faceUp()"
+    class="relative size-full"
+    [class.transform-3d]="flippable()"
+    [class.motion-safe:transition-transform]="flippable()"
+    [class.motion-safe:duration-700]="flippable()"
+    [class.rotate-y-180]="flippable() && !faceUp()"
   >
     <div
-      class="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-b from-primary-800 to-surface-900 shadow-lg shadow-surface-950/60 backface-hidden"
+      class="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-b from-primary-800 to-surface-900 shadow-lg shadow-surface-950/60"
+      [class.backface-hidden]="flippable()"
+      [class.hidden]="!flippable() && !faceUp()"
       [class.p-2]="!compact()"
       [class.p-1]="compact()"
     >
@@ -78,7 +84,11 @@
     </div>
 
     <div
-      class="absolute inset-0 flex rotate-y-180 items-center justify-center overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-br from-primary-700 to-surface-950 text-primary-200 shadow-lg shadow-surface-950/60 backface-hidden"
+      class="absolute inset-0 items-center justify-center overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-br from-primary-700 to-surface-950 text-primary-200 shadow-lg shadow-surface-950/60"
+      [class.flex]="flippable() || !faceUp()"
+      [class.hidden]="!flippable() && faceUp()"
+      [class.rotate-y-180]="flippable()"
+      [class.backface-hidden]="flippable()"
       aria-hidden="true"
     >
       <img [ngSrc]="logo" width="640" height="378" alt="" class="w-28 drop-shadow-lg" />

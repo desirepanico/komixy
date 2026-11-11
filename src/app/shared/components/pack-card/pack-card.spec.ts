@@ -25,6 +25,7 @@ const entry = (modifiche: Partial<RankingEntry['comic']> = {}): RankingEntry => 
     [entry]="carta()"
     [scale]="scala()"
     [faceUp]="davanti()"
+    [flippable]="girevole()"
     [decorative]="decorativa()"
   />`,
 })
@@ -32,6 +33,7 @@ class Host {
   readonly carta = signal<RankingEntry>(entry());
   readonly scala = signal(1);
   readonly davanti = signal(true);
+  readonly girevole = signal(false);
   readonly decorativa = signal(false);
 }
 
@@ -78,12 +80,29 @@ describe('PackCard', () => {
     expect(carta().style.height).toBe('160px');
   });
 
-  it('col dorso in vista la carta è girata', async () => {
-    const girevole = () => html.querySelector('.rotate-y-180.size-full');
-    expect(girevole()).toBeNull();
+  it('una carta che può girarsi col dorso in vista è ruotata', async () => {
+    host().girevole.set(true);
+    await fixture.whenStable();
+    const ruotata = () => html.querySelector('.rotate-y-180.size-full');
+    expect(ruotata()).toBeNull();
     host().davanti.set(false);
     await fixture.whenStable();
-    expect(girevole()).not.toBeNull();
+    expect(ruotata()).not.toBeNull();
+  });
+
+  it('una carta che non può girarsi è piatta, senza 3D che sfoca il testo', () => {
+    expect(html.querySelector('.transform-3d')).toBeNull();
+    expect(html.querySelector('.backface-hidden')).toBeNull();
+    expect(carta().classList.contains('perspective-distant')).toBe(false);
+    expect(carta().firstElementChild?.getAttribute('style') ?? '').not.toContain('transform');
+  });
+
+  it('una carta piatta col dorso in vista mostra il dorso e nasconde il fronte', async () => {
+    host().davanti.set(false);
+    await fixture.whenStable();
+    const facce = Array.from(html.querySelectorAll('.absolute.inset-0')) as HTMLElement[];
+    expect(facce[0].classList.contains('hidden')).toBe(true);
+    expect(facce[1].classList.contains('hidden')).toBe(false);
   });
 
   it('il dorso mostra il logo di Komixy', () => {
