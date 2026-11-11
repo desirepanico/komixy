@@ -38,6 +38,21 @@ describe('PackTear', () => {
     expect(html.querySelector('button, a')).toBeNull();
   });
 
+  it('a riposo la busta è chiusa: niente bordi a dente di sega tra lembo e corpo', () => {
+    expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(0);
+  });
+
+  it('trascinando il lembo compaiono i bordi strappati e se si lascia di nuovo la busta si richiude', async () => {
+    maniglia().dispatchEvent(evento('pointerdown', 10));
+    maniglia().dispatchEvent(evento('pointermove', 40));
+    await fixture.whenStable();
+    expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(2);
+
+    maniglia().dispatchEvent(evento('pointerup', 40));
+    await fixture.whenStable();
+    expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(0);
+  });
+
   it('trascinando abbastanza il lembo chiede di strappare la busta', async () => {
     maniglia().dispatchEvent(evento('pointerdown', 10));
     maniglia().dispatchEvent(evento('pointermove', 10 + PACK_TEAR_DISTANCE_PX + 5));

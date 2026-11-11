@@ -34,6 +34,9 @@ export class PackTear {
   protected readonly dragX = signal<number>(0);
   protected readonly dragging = signal<boolean>(false);
 
+  /** I denti di sega compaiono solo con la busta in strappo: a riposo corpo e lembo sono uniti e la busta è chiusa */
+  protected readonly tearing = computed(() => this.dragging() || this.torn());
+
   private startX: number | null = null;
 
   protected readonly stripTransform = computed(() => {
