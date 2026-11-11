@@ -53,4 +53,11 @@ describe('BookmarkButton', () => {
     expect(link.getAttribute('href')).toBe('/login');
     expect(link.getAttribute('aria-label')).toBe('bookmark.signUp');
   });
+
+  it('il lucchetto dell’ospite non diventa trasparente al passaggio del mouse, così resta visibile sulla copertina', async () => {
+    const { html } = await crea(false);
+    const classi = (html.querySelector('a') as HTMLAnchorElement).className;
+    expect(classi).toContain('hover:bg-surface-800');
+    expect(classi).not.toContain('hover:bg-primary-400/15');
+  });
 });
