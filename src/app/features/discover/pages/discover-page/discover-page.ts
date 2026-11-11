@@ -1,32 +1,18 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matArrowForwardOutline } from '@ng-icons/material-symbols/outline';
-import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
-import { Button } from '@shared/components/button/button';
 import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
-import { ComicCard } from '../../components/comic-card/comic-card';
-import { ComicRankCard } from '@features/ranking/components/comic-rank-card/comic-rank-card';
 import { ComicItem } from '@shared/models/comic.model';
-import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ranking.service';
+import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
+import { ComicCard } from '../../components/comic-card/comic-card';
+import { WeeklyPack } from '../../components/weekly-pack/weekly-pack';
 
 @Component({
   selector: 'app-discover-page',
-  imports: [
-    ComicCard,
-    ComicRankCard,
-    TranslocoPipe,
-    HorizontalScroller,
-    Button,
-    RouterLink,
-    NgIcon,
-  ],
+  imports: [ComicCard, TranslocoPipe, HorizontalScroller, WeeklyPack],
   templateUrl: './discover-page.html',
-  providers: [provideIcons({ matArrowForwardOutline })],
 })
 export class DiscoverPage {
-  protected readonly selectedId = signal<string | null>(null);
+  protected readonly bookmarks = inject(BookmarksService);
   protected readonly comics = signal<ComicItem[]>([
     {
       id: '1',
@@ -99,13 +85,4 @@ export class DiscoverPage {
       coverUrl: 'https://picsum.photos/seed/komixy-cyber/160/200',
     },
   ]);
-
-  // In Discover si mostrano le prime 6 posizioni (la sesta solo da tablet in su, per avere due colonne piene)
-  protected readonly weeklyRanking = inject(WeeklyRankingService);
-  protected readonly rankingNavigation = inject(RankingNavigationService);
-  protected readonly topEntries = computed(() => this.weeklyRanking.entries().slice(0, 6));
-
-  protected toggleBookmark(id: string): void {
-    this.selectedId.update((current) => (current === id ? null : id));
-  }
 }

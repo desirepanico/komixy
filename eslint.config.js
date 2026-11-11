@@ -82,10 +82,6 @@ module.exports = defineConfig(
     },
   },
   ...regoleFeature('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
-  // discover mostra la card della classifica (unica eccezione oltre ai servizi di navigazione)
-  ...regoleFeature('src/app/features/discover/**', [
-    '^@features/(?!ranking/components/|.*/services/[^/]+-navigation/)',
-  ]),
   {
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended],
