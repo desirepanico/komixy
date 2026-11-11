@@ -1,8 +1,9 @@
 <section class="flex min-h-[calc(100dvh-6rem)] min-w-0 flex-col gap-6 px-3 py-2 md:min-h-0 md:p-2">
-  <div class="flex items-center gap-3">
+  <div class="flex flex-wrap items-start gap-x-3 gap-y-3">
     <a
       appButton
       variant="outlined"
+      class="shrink-0"
       [iconOnly]="true"
       [rounded]="true"
       [routerLink]="discoverNavigation.discoverLink"
@@ -11,7 +12,7 @@
       <ng-icon name="matArrowBackOutline" size="20" />
     </a>
 
-    <div class="min-w-0">
+    <div class="min-w-48 flex-1">
       <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
         {{ 'ranking.title' | transloco }}
       </h1>
