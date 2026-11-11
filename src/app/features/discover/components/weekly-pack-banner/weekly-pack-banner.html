@@ -59,10 +59,10 @@
     </div>
   </div>
 } @else {
-  <div class="flex flex-col gap-3 rounded-2xl border border-primary-400/20 bg-surface-900 p-3">
-    <div class="flex items-center gap-3">
-      <img [ngSrc]="packImage" width="480" height="847" alt="" class="w-9 shrink-0 drop-shadow-md" />
-      <div class="min-w-0">
+  <div class="flex items-center gap-4 rounded-2xl border border-primary-400/20 bg-surface-900 p-3">
+    <img [ngSrc]="packImage" width="480" height="847" alt="" class="w-16 shrink-0 drop-shadow-md" />
+    <div class="flex min-w-0 flex-col items-start gap-2">
+      <div>
         <p class="text-sm font-bold text-surface-50">{{ 'weeklyPack.openedTitle' | transloco }}</p>
         <p class="text-xs text-surface-400">
           {{ openedOn() }} ·
@@ -72,18 +72,17 @@
           }}
         </p>
       </div>
+      <a
+        appButton
+        variant="outlined"
+        severity="accent"
+        size="sm"
+        [rounded]="true"
+        [routerLink]="rankingNavigation.rankingLink"
+      >
+        {{ 'weeklyPack.review' | transloco }}
+      </a>
     </div>
-    <a
-      appButton
-      variant="outlined"
-      severity="accent"
-      size="sm"
-      [rounded]="true"
-      class="w-full"
-      [routerLink]="rankingNavigation.rankingLink"
-    >
-      {{ 'weeklyPack.review' | transloco }}
-    </a>
   </div>
 
   @if (session.isGuest()) {
