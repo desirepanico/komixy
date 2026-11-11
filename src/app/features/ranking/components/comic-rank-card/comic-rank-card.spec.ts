@@ -1,8 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ComicItem } from '@shared/models/comic.model';
+import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
+import { SessionService } from '@shared/services/session/session.service';
 import { ComicRankCard } from './comic-rank-card';
 
 const fumetto: ComicItem = {
@@ -22,14 +24,12 @@ const fumetto: ComicItem = {
     [comic]="fumetto()"
     [rank]="posizione()"
     [priority]="priorita()"
-    (bookmarkToggle)="toggle()"
   />`,
 })
 class Host {
   readonly fumetto = signal(fumetto);
   readonly posizione = signal(1);
   readonly priorita = signal(false);
-  toggle = vi.fn();
 }
 
 describe('ComicRankCard', () => {
@@ -121,9 +121,17 @@ describe('ComicRankCard', () => {
     expect(ritardo()).toBe('0ms');
   });
 
-  it('il segnalibro emette bookmarkToggle', async () => {
+  it('il segnalibro di un iscritto mette il fumetto in lista', async () => {
+    TestBed.inject(SessionService).setAuthenticated(true);
     const { fixture, html } = await crea();
     (html.querySelector('button') as HTMLButtonElement).click();
-    expect(fixture.componentInstance.toggle).toHaveBeenCalledOnce();
+    await fixture.whenStable();
+    expect(TestBed.inject(BookmarksService).isSaved('w1')).toBe(true);
+  });
+
+  it('per un ospite il segnalibro ha il lucchetto e porta a iscriversi', async () => {
+    const { html } = await crea();
+    expect(html.querySelector('button')).toBeNull();
+    expect(html.querySelector('app-bookmark-button a')?.getAttribute('href')).toBe('/login');
   });
 });

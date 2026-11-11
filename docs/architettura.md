@@ -15,7 +15,7 @@ PrimeNG è stato rimosso e non va reintrodotto.
 
 ```
 core/       shell dell'app: guards, interceptors, layout, providers (provideCore)
-features/   una cartella per area: auth, comics, discover, library, not-found, profile, ranking, releases
+features/   una cartella per area: auth, comics, discover, library, not-found, pack, profile, ranking, releases
 shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
 ```
 
@@ -24,26 +24,26 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 ### Regole sulle dipendenze
 
 - `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: il guard `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`; la dipendenza è a senso unico e `auth` non importa da `core`.
-- Una feature non importa da un'altra. Eccezioni, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature") e la card di `ranking` usata da `discover`. `WeeklyRankingService` è in `shared/services`.
+- Una feature non importa da un'altra. Unica eccezione, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature"). Per questo ciò che serve a più feature sta in `shared`: `WeeklyRankingService`, `WeeklyPackService`, `BookmarksService`, `SessionService` (iscritto o ospite), `ComicCatalogService`, e i componenti della busta (`app-pack-card`, `app-card-fan`, `app-card-spotlight`).
 - Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
 
 ## Routing
 
-`app.routes.ts` monta le feature sui loro percorsi, sempre con lazy loading (`loadChildren`). Ogni feature ha le sue rotte in `features/<nome>/routes/<nome>.routes.ts` (`DISCOVER_ROUTES`, `RANKING_ROUTES`, `COMICS_ROUTES`, `RELEASES_ROUTES`, `LIBRARY_ROUTES`, `PROFILE_ROUTES`, `AUTH_ROUTES`, `NOT_FOUND_ROUTES`): sono relative alla radice della feature, senza il suo percorso, così la feature non conosce dove è montata e non importa le altre. L'enum `AppRoutes` sta in `shared/models/app-routes.model.ts`, così nessuna area dipende da `app.routes.ts`.
+`app.routes.ts` monta le feature sui loro percorsi, sempre con lazy loading (`loadChildren`). Ogni feature ha le sue rotte in `features/<nome>/routes/<nome>.routes.ts` (`DISCOVER_ROUTES`, `RANKING_ROUTES`, `PACK_ROUTES`, `COMICS_ROUTES`, `RELEASES_ROUTES`, `LIBRARY_ROUTES`, `PROFILE_ROUTES`, `AUTH_ROUTES`, `NOT_FOUND_ROUTES`): sono relative alla radice della feature, senza il suo percorso, così la feature non conosce dove è montata e non importa le altre. L'enum `AppRoutes` sta in `shared/models/app-routes.model.ts`, così nessuna area dipende da `app.routes.ts`.
 
-- Tutte le pagine stanno dentro il layout (`core/layout`), tranne il login (`login`) e la pagina 404 (`**`).
+- Tutte le pagine stanno dentro il layout (`core/layout`), tranne il login (`login`), la pagina 404 (`**`) e l'apertura della busta (`discover/pack`, feature `pack`), che è a schermo intero e quindi senza menu: `app.routes.ts` la monta prima del layout con il percorso `discover/pack`.
 - `/` reindirizza a `discover`; `discover/ranking` è montata come figlia di `discover` (le rotte sono della feature `ranking`), così la voce di menu resta attiva.
-- `comic/:id` è una rotta figlia di `comic`: per ora usa lo stesso componente segnaposto, la pagina di dettaglio non è ancora implementata.
+- `comic` mostra il segnaposto dell'elenco, `comic/:id` il dettaglio del volume (feature `comics`).
 - Il router usa le view transitions e il ripristino dello scroll.
 
 ### Navigazione delle feature
 
 Ogni feature ha il suo servizio di navigazione (`features/<nome>/services/<nome>-navigation/`), in coppia con le sue rotte (`routes/<nome>.routes.ts`):
 
-- contiene **solo le rotte della propria feature**: `DiscoverNavigationService` ha la pagina Scopri, `RankingNavigationService` la classifica, `ComicsNavigationService` i fumetti, `AuthNavigationService` il login, `ReleasesNavigationService` le uscite, `LibraryNavigationService` la libreria, `ProfileNavigationService` il profilo, `NotFoundNavigationService` la pagina 404;
+- contiene **solo le rotte della propria feature**: `DiscoverNavigationService` ha la pagina Scopri, `RankingNavigationService` la classifica, `PackNavigationService` l'apertura della busta, `ComicsNavigationService` i fumetti, `AuthNavigationService` il login, `ReleasesNavigationService` le uscite, `LibraryNavigationService` la libreria, `ProfileNavigationService` il profilo, `NotFoundNavigationService` la pagina 404;
 - espone i **percorsi** per i link (`discoverLink`, `detailLink(id)`), usati con `[routerLink]`: i link restano `<a>`; ha i metodi `goToXxx()` per navigare da codice e i `*UrlTree()` per i guard;
 - usa percorsi assoluti, costruiti con `AppRoutes` (`shared`);
-- **per andare in un'altra feature si inietta il suo servizio**: la pagina della classifica torna a Scopri con `DiscoverNavigationService`, la card di Scopri porta al fumetto con `ComicsNavigationService`, `AuthNavigationService` dopo il login usa `DiscoverNavigationService`. È l'unico import ammesso tra feature (oltre alla card della classifica per `discover`);
+- **per andare in un'altra feature si inietta il suo servizio**: la pagina della classifica torna a Scopri con `DiscoverNavigationService`, la card di Scopri porta al fumetto con `ComicsNavigationService`, `AuthNavigationService` dopo il login usa `DiscoverNavigationService`, l'apertura della busta va alla classifica con `RankingNavigationService`. È l'unico import ammesso tra feature;
 - il test `app.routes.spec.ts` verifica che ogni link dei servizi porti alla pagina della sua feature.
 
 Così ogni percorso è scritto in un solo servizio, e pagine e componenti delle feature non conoscono né `Router` né `AppRoutes` (ESLint lo impedisce, insieme agli import tra feature). Il menu in `core/layout` è l'eccezione: `core` non può usare i servizi delle feature, quindi costruisce i suoi link con `AppRoutes` e `MAIN_PAGES`.

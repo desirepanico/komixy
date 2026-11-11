@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
+import { SessionService } from '@shared/services/session/session.service';
 import { AuthService } from './auth.service';
 
 const utente: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
@@ -27,6 +28,14 @@ describe('AuthService', () => {
     service.login(utente);
     expect(service.loggedUser()).toEqual(utente);
     expect(service.isAuthenticated()).toBe(true);
+  });
+
+  it("dopo il login e il logout lo stato condiviso con le altre feature si aggiorna", () => {
+    const sessione = TestBed.inject(SessionService);
+    service.login(utente);
+    expect(sessione.isAuthenticated()).toBe(true);
+    service.logout();
+    expect(sessione.isGuest()).toBe(true);
   });
 
   it("dopo il logout cancella l'utente e va al login", () => {

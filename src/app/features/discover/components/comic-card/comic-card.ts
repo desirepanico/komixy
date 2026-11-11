@@ -1,18 +1,15 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matBookmarkOutline } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
-import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { EditionType } from '@shared/models/comic.model';
 import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 @Component({
   selector: 'app-comic-card',
-  imports: [TranslocoPipe, RouterLink, Skeleton, Tag, ToggleButton, NgIcon],
-  providers: [provideIcons({ matBookmarkOutline })],
+  imports: [TranslocoPipe, RouterLink, Skeleton, Tag, BookmarkButton],
   templateUrl: './comic-card.html',
 })
 export class ComicCard {
@@ -28,18 +25,9 @@ export class ComicCard {
   public readonly volume = input<number>();
   public readonly totalVolumes = input<number | null>(null);
 
-  public readonly bookmarked = input<boolean>(false);
-  public readonly bookmarkToggle = output<void>();
-
   /** Finché la copertina non è arrivata si vede lo skeleton */
   protected readonly coverLoaded = signal<boolean>(false);
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.id()));
   protected readonly editionSeverity = computed(() => editionSeverity(this.editionType()));
-
-  public handleBookmarkClick(event: MouseEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.bookmarkToggle.emit();
-  }
 }

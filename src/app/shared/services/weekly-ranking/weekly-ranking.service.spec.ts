@@ -5,6 +5,10 @@ import { WeeklyRankingService } from './weekly-ranking.service';
 describe('WeeklyRankingService', () => {
   const entries = () => TestBed.inject(WeeklyRankingService).entries();
 
+  it('ha dieci posizioni, una per carta della busta', () => {
+    expect(entries()).toHaveLength(10);
+  });
+
   it('numera le posizioni partendo da 1 senza buchi', () => {
     expect(entries().map((e) => e.rank)).toEqual(entries().map((_, i) => i + 1));
   });

@@ -1,0 +1,31 @@
+<div
+  class="flex flex-col items-center gap-3 rounded-3xl border border-primary-400/30 bg-surface-900 bg-linear-to-br from-primary-700/55 to-transparent to-70% p-5 text-center"
+>
+  <img
+    [ngSrc]="packImage"
+    width="480"
+    height="847"
+    alt=""
+    class="w-24 brightness-75 drop-shadow-xl grayscale-[0.4]"
+  />
+  <h2 class="text-lg font-bold text-surface-50">{{ 'ranking.lockedTitle' | transloco }}</h2>
+  <p class="text-sm leading-snug text-surface-300">{{ 'ranking.lockedText' | transloco }}</p>
+  <div class="flex items-center gap-3">
+    <a
+      appButton
+      severity="accent"
+      size="sm"
+      [rounded]="true"
+      [routerLink]="packNavigation.packLink"
+    >
+      {{ 'weeklyPack.open' | transloco }}
+    </a>
+    <button
+      type="button"
+      class="cursor-pointer rounded-xs px-1 text-sm font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      (click)="skip()"
+    >
+      {{ 'weeklyPack.skip' | transloco }}
+    </button>
+  </div>
+</div>

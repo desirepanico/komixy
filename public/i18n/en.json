@@ -14,18 +14,19 @@
   "weeklyManga": {
     "title": "Manga of the week",
     "subtitle": "The most read this week",
-    "rank": "Rank {{ rank }}",
-    "seeAll": "See the full ranking"
+    "rank": "Rank {{ rank }}"
   },
   "bookmark": {
     "add": "Add to bookmarks",
-    "remove": "Remove from bookmarks"
+    "remove": "Remove from bookmarks",
+    "signUp": "Sign up to save to your lists"
   },
   "common": {
     "back": "Back",
     "releases": "Releases",
     "library": "Library",
-    "profile": "Profile"
+    "profile": "Profile",
+    "inList": "In list"
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -96,5 +97,66 @@
     "subtitle": "Volume details",
     "comingSoon": "Comic details coming soon",
     "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
+  },
+  "guestNotice": {
+    "list": "As a guest you can't save to your lists.",
+    "detail": "As a guest you can see the details, but you can't save to your lists.",
+    "signUp": "Sign up to do so."
+  },
+  "weeklyPack": {
+    "title": "Weekly pack",
+    "subtitle": "The 10 most-read volumes · from 10th to 1st",
+    "guestSubtitle": "Guest · the 10 most-read volumes, from 10th to 1st",
+    "week": "Week {{ week }}",
+    "guestWeek": "Guest · Week {{ week }}",
+    "readyTitle": "Your pack is ready",
+    "readyText": "10 cards: the most-read volumes of the week. Open it to discover the ranking.",
+    "guestTitle": "Open the weekly pack",
+    "guestText": "You can open it without an account. To save the cards to your lists you need to sign up.",
+    "open": "Open the pack",
+    "skip": "Skip the animation",
+    "signUp": "Sign up",
+    "openedTitle": "Weekly pack opened",
+    "nextPackIn": "new pack in {{ days }} days",
+    "nextPackTomorrow": "new pack tomorrow",
+    "review": "Review the week",
+    "tearHint": "Drag right along the top edge to tear the pack open",
+    "cardsFlipped": "Cards flipped: {{ flipped }} / {{ total }}",
+    "flipCard": "Flip the card",
+    "nextCard": "Next card",
+    "seeCollection": "See the collection",
+    "tapToFlip": "Tap the card to flip it",
+    "tapToContinue": "tap to continue",
+    "rare": "Rare card!",
+    "collectionComplete": "Collection complete",
+    "rareCount": "{{ count }} rare",
+    "savedCount": "{{ count }} in list",
+    "collectionHint": "tap a card to see it",
+    "seeRanking": "See the ranking",
+    "backToCollection": "Back to the collection",
+    "viewDetail": "View details",
+    "cardLabel": "Position {{ rank }}: {{ title }}"
+  },
+  "ranking": {
+    "title": "Review the week",
+    "subtitle": "Week {{ week }} · {{ count }} cards",
+    "guestSubtitle": "Guest · Week {{ week }} · {{ count }} cards",
+    "subtitleSealed": "Week {{ week }}",
+    "viewLabel": "Ranking view",
+    "list": "List",
+    "cards": "Cards",
+    "cardsHint": "Tap a card to see it",
+    "lockedTitle": "The ranking is revealed by opening the pack",
+    "lockedText": "While the pack is sealed the ranking can't be viewed, not even from a direct link."
+  },
+  "comicDetail": {
+    "title": "Details",
+    "ofTheWeek": "of the week",
+    "addToList": "Add to list",
+    "signUpToSave": "Sign up to save to your list",
+    "share": "Share",
+    "linkCopied": "Link copied",
+    "notFound": "Comic not found",
+    "notFoundHint": "This volume doesn't exist or is no longer available."
   }
 }

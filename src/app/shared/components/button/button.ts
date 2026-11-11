@@ -1,6 +1,6 @@
 import { Component, computed, input } from '@angular/core';
-import { BUTTON_COLORS } from '../../constants/ui.const';
-import { ButtonSeverity, ButtonVariant } from '../../models/button.model';
+import { BUTTON_COLORS, BUTTON_SIZES } from '../../constants/ui.const';
+import { ButtonSeverity, ButtonSize, ButtonVariant } from '../../models/button.model';
 
 /**
  * Bottone (ex p-button). Si applica a elementi nativi, così funzionano `routerLink`, `click` e `disabled`:
@@ -19,6 +19,8 @@ export class Button {
   public readonly variant = input<ButtonVariant>('filled');
   /** colore del bottone, come nei set Figma: primary (default), secondary, success, info, warn, danger, contrast */
   public readonly severity = input<ButtonSeverity>('primary');
+  /** md = altezza 44px (default), sm = 36px per i bottoni dentro le card */
+  public readonly size = input<ButtonSize>('md');
   /** true = bottone tondo di sola icona (serve aria-label) */
   public readonly iconOnly = input<boolean>(false);
   /** true = bordi completamente tondi (pillola/cerchio, come `rounded` di PrimeNG); false = angoli arrotondati (rounded-sm) */
@@ -34,7 +36,7 @@ export class Button {
     if (variant === 'text' && !this.iconOnly()) {
       return `${base} ${colors} ${radius}`;
     }
-    const size = this.iconOnly() ? 'size-10' : 'h-11 px-4 text-base';
+    const size = this.iconOnly() ? 'size-10' : BUTTON_SIZES[this.size()];
     return `${base} justify-center gap-2 font-semibold ${colors} ${size} ${radius}`;
   });
 }

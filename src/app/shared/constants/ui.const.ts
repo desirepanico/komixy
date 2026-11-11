@@ -1,4 +1,4 @@
-import { ButtonSeverity, ButtonVariant } from '../models/button.model';
+import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
 const FILLED_TEXT = 'text-surface-800';
@@ -41,7 +41,49 @@ export const BUTTON_COLORS: Readonly<
     outlined: 'border border-surface-100 text-surface-100 hover:bg-surface-100/15',
     text: 'text-surface-100 hover:bg-surface-100/15',
   },
+  // Viola pieno con testo chiaro (primary-600): è il bottone principale del flusso della busta
+  accent: {
+    filled: 'bg-primary-600 text-surface-50 hover:bg-primary-700',
+    outlined: 'border border-primary-400/55 text-primary-300 hover:bg-primary-400/15',
+    text: 'text-primary-300 hover:bg-primary-400/15',
+  },
+};
+
+export const BUTTON_SIZES: Readonly<Record<ButtonSize, string>> = {
+  md: 'h-11 px-4 text-base',
+  sm: 'h-9 px-4 text-sm',
 };
 
 /** Se la prima navigazione non finisce mai, lo skeleton non deve restare per sempre */
 export const BOOT_SKELETON_TIMEOUT_MS = 10_000;
+
+/** Dove si ricorda la settimana della busta già aperta (TODO: lo registra il server per utente o ospite) */
+export const WEEKLY_PACK_STORAGE_KEY = 'komixy.weeklyPack';
+
+/** La settimana della busta comincia il lunedì, ora italiana */
+export const WEEKLY_PACK_TIME_ZONE = 'Europe/Rome';
+
+/** Quanto bisogna trascinare la busta verso destra per strapparla */
+export const PACK_TEAR_DISTANCE_PX = 140;
+
+/** Misure di una carta a grandezza naturale: si scala con `scale` di `app-pack-card` */
+export const PACK_CARD_WIDTH_PX = 192;
+export const PACK_CARD_HEIGHT_PX = 320;
+
+/** Apertura totale del ventaglio, dalla carta più a sinistra a quella più a destra */
+export const CARD_FAN_SPREAD_DEG = 100;
+
+/** Vista scelta nella pagina «Rivedi la settimana» */
+export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';
+
+export const PACK_IMAGE_URL = '/img/pack/booster.webp';
+
+/** Il lembo che si strappa è l'11% in alto dell'immagine della busta */
+export const PACK_STRIP_RATIO = 0.11;
+
+/** Bordi a dente di sega della busta strappata: del corpo (in alto) e del lembo (in basso) */
+export const PACK_BODY_CLIP = 'polygon(0.0% 0%,3.57% 1.6%,7.14% 0%,10.71% 1.6%,14.29% 0%,17.86% 1.6%,21.43% 0%,25.0% 1.6%,28.57% 0%,32.14% 1.6%,35.71% 0%,39.29% 1.6%,42.86% 0%,46.43% 1.6%,50.0% 0%,53.57% 1.6%,57.14% 0%,60.71% 1.6%,64.29% 0%,67.86% 1.6%,71.43% 0%,75.0% 1.6%,78.57% 0%,82.14% 1.6%,85.71% 0%,89.29% 1.6%,92.86% 0%,96.43% 1.6%,100.0% 0%,100% 100%,0 100%)';
+export const PACK_STRIP_CLIP = 'polygon(0 0,100% 0,100.0% 100%,96.43% 88%,92.86% 100%,89.29% 88%,85.71% 100%,82.14% 88%,78.57% 100%,75.0% 88%,71.43% 100%,67.86% 88%,64.29% 100%,60.71% 88%,57.14% 100%,53.57% 88%,50.0% 100%,46.43% 88%,42.86% 100%,39.29% 88%,35.71% 100%,32.14% 88%,28.57% 100%,25.0% 88%,21.43% 100%,17.86% 88%,14.29% 100%,10.71% 88%,7.14% 100%,3.57% 88%,0.0% 100%)';
+
+/** Quanto dura l'animazione dello strappo prima di passare alle carte */
+export const PACK_TEAR_ANIMATION_MS = 800;

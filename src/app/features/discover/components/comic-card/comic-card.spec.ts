@@ -1,7 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { SessionService } from '@shared/services/session/session.service';
+import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { EditionType } from '@shared/models/comic.model';
 import { ComicCard } from './comic-card';
 
@@ -16,14 +18,12 @@ import { ComicCard } from './comic-card';
       [totalVolumes]="12"
       [isSingleVolume]="unico()"
       [editionType]="edizione()"
-      (bookmarkToggle)="toggle()"
     />
   `,
 })
 class Host {
   readonly unico = signal(false);
   readonly edizione = signal<EditionType | null>(null);
-  toggle = vi.fn();
 }
 
 describe('ComicCard', () => {
@@ -84,12 +84,20 @@ describe('ComicCard', () => {
     expect(html.querySelector('app-tag')?.textContent).toContain('mangaCard.editions.limited');
   });
 
-  it('il segnalibro emette bookmarkToggle senza far seguire il link', async () => {
+  it('il segnalibro mette il fumetto in lista, senza far seguire il link', async () => {
+    TestBed.inject(SessionService).setAuthenticated(true);
     const { fixture, html } = await crea();
     const evento = new MouseEvent('click', { bubbles: true, cancelable: true });
     (html.querySelector('button') as HTMLButtonElement).dispatchEvent(evento);
+    await fixture.whenStable();
 
-    expect(fixture.componentInstance.toggle).toHaveBeenCalledOnce();
-    expect(evento.defaultPrevented).toBe(true);
+    expect(TestBed.inject(BookmarksService).isSaved('7')).toBe(true);
+    expect(html.querySelector('button')?.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('per un ospite il segnalibro ha il lucchetto e porta a iscriversi', async () => {
+    const { html } = await crea();
+    expect(html.querySelector('button')).toBeNull();
+    expect(html.querySelector('app-bookmark-button a')?.getAttribute('href')).toBe('/login');
   });
 });

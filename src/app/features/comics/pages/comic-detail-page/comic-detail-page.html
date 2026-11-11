@@ -1,0 +1,115 @@
+<section class="min-w-0 space-y-6 px-3 py-2 md:p-2">
+  <div class="flex items-center gap-3">
+    <a
+      appButton
+      variant="outlined"
+      [iconOnly]="true"
+      [rounded]="true"
+      [routerLink]="discoverNavigation.discoverLink"
+      [attr.aria-label]="'common.back' | transloco"
+    >
+      <ng-icon name="matArrowBackOutline" size="20" />
+    </a>
+    <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+      {{ 'comicDetail.title' | transloco }}
+    </h1>
+  </div>
+
+  @if (comic(); as comic) {
+    <div class="flex gap-4">
+      <div class="relative aspect-2/3 h-50 shrink-0 overflow-hidden rounded-xl bg-surface-800">
+        @if (!coverLoaded()) {
+          <app-skeleton class="absolute inset-0 rounded-none" />
+        }
+        <img
+          class="size-full object-cover"
+          [src]="comic.coverUrl"
+          (load)="coverLoaded.set(true)"
+          (error)="coverLoaded.set(true)"
+          [alt]="'mangaCard.coverAlt' | transloco: { title: comic.title }"
+        />
+      </div>
+
+      <div class="flex min-w-0 flex-col items-start gap-2">
+        @if (weeklyRank(); as rank) {
+          <span
+            class="flex items-baseline gap-1.5 rounded-full border border-primary-400/30 bg-primary-500/15 px-2.5 py-1 text-xs font-bold text-primary-300"
+          >
+            <b class="text-base">#{{ rank }}</b>
+            {{ 'comicDetail.ofTheWeek' | transloco }}
+          </span>
+        }
+        <h2 class="text-xl leading-tight font-bold text-surface-50">{{ comic.title }}</h2>
+        <p class="text-sm text-surface-400">{{ comic.author }}</p>
+        @if (comic.isSingleVolume) {
+          <span class="text-sm font-semibold text-primary-400">
+            {{ 'mangaCard.singleVolume' | transloco }}
+          </span>
+        } @else {
+          <span class="text-sm text-primary-400">
+            {{ 'mangaCard.volumeLabel' | transloco }}
+            <span class="text-base font-bold text-primary-300">{{ comic.volume }}</span>
+            @if (comic.totalVolumes) {
+              <span class="text-surface-400"> / {{ comic.totalVolumes }}</span>
+            }
+          </span>
+        }
+        @if (comic.editionType) {
+          <app-tag [severity]="severity()">
+            {{ 'mangaCard.editions.' + comic.editionType | transloco }}
+          </app-tag>
+        }
+      </div>
+    </div>
+
+    <div class="grid gap-2.5">
+      @if (bookmarks.canSave()) {
+        <button
+          type="button"
+          appButton
+          severity="accent"
+          [rounded]="true"
+          class="w-full"
+          [attr.aria-pressed]="saved()"
+          (click)="toggleSaved()"
+        >
+          <ng-icon [name]="saved() ? 'matCheckOutline' : 'matAddOutline'" size="20" />
+          {{ (saved() ? 'common.inList' : 'comicDetail.addToList') | transloco }}
+        </button>
+      } @else {
+        <a
+          appButton
+          variant="outlined"
+          severity="secondary"
+          [rounded]="true"
+          class="w-full border-dashed"
+          [routerLink]="session.signUpLink"
+        >
+          <ng-icon name="matLockOutline" size="20" />
+          {{ 'comicDetail.signUpToSave' | transloco }}
+        </a>
+      }
+      <button
+        type="button"
+        appButton
+        variant="outlined"
+        severity="accent"
+        [rounded]="true"
+        class="w-full"
+        (click)="share()"
+      >
+        {{ (copied() ? 'comicDetail.linkCopied' : 'comicDetail.share') | transloco }}
+      </button>
+    </div>
+
+    @if (session.isGuest()) {
+      <app-guest-notice [message]="'guestNotice.detail' | transloco" />
+    }
+  } @else {
+    <app-empty-state
+      icon="matSearchOffOutline"
+      [title]="'comicDetail.notFound' | transloco"
+      [description]="'comicDetail.notFoundHint' | transloco"
+    />
+  }
+</section>

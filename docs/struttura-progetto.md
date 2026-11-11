@@ -13,17 +13,17 @@ src/
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
 │   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         auth, comics, discover, library, not-found, profile, ranking, releases
+│   │   └── <feature>/         auth, comics, discover, library, not-found, pack, profile, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
-│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, ...
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-pack-card, app-card-fan, app-card-spotlight, app-guest-notice, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
-│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, viewport/, mobile-swipe/, transloco-http-loader/)
+│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
@@ -45,7 +45,6 @@ Dove mettere le cose:
 - **features**: tutto ciò che appartiene a una sola area. Una feature non importa da un'altra: se due feature condividono qualcosa, spostalo in `shared` (componenti, direttive, modelli, servizi, costanti).
   - **Eccezione**: `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`. La dipendenza è a senso unico: `auth` non importa da `core`.
   - **Eccezione**: i servizi di navigazione: per andare in un'altra feature si inietta il suo `<nome>-navigation.service` (`DiscoverNavigationService`, `ComicsNavigationService`, ...).
-  - **Eccezione**: `discover` mostra la Top 5 usando la card della feature `ranking` (`features/ranking/components`). La dipendenza è a senso unico: `ranking` non importa mai da `discover`.
 - **shared**: componenti, direttive, modelli, servizi e costanti usati da più feature (o da `core`). Può essere importato da qualsiasi parte, ma non dipende da `features` né da `core`. Un servizio qui è un singleton come quelli di `core`: la differenza è che serve alle feature, non alla shell dell'app.
 - Le dipendenze vanno in una direzione: `features` → `shared` e `core`; `shared` e `core` non dipendono da `features`, e `shared` non dipende da `core`.
 

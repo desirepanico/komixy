@@ -22,6 +22,8 @@ import { Button } from './button';
     <button id="pericolo" appButton severity="danger">Ok</button>
     <button id="pericolo-bordo" appButton severity="danger" variant="outlined">Ok</button>
     <button id="pericolo-testo" appButton severity="danger" variant="text">Ok</button>
+    <button id="accento" appButton severity="accent">Ok</button>
+    <button id="piccolo" appButton size="sm">Ok</button>
     <a id="link" appButton href="/x">Vai</a>
   `,
 })
@@ -95,5 +97,16 @@ describe('Button', () => {
     const link = await el('link');
     expect(link.classList).toContain('bg-primary-300');
     expect(link.textContent?.trim()).toBe('Vai');
+  });
+
+  it('la variante accent è viola scuro con testo chiaro', async () => {
+    const classi = (await el('accento')).classList;
+    expect(classi).toContain('bg-primary-600');
+    expect(classi).toContain('text-surface-50');
+  });
+
+  it('la dimensione sm è più bassa di quella di default', async () => {
+    expect((await el('piccolo')).classList).toContain('h-9');
+    expect((await el('pieno')).classList).toContain('h-11');
   });
 });

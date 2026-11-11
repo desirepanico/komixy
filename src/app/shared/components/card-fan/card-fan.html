@@ -1,0 +1,23 @@
+<ul class="relative mx-auto h-56 w-full max-w-sm list-none">
+  @for (item of fan(); track item.entry.comic.id; let i = $index) {
+    <li
+      class="absolute top-6 left-1/2 -ml-10 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out"
+      style="transform-origin: 50% 158%"
+      [style.transform]="'rotate(' + (spread() ? item.angle : 0) + 'deg)'"
+      [style.transition-delay.ms]="i * 30"
+      [style.z-index]="item.layer"
+    >
+      <button
+        type="button"
+        class="block cursor-pointer rounded-xl outline-none motion-safe:transition-transform motion-safe:duration-200 hover:-translate-y-3 focus-visible:-translate-y-3 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        [attr.aria-label]="
+          'weeklyPack.cardLabel'
+            | transloco: { rank: item.entry.rank, title: item.entry.comic.title }
+        "
+        (click)="cardSelect.emit(item.entry)"
+      >
+        <app-pack-card [entry]="item.entry" [scale]="cardScale" [decorative]="true" />
+      </button>
+    </li>
+  }
+</ul>
