@@ -1,8 +1,14 @@
-<ul class="relative mx-auto h-56 w-full max-w-sm list-none">
+<ul
+  class="relative mx-auto w-full list-none"
+  [style.height.px]="height()"
+  [style.max-width.px]="width()"
+>
   @for (item of fan(); track item.entry.comic.id; let i = $index) {
     <li
-      class="absolute top-6 left-1/2 -ml-10 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out"
+      class="absolute left-1/2 motion-safe:transition-transform motion-safe:duration-700 motion-safe:ease-out"
       style="transform-origin: 50% 158%"
+      [style.top.px]="top()"
+      [style.margin-left.px]="-cardHalfWidth()"
       [style.transform]="'rotate(' + (spread() ? item.angle : 0) + 'deg)'"
       [style.transition-delay.ms]="i * 30"
       [style.z-index]="item.layer"
@@ -16,7 +22,12 @@
         "
         (click)="cardSelect.emit(item.entry)"
       >
-        <app-pack-card [entry]="item.entry" [scale]="cardScale" [decorative]="true" />
+        <app-pack-card
+          [entry]="item.entry"
+          [scale]="cardScale()"
+          [compact]="true"
+          [decorative]="true"
+        />
       </button>
     </li>
   }

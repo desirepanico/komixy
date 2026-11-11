@@ -27,6 +27,7 @@ const entry = (modifiche: Partial<RankingEntry['comic']> = {}): RankingEntry => 
     [faceUp]="davanti()"
     [flippable]="girevole()"
     [decorative]="decorativa()"
+    [compact]="compatta()"
   />`,
 })
 class Host {
@@ -34,6 +35,7 @@ class Host {
   readonly scala = signal(1);
   readonly davanti = signal(true);
   readonly girevole = signal(false);
+  readonly compatta = signal<boolean | undefined>(undefined);
   readonly decorativa = signal(false);
 }
 
@@ -122,6 +124,13 @@ describe('PackCard', () => {
     expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
     expect(html.textContent).not.toContain('One Piece');
     expect(html.querySelector('img[src*="one-piece"]')).not.toBeNull();
+  });
+
+  it('a grandezza naturale può essere forzata compatta, come nel ventaglio', async () => {
+    host().compatta.set(true);
+    await fixture.whenStable();
+    expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
+    expect(html.textContent).not.toContain('One Piece');
   });
 
   it('se è decorativa si nasconde ai lettori di schermo', async () => {

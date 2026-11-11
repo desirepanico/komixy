@@ -2,12 +2,9 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, ViewEncapsulation, computed, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import {
-  matPauseOutline,
-  matPlayArrowOutline,
-  matTouchAppOutline,
-} from '@ng-icons/material-symbols/outline';
+import { matPauseOutline, matPlayArrowOutline } from '@ng-icons/material-symbols/outline';
 import { Brand } from '@shared/components/brand/brand';
+import { Hint } from '@shared/components/hint/hint';
 import { Tag } from '@shared/components/tag/tag';
 
 /**
@@ -16,11 +13,11 @@ import { Tag } from '@shared/components/tag/tag';
  */
 @Component({
   selector: 'app-login-volumes',
-  imports: [Brand, NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
+  imports: [Brand, Hint, NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
   templateUrl: './login-volumes.html',
   styleUrl: './login-volumes.css',
   encapsulation: ViewEncapsulation.None,
-  providers: [provideIcons({ matPauseOutline, matPlayArrowOutline, matTouchAppOutline })],
+  providers: [provideIcons({ matPauseOutline, matPlayArrowOutline })],
   host: { class: 'relative block max-lg:contents' },
 })
 export class LoginVolumes {

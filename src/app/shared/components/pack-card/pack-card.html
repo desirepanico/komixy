@@ -17,10 +17,10 @@
       class="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-b from-primary-800 to-surface-900 shadow-lg shadow-surface-950/60"
       [class.backface-hidden]="flippable()"
       [class.hidden]="!flippable() && !faceUp()"
-      [class.p-2]="!compact()"
-      [class.p-1]="compact()"
+      [class.p-2]="!isCompact()"
+      [class.p-1]="isCompact()"
     >
-      @if (compact()) {
+      @if (isCompact()) {
         <div class="relative size-full overflow-hidden rounded-lg bg-surface-800">
           <img
             class="size-full object-cover"

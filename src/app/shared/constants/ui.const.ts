@@ -106,6 +106,14 @@ export const PACK_CARD_COMPACT_BELOW = 0.7;
 
 /** Apertura totale del ventaglio, dalla carta più a sinistra a quella più a destra */
 export const CARD_FAN_SPREAD_DEG = 100;
+/** Il ventaglio a grandezza base (telefono) misura 384×224 px con carte a scala 0,42; cresce con la larghezza fino a 2,2 volte */
+export const CARD_FAN_BASE_SCALE = 0.42;
+export const CARD_FAN_BASE_WIDTH_PX = 384;
+export const CARD_FAN_BASE_HEIGHT_PX = 224;
+export const CARD_FAN_BASE_TOP_PX = 24;
+export const CARD_FAN_MAX_GROWTH = 2.2;
+/** Larghezza del contenitore da cui il ventaglio comincia a crescere: sotto, resta a grandezza base */
+export const CARD_FAN_GROW_FROM_PX = 430;
 
 /** Pannello «Top» accanto alla busta aperta in Scopri: le carte della classifica (al massimo 10) che stanno intere nella larghezza */
 export const WEEKLY_TOP_COUNT = 10;

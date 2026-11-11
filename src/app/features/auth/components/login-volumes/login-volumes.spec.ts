@@ -185,11 +185,10 @@ describe('LoginVolumes', () => {
     expect(pausa().hasAttribute('aria-pressed')).toBe(false);
   });
 
-  it('la pausa ferma anche l’icona che pulsa', async () => {
-    pausa().click();
-    await fixture.whenStable();
-    const icona = html.querySelector('ng-icon.animate-pulse') as HTMLElement;
-    expect(icona.style.animationPlayState).toBe('paused');
+  it('l’invito a toccare è il suggerimento comune, con la sua icona ferma', () => {
+    const invito = html.querySelector('app-hint') as HTMLElement;
+    expect(invito.querySelector('ng-icon')?.getAttribute('name')).toBe('matTouchAppOutline');
+    expect(invito.querySelector('.animate-pulse')).toBeNull();
   });
 
   it('le copertine si alternano: una sì e una no partono a metà ciclo', () => {

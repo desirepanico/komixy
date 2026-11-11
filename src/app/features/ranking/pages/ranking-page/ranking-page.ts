@@ -8,6 +8,7 @@ import { DiscoverNavigationService } from '@features/discover/services/discover-
 import { Button } from '@shared/components/button/button';
 import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
+import { Hint } from '@shared/components/hint/hint';
 import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
 import { RankingEntry } from '@shared/models/ranking-entry.model';
 import { SessionService } from '@shared/services/session/session.service';
@@ -32,6 +33,7 @@ import { RankingViewService } from '../../services/ranking-view/ranking-view.ser
     CardFan,
     CardSpotlight,
     GuestNotice,
+    Hint,
     Button,
     RouterLink,
     NgIcon,

@@ -99,7 +99,7 @@ describe('RankingPage', () => {
       await apriCarte();
       expect(html.querySelector('app-card-fan')).not.toBeNull();
       expect(html.querySelector('app-comic-rank-card')).toBeNull();
-      expect(html.textContent).toContain('ranking.cardsHint');
+      expect(html.textContent).toContain('common.tapCardHint');
       expect(localStorage.getItem(RANKING_VIEW_STORAGE_KEY)).toBe('cards');
     });
 

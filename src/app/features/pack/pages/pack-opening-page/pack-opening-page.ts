@@ -19,6 +19,7 @@ import { matArrowBackOutline } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
 import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
+import { Hint } from '@shared/components/hint/hint';
 import { PackCard } from '@shared/components/pack-card/pack-card';
 import { Tag } from '@shared/components/tag/tag';
 import { PACK_TEAR_ANIMATION_MS } from '@shared/constants/ui.const';
@@ -47,6 +48,7 @@ type Phase = 'sealed' | 'cards' | 'collection';
     TranslocoPipe,
     NgIcon,
     Tag,
+    Hint,
   ],
   providers: [provideIcons({ matArrowBackOutline })],
   templateUrl: './pack-opening-page.html',

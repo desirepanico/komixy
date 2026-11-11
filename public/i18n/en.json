@@ -38,7 +38,8 @@
     "releases": "Releases",
     "library": "Library",
     "profile": "Profile",
-    "inList": "In list"
+    "inList": "In list",
+    "tapCardHint": "Tap a card to see it"
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -164,7 +165,6 @@
     "collectionComplete": "Collection complete",
     "rareCount": "{{ count }} rare",
     "savedCount": "{{ count }} in list",
-    "collectionHint": "tap a card to see it",
     "seeRanking": "See the ranking",
     "backToCollection": "Back to the collection",
     "viewDetail": "View details",
@@ -179,7 +179,6 @@
     "viewLabel": "Ranking view",
     "list": "List",
     "cards": "Cards",
-    "cardsHint": "Tap a card to see it",
     "lockedTitle": "The ranking is revealed by opening the pack",
     "lockedText": "While the pack is sealed the ranking can't be viewed, not even from a direct link."
   },

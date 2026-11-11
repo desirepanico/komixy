@@ -39,9 +39,7 @@
         </div>
 
         <div class="flex flex-col items-center gap-4 pt-6">
-          <p class="max-w-xs text-center text-sm text-surface-300">
-            {{ 'weeklyPack.tearHint' | transloco }}
-          </p>
+          <app-hint class="max-w-xs">{{ 'weeklyPack.tearHint' | transloco }}</app-hint>
           <button
             #primary
             type="button"
@@ -73,7 +71,7 @@
             }
           </ul>
 
-          <span caption class="first-letter:uppercase">
+          <app-hint caption>
             @if (!faceUp()) {
               {{ 'weeklyPack.tapToFlip' | transloco }}
             } @else {
@@ -83,7 +81,7 @@
               }
               {{ 'weeklyPack.tapToContinue' | transloco }}
             }
-          </span>
+          </app-hint>
 
           <button
             #primary
@@ -139,8 +137,8 @@
               @if (bookmarks.savedCount() > 0) {
                 · {{ 'weeklyPack.savedCount' | transloco: { count: bookmarks.savedCount() } }}
               }
-              · {{ 'weeklyPack.collectionHint' | transloco }}
             </p>
+            <app-hint>{{ 'common.tapCardHint' | transloco }}</app-hint>
             <a
               #primary
               appButton

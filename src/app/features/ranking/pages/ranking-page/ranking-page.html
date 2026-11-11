@@ -75,7 +75,7 @@
       <div class="flex flex-1 items-center">
         <app-card-fan class="w-full" [entries]="ranking.entries()" (cardSelect)="selected.set($event)" />
       </div>
-      <p class="pt-6 text-center text-sm text-surface-400">{{ 'ranking.cardsHint' | transloco }}</p>
+      <app-hint class="self-center pt-6">{{ 'common.tapCardHint' | transloco }}</app-hint>
     </div>
   }
 </section>

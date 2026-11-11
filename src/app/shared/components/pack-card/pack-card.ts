@@ -39,13 +39,17 @@ export class PackCard {
   public readonly flippable = input<boolean>(false);
   /** true quando chi la contiene (es. un bottone con la sua etichetta) descrive già la carta */
   public readonly decorative = input<boolean>(false);
+  /** true = sempre copertina e numero (carte sovrapposte, come nel ventaglio); se non c'è, dipende dalla scala */
+  public readonly compact = input<boolean | undefined>(undefined);
 
   protected readonly logo = LOGO_URL;
   protected readonly baseWidth = PACK_CARD_WIDTH_PX;
   protected readonly baseHeight = PACK_CARD_HEIGHT_PX;
 
   /** Una carta piccola mostra copertina e posizione, ben leggibili; i testi sono solo nella carta grande */
-  protected readonly compact = computed(() => this.scale() < PACK_CARD_COMPACT_BELOW);
+  protected readonly isCompact = computed(
+    () => this.compact() ?? this.scale() < PACK_CARD_COMPACT_BELOW,
+  );
 
   protected readonly width = computed(() => PACK_CARD_WIDTH_PX * this.scale());
   protected readonly height = computed(() => PACK_CARD_HEIGHT_PX * this.scale());
