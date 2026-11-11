@@ -67,7 +67,7 @@ describe('WeeklyPackBanner', () => {
   });
 
   describe('busta aperta', () => {
-    it("mostra la striscia con il solo pulsante «Rivedi la settimana»", async () => {
+    it('mostra la striscia con il solo pulsante «Rivedi la settimana»', async () => {
       await crea(true, true);
       expect(testo()).toContain('weeklyPack.openedTitle');
       expect(testo()).toContain('weeklyPack.nextPackIn');
@@ -75,6 +75,11 @@ describe('WeeklyPackBanner', () => {
       const rivedi = html.querySelector('a[href="/discover/ranking"]');
       expect(rivedi?.textContent).toContain('weeklyPack.review');
       expect(html.querySelector('button')).toBeNull();
+    });
+
+    it('sotto la data dice quante carte sono rare', async () => {
+      await crea(true, true);
+      expect(testo()).toContain('weeklyPack.rareCount');
     });
 
     it("l'ospite vede anche l'avviso che non può salvare nelle liste", async () => {

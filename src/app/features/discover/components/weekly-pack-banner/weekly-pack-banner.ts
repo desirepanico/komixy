@@ -8,12 +8,13 @@ import { RankingNavigationService } from '@features/ranking/services/ranking-nav
 import { Button } from '@shared/components/button/button';
 import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
 import { PACK_IMAGE_URL } from '@shared/constants/ui.const';
+import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
 /**
  * Busta della settimana in Scopri: da aprire (con «Salta l'animazione» per chi non vuole il 3D)
- * oppure, una volta aperta, una striscia con il solo pulsante «Rivedi la settimana».
+ * oppure, una volta aperta, una striscia con il pulsante «Rivedi la settimana».
  * Gli ospiti possono aprirla ma non salvare le carte in lista.
  */
 @Component({
@@ -25,6 +26,7 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
 export class WeeklyPackBanner {
   protected readonly pack = inject(WeeklyPackService);
   protected readonly session = inject(SessionService);
+  protected readonly bookmarks = inject(BookmarksService);
   protected readonly packNavigation = inject(PackNavigationService);
   protected readonly rankingNavigation = inject(RankingNavigationService);
   private readonly transloco = inject(TranslocoService);

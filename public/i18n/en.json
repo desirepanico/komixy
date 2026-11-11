@@ -168,7 +168,8 @@
     "seeRanking": "See the ranking",
     "backToCollection": "Back to the collection",
     "viewDetail": "View details",
-    "cardLabel": "Position {{ rank }}: {{ title }}"
+    "cardLabel": "Position {{ rank }}: {{ title }}",
+    "topTitle": "Top {{ count }} of the week"
   },
   "ranking": {
     "title": "Review the week",

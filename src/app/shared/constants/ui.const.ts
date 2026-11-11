@@ -105,6 +105,9 @@ export const PACK_CARD_HEIGHT_PX = 320;
 /** Apertura totale del ventaglio, dalla carta più a sinistra a quella più a destra */
 export const CARD_FAN_SPREAD_DEG = 100;
 
+/** Quanti volumi mostra il pannello «Top» accanto alla busta aperta in Scopri */
+export const WEEKLY_TOP_COUNT = 3;
+
 /** Vista scelta nella pagina «Rivedi la settimana» */
 export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';
 

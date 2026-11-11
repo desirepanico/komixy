@@ -1,0 +1,54 @@
+<section
+  class="flex flex-col gap-3 rounded-2xl border border-primary-400/20 bg-surface-900 p-4"
+  aria-labelledby="weekly-top-title"
+>
+  <div class="flex items-center justify-between gap-3">
+    <h2 id="weekly-top-title" class="text-sm font-bold text-surface-50">
+      {{ 'weeklyPack.topTitle' | transloco: { count: count } }}
+    </h2>
+    <a
+      appButton
+      variant="text"
+      severity="accent"
+      [underline]="true"
+      class="px-1 text-sm font-semibold"
+      [routerLink]="rankingNavigation.rankingLink"
+    >
+      {{ 'weeklyPack.seeRanking' | transloco }}
+    </a>
+  </div>
+
+  <ul class="grid list-none grid-cols-3 gap-3">
+    @for (item of top(); track item.entry.comic.id) {
+      <li class="min-w-0">
+        <a
+          class="group flex flex-col gap-1.5 rounded-lg outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          [routerLink]="item.link"
+          [attr.aria-label]="
+            'weeklyPack.cardLabel'
+              | transloco: { rank: item.entry.rank, title: item.entry.comic.title }
+          "
+        >
+          <span class="relative block aspect-3/4 overflow-hidden rounded-lg bg-surface-800">
+            <img
+              class="size-full object-cover motion-safe:transition-transform motion-safe:duration-200 group-hover:scale-105"
+              [src]="item.entry.comic.coverUrl"
+              alt=""
+              draggable="false"
+            />
+            <span
+              class="absolute top-1.5 left-1.5 flex items-baseline gap-0.5 rounded-lg bg-surface-950/65 px-2 py-0.5 font-black leading-none text-surface-50 backdrop-blur-sm"
+              aria-hidden="true"
+            >
+              <span class="text-xs">#</span>
+              <span class="text-lg">{{ item.entry.rank }}</span>
+            </span>
+          </span>
+          <span class="truncate text-xs font-bold text-surface-50" aria-hidden="true">
+            {{ item.entry.comic.title }}
+          </span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>

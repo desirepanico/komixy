@@ -11,9 +11,7 @@ describe('DiscoverPage', () => {
   let fixture: ComponentFixture<DiscoverPage>;
 
   const segnalibri = () =>
-    Array.from(
-      html.querySelectorAll('app-comic-card button[aria-pressed]'),
-    ) as HTMLButtonElement[];
+    Array.from(html.querySelectorAll('app-comic-card button[aria-pressed]')) as HTMLButtonElement[];
 
   const crea = async (iscritto = true) => {
     TestBed.inject(SessionService).setAuthenticated(iscritto);
@@ -40,6 +38,17 @@ describe('DiscoverPage', () => {
     expect(html.querySelector('app-weekly-pack-banner')).not.toBeNull();
     expect(html.querySelector('app-comic-rank-card')).toBeNull();
     expect(html.querySelector('a[href="/discover/pack"]')).not.toBeNull();
+  });
+
+  it('a busta chiusa non mostra il pannello con la top della settimana', async () => {
+    await crea();
+    expect(html.querySelector('app-weekly-top')).toBeNull();
+  });
+
+  it('a busta aperta mostra il pannello con la top della settimana', async () => {
+    TestBed.inject(WeeklyPackService).open();
+    await crea();
+    expect(html.querySelector('app-weekly-top')).not.toBeNull();
   });
 
   it('a busta aperta resta un solo pulsante, «Rivedi la settimana»', async () => {
