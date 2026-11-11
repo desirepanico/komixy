@@ -1,13 +1,13 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
+import { editionSeverity } from '@shared/constants/ui.const';
 import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
-import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
 
 /**
  * Riga di classifica: posizione, copertina e le stesse informazioni di `app-comic-card`,

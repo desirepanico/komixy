@@ -1,3 +1,4 @@
+import { EditionType } from '@shared/models/comic.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
@@ -82,8 +83,13 @@ export const PACK_IMAGE_URL = '/img/pack/booster.webp';
 export const PACK_STRIP_RATIO = 0.11;
 
 /** Bordi a dente di sega della busta strappata: del corpo (in alto) e del lembo (in basso) */
-export const PACK_BODY_CLIP = 'polygon(0.0% 0%,3.57% 1.6%,7.14% 0%,10.71% 1.6%,14.29% 0%,17.86% 1.6%,21.43% 0%,25.0% 1.6%,28.57% 0%,32.14% 1.6%,35.71% 0%,39.29% 1.6%,42.86% 0%,46.43% 1.6%,50.0% 0%,53.57% 1.6%,57.14% 0%,60.71% 1.6%,64.29% 0%,67.86% 1.6%,71.43% 0%,75.0% 1.6%,78.57% 0%,82.14% 1.6%,85.71% 0%,89.29% 1.6%,92.86% 0%,96.43% 1.6%,100.0% 0%,100% 100%,0 100%)';
-export const PACK_STRIP_CLIP = 'polygon(0 0,100% 0,100.0% 100%,96.43% 88%,92.86% 100%,89.29% 88%,85.71% 100%,82.14% 88%,78.57% 100%,75.0% 88%,71.43% 100%,67.86% 88%,64.29% 100%,60.71% 88%,57.14% 100%,53.57% 88%,50.0% 100%,46.43% 88%,42.86% 100%,39.29% 88%,35.71% 100%,32.14% 88%,28.57% 100%,25.0% 88%,21.43% 100%,17.86% 88%,14.29% 100%,10.71% 88%,7.14% 100%,3.57% 88%,0.0% 100%)';
+export const PACK_BODY_CLIP =
+  'polygon(0.0% 0%,3.57% 1.6%,7.14% 0%,10.71% 1.6%,14.29% 0%,17.86% 1.6%,21.43% 0%,25.0% 1.6%,28.57% 0%,32.14% 1.6%,35.71% 0%,39.29% 1.6%,42.86% 0%,46.43% 1.6%,50.0% 0%,53.57% 1.6%,57.14% 0%,60.71% 1.6%,64.29% 0%,67.86% 1.6%,71.43% 0%,75.0% 1.6%,78.57% 0%,82.14% 1.6%,85.71% 0%,89.29% 1.6%,92.86% 0%,96.43% 1.6%,100.0% 0%,100% 100%,0 100%)';
+export const PACK_STRIP_CLIP =
+  'polygon(0 0,100% 0,100.0% 100%,96.43% 88%,92.86% 100%,89.29% 88%,85.71% 100%,82.14% 88%,78.57% 100%,75.0% 88%,71.43% 100%,67.86% 88%,64.29% 100%,60.71% 88%,57.14% 100%,53.57% 88%,50.0% 100%,46.43% 88%,42.86% 100%,39.29% 88%,35.71% 100%,32.14% 88%,28.57% 100%,25.0% 88%,21.43% 100%,17.86% 88%,14.29% 100%,10.71% 88%,7.14% 100%,3.57% 88%,0.0% 100%)';
 
 /** Quanto dura l'animazione dello strappo prima di passare alle carte */
 export const PACK_TEAR_ANIMATION_MS = 800;
+/** Due soli stili: edizione limitata in viola (primary), deluxe e varianti neutre (secondary). */
+export const editionSeverity = (type: EditionType | null): 'primary' | 'secondary' =>
+  type === 'limited' ? 'primary' : 'secondary';

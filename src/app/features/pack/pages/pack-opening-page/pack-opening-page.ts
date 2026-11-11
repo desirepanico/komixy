@@ -10,10 +10,10 @@ import {
   viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { CardFan } from '@shared/components/card-fan/card-fan';
 import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight';
@@ -129,6 +129,8 @@ export class PackOpeningPage {
 
   /** Il bottone che aveva il focus sparisce con la fase: il focus passa al bottone principale della nuova */
   private focusPrimary(): void {
-    afterNextRender(() => (this.primary()?.nativeElement as HTMLElement | undefined)?.focus(), { injector: this.injector });
+    afterNextRender(() => (this.primary()?.nativeElement as HTMLElement | undefined)?.focus(), {
+      injector: this.injector,
+    });
   }
 }

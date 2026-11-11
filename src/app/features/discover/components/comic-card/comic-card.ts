@@ -1,12 +1,13 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
+import { editionSeverity } from '@shared/constants/ui.const';
 import { EditionType } from '@shared/models/comic.model';
-import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
+
 @Component({
   selector: 'app-comic-card',
   imports: [TranslocoPipe, RouterLink, Skeleton, Tag, BookmarkButton],

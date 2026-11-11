@@ -33,7 +33,7 @@
             #primary
             type="button"
             appButton
-            severity="accent"
+            [severity]="'accent'"
             [rounded]="true"
             class="min-w-40"
             [disabled]="torn()"
@@ -72,7 +72,15 @@
             }
           </span>
 
-          <button #primary type="button" appButton severity="accent" [rounded]="true" class="min-w-40" (click)="onPrimary()">
+          <button
+            #primary
+            type="button"
+            appButton
+            severity="accent"
+            [rounded]="true"
+            class="min-w-40"
+            (click)="onPrimary()"
+          >
             @if (!faceUp()) {
               {{ 'weeklyPack.flipCard' | transloco }}
             } @else if (isLast()) {

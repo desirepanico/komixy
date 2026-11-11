@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -11,14 +12,14 @@ import {
   matLockOutline,
   matSearchOffOutline,
 } from '@ng-icons/material-symbols/outline';
-import { map } from 'rxjs';
-import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { Button } from '@shared/components/button/button';
 import { EmptyState } from '@shared/components/empty-state/empty-state';
 import { GuestNotice } from '@shared/components/guest-notice/guest-notice';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
-import { editionSeverity } from '@shared/models/edition-severity/edition-severity';
+import { map } from 'rxjs';
+
+import { editionSeverity } from '@shared/constants/ui.const';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { SessionService } from '@shared/services/session/session.service';
