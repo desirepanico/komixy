@@ -6,6 +6,7 @@ import { AuthNavigationService } from '@features/auth/services/auth-navigation/a
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { NotFoundNavigationService } from '@features/not-found/services/not-found-navigation/not-found-navigation.service';
+import { PackNavigationService } from '@features/pack/services/pack-navigation/pack-navigation.service';
 import { RankingNavigationService } from '@features/ranking/services/ranking-navigation/ranking-navigation.service';
 import { LibraryNavigationService } from '@features/library/services/library-navigation/library-navigation.service';
 import { ProfileNavigationService } from '@features/profile/services/profile-navigation/profile-navigation.service';
@@ -45,6 +46,12 @@ describe('routes', () => {
     expect(html.querySelector('app-layout app-ranking-page')).not.toBeNull();
   });
 
+  it('discover/pack mostra l\'apertura della busta a schermo intero, fuori dal layout', async () => {
+    const { html } = await apri('/discover/pack');
+    expect(html.localName).toBe('app-pack-opening-page');
+    expect(html.querySelector('app-layout')).toBeNull();
+  });
+
   it('releases mostra la pagina delle uscite', async () => {
     const { html } = await apri('/releases');
     expect(html.querySelector('app-releases-page')).not.toBeNull();
@@ -60,9 +67,14 @@ describe('routes', () => {
     expect(html.querySelector('app-profile-page')).not.toBeNull();
   });
 
-  it('comic/:id mostra la pagina dei fumetti', async () => {
-    const { html } = await apri('/comic/42');
+  it('comic mostra la pagina dei fumetti', async () => {
+    const { html } = await apri('/comic');
     expect(html.querySelector('app-comics-page')).not.toBeNull();
+  });
+
+  it('comic/:id mostra il dettaglio del fumetto', async () => {
+    const { html } = await apri('/comic/42');
+    expect(html.querySelector('app-comic-detail-page')).not.toBeNull();
   });
 
   it('login è fuori dal layout', async () => {
@@ -88,6 +100,11 @@ describe('routes', () => {
         'app-ranking-page',
       ],
       [
+        'pack → packLink',
+        () => TestBed.inject(PackNavigationService).packLink,
+        'app-pack-opening-page',
+      ],
+      [
         'comics → comicsLink',
         () => TestBed.inject(ComicsNavigationService).comicsLink,
         'app-comics-page',
@@ -95,7 +112,7 @@ describe('routes', () => {
       [
         'comics → detailLink',
         () => TestBed.inject(ComicsNavigationService).detailLink('1'),
-        'app-comics-page',
+        'app-comic-detail-page',
       ],
       [
         'releases → releasesLink',

@@ -1,4 +1,4 @@
-<section class="min-w-0 space-y-6 px-3 py-2 md:p-2">
+<section class="flex min-h-[calc(100dvh-6rem)] min-w-0 flex-col gap-6 px-3 py-2 md:min-h-0 md:p-2">
   <div class="flex items-center gap-3">
     <a
       appButton
@@ -13,13 +13,25 @@
 
     <div class="min-w-0 flex-1">
       <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+<<<<<<< HEAD
         {{ 'rankingPage.title' | transloco }}
+=======
+        {{ 'ranking.title' | transloco }}
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
       </h1>
       <p class="text-sm text-surface-400">
-        {{ 'weeklyManga.subtitle' | transloco }}
+        @if (!pack.isOpened()) {
+          {{ 'ranking.subtitleSealed' | transloco: { week: pack.weekNumber } }}
+        } @else {
+          {{
+            (session.isGuest() ? 'ranking.guestSubtitle' : 'ranking.subtitle')
+              | transloco: { week: pack.weekNumber, count: ranking.entries().length }
+          }}
+        }
       </p>
     </div>
 
+<<<<<<< HEAD
     @if (weeklyPack.status() === 'opened' && canChoose) {
       <div
         role="group"
@@ -80,17 +92,65 @@
     <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
     <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
       @for (entry of weeklyPack.entries(); track entry.comic.id) {
+=======
+    @if (pack.isOpened()) {
+      <app-ranking-view-switch
+        class="ml-auto shrink-0"
+        [view]="views.view()"
+        (viewChange)="changeView($event)"
+      />
+    }
+  </div>
+
+  @if (!pack.isOpened()) {
+    <app-ranking-locked />
+  } @else if (views.view() === 'list') {
+    @if (session.isGuest()) {
+      <app-guest-notice [message]="'guestNotice.list' | transloco" />
+    }
+
+    <!-- Su desktop due colonne lette dall'alto in basso: 1-5 a sinistra, 6-10 a destra -->
+    <ol class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
+      @for (entry of ranking.entries(); track entry.comic.id) {
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
         <li>
           <app-comic-rank-card
             [comic]="entry.comic"
             [rank]="entry.rank"
             [priority]="entry.rank <= 5"
+<<<<<<< HEAD
             [bookmarked]="bookmarks.isBookmarked(entry.comic.id)"
             [locked]="bookmarks.locked()"
             (bookmarkToggle)="bookmarks.toggle(entry.comic.id)"
+=======
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
           />
         </li>
       }
     </ol>
+<<<<<<< HEAD
+=======
+  } @else if (selected(); as entry) {
+    <app-card-spotlight [entry]="entry" [detailLink]="detailLink(entry)" [summary]="true">
+      <app-card-fan behindCard [entries]="ranking.entries()" />
+      <button
+        type="button"
+        appButton
+        severity="accent"
+        [rounded]="true"
+        class="min-w-40"
+        (click)="selected.set(null)"
+      >
+        {{ 'weeklyPack.backToCollection' | transloco }}
+      </button>
+    </app-card-spotlight>
+  } @else {
+    <div class="flex flex-1 flex-col">
+      <div class="flex flex-1 items-center">
+        <app-card-fan class="w-full" [entries]="ranking.entries()" (cardSelect)="selected.set($event)" />
+      </div>
+      <p class="pt-6 text-center text-sm text-surface-400">{{ 'ranking.cardsHint' | transloco }}</p>
+    </div>
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   }
 </section>

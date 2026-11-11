@@ -4,10 +4,16 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 | Pagina | Rotta | Feature | Stato |
 |---|---|---|---|
+<<<<<<< HEAD
 | Scopri | `/discover` | `discover` | Attiva: la busta della settimana (da aprire, oppure aperta con il collegamento a «Rivedi la settimana») e i manga da scoprire; le copertine mostrano `app-skeleton` finché non arrivano |
 | Rivedi la settimana | `/discover/ranking` | `ranking` | Attiva: la classifica settimanale come elenco o come carte (scena 3D); finché la busta è sigillata mostra un blocco con il collegamento a Scopri; le copertine mostrano `app-skeleton` finché non arrivano |
+=======
+| Scopri | `/discover` | `discover` | Attiva: la busta della settimana (`app-weekly-pack-banner`) e i «Manga da scoprire»; le copertine mostrano `app-skeleton` finché non arrivano. Busta da aprire: card con «Apri la busta» e «Salta l'animazione» (apre senza animazione e va a «Rivedi la settimana»); per un ospite si aggiunge «Iscriviti». Busta già aperta: una striscia con la data e «nuova busta tra N giorni» e un solo pulsante, «Rivedi la settimana» (per l'ospite anche l'avviso che non può salvare nelle liste) |
+| Apertura busta | `/discover/pack` | `pack` | Attiva, a schermo intero e fuori dal layout (niente menu). Si strappa la busta trascinando il lembo verso destra (`app-pack-tear`; chi non può trascinare usa «Apri la busta»), si girano le 10 carte dalla 10ª alla 1ª (contatore «Carte girate: n / 10»; una carta con edizione speciale è «Carta rara!») e si arriva alla raccolta a ventaglio, da cui si sceglie una carta o si va alla classifica. Ogni carta ha «Vedi dettaglio» e «In lista». L'apertura si registra allo strappo e vale una volta a settimana (settimana ISO, fuso Europe/Rome). Una busta già aperta rimanda a «Rivedi la settimana». Esc torna a Scopri |
+| Classifica | `/discover/ranking` | `ranking` | Attiva, «Rivedi la settimana»: la classifica in due viste, Elenco (default) e Carte (ventaglio), con la scelta ricordata (`RankingViewService`). A busta sigillata non mostra nulla della classifica (`app-ranking-locked`, anche da link diretto) |
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 | Uscite | `/releases` | `releases` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
-| Fumetto | `/comic/:id` | `comics` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`); manca la pagina di dettaglio |
+| Fumetto | `/comic`, `/comic/:id` | `comics` | `/comic`: segnaposto (`app-empty-state`). `/comic/:id`: dettaglio del volume (copertina, titolo, autore, volume, edizione, «#N della settimana» solo a busta aperta), «Aggiungi in lista» e «Condividi»; un id sconosciuto mostra «Fumetto non trovato» |
 | Libreria | `/library` | `library` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Profilo | `/profile` | `profile` | Segnaposto: intestazione e messaggio provvisorio (`app-empty-state`) |
 | Scan | `/scan` | — | Voce nell'enum delle rotte, non ancora implementata |
@@ -26,6 +32,7 @@ Komixy è un'app per collezionisti di fumetti e manga.
 
 ## Componenti condivisi
 
+<<<<<<< HEAD
 - `app-brand`: marchio, cioè il logo con la scritta (`public/img/logo/komixy-logo-wordmark.png`, per sfondi scuri). Il nome non si traduce: l'`alt` è «Komixy». Si usa nella sidebar desktop e nel pannello della login. Il favicon (`public/favicon.ico`) è il logo `komixy-logo.png` intero (K, anello e stella) senza il bordo bianco esterno, in un cerchio `surface-950` senza bordo, così il logo può essere più grande
 - `app-pack-scene`: la scena 3D della busta con i suoi controlli (vedi «Busta della settimana»)
 - `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`; severity `primary`, `secondary`, `success`, `info`, `warn`, `danger`, `contrast`, come nei set Severity, Outlined e Text di Figma; `[underline]="true"` lo sottolinea alla selezione, come il link di PrimeNG (passaggio del mouse, focus da tastiera e tocco con `active:`, perché sul telefono non c'è hover), e va usato su `<a href>` o `<a routerLink>`, così si apre anche in un’altra scheda con `target="_blank"`, clic centrale o Ctrl+clic)
@@ -34,8 +41,23 @@ Komixy è un'app per collezionisti di fumetti e manga.
 - `app-error-message`: primo errore di `errors` (testo con icona, `role="alert"`), scelto dal tipo di errore con `common.validation.<kind>` e il nome del campo (`field`). Lo usa `app-field-wrapper`.
 - `app-field-wrapper`: nome del campo (`label`, chiave Transloco), controllo come contenuto e `app-error-message` (`errors`). `inputId` è l'id del controllo, così l'etichetta lo seleziona e `aria-describedby` punta al messaggio. Lo usano, al loro interno, i controlli qui sotto
 - `app-input-text` e `app-input-password` (cartella `shared/components/input/`): campi completi per i Signal Forms, con nome del campo (`label`), `placeholder`, input ed errore (testo con icona, `aria-invalid` e `aria-describedby`, visibili solo dopo che il campo è stato toccato). Il campo si passa con `[field]` (`app-input-text` ha i tipi `text` e `email`); `app-input-password` ha anche il bottone occhio con `aria-pressed`. I messaggi d'errore sono gli stessi per tutti i form (`common.validation.<kind>`), es. «Il campo Email è obbligatorio». Come si usano: `.claude/rules/shared-inputs.md`. Esempio: `login-form`
+=======
+- `app-tag`, `appButton` (su `button` o `a`; varianti `filled`, `outlined`, `text`; severity `primary`, `secondary`, `success`, `info`, `warn`, `danger`, `contrast`, come nei set Severity, Outlined e Text di Figma, più `accent`, viola scuro con testo chiaro, usato nel flusso della busta; `size` `md` o `sm`)
+- `appToggleButton` (su `button`, 36px (un po' più grande dei 30px di Figma), solo tondo): bottone a due stati con `pressed`, usato da `app-bookmark-button`. Imposta da solo `aria-pressed`; l'`aria-label` lo passa chi lo usa
+- `app-field-wrapper`: nome del campo (`label`, chiave Transloco), controllo come contenuto e messaggio d'errore (`errors`, scelto dal tipo di errore). `inputId` è l'id del controllo, così l'etichetta lo seleziona e `aria-describedby` punta al messaggio. Lo usano, al loro interno, i controlli qui sotto
+- `app-input-text` e `app-input-password` (cartella `shared/components/input/`): campi completi (nome del campo, input ed errore) per i Signal Forms, si legano con `[formField]`. `label` e `placeholder` sono chiavi Transloco. I messaggi d'errore sono gli stessi per tutti i form (`validation.*`, scelti dal `kind` in `VALIDATION_MESSAGES`) e il wrapper ci mette il nome del campo, es. «Il campo Email è obbligatorio». L'errore (testo con icona), `aria-invalid` e `aria-describedby` compaiono solo dopo che il campo è stato toccato. `app-input-password` ha il suo `<input>` e il bottone occhio con `aria-pressed`. Esempio: `login-form`
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 - `app-horizontal-scroller`: liste che scorrono in orizzontale (scroll nativo, snap, frecce visibili col mouse e nascoste solo sui dispositivi touch, tasti freccia da tastiera)
+- `app-bookmark-button`: il segnalibro («In lista») di un fumetto, legato a `BookmarksService`: un iscritto aggiunge e toglie (più fumetti insieme), un ospite vede il lucchetto e un link a iscriversi. Lo usano `app-comic-card` e `app-comic-rank-card`
+- `app-pack-card` (la carta della busta, 192×320 px scalabili con `scale`, anche col dorso), `app-card-fan` (le carte a ventaglio, un bottone per carta, `data-no-swipe`) e `app-card-spotlight` (una carta in primo piano con «Vedi dettaglio» e «In lista»; `faceUp` e `interactive` per girarla, `summary` per il riepilogo, slot `caption`, `afterCard`, `behindCard`)
+- `app-guest-notice`: avviso per gli ospiti («Come ospite non puoi salvare nelle liste. Iscriviti per farlo.»)
 - Direttive `appSwipe` (swipe tra pagine) e `appInView`
+
+## Ospiti e iscritti
+
+Chi non ha fatto l'accesso è un ospite (`SessionService`, impostato da `AuthService`). Un ospite può aprire la busta, vedere la classifica e i dettagli, ma non salvare nelle liste: i segnalibri hanno il lucchetto (`BookmarksService.toggle()` non fa nulla), «In lista» mostra «Iscriviti per salvare nelle liste» e il dettaglio ha «Iscriviti per salvare in lista». I dati sono di prova: l'apertura della busta (`WeeklyPackService`) è salvata nel browser (chiave `komixy.weeklyPack`), i segnalibri restano in memoria.
+
+TODO per l'API: una apertura a settimana per identità (`user_id` per gli iscritti, `guest_id` anonimo per gli ospiti, vincolo univoco identità + settimana), `GET /weekly-pack` (sigillata o aperta con le 10 carte), `POST /weekly-pack/open` atomico e idempotente (lo chiama anche «Salta l'animazione»), classifica non consegnata a busta sigillata (403) e `PUT/DELETE /me/bookmarks/:comicId` con 403 per gli ospiti. Le carte sono la classifica fotografata a inizio settimana, senza casualità.
 
 ## Layout
 

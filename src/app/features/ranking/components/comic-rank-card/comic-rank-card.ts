@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, ViewEncapsulation, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -8,14 +9,33 @@ import { ComicCover } from '@shared/components/comic-cover/comic-cover';
 import { Tag } from '@shared/components/tag/tag';
 import { ToggleButton } from '@shared/components/toggle-button/toggle-button';
 import { EDITION_SEVERITY } from '@shared/constants/ui.const';
+=======
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
+import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
+import { Skeleton } from '@shared/components/skeleton/skeleton';
+import { Tag } from '@shared/components/tag/tag';
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
 
+<<<<<<< HEAD
 /** Tutta la riga è un link (titolo con link "stirato"); il segnalibro resta cliccabile. */
 @Component({
   selector: 'app-comic-rank-card',
   imports: [RouterLink, TranslocoPipe, ComicCover, Tag, ToggleButton, NgIcon, InView],
   providers: [provideIcons({ matBookmarkOutline, matLockOutline })],
+=======
+/**
+ * Riga di classifica: posizione, copertina e le stesse informazioni di `app-comic-card`,
+ * in orizzontale. Tutta la riga è un link (titolo con link "stirato"); il segnalibro (`app-bookmark-button`) resta cliccabile.
+ */
+@Component({
+  selector: 'app-comic-rank-card',
+  imports: [RouterLink, TranslocoPipe, Skeleton, Tag, BookmarkButton, InView],
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   templateUrl: './comic-rank-card.html',
   styleUrl: './comic-rank-card.css',
   encapsulation: ViewEncapsulation.None,
@@ -28,10 +48,13 @@ export class ComicRankCard {
   public readonly rank = input.required<number>();
   /** Riga visibile senza scorrere: la copertina si scarica subito e non in lazy (migliora l'LCP) */
   public readonly priority = input<boolean>(false);
+<<<<<<< HEAD
   public readonly bookmarked = input<boolean>(false);
   /** L'ospite non può salvare: il segnalibro mostra il lucchetto e il tocco porta all'invito a iscriversi */
   public readonly locked = input<boolean>(false);
   public readonly bookmarkToggle = output<void>();
+=======
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 
   protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
   /** Solo la prima copertina ha la priorità più alta: è quasi sempre l'elemento più grande della pagina */

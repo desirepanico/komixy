@@ -1,18 +1,27 @@
 import { TestBed } from '@angular/core/testing';
+<<<<<<< HEAD
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { UserRole } from '../../models/user-role.model';
 import { SessionService } from '../session/session.service';
 import { ToastService } from '../toast/toast.service';
+=======
+import { beforeEach, describe, expect, it } from 'vitest';
+import { SessionService } from '../session/session.service';
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 import { BookmarksService } from './bookmarks.service';
 
 describe('BookmarksService', () => {
   let service: BookmarksService;
   let session: SessionService;
+<<<<<<< HEAD
   let toast: ToastService;
+=======
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 
   beforeEach(() => {
     service = TestBed.inject(BookmarksService);
     session = TestBed.inject(SessionService);
+<<<<<<< HEAD
     toast = TestBed.inject(ToastService);
     vi.spyOn(toast, 'info');
   });
@@ -53,5 +62,33 @@ describe('BookmarksService', () => {
     service.toggle('w1');
     expect(service.locked()).toBe(false);
     expect(toast.info).not.toHaveBeenCalled();
+=======
+  });
+
+  it('un iscritto aggiunge e toglie un fumetto dalla lista', () => {
+    session.setAuthenticated(true);
+    expect(service.toggle('a')).toBe(true);
+    expect(service.isSaved('a')).toBe(true);
+    expect(service.savedCount()).toBe(1);
+
+    service.toggle('a');
+    expect(service.isSaved('a')).toBe(false);
+    expect(service.savedCount()).toBe(0);
+  });
+
+  it('può avere più fumetti in lista insieme', () => {
+    session.setAuthenticated(true);
+    service.toggle('a');
+    service.toggle('b');
+    expect(service.isSaved('a')).toBe(true);
+    expect(service.isSaved('b')).toBe(true);
+    expect(service.savedCount()).toBe(2);
+  });
+
+  it('un ospite non salva nulla', () => {
+    expect(service.canSave()).toBe(false);
+    expect(service.toggle('a')).toBe(false);
+    expect(service.isSaved('a')).toBe(false);
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   });
 });

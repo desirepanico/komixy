@@ -1,5 +1,20 @@
 <section class="min-w-0 space-y-8 px-3 py-2 md:p-2">
+<<<<<<< HEAD
   <app-weekly-pack />
+=======
+  <div class="space-y-4">
+    <div class="min-w-0">
+      <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+        {{ 'weeklyManga.title' | transloco }}
+      </h1>
+      <p class="text-sm text-surface-400">
+        {{ 'weeklyManga.subtitle' | transloco }}
+      </p>
+    </div>
+
+    <app-weekly-pack-banner />
+  </div>
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 
   <div class="space-y-4">
     <div class="min-w-0">
@@ -12,7 +27,7 @@
     </div>
 
     <app-horizontal-scroller [ariaLabel]="'discoverManga.title' | transloco">
-      @for (comic of comics(); track comic.id) {
+      @for (comic of catalog.toDiscover(); track comic.id) {
         <div class="w-40 shrink-0 snap-start lg:w-44">
           <app-comic-card
             [id]="comic.id"
@@ -23,9 +38,12 @@
             [isSingleVolume]="comic.isSingleVolume"
             [editionType]="comic.editionType"
             [coverUrl]="comic.coverUrl"
+<<<<<<< HEAD
             [bookmarked]="bookmarks.isBookmarked(comic.id)"
             [locked]="bookmarks.locked()"
             (bookmarkToggle)="bookmarks.toggle(comic.id)"
+=======
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
           />
         </div>
       }

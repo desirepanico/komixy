@@ -6,8 +6,12 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
+<<<<<<< HEAD
 import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
 import { ApiError, AuthService } from './auth.service';
+=======
+import { AuthService } from './auth.service';
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 
 const utente: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
 
@@ -32,6 +36,7 @@ describe('AuthService', () => {
     expect(service.isAuthenticated()).toBe(true);
   });
 
+<<<<<<< HEAD
   it('dopo il login la sessione condivisa conosce utente e ruolo', () => {
     service.login({ id: 'guest', email: '', userRole: UserRole.Guest });
     const sessione = TestBed.inject(SessionService);
@@ -45,6 +50,16 @@ describe('AuthService', () => {
     expect(TestBed.inject(SessionService).user()).toBeNull();
   });
 
+=======
+  it("dopo il login e il logout lo stato condiviso con le altre feature si aggiorna", () => {
+    const sessione = TestBed.inject(SessionService);
+    service.login(utente);
+    expect(sessione.isAuthenticated()).toBe(true);
+    service.logout();
+    expect(sessione.isGuest()).toBe(true);
+  });
+
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   it("dopo il logout cancella l'utente e va al login", () => {
     service.login(utente);
     service.logout();

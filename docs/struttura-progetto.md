@@ -13,18 +13,27 @@ src/
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
 │   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
-│   │   └── <feature>/         auth, comics, discover, library, not-found, profile, ranking, releases
+│   │   └── <feature>/         auth, comics, discover, library, not-found, pack, profile, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
 │   │       ├── components/    componenti usati solo da questa feature
 │   │       ├── models/        tipi e interfacce della feature
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
+<<<<<<< HEAD
 │       ├── components/        componenti UI generici: app-brand, app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-toast, app-error-message, app-field-wrapper, app-input-text, app-pack-scene (scena 3D della busta, con le cartelle pack-math/, pack-flow/, pack-art/, pack-renderer/, pack-renderer-loader/), ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, pack, session-user, user-role, nav-item, app-routes, button)
 │       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, session/, bookmarks/, safe-storage/, pack-support/, viewport/, mobile-swipe/, toast/, transloco-http-loader/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom), image-stub/ (immagini che si caricano o falliscono subito)
+=======
+│       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-pack-card, app-card-fan, app-card-spotlight, app-guest-notice, ...
+│       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
+│       ├── directives/        direttive generiche: appSwipe, appInView
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
+│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
+├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
 public/

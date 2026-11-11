@@ -1,6 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
+<<<<<<< HEAD
 import { UserRole } from '../../models/user-role.model';
+=======
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 import { SessionService } from './session.service';
 
 describe('SessionService', () => {
@@ -10,6 +13,7 @@ describe('SessionService', () => {
     service = TestBed.inject(SessionService);
   });
 
+<<<<<<< HEAD
   it('parte senza utente e senza essere ospite', () => {
     expect(service.user()).toBeNull();
     expect(service.isGuest()).toBe(false);
@@ -31,5 +35,20 @@ describe('SessionService', () => {
     service.end();
     expect(service.user()).toBeNull();
     expect(service.isGuest()).toBe(false);
+=======
+  it('all\'inizio è un ospite', () => {
+    expect(service.isAuthenticated()).toBe(false);
+    expect(service.isGuest()).toBe(true);
+  });
+
+  it('dopo setAuthenticated(true) è un iscritto', () => {
+    service.setAuthenticated(true);
+    expect(service.isAuthenticated()).toBe(true);
+    expect(service.isGuest()).toBe(false);
+  });
+
+  it('invita a iscriversi dalla pagina di login', () => {
+    expect(service.signUpLink).toEqual(['/', 'login']);
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   });
 });

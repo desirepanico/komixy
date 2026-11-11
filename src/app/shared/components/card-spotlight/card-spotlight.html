@@ -1,0 +1,106 @@
+<div class="relative isolate flex flex-1 flex-col items-center justify-center gap-5">
+  <div
+    class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/40 blur-3xl"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Dietro alla carta in primo piano: es. il ventaglio da cui è stata scelta -->
+  <div
+    class="pointer-events-none absolute inset-0 flex items-center justify-center"
+    aria-hidden="true"
+    inert
+  >
+    <ng-content select="[behindCard]" />
+  </div>
+
+  <!-- Invito per gli ospiti: compare toccando «In lista» -->
+  <div role="status" class="absolute top-0 left-1/2 z-10 -translate-x-1/2">
+    @if (inviteShown()) {
+      <a
+        [routerLink]="session.signUpLink"
+        class="block rounded-xl border border-surface-700 bg-surface-900 px-4 py-2 text-sm whitespace-nowrap text-surface-100 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      >
+        {{ 'bookmark.signUp' | transloco }}
+      </a>
+    }
+  </div>
+
+  @if (interactive()) {
+    <button
+      type="button"
+      class="relative z-10 block cursor-pointer rounded-xl outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400"
+      [attr.aria-label]="(faceUp() ? 'weeklyPack.nextCard' : 'weeklyPack.flipCard') | transloco"
+      (click)="cardPress.emit()"
+    >
+      <app-pack-card [entry]="entry()" [faceUp]="faceUp()" [decorative]="true" />
+    </button>
+  } @else {
+    <app-pack-card class="relative z-10" [entry]="entry()" [faceUp]="faceUp()" />
+  }
+
+  <ng-content select="[afterCard]" />
+</div>
+
+<div class="flex flex-col items-center gap-4 pt-6">
+  <p class="min-h-6 text-center text-sm text-surface-300">
+    @if (summary()) {
+      <b class="text-primary-300">#{{ entry().rank }}</b>
+      {{ entry().comic.title }} ·
+      @if (entry().comic.isSingleVolume) {
+        {{ 'mangaCard.singleVolume' | transloco }}
+      } @else {
+        {{ 'mangaCard.volume' | transloco: { volume: entry().comic.volume } }}
+      }
+    } @else {
+      <ng-content select="[caption]" />
+    }
+  </p>
+
+  <div class="flex min-h-9 flex-wrap items-center justify-center gap-3">
+    @if (faceUp()) {
+      <a
+        appButton
+        variant="outlined"
+        severity="accent"
+        size="sm"
+        [rounded]="true"
+        [routerLink]="detailLink()"
+      >
+        {{ 'weeklyPack.viewDetail' | transloco }}
+      </a>
+
+      @if (bookmarks.canSave()) {
+        <button
+          type="button"
+          appButton
+          variant="outlined"
+          severity="accent"
+          size="sm"
+          [rounded]="true"
+          [class.bg-primary-700/40]="saved()"
+          [attr.aria-pressed]="saved()"
+          (click)="onInList()"
+        >
+          <ng-icon [name]="saved() ? 'matCheckOutline' : 'matAddOutline'" size="18" />
+          {{ 'common.inList' | transloco }}
+        </button>
+      } @else {
+        <button
+          type="button"
+          appButton
+          variant="outlined"
+          severity="accent"
+          size="sm"
+          [rounded]="true"
+          class="border-dashed"
+          (click)="onInList()"
+        >
+          <ng-icon name="matLockOutline" size="18" />
+          {{ 'common.inList' | transloco }}
+        </button>
+      }
+    }
+  </div>
+
+  <ng-content />
+</div>

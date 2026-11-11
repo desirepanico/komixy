@@ -31,23 +31,31 @@
   "bookmark": {
     "add": "Aggiungi ai segnalibri",
     "remove": "Rimuovi dai segnalibri",
+<<<<<<< HEAD
     "locked": "Salvare in lista è riservato agli iscritti",
     "guestLocked": {
       "summaryInfo": "Solo per gli iscritti",
       "detailInfo": "Iscriviti per salvare i volumi nelle tue liste."
     }
+=======
+    "signUp": "Iscriviti per salvare nelle liste"
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "common": {
     "back": "Indietro",
     "releases": "Uscite",
     "library": "Libreria",
     "profile": "Profilo",
+<<<<<<< HEAD
     "validation": {
       "required": "Il campo {{ field }} è obbligatorio.",
       "email": "Inserisci un'email valida, ad esempio mario@gmail.it.",
       "minLength": "Il campo {{ field }} deve contenere almeno {{ minLength }} caratteri.",
       "generic": "Il campo {{ field }} non è valido."
     }
+=======
+    "inList": "In lista"
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   },
   "scroller": {
     "scrollLeft": "Scorri verso sinistra",
@@ -122,6 +130,7 @@
     "comingSoon": "Dettaglio del fumetto in arrivo",
     "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
   },
+<<<<<<< HEAD
   "forgotPassword": {
     "title": "Password dimenticata",
     "comingSoonHint": "Qui potrai impostare una nuova password."
@@ -203,5 +212,67 @@
       "summaryWarn": "Vista Carte non disponibile",
       "detailWarn": "Ti mostro la classifica come elenco."
     }
+=======
+  "guestNotice": {
+    "list": "Come ospite non puoi salvare nelle liste.",
+    "detail": "Come ospite puoi vedere il dettaglio, ma non salvare nelle liste.",
+    "signUp": "Iscriviti per farlo."
+  },
+  "weeklyPack": {
+    "title": "Busta della settimana",
+    "subtitle": "I 10 volumi più letti · dalla 10ª alla 1ª",
+    "guestSubtitle": "Ospite · i 10 volumi più letti, dalla 10ª alla 1ª",
+    "week": "Settimana {{ week }}",
+    "guestWeek": "Ospite · Settimana {{ week }}",
+    "readyTitle": "La tua busta è pronta",
+    "readyText": "10 carte: i volumi più letti della settimana. Aprila per scoprire la classifica.",
+    "guestTitle": "Apri la busta della settimana",
+    "guestText": "Puoi aprirla anche senza account. Per salvare le carte in lista serve iscriversi.",
+    "open": "Apri la busta",
+    "skip": "Salta l'animazione",
+    "signUp": "Iscriviti",
+    "openedTitle": "Busta della settimana aperta",
+    "nextPackIn": "nuova busta tra {{ days }} giorni",
+    "nextPackTomorrow": "nuova busta domani",
+    "review": "Rivedi la settimana",
+    "tearHint": "Trascina verso destra sul bordo superiore per strappare la busta",
+    "cardsFlipped": "Carte girate: {{ flipped }} / {{ total }}",
+    "flipCard": "Gira la carta",
+    "nextCard": "Prossima carta",
+    "seeCollection": "Vedi la raccolta",
+    "tapToFlip": "Tocca la carta per girarla",
+    "tapToContinue": "tocca per continuare",
+    "rare": "Carta rara!",
+    "collectionComplete": "Raccolta completa",
+    "rareCount": "{{ count }} rare",
+    "savedCount": "{{ count }} in lista",
+    "collectionHint": "tocca una carta per vederla",
+    "seeRanking": "Vedi la classifica",
+    "backToCollection": "Torna alla raccolta",
+    "viewDetail": "Vedi dettaglio",
+    "cardLabel": "Posizione {{ rank }}: {{ title }}"
+  },
+  "ranking": {
+    "title": "Rivedi la settimana",
+    "subtitle": "Settimana {{ week }} · {{ count }} carte",
+    "guestSubtitle": "Ospite · Settimana {{ week }} · {{ count }} carte",
+    "subtitleSealed": "Settimana {{ week }}",
+    "viewLabel": "Vista della classifica",
+    "list": "Elenco",
+    "cards": "Carte",
+    "cardsHint": "Tocca una carta per vederla",
+    "lockedTitle": "La classifica si svela aprendo la busta",
+    "lockedText": "Finché la busta è sigillata la classifica non è consultabile, nemmeno da link diretto."
+  },
+  "comicDetail": {
+    "title": "Dettaglio",
+    "ofTheWeek": "della settimana",
+    "addToList": "Aggiungi in lista",
+    "signUpToSave": "Iscriviti per salvare in lista",
+    "share": "Condividi",
+    "linkCopied": "Link copiato",
+    "notFound": "Fumetto non trovato",
+    "notFoundHint": "Questo volume non esiste o non è più disponibile."
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   }
 }

@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { delay, Observable, of, tap, throwError } from 'rxjs';
 import { LoggedUser, LoginCredentials } from '../../models/auth.model';
+=======
+import { inject, Injectable, signal } from '@angular/core';
+import { SessionService } from '@shared/services/session/session.service';
+import { LoggedUser } from '../../models/auth.model';
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
 
 export class ApiError extends Error {
@@ -26,10 +32,12 @@ export class AuthService {
 
   public readonly loggedUser = this._loggedUser.asReadonly();
 
-  public readonly isAuthenticated = computed(() => this._loggedUser() !== null);
+  /** Chi non ha fatto l'accesso è un ospite: lo stato sta in `SessionService`, che le altre feature possono leggere */
+  public readonly isAuthenticated = this.session.isAuthenticated;
 
   public login(user: LoggedUser): void {
     this._loggedUser.set(user);
+<<<<<<< HEAD
     this.session.start({ id: user.id, role: user.userRole });
   }
 
@@ -45,11 +53,18 @@ export class AuthService {
       delay(FAKE_API_DELAY_MS),
       tap((user) => this.login(user)),
     );
+=======
+    this.session.setAuthenticated(true);
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
   }
 
   public logout(): void {
     this._loggedUser.set(null);
+<<<<<<< HEAD
     this.session.end();
+=======
+    this.session.setAuthenticated(false);
+>>>>>>> 3e90d81c37a4f84b5b06781035b44042b00ce3a7
     void this.navigation.goToLogin();
   }
 }

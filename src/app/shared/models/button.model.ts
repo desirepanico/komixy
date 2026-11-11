@@ -6,4 +6,6 @@ export type ButtonSeverity =
   | 'info'
   | 'warn'
   | 'danger'
-  | 'contrast';
+  | 'contrast'
+  | 'accent';
+export type ButtonSize = 'md' | 'sm';

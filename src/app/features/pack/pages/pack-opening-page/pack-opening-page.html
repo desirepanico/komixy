@@ -1,0 +1,137 @@
+@if (!alreadyOpened) {
+  <main class="relative flex min-h-dvh flex-col px-4 pt-5 pb-8">
+    <header class="relative z-20 flex items-start justify-between gap-3">
+      <div class="min-w-0">
+        <h1 class="text-lg font-bold text-surface-50">{{ 'weeklyPack.title' | transloco }}</h1>
+        <p class="text-sm text-surface-400">
+          {{ (session.isGuest() ? 'weeklyPack.guestSubtitle' : 'weeklyPack.subtitle') | transloco }}
+        </p>
+      </div>
+      <p
+        class="shrink-0 rounded-full border border-surface-700 bg-surface-900/70 px-3 py-1.5 text-[13px] font-bold text-primary-300"
+        aria-live="polite"
+      >
+        {{ 'weeklyPack.cardsFlipped' | transloco: { flipped: flippedCount(), total: total() } }}
+      </p>
+    </header>
+
+    @switch (phase()) {
+      @case ('sealed') {
+        <div class="relative isolate flex flex-1 flex-col items-center justify-center">
+          <div
+            class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/30 blur-3xl"
+            aria-hidden="true"
+          ></div>
+          <app-pack-tear [torn]="torn()" (tearRequest)="tear()" />
+        </div>
+
+        <div class="flex flex-col items-center gap-4 pt-6">
+          <p class="max-w-xs text-center text-sm text-surface-300">
+            {{ 'weeklyPack.tearHint' | transloco }}
+          </p>
+          <button
+            #primary
+            type="button"
+            appButton
+            severity="accent"
+            [rounded]="true"
+            class="min-w-40"
+            [disabled]="torn()"
+            (click)="tear()"
+          >
+            {{ 'weeklyPack.open' | transloco }}
+          </button>
+        </div>
+      }
+
+      @case ('cards') {
+        <app-card-spotlight
+          [entry]="current()"
+          [detailLink]="currentLink()"
+          [faceUp]="faceUp()"
+          [interactive]="true"
+          (cardPress)="onPrimary()"
+        >
+          <ul afterCard class="flex min-h-16 w-full list-none items-center gap-1 self-start">
+            @for (entry of previous(); track entry.comic.id) {
+              <li>
+                <app-pack-card [entry]="entry" [scale]="0.2" [decorative]="true" />
+              </li>
+            }
+          </ul>
+
+          <span caption class="first-letter:uppercase">
+            @if (!faceUp()) {
+              {{ 'weeklyPack.tapToFlip' | transloco }}
+            } @else {
+              @if (current().comic.editionType) {
+                <b class="text-primary-300">{{ 'weeklyPack.rare' | transloco }}</b>
+                {{ 'mangaCard.editions.' + current().comic.editionType | transloco }} ·
+              }
+              {{ 'weeklyPack.tapToContinue' | transloco }}
+            }
+          </span>
+
+          <button #primary type="button" appButton severity="accent" [rounded]="true" class="min-w-40" (click)="onPrimary()">
+            @if (!faceUp()) {
+              {{ 'weeklyPack.flipCard' | transloco }}
+            } @else if (isLast()) {
+              {{ 'weeklyPack.seeCollection' | transloco }}
+            } @else {
+              {{ 'weeklyPack.nextCard' | transloco }}
+            }
+          </button>
+        </app-card-spotlight>
+      }
+
+      @case ('collection') {
+        @if (selected(); as entry) {
+          <app-card-spotlight [entry]="entry" [detailLink]="selectedLink()" [summary]="true">
+            <app-card-fan behindCard [entries]="pack.deck()" />
+            <button
+              #primary
+              type="button"
+              appButton
+              severity="accent"
+              [rounded]="true"
+              class="min-w-40"
+              (click)="backToCollection()"
+            >
+              {{ 'weeklyPack.backToCollection' | transloco }}
+            </button>
+          </app-card-spotlight>
+        } @else {
+          <div class="relative isolate flex flex-1 flex-col items-center justify-center">
+            <div
+              class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/30 blur-3xl"
+              aria-hidden="true"
+            ></div>
+            <app-card-fan [entries]="pack.deck()" (cardSelect)="select($event)" />
+          </div>
+
+          <div class="flex flex-col items-center gap-4 pt-6">
+            <p class="max-w-xs text-center text-sm text-surface-300">
+              {{ 'weeklyPack.collectionComplete' | transloco }} ·
+              <b class="text-primary-300">
+                {{ 'weeklyPack.rareCount' | transloco: { count: pack.rareCount() } }}
+              </b>
+              @if (bookmarks.savedCount() > 0) {
+                · {{ 'weeklyPack.savedCount' | transloco: { count: bookmarks.savedCount() } }}
+              }
+              · {{ 'weeklyPack.collectionHint' | transloco }}
+            </p>
+            <a
+              #primary
+              appButton
+              severity="accent"
+              [rounded]="true"
+              [routerLink]="rankingNavigation.rankingLink"
+            >
+              {{ 'weeklyPack.seeRanking' | transloco }}
+            </a>
+          </div>
+        }
+      }
+    }
+  </main>
+}

@@ -9,5 +9,6 @@ export enum AppRoutes {
   ForgotPassword = 'forgot-password',
   Comic = 'comic',
   Ranking = 'ranking',
+  Pack = 'pack',
   NotFound = 'not-found',
 }

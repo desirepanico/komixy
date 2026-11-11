@@ -1,0 +1,41 @@
+<!-- Tutto decorativo (aria-hidden): la busta si apre anche dal bottone della pagina -->
+<div class="relative aspect-480/847 w-44 select-none drop-shadow-2xl" aria-hidden="true">
+  <div
+    class="absolute inset-x-0 bottom-0 bg-no-repeat transition-[transform,opacity] duration-700 motion-reduce:transition-none"
+    [class.opacity-0]="torn()"
+    [class.translate-y-6]="torn()"
+    [style.height.%]="bodyPercent"
+    [style.background-image]="image"
+    [style.background-size]="bodyBackgroundSize"
+    [style.background-position]="'bottom'"
+    [style.clip-path]="bodyClip"
+  ></div>
+
+  <!-- Il lembo si muove da fuori (transform), l'ondeggiare di richiamo sta in un elemento interno: due animazioni sullo stesso transform si sovrascriverebbero -->
+  <div
+    class="absolute inset-x-0 top-0 motion-reduce:transition-none"
+    [class.transition-[transform,opacity]]="!dragging()"
+    [class.duration-700]="!dragging()"
+    [class.opacity-0]="torn()"
+    [style.height.%]="stripPercent"
+    [style.clip-path]="stripClip"
+    [style.transform]="stripTransform()"
+  >
+    <div
+      class="size-full bg-no-repeat motion-reduce:animate-none"
+      [class.animate-tear-hint]="!dragging() && !torn()"
+      [style.background-image]="image"
+      [style.background-size]="stripBackgroundSize"
+      [style.background-position]="'top'"
+    ></div>
+  </div>
+
+  <!-- Area da afferrare: più alta del lembo, così si prende anche col dito -->
+  <div
+    class="absolute inset-x-0 -top-6 z-10 h-20 cursor-grab touch-none active:cursor-grabbing"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerEnd()"
+    (pointercancel)="onPointerEnd()"
+  ></div>
+</div>

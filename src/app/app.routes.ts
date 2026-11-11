@@ -8,6 +8,11 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: AppRoutes.Login,
   },
+  // L'apertura della busta sta sotto /discover ma a schermo intero, quindi fuori dal layout (niente menu)
+  {
+    path: `${AppRoutes.Discover}/${AppRoutes.Pack}`,
+    loadChildren: () => import('@features/pack/routes/pack.routes').then((m) => m.PACK_ROUTES),
+  },
   {
     path: '',
     loadComponent: () => import('@core/layout/layout').then((m) => m.Layout),

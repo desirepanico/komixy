@@ -1,0 +1,92 @@
+@if (!pack.isOpened()) {
+  <div
+    class="flex items-center gap-4 rounded-3xl border border-primary-400/30 bg-surface-900 bg-linear-to-br from-primary-700/55 to-transparent to-70% p-4 shadow-lg shadow-surface-950/50"
+  >
+    <img
+      [ngSrc]="packImage"
+      width="480"
+      height="847"
+      alt=""
+      priority
+      class="w-28 shrink-0 motion-safe:animate-pack-float drop-shadow-xl"
+    />
+
+    <div class="flex min-w-0 flex-col items-start gap-1.5">
+      <span
+        class="rounded-full border border-primary-400/35 bg-primary-500/20 px-2.5 py-0.5 text-xs font-extrabold tracking-widest text-primary-300 uppercase"
+      >
+        {{
+          (session.isGuest() ? 'weeklyPack.guestWeek' : 'weeklyPack.week')
+            | transloco: { week: pack.weekNumber }
+        }}
+      </span>
+      <h2 class="text-lg leading-tight font-bold text-surface-50">
+        {{ (session.isGuest() ? 'weeklyPack.guestTitle' : 'weeklyPack.readyTitle') | transloco }}
+      </h2>
+      <p class="text-sm leading-snug text-surface-300">
+        {{ (session.isGuest() ? 'weeklyPack.guestText' : 'weeklyPack.readyText') | transloco }}
+      </p>
+      <div class="mt-1 flex flex-wrap items-center gap-2">
+        <a
+          appButton
+          severity="accent"
+          size="sm"
+          [rounded]="true"
+          [routerLink]="packNavigation.packLink"
+        >
+          {{ 'weeklyPack.open' | transloco }}
+        </a>
+        @if (session.isGuest()) {
+          <a
+            appButton
+            variant="outlined"
+            severity="accent"
+            size="sm"
+            [rounded]="true"
+            [routerLink]="session.signUpLink"
+          >
+            {{ 'weeklyPack.signUp' | transloco }}
+          </a>
+        }
+        <button
+          type="button"
+          class="cursor-pointer rounded-xs px-1 text-sm font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          (click)="skip()"
+        >
+          {{ 'weeklyPack.skip' | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="flex flex-col gap-3 rounded-2xl border border-primary-400/20 bg-surface-900 p-3">
+    <div class="flex items-center gap-3">
+      <img [ngSrc]="packImage" width="480" height="847" alt="" class="w-9 shrink-0 drop-shadow-md" />
+      <div class="min-w-0">
+        <p class="text-sm font-bold text-surface-50">{{ 'weeklyPack.openedTitle' | transloco }}</p>
+        <p class="text-xs text-surface-400">
+          {{ openedOn() }} ·
+          {{
+            (pack.daysUntilNextPack === 1 ? 'weeklyPack.nextPackTomorrow' : 'weeklyPack.nextPackIn')
+              | transloco: { days: pack.daysUntilNextPack }
+          }}
+        </p>
+      </div>
+    </div>
+    <a
+      appButton
+      variant="outlined"
+      severity="accent"
+      size="sm"
+      [rounded]="true"
+      class="w-full"
+      [routerLink]="rankingNavigation.rankingLink"
+    >
+      {{ 'weeklyPack.review' | transloco }}
+    </a>
+  </div>
+
+  @if (session.isGuest()) {
+    <app-guest-notice class="mt-2.5" [message]="'guestNotice.list' | transloco" />
+  }
+}
