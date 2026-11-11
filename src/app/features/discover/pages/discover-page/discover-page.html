@@ -9,7 +9,7 @@
       </p>
     </div>
 
-    <!-- Il contenitore decide la disposizione: se la striscia e il pannello Top non ci stanno affiancati (meno di 59rem), vanno uno sotto l'altro a tutta larghezza, senza spazi vuoti a destra -->
+    <!-- Il contenitore decide la disposizione: il pannello Top compare solo se sta accanto alla striscia (da 59rem); sotto resta la sola striscia, a tutta larghezza -->
     <div class="@container">
       <div class="flex flex-col gap-4 @min-[59rem]:flex-row @min-[59rem]:items-start">
         <app-weekly-pack-banner
@@ -20,7 +20,9 @@
           "
         />
         @if (pack.isOpened()) {
-          <app-weekly-top class="hidden md:block @min-[59rem]:min-w-[26rem] @min-[59rem]:flex-1" />
+          <app-weekly-top
+            class="hidden @min-[59rem]:block @min-[59rem]:min-w-[26rem] @min-[59rem]:flex-1"
+          />
         }
       </div>
     </div>
