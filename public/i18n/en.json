@@ -169,7 +169,7 @@
     "backToCollection": "Back to the collection",
     "viewDetail": "View details",
     "cardLabel": "Position {{ rank }}: {{ title }}",
-    "topTitle": "Top {{ count }} of the week"
+    "topTitle": "Top of the week"
   },
   "ranking": {
     "title": "Review the week",

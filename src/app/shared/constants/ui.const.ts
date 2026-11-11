@@ -105,8 +105,15 @@ export const PACK_CARD_HEIGHT_PX = 320;
 /** Apertura totale del ventaglio, dalla carta più a sinistra a quella più a destra */
 export const CARD_FAN_SPREAD_DEG = 100;
 
-/** Quanti volumi mostra il pannello «Top» accanto alla busta aperta in Scopri */
-export const WEEKLY_TOP_COUNT = 3;
+/** Pannello «Top» accanto alla busta aperta in Scopri: le carte della classifica (al massimo 10) che stanno intere nella larghezza */
+export const WEEKLY_TOP_COUNT = 10;
+/** Scala delle carte nel pannello (96×160 px) e distanza tra loro */
+export const WEEKLY_TOP_CARD_SCALE = 0.5;
+export const WEEKLY_TOP_GAP_PX = 12;
+/** Carte mostrate finché la larghezza del pannello non è stata misurata */
+export const WEEKLY_TOP_INITIAL_COUNT = 3;
+/** Bordo e spaziatura interna del pannello, per calcolarne la larghezza massima */
+export const WEEKLY_TOP_FRAME_PX = 34;
 
 /** Vista scelta nella pagina «Rivedi la settimana» */
 export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';

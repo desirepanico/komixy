@@ -169,7 +169,7 @@
     "backToCollection": "Torna alla raccolta",
     "viewDetail": "Vedi dettaglio",
     "cardLabel": "Posizione {{ rank }}: {{ title }}",
-    "topTitle": "Top {{ count }} della settimana"
+    "topTitle": "Top della settimana"
   },
   "ranking": {
     "title": "Rivedi la settimana",
