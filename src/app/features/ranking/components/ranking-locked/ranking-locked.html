@@ -22,7 +22,11 @@
     </a>
     <button
       type="button"
-      class="cursor-pointer rounded-xs px-1 text-sm font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      appButton
+      variant="text"
+      severity="accent"
+      [rounded]="true"
+      class="px-3 py-1.5 text-sm font-semibold"
       (click)="skip()"
     >
       {{ 'weeklyPack.skip' | transloco }}
