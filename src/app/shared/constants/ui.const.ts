@@ -77,6 +77,9 @@ export const CARD_FAN_SPREAD_DEG = 100;
 /** Vista scelta nella pagina «Rivedi la settimana» */
 export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';
 
+/** Logo di Komixy, sul dorso delle carte */
+export const LOGO_URL = '/img/logo/komixy-logo.png';
+
 export const PACK_IMAGE_URL = '/img/pack/booster.webp';
 
 /** Il lembo che si strappa è l'11% in alto dell'immagine della busta */

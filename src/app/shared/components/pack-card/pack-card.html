@@ -10,7 +10,7 @@
     [class.rotate-y-180]="!faceUp()"
   >
     <div
-      class="absolute inset-0 rounded-xl bg-linear-to-b from-primary-200 to-primary-600 p-0.5 shadow-lg shadow-surface-950/60 backface-hidden"
+      class="absolute inset-0 overflow-hidden rounded-xl bg-linear-to-b from-primary-200 to-primary-600 p-0.5 shadow-lg shadow-surface-950/60 backface-hidden"
     >
       <div
         class="flex size-full min-w-0 flex-col rounded-[10px] bg-linear-to-b from-teal-800 to-surface-900 p-2"
@@ -64,13 +64,13 @@
     </div>
 
     <div
-      class="absolute inset-0 rotate-y-180 rounded-xl bg-linear-to-b from-primary-200 to-primary-600 p-0.5 shadow-lg shadow-surface-950/60 backface-hidden"
+      class="absolute inset-0 rotate-y-180 overflow-hidden rounded-xl bg-linear-to-b from-primary-200 to-primary-600 p-0.5 shadow-lg shadow-surface-950/60 backface-hidden"
       aria-hidden="true"
     >
       <div
         class="flex size-full items-center justify-center rounded-[10px] bg-linear-to-br from-primary-700 to-surface-950 text-primary-200"
       >
-        <ng-icon name="matMenuBookOutline" size="56" />
+        <img [ngSrc]="logo" width="640" height="378" alt="" class="w-28 drop-shadow-lg" />
       </div>
     </div>
   </div>

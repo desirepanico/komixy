@@ -1,8 +1,7 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matMenuBookOutline } from '@ng-icons/material-symbols/outline';
-import { PACK_CARD_HEIGHT_PX, PACK_CARD_WIDTH_PX } from '../../constants/ui.const';
+import { LOGO_URL, PACK_CARD_HEIGHT_PX, PACK_CARD_WIDTH_PX } from '../../constants/ui.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 
 /**
@@ -12,8 +11,7 @@ import { RankingEntry } from '../../models/ranking-entry.model';
  */
 @Component({
   selector: 'app-pack-card',
-  imports: [TranslocoPipe, NgIcon],
-  providers: [provideIcons({ matMenuBookOutline })],
+  imports: [TranslocoPipe, NgOptimizedImage],
   templateUrl: './pack-card.html',
   host: {
     class: 'block shrink-0 perspective-distant',
@@ -31,6 +29,7 @@ export class PackCard {
   /** true quando chi la contiene (es. un bottone con la sua etichetta) descrive già la carta */
   public readonly decorative = input<boolean>(false);
 
+  protected readonly logo = LOGO_URL;
   protected readonly baseWidth = PACK_CARD_WIDTH_PX;
   protected readonly baseHeight = PACK_CARD_HEIGHT_PX;
 

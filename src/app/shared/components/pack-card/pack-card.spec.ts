@@ -86,6 +86,12 @@ describe('PackCard', () => {
     expect(girevole()).not.toBeNull();
   });
 
+  it('il dorso mostra il logo di Komixy', () => {
+    const logo = html.querySelector('[aria-hidden="true"] img') as HTMLImageElement;
+    expect(logo.getAttribute('src')).toContain('/img/logo/komixy-logo.png');
+    expect(logo.getAttribute('alt')).toBe('');
+  });
+
   it('se è decorativa si nasconde ai lettori di schermo', async () => {
     expect(carta().getAttribute('aria-hidden')).toBeNull();
     host().decorativa.set(true);
