@@ -11,7 +11,7 @@
     [style.clip-path]="tearing() ? bodyClip : null"
   ></div>
 
-  <!-- Il lembo si muove da fuori (transform), l'ondeggiare di richiamo sta in un elemento interno: due animazioni sullo stesso transform si sovrascriverebbero -->
+  <!-- Il lembo sta fermo finché non lo si trascina o si apre la busta -->
   <div
     class="absolute inset-x-0 top-0 motion-reduce:transition-none"
     [class.transition-[transform,opacity]]="!dragging()"
@@ -22,8 +22,7 @@
     [style.transform]="stripTransform()"
   >
     <div
-      class="size-full bg-no-repeat motion-reduce:animate-none"
-      [class.animate-tear-hint]="!dragging() && !torn()"
+      class="size-full bg-no-repeat"
       [style.background-image]="image"
       [style.background-size]="stripBackgroundSize"
       [style.background-position]="'top'"

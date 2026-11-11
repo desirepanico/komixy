@@ -4,7 +4,7 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 
 ## Dove sta cosa
 
-- `src/tailwind.css`: tema Tailwind (`@theme`), con i colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, i raggi `--radius-*`, il font `Mulish`, le animazioni (`animate-rank-in` e `animate-rank-glow` per la classifica, `animate-float`, `animate-orb` e `animate-fade-up` per il pannello della login, `animate-pack-float` e `animate-tear-hint` per la busta della settimana) e il breakpoint `xs` (360px: sotto questa soglia, cioè sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`).
+- `src/tailwind.css`: tema Tailwind (`@theme`), con i colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, i raggi `--radius-*`, il font `Mulish`, le animazioni (`animate-rank-in` e `animate-rank-glow` per la classifica, `animate-float`, `animate-orb` e `animate-fade-up` per il pannello della login, `animate-pack-float` per la busta della settimana nella card di Scopri) e il breakpoint `xs` (360px: sotto questa soglia, cioè sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`).
 - `public/theme/theme.css`: token, font, colore base del testo (`surface-100` sul `body`), colore dell'alt delle immagini che non caricano (`surface-400`), sfondo dell'app e focus ring.
 - `public/theme/glass.css`: effetto "glass".
 - `public/theme/page-transition.css`: transizione tra le pagine su mobile/tablet (view transition).

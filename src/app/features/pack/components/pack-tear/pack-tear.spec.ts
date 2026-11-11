@@ -42,6 +42,11 @@ describe('PackTear', () => {
     expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(0);
   });
 
+  it('a riposo il lembo non si anima: si muove solo quando lo si trascina o si apre la busta', () => {
+    expect(html.querySelector('[class*="animate-"]')).toBeNull();
+    expect(lembo().style.transform).toContain('translateX(0px)');
+  });
+
   it('trascinando il lembo compaiono i bordi strappati e se si lascia di nuovo la busta si richiude', async () => {
     maniglia().dispatchEvent(evento('pointerdown', 10));
     maniglia().dispatchEvent(evento('pointermove', 40));
