@@ -92,6 +92,19 @@ describe('PackCard', () => {
     expect(logo.getAttribute('alt')).toBe('');
   });
 
+  it('a grandezza naturale mostra titolo, autore e volume', () => {
+    expect(html.textContent).toContain('One Piece');
+    expect(html.querySelector('.text-5xl')).toBeNull();
+  });
+
+  it('una carta piccola mostra copertina e un numero di posizione grande, senza i testi illeggibili', async () => {
+    host().scala.set(0.42);
+    await fixture.whenStable();
+    expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
+    expect(html.textContent).not.toContain('One Piece');
+    expect(html.querySelector('img[src*="one-piece"]')).not.toBeNull();
+  });
+
   it('se è decorativa si nasconde ai lettori di schermo', async () => {
     expect(carta().getAttribute('aria-hidden')).toBeNull();
     host().decorativa.set(true);

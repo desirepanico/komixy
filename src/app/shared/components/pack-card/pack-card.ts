@@ -1,11 +1,16 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { LOGO_URL, PACK_CARD_HEIGHT_PX, PACK_CARD_WIDTH_PX } from '../../constants/ui.const';
+import {
+  LOGO_URL,
+  PACK_CARD_COMPACT_BELOW,
+  PACK_CARD_HEIGHT_PX,
+  PACK_CARD_WIDTH_PX,
+} from '../../constants/ui.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 
 /**
- * Carta della busta settimanale: posizione, copertina, titolo, autore, volume ed edizione.
+ * Carta della busta settimanale: posizione, copertina, titolo, autore, volume ed edizione. Sotto `PACK_CARD_COMPACT_BELOW` di scala mostra solo copertina e un numero di posizione grande (senza «#»: nel ventaglio le carte si sovrappongono e le due cifre del 10 resterebbero coperte).
  * Ha sempre le misure di 192×320 px, ridotte da `scale` (1 = carta intera, 0.6 = ventaglio, 0.2 = miniatura).
  *   <app-pack-card [entry]="entry" [scale]="0.6" [decorative]="true" />
  */
@@ -32,6 +37,9 @@ export class PackCard {
   protected readonly logo = LOGO_URL;
   protected readonly baseWidth = PACK_CARD_WIDTH_PX;
   protected readonly baseHeight = PACK_CARD_HEIGHT_PX;
+
+  /** Una carta piccola mostra copertina e posizione, ben leggibili; i testi sono solo nella carta grande */
+  protected readonly compact = computed(() => this.scale() < PACK_CARD_COMPACT_BELOW);
 
   protected readonly width = computed(() => PACK_CARD_WIDTH_PX * this.scale());
   protected readonly height = computed(() => PACK_CARD_HEIGHT_PX * this.scale());

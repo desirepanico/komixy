@@ -101,6 +101,8 @@ export const PACK_TEAR_DISTANCE_PX = 140;
 /** Misure di una carta a grandezza naturale: si scala con `scale` di `app-pack-card` */
 export const PACK_CARD_WIDTH_PX = 192;
 export const PACK_CARD_HEIGHT_PX = 320;
+/** Sotto questa scala i testi della carta non si leggono: si mostrano la copertina e un numero di posizione grande */
+export const PACK_CARD_COMPACT_BELOW = 0.7;
 
 /** Apertura totale del ventaglio, dalla carta più a sinistra a quella più a destra */
 export const CARD_FAN_SPREAD_DEG = 100;
