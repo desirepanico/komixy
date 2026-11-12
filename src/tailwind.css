@@ -20,6 +20,19 @@
   /* Busta della settimana: ondeggia piano nella card di Scopri */
   --animate-pack-float: pack-float 5s ease-in-out infinite;
 
+  /* Carta di un'edizione speciale: un riflesso lucido attraversa la copertina ogni tanto */
+  --animate-card-sheen: card-sheen 4.5s ease-in-out infinite;
+
+  @keyframes card-sheen {
+    0%,
+    55% {
+      transform: translateX(-150%) skewX(-20deg);
+    }
+    100% {
+      transform: translateX(450%) skewX(-20deg);
+    }
+  }
+
   @keyframes pack-float {
     50% {
       transform: translateY(-6px) rotate(1.5deg);

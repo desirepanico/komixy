@@ -97,18 +97,18 @@ describe('ComicCard', () => {
     expect(html.textContent).not.toContain('/ 12');
   });
 
-  it("non mostra il tag e ha la cornice sobria se non c'è un'edizione speciale", async () => {
+  it("senza un'edizione speciale non ha il tag né il riflesso, e la cornice è tinta unita", async () => {
     const { html } = await create();
     expect(html.querySelector('app-tag')).toBeNull();
-    expect(html.querySelector('app-comic-card > div')?.className).toContain(
-      'border-primary-400/35',
-    );
+    expect(html.querySelector('span[aria-hidden]')).toBeNull();
+    expect(html.querySelector('app-comic-card > div')?.className).toContain('bg-surface-600');
   });
 
-  it("con un'edizione speciale mostra il tag e la cornice più chiara", async () => {
+  it("con un'edizione speciale ha il tag, la cornice sfumata e il riflesso decorativo", async () => {
     const { html } = await create({ edition: 'limited' });
     expect(html.querySelector('app-tag')?.textContent).toContain('mangaCard.editions.limited');
-    expect(html.querySelector('app-comic-card > div')?.className).toContain('border-primary-300');
+    expect(html.querySelector('app-comic-card > div')?.className).toContain('from-primary-200');
+    expect(html.querySelector('span[aria-hidden]')).not.toBeNull();
   });
 
   it("ospita nello spazio in alto a destra l'azione passata da chi la usa", async () => {

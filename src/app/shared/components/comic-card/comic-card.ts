@@ -8,7 +8,7 @@ import { Tag } from '../tag/tag';
 
 /**
  * Carta di un volume, larga quanto il suo contenitore. Con `link` il titolo porta alla pagina e la carta intera è cliccabile.
- * Le edizioni speciali hanno la cornice più chiara. Lo spazio `cardAction` in alto a destra ospita il segnalibro.
+ * Le edizioni speciali sono «rare»: cornice sfumata e un riflesso che attraversa la copertina. Lo spazio `cardAction` in alto a destra ospita il segnalibro.
  *   <app-comic-card [comic]="comic" [link]="detailLink">
  *     <app-bookmark-button cardAction [comicId]="comic.id" />
  *   </app-comic-card>
