@@ -13,73 +13,99 @@
     [class.motion-safe:duration-700]="flippable()"
     [class.rotate-y-180]="flippable() && !faceUp()"
   >
+    <!-- Il bordo è lo sfondo di questo contenitore visto attraverso il padding: uniforme su tutti i lati -->
     <div
-      class="absolute inset-0 flex min-w-0 flex-col overflow-hidden rounded-xl border-2 border-primary-300 bg-linear-to-b from-primary-800 to-surface-900 shadow-lg shadow-surface-950/60"
+      class="absolute inset-0 rounded-xl p-0.5 shadow-lg shadow-surface-950/60"
+      [class]="
+        isRare()
+          ? 'bg-linear-to-br from-primary-200 via-primary-500 to-primary-300'
+          : 'bg-primary-300'
+      "
       [class.backface-hidden]="flippable()"
       [class.hidden]="!flippable() && !faceUp()"
-      [class.p-2]="!isCompact()"
-      [class.p-1]="isCompact()"
     >
-      @if (isCompact()) {
-        <div class="relative size-full overflow-hidden rounded-lg bg-surface-800">
-          <img
-            class="size-full object-cover"
-            [src]="entry().comic.coverUrl"
-            alt=""
-            draggable="false"
-          />
-          <span
-            class="absolute top-2 left-2 rounded-xl bg-surface-950/70 px-2.5 py-1 text-5xl leading-none font-black text-surface-50 backdrop-blur-sm"
-          >
-            {{ entry().rank }}
-          </span>
-        </div>
-      } @else {
-        <div class="relative aspect-3/4 w-full shrink-0 overflow-hidden rounded-lg bg-surface-800">
-          <img
-            class="size-full object-cover"
-            [src]="entry().comic.coverUrl"
-            alt=""
-            draggable="false"
-          />
-          <span
-            class="absolute top-2 left-2 rounded-xl bg-surface-950/70 px-2.5 py-1 text-5xl leading-none font-black text-surface-50 backdrop-blur-sm"
-          >
-            {{ entry().rank }}
-          </span>
-        </div>
+      <div
+        class="flex size-full min-w-0 flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-linear-to-b from-[color-mix(in_srgb,var(--color-primary-800)_55%,var(--color-surface-900))] to-surface-900"
+        [class.p-2]="!isCompact()"
+        [class.p-1]="isCompact()"
+      >
+        @if (isCompact()) {
+          <div class="relative size-full overflow-hidden rounded-lg bg-surface-800">
+            <img
+              class="size-full object-cover"
+              [src]="entry().comic.coverUrl"
+              alt=""
+              draggable="false"
+            />
 
-        <div class="mt-2 flex min-w-0 flex-1 flex-col gap-0.5">
-          <span class="truncate text-sm/5 font-bold text-surface-50">
-            {{ entry().comic.title }}
-          </span>
-          <span class="truncate text-xs/4 text-surface-300">
-            {{ entry().comic.author }}
-          </span>
-          <div class="flex items-center justify-between gap-1.5">
-            @if (entry().comic.isSingleVolume) {
-              <span class="truncate text-xs font-semibold text-primary-300">
-                {{ 'mangaCard.singleVolume' | transloco }}
-              </span>
-            } @else {
-              <span class="text-xs whitespace-nowrap text-primary-300">
-                {{ 'mangaCard.volumeLabel' | transloco }}
-                <span class="text-sm font-bold">{{ entry().comic.volume }}</span>
-                @if (entry().comic.totalVolumes) {
-                  <span class="text-surface-300"> / {{ entry().comic.totalVolumes }}</span>
-                }
-              </span>
-            }
-            @if (entry().comic.editionType) {
+            @if (isRare() && !decorative()) {
               <span
-                class="shrink-0 rounded-lg border border-primary-400/40 bg-primary-500/20 px-1.5 py-0.5 text-[11px] font-semibold whitespace-nowrap text-primary-200"
-              >
-                {{ 'mangaCard.editions.' + entry().comic.editionType | transloco }}
-              </span>
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-transparent via-surface-50/35 to-transparent motion-safe:block motion-safe:animate-card-sheen"
+              ></span>
             }
+            <span
+              class="absolute top-2 left-2 rounded-xl bg-surface-950/70 px-2.5 py-1 text-5xl leading-none font-black text-surface-50 backdrop-blur-sm"
+            >
+              {{ entry().rank }}
+            </span>
           </div>
-        </div>
-      }
+        } @else {
+          <div
+            class="relative aspect-3/4 w-full shrink-0 overflow-hidden rounded-lg bg-surface-800"
+          >
+            <img
+              class="size-full object-cover"
+              [src]="entry().comic.coverUrl"
+              alt=""
+              draggable="false"
+            />
+
+            @if (isRare() && !decorative()) {
+              <span
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-transparent via-surface-50/35 to-transparent motion-safe:block motion-safe:animate-card-sheen"
+              ></span>
+            }
+            <span
+              class="absolute top-2 left-2 rounded-xl bg-surface-950/70 px-2.5 py-1 text-5xl leading-none font-black text-surface-50 backdrop-blur-sm"
+            >
+              {{ entry().rank }}
+            </span>
+          </div>
+
+          <div class="mt-2 flex min-w-0 flex-1 flex-col gap-0.5">
+            <span class="truncate text-sm/5 font-bold text-surface-50">
+              {{ entry().comic.title }}
+            </span>
+            <span class="truncate text-xs/4 text-surface-300">
+              {{ entry().comic.author }}
+            </span>
+            <div class="flex items-center justify-between gap-1.5">
+              @if (entry().comic.isSingleVolume) {
+                <span class="truncate text-xs font-semibold text-primary-300">
+                  {{ 'mangaCard.singleVolume' | transloco }}
+                </span>
+              } @else {
+                <span class="text-xs whitespace-nowrap text-primary-300">
+                  {{ 'mangaCard.volumeLabel' | transloco }}
+                  <span class="text-sm font-bold">{{ entry().comic.volume }}</span>
+                  @if (entry().comic.totalVolumes) {
+                    <span class="text-surface-300"> / {{ entry().comic.totalVolumes }}</span>
+                  }
+                </span>
+              }
+              @if (entry().comic.editionType) {
+                <span
+                  class="shrink-0 rounded-lg border border-primary-400/40 bg-primary-500/20 px-1.5 py-0.5 text-[11px] font-semibold whitespace-nowrap text-primary-200"
+                >
+                  {{ 'mangaCard.editions.' + entry().comic.editionType | transloco }}
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
     </div>
 
     <div

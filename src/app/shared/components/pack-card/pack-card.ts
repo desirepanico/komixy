@@ -42,6 +42,7 @@ export class PackCard {
   /** true = sempre copertina e numero (carte sovrapposte); se manca, dipende dalla scala */
   public readonly compact = input<boolean | undefined>(undefined);
 
+  protected readonly isRare = computed(() => this.entry().comic.editionType !== null);
   protected readonly isCompact = computed(
     () => this.compact() ?? this.scale() < PACK_CARD_COMPACT_BELOW,
   );

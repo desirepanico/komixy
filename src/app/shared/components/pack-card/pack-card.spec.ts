@@ -134,6 +134,22 @@ describe('PackCard', () => {
     expect(html.textContent).not.toContain('One Piece');
   });
 
+  it("un'edizione speciale ha la cornice sfumata e il riflesso, una normale la cornice tinta unita", async () => {
+    expect(html.querySelector('.from-primary-200')).not.toBeNull();
+    expect(html.querySelector('span[aria-hidden]')).not.toBeNull();
+
+    host().card.set(entry({ editionType: null }));
+    await fixture.whenStable();
+    expect(html.querySelector('.from-primary-200')).toBeNull();
+    expect(html.querySelector('span[aria-hidden]')).toBeNull();
+  });
+
+  it("se è decorativa non ha il riflesso, anche con un'edizione speciale", async () => {
+    host().decorative.set(true);
+    await fixture.whenStable();
+    expect(html.querySelector('span[aria-hidden]')).toBeNull();
+  });
+
   it('se è decorativa si nasconde ai lettori di schermo', async () => {
     expect(card().getAttribute('aria-hidden')).toBeNull();
     host().decorative.set(true);
