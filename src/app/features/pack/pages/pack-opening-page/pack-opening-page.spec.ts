@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { PACK_TEAR_ANIMATION_MS, WEEKLY_PACK_STORAGE_KEY } from '@shared/constants/ui.const';
+import { PACK_TEAR_ANIMATION_MS, WEEKLY_PACK_STORAGE_KEY } from '@shared/constants/pack.const';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 import { PackOpeningPage } from './pack-opening-page';

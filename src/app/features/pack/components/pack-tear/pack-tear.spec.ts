@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { PACK_TEAR_DISTANCE_PX } from '@shared/constants/ui.const';
+import { PACK_TEAR_DISTANCE_PX } from '@shared/constants/pack.const';
 import { PackTear } from './pack-tear';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { WEEKLY_PACK_STORAGE_KEY, WEEKLY_PACK_TIME_ZONE } from '../../constants/ui.const';
+import { WEEKLY_PACK_STORAGE_KEY, WEEKLY_PACK_TIME_ZONE } from '../../constants/pack.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { WeeklyRankingService } from '../weekly-ranking/weekly-ranking.service';
 import { daysUntilNextWeek, dateInZone, isoWeek } from './iso-week/iso-week';

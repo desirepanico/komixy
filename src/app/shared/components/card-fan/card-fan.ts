@@ -21,7 +21,7 @@ import {
   CARD_FAN_MAX_GROWTH,
   CARD_FAN_SPREAD_DEG,
   PACK_CARD_WIDTH_PX,
-} from '../../constants/ui.const';
+} from '../../constants/pack.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { PackCard } from '../pack-card/pack-card';
 import { packCardRadius } from '../../utils/pack-card-radius/pack-card-radius';

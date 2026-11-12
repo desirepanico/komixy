@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { PackNavigationService } from '@features/pack/services/pack-navigation/pack-navigation.service';
 import { Button } from '@shared/components/button/button';
-import { PACK_IMAGE_URL } from '@shared/constants/ui.const';
+import { PACK_IMAGE_URL } from '@shared/constants/pack.const';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
 /**

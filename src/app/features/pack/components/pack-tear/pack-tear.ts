@@ -5,7 +5,7 @@ import {
   PACK_STRIP_CLIP,
   PACK_STRIP_RATIO,
   PACK_TEAR_DISTANCE_PX,
-} from '@shared/constants/ui.const';
+} from '@shared/constants/pack.const';
 
 /**
  * La busta con il lembo in alto che si strappa trascinandolo verso destra.

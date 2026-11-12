@@ -17,7 +17,7 @@ import {
   SPOTLIGHT_GROW_FROM_PX,
   SPOTLIGHT_MAX_SCALE,
   SPOTLIGHT_MIN_SCALE,
-} from '../../constants/ui.const';
+} from '../../constants/pack.const';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';

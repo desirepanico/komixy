@@ -20,7 +20,7 @@ import {
   WEEKLY_TOP_FRAME_PX,
   WEEKLY_TOP_GAP_PX,
   WEEKLY_TOP_INITIAL_COUNT,
-} from '@shared/constants/ui.const';
+} from '@shared/constants/pack.const';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
 /**

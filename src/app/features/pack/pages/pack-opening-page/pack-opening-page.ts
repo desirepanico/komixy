@@ -22,7 +22,7 @@ import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight'
 import { Hint } from '@shared/components/hint/hint';
 import { PackCard } from '@shared/components/pack-card/pack-card';
 import { Tag } from '@shared/components/tag/tag';
-import { PACK_TEAR_ANIMATION_MS } from '@shared/constants/ui.const';
+import { PACK_TEAR_ANIMATION_MS } from '@shared/constants/pack.const';
 import { RankingEntry } from '@shared/models/ranking-entry.model';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';

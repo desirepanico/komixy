@@ -10,7 +10,7 @@ import { RankingNavigationService } from '@features/ranking/services/ranking-nav
 import { Button } from '@shared/components/button/button';
 import { Message } from '@shared/components/message/message';
 import { Tag } from '@shared/components/tag/tag';
-import { PACK_IMAGE_URL } from '@shared/constants/ui.const';
+import { PACK_IMAGE_URL } from '@shared/constants/pack.const';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';

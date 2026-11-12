@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { WEEKLY_PACK_STORAGE_KEY } from '../../constants/ui.const';
+import { WEEKLY_PACK_STORAGE_KEY } from '../../constants/pack.const';
 import { WeeklyPackService } from './weekly-pack.service';
 
 describe('WeeklyPackService', () => {

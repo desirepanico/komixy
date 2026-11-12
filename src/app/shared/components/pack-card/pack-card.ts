@@ -6,7 +6,7 @@ import {
   PACK_CARD_COMPACT_BELOW,
   PACK_CARD_HEIGHT_PX,
   PACK_CARD_WIDTH_PX,
-} from '../../constants/ui.const';
+} from '../../constants/pack.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 
 /**
