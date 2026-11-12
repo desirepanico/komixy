@@ -37,7 +37,8 @@
   @if (interactive()) {
     <button
       type="button"
-      class="relative z-10 block cursor-pointer rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400"
+      [style.border-radius]="cardRadius()"
+      class="relative z-10 block cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-400"
       [attr.aria-label]="(faceUp() ? 'weeklyPack.nextCard' : 'weeklyPack.flipCard') | transloco"
       (click)="cardPress.emit()"
     >

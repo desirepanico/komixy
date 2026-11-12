@@ -28,6 +28,7 @@ import { SessionService } from '../../services/session/session.service';
 import { Button } from '../button/button';
 import { Message } from '../message/message';
 import { PackCard } from '../pack-card/pack-card';
+import { packCardRadius } from '../pack-card/pack-card-radius/pack-card-radius';
 
 /**
  * Una carta in primo piano con i suoi comandi: «Vedi dettaglio» e «In lista».
@@ -76,6 +77,9 @@ export class CardSpotlight {
     const max = this.stageWidth() >= SPOTLIGHT_GROW_FROM_PX ? SPOTLIGHT_MAX_SCALE : 1;
     return Math.min(max, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
   });
+
+  /** Gli angoli dell'anello di focus seguono quelli della carta rimpicciolita */
+  protected readonly cardRadius = computed(() => packCardRadius(this.cardScale()));
 
   protected readonly saved = computed(() => this.bookmarks.isSaved(this.entry().comic.id));
 

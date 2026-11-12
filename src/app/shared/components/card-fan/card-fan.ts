@@ -24,6 +24,7 @@ import {
 } from '../../constants/ui.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { PackCard } from '../pack-card/pack-card';
+import { packCardRadius } from '../pack-card/pack-card-radius/pack-card-radius';
 import { fanAngle } from './fan-layout/fan-layout';
 
 /**
@@ -63,6 +64,8 @@ export class CardFan {
   protected readonly height = computed(() => CARD_FAN_BASE_HEIGHT_PX * this.growth());
   protected readonly top = computed(() => CARD_FAN_BASE_TOP_PX * this.growth());
   /** Metà larghezza della carta: la centra sul perno del ventaglio */
+  /** Gli angoli dell'anello di focus seguono quelli della carta rimpicciolita */
+  protected readonly cardRadius = computed(() => packCardRadius(this.cardScale()));
   protected readonly cardHalfWidth = computed(() => (PACK_CARD_WIDTH_PX * this.cardScale()) / 2);
 
   /** Da sinistra a destra, quindi nell'ordine in cui si legge e si naviga con Tab */
