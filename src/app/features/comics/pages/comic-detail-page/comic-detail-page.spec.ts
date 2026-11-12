@@ -86,14 +86,14 @@ describe('ComicDetailPage', () => {
   describe('da isMember', () => {
     it('aggiunge e toglie il volume dalla lista', async () => {
       await create('w1');
-      expect(button('comicDetail.addToList').getAttribute('aria-pressed')).toBe('false');
+      expect(button('comicDetail.addToLibrary').getAttribute('aria-pressed')).toBe('false');
 
-      button('comicDetail.addToList').click();
+      button('comicDetail.addToLibrary').click();
       await fixture.whenStable();
       expect(TestBed.inject(BookmarksService).isSaved('w1')).toBe(true);
-      expect(button('common.inList').getAttribute('aria-pressed')).toBe('true');
+      expect(button('common.inLibrary').getAttribute('aria-pressed')).toBe('true');
 
-      button('common.inList').click();
+      button('common.inLibrary').click();
       await fixture.whenStable();
       expect(TestBed.inject(BookmarksService).isSaved('w1')).toBe(false);
     });
@@ -107,7 +107,7 @@ describe('ComicDetailPage', () => {
   describe('da ospite', () => {
     it("al posto di «Aggiungi in lista» c'è l'invito a iscriversi", async () => {
       await create('w1', false);
-      expect(button('comicDetail.addToList')).toBeUndefined();
+      expect(button('comicDetail.addToLibrary')).toBeUndefined();
       const invitation = html.querySelector('a[href="/login"]');
       expect(invitation?.textContent).toContain('comicDetail.signUpToSave');
     });

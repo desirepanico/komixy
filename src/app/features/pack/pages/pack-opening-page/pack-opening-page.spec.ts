@@ -129,6 +129,19 @@ describe('PackOpeningPage', () => {
     expect(html.querySelector('a[href="/discover/ranking"]')).not.toBeNull();
   });
 
+  it('alla fine spiega a un iscritto che i volumi non sono ancora nella sua libreria', async () => {
+    await create();
+    await openAllCards();
+    expect(html.textContent).toContain('weeklyPack.libraryHint');
+    expect(html.textContent).not.toContain('weeklyPack.libraryHintGuest');
+  });
+
+  it('alla fine spiega a un ospite che per aggiungere alla libreria serve iscriversi', async () => {
+    await create(false);
+    await openAllCards();
+    expect(html.textContent).toContain('weeklyPack.libraryHintGuest');
+  });
+
   it('dalla raccolta si sceglie una carta e si torna alla raccolta', async () => {
     await create();
     await openAllCards();

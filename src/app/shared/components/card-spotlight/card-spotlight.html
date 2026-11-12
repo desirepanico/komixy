@@ -108,7 +108,7 @@
           (click)="onInList()"
         >
           <ng-icon [name]="saved() ? 'matCheckOutline' : 'matAddOutline'" size="18" />
-          {{ 'common.inList' | transloco }}
+          {{ 'common.inLibrary' | transloco }}
         </button>
       } @else {
         <button
@@ -122,7 +122,7 @@
           (click)="onInList()"
         >
           <ng-icon name="matLockOutline" size="18" />
-          {{ 'common.inList' | transloco }}
+          {{ 'common.inLibrary' | transloco }}
         </button>
       }
     }

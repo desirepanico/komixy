@@ -51,7 +51,7 @@ describe('CardSpotlight', () => {
   const host = () => fixture.componentInstance;
   const inList = () =>
     Array.from(html.querySelectorAll('button')).find((b) =>
-      b.textContent?.includes('common.inList'),
+      b.textContent?.includes('common.inLibrary'),
     ) as HTMLButtonElement;
 
   const create = async (isMember: boolean) => {

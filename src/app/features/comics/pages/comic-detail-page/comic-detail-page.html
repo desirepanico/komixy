@@ -75,7 +75,7 @@
           (click)="toggleSaved()"
         >
           <ng-icon [name]="saved() ? 'matCheckOutline' : 'matAddOutline'" size="20" />
-          {{ (saved() ? 'common.inList' : 'comicDetail.addToList') | transloco }}
+          {{ (saved() ? 'common.inLibrary' : 'comicDetail.addToLibrary') | transloco }}
         </button>
       } @else {
         <a

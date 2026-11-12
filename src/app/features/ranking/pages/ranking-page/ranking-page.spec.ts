@@ -213,7 +213,7 @@ describe('RankingPage', () => {
       (html.querySelectorAll('app-card-fan button')[9] as HTMLButtonElement).click();
       await fixture.whenStable();
       const inList = Array.from(html.querySelectorAll('button')).find((b) =>
-        b.textContent?.includes('common.inList'),
+        b.textContent?.includes('common.inLibrary'),
       ) as HTMLButtonElement;
       inList.click();
       await fixture.whenStable();
