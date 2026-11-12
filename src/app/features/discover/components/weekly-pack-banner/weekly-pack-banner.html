@@ -18,10 +18,10 @@
             | transloco: { week: pack.weekNumber }
         }}
       </app-tag>
-      <h2 class="text-lg leading-tight font-bold text-surface-50">
+      <h2 class="text-lg/tight font-bold text-surface-50">
         {{ (session.isGuest() ? 'weeklyPack.guestTitle' : 'weeklyPack.readyTitle') | transloco }}
       </h2>
-      <p class="text-sm leading-snug text-surface-300">
+      <p class="text-sm/snug text-surface-300">
         {{ (session.isGuest() ? 'weeklyPack.guestText' : 'weeklyPack.readyText') | transloco }}
       </p>
       <div class="mt-1 flex flex-wrap items-center gap-2">

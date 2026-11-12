@@ -30,7 +30,7 @@
 
   <div class="flex min-w-0 flex-1 flex-col gap-1.5 px-2 pt-1 pb-2">
     <h3
-      class="truncate text-sm leading-5 font-bold text-surface-50 transition-colors group-hover:text-primary-300"
+      class="truncate text-sm/5 font-bold text-surface-50 transition-colors group-hover:text-primary-300"
       [title]="title()"
     >
       <a
@@ -40,7 +40,7 @@
         {{ title() }}
       </a>
     </h3>
-    <p class="truncate text-xs leading-4 text-surface-400" [title]="author()">
+    <p class="truncate text-xs/4 text-surface-400" [title]="author()">
       {{ author() }}
     </p>
     @if (isSingleVolume()) {
@@ -51,7 +51,7 @@
       <div class="flex items-center gap-1">
         <span class="text-xs text-primary-400">{{ 'mangaCard.volumeLabel' | transloco }}</span>
 
-        <span class="text-sm leading-1.5 font-bold text-primary-300">
+        <span class="text-sm/1.5 font-bold text-primary-300">
           {{ volume() }}
         </span>
 

@@ -105,6 +105,7 @@ Ogni `provideXxx()` restituisce `EnvironmentProviders` e sta in `core/providers/
 - App zoneless: dopo ogni azione `await fixture.whenStable()`, mai `fixture.detectChanges()`. Input con un `Host` di prova o `fixture.componentRef.setInput`. Provider standalone, niente `NgModule`.
 - Già pronto in ogni test (da `angular.json`): Transloco finto con traduzioni vuote (`providersFile`: si leggono le chiavi; `provideTranslocoTesting` dà testi veri a un test), polyfill di jsdom per `ResizeObserver`, `matchMedia`, `scrollBy` (`setupFiles`), ripristino automatico di mock e globali (`vitest-base.config.mts`).
 - Ricette: router `provideRouter([...])` o `RouterTestingHarness`; HTTP `provideHttpClient()` + `provideHttpClientTesting()` e `HttpTestingController`; provider di avvio con `TestBed.inject(ApplicationInitStatus).donePromise`; guard con `TestBed.runInInjectionContext`; API del browser diverse con `vi.stubGlobal`.
+- Nei template `.html` `eslint-plugin-better-tailwindcss` segnala classi in conflitto, sconosciute, deprecate o non canoniche (con `npx eslint --fix` si correggono; l'ordine lo fa Prettier). Non concatenare stringhe di classi: classe statica più `[class]` a parte.
 - ESLint vieta: import tra feature (tranne `*-navigation`), `Router` e `AppRoutes` in pagine e componenti, `@angular/forms` (solo Signal Forms), `CommonModule`/`NgClass`/`NgStyle`. Se cambi una regola di `angular.md`, aggiorna `eslint.config.js` nello stesso commit.
 
 ## Flusso git

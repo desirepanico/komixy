@@ -1,5 +1,5 @@
 <div
-  class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 py-3 pr-2 pl-2 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98] xs:gap-3 xs:pr-3"
+  class="group relative flex items-center gap-2 rounded-xl border border-primary-400/20 bg-surface-900 px-2 py-3 shadow-lg shadow-surface-950/50 transition duration-200 hover:border-primary-400/50 active:scale-[0.98] xs:gap-3 xs:pr-3"
 >
   <!-- Posizione: visiva, letta come "Posizione N" dai lettori di schermo -->
   <span
@@ -34,13 +34,13 @@
     <!-- Titolo: il suo ::after copre tutta la riga, così la riga intera è cliccabile -->
     <a
       [routerLink]="comicLink()"
-      class="truncate text-sm leading-6 font-bold text-surface-50 transition-colors outline-none group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400 md:text-base"
+      class="truncate text-sm/6 font-bold text-surface-50 transition-colors outline-none group-hover:text-primary-300 after:absolute after:inset-0 after:rounded-xl focus-visible:after:ring-2 focus-visible:after:ring-primary-400 md:text-base"
       [title]="comic().title"
     >
       {{ comic().title }}
     </a>
 
-    <p class="truncate text-sm leading-5 text-surface-400" [title]="comic().author">
+    <p class="truncate text-sm/5 text-surface-400" [title]="comic().author">
       {{ comic().author }}
     </p>
 

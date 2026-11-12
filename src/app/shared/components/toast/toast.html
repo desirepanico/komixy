@@ -14,10 +14,8 @@
   <!-- Il messaggio è letto per intero (titolo e dettaglio insieme); il timer si ferma su hover e focus -->
   <div
     aria-atomic="true"
-    [class]="
-      'glass-strong pointer-events-auto mb-2 grid grid-cols-[auto_1fr_auto] items-center gap-x-2 rounded-md border px-3 py-2.5 ' +
-      style(toast.severity).container
-    "
+    class="glass-strong pointer-events-auto mb-2 grid grid-cols-[auto_1fr_auto] items-center gap-x-2 rounded-md border px-3 py-2.5"
+    [class]="style(toast.severity).container"
     (pointerenter)="toastService.pause(toast.id)"
     (pointerleave)="toastService.resume(toast.id)"
     (focusin)="toastService.pause(toast.id)"

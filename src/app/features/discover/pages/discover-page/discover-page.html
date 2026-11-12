@@ -15,13 +15,13 @@
         <app-weekly-pack-banner
           [class]="
             pack.isOpened()
-              ? 'min-w-0 flex-1 @min-[59rem]:max-w-3xl @min-[59rem]:min-w-[32rem]'
+              ? 'min-w-0 flex-1 @min-[59rem]:max-w-3xl @min-[59rem]:min-w-lg'
               : 'min-w-0 flex-1'
           "
         />
         @if (pack.isOpened()) {
           <app-weekly-top
-            class="hidden @min-[59rem]:block @min-[59rem]:min-w-[26rem] @min-[59rem]:flex-1"
+            class="hidden @min-[59rem]:block @min-[59rem]:min-w-104 @min-[59rem]:flex-1"
           />
         }
       </div>

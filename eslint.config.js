@@ -5,6 +5,8 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 // @ts-ignore
 const angular = require('angular-eslint');
+// @ts-ignore
+const betterTailwindcss = require('eslint-plugin-better-tailwindcss');
 
 // defineConfig sostituisce tseslint.config (deprecato)
 const { defineConfig } = require('eslint/config');
@@ -115,11 +117,27 @@ module.exports = defineConfig(
   ...featureRules('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
   {
     files: ['**/*.html'],
-    extends: [...angular.configs.templateRecommended],
+    extends: [
+      ...angular.configs.templateRecommended,
+      betterTailwindcss.configs['recommended-warn'],
+    ],
+    // Con Tailwind v4 il tema sta in questo file CSS: senza, il plugin non conosce primary-*, surface-*, xs:
+    settings: { 'better-tailwindcss': { entryPoint: 'src/tailwind.css' } },
     rules: {
+      // L'ordine e l'a capo delle classi li gestisce Prettier (prettier-plugin-tailwindcss)
+      'better-tailwindcss/enforce-consistent-class-order': 'off',
+      'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
+      // Classi che il plugin non trova nel tema: `glass-*` sono in public/theme/glass.css e `dark` è la
+      // variante dichiarata con @custom-variant in tailwind.css
+      'better-tailwindcss/no-unknown-classes': ['warn', { ignore: ['^glass-', '^dark$'] }],
       '@angular-eslint/template/prefer-control-flow': 'error',
       // Le copertine arrivano da URL esterni: NgOptimizedImage non serve ovunque
       '@angular-eslint/template/prefer-ngsrc': 'off',
     },
+  },
+  // tag.html: nei `[class.x]="severity() === 'primary'"` il plugin scambia 'primary' per una classe
+  {
+    files: ['src/app/shared/components/tag/tag.html'],
+    rules: { 'better-tailwindcss/no-unknown-classes': 'off' },
   },
 );
