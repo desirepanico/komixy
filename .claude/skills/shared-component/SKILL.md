@@ -14,6 +14,6 @@ description: Crea o modifica un componente riutilizzabile in src/app/shared/comp
 4. Template in un file `./<nome>.html` relativo al file `.ts` (niente template inline nei componenti shared). Contenuto testuale tramite `<ng-content />`; nessun testo hardcoded (Transloco). Un campo di un form (input, select, ...) non è un componente qualunque: segue la sezione «Campi» di `.claude/rules/form.md`.
 5. Stile solo con classi Tailwind e token del tema (`primary-*`, `surface-*`, `rounded-*`): niente CSS globale, niente hex né colori di default Tailwind (`white`, `black`, ...).
 6. Varianti con un `input()` tipizzato (es. `severity = input<'primary' | 'secondary'>('primary')`) e classi condizionali `[class.xxx]`.
-7. Accessibilità: contrasto WCAG AA, `focus-visible` visibile, `aria-*` sugli elementi interattivi.
+7. Accessibilità: contrasto WCAG AA, `focus-visible` visibile, `aria-*` sugli elementi interattivi e uso solo da tastiera (Tab, Invio, Spazio, Esc): sezione «Componenti condivisi» di `.claude/rules/accessibilita.md`, con un test da tastiera nello spec.
 8. Sostituisci tutti gli usi duplicati nelle feature importando il componente in `imports`.
 9. Verifica con `npm run lint`, `npm test` e `npm run build` prima del commit.

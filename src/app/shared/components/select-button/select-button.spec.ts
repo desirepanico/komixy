@@ -63,4 +63,29 @@ describe('SelectButton', () => {
     await fixture.whenStable();
     expect(buttons()).toHaveLength(3);
   });
+
+  describe('da tastiera', () => {
+    it('ogni voce è un bottone nativo, raggiungibile con Tab', () => {
+      for (const button of buttons()) {
+        expect(button.tagName).toBe('BUTTON');
+        expect(button.getAttribute('type')).toBe('button');
+        expect(button.hasAttribute('tabindex')).toBe(false);
+        expect(button.disabled).toBe(false);
+      }
+    });
+
+    it('ogni voce può avere il focus', () => {
+      for (const button of buttons()) {
+        button.focus();
+        expect(document.activeElement).toBe(button);
+      }
+    });
+
+    it('il focus resta sulla voce scelta dopo il cambio', async () => {
+      buttons()[1].focus();
+      buttons()[1].click();
+      await fixture.whenStable();
+      expect(document.activeElement).toBe(buttons()[1]);
+    });
+  });
 });

@@ -25,6 +25,16 @@ Regola generale: tutto ciò che si fa con mouse o touch si deve poter fare anche
 - Se un elemento che ha il focus sparisce o si disabilita (es. freccia a fine lista), sposta il focus su un elemento vicino (es. l'altra freccia): il focus non va mai perso.
 - Prova ogni nuova pagina o componente usando solo Tab, Invio, Spazio ed Esc.
 
+## Componenti condivisi (`shared/components`)
+
+Un componente shared si usa in tante pagine: se non è accessibile da tastiera, non lo è nessuna.
+
+- Ogni parte interattiva è un elemento nativo (`<button type="button">`, `<a>`, `<input>`): Tab, Maiusc+Tab, Invio e Spazio funzionano senza codice. Niente `<div>` o `<span>` con `(click)`, niente `tabindex` positivo.
+- Un gruppo di bottoni a due stati (come `app-select-button`) resta una fila di `<button>` con `aria-pressed` dentro un `role="group"` con nome: ogni voce si raggiunge con Tab. Le frecce non servono.
+- Solo un widget composto davvero (`role="tablist"`, `radiogroup`, menu, lista con selezione) segue il pattern ARIA del suo ruolo: un solo elemento raggiungibile con Tab (gli altri `tabindex="-1"`), frecce per spostarsi, Home e Fine per gli estremi, e il focus che segue la voce scelta.
+- Il `focus-visible` è dentro il componente (non lo aggiunge chi lo usa) e il focus non va perso se l'elemento cambia o sparisce.
+- Lo spec controlla la tastiera: gli elementi sono nativi, non hanno `tabindex` che li escluda, si possono portare in focus (`focus()` e `document.activeElement`) e, se c'è una gestione dei tasti, ogni tasto previsto (`dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }))`). Tab vero e Invio nativo jsdom non li simula: prova il componente a mano con la sola tastiera.
+
 ## Form
 
 - L'errore non si riconosce solo dal colore: il messaggio ha sempre il testo e un'icona (`app-field-wrapper`), e il campo ha `aria-invalid` e `aria-describedby`.
