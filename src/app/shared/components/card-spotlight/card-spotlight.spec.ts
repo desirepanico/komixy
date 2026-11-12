@@ -195,4 +195,24 @@ describe('CardSpotlight', () => {
     const minima = small.nativeElement.querySelector('app-pack-card') as HTMLElement;
     expect(minima.style.height).toBe('160px');
   });
+
+  it('su tablet e desktop la carta cresce, fino alla scala massima', async () => {
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(800);
+    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(800);
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(private readonly callback: () => void) {}
+        observe(): void {
+          this.callback();
+        }
+        disconnect(): void {}
+      },
+    );
+    const grown = TestBed.createComponent(Host);
+    await grown.whenStable();
+    const card = grown.nativeElement.querySelector('app-pack-card') as HTMLElement;
+    // 1,3 volte i 320 px della carta intera
+    expect(card.style.height).toBe('416px');
+  });
 });

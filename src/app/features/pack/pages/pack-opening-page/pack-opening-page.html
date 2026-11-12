@@ -15,7 +15,9 @@
         </a>
 
         <div class="min-w-0">
-          <h1 class="text-base leading-tight font-bold text-surface-50 sm:text-lg">{{ 'weeklyPack.title' | transloco }}</h1>
+          <h1 class="text-base leading-tight font-bold text-surface-50 sm:text-lg">
+            {{ 'weeklyPack.title' | transloco }}
+          </h1>
           <p class="text-xs text-surface-400 sm:text-sm">
             {{
               (session.isGuest() ? 'weeklyPack.guestSubtitle' : 'weeklyPack.subtitle') | transloco
@@ -63,7 +65,7 @@
           [interactive]="true"
           (cardPress)="onPrimary()"
         >
-          <ul afterCard class="flex min-h-12 w-full list-none items-center gap-1">
+          <ul afterCard class="flex min-h-12 w-full list-none items-center justify-center gap-1">
             @for (entry of previous(); track entry.comic.id) {
               <li>
                 <app-pack-card [entry]="entry" [scale]="0.2" [decorative]="true" />

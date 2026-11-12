@@ -14,6 +14,8 @@ import {
 import {
   PACK_CARD_HEIGHT_PX,
   SPOTLIGHT_GAP_PX,
+  SPOTLIGHT_GROW_FROM_PX,
+  SPOTLIGHT_MAX_SCALE,
   SPOTLIGHT_MIN_SCALE,
 } from '../../constants/ui.const';
 import { RouterLink } from '@angular/router';
@@ -62,14 +64,16 @@ export class CardSpotlight {
   private readonly stage = viewChild.required<ElementRef<HTMLElement>>('stage');
   private readonly after = viewChild.required<ElementRef<HTMLElement>>('after');
   private readonly stageHeight = signal<number>(0);
+  private readonly stageWidth = signal<number>(0);
   private readonly afterHeight = signal<number>(0);
 
-  /** La carta si rimpicciolisce se lo spazio non basta, così la pagina non scrolla (mai sotto 0,5) */
+  /** La carta si adatta allo spazio: si rimpicciolisce se non basta, così la pagina non scrolla, e su tablet e desktop cresce */
   protected readonly cardScale = computed(() => {
     const stage = this.stageHeight();
     if (stage === 0) return 1;
     const available = stage - this.afterHeight() - SPOTLIGHT_GAP_PX;
-    return Math.min(1, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
+    const max = this.stageWidth() >= SPOTLIGHT_GROW_FROM_PX ? SPOTLIGHT_MAX_SCALE : 1;
+    return Math.min(max, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
   });
 
   protected readonly saved = computed(() => this.bookmarks.isSaved(this.entry().comic.id));
@@ -80,6 +84,7 @@ export class CardSpotlight {
       const after = this.after().nativeElement;
       const observer = new ResizeObserver(() => {
         this.stageHeight.set(stage.clientHeight);
+        this.stageWidth.set(stage.clientWidth);
         this.afterHeight.set(after.offsetHeight);
       });
       observer.observe(stage);
