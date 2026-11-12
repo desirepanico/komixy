@@ -44,3 +44,6 @@ export const IGNORED_TARGETS = [
   '[role="slider"]',
   '[data-no-swipe]',
 ].join(',');
+
+/** Parametro dell'indirizzo con la vista della classifica (`?view=cards` o `?view=list`), così il link condiviso apre la vista scelta */
+export const RANKING_VIEW_QUERY_PARAM = 'view';

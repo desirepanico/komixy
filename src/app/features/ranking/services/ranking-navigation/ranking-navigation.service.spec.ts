@@ -22,4 +22,17 @@ describe('RankingNavigationService', () => {
     await service.goToRanking();
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover', 'ranking']);
   });
+
+  it("mette la vista scelta nell'indirizzo, senza aggiungere una voce alla cronologia", async () => {
+    await service.goToView('cards');
+    expect(router.navigate).toHaveBeenCalledWith(['/', 'discover', 'ranking'], {
+      queryParams: { view: 'cards' },
+      replaceUrl: true,
+    });
+    await service.goToView('list');
+    expect(router.navigate).toHaveBeenLastCalledWith(['/', 'discover', 'ranking'], {
+      queryParams: { view: 'list' },
+      replaceUrl: true,
+    });
+  });
 });

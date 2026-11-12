@@ -2,8 +2,8 @@ import { Injectable, signal } from '@angular/core';
 import { RankingView } from '../../models/ranking-view.model';
 
 /**
- * La vista scelta in «Rivedi la settimana». Sta in memoria: si ricorda uscendo e rientrando nella
- * classifica, ma non dopo aver ricaricato l'app, che riparte dall'elenco.
+ * L'ultima vista scelta in «Rivedi la settimana». Sta in memoria: serve quando l'indirizzo non ha `?view=`
+ * (es. si rientra dal link «Rivedi la settimana»); ricaricando l'app riparte dall'elenco.
  */
 @Injectable({ providedIn: 'root' })
 export class RankingViewService {
