@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
+import { ComicsNavigationService } from '../../services/comics-navigation/comics-navigation.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -45,7 +45,7 @@ import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ran
   templateUrl: './comic-detail-page.html',
 })
 export class ComicDetailPage {
-  protected readonly discoverNavigation = inject(DiscoverNavigationService);
+  protected readonly comicsNavigation = inject(ComicsNavigationService);
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly session = inject(SessionService);
   private readonly catalog = inject(ComicCatalogService);

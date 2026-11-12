@@ -48,7 +48,7 @@ Dipendenze in una direzione: `features` → `shared` e `core`. Import: alias `@c
 | Scopri | `/discover` | `discover` | Attiva: busta della settimana (`app-weekly-pack-banner`) e «Manga da scoprire» (card con segnalibro) |
 | Apertura busta | `/discover/pack` | `pack` | Attiva, a schermo intero, senza menu. Si strappa trascinando il lembo (`app-pack-tear`; alternativa «Apri la busta»), si girano le 10 carte dalla 10ª alla 1ª, poi raccolta a ventaglio |
 | Classifica | `/discover/ranking` | `ranking` | Attiva: vista Elenco (default) o Carte (ventaglio), scelta nell'indirizzo (`?view=cards`, parametro `RANKING_VIEW_QUERY_PARAM`; l'elenco non ha parametro); a busta sigillata mostra `app-ranking-locked` |
-| Fumetto | `/comic`, `/comic/:id` | `comics` | `/comic` segnaposto; `/comic/:id` dettaglio del volume («Fumetto non trovato» se l'id non esiste) |
+| Fumetto | `/comic`, `/comic/:id` | `comics` | `/comic` segnaposto; `/comic/:id` dettaglio del volume («Fumetto non trovato» se l'id non esiste); la freccia indietro torna alla pagina di provenienza (`ComicsNavigationService.goBack()`), a Scopri se il dettaglio è la prima pagina aperta |
 | Uscite, Libreria, Profilo | `/releases`, `/library`, `/profile` | omonime | Segnaposto (`app-empty-state`) |
 | Scan | `/scan` | — | Solo nell'enum `AppRoutes`, non implementata |
 | Non trovata | qualsiasi altra | `not-found` | Pagina 404 |

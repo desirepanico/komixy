@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
+import { ComicsNavigationService } from '../../services/comics-navigation/comics-navigation.service';
 import { ComicDetailPage } from './comic-detail-page';
 
 describe('ComicDetailPage', () => {
@@ -48,11 +49,12 @@ describe('ComicDetailPage', () => {
     expect(html.querySelector('app-tag')?.textContent).toContain('mangaCard.editions.limited');
   });
 
-  it('ha un pulsante per tornare a Scopri', async () => {
+  it('ha un pulsante per tornare indietro', async () => {
     await create('w1');
-    expect(html.querySelector('a[href="/discover"]')?.getAttribute('aria-label')).toBe(
-      'common.back',
-    );
+    const back = html.querySelector('button[aria-label="common.back"]') as HTMLButtonElement;
+    const goBack = vi.spyOn(TestBed.inject(ComicsNavigationService), 'goBack').mockReturnValue();
+    back.click();
+    expect(goBack).toHaveBeenCalled();
   });
 
   it('con la busta sigillata non rivela la posizione in classifica', async () => {
