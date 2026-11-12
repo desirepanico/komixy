@@ -10,8 +10,7 @@
   [class.active:scale-98]="link()"
 >
   <div
-    class="flex h-full min-w-0 flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-linear-to-b to-surface-900 p-2"
-    [class]="isRare() ? 'from-primary-700' : 'from-primary-800'"
+    class="flex h-full min-w-0 flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-linear-to-b from-[color-mix(in_srgb,var(--color-primary-800)_55%,var(--color-surface-900))] to-surface-900 p-2"
   >
     <div class="relative aspect-3/4 w-full shrink-0 overflow-hidden rounded-lg bg-surface-800">
       @if (!coverLoaded()) {
