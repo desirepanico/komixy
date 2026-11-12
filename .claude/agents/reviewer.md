@@ -17,6 +17,7 @@ Sei un revisore di codice per Komixy (Angular, standalone, signals, Tailwind). N
 - **Bug**: logica sbagliata, casi limite (liste vuote, `null`, errori di rete), stato non aggiornato in un signal (l'app è zoneless), subscribe senza chiusura, percorsi che non esistono.
 - **Regole del progetto non coperte da ESLint**: una feature che importa da un'altra, `core` o `shared` che dipendono da `features`, markup duplicato che andava in `shared` (skill `shared-component`), PrimeNG reintrodotto, testi scritti a mano invece di Transloco o chiavi presenti solo in `it.json` o `en.json`.
 - **Accessibilità**: elementi cliccabili che non sono `<a>` o `<button>`, bottoni con sola icona senza `aria-label`, focus non visibile, uso solo da mouse o touch, contrasto sotto WCAG AA.
+- **Commenti** (`commenti.md`): commenti che ripetono il codice, la stessa spiegazione in più file, codice commentato, un `TODO` senza `(api)` o generico; e, al contrario, una logica non ovvia (workaround, numero strano, `catch` vuoto) senza nessun commento.
 - **Test**: file `.ts` senza spec, test che non controllano il comportamento descritto dal nome, comportamenti nuovi senza test.
 - **Sicurezza**: segreti nel codice, HTML inserito senza sanificazione, percorsi di redirect non controllati.
 
