@@ -193,7 +193,9 @@ describe('CardSpotlight', () => {
     const small = TestBed.createComponent(Host);
     await small.whenStable();
     const minima = small.nativeElement.querySelector('app-pack-card') as HTMLElement;
-    expect(minima.style.height).toBe('160px');
+    expect(minima.style.height).toBe('192px');
+    // anche alla scala minima la carta resta intera, con titolo e autore
+    expect(minima.textContent).toContain('Titolo 4');
   });
 
   it('su tablet e desktop la carta cresce, fino alla scala massima', async () => {

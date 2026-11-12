@@ -135,7 +135,7 @@ export const PACK_CARD_WIDTH_PX = 192;
 export const PACK_CARD_HEIGHT_PX = 320;
 /** Spazio tra la carta in primo piano e ciò che sta sotto, e scala minima a cui si rimpicciolisce per non scrollare */
 export const SPOTLIGHT_GAP_PX = 20;
-export const SPOTLIGHT_MIN_SCALE = 0.5;
+export const SPOTLIGHT_MIN_SCALE = 0.6;
 /** Da questa larghezza (tablet e desktop) la carta in primo piano può crescere fino a `SPOTLIGHT_MAX_SCALE` */
 export const SPOTLIGHT_GROW_FROM_PX = 640;
 export const SPOTLIGHT_MAX_SCALE = 1.3;

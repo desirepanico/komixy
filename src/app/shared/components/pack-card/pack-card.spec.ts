@@ -115,7 +115,8 @@ describe('PackCard', () => {
 
   it('a grandezza naturale mostra titolo, autore e volume', () => {
     expect(html.textContent).toContain('One Piece');
-    expect(html.querySelector('.text-5xl')).toBeNull();
+    // il numero ha lo stesso stile della carta piccola e del ventaglio
+    expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
   });
 
   it('una carta piccola mostra copertina e un numero di posizione grande, senza i testi illeggibili', async () => {

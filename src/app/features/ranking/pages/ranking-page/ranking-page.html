@@ -1,4 +1,6 @@
-<section class="flex min-h-[calc(100dvh-6rem)] min-w-0 flex-col gap-6 px-3 py-2 md:min-h-0 md:p-2">
+<section
+  class="flex min-h-[calc(100dvh-6rem)] min-w-0 flex-col gap-6 px-3 py-2 md:p-2 lg:min-h-[calc(100dvh-1rem)]"
+>
   <div class="flex flex-wrap items-start gap-x-3 gap-y-3">
     <a
       appButton
@@ -71,7 +73,11 @@
     </ol>
   } @else if (selected(); as entry) {
     <app-card-spotlight [entry]="entry" [detailLink]="detailLink(entry)" [summary]="true">
-      <app-card-fan behindCard class="w-full" [entries]="ranking.entries()" />
+      <app-card-fan
+        behindCard
+        class="w-full max-w-[max(10rem,calc((100dvh-15rem)*1.25))]"
+        [entries]="ranking.entries()"
+      />
       <button
         type="button"
         appButton
@@ -86,7 +92,11 @@
   } @else {
     <div class="flex flex-1 flex-col">
       <div class="flex flex-1 items-center">
-        <app-card-fan class="w-full" [entries]="ranking.entries()" (cardSelect)="selected.set($event)" />
+        <app-card-fan
+          class="w-full"
+          [entries]="ranking.entries()"
+          (cardSelect)="selected.set($event)"
+        />
       </div>
       <app-hint class="self-center pt-6">{{ 'common.tapCardHint' | transloco }}</app-hint>
     </div>
