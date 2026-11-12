@@ -37,6 +37,9 @@ export const PACK_CARD_HEIGHT_PX = 320;
 /** Sotto questa scala i testi non si leggono: copertina e numero di posizione */
 export const PACK_CARD_COMPACT_BELOW = 0.7;
 
+/** Dalla scala del ventaglio (0,42) in su la carta rara ha il riflesso; le miniature (0,2) no */
+export const PACK_CARD_SHEEN_FROM = 0.4;
+
 // ─── Carta in primo piano (spotlight) ────────────────────────────────────────
 
 /** Spazio tra la carta in primo piano e ciò che sta sotto */

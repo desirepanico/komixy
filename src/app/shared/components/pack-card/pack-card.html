@@ -19,7 +19,7 @@
       [class]="
         isRare()
           ? 'bg-linear-to-br from-primary-200 via-primary-500 to-primary-300'
-          : 'bg-primary-300'
+          : 'bg-surface-600'
       "
       [class.backface-hidden]="flippable()"
       [class.hidden]="!flippable() && !faceUp()"
@@ -38,9 +38,10 @@
               draggable="false"
             />
 
-            @if (isRare() && !decorative()) {
+            @if (hasSheen()) {
               <span
                 aria-hidden="true"
+                [style.animation-delay.ms]="sheenDelayMs()"
                 class="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-transparent via-surface-50/35 to-transparent motion-safe:block motion-safe:animate-card-sheen"
               ></span>
             }
@@ -61,9 +62,10 @@
               draggable="false"
             />
 
-            @if (isRare() && !decorative()) {
+            @if (hasSheen()) {
               <span
                 aria-hidden="true"
+                [style.animation-delay.ms]="sheenDelayMs()"
                 class="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-linear-to-r from-transparent via-surface-50/35 to-transparent motion-safe:block motion-safe:animate-card-sheen"
               ></span>
             }

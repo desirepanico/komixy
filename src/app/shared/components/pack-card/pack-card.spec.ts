@@ -137,17 +137,33 @@ describe('PackCard', () => {
   it("un'edizione speciale ha la cornice sfumata e il riflesso, una normale la cornice tinta unita", async () => {
     expect(html.querySelector('.from-primary-200')).not.toBeNull();
     expect(html.querySelector('span[aria-hidden]')).not.toBeNull();
+    expect(html.querySelector('.bg-surface-600')).toBeNull();
 
     host().card.set(entry({ editionType: null }));
     await fixture.whenStable();
     expect(html.querySelector('.from-primary-200')).toBeNull();
+    expect(html.querySelector('.bg-surface-600')).not.toBeNull();
     expect(html.querySelector('span[aria-hidden]')).toBeNull();
   });
 
-  it("se è decorativa non ha il riflesso, anche con un'edizione speciale", async () => {
+  it('il riflesso c’è anche sulle carte decorative, ma non sulle miniature', async () => {
     host().decorative.set(true);
+    host().scale.set(0.42);
+    await fixture.whenStable();
+    expect(html.querySelector('span[aria-hidden]')).not.toBeNull();
+
+    host().scale.set(0.2);
     await fixture.whenStable();
     expect(html.querySelector('span[aria-hidden]')).toBeNull();
+  });
+
+  it('ogni carta rara parte da un punto diverso del riflesso', async () => {
+    const delay = () =>
+      (html.querySelector('span[aria-hidden]') as HTMLElement).style.animationDelay;
+    const first = delay();
+    host().card.set({ ...entry(), rank: 7 });
+    await fixture.whenStable();
+    expect(delay()).not.toBe(first);
   });
 
   it('se è decorativa si nasconde ai lettori di schermo', async () => {

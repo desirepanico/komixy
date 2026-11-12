@@ -5,6 +5,7 @@ import {
   LOGO_URL,
   PACK_CARD_COMPACT_BELOW,
   PACK_CARD_HEIGHT_PX,
+  PACK_CARD_SHEEN_FROM,
   PACK_CARD_WIDTH_PX,
 } from '../../constants/pack.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
@@ -43,6 +44,11 @@ export class PackCard {
   public readonly compact = input<boolean | undefined>(undefined);
 
   protected readonly isRare = computed(() => this.entry().comic.editionType !== null);
+  protected readonly hasSheen = computed(
+    () => this.isRare() && this.scale() >= PACK_CARD_SHEEN_FROM,
+  );
+  /** Ogni carta parte da un punto diverso, così i riflessi non scorrono tutti insieme */
+  protected readonly sheenDelayMs = computed(() => -this.entry().rank * 700);
   protected readonly isCompact = computed(
     () => this.compact() ?? this.scale() < PACK_CARD_COMPACT_BELOW,
   );
