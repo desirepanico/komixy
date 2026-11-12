@@ -1,6 +1,5 @@
 import { MessageSeverity } from '@shared/models/message.model';
 import { ToastSeverity } from '@shared/models/toast.model';
-import { EditionType } from '@shared/models/comic.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
@@ -185,6 +184,3 @@ export const PACK_STRIP_CLIP =
 
 /** Quanto dura l'animazione dello strappo prima di passare alle carte */
 export const PACK_TEAR_ANIMATION_MS = 800;
-/** Due soli stili: edizione limitata in viola (primary), deluxe e varianti neutre (secondary). */
-export const editionSeverity = (type: EditionType | null): 'primary' | 'secondary' =>
-  type === 'limited' ? 'primary' : 'secondary';

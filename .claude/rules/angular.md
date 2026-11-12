@@ -28,6 +28,7 @@ paths:
 
 - Ogni file `.ts` con il suo spec sta in una **cartella propria**, con dentro solo lui, il suo `*.spec.ts` e, per un componente, il suo `.html`. La cartella ha il nome del file senza il tipo: `services/viewport/viewport.service.ts` + `viewport.service.spec.ts`, `guards/user-role/user-role.guard.ts`, `providers/i18n/i18n.provider.ts`.
 - Un file di logica che serve solo a un altro (es. `detect-swipe`) ha la sua cartella dentro quella del file che lo usa: `directives/swipe/detect-swipe/`.
+- Le funzioni pure usate da **due o più aree** (feature, `core`, componenti shared) stanno in `shared/utils/<nome>/<nome>.ts`, una funzione per cartella con il suo spec (`shared/utils/edition-severity/`). Una funzione usata da una sola area resta accanto a chi la usa, non in `utils`. Niente funzioni in `*.const.ts` né in `*.model.ts`, e niente file generici tipo `helpers.ts`.
 - Le rotte di una feature stanno in `routes/<nome>.routes.ts`.
 - Eccezioni: i file `*.model.ts` (nessuno spec) restano nella cartella del loro tipo (`models/`) e i `*.const.ts` in `shared/constants/`, tutti insieme; `main.ts` e i file nella radice di `src/app` (`app.ts`, `app.config.ts`, `app.routes.ts`) restano dove sono. Lo controlla `npm run lint` (`scripts/check-specs.mjs`).
 

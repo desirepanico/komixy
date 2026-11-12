@@ -19,7 +19,7 @@ import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
 import { map } from 'rxjs';
 
-import { editionSeverity } from '@shared/constants/ui.const';
+import { editionSeverity } from '@shared/utils/edition-severity/edition-severity';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { SessionService } from '@shared/services/session/session.service';

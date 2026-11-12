@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { PackCard } from '@shared/components/pack-card/pack-card';
-import { packCardRadius } from '@shared/components/pack-card/pack-card-radius/pack-card-radius';
+import { packCardRadius } from '@shared/utils/pack-card-radius/pack-card-radius';
 import {
   WEEKLY_TOP_CARD_SCALE,
   WEEKLY_TOP_CARD_WIDTH_PX,

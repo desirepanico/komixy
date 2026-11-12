@@ -5,7 +5,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { Skeleton } from '@shared/components/skeleton/skeleton';
 import { Tag } from '@shared/components/tag/tag';
-import { editionSeverity } from '@shared/constants/ui.const';
+import { editionSeverity } from '@shared/utils/edition-severity/edition-severity';
 import { InView } from '@shared/directives/in-view/in-view.directive';
 import { ComicItem } from '@shared/models/comic.model';
 

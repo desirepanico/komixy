@@ -24,7 +24,7 @@ import {
 } from '../../constants/ui.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { PackCard } from '../pack-card/pack-card';
-import { packCardRadius } from '../pack-card/pack-card-radius/pack-card-radius';
+import { packCardRadius } from '../../utils/pack-card-radius/pack-card-radius';
 import { fanAngle } from './fan-layout/fan-layout';
 
 /**

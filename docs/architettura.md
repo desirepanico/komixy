@@ -16,7 +16,7 @@ PrimeNG è stato rimosso e non va reintrodotto.
 ```
 core/       shell dell'app: guards, interceptors, layout, providers (provideCore)
 features/   una cartella per area: auth, comics, discover, library, not-found, pack, profile, ranking, releases
-shared/     componenti, direttive, modelli, servizi e costanti condivisi tra feature (constants, models, services)
+shared/     componenti, direttive, modelli, servizi, costanti e funzioni pure condivisi tra feature (constants, models, services, utils)
 ```
 
 Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea solo quello che serve. Ogni file `.ts` ha il suo `*.spec.ts` accanto (vedi `docs/sviluppo.md`).
@@ -25,7 +25,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 
 - `features` → `shared` e `core`; `core` → `shared`; `shared` e `core` non importano mai da `features`, e `shared` non importa da `core`. Eccezione: il guard `userRoleGuard` (`core/guards`) importa `AuthService` da `features/auth`; la dipendenza è a senso unico e `auth` non importa da `core`.
 - Una feature non importa da un'altra. Unica eccezione, a senso unico: i servizi di navigazione (`<nome>-navigation`, vedi "Navigazione delle feature"). Per questo ciò che serve a più feature sta in `shared`: `WeeklyRankingService`, `WeeklyPackService`, `BookmarksService`, `SessionService` (iscritto o ospite), `ComicCatalogService`, e i componenti della busta (`app-pack-card`, `app-card-fan`, `app-card-spotlight`).
-- Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
+- Se due feature condividono qualcosa, va in `shared` (componenti, direttive, modelli, servizi, costanti, utils). `core` contiene solo ciò che serve alla shell dell'app (layout, guard, interceptor, provider di avvio): niente modelli, servizi o costanti.
 
 ## Routing
 

@@ -28,7 +28,7 @@ import { SessionService } from '../../services/session/session.service';
 import { Button } from '../button/button';
 import { Message } from '../message/message';
 import { PackCard } from '../pack-card/pack-card';
-import { packCardRadius } from '../pack-card/pack-card-radius/pack-card-radius';
+import { packCardRadius } from '../../utils/pack-card-radius/pack-card-radius';
 
 /**
  * Una carta in primo piano con i suoi comandi: «Vedi dettaglio» e «In lista».

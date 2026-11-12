@@ -22,8 +22,9 @@ src/
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-brand, app-toast, app-hint, app-message, app-select-button, app-pack-card, app-card-fan, app-card-spotlight, ...
 │       ├── constants/         costanti condivise, al massimo tre file `*.const.ts`, uno per ambito, senza sottocartelle (navigation, ui, form)
 │       ├── directives/        direttive generiche: appSwipe, appInView
-│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button) e edition-severity/
-│       └── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
+│       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button): solo tipi ed enum
+│       ├── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
+│       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
@@ -104,6 +105,7 @@ Per aggiungere una feature nuova:
 ## Dove vanno le altre cose
 
 - **shared/constants**: costanti condivise, tre file `*.const.ts` e nessuna sottocartella: `navigation.const.ts` (ordine delle pagine principali e gesti di swipe), `ui.const.ts` (colori dei bottoni, skeleton di avvio), `form.const.ts` (validazione). Ci stanno tutte le costanti dichiarate con `const`, anche quelle di una sola area. Regole in `.claude/rules/costanti.md`.
+- **shared/utils**: funzioni pure usate da due o più aree (feature, `core`, componenti shared), una per cartella con il suo spec: `utils/<nome>/<nome>.ts`. Una funzione usata da una sola area resta accanto a chi la usa (es. `features/auth/utils/` per quelle della feature); niente funzioni in `*.const.ts` o `*.model.ts` e niente `helpers.ts` generici. Regole in `.claude/rules/angular.md`, sezione "Cartelle".
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
 - **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
 - **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.

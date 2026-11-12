@@ -100,7 +100,7 @@ Dettagli in [`docs/claude-code.md`](docs/claude-code.md).
 ```
 src/app/core        shell dell'app: guard, layout, provider di avvio
 src/app/features    una cartella per area: auth, comics, discover, library, not-found, pack, profile, ranking, releases
-src/app/shared      componenti, direttive, modelli, servizi e costanti usati da più feature
+src/app/shared      componenti, direttive, modelli, servizi, costanti e funzioni pure (`utils`) usati da più feature
 src/testing         finti per i test (non fa parte dell'app)
 public/             traduzioni (i18n), CSS globale (theme), font, immagini
 ```
