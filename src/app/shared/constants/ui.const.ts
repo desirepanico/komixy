@@ -150,9 +150,10 @@ export const CARD_FAN_BASE_WIDTH_PX = 384;
 export const CARD_FAN_BASE_HEIGHT_PX = 224;
 export const CARD_FAN_BASE_TOP_PX = 24;
 export const CARD_FAN_MAX_GROWTH = 2.2;
-/** Il ventaglio può ridursi, per l'altezza, fino a questa scala; `HEIGHT_FACTOR` è quanto spazio occupa davvero rispetto all'altezza base (le carte ruotate escono) */
+/** Il ventaglio si rimpicciolisce con la larghezza del suo contenitore, fino a questa scala */
 export const CARD_FAN_MIN_GROWTH = 0.5;
-export const CARD_FAN_HEIGHT_FACTOR = 1.5;
+/** Sotto questa larghezza del contenitore il ventaglio si rimpicciolisce; sopra, sui telefoni, resta alla grandezza base */
+export const CARD_FAN_SHRINK_BELOW_PX = 320;
 /** Larghezza del contenitore da cui il ventaglio comincia a crescere: sotto, resta a grandezza base */
 export const CARD_FAN_GROW_FROM_PX = 430;
 

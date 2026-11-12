@@ -27,15 +27,6 @@ class Host {
   scelta = vi.fn();
 }
 
-@Component({
-  imports: [CardFan],
-  template: `<app-card-fan [entries]="cards" [fitHeight]="fitHeight()" />`,
-})
-class HeightHost {
-  readonly cards = cards;
-  readonly fitHeight = signal(false);
-}
-
 describe('CardFan', () => {
   let measure: (larghezza: number) => void;
   let fixture: ReturnType<typeof TestBed.createComponent<Host>>;
@@ -133,37 +124,21 @@ describe('CardFan', () => {
     });
   });
 
-  describe('altezza', () => {
-    // Ogni osservatore «misura» 800 px di larghezza e 100 px di altezza
-    const createWith = async (fitHeight: boolean) => {
-      vi.stubGlobal(
-        'ResizeObserver',
-        class {
-          constructor(private readonly callback: ResizeObserverCallback) {}
-          observe(): void {
-            this.callback(
-              [{ contentRect: { width: 800, height: 100 } } as ResizeObserverEntry],
-              this as unknown as ResizeObserver,
-            );
-          }
-          unobserve(): void {}
-          disconnect(): void {}
-        },
+  describe('contenitore stretto', () => {
+    it('si rimpicciolisce in proporzione alla larghezza', async () => {
+      measure(240);
+      await fixture.whenStable();
+      // 240 ÷ 320 × 384 px
+      expect(parseFloat((html.querySelector('ul') as HTMLElement).style.maxWidth)).toBeCloseTo(
+        288,
+        1,
       );
-      const host = TestBed.createComponent(HeightHost);
-      host.componentInstance.fitHeight.set(fitHeight);
-      await host.whenStable();
-      return parseFloat((host.nativeElement.querySelector('ul') as HTMLElement).style.maxWidth);
-    };
-
-    it('con fitHeight si rimpicciolisce se il contenitore è basso', async () => {
-      // scala minima 0,5 × 384 px
-      expect(await createWith(true)).toBeCloseTo(192, 1);
     });
 
-    it('senza fitHeight ignora l’altezza del contenitore', async () => {
-      // 800 ÷ 430 × 384 px
-      expect(await createWith(false)).toBeCloseTo(714.4, 1);
+    it('non scende sotto la scala minima', async () => {
+      measure(100);
+      await fixture.whenStable();
+      expect((html.querySelector('ul') as HTMLElement).style.maxWidth).toBe('192px');
     });
   });
 });

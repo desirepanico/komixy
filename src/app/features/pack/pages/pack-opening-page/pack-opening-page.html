@@ -108,7 +108,11 @@
       @case ('collection') {
         @if (selected(); as entry) {
           <app-card-spotlight [entry]="entry" [detailLink]="selectedLink()" [summary]="true">
-            <app-card-fan behindCard class="w-full" [fitHeight]="true" [entries]="pack.deck()" />
+            <app-card-fan
+              behindCard
+              class="w-full max-w-[max(10rem,calc((100dvh-15rem)*1.25))]"
+              [entries]="pack.deck()"
+            />
             <button
               #primary
               type="button"
@@ -128,8 +132,7 @@
               aria-hidden="true"
             ></div>
             <app-card-fan
-              class="w-full"
-              [fitHeight]="true"
+              class="w-full max-w-[max(10rem,calc((100dvh-15rem)*1.25))]"
               [entries]="pack.deck()"
               (cardSelect)="select($event)"
             />
