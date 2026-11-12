@@ -152,7 +152,7 @@ describe('RankingPage', () => {
       inList.click();
       await fixture.whenStable();
       expect(TestBed.inject(BookmarksService).savedCount()).toBe(0);
-      expect(html.querySelector('a[href="/login"]')?.textContent).toContain('bookmark.signUp');
+      expect(html.querySelector('a[href="/login"]')?.textContent).toContain('guestNotice.signUp');
     });
 
     it("tornando all'Elenco la carta scelta non resta aperta", async () => {

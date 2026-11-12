@@ -17,14 +17,21 @@
   </div>
 
   <!-- Invito per gli ospiti: compare toccando «In lista» -->
-  <div role="status" class="absolute top-0 left-1/2 z-10 -translate-x-1/2">
+  <div role="status" class="absolute top-0 left-1/2 z-10 w-max max-w-full -translate-x-1/2">
     @if (inviteShown()) {
-      <a
-        [routerLink]="session.signUpLink"
-        class="block rounded-xl border border-surface-700 bg-surface-900 px-4 py-2 text-sm whitespace-nowrap text-surface-100 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      <app-message
+        class="rounded-xl bg-surface-900"
+        severity="primary"
+        icon="matLockOutline"
+        [label]="'guestNotice.list' | transloco"
       >
-        {{ 'bookmark.signUp' | transloco }}
-      </a>
+        <a
+          [routerLink]="session.signUpLink"
+          class="rounded-xs font-bold text-primary-300 underline underline-offset-2 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        >
+          {{ 'guestNotice.signUp' | transloco }}
+        </a>
+      </app-message>
     }
   </div>
 

@@ -100,7 +100,7 @@ describe('CardSpotlight', () => {
     expect(html.querySelector('a[href="/login"]')).toBeNull();
     inList().click();
     await fixture.whenStable();
-    expect(html.querySelector('a[href="/login"]')?.textContent).toContain('bookmark.signUp');
+    expect(html.querySelector('a[href="/login"]')?.textContent).toContain('guestNotice.signUp');
     expect(TestBed.inject(BookmarksService).isSaved('w4')).toBe(false);
   });
 

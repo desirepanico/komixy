@@ -26,6 +26,7 @@ import { RankingEntry } from '../../models/ranking-entry.model';
 import { BookmarksService } from '../../services/bookmarks/bookmarks.service';
 import { SessionService } from '../../services/session/session.service';
 import { Button } from '../button/button';
+import { Message } from '../message/message';
 import { PackCard } from '../pack-card/pack-card';
 
 /**
@@ -40,7 +41,7 @@ import { PackCard } from '../pack-card/pack-card';
  */
 @Component({
   selector: 'app-card-spotlight',
-  imports: [PackCard, Button, RouterLink, TranslocoPipe, NgIcon],
+  imports: [PackCard, Button, Message, RouterLink, TranslocoPipe, NgIcon],
   providers: [provideIcons({ matAddOutline, matCheckOutline, matLockOutline })],
   templateUrl: './card-spotlight.html',
   host: { class: 'flex min-h-0 flex-1 flex-col' },
