@@ -108,8 +108,8 @@ describe('PackCard', () => {
   });
 
   it('il dorso ha lo stesso bordo grigio delle carte comuni', () => {
-    const back = html.querySelector('[aria-hidden="true"] img')?.parentElement as HTMLElement;
-    expect(back.classList.contains('border-surface-600')).toBe(true);
+    // la carta di prova è rara: l'unico bordo grigio è quello del dorso
+    expect(html.querySelectorAll('.bg-surface-600')).toHaveLength(1);
   });
 
   it('il dorso mostra il logo di Komixy', () => {
@@ -142,12 +142,12 @@ describe('PackCard', () => {
   it("un'edizione speciale ha la cornice sfumata e il riflesso, una normale la cornice tinta unita", async () => {
     expect(html.querySelector('.from-primary-200')).not.toBeNull();
     expect(html.querySelector('span[aria-hidden]')).not.toBeNull();
-    expect(html.querySelector('.bg-surface-600')).toBeNull();
+    expect(html.querySelectorAll('.bg-surface-600')).toHaveLength(1);
 
     host().card.set(entry({ editionType: null }));
     await fixture.whenStable();
     expect(html.querySelector('.from-primary-200')).toBeNull();
-    expect(html.querySelector('.bg-surface-600')).not.toBeNull();
+    expect(html.querySelectorAll('.bg-surface-600')).toHaveLength(2);
     expect(html.querySelector('span[aria-hidden]')).toBeNull();
   });
 

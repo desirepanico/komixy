@@ -1,0 +1,17 @@
+<!-- Il bordo è lo sfondo del contenitore esterno visto attraverso il padding: stesso spessore e colore su tutti i lati -->
+<div
+  class="group relative size-full rounded-xl p-0.5 shadow-lg shadow-surface-950/60 transition duration-200 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-400 has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-surface-950"
+  [class]="
+    rare() ? 'bg-linear-to-br from-primary-200 via-primary-500 to-primary-300' : 'bg-surface-600'
+  "
+  [class.hover:bg-surface-500]="interactive() && !rare()"
+  [class.active:scale-98]="interactive()"
+>
+  <div
+    class="flex size-full min-w-0 flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-linear-to-b from-[color-mix(in_srgb,var(--color-primary-800)_55%,var(--color-surface-900))] to-surface-900"
+    [class.p-2]="!compact()"
+    [class.p-1]="compact()"
+  >
+    <ng-content />
+  </div>
+</div>

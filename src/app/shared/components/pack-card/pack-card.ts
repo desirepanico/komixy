@@ -8,6 +8,7 @@ import {
   PACK_CARD_SHEEN_FROM,
   PACK_CARD_WIDTH_PX,
 } from '../../constants/pack.const';
+import { CardFrame } from '../card-frame/card-frame';
 import { RankingEntry } from '../../models/ranking-entry.model';
 
 /**
@@ -16,7 +17,7 @@ import { RankingEntry } from '../../models/ranking-entry.model';
  */
 @Component({
   selector: 'app-pack-card',
-  imports: [TranslocoPipe, NgOptimizedImage],
+  imports: [TranslocoPipe, NgOptimizedImage, CardFrame],
   templateUrl: './pack-card.html',
   host: {
     class: 'block shrink-0',

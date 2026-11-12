@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicItem } from '../../models/comic.model';
 import { editionSeverity } from '../../utils/edition-severity/edition-severity';
+import { CardFrame } from '../card-frame/card-frame';
 import { Skeleton } from '../skeleton/skeleton';
 import { Tag } from '../tag/tag';
 
@@ -15,7 +16,7 @@ import { Tag } from '../tag/tag';
  */
 @Component({
   selector: 'app-comic-card',
-  imports: [TranslocoPipe, RouterLink, Skeleton, Tag],
+  imports: [TranslocoPipe, RouterLink, CardFrame, Skeleton, Tag],
   templateUrl: './comic-card.html',
   host: { class: 'block h-full' },
 })

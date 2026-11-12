@@ -13,22 +13,12 @@
     [class.motion-safe:duration-700]="flippable()"
     [class.rotate-y-180]="flippable() && !faceUp()"
   >
-    <!-- Il bordo è lo sfondo di questo contenitore visto attraverso il padding: uniforme su tutti i lati -->
     <div
-      class="absolute inset-0 rounded-xl p-0.5 shadow-lg shadow-surface-950/60"
-      [class]="
-        isRare()
-          ? 'bg-linear-to-br from-primary-200 via-primary-500 to-primary-300'
-          : 'bg-surface-600'
-      "
+      class="absolute inset-0"
       [class.backface-hidden]="flippable()"
       [class.hidden]="!flippable() && !faceUp()"
     >
-      <div
-        class="flex size-full min-w-0 flex-col overflow-hidden rounded-[calc(var(--radius-xl)-2px)] bg-linear-to-b from-[color-mix(in_srgb,var(--color-primary-800)_55%,var(--color-surface-900))] to-surface-900"
-        [class.p-2]="!isCompact()"
-        [class.p-1]="isCompact()"
-      >
+      <app-card-frame class="block size-full" [rare]="isRare()" [compact]="isCompact()">
         @if (isCompact()) {
           <div class="relative size-full overflow-hidden rounded-lg bg-surface-800">
             <img
@@ -107,18 +97,19 @@
             </div>
           </div>
         }
-      </div>
+      </app-card-frame>
     </div>
 
     <div
-      class="absolute inset-0 items-center justify-center overflow-hidden rounded-xl border-2 border-surface-600 bg-linear-to-b from-[color-mix(in_srgb,var(--color-primary-800)_55%,var(--color-surface-900))] to-surface-900 text-primary-200 shadow-lg shadow-surface-950/60"
-      [class.flex]="flippable() || !faceUp()"
+      class="absolute inset-0"
       [class.hidden]="!flippable() && faceUp()"
       [class.rotate-y-180]="flippable()"
       [class.backface-hidden]="flippable()"
       aria-hidden="true"
     >
-      <img [ngSrc]="logo" width="640" height="378" alt="" class="w-28 drop-shadow-lg" />
+      <app-card-frame class="block size-full">
+        <img [ngSrc]="logo" width="640" height="378" alt="" class="m-auto w-28 drop-shadow-lg" />
+      </app-card-frame>
     </div>
   </div>
 </div>
