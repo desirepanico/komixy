@@ -103,8 +103,16 @@ export class PackOpeningPage {
     if (this.torn()) return;
     this.torn.set(true);
     this.pack.open();
-    const timer = setTimeout(() => this.goTo('cards'), PACK_TEAR_ANIMATION_MS);
+    const timer = setTimeout(() => {
+      if (this.phase() === 'sealed') this.goTo('cards');
+    }, PACK_TEAR_ANIMATION_MS);
     this.destroyRef.onDestroy(() => clearTimeout(timer));
+  }
+  /** Registra l'apertura e va alla raccolta, senza strappo né carte da girare */
+  protected skip(): void {
+    this.torn.set(true);
+    this.pack.open();
+    this.goTo('collection');
   }
   /** Un tocco sulla carta o sul bottone principale: prima la gira, poi passa alla prossima */
   protected onPrimary(): void {

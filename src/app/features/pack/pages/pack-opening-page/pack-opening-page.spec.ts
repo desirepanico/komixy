@@ -21,6 +21,11 @@ describe('PackOpeningPage', () => {
     Array.from(html.querySelectorAll('button')).find((b) => b.classList.contains('min-w-40'))!;
   const counter = () => html.querySelector('[aria-live]')?.textContent?.trim();
 
+  const skip = () =>
+    Array.from(html.querySelectorAll('button')).find((b) =>
+      b.textContent?.includes('weeklyPack.skip'),
+    )!;
+
   const tear = async () => {
     primary().click();
     await vi.advanceTimersByTimeAsync(PACK_TEAR_ANIMATION_MS);
@@ -139,6 +144,51 @@ describe('PackOpeningPage', () => {
     await fixture.whenStable();
     expect(html.querySelector('app-card-spotlight')).toBeNull();
     expect(html.querySelector('app-card-fan')).not.toBeNull();
+  });
+
+  it("«Salta l'animazione» dalla busta sigillata apre la busta e mostra la raccolta", async () => {
+    await create();
+    skip().click();
+    await fixture.whenStable();
+    expect(TestBed.inject(WeeklyPackService).isOpened()).toBe(true);
+    expect(html.querySelector('app-pack-tear')).toBeNull();
+    expect(html.querySelectorAll('app-card-fan button')).toHaveLength(10);
+    expect(html.textContent).toContain('weeklyPack.collectionComplete');
+    expect(html.querySelector('a[href="/discover/ranking"]')).not.toBeNull();
+  });
+
+  it("«Salta l'animazione» dalle carte salta quelle ancora da girare", async () => {
+    await create();
+    await tear();
+    primary().click();
+    await fixture.whenStable();
+    skip().click();
+    await fixture.whenStable();
+    expect(html.querySelector('app-card-fan')).not.toBeNull();
+    expect(html.querySelector('ul[afterCard]')).toBeNull();
+  });
+
+  it("saltando durante lo strappo la raccolta non torna alle carte allo scadere dell'animazione", async () => {
+    await create();
+    primary().click();
+    await fixture.whenStable();
+    skip().click();
+    await vi.advanceTimersByTimeAsync(PACK_TEAR_ANIMATION_MS);
+    await fixture.whenStable();
+    expect(html.querySelector('app-card-fan')).not.toBeNull();
+    expect(html.querySelector('app-card-spotlight')).toBeNull();
+  });
+
+  it("con la raccolta mostrata il contatore ha tutte le carte girate e «Salta» non c'è più", async () => {
+    await create();
+    skip().click();
+    await fixture.whenStable();
+    expect(counter()).toBe('weeklyPack.cardsFlipped');
+    expect(
+      Array.from(html.querySelectorAll('button')).some((b) =>
+        b.textContent?.includes('weeklyPack.skip'),
+      ),
+    ).toBe(false);
   });
 
   it('ha il pulsante per tornare indietro a Scopri', async () => {

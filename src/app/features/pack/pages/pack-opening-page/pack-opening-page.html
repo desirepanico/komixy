@@ -54,6 +54,17 @@
           >
             {{ 'weeklyPack.open' | transloco }}
           </button>
+          <button
+            type="button"
+            appButton
+            variant="text"
+            severity="accent"
+            [rounded]="true"
+            class="px-3 py-1.5 text-sm font-semibold"
+            (click)="skip()"
+          >
+            {{ 'weeklyPack.skip' | transloco }}
+          </button>
         </div>
       }
 
@@ -101,6 +112,17 @@
             } @else {
               {{ 'weeklyPack.nextCard' | transloco }}
             }
+          </button>
+          <button
+            type="button"
+            appButton
+            variant="text"
+            severity="accent"
+            [rounded]="true"
+            class="px-3 py-1.5 text-sm font-semibold"
+            (click)="skip()"
+          >
+            {{ 'weeklyPack.skip' | transloco }}
           </button>
         </app-card-spotlight>
       }
