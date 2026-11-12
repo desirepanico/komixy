@@ -14,4 +14,12 @@ describe('test-setup', () => {
       observer.disconnect();
     }).not.toThrow();
   });
+
+  it("svuota lo storage prima di ogni test: un test non lascia dati all'altro", () => {
+    localStorage.setItem('chiave', 'valore');
+  });
+
+  it('lo storage è vuoto all’inizio del test successivo', () => {
+    expect(localStorage.getItem('chiave')).toBeNull();
+  });
 });

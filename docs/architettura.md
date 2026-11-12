@@ -52,12 +52,12 @@ Così ogni percorso è scritto in un solo servizio, e pagine e componenti delle 
 
 Un provider dice al sistema di dependency injection di Angular come creare o configurare qualcosa (un servizio, un'opzione, un'operazione da fare all'avvio). Nel progetto ce ne sono di quattro tipi, dal più globale al più locale:
 
-| Tipo | Dove | Esempio |
-|---|---|---|
-| Configurazione dell'app | `app.config.ts` | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
-| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()` |
-| Servizi `providedIn: 'root'` | `shared/services`, `features/*/services` | `ViewportService`, `AuthService`, `WeeklyRankingService` |
-| Provider di componente | `providers: [...]` nel decorator | `provideIcons({ matXxxOutline })` |
+| Tipo                             | Dove                                       | Esempio                                                                       |
+| -------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------- |
+| Configurazione dell'app          | `app.config.ts`                            | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()` |
+| Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`             |
+| Servizi `providedIn: 'root'`     | `shared/services`, `features/*/services`   | `ViewportService`, `AuthService`, `WeeklyRankingService`                      |
+| Provider di componente           | `providers: [...]` nel decorator           | `provideIcons({ matXxxOutline })`                                             |
 
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
 
@@ -83,6 +83,7 @@ Regole:
 ## Accesso e ruoli
 
 - `AuthService` (`features/auth`) tiene l'utente loggato in un signal.
+- Dopo un refresh l'iscritto resta tale: `SessionService` (stato iscritto o ospite) e `AuthService` (utente) lo rileggono dallo storage del browser (`SESSION_STORAGE_KEY`, `AUTH_USER_STORAGE_KEY` in `form.const.ts`; solo email e ruolo, nessuna password o token). L'ospite non si salva: ricaricando resta ospite. Provvisorio, a regime la sessione la mantiene il server (`TODO(api)`).
 - `userRoleGuard(ruolo)` (`core/guards`) reindirizza al login chi non è autenticato e a `discover` chi non ha il ruolo richiesto.
 
 ## Dati

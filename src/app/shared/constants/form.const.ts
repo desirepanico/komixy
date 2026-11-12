@@ -5,6 +5,13 @@ export const DEMO_CREDENTIALS: Readonly<{ email: string; password: string }> = {
   password: 'password1',
 };
 
+// TODO(api): la sessione la manterrà il server (cookie o token), non il browser
+/** Chiave dello storage con lo stato «iscritto» (letta da `SessionService`) */
+export const SESSION_STORAGE_KEY = 'komixy.session';
+
+/** Chiave dello storage con l'utente iscritto (letta da `AuthService`) */
+export const AUTH_USER_STORAGE_KEY = 'komixy.user';
+
 /** Lunghezza minima della password al login */
 export const PASSWORD_MIN_LENGTH = 6;
 

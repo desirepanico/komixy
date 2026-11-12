@@ -6,7 +6,11 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
-import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
+import {
+  AUTH_USER_STORAGE_KEY,
+  DEMO_CREDENTIALS,
+  FAKE_API_DELAY_MS,
+} from '@shared/constants/form.const';
 import { ApiError, AuthService } from './auth.service';
 
 const user: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
@@ -16,6 +20,7 @@ describe('AuthService', () => {
   let router: Router;
 
   beforeEach(() => {
+    localStorage.clear();
     service = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
@@ -55,6 +60,44 @@ describe('AuthService', () => {
     service.logout();
     expect(service.loggedUser()).toBeNull();
     expect(router.navigate).toHaveBeenCalledWith(['/', AppRoutes.Login]);
+  });
+
+  describe('dopo un refresh', () => {
+    const refresh = () => {
+      TestBed.resetTestingModule();
+      vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      return TestBed.inject(AuthService);
+    };
+
+    it("l'iscritto resta tale, con i suoi dati", () => {
+      service.login(user);
+      const fresh = refresh();
+      expect(fresh.loggedUser()).toEqual(user);
+      expect(fresh.isAuthenticated()).toBe(true);
+      expect(TestBed.inject(SessionService).isGuest()).toBe(false);
+    });
+
+    it("l'ospite resta ospite", () => {
+      service.enterAsGuest();
+      const fresh = refresh();
+      expect(fresh.loggedUser()).toBeNull();
+      expect(fresh.isAuthenticated()).toBe(false);
+    });
+
+    it('dopo il logout riparte da ospite e lo storage è pulito', () => {
+      service.login(user);
+      service.logout();
+      const fresh = refresh();
+      expect(fresh.loggedUser()).toBeNull();
+      expect(fresh.isAuthenticated()).toBe(false);
+      expect(localStorage.getItem(AUTH_USER_STORAGE_KEY)).toBeNull();
+    });
+
+    it('un utente salvato rovinato viene ignorato', () => {
+      service.login(user);
+      localStorage.setItem(AUTH_USER_STORAGE_KEY, '{non json');
+      expect(refresh().loggedUser()).toBeNull();
+    });
   });
 
   describe('authenticate', () => {

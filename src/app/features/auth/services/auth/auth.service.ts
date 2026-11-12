@@ -1,5 +1,9 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
+import {
+  AUTH_USER_STORAGE_KEY,
+  DEMO_CREDENTIALS,
+  FAKE_API_DELAY_MS,
+} from '@shared/constants/form.const';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { delay, Observable, of, tap, throwError } from 'rxjs';
@@ -22,7 +26,7 @@ export class AuthService {
   private readonly navigation = inject(AuthNavigationService);
   private readonly session = inject(SessionService);
 
-  private readonly _loggedUser = signal<LoggedUser | null>(null);
+  private readonly _loggedUser = signal<LoggedUser | null>(this.read());
 
   public readonly loggedUser = this._loggedUser.asReadonly();
 
@@ -31,12 +35,14 @@ export class AuthService {
 
   public login(user: LoggedUser): void {
     this._loggedUser.set(user);
+    this.write(user);
     this.session.setAuthenticated(true);
   }
 
   /** L'ospite entra senza account: può guardare ma non salvare in lista */
   public enterAsGuest(): void {
     this._loggedUser.set(null);
+    this.write(null);
     this.session.setAuthenticated(false);
   }
 
@@ -56,7 +62,37 @@ export class AuthService {
 
   public logout(): void {
     this._loggedUser.set(null);
+    this.write(null);
     this.session.setAuthenticated(false);
     void this.navigation.goToLogin();
+  }
+
+  /** Dopo un refresh l'utente iscritto si rilegge dallo storage; l'ospite non si salva */
+  private read(): LoggedUser | null {
+    if (!this.session.isAuthenticated()) return null;
+    try {
+      const raw = localStorage.getItem(AUTH_USER_STORAGE_KEY);
+      const value: unknown = raw ? JSON.parse(raw) : null;
+      if (
+        value &&
+        typeof value === 'object' &&
+        'id' in value &&
+        'email' in value &&
+        'userRole' in value
+      ) {
+        return value as LoggedUser;
+      }
+    } catch {
+      // Storage non disponibile o contenuto rovinato: nessun utente
+    }
+    return null;
+  }
+  private write(user: LoggedUser | null): void {
+    try {
+      if (user) localStorage.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(user));
+      else localStorage.removeItem(AUTH_USER_STORAGE_KEY);
+    } catch {
+      // Storage non disponibile (es. navigazione privata): vale solo finché l'app è aperta
+    }
   }
 }

@@ -2,19 +2,19 @@
 
 ## Comandi
 
-| Comando                   | Cosa fa                                                                                                                                                                                            |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm start`               | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica                                                                                                                      |
-| `npm run build`           | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
-| `npm run watch`           | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
-| `npm test`                | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
-| `npm run lint`            | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) e `scripts/check-class-order.mjs` (ordine dei membri di classe)                                                                        |
-| `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare |
-| `npm run knip`            | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
-| `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
-| `npm run deploy:login`    | Accesso a Vercel (una volta sola)                                                                                                                                                                  |
-| `npm run deploy:dev`      | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia                                                                                       |
-| `npm run deploy:prod`     | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico                                                                                                               |
+| Comando                       | Cosa fa                                                                                                                                                                                            |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm start`                   | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica                                                                                                                      |
+| `npm run build`               | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
+| `npm run watch`               | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
+| `npm test`                    | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
+| `npm run lint`                | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) e `scripts/check-class-order.mjs` (ordine dei membri di classe)          |
+| `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare                                                             |
+| `npm run knip`                | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
+| `npm run ng -- <comando>`     | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
+| `npm run deploy:login`        | Accesso a Vercel (una volta sola)                                                                                                                                                                  |
+| `npm run deploy:dev`          | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia                                                                                       |
+| `npm run deploy:prod`         | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico                                                                                                               |
 
 Gli script `prestart`, `prebuild`, `pretest`, `prelint` e `preknip` non si lanciano a mano: npm esegue automaticamente lo script con prefisso `pre` prima di quello con lo stesso nome. Tutti eseguono `scripts/ensure-deps.mjs` (sezione seguente).
 
@@ -40,7 +40,7 @@ Le regole (cosa testare, un file di spec per ogni file `.ts`, una cartella per f
 | Opzione         | File                                           | Cosa fa                                                                                                                                                                          |
 | --------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `providersFile` | `src/testing/test-providers/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test |
-| `setupFiles`    | `src/testing/test-setup/test-setup.ts`         | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha                                                                                  |
+| `setupFiles`    | `src/testing/test-setup/test-setup.ts`         | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha; prima di ogni test svuota `localStorage`                                        |
 | `runnerConfig`  | `vitest-base.config.mts`                       | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima                                                                               |
 
 **A cosa serve `src/testing/`.** jsdom simula il browser ma non lo replica del tutto: se un componente usa una funzione che jsdom non ha, il test si rompe con errori come "ResizeObserver is not defined". I finti in `src/testing/` sono scritti una volta sola e caricati prima di ogni test, così gli spec restano brevi. Le traduzioni sono finte perché il test controlla il comportamento del componente, non il testo italiano.

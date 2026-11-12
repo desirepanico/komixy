@@ -42,7 +42,7 @@ Dipendenze in una direzione: `features` → `shared` e `core`. Import con alias 
 
 ## Dominio
 
-- **Ospiti e iscritti**: `SessionService` dice chi usa l'app. Un ospite può aprire la busta, vedere classifica e dettagli, ma non salvare nelle liste.
+- **Ospiti e iscritti**: `SessionService` dice chi usa l'app. Un ospite può aprire la busta, vedere classifica e dettagli, ma non salvare nelle liste. L'iscritto si rilegge dopo un refresh dallo storage (provvisorio, `TODO(api)`).
 - **Busta settimanale**: `WeeklyPackService`. Le 10 carte sono la classifica della settimana; una apertura a settimana ISO, salvata per ora solo in `localStorage` (provvisorio, a regime la gestisce il backend).
 - **Dati simulati** nei servizi, con `TODO(api)` per l'API reale.
 
