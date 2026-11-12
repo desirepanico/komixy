@@ -44,3 +44,6 @@ export const IGNORED_TARGETS = [
   '[role="slider"]',
   '[data-no-swipe]',
 ].join(',');
+
+/** Parametro dell'indirizzo che dice quale vista della classifica mostrare (`?view=cards`; l'elenco è il default e non compare) */
+export const RANKING_VIEW_QUERY_PARAM = 'view';

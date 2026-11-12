@@ -167,9 +167,6 @@ export const WEEKLY_TOP_INITIAL_COUNT = 3;
 /** Bordo e spaziatura interna del pannello, per calcolarne la larghezza massima */
 export const WEEKLY_TOP_FRAME_PX = 34;
 
-/** Vista scelta nella pagina «Rivedi la settimana» */
-export const RANKING_VIEW_STORAGE_KEY = 'komixy.rankingView';
-
 /** Logo di Komixy, sul dorso delle carte */
 export const LOGO_URL = '/img/logo/komixy-logo.png';
 

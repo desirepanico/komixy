@@ -47,7 +47,7 @@ Dipendenze in una direzione: `features` → `shared` e `core`. Import: alias `@c
 | Login | `/login` (pagina di partenza), `/login/register`, `/login/forgot-password` | `auth` | Login attiva, fuori dal layout: da 1024px due colonne (`app-login-volumes` a sinistra, form in card a destra), sotto una colonna; alta quanto la finestra, senza scroll. Registrazione e password dimenticata: segnaposto |
 | Scopri | `/discover` | `discover` | Attiva: busta della settimana (`app-weekly-pack-banner`) e «Manga da scoprire» (card con segnalibro) |
 | Apertura busta | `/discover/pack` | `pack` | Attiva, a schermo intero, senza menu. Si strappa trascinando il lembo (`app-pack-tear`; alternativa «Apri la busta»), si girano le 10 carte dalla 10ª alla 1ª, poi raccolta a ventaglio |
-| Classifica | `/discover/ranking` | `ranking` | Attiva: vista Elenco (default) o Carte (ventaglio), scelta ricordata da `RankingViewService`; a busta sigillata mostra `app-ranking-locked` |
+| Classifica | `/discover/ranking` | `ranking` | Attiva: vista Elenco (default) o Carte (ventaglio), scelta nell'indirizzo (`?view=cards`, parametro `RANKING_VIEW_QUERY_PARAM`; l'elenco non ha parametro); a busta sigillata mostra `app-ranking-locked` |
 | Fumetto | `/comic`, `/comic/:id` | `comics` | `/comic` segnaposto; `/comic/:id` dettaglio del volume («Fumetto non trovato» se l'id non esiste) |
 | Uscite, Libreria, Profilo | `/releases`, `/library`, `/profile` | omonime | Segnaposto (`app-empty-state`) |
 | Scan | `/scan` | — | Solo nell'enum `AppRoutes`, non implementata |

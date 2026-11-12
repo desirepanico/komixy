@@ -1,5 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matArrowBackOutline, matLockOutline } from '@ng-icons/material-symbols/outline';
@@ -11,6 +12,7 @@ import { CardSpotlight } from '@shared/components/card-spotlight/card-spotlight'
 import { Hint } from '@shared/components/hint/hint';
 import { Message } from '@shared/components/message/message';
 import { SelectButton } from '@shared/components/select-button/select-button';
+import { RANKING_VIEW_QUERY_PARAM } from '@shared/constants/navigation.const';
 import { RankingEntry } from '@shared/models/ranking-entry.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
@@ -19,10 +21,11 @@ import { ComicRankCard } from '../../components/comic-rank-card/comic-rank-card'
 import { RankingLocked } from '../../components/ranking-locked/ranking-locked';
 import { SelectButtonOption } from '@shared/models/select-button.model';
 import { RankingView } from '../../models/ranking-view.model';
-import { RankingViewService } from '../../services/ranking-view/ranking-view.service';
+import { RankingNavigationService } from '../../services/ranking-navigation/ranking-navigation.service';
 
 /**
  * «Rivedi la settimana»: la classifica in due viste, Elenco e Carte (ventaglio).
+ * La vista scelta è nell'indirizzo, quindi si ritrova tornando indietro e si può condividere.
  * Finché la busta è sigillata non mostra nulla della classifica.
  */
 @Component({
@@ -49,7 +52,15 @@ export class RankingPage {
   protected readonly ranking = inject(WeeklyRankingService);
   protected readonly pack = inject(WeeklyPackService);
   protected readonly session = inject(SessionService);
-  protected readonly views = inject(RankingViewService);
+  private readonly rankingNavigation = inject(RankingNavigationService);
+  private readonly queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
+    requireSync: true,
+  });
+
+  /** La vista sta nell'indirizzo (`?view=cards`): senza parametro, o con un valore sconosciuto, è l'elenco */
+  protected readonly view = computed<RankingView>(() =>
+    this.queryParams().get(RANKING_VIEW_QUERY_PARAM) === 'cards' ? 'cards' : 'list',
+  );
   protected readonly viewOptions: readonly SelectButtonOption<RankingView>[] = [
     { value: 'list', label: 'ranking.list' },
     { value: 'cards', label: 'ranking.cards' },
@@ -59,8 +70,8 @@ export class RankingPage {
   protected readonly selected = signal<RankingEntry | null>(null);
 
   protected changeView(view: RankingView): void {
-    this.views.setView(view);
     this.selected.set(null);
+    void this.rankingNavigation.goToView(view);
   }
 
   protected detailLink(entry: RankingEntry): readonly string[] {

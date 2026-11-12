@@ -35,7 +35,7 @@
         class="ml-auto shrink-0"
         label="ranking.viewLabel"
         [options]="viewOptions"
-        [value]="views.view()"
+        [value]="view()"
         (valueChange)="changeView($event)"
       />
     }
@@ -43,7 +43,7 @@
 
   @if (!pack.isOpened()) {
     <app-ranking-locked />
-  } @else if (views.view() === 'list') {
+  } @else if (view() === 'list') {
     @if (session.isGuest()) {
       <app-message
         severity="primary"
