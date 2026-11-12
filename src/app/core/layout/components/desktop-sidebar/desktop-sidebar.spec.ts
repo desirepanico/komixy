@@ -37,6 +37,11 @@ describe('DesktopSidebar', () => {
     expect(html.querySelector('a[aria-label="common.brand"]')?.getAttribute('href')).toBe('/');
   });
 
+  it('al posto del vecchio quadratino con il testo mostra il logo di Komixy', () => {
+    expect(html.querySelector('a[aria-label="common.brand"] app-brand img')).not.toBeNull();
+    expect(html.querySelector('a[aria-label="common.brand"] ng-icon')).toBeNull();
+  });
+
   it('traduce il riquadro del profilo', () => {
     expect(html.textContent).toContain('menu.myProfile');
     expect(html.textContent).toContain('menu.viewProfile');

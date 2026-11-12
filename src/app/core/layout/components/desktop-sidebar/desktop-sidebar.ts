@@ -10,16 +10,16 @@ import {
   matHomeOutline,
   matChevronRightOutline,
   matKeyboardArrowDownOutline,
-  matMenuBookOutline,
   matPersonOutline,
 } from '@ng-icons/material-symbols/outline';
+import { Brand } from '@shared/components/brand/brand';
 import { Button } from '@shared/components/button/button';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { NavGroup } from '@shared/models/nav-item.model';
 @Component({
   selector: 'app-desktop-sidebar',
-  imports: [RouterLink, RouterLinkActive, NgIcon, TranslocoPipe, Button],
+  imports: [RouterLink, RouterLinkActive, NgIcon, TranslocoPipe, Button, Brand],
   templateUrl: './desktop-sidebar.html',
   providers: [
     provideIcons({
@@ -31,7 +31,6 @@ import { NavGroup } from '@shared/models/nav-item.model';
       matExploreOutline,
       matKeyboardArrowDownOutline,
       matChevronRightOutline,
-      matMenuBookOutline,
     }),
   ],
 })
