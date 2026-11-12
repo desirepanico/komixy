@@ -106,7 +106,16 @@ public/             traduzioni (i18n), CSS globale (theme), font, immagini
 
 ## Documentazione
 
-La cartella [`docs/`](docs/README.md) spiega come è fatto il progetto: parti da lì per capire di cosa si parla.
+La cartella `docs/` spiega come è fatto il progetto, per chi ci lavora. Claude Code non la carica: le sue istruzioni sono in `CLAUDE.md` e `.claude/rules/`.
+
+**Ordine di lettura**
+
+1. [`docs/funzionalita.md`](docs/funzionalita.md): cosa fa l'app, pagina per pagina, e a che punto è.
+2. [`docs/architettura.md`](docs/architettura.md): stack, aree (`core`, `features`, `shared`), routing, provider.
+3. [`docs/struttura-progetto.md`](docs/struttura-progetto.md): dove va ogni file, con l'albero e l'esempio di una feature.
+4. [`docs/sviluppo.md`](docs/sviluppo.md): comandi, formattazione, test, lint, CI e deploy.
+
+**Per argomento**
 
 | Voglio...                                     | Leggo                                                                                                       |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
