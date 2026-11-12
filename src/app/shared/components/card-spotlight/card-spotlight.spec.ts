@@ -54,8 +54,8 @@ describe('CardSpotlight', () => {
       b.textContent?.includes('common.inList'),
     ) as HTMLButtonElement;
 
-  const create = async (iscritto: boolean) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
+  const create = async (isMember: boolean) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
     fixture = TestBed.createComponent(Host);
     html = fixture.nativeElement;
     await fixture.whenStable();
@@ -86,7 +86,7 @@ describe('CardSpotlight', () => {
     expect(link.textContent).toContain('weeklyPack.viewDetail');
   });
 
-  it('un iscritto mette e toglie la carta dalla lista', async () => {
+  it('un isMember mette e toglie la carta dalla lista', async () => {
     await create(true);
     expect(inList().getAttribute('aria-pressed')).toBe('false');
     inList().click();

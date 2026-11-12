@@ -15,11 +15,11 @@ describe('RankingPage', () => {
 
   const RANKING_URL = '/discover/ranking';
 
-  const create = async (opzioni: { iscritto?: boolean; aperta?: boolean; url?: string } = {}) => {
-    TestBed.inject(SessionService).setAuthenticated(opzioni.iscritto ?? true);
-    if (opzioni.aperta ?? true) TestBed.inject(WeeklyPackService).open();
+  const create = async (options: { isMember?: boolean; isOpened?: boolean; url?: string } = {}) => {
+    TestBed.inject(SessionService).setAuthenticated(options.isMember ?? true);
+    if (options.isOpened ?? true) TestBed.inject(WeeklyPackService).open();
     harness ??= await RouterTestingHarness.create();
-    component = await harness.navigateByUrl(opzioni.url ?? RANKING_URL, RankingPage);
+    component = await harness.navigateByUrl(options.url ?? RANKING_URL, RankingPage);
     fixture = harness.fixture;
     html = harness.routeNativeElement as HTMLElement;
     await fixture.whenStable();
@@ -61,7 +61,7 @@ describe('RankingPage', () => {
   });
 
   describe('con la busta sigillata', () => {
-    beforeEach(() => create({ aperta: false }));
+    beforeEach(() => create({ isOpened: false }));
 
     it('non mostra la classifica ma il blocco, senza il cambio vista', () => {
       expect(html.querySelector('app-ranking-locked')).not.toBeNull();
@@ -90,12 +90,12 @@ describe('RankingPage', () => {
     });
 
     it('per un ospite avvisa che non può salvare nelle liste', async () => {
-      await create({ iscritto: false });
+      await create({ isMember: false });
       expect(html.querySelector('app-message')).not.toBeNull();
       expect(html.querySelector('app-comic-rank-card app-bookmark-button a')).not.toBeNull();
     });
 
-    it("un iscritto non vede l'avviso e salva più righe in lista", async () => {
+    it("un isMember non vede l'avviso e salva più righe in lista", async () => {
       await create();
       expect(html.querySelector('app-message')).toBeNull();
       const bookmarks = () =>
@@ -208,7 +208,7 @@ describe('RankingPage', () => {
     });
 
     it('per un ospite «In lista» ha il lucchetto e non salva', async () => {
-      await create({ iscritto: false });
+      await create({ isMember: false });
       await openCards();
       (html.querySelectorAll('app-card-fan button')[9] as HTMLButtonElement).click();
       await fixture.whenStable();
@@ -221,7 +221,7 @@ describe('RankingPage', () => {
       expect(html.querySelector('a[href="/login"]')?.textContent).toContain('guestNotice.signUp');
     });
 
-    it("tornando all'Elenco la carta scelta non resta aperta", async () => {
+    it("tornando all'Elenco la carta scelta non resta isOpened", async () => {
       await create();
       await openCards();
       (html.querySelectorAll('app-card-fan button')[0] as HTMLButtonElement).click();

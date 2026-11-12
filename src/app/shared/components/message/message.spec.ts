@@ -63,10 +63,10 @@ describe('Message', () => {
       ['warn', 'matWarningOutline', 'border-amber-500/40'],
       ['error', 'matErrorOutline', 'border-red-500/40'],
     ];
-    for (const [tone, nome, bordo] of expected) {
+    for (const [tone, name, border] of expected) {
       await set(tone);
-      expect(iconName()).toBe(nome);
-      expect(container().className).toContain(bordo);
+      expect(iconName()).toBe(name);
+      expect(container().className).toContain(border);
     }
   });
 

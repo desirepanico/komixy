@@ -20,9 +20,9 @@ describe('LoginPage', () => {
   };
 
   const signIn = async (html: HTMLElement) => {
-    const write = (id: string, valore: string) => {
+    const write = (id: string, value: string) => {
       const field = html.querySelector(`#${id}`) as HTMLInputElement;
-      field.value = valore;
+      field.value = value;
       field.dispatchEvent(new Event('input'));
     };
     write('login-email', DEMO_CREDENTIALS.email);

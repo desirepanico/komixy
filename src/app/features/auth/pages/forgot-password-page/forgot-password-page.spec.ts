@@ -1,9 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ForgotPasswordPage } from './forgot-password-page';
 
 describe('ForgotPasswordPage', () => {
+  let fixture: ComponentFixture<ForgotPasswordPage>;
   let html: HTMLElement;
 
   beforeEach(async () => {
@@ -11,9 +12,13 @@ describe('ForgotPasswordPage', () => {
       imports: [ForgotPasswordPage],
       providers: [provideRouter([])],
     }).compileComponents();
-    const fixture = TestBed.createComponent(ForgotPasswordPage);
+    fixture = TestBed.createComponent(ForgotPasswordPage);
     await fixture.whenStable();
     html = fixture.nativeElement;
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra il titolo e il segnaposto', () => {

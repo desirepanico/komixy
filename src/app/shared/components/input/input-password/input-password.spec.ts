@@ -33,8 +33,8 @@ describe('InputPassword', () => {
     await fixture.whenStable();
     const html = fixture.nativeElement as HTMLElement;
     const field = html.querySelector('input') as HTMLInputElement;
-    const write = async (valore: string) => {
-      field.value = valore;
+    const write = async (value: string) => {
+      field.value = value;
       field.dispatchEvent(new Event('input'));
       await fixture.whenStable();
     };

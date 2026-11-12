@@ -137,11 +137,11 @@ describe('routes', () => {
       ],
     ];
 
-    it.each(cases)('%s apre la pagina della sua feature', async (_nome, link, pagina) => {
+    it.each(cases)('%s apre la pagina della sua feature', async (_name, link, page) => {
       const router = TestBed.inject(Router);
       const url = router.serializeUrl(router.createUrlTree([...link()]));
       const { html } = await open(url);
-      expect(html.matches(pagina) || html.querySelector(pagina) !== null).toBe(true);
+      expect(html.matches(page) || html.querySelector(page) !== null).toBe(true);
     });
   });
 });

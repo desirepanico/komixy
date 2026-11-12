@@ -161,6 +161,8 @@ export const CARD_FAN_GROW_FROM_PX = 430;
 export const WEEKLY_TOP_COUNT = 10;
 /** Scala delle carte nel pannello (96×160 px) e distanza tra loro */
 export const WEEKLY_TOP_CARD_SCALE = 0.5;
+/** Larghezza di una carta del pannello, già ridotta dalla scala */
+export const WEEKLY_TOP_CARD_WIDTH_PX = PACK_CARD_WIDTH_PX * WEEKLY_TOP_CARD_SCALE;
 export const WEEKLY_TOP_GAP_PX = 12;
 /** Carte mostrate finché la larghezza del pannello non è stata misurata */
 export const WEEKLY_TOP_INITIAL_COUNT = 3;

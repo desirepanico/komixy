@@ -37,8 +37,8 @@ describe('InputText', () => {
     await fixture.whenStable();
     const html = fixture.nativeElement as HTMLElement;
     const field = html.querySelector('input') as HTMLInputElement;
-    const write = async (valore: string) => {
-      field.value = valore;
+    const write = async (value: string) => {
+      field.value = value;
       field.dispatchEvent(new Event('input'));
       await fixture.whenStable();
     };
@@ -75,7 +75,7 @@ describe('InputText', () => {
     expect(host.text()).toBe('a@b.it');
   });
 
-  it('mostra nel campo il valore del modello', async () => {
+  it('mostra nel campo il value del modello', async () => {
     const { fixture, host, field } = await create();
     host.text.set('x@y.it');
     await fixture.whenStable();
@@ -105,7 +105,7 @@ describe('InputText', () => {
     expect(message()).toBe('validation.minLength');
   });
 
-  it('toglie il messaggio quando il valore diventa valido', async () => {
+  it('toglie il messaggio quando il value diventa valido', async () => {
     const { field, write, signOut, message } = await create();
     await signOut();
     await write('abc');

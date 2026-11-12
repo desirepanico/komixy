@@ -1,9 +1,10 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { RegisterPage } from './register-page';
 
 describe('RegisterPage', () => {
+  let fixture: ComponentFixture<RegisterPage>;
   let html: HTMLElement;
 
   beforeEach(async () => {
@@ -11,9 +12,13 @@ describe('RegisterPage', () => {
       imports: [RegisterPage],
       providers: [provideRouter([])],
     }).compileComponents();
-    const fixture = TestBed.createComponent(RegisterPage);
+    fixture = TestBed.createComponent(RegisterPage);
     await fixture.whenStable();
     html = fixture.nativeElement;
+  });
+
+  it('viene creata', () => {
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra il titolo e il segnaposto', () => {

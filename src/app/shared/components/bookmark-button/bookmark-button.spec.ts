@@ -12,8 +12,8 @@ import { BookmarkButton } from './bookmark-button';
 class Host {}
 
 describe('BookmarkButton', () => {
-  const create = async (iscritto: boolean) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
+  const create = async (isMember: boolean) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return { fixture, html: fixture.nativeElement as HTMLElement };
@@ -30,7 +30,7 @@ describe('BookmarkButton', () => {
     expect((await create(true)).fixture.componentInstance).toBeTruthy();
   });
 
-  it('per un iscritto aggiunge e toglie il fumetto dalla lista', async () => {
+  it('per un isMember aggiunge e toglie il fumetto dalla lista', async () => {
     const { fixture, html } = await create(true);
     const button = () => html.querySelector('button') as HTMLButtonElement;
     expect(button().getAttribute('aria-pressed')).toBe('false');

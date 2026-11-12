@@ -34,7 +34,7 @@ describe('DesktopSidebar', () => {
   });
 
   it('ha un link al logo che porta alla home', () => {
-    expect(html.querySelector('a[aria-label="Komixy"]')?.getAttribute('href')).toBe('/');
+    expect(html.querySelector('a[aria-label="common.brand"]')?.getAttribute('href')).toBe('/');
   });
 
   it('traduce il riquadro del profilo', () => {

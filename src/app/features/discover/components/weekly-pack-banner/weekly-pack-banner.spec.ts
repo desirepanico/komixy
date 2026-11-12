@@ -10,9 +10,9 @@ describe('WeeklyPackBanner', () => {
   let router: Router;
   let fixture: ReturnType<typeof TestBed.createComponent<WeeklyPackBanner>>;
 
-  const create = async (iscritto: boolean, aperta = false) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
-    if (aperta) TestBed.inject(WeeklyPackService).open();
+  const create = async (isMember: boolean, isOpened = false) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
+    if (isOpened) TestBed.inject(WeeklyPackService).open();
     fixture = TestBed.createComponent(WeeklyPackBanner);
     html = fixture.nativeElement;
     await fixture.whenStable();
@@ -37,7 +37,7 @@ describe('WeeklyPackBanner', () => {
   });
 
   describe('busta da aprire', () => {
-    it('per un iscritto invita ad aprirla, senza il pulsante Iscriviti', async () => {
+    it('per un isMember invita ad aprirla, senza il pulsante Iscriviti', async () => {
       await create(true);
       expect(text()).toContain('weeklyPack.readyTitle');
       expect(text()).toContain('weeklyPack.week');
@@ -66,7 +66,7 @@ describe('WeeklyPackBanner', () => {
     });
   });
 
-  describe('busta aperta', () => {
+  describe('busta isOpened', () => {
     it('mostra la striscia con il solo pulsante «Rivedi la settimana»', async () => {
       await create(true, true);
       expect(text()).toContain('weeklyPack.openedTitle');
@@ -87,7 +87,7 @@ describe('WeeklyPackBanner', () => {
       expect(html.querySelector('app-message')).not.toBeNull();
     });
 
-    it("l'iscritto non vede l'avviso", async () => {
+    it("l'isMember non vede l'avviso", async () => {
       await create(true, true);
       expect(html.querySelector('app-message')).toBeNull();
     });

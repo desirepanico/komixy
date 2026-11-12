@@ -5,7 +5,7 @@
     <a
       routerLink="/"
       class="flex items-center gap-3 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-      aria-label="Komixy"
+      [attr.aria-label]="'common.brand' | transloco"
     >
       <div
         class="flex size-10 items-center justify-center rounded-xl bg-primary-500 text-surface-950 shadow-lg shadow-primary-900/20"
@@ -13,7 +13,9 @@
         <ng-icon name="matMenuBookOutline" size="22" />
       </div>
 
-      <span class="text-xl font-bold tracking-tight text-surface-50"> Komixy </span>
+      <span class="text-xl font-bold tracking-tight text-surface-50">
+        {{ 'common.brand' | transloco }}
+      </span>
     </a>
   </div>
 

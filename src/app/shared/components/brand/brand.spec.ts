@@ -22,6 +22,6 @@ describe('Brand', () => {
   it('mostra il logo con il nome Komixy', () => {
     const logo = html.querySelector('img');
     expect(logo?.getAttribute('src')).toContain('komixy-logo-wordmark.png');
-    expect(logo?.getAttribute('alt')).toBe('Komixy');
+    expect(logo?.getAttribute('alt')).toBe('common.brand');
   });
 });

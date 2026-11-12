@@ -13,8 +13,8 @@ describe('DiscoverPage', () => {
   const bookmarks = () =>
     Array.from(html.querySelectorAll('app-comic-card button[aria-pressed]')) as HTMLButtonElement[];
 
-  const create = async (iscritto = true) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
+  const create = async (isMember = true) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
     fixture = TestBed.createComponent(DiscoverPage);
     html = fixture.nativeElement;
     await fixture.whenStable();
@@ -64,7 +64,7 @@ describe('DiscoverPage', () => {
     expect(list?.querySelectorAll('app-comic-card')).toHaveLength(4);
   });
 
-  it('un iscritto può mettere in lista più fumetti', async () => {
+  it('un isMember può mettere in lista più fumetti', async () => {
     await create();
     bookmarks()[0].click();
     bookmarks()[1].click();

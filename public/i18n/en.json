@@ -39,7 +39,8 @@
     "library": "Library",
     "profile": "Profile",
     "inList": "In list",
-    "tapCardHint": "Tap a card to see it"
+    "tapCardHint": "Tap a card to see it",
+    "brand": "Komixy"
   },
   "scroller": {
     "scrollLeft": "Scroll left",
@@ -72,7 +73,6 @@
     "invalid": "The {{ name }} field is not valid."
   },
   "loginVolumes": {
-    "brand": "Komixy",
     "title": "Your comic and manga collection, always with you",
     "subtitle": "Keep track of the volumes you own, discover what's new and never miss a release.",
     "coversHint": "Tap a cover to discover it",

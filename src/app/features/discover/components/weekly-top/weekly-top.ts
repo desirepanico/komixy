@@ -14,16 +14,14 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { PackCard } from '@shared/components/pack-card/pack-card';
 import { packCardRadius } from '@shared/components/pack-card/pack-card-radius/pack-card-radius';
 import {
-  PACK_CARD_WIDTH_PX,
   WEEKLY_TOP_CARD_SCALE,
+  WEEKLY_TOP_CARD_WIDTH_PX,
   WEEKLY_TOP_COUNT,
   WEEKLY_TOP_FRAME_PX,
   WEEKLY_TOP_GAP_PX,
   WEEKLY_TOP_INITIAL_COUNT,
 } from '@shared/constants/ui.const';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
-
-const CARD_WIDTH = PACK_CARD_WIDTH_PX * WEEKLY_TOP_CARD_SCALE;
 
 /**
  * Le carte della classifica della settimana in un pannello accanto alla busta aperta (su schermi larghi):
@@ -63,7 +61,7 @@ export class WeeklyTop {
     const width = this.listWidth();
     const fit =
       width > 0
-        ? Math.floor((width + WEEKLY_TOP_GAP_PX) / (CARD_WIDTH + WEEKLY_TOP_GAP_PX))
+        ? Math.floor((width + WEEKLY_TOP_GAP_PX) / (WEEKLY_TOP_CARD_WIDTH_PX + WEEKLY_TOP_GAP_PX))
         : WEEKLY_TOP_INITIAL_COUNT;
     return this.top().slice(0, Math.max(1, fit));
   });
@@ -71,7 +69,7 @@ export class WeeklyTop {
   /** Oltre questa larghezza non servirebbe altro spazio: tutte le carte sono già in fila */
   protected readonly maxWidth = computed(() => {
     const count = this.top().length;
-    return count * CARD_WIDTH + (count - 1) * WEEKLY_TOP_GAP_PX + WEEKLY_TOP_FRAME_PX;
+    return count * WEEKLY_TOP_CARD_WIDTH_PX + (count - 1) * WEEKLY_TOP_GAP_PX + WEEKLY_TOP_FRAME_PX;
   });
 
   public constructor() {

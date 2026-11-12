@@ -6,11 +6,11 @@ import { PackTear } from './pack-tear';
 
 @Component({
   imports: [PackTear],
-  template: `<app-pack-tear [torn]="torn()" (tearRequest)="strappo()" />`,
+  template: `<app-pack-tear [torn]="torn()" (tearRequest)="onTear()" />`,
 })
 class Host {
   readonly torn = signal(false);
-  strappo = vi.fn();
+  onTear = vi.fn();
 }
 
 describe('PackTear', () => {
@@ -65,7 +65,7 @@ describe('PackTear', () => {
     expect(flap().style.transform).toContain(`translateX(${PACK_TEAR_DISTANCE_PX + 5}px)`);
 
     handle().dispatchEvent(event('pointerup', 10 + PACK_TEAR_DISTANCE_PX + 5));
-    expect(fixture.componentInstance.strappo).toHaveBeenCalledOnce();
+    expect(fixture.componentInstance.onTear).toHaveBeenCalledOnce();
   });
 
   it('trascinando poco il lembo torna a posto e la busta resta chiusa', async () => {
@@ -73,7 +73,7 @@ describe('PackTear', () => {
     handle().dispatchEvent(event('pointermove', 60));
     handle().dispatchEvent(event('pointerup', 60));
     await fixture.whenStable();
-    expect(fixture.componentInstance.strappo).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.onTear).not.toHaveBeenCalled();
     expect(flap().style.transform).toContain('translateX(0px)');
   });
 
@@ -92,6 +92,6 @@ describe('PackTear', () => {
     handle().dispatchEvent(event('pointerdown', 0));
     handle().dispatchEvent(event('pointermove', 500));
     handle().dispatchEvent(event('pointerup', 500));
-    expect(fixture.componentInstance.strappo).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.onTear).not.toHaveBeenCalled();
   });
 });

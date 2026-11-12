@@ -14,8 +14,8 @@ describe('ComicDetailPage', () => {
 
   const params = new BehaviorSubject(convertToParamMap({}));
 
-  const create = async (id: string, iscritto = true) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
+  const create = async (id: string, isMember = true) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
     params.next(convertToParamMap({ id }));
     fixture = TestBed.createComponent(ComicDetailPage);
     html = fixture.nativeElement;
@@ -83,7 +83,7 @@ describe('ComicDetailPage', () => {
     expect(html.querySelector('app-skeleton')).toBeNull();
   });
 
-  describe('da iscritto', () => {
+  describe('da isMember', () => {
     it('aggiunge e toglie il volume dalla lista', async () => {
       await create('w1');
       expect(button('comicDetail.addToList').getAttribute('aria-pressed')).toBe('false');

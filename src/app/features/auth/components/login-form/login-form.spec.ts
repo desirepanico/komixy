@@ -33,8 +33,8 @@ describe('LoginForm', () => {
   let successes = 0;
 
   const field = (id: string) => html.querySelector(`#${id}`) as HTMLInputElement;
-  const write = (id: string, valore: string) => {
-    field(id).value = valore;
+  const write = (id: string, value: string) => {
+    field(id).value = value;
     field(id).dispatchEvent(new Event('input'));
   };
   const submit = async () => {

@@ -20,11 +20,11 @@ const cards: RankingEntry[] = [1, 2, 3].map((rank) => ({
 
 @Component({
   imports: [CardFan],
-  template: `<app-card-fan [entries]="cards()" (cardSelect)="scelta($event)" />`,
+  template: `<app-card-fan [entries]="cards()" (cardSelect)="onSelect($event)" />`,
 })
 class Host {
   readonly cards = signal(cards);
-  scelta = vi.fn();
+  onSelect = vi.fn();
 }
 
 describe('CardFan', () => {
@@ -80,9 +80,9 @@ describe('CardFan', () => {
     expect(levels[2]).toBe(Math.max(...levels));
   });
 
-  it('segnala la carta scelta', () => {
+  it('segnala la carta onSelect', () => {
     buttons()[2].click();
-    expect(fixture.componentInstance.scelta).toHaveBeenCalledWith(cards[0]);
+    expect(fixture.componentInstance.onSelect).toHaveBeenCalledWith(cards[0]);
   });
 
   it('si ignora lo swipe di pagina sopra il ventaglio', () => {

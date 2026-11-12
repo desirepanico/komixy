@@ -11,8 +11,8 @@ describe('PackOpeningPage', () => {
   let html: HTMLElement;
   let router: Router;
 
-  const create = async (iscritto = true) => {
-    TestBed.inject(SessionService).setAuthenticated(iscritto);
+  const create = async (isMember = true) => {
+    TestBed.inject(SessionService).setAuthenticated(isMember);
     fixture = TestBed.createComponent(PackOpeningPage);
     html = fixture.nativeElement;
     await fixture.whenStable();
