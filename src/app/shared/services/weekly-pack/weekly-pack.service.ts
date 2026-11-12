@@ -21,7 +21,7 @@ export class WeeklyPackService {
   private readonly current = isoWeek(this.today);
   private readonly weekKey = `${this.current.year}-W${this.current.week}`;
 
-  // TODO: l'apertura la registra il server, una per utente (user_id) o per ospite (guest_id)
+  // TODO(api): l'apertura la registra il server, una per utente (user_id) o per ospite (guest_id)
   private readonly opened = signal<OpenedPack | null>(this.read());
 
   /** Numero della settimana ISO, mostrato come «Settimana 46» */
@@ -72,7 +72,7 @@ export class WeeklyPackService {
         return value as OpenedPack;
       }
     } catch {
-      // storage non disponibile o contenuto rovinato: la busta risulta da aprire
+      // Storage non disponibile o contenuto rovinato: la busta risulta da aprire
     }
     return null;
   }
@@ -81,7 +81,7 @@ export class WeeklyPackService {
     try {
       localStorage.setItem(WEEKLY_PACK_STORAGE_KEY, JSON.stringify(opened));
     } catch {
-      // storage non disponibile (es. navigazione privata): l'apertura vale solo finché l'app è aperta
+      // Storage non disponibile (es. navigazione privata): l'apertura vale solo finché l'app è aperta
     }
   }
 }

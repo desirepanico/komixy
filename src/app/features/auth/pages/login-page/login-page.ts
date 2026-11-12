@@ -19,7 +19,7 @@ export class LoginPage {
   private readonly route = inject(ActivatedRoute);
 
   protected loginWithProvider(provider: SocialProvider): void {
-    // TODO: sostituire con l'accesso reale con Google o Apple
+    // TODO(api): sostituire con l'accesso reale con Google o Apple
     this.authService.login({ id: provider, email: '', userRole: UserRole.User });
     this.goAfterLogin();
   }

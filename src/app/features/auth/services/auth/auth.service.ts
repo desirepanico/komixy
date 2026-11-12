@@ -40,7 +40,7 @@ export class AuthService {
     this.session.setAuthenticated(false);
   }
 
-  // TODO: sostituire con la chiamata all'API di autenticazione
+  // TODO(api): sostituire con la chiamata all'API di autenticazione
   public authenticate(credentials: LoginCredentials): Observable<LoggedUser> {
     const email = credentials.email.trim().toLowerCase();
     if (email !== DEMO_CREDENTIALS.email || credentials.password !== DEMO_CREDENTIALS.password) {

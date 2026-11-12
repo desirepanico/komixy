@@ -4,7 +4,7 @@ import { ComicItem } from '../../models/comic.model';
 
 @Injectable({ providedIn: 'root' })
 export class WeeklyRankingService {
-  // TODO: sostituire con i dati reali dell'API
+  // TODO(api): sostituire con i dati reali dell'API
   private readonly comics = signal<ComicItem[]>([
     {
       id: 'w1',

@@ -37,7 +37,7 @@ export class Button {
     const decoration = this.underline()
       ? 'decoration-current underline-offset-4 hover:underline focus-visible:underline active:underline'
       : '';
-    // il bottone text lascia a chi lo usa allineamento, spaziature e testo
+    // Il bottone text lascia a chi lo usa allineamento, spaziature e testo
     if (variant === 'text' && !this.iconOnly()) {
       return `${base} ${colors} ${radius} ${decoration}`;
     }

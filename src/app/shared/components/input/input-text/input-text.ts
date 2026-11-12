@@ -10,8 +10,9 @@ type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
  * `[formField]`. `label` è una chiave Transloco; i messaggi d'errore li scrive il wrapper. Per le password c'è `app-input-password`.
  *
  * `implements FormValueControl` è il contratto dei controlli per `[formField]`: la direttiva scrive da sola
- * in `value` (a due vie con il modello del form) e in `disabled`. A runtime l'interfaccia non c'è: la usa
- * solo il compilatore, per controllare i tipi.
+ * in `value` (a due vie con il modello del form) e in `disabled`; a runtime l'interfaccia non c'è, serve al
+ * compilatore. La direttiva sta sullo stesso elemento: iniettandola (`formField`) si leggono errori e stato
+ * «toccato» senza che il form li passi al componente.
  *
  * <app-input-text
  *   label="login.email" inputId="login-email" type="email" placeholder="login.emailPlaceholder"
@@ -32,14 +33,8 @@ export class InputText implements FormValueControl<string> {
   public readonly placeholder = input.required<string>();
   public readonly autocomplete = input<string>('');
 
-  // Stato che `[formField]` scrive da solo
   public readonly disabled = input<boolean>(false);
 
-  /**
-   * La direttiva `[formField]` sta sullo stesso elemento di questo componente: iniettandola si ottiene
-   * lo stato del campo del form (es. `form.email`). Da qui si leggono gli errori e se il campo è stato
-   * toccato, così il form non deve passarli al componente.
-   */
   private readonly formField = inject<FormField<string>>(FormField);
   private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 

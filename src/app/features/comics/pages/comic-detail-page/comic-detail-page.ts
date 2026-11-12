@@ -96,7 +96,7 @@ export class ComicDetailPage {
         this.copied.set(true);
       }
     } catch {
-      // condivisione annullata dall'utente o non permessa: non c'è nulla da segnalare
+      // Condivisione annullata dall'utente o non permessa: non c'è nulla da segnalare
     }
   }
 }

@@ -7,7 +7,7 @@ import { WeeklyRankingService } from '../weekly-ranking/weekly-ranking.service';
 export class ComicCatalogService {
   private readonly ranking = inject(WeeklyRankingService);
 
-  // TODO: sostituire con i dati reali dell'API
+  // TODO(api): sostituire con i dati reali dell'API
   private readonly _toDiscover = signal<ComicItem[]>([
     {
       id: 'd1',

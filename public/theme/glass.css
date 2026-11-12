@@ -1,11 +1,4 @@
-/* =========================================================
-    KOMIXY — GLASS SYSTEM
-    Mobile + Desktop
-    ========================================================= */
-
-/* =========================================================
-   VARIABILI
-   ========================================================= */
+/* Effetto vetro: sfocatura dello sfondo con un'ombra e un filo di luce in alto. Tre livelli, dal più leggero al più marcato */
 
 :root {
   --glass-blur: 20px;
@@ -13,21 +6,7 @@
   --glass-shadow: 55%;
 }
 
-/* =========================================================
-   GLASS
-   ========================================================= */
-
-/*
-  GLASS — DEFAULT
-
-  USALO PER:
-  - Card manga
-  - Card collezione
-  - Pannelli
-  - Sezioni
-  - Elementi principali
-*/
-
+/* Predefinito: card, pannelli, sezioni */
 .glass {
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
 
@@ -38,21 +17,7 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 8%, transparent);
 }
 
-/* =========================================================
-   GLASS LIGHT
-   ========================================================= */
-
-/*
-  GLASS LIGHT
-
-  USALO PER:
-  - Filtri
-  - Toolbar
-  - Badge
-  - Piccoli pannelli
-  - Elementi secondari
-*/
-
+/* Leggero: filtri, toolbar, badge, piccoli pannelli */
 .glass-light {
   --glass-blur: 14px;
   --glass-saturation: 130%;
@@ -67,22 +32,7 @@
     inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 6%, transparent);
 }
 
-/* =========================================================
-   GLASS STRONG
-   ========================================================= */
-
-/*
-  GLASS STRONG
-
-  USALO PER:
-  - Navbar
-  - Menu
-  - Drawer
-  - Modal
-  - Dialog
-  - Popup
-*/
-
+/* Marcato: navbar, menu, drawer, modal, popup */
 .glass-strong {
   --glass-blur: 28px;
   --glass-saturation: 150%;
@@ -114,10 +64,7 @@
   }
 }
 
-/* =========================================================
-   serve a gestire la compatibilità con i browser che non supportano l'effetto di sfocatura dello sfondo (backdrop-filter)
-   ========================================================= */
-
+/* Senza backdrop-filter il vetro resterebbe una sfocatura a metà: meglio nessun effetto */
 @supports not (backdrop-filter: blur(1px)) {
   .glass,
   .glass-light,

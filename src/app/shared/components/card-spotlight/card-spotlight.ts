@@ -78,7 +78,6 @@ export class CardSpotlight {
     return Math.min(max, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
   });
 
-  /** Gli angoli dell'anello di focus seguono quelli della carta rimpicciolita */
   protected readonly cardRadius = computed(() => packCardRadius(this.cardScale()));
 
   protected readonly saved = computed(() => this.bookmarks.isSaved(this.entry().comic.id));

@@ -1,4 +1,4 @@
-// Completa jsdom con le API del browser che l'app usa e che jsdom non ha.
+// Completa jsdom con le API del browser che l'app usa e che jsdom non ha
 class FakeResizeObserver {
   observe(): void {}
   unobserve(): void {}

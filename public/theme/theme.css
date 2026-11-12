@@ -1,12 +1,10 @@
-/* =========================================
-   TEMA GENERALE
-   ========================================= */
+/* Tema generale: font, colore base del testo, sfondo e focus ring */
 
 @font-face {
   font-family: 'Mulish';
   src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
   font-style: normal;
-  font-weight: 200 1000; /*contiene tutti i pesi disponibili tra 200 e 1000.*/
+  font-weight: 200 1000; /* Tutti i pesi disponibili tra 200 e 1000 */
   font-display: swap;
 }
 
@@ -15,7 +13,7 @@ body {
   /* Colore base del testo (tema scuro): chi non imposta un colore lo eredita da qui, senza finire nero su sfondo scuro */
   color: var(--color-surface-100);
   overflow-x: clip;
-} /*serve a tagliare (nascondere) tutto il contenuto che fuoriesce orizzontalmente dal contenitore*/
+} /* Nasconde ciò che esce in orizzontale dal contenitore */
 
 /* Testo alternativo (alt) mostrato quando l'immagine non si carica: leggibile sul tema scuro */
 img {
@@ -54,10 +52,7 @@ img {
   }
 }
 
-/* =========================================
-   TOKEN SEMANTICI (dal vecchio preset PrimeNG)
-   I colori primary/surface/neutral e i radius sono in src/tailwind.css (@theme)
-   ========================================= */
+/* Token semantici. I colori primary/surface/neutral e i radius sono in src/tailwind.css (@theme) */
 
 :root {
   /* Colori semantici del primary (tema scuro) */

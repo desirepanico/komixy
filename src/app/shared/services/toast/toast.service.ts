@@ -48,14 +48,13 @@ export class ToastService {
     if (--timer.holds === 0) this.schedule(id, timer.remaining);
   }
 
-  // Toglie il messaggio e ferma il suo timer, così un messaggio chiuso a mano non fa partire una chiusura inutile
+  // Ferma anche il timer: un messaggio chiuso a mano non deve far partire un'altra chiusura
   public dismiss(id: number): void {
     clearTimeout(this.timers.get(id)?.handle);
     this.timers.delete(id);
     this.state.update((toasts) => toasts.filter((toast) => toast.id !== id));
   }
 
-  // Aggiunge il messaggio, lo fa sparire da solo dopo la durata della sua severity e tiene al massimo TOAST_MAX_VISIBLE messaggi
   private show(
     severity: ToastSeverity,
     summary: string,
@@ -73,12 +72,10 @@ export class ToastService {
       },
     ]);
     this.schedule(id, TOAST_DURATION_MS[severity]);
-    // Oltre il limite sparisce il più vecchio
     const [oldest] = this.state();
     if (this.state().length > TOAST_MAX_VISIBLE) this.dismiss(oldest.id);
   }
 
-  // Fa partire (o ripartire) il timer di chiusura con il tempo indicato
   private schedule(id: number, remaining: number): void {
     const holds = this.timers.get(id)?.holds ?? 0;
     this.timers.set(id, {

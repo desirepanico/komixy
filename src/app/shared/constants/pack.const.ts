@@ -1,6 +1,6 @@
 // ─── Regole della settimana ──────────────────────────────────────────────────
 
-/** Dove si ricorda la settimana della busta già aperta (TODO: lo registra il server per utente o ospite) */
+/** Dove si ricorda la settimana della busta già aperta (TODO(api): lo registra il server per utente o ospite) */
 export const WEEKLY_PACK_STORAGE_KEY = 'komixy.weeklyPack';
 
 /** La settimana della busta comincia il lunedì, ora italiana */

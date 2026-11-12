@@ -5,6 +5,7 @@ export type SwipeDirection = 'left' | 'right';
  * Deve superare la soglia ed essere nettamente più orizzontale che verticale.
  */
 export function detectSwipe(deltaX: number, deltaY: number, threshold = 70): SwipeDirection | null {
+  // Il moltiplicatore 1,5 scarta i gesti diagonali: lo scroll verticale non deve cambiare pagina
   const isHorizontal = Math.abs(deltaX) >= threshold && Math.abs(deltaX) > Math.abs(deltaY) * 1.5;
   if (!isHorizontal) return null;
   return deltaX < 0 ? 'left' : 'right';

@@ -8,7 +8,7 @@ export class BookmarksService {
   private readonly session = inject(SessionService);
   private readonly toast = inject(ToastService);
 
-  // TODO: sostituire con PUT/DELETE /me/bookmarks/:comicId dell'API
+  // TODO(api): sostituire con PUT/DELETE /me/bookmarks/:comicId dell'API
   private readonly _savedIds = signal<ReadonlySet<string>>(new Set());
 
   public readonly savedCount = computed(() => this._savedIds().size);

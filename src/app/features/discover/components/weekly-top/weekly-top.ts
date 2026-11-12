@@ -44,7 +44,6 @@ export class WeeklyTop {
   private readonly listWidth = signal<number>(0);
 
   protected readonly cardScale = WEEKLY_TOP_CARD_SCALE;
-  /** Gli angoli dell'anello di focus seguono quelli della carta rimpicciolita */
   protected readonly cardRadius = packCardRadius(WEEKLY_TOP_CARD_SCALE);
   protected readonly gap = WEEKLY_TOP_GAP_PX;
 

@@ -64,7 +64,6 @@ export class CardFan {
   protected readonly height = computed(() => CARD_FAN_BASE_HEIGHT_PX * this.growth());
   protected readonly top = computed(() => CARD_FAN_BASE_TOP_PX * this.growth());
   /** Metà larghezza della carta: la centra sul perno del ventaglio */
-  /** Gli angoli dell'anello di focus seguono quelli della carta rimpicciolita */
   protected readonly cardRadius = computed(() => packCardRadius(this.cardScale()));
   protected readonly cardHalfWidth = computed(() => (PACK_CARD_WIDTH_PX * this.cardScale()) / 2);
 
@@ -76,7 +75,7 @@ export class CardFan {
       .map((entry) => ({
         entry,
         angle: fanAngle(entry.rank, count, CARD_FAN_SPREAD_DEG),
-        // la 1ª carta è l'ultima a venire disegnata, quindi sta sopra le altre
+        // La 1ª carta è l'ultima a venire disegnata, quindi sta sopra le altre
         layer: count - entry.rank + 1,
       }));
   });
