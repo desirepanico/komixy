@@ -27,6 +27,11 @@ const RESTRICTED_IMPORT_PATHS = [
 // Regole sugli import delle feature (vedi .claude/rules/angular.md):
 // - tra feature si importano solo i servizi di navigazione (`regexVietate`);
 // - pagine e componenti non usano Router né AppRoutes: navigano con i servizi di navigazione.
+/**
+ * @param {string} cartella glob delle cartelle delle feature, es. `src/app/features/**`
+ * @param {string[]} regexVietate import vietati, come espressioni regolari sul percorso
+ * @returns {import('eslint').Linter.Config[]}
+ */
 function regoleFeature(cartella, regexVietate) {
   const patterns = regexVietate.map((regex) => ({
     regex,
