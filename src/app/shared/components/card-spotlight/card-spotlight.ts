@@ -1,12 +1,25 @@
-import { Component, computed, inject, input, linkedSignal, output } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  ElementRef,
+  afterNextRender,
+  computed,
+  inject,
+  input,
+  linkedSignal,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
+import {
+  PACK_CARD_HEIGHT_PX,
+  SPOTLIGHT_GAP_PX,
+  SPOTLIGHT_MIN_SCALE,
+} from '../../constants/ui.const';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import {
-  matAddOutline,
-  matCheckOutline,
-  matLockOutline,
-} from '@ng-icons/material-symbols/outline';
+import { matAddOutline, matCheckOutline, matLockOutline } from '@ng-icons/material-symbols/outline';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { BookmarksService } from '../../services/bookmarks/bookmarks.service';
 import { SessionService } from '../../services/session/session.service';
@@ -28,7 +41,7 @@ import { PackCard } from '../pack-card/pack-card';
   imports: [PackCard, Button, RouterLink, TranslocoPipe, NgIcon],
   providers: [provideIcons({ matAddOutline, matCheckOutline, matLockOutline })],
   templateUrl: './card-spotlight.html',
-  host: { class: 'flex flex-1 flex-col' },
+  host: { class: 'flex min-h-0 flex-1 flex-col' },
 })
 export class CardSpotlight {
   protected readonly bookmarks = inject(BookmarksService);
@@ -45,7 +58,35 @@ export class CardSpotlight {
   public readonly interactive = input<boolean>(false);
   public readonly cardPress = output<void>();
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly stage = viewChild.required<ElementRef<HTMLElement>>('stage');
+  private readonly after = viewChild.required<ElementRef<HTMLElement>>('after');
+  private readonly stageHeight = signal<number>(0);
+  private readonly afterHeight = signal<number>(0);
+
+  /** La carta si rimpicciolisce se lo spazio non basta, così la pagina non scrolla (mai sotto 0,5) */
+  protected readonly cardScale = computed(() => {
+    const stage = this.stageHeight();
+    if (stage === 0) return 1;
+    const available = stage - this.afterHeight() - SPOTLIGHT_GAP_PX;
+    return Math.min(1, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
+  });
+
   protected readonly saved = computed(() => this.bookmarks.isSaved(this.entry().comic.id));
+
+  public constructor() {
+    afterNextRender(() => {
+      const stage = this.stage().nativeElement;
+      const after = this.after().nativeElement;
+      const observer = new ResizeObserver(() => {
+        this.stageHeight.set(stage.clientHeight);
+        this.afterHeight.set(after.offsetHeight);
+      });
+      observer.observe(stage);
+      observer.observe(after);
+      this.destroyRef.onDestroy(() => observer.disconnect());
+    });
+  }
 
   /** Cambiando carta l'invito a iscriversi (solo ospiti) sparisce */
   protected readonly inviteShown = linkedSignal<RankingEntry, boolean>({

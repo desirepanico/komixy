@@ -9,6 +9,21 @@ const angular = require('angular-eslint');
 // defineConfig sostituisce tseslint.config (deprecato)
 const { defineConfig } = require('eslint/config');
 
+// Import vietati in tutta l'app. Le regole delle feature ridefiniscono `no-restricted-imports`
+// (la regola non si fonde), quindi ripetono questo elenco.
+const RESTRICTED_IMPORT_PATHS = [
+  {
+    name: '@angular/forms',
+    message: 'Usa i Signal Forms (@angular/forms/signals): niente Reactive Forms né ngModel.',
+  },
+  {
+    name: '@angular/common',
+    importNames: ['CommonModule', 'NgClass', 'NgStyle'],
+    message:
+      'Importa solo le direttive e le pipe usate; per classi e stili usa i binding [class.x] e [style.x].',
+  },
+];
+
 // Regole sugli import delle feature (vedi .claude/rules/angular.md):
 // - tra feature si importano solo i servizi di navigazione (`regexVietate`);
 // - pagine e componenti non usano Router né AppRoutes: navigano con i servizi di navigazione.
@@ -22,7 +37,9 @@ function regoleFeature(cartella, regexVietate) {
     {
       files: [`${cartella}/*.ts`],
       ignores: ['**/*.spec.ts'],
-      rules: { 'no-restricted-imports': ['error', { patterns }] },
+      rules: {
+        'no-restricted-imports': ['error', { paths: RESTRICTED_IMPORT_PATHS, patterns }],
+      },
     },
     {
       files: pagineEComponenti,
@@ -32,6 +49,7 @@ function regoleFeature(cartella, regexVietate) {
           'error',
           {
             paths: [
+              ...RESTRICTED_IMPORT_PATHS,
               {
                 name: '@angular/router',
                 importNames: ['Router'],
@@ -79,6 +97,7 @@ module.exports = defineConfig(
       '@angular-eslint/no-host-metadata-property': 'off',
       '@angular-eslint/no-input-rename': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
+      'no-restricted-imports': ['error', { paths: RESTRICTED_IMPORT_PATHS }],
     },
   },
   ...regoleFeature('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),

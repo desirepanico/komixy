@@ -133,6 +133,9 @@ export const PACK_TEAR_DISTANCE_PX = 140;
 /** Misure di una carta a grandezza naturale: si scala con `scale` di `app-pack-card` */
 export const PACK_CARD_WIDTH_PX = 192;
 export const PACK_CARD_HEIGHT_PX = 320;
+/** Spazio tra la carta in primo piano e ciò che sta sotto, e scala minima a cui si rimpicciolisce per non scrollare */
+export const SPOTLIGHT_GAP_PX = 20;
+export const SPOTLIGHT_MIN_SCALE = 0.5;
 /** Sotto questa scala i testi della carta non si leggono: si mostrano la copertina e un numero di posizione grande */
 export const PACK_CARD_COMPACT_BELOW = 0.7;
 
@@ -144,6 +147,9 @@ export const CARD_FAN_BASE_WIDTH_PX = 384;
 export const CARD_FAN_BASE_HEIGHT_PX = 224;
 export const CARD_FAN_BASE_TOP_PX = 24;
 export const CARD_FAN_MAX_GROWTH = 2.2;
+/** Il ventaglio può ridursi, per l'altezza, fino a questa scala; `HEIGHT_FACTOR` è quanto spazio occupa davvero rispetto all'altezza base (le carte ruotate escono) */
+export const CARD_FAN_MIN_GROWTH = 0.5;
+export const CARD_FAN_HEIGHT_FACTOR = 1.5;
 /** Larghezza del contenitore da cui il ventaglio comincia a crescere: sotto, resta a grandezza base */
 export const CARD_FAN_GROW_FROM_PX = 430;
 

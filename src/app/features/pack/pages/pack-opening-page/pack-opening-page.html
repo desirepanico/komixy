@@ -1,5 +1,5 @@
 @if (!alreadyOpened) {
-  <main class="relative flex min-h-dvh flex-col px-4 pt-5 pb-8">
+  <main class="relative flex h-dvh flex-col overflow-hidden px-4 pt-4 pb-4 sm:pt-5 sm:pb-6">
     <header class="relative z-20 flex items-start justify-between gap-3">
       <div class="flex min-w-0 items-start gap-3">
         <a
@@ -15,8 +15,8 @@
         </a>
 
         <div class="min-w-0">
-          <h1 class="text-lg font-bold text-surface-50">{{ 'weeklyPack.title' | transloco }}</h1>
-          <p class="text-sm text-surface-400">
+          <h1 class="text-base leading-tight font-bold text-surface-50 sm:text-lg">{{ 'weeklyPack.title' | transloco }}</h1>
+          <p class="text-xs text-surface-400 sm:text-sm">
             {{
               (session.isGuest() ? 'weeklyPack.guestSubtitle' : 'weeklyPack.subtitle') | transloco
             }}
@@ -30,7 +30,7 @@
 
     @switch (phase()) {
       @case ('sealed') {
-        <div class="relative isolate flex flex-1 flex-col items-center justify-center">
+        <div class="relative isolate flex min-h-0 flex-1 flex-col items-center justify-center">
           <div
             class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/30 blur-3xl"
             aria-hidden="true"
@@ -38,7 +38,7 @@
           <app-pack-tear [torn]="torn()" (tearRequest)="tear()" />
         </div>
 
-        <div class="flex flex-col items-center gap-4 pt-6">
+        <div class="flex shrink-0 flex-col items-center gap-3 pt-3 sm:gap-4 sm:pt-6">
           <app-hint class="max-w-xs">{{ 'weeklyPack.tearHint' | transloco }}</app-hint>
           <button
             #primary
@@ -63,7 +63,7 @@
           [interactive]="true"
           (cardPress)="onPrimary()"
         >
-          <ul afterCard class="flex min-h-16 w-full list-none items-center gap-1 self-start">
+          <ul afterCard class="flex min-h-12 w-full list-none items-center gap-1">
             @for (entry of previous(); track entry.comic.id) {
               <li>
                 <app-pack-card [entry]="entry" [scale]="0.2" [decorative]="true" />
@@ -120,7 +120,7 @@
             </button>
           </app-card-spotlight>
         } @else {
-          <div class="relative isolate flex flex-1 flex-col items-center justify-center">
+          <div class="relative isolate flex min-h-0 flex-1 flex-col items-center justify-center">
             <div
               class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/30 blur-3xl"
               aria-hidden="true"
@@ -128,7 +128,7 @@
             <app-card-fan class="w-full" [entries]="pack.deck()" (cardSelect)="select($event)" />
           </div>
 
-          <div class="flex flex-col items-center gap-4 pt-6">
+          <div class="flex shrink-0 flex-col items-center gap-3 pt-3 sm:gap-4 sm:pt-6">
             <p class="max-w-xs text-center text-sm text-surface-300">
               {{ 'weeklyPack.collectionComplete' | transloco }} ·
               <b class="text-primary-300">

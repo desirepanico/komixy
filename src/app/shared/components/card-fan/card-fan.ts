@@ -16,6 +16,8 @@ import {
   CARD_FAN_BASE_TOP_PX,
   CARD_FAN_BASE_WIDTH_PX,
   CARD_FAN_GROW_FROM_PX,
+  CARD_FAN_HEIGHT_FACTOR,
+  CARD_FAN_MIN_GROWTH,
   CARD_FAN_MAX_GROWTH,
   CARD_FAN_SPREAD_DEG,
   PACK_CARD_WIDTH_PX,
@@ -45,11 +47,22 @@ export class CardFan {
 
   /** Larghezza del contenitore, 0 finché non è stata misurata */
   private readonly hostWidth = signal<number>(0);
+  /** Altezza dello spazio in cui sta il ventaglio (il suo contenitore), 0 finché non è stata misurata */
+  private readonly roomHeight = signal<number>(0);
 
   /** Quanto è cresciuto il ventaglio rispetto al telefono: 1 su mobile, fino a `CARD_FAN_MAX_GROWTH` su tablet e desktop */
-  protected readonly growth = computed(() =>
-    Math.min(CARD_FAN_MAX_GROWTH, Math.max(1, this.hostWidth() / CARD_FAN_GROW_FROM_PX)),
-  );
+  protected readonly growth = computed(() => {
+    const byWidth = Math.min(
+      CARD_FAN_MAX_GROWTH,
+      Math.max(1, this.hostWidth() / CARD_FAN_GROW_FROM_PX),
+    );
+    const room = this.roomHeight();
+    // Misura mancante o non valida: conta solo la larghezza
+    if (!(room > 0)) return byWidth;
+    // Se l'altezza non basta (telefono in orizzontale) il ventaglio si rimpicciolisce, senza scrollare
+    const byHeight = room / (CARD_FAN_BASE_HEIGHT_PX * CARD_FAN_HEIGHT_FACTOR);
+    return Math.min(byWidth, Math.max(CARD_FAN_MIN_GROWTH, byHeight));
+  });
   protected readonly cardScale = computed(() => CARD_FAN_BASE_SCALE * this.growth());
   protected readonly width = computed(() => CARD_FAN_BASE_WIDTH_PX * this.growth());
   protected readonly height = computed(() => CARD_FAN_BASE_HEIGHT_PX * this.growth());
@@ -75,6 +88,12 @@ export class CardFan {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       this.spread.set(true);
+      const room = host.nativeElement.parentElement;
+      if (room) {
+        const roomObserver = new ResizeObserver(([e]) => this.roomHeight.set(e.contentRect.height));
+        roomObserver.observe(room);
+        destroyRef.onDestroy(() => roomObserver.disconnect());
+      }
       const observer = new ResizeObserver(([entry]) => this.hostWidth.set(entry.contentRect.width));
       observer.observe(host.nativeElement);
       destroyRef.onDestroy(() => observer.disconnect());

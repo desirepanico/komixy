@@ -2,18 +2,18 @@
 
 ## Comandi
 
-| Comando | Cosa fa |
-|---|---|
-| `npm start` | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica |
-| `npm run build` | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel |
-| `npm run watch` | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server |
-| `npm test` | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
-| `npm run lint` | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) |
-| `npm run knip` | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`) |
-| `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...` |
-| `npm run deploy:login` | Accesso a Vercel (una volta sola) |
-| `npm run deploy:dev` | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia |
-| `npm run deploy:prod` | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico |
+| Comando                   | Cosa fa                                                                                                                                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm start`               | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica                                                                                                                      |
+| `npm run build`           | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
+| `npm run watch`           | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
+| `npm test`                | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
+| `npm run lint`            | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec)                                                                        |
+| `npm run knip`            | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
+| `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
+| `npm run deploy:login`    | Accesso a Vercel (una volta sola)                                                                                                                                                                  |
+| `npm run deploy:dev`      | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia                                                                                       |
+| `npm run deploy:prod`     | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico                                                                                                               |
 
 Gli script `prestart`, `prebuild`, `pretest`, `prelint` e `preknip` non si lanciano a mano: npm esegue automaticamente lo script con prefisso `pre` prima di quello con lo stesso nome. Tutti eseguono `scripts/ensure-deps.mjs` (sezione seguente).
 
@@ -36,11 +36,11 @@ Le regole (cosa testare, un file di spec per ogni file `.ts`, una cartella per f
 
 **Cosa è già pronto in ogni test.** Le opzioni del builder in `angular.json` caricano tre cose, così gli spec non le ripetono:
 
-| Opzione | File | Cosa fa |
-|---|---|---|
+| Opzione         | File                                           | Cosa fa                                                                                                                                                                          |
+| --------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `providersFile` | `src/testing/test-providers/test-providers.ts` | Transloco finto con traduzioni vuote: nei test i testi che si leggono sono le chiavi (`'menu.main'`). `provideTranslocoTesting({ it: {...} })` dà traduzioni vere a un solo test |
-| `setupFiles` | `src/testing/test-setup/test-setup.ts` | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha |
-| `runnerConfig` | `vitest-base.config.mts` | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima |
+| `setupFiles`    | `src/testing/test-setup/test-setup.ts`         | Aggiunge a jsdom `ResizeObserver`, `matchMedia` (sempre `false`) e `scrollBy`, che jsdom non ha                                                                                  |
+| `runnerConfig`  | `vitest-base.config.mts`                       | `restoreMocks` e `unstubGlobals`: dopo ogni test mock e variabili globali finte tornano come prima                                                                               |
 
 **A cosa serve `src/testing/`.** jsdom simula il browser ma non lo replica del tutto: se un componente usa una funzione che jsdom non ha, il test si rompe con errori come "ResizeObserver is not defined". I finti in `src/testing/` sono scritti una volta sola e caricati prima di ogni test, così gli spec restano brevi. Le traduzioni sono finte perché il test controlla il comportamento del componente, non il testo italiano.
 
@@ -52,14 +52,14 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 
 **Ricette ricorrenti**
 
-| Serve | Come |
-|---|---|
-| `routerLink`, `Router` | `provideRouter([...rotte])`; per una pagina vera `RouterTestingHarness.create()` e `harness.navigateByUrl(...)` |
-| Richieste HTTP | `provideHttpClient()` + `provideHttpClientTesting()`, `HttpTestingController.expectOne(...).flush(...)` e `http.verify()` alla fine |
-| Codice di avvio (`provideXxx()`) | `providers: [provideXxx()]`, poi `await TestBed.inject(ApplicationInitStatus).donePromise` |
-| Un servizio di cui non serve il codice vero | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova |
-| Un'API del browser con un comportamento diverso (`matchMedia` vero, `IntersectionObserver`) | `vi.stubGlobal(...)` dentro il test |
-| Un guard | `TestBed.runInInjectionContext(() => guard(...))` |
+| Serve                                                                                       | Come                                                                                                                                |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `routerLink`, `Router`                                                                      | `provideRouter([...rotte])`; per una pagina vera `RouterTestingHarness.create()` e `harness.navigateByUrl(...)`                     |
+| Richieste HTTP                                                                              | `provideHttpClient()` + `provideHttpClientTesting()`, `HttpTestingController.expectOne(...).flush(...)` e `http.verify()` alla fine |
+| Codice di avvio (`provideXxx()`)                                                            | `providers: [provideXxx()]`, poi `await TestBed.inject(ApplicationInitStatus).donePromise`                                          |
+| Un servizio di cui non serve il codice vero                                                 | `{ provide: Servizio, useValue: { ... } }` con `vi.fn()` e signal di prova                                                          |
+| Un'API del browser con un comportamento diverso (`matchMedia` vero, `IntersectionObserver`) | `vi.stubGlobal(...)` dentro il test                                                                                                 |
+| Un guard                                                                                    | `TestBed.runInInjectionContext(() => guard(...))`                                                                                   |
 
 ## Lint
 
@@ -68,6 +68,7 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 - `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`).
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
 - Nelle feature `no-restricted-imports` vieta di importare da un'altra feature (tranne i servizi `<nome>-navigation`) e, in `pages` e `components`, anche `Router` e `AppRoutes`: la navigazione passa dai servizi di navigazione.
+- In tutta l'app `no-restricted-imports` vieta `@angular/forms` (si usano i Signal Forms) e `CommonModule`, `NgClass`, `NgStyle` di `@angular/common`. L'elenco è `RESTRICTED_IMPORT_PATHS` in `eslint.config.js`: le regole delle feature lo ripetono, perché la regola non si fonde tra blocchi.
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 
@@ -77,7 +78,7 @@ Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.conf
 
 ## CI
 
-CI (*Continuous Integration*) è un controllo automatico che GitHub esegue su un server pulito, senza il computer di chi sviluppa, ogni volta che si pubblica codice. Serve a verificare che il progetto funzioni anche fuori dalla propria macchina: per esempio prende un pacchetto dimenticato in `package.json` che in locale funziona perché era già installato.
+CI (_Continuous Integration_) è un controllo automatico che GitHub esegue su un server pulito, senza il computer di chi sviluppa, ogni volta che si pubblica codice. Serve a verificare che il progetto funzioni anche fuori dalla propria macchina: per esempio prende un pacchetto dimenticato in `package.json` che in locale funziona perché era già installato.
 
 `.github/workflows/ci.yml` gira su push e pull request verso `develop` e `master` (la pull request di rilascio `develop` → `master` è quindi controllata prima dell'unione). Su una macchina Linux con Node 22 esegue, in ordine:
 
@@ -95,7 +96,7 @@ Se un passaggio fallisce il commit è segnato con ❌, se passano tutti con ✅.
 
 L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel.json` definisce il comando di build, la cartella di output (`dist/komixy/browser`) il rewrite di ogni percorso su `index.html` e la cache di una settimana per i font in `/fonts/`.
 
-**I deploy sono sempre manuali.** `vercel.json` ha `"git": { "deploymentEnabled": false }`: un `git push`, su qualsiasi ramo, non pubblica niente. Si pubblica solo lanciando un comando (o *Redeploy*/*Promote* dal pannello Vercel). Così nessun push cambia per sbaglio dev o produzione, e pubblicare in dev non tocca mai la produzione.
+**I deploy sono sempre manuali.** `vercel.json` ha `"git": { "deploymentEnabled": false }`: un `git push`, su qualsiasi ramo, non pubblica niente. Si pubblica solo lanciando un comando (o _Redeploy_/_Promote_ dal pannello Vercel). Così nessun push cambia per sbaglio dev o produzione, e pubblicare in dev non tocca mai la produzione.
 
 **Preview e produzione.** Vercel distingue due tipi di deployment:
 
@@ -108,12 +109,12 @@ L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel
 
 **Cosa pubblica cosa.**
 
-| Azione | Risultato |
-|---|---|
-| `git push` (qualsiasi ramo) | Non pubblica. Parte solo la CI su GitHub |
-| `npm run deploy:dev` | **Preview** dai file locali: mai la produzione |
-| `npm run deploy:prod` | **Produzione** dai file locali |
-| *Redeploy* o *Promote to Production* nel pannello Vercel | Rifà o mette in produzione un deployment già fatto (utile anche per tornare indietro) |
+| Azione                                                   | Risultato                                                                             |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `git push` (qualsiasi ramo)                              | Non pubblica. Parte solo la CI su GitHub                                              |
+| `npm run deploy:dev`                                     | **Preview** dai file locali: mai la produzione                                        |
+| `npm run deploy:prod`                                    | **Produzione** dai file locali                                                        |
+| _Redeploy_ o _Promote to Production_ nel pannello Vercel | Rifà o mette in produzione un deployment già fatto (utile anche per tornare indietro) |
 
 **Come si rilascia.**
 
@@ -124,7 +125,7 @@ L'app è una single page app su Vercel (progetto `desirepanico-komixy`). `vercel
 
 **Comandi per pubblicare.** La prima volta su un PC: `npm run deploy:login` e, se Vercel lo chiede, collegare il progetto esistente `desirepanico-komixy` nel team `desy2`.
 
-*Dev*:
+_Dev_:
 
 ```bash
 git checkout develop
@@ -132,7 +133,7 @@ git pull --rebase origin develop
 npm run deploy:dev
 ```
 
-*Produzione* (dopo aver unito la pull request):
+_Produzione_ (dopo aver unito la pull request):
 
 ```bash
 git checkout master

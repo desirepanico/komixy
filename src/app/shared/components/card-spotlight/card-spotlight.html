@@ -1,4 +1,7 @@
-<div class="relative isolate flex flex-1 flex-col items-center justify-center gap-5">
+<div
+  #stage
+  class="relative isolate flex min-h-0 flex-1 flex-col items-center justify-center gap-3 sm:gap-5"
+>
   <div
     class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/40 blur-3xl"
     aria-hidden="true"
@@ -34,17 +37,28 @@
     >
       <!-- Una carta nuova nasce già nel suo verso: se si riusasse la stessa carta, passando alla prossima si vedrebbe il suo fronte girare verso il dorso -->
       @for (item of [entry()]; track item.comic.id) {
-        <app-pack-card [entry]="item" [faceUp]="faceUp()" [flippable]="true" [decorative]="true" />
+        <app-pack-card
+          [entry]="item"
+          [scale]="cardScale()"
+          [faceUp]="faceUp()"
+          [flippable]="true"
+          [decorative]="true"
+        />
       }
     </button>
   } @else {
-    <app-pack-card class="relative z-10" [entry]="entry()" [faceUp]="faceUp()" />
+    <app-pack-card
+      class="relative z-10"
+      [entry]="entry()"
+      [scale]="cardScale()"
+      [faceUp]="faceUp()"
+    />
   }
 
-  <ng-content select="[afterCard]" />
+  <div #after class="w-full empty:hidden"><ng-content select="[afterCard]" /></div>
 </div>
 
-<div class="flex flex-col items-center gap-4 pt-6">
+<div class="flex shrink-0 flex-col items-center gap-3 pt-3 sm:gap-4 sm:pt-6">
   <p class="min-h-6 text-center text-sm text-surface-300">
     @if (summary()) {
       <b class="text-primary-300">#{{ entry().rank }}</b>

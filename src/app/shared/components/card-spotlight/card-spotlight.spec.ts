@@ -95,7 +95,7 @@ describe('CardSpotlight', () => {
     expect(TestBed.inject(BookmarksService).isSaved('w4')).toBe(true);
   });
 
-  it('un ospite vede il lucchetto e, toccando, l\'invito a iscriversi', async () => {
+  it("un ospite vede il lucchetto e, toccando, l'invito a iscriversi", async () => {
     await crea(false);
     expect(html.querySelector('a[href="/login"]')).toBeNull();
     inLista().click();
@@ -104,7 +104,7 @@ describe('CardSpotlight', () => {
     expect(TestBed.inject(BookmarksService).isSaved('w4')).toBe(false);
   });
 
-  it('cambiando carta l\'invito sparisce', async () => {
+  it("cambiando carta l'invito sparisce", async () => {
     await crea(false);
     inLista().click();
     await fixture.whenStable();
@@ -168,5 +168,31 @@ describe('CardSpotlight', () => {
     expect(dopo).not.toBe(prima);
     expect(html.querySelector('app-card-spotlight button[aria-label]')).toBe(bottone);
     expect(dopo?.querySelector('.rotate-y-180.size-full')).not.toBeNull();
+  });
+
+  it('rimpicciolisce la carta se lo spazio non basta, senza scendere sotto la scala minima', async () => {
+    let altezza = 300;
+    vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(() => altezza);
+    vi.stubGlobal(
+      'ResizeObserver',
+      class {
+        constructor(private readonly callback: () => void) {}
+        observe(): void {
+          this.callback();
+        }
+        disconnect(): void {}
+      },
+    );
+    const nuovo = TestBed.createComponent(Host);
+    await nuovo.whenStable();
+    const carta = nuovo.nativeElement.querySelector('app-pack-card') as HTMLElement;
+    // 300 px di spazio meno i 20 di distanza: 280 / 320
+    expect(carta.style.height).toBe('280px');
+
+    altezza = 100;
+    const piccolo = TestBed.createComponent(Host);
+    await piccolo.whenStable();
+    const minima = piccolo.nativeElement.querySelector('app-pack-card') as HTMLElement;
+    expect(minima.style.height).toBe('160px');
   });
 });
