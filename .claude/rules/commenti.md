@@ -12,7 +12,7 @@ Un commento spiega il **perché**, mai il cosa: se leggendo il codice si capisce
 
 ## Dove sì
 
-- **JSDoc su componenti e direttive di `shared`** solo se l'uso non è intuitivo: contenuto proiettato (`ng-content`), input che si combinano, un contratto particolare (un esempio breve basta). Non si scrive a cosa serve ciò che dice già il nome: un campo password, un logo, un tag, un bottone, un segnaposto non hanno bisogno di «Campo password con…». Sugli `input()` solo se il valore non è evidente (unità, valori ammessi, effetto di `true`/`false`).
+- **JSDoc solo sui componenti e sulle direttive complicati** di `shared`: quelli con una logica o un contratto che dal nome non si capisce (contenuto proiettato con nomi precisi, algoritmi di layout, gesti, più stati che si combinano: `app-card-fan`, `app-card-spotlight`, `app-pack-card`, `app-horizontal-scroller`, `appSwipe`, `appInView`). Un esempio d'uso breve basta. **I componenti semplici non hanno JSDoc, né sulla classe né sugli `input()`**: bottone, campo di testo o password, tag, segnaposto, messaggio, skeleton, logo, toggle, hint, toast. Si capiscono dal nome e dall'uso nei template.
 - **Funzioni in `shared/utils` e logica con una regola di business**: una riga su cosa garantiscono o perché esistono, solo se non lo dice il nome.
 - **Commento nel corpo del codice** solo per: un workaround, un vincolo del browser o di una libreria, una scelta di accessibilità (es. perché un link è stirato su tutta la card), un numero che sembra strano (soglie, moltiplicatori), un `catch` vuoto (perché si ignora l'errore).
 - **`TODO`** con formato fisso `// TODO(api): cosa manca`, così si ritrovano tutti con una ricerca. Dice cosa sostituire e con cosa (es. `PUT/DELETE /me/bookmarks/:comicId`), non «da sistemare».

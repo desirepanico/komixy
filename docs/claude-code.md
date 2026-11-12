@@ -33,7 +33,7 @@ Le regole di dettaglio stanno in `.claude/rules/` (si caricano quando Claude toc
 | `skeleton.md` | Quando e come usare `app-skeleton` | `src/**/*.html` |
 | `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
-| `commenti.md` | Commenti: solo il perché; dove sì (JSDoc shared, workaround, `TODO(api)`, sezioni delle costanti), dove no (ripetizioni, banner, storia), forma | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
+| `commenti.md` | Commenti: solo il perché; dove sì (JSDoc solo sui componenti shared complicati, workaround, `TODO(api)`, sezioni delle costanti), dove no (ripetizioni, banner, storia), forma | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
 | `knip.md` | Codice inutilizzato: si toglie, non si nasconde in `knip.json` | `src/**/*.ts`, `knip.json`, `scripts/*.mjs` |
 | `git.md` | Branch | sempre |
 

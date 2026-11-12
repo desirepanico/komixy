@@ -13,7 +13,6 @@ import { TOAST_STYLES } from '../../constants/ui.const';
 import { ToastSeverity } from '../../models/toast.model';
 import { ToastService } from '../../services/toast/toast.service';
 
-/** Va montato una sola volta, in `app.html`. */
 @Component({
   selector: 'app-toast',
   imports: [TranslocoPipe, NgIcon, NgTemplateOutlet],

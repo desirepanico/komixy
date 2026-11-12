@@ -1,9 +1,5 @@
 import { Component, computed, input } from '@angular/core';
 
-/**
- * Si applica a un `button`; l'`aria-label` lo passa chi lo usa.
- *   <button appToggleButton type="button" [pressed]="saved()" aria-label="..."><ng-icon .../></button>
- */
 @Component({
   selector: 'button[appToggleButton]',
   host: {
@@ -13,7 +9,6 @@ import { Component, computed, input } from '@angular/core';
   templateUrl: './toggle-button.html',
 })
 export class ToggleButton {
-  /** true = attivo (sfondo viola scuro e bordo viola) */
   public readonly pressed = input<boolean>(false);
 
   protected readonly classes = computed(() => {

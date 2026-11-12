@@ -7,6 +7,5 @@ export type TagSeverity = 'primary' | 'secondary' | 'accent';
   templateUrl: './tag.html',
 })
 export class Tag {
-  /** accent = viola trasparente con anello, discreto sulle card viola */
   public readonly severity = input<TagSeverity>('primary');
 }

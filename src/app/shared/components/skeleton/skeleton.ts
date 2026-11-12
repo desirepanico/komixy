@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
 
-/**
- * Decorativo: misure e raggio si danno con classi Tailwind sul tag.
- *   <app-skeleton class="h-6 w-56" />
- */
 @Component({
   selector: 'app-skeleton',
   templateUrl: './skeleton.html',

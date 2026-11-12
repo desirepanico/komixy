@@ -30,13 +30,11 @@ export class InputPassword implements FormValueControl<string> {
   public readonly value = model<string>('');
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
-  /** Chiave Transloco del segnaposto */
   public readonly placeholder = input.required<string>();
   public readonly autocomplete = input<string>('current-password');
   public readonly disabled = input<boolean>(false);
 
   protected readonly visible = signal<boolean>(false);
-  /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
   protected readonly showError = computed(
     () => this.formField.state().touched() && this.formField.errors().length > 0,
   );
@@ -44,7 +42,6 @@ export class InputPassword implements FormValueControl<string> {
     this.showError() ? this.formField.errors() : [],
   );
 
-  /** All'uscita dal campo: da qui in poi gli errori si vedono */
   protected markAsTouched(): void {
     this.formField.state().markAsTouched();
   }
