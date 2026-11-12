@@ -1,0 +1,68 @@
+<!-- Il link sta sul titolo e il suo ::after copre tutta la carta -->
+<div
+  class="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-xl border-2 bg-linear-to-b from-primary-800 to-surface-900 p-2 shadow-lg transition duration-200 has-[a:focus-visible]:ring-2 has-[a:focus-visible]:ring-primary-400 has-[a:focus-visible]:ring-offset-2 has-[a:focus-visible]:ring-offset-surface-950"
+  [class]="
+    isRare()
+      ? 'border-primary-200 shadow-primary-400/40 hover:shadow-primary-400/60'
+      : 'border-primary-300 shadow-surface-950/60 hover:border-primary-200'
+  "
+  [class.active:scale-98]="link()"
+>
+  <div class="relative aspect-3/4 w-full shrink-0 overflow-hidden rounded-lg bg-surface-800">
+    @if (!coverLoaded()) {
+      <app-skeleton class="absolute inset-0 rounded-none" />
+    }
+    <img
+      class="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+      [src]="comic().coverUrl"
+      loading="lazy"
+      draggable="false"
+      (load)="coverLoaded.set(true)"
+      (error)="coverLoaded.set(true)"
+      [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
+    />
+
+    <div class="absolute top-2 right-2 z-10"><ng-content select="[cardAction]" /></div>
+
+    @if (comic().editionType) {
+      <div
+        class="absolute inset-x-0 bottom-0 bg-linear-to-t from-surface-950/95 via-surface-950/75 to-transparent px-2 pt-8 pb-2"
+      >
+        <app-tag [severity]="editionSeverity()">
+          {{ 'mangaCard.editions.' + comic().editionType | transloco }}
+        </app-tag>
+      </div>
+    }
+  </div>
+
+  <div class="mt-2 flex min-w-0 flex-1 flex-col gap-0.5">
+    <h3
+      class="truncate text-sm/5 font-bold text-surface-50 transition-colors group-hover:text-primary-300"
+      [title]="comic().title"
+    >
+      @if (link(); as href) {
+        <a [routerLink]="href" class="outline-none after:absolute after:inset-0 after:rounded-xl">
+          {{ comic().title }}
+        </a>
+      } @else {
+        {{ comic().title }}
+      }
+    </h3>
+    <p class="truncate text-xs/4 text-surface-300" [title]="comic().author">
+      {{ comic().author }}
+    </p>
+    @if (comic().isSingleVolume) {
+      <span class="min-h-5 truncate text-xs/5 font-semibold text-primary-300">
+        {{ 'mangaCard.singleVolume' | transloco }}
+      </span>
+    } @else {
+      <span class="min-h-5 text-xs/5 whitespace-nowrap text-primary-300">
+        {{ 'mangaCard.volumeLabel' | transloco }}
+        <span class="text-sm font-bold">{{ comic().volume }}</span>
+        @if (comic().totalVolumes) {
+          <span class="text-surface-300"> / {{ comic().totalVolumes }}</span>
+        }
+      </span>
+    }
+  </div>
+</div>

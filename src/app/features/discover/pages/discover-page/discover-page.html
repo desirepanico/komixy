@@ -41,16 +41,9 @@
     <app-horizontal-scroller [ariaLabel]="'discoverManga.title' | transloco">
       @for (comic of catalog.toDiscover(); track comic.id) {
         <div class="w-40 shrink-0 snap-start lg:w-44">
-          <app-comic-card
-            [id]="comic.id"
-            [title]="comic.title"
-            [author]="comic.author"
-            [volume]="comic.volume"
-            [totalVolumes]="comic.totalVolumes"
-            [isSingleVolume]="comic.isSingleVolume"
-            [editionType]="comic.editionType"
-            [coverUrl]="comic.coverUrl"
-          />
+          <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
+            <app-bookmark-button cardAction [comicId]="comic.id" />
+          </app-comic-card>
         </div>
       }
     </app-horizontal-scroller>
