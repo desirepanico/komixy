@@ -30,18 +30,18 @@
   "bookmark": {
     "add": "Aggiungi ai segnalibri",
     "remove": "Rimuovi dai segnalibri",
-    "signUp": "Iscriviti per salvare nelle liste",
+    "signUp": "Iscriviti per salvare nella tua libreria",
     "guestLocked": {
       "summaryInfo": "Solo per gli iscritti",
-      "detailInfo": "Iscriviti per salvare i volumi nelle tue liste."
+      "detailInfo": "Iscriviti per salvare i volumi nella tua libreria."
     },
     "added": {
       "summaryOk": "Volume salvato",
-      "detailOk": "Lo trovi nelle tue liste."
+      "detailOk": "Lo trovi nella tua libreria."
     },
     "removed": {
       "summaryOk": "Volume rimosso",
-      "detailOk": "Non è più nelle tue liste."
+      "detailOk": "Non è più nella tua libreria."
     }
   },
   "common": {
@@ -133,8 +133,8 @@
     "comingSoonHint": "Qui troverai trama, volumi ed edizioni del fumetto."
   },
   "guestNotice": {
-    "list": "Come ospite non puoi salvare nelle liste.",
-    "detail": "Come ospite puoi vedere il dettaglio, ma non salvare nelle liste.",
+    "list": "Come ospite non puoi salvare nella tua libreria.",
+    "detail": "Come ospite puoi vedere il dettaglio, ma non salvare nella tua libreria.",
     "signUp": "Iscriviti per farlo."
   },
   "weeklyPack": {
