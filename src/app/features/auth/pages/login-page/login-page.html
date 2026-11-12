@@ -1,23 +1,23 @@
 <main
-  class="relative flex h-dvh flex-col items-center justify-start gap-4 max-sm:gap-(--s1) overflow-x-clip overflow-y-auto px-6 py-6 max-sm:pt-(--s3) max-sm:pb-[calc(var(--s1)*0.5)] max-sm:[--s1:clamp(0.5rem,calc(3.02dvh_-_12.1px),1rem)] max-sm:has-[[role=alert]]:[--s1:clamp(0.3125rem,calc(2.27dvh_-_9.1px),0.75rem)] max-sm:has-[[role=alert]]:[--s3:clamp(0.75rem,calc(6.04dvh_-_24.3px),2rem)] max-sm:[--s2:clamp(0.75rem,calc(4.53dvh_-_18.2px),1.5rem)] max-sm:has-[[role=alert]]:[--s2:clamp(0.375rem,calc(2.27dvh_-_9.1px),0.75rem)] max-sm:[--s3:clamp(1rem,calc(6.04dvh_-_24.3px),2rem)] max-sm:[--cw:max(3rem,min(7rem,calc(19.6dvh_-_70.7px),calc(3rem_+_0.45*(100dvh_-_40rem)),calc((100vw_-_2rem)/4)))] max-sm:[--logo:clamp(1.75rem,calc(9.06dvh_-_32.4px),3.25rem)] sm:gap-6 sm:py-8 md:grid md:grid-cols-2 md:items-stretch md:justify-normal md:gap-0 md:overflow-y-hidden md:p-0"
+  class="relative flex h-dvh flex-col items-center justify-start gap-4 overflow-x-clip overflow-y-auto px-6 py-6 max-sm:gap-(--s1) max-sm:pt-(--s3) max-sm:pb-[calc(var(--s1)*0.5)] max-sm:[--cw:max(3rem,min(7rem,calc(19.6dvh_-_70.7px),calc(3rem_+_0.45*(100dvh_-_40rem)),calc((100vw_-_2rem)/4)))] max-sm:[--logo:clamp(1.75rem,calc(9.06dvh_-_32.4px),3.25rem)] max-sm:[--s1:clamp(0.5rem,calc(3.02dvh_-_12.1px),1rem)] max-sm:[--s2:clamp(0.75rem,calc(4.53dvh_-_18.2px),1.5rem)] max-sm:[--s3:clamp(1rem,calc(6.04dvh_-_24.3px),2rem)] max-sm:has-[[role=alert]]:[--s1:clamp(0.3125rem,calc(2.27dvh_-_9.1px),0.75rem)] max-sm:has-[[role=alert]]:[--s2:clamp(0.375rem,calc(2.27dvh_-_9.1px),0.75rem)] max-sm:has-[[role=alert]]:[--s3:clamp(0.75rem,calc(6.04dvh_-_24.3px),2rem)] sm:gap-6 sm:py-8 md:grid md:grid-cols-2 md:items-stretch md:justify-normal md:gap-0 md:overflow-y-hidden md:p-0"
 >
   <app-login-volumes />
 
   <!-- Sotto i 768px niente colonne né card: gli elementi si dispongono in fila, nello stesso ordine del DOM -->
   <div
-    class="max-md:contents md:flex md:justify-center md:overflow-y-auto md:px-6 md:py-10 md:[@media(max-height:50rem)]:py-4 lg:px-8"
+    class="max-md:contents md:flex md:justify-center md:overflow-y-auto md:px-6 md:py-10 lg:px-8 md:[@media(max-height:50rem)]:py-4"
   >
     <section
-      class="glass-strong-from-md max-md:contents md:my-auto md:w-full md:max-w-md 2xl:max-w-lg md:rounded-3xl md:border md:border-primary-400/20 md:bg-surface-900/65 md:px-6 md:py-10 lg:px-10"
+      class="glass-strong-from-md max-md:contents md:my-auto md:w-full md:max-w-md md:rounded-3xl md:border md:border-primary-400/20 md:bg-surface-900/65 md:px-6 md:py-10 lg:px-10 2xl:max-w-lg"
       aria-labelledby="login-title"
     >
       <h1
         id="login-title"
-        class="max-md:sr-only text-2xl font-bold tracking-tight text-surface-50 lg:text-3xl"
+        class="text-2xl font-bold tracking-tight text-surface-50 max-md:sr-only lg:text-3xl"
       >
         {{ 'login.submit' | transloco }}
       </h1>
-      <p class="mb-8 mt-3 hidden text-sm leading-6 text-surface-300 md:block">
+      <p class="mt-3 mb-8 hidden text-sm leading-6 text-surface-300 md:block">
         {{ 'login.subtitle' | transloco }}
       </p>
 

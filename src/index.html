@@ -40,7 +40,7 @@
     <div id="skeleton" class="group/skel" data-variant="list" aria-hidden="true">
       <!-- Pagine con menu (tutte tranne login): sidebar da 1024px in su, barra in basso sotto -->
       <div
-        class="min-h-dvh animate-pulse motion-reduce:animate-none group-data-[variant=login]/skel:hidden lg:flex lg:gap-1 lg:py-2 lg:pl-2"
+        class="min-h-dvh animate-pulse group-data-[variant=login]/skel:hidden motion-reduce:animate-none lg:flex lg:gap-1 lg:py-2 lg:pl-2"
       >
         <div
           class="sticky top-4 hidden h-[calc(100dvh-2rem)] w-64 shrink-0 rounded-xl border border-surface-50/10 bg-surface-950/70 lg:block"
@@ -142,7 +142,7 @@
             </div>
           </div>
           <div
-            class="absolute left-1/2 top-1/2 size-20 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-surface-900 bg-surface-800"
+            class="absolute top-1/2 left-1/2 size-20 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-surface-900 bg-surface-800"
           ></div>
           <div class="col-span-2 col-start-4 flex items-center justify-around pl-5">
             <div class="flex flex-col items-center gap-1">
@@ -159,7 +159,7 @@
 
       <!-- login: sotto 1024px una colonna centrata senza card (marchio, titolo, invito, copertine, campi); da 1024px pannello di marca a sinistra e card a destra, senza menu -->
       <div
-        class="hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden px-6 py-6 motion-reduce:animate-none group-data-[variant=login]/skel:flex sm:gap-6 sm:py-8 group-data-[variant=login]/skel:lg:grid lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0"
+        class="hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden px-6 py-6 group-data-[variant=login]/skel:flex motion-reduce:animate-none sm:gap-6 sm:py-8 lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0 group-data-[variant=login]/skel:lg:grid"
       >
         <!-- Stesse misure di login-volumes: marchio, titolo e sottotitolo (solo da 1024px), invito e copertine -->
         <div
@@ -173,9 +173,15 @@
             <div
               class="flex h-12.5 flex-col items-center justify-center gap-2 sm:h-18.75 sm:gap-3 lg:h-[min(11.25rem,22.5dvh)] lg:items-stretch lg:gap-[min(0.75rem,1.5dvh)]"
             >
-              <div class="h-5 w-full rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"></div>
-              <div class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"></div>
-              <div class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block lg:h-[min(2.25rem,4.5dvh)]"></div>
+              <div
+                class="h-5 w-full rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"
+              ></div>
+              <div
+                class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"
+              ></div>
+              <div
+                class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block lg:h-[min(2.25rem,4.5dvh)]"
+              ></div>
             </div>
             <div class="hidden h-14 flex-col justify-center gap-2 lg:flex">
               <div class="h-4 rounded-md bg-surface-800/70"></div>
@@ -209,7 +215,7 @@
             <div class="hidden h-9 items-center lg:flex">
               <div class="h-6 w-24 rounded-md bg-surface-800 lg:h-7"></div>
             </div>
-            <div class="mb-8 mt-3 hidden h-6 items-center lg:flex">
+            <div class="mt-3 mb-8 hidden h-6 items-center lg:flex">
               <div class="h-4 w-full rounded-md bg-surface-800/70"></div>
             </div>
             <div class="flex w-full max-w-sm flex-col gap-5 lg:max-w-none">

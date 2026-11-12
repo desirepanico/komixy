@@ -26,7 +26,7 @@
             type="button"
             variant="text"
             severity="secondary"
-            class="mb-2 w-full justify-between px-3 py-2 text-left text-xs font-bold uppercase tracking-wider hover:bg-surface-800/70"
+            class="mb-2 w-full justify-between px-3 py-2 text-left text-xs font-bold tracking-wider uppercase hover:bg-surface-800/70"
             [attr.aria-expanded]="group.expandable"
             [attr.aria-controls]="'nav-group-' + group.title"
             (click)="toggleGroup(group)"
@@ -82,7 +82,9 @@
       >
 
       <div class="min-w-0 flex-1">
-        <p class="truncate text-sm font-semibold text-surface-100">{{ 'menu.myProfile' | transloco }}</p>
+        <p class="truncate text-sm font-semibold text-surface-100">
+          {{ 'menu.myProfile' | transloco }}
+        </p>
         <p class="truncate text-xs text-surface-500">{{ 'menu.viewProfile' | transloco }}</p>
       </div>
 

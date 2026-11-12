@@ -1,7 +1,7 @@
 <nav
-  class="[view-transition-name:mobile-nav] fixed inset-x-2 bottom-6 z-50 grid h-14 grid-cols-5 items-center rounded-full border border-primary-400/15 bg-surface-900/60 px-4 glass-strong shadow-[0_14px_32px_color-mix(in_srgb,var(--color-surface-950)_75%,transparent),0_4px_16px_color-mix(in_srgb,var(--color-primary-800)_20%,transparent)] transition-shadow duration-200"
+  class="glass-strong fixed inset-x-2 bottom-6 z-50 grid h-14 grid-cols-5 items-center rounded-full border border-primary-400/15 bg-surface-900/60 px-4 shadow-[0_14px_32px_color-mix(in_srgb,var(--color-surface-950)_75%,transparent),0_4px_16px_color-mix(in_srgb,var(--color-primary-800)_20%,transparent)] transition-shadow duration-200 [view-transition-name:mobile-nav]"
 >
-  <div class="col-span-2 flex gap-2 items-center justify-around pr-5">
+  <div class="col-span-2 flex items-center justify-around gap-2 pr-5">
     @for (item of navItems.slice(0, 2); track item.route) {
       <a
         [routerLink]="item.route"
@@ -28,7 +28,7 @@
   <a
     [routerLink]="AppRoutes.Scan"
     routerLinkActive="bg-primary-500 text-surface-800"
-    class="absolute left-1/2 top-1/2 z-10 flex size-20 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-4 border-surface-900 bg-primary-400 text-surface-900 shadow-lg shadow-primary-950/50 ring-1 ring-primary-300/30 transition-all duration-200 hover:bg-primary-300 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+    class="absolute top-1/2 left-1/2 z-10 flex size-20 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-4 border-surface-900 bg-primary-400 text-surface-900 shadow-lg ring-1 shadow-primary-950/50 ring-primary-300/30 transition-all duration-200 hover:bg-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 active:scale-95"
   >
     <ng-icon name="matBarcodeScannerOutline" size="24" />
 
@@ -37,7 +37,7 @@
     </span>
   </a>
 
-  <div class="col-start-4 col-span-2 flex gap-2 items-center justify-around pl-5">
+  <div class="col-span-2 col-start-4 flex items-center justify-around gap-2 pl-5">
     @for (item of navItems.slice(2); track item.route) {
       <a
         [routerLink]="item.route"
