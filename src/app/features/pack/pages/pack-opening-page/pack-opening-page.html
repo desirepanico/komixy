@@ -108,7 +108,7 @@
       @case ('collection') {
         @if (selected(); as entry) {
           <app-card-spotlight [entry]="entry" [detailLink]="selectedLink()" [summary]="true">
-            <app-card-fan behindCard class="w-full" [entries]="pack.deck()" />
+            <app-card-fan behindCard class="w-full" [fitHeight]="true" [entries]="pack.deck()" />
             <button
               #primary
               type="button"
@@ -127,7 +127,12 @@
               class="pointer-events-none absolute top-1/2 left-1/2 -z-10 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary-500/30 blur-3xl"
               aria-hidden="true"
             ></div>
-            <app-card-fan class="w-full" [entries]="pack.deck()" (cardSelect)="select($event)" />
+            <app-card-fan
+              class="w-full"
+              [fitHeight]="true"
+              [entries]="pack.deck()"
+              (cardSelect)="select($event)"
+            />
           </div>
 
           <div class="flex shrink-0 flex-col items-center gap-3 pt-3 sm:gap-4 sm:pt-6">

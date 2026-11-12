@@ -41,6 +41,11 @@ import { fanAngle } from './fan-layout/fan-layout';
 })
 export class CardFan {
   public readonly entries = input.required<readonly RankingEntry[]>();
+  /**
+   * true = il ventaglio si rimpicciolisce se il suo contenitore non è abbastanza alto (pagina a schermo intero,
+   * senza scroll). Il contenitore deve avere un'altezza propria: se dipende dal ventaglio, la misura lo rimpicciolirebbe all'infinito.
+   */
+  public readonly fitHeight = input<boolean>(false);
   public readonly cardSelect = output<RankingEntry>();
 
   protected readonly spread = signal<boolean>(false);
@@ -56,7 +61,7 @@ export class CardFan {
       CARD_FAN_MAX_GROWTH,
       Math.max(1, this.hostWidth() / CARD_FAN_GROW_FROM_PX),
     );
-    const room = this.roomHeight();
+    const room = this.fitHeight() ? this.roomHeight() : 0;
     // Misura mancante o non valida: conta solo la larghezza
     if (!(room > 0)) return byWidth;
     // Se l'altezza non basta (telefono in orizzontale) il ventaglio si rimpicciolisce, senza scrollare
