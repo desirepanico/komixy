@@ -48,12 +48,20 @@ describe('WeeklyPackBanner', () => {
       expect(html.querySelector('a[href="/login"]')).toBeNull();
     });
 
-    it('per un ospite la apre comunque e propone di iscriversi', async () => {
+    it('per un ospite la apre comunque e avvisa che non può salvare, con il link per iscriversi', async () => {
       await create(false);
       expect(text()).toContain('weeklyPack.guestTitle');
       expect(text()).toContain('weeklyPack.guestWeek');
       expect(html.querySelector('a[href="/discover/pack"]')).not.toBeNull();
-      expect(html.querySelector('a[href="/login"]')?.textContent).toContain('weeklyPack.signUp');
+      expect(html.querySelector('app-message')?.textContent).toContain('guestNotice.list');
+      expect(html.querySelector('app-message a[href="/login"]')?.textContent).toContain(
+        'guestNotice.signUp',
+      );
+    });
+
+    it('la riga dei pulsanti ha solo «Apri la busta» e «Salta l’animazione»', async () => {
+      await create(false);
+      expect(html.querySelectorAll('[appButton]')).toHaveLength(2);
     });
 
     it("«Salta l'animazione» apre la busta e va alla revisione della settimana", async () => {
