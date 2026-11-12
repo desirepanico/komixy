@@ -19,18 +19,18 @@
   "bookmark": {
     "add": "Add to bookmarks",
     "remove": "Remove from bookmarks",
-    "signUp": "Sign up to save to your lists",
+    "signUp": "Sign up to save to your library",
     "guestLocked": {
       "summaryInfo": "Registered users only",
-      "detailInfo": "Sign up to save volumes to your lists."
+      "detailInfo": "Sign up to save volumes to your library."
     },
     "added": {
       "summaryOk": "Volume saved",
-      "detailOk": "You can find it in your lists."
+      "detailOk": "You can find it in your library."
     },
     "removed": {
       "summaryOk": "Volume removed",
-      "detailOk": "It is no longer in your lists."
+      "detailOk": "It is no longer in your library."
     }
   },
   "common": {
@@ -133,8 +133,8 @@
     "comingSoonHint": "Here you will find the plot, volumes and editions of the comic."
   },
   "guestNotice": {
-    "list": "As a guest you can't save to your lists.",
-    "detail": "As a guest you can see the details, but you can't save to your lists.",
+    "list": "As a guest you can't save to your library.",
+    "detail": "As a guest you can see the details, but you can't save to your library.",
     "signUp": "Sign up to do so."
   },
   "weeklyPack": {
