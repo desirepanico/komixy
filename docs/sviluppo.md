@@ -85,7 +85,7 @@ Prettier formatta il codice e `prettier-plugin-tailwindcss` ordina le classi Tai
 - `plugins: ["prettier-plugin-tailwindcss"]`: deve restare l'ultimo dell'elenco;
 - `tailwindStylesheet: "./src/tailwind.css"`: con Tailwind v4 non c'è un `tailwind.config.js`, quindi il plugin legge il tema (e quindi `primary-*`, `surface-*`, `xs:`...) da questo file. Senza, ordina le classi senza conoscere quelle del tema.
 
-Non c'è un comando `npm run` dedicato e la CI non lo controlla: si lancia a mano sui file toccati (`npx prettier --write src/app/.../file.html`) o dall'editor con l'estensione Prettier (consigliata in `.vscode/extensions.json`). Le regole su cosa ci va dentro sono in `.claude/rules/stile.md`.
+Non c'è un comando `npm run` dedicato e la CI non lo controlla: si lancia a mano sui file toccati (`npx prettier --write src/app/.../file.html`) o dall'editor: con l'estensione Prettier (consigliata in `.vscode/extensions.json`) `.vscode/settings.json` formatta ogni file al salvataggio (`editor.formatOnSave`). Le regole su cosa ci va dentro sono in `.claude/rules/stile.md`.
 
 ## CI
 

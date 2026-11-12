@@ -14,7 +14,7 @@ Lo stato delle pagine (quali sono attive e quali ancora segnaposto) è in [`docs
 | Account Vercel del team `desy2` | solo per pubblicare        | `npm run deploy:login` la prima volta (la CLI di Vercel parte con `npx`, non si installa) |
 | Editor                          | VS Code consigliato        | Estensioni qui sotto                                                                      |
 
-Estensioni di VS Code consigliate: Angular Language Service (`angular.ng-template`), Prettier (`esbenp.prettier-vscode`), i18n Ally (`lokalise.i18n-ally`, già configurata in `.vscode/settings.json` per `public/i18n`), Tailwind CSS IntelliSense (`bradlc.vscode-tailwindcss`).
+Estensioni di VS Code consigliate: Angular Language Service (`angular.ng-template`), Prettier (`esbenp.prettier-vscode`, formatta al salvataggio), i18n Ally (`lokalise.i18n-ally`, già configurata in `.vscode/settings.json` per `public/i18n`), Tailwind CSS IntelliSense (`bradlc.vscode-tailwindcss`).
 
 ## Primi passi
 
