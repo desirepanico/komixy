@@ -85,6 +85,13 @@ describe('WeeklyPackBanner', () => {
       expect(html.querySelector('button')).toBeNull();
     });
 
+    it('la striscia si allunga alla riga che la contiene, così sotto non resta vuoto', async () => {
+      await create(true, true);
+      const root = html.firstElementChild as HTMLElement;
+      expect(root.className).toContain('h-full');
+      expect(root.firstElementChild?.className).toContain('flex-1');
+    });
+
     it('sotto la data dice quante carte sono rare', async () => {
       await create(true, true);
       expect(text()).toContain('weeklyPack.rareCount');

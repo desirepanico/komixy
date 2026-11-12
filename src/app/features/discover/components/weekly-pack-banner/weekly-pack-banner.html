@@ -67,9 +67,10 @@
     }
   </div>
 } @else {
-  <div>
+  <!-- Accanto al pannello Top la striscia si allunga alla sua altezza: niente vuoto sotto, con o senza il messaggio per gli ospiti -->
+  <div class="flex h-full flex-col">
     <div
-      class="flex items-center gap-4 rounded-2xl border border-primary-400/20 bg-surface-900 p-4 md:gap-6 md:px-6"
+      class="flex flex-1 items-center gap-4 rounded-2xl border border-primary-400/20 bg-surface-900 p-4 md:gap-6 md:px-6"
     >
       <img
         [ngSrc]="packImage"
