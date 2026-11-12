@@ -107,6 +107,11 @@ describe('PackCard', () => {
     expect(faces[1].classList.contains('hidden')).toBe(false);
   });
 
+  it('il dorso ha lo stesso bordo grigio delle carte comuni', () => {
+    const back = html.querySelector('[aria-hidden="true"] img')?.parentElement as HTMLElement;
+    expect(back.classList.contains('border-surface-600')).toBe(true);
+  });
+
   it('il dorso mostra il logo di Komixy', () => {
     const logo = html.querySelector('[aria-hidden="true"] img') as HTMLImageElement;
     expect(logo.getAttribute('src')).toContain('/img/logo/komixy-logo.png');
