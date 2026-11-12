@@ -9,8 +9,14 @@ const angular = require('angular-eslint');
 // defineConfig sostituisce tseslint.config (deprecato)
 const { defineConfig } = require('eslint/config');
 
-// Import vietati in tutta l'app. Le regole delle feature ridefiniscono `no-restricted-imports`
-// (la regola non si fonde), quindi ripetono questo elenco.
+// ─── Import vietati ──────────────────────────────────────────────────────────
+// La regola `no-restricted-imports` blocca gli import che non vogliamo. Ha due modi di indicarli:
+// - `paths`: un modulo preciso (e, se serve, solo alcuni suoi nomi);
+// - `patterns`: tutti i moduli il cui percorso corrisponde a un'espressione.
+// Attenzione: se due blocchi della configurazione la impostano, vince l'ultimo e i due elenchi NON si
+// sommano. Per questo i blocchi più specifici (le feature) ripetono gli elenchi di quelli generali.
+
+// Vietati in tutta l'app (regole di .claude/rules/angular.md e form.md)
 const RESTRICTED_IMPORT_PATHS = [
   {
     name: '@angular/forms',
@@ -24,50 +30,51 @@ const RESTRICTED_IMPORT_PATHS = [
   },
 ];
 
-// Regole sugli import delle feature (vedi .claude/rules/angular.md):
-// - tra feature si importano solo i servizi di navigazione (`regexVietate`);
-// - pagine e componenti non usano Router né AppRoutes: navigano con i servizi di navigazione.
+// Vietati solo in pagine e componenti delle feature: si naviga con i servizi di navigazione
+const NAVIGATION_IMPORT_PATHS = [
+  {
+    name: '@angular/router',
+    importNames: ['Router'],
+    message: 'Naviga con il servizio di navigazione, non con Router.',
+  },
+  {
+    name: '@shared/models/app-routes.model',
+    importNames: ['AppRoutes'],
+    message: 'I percorsi si costruiscono nei servizi di navigazione.',
+  },
+];
+
 /**
- * @param {string} cartella glob delle cartelle delle feature, es. `src/app/features/**`
- * @param {string[]} regexVietate import vietati, come espressioni regolari sul percorso
+ * Regole sugli import delle feature (vedi .claude/rules/angular.md):
+ * - una feature non importa da un'altra, tranne i servizi di navigazione (`<nome>-navigation`);
+ * - pagine e componenti non usano `Router` né `AppRoutes`.
+ * Restituisce due blocchi di configurazione: uno per tutti i file della feature, uno più severo per
+ * `pages/` e `components/`. Gli spec sono esclusi.
+ * @param {string} folder glob delle cartelle delle feature, es. `src/app/features/**`
+ * @param {string[]} forbiddenRegexes import vietati tra feature, come espressioni regolari sul percorso
  * @returns {import('eslint').Linter.Config[]}
  */
-function regoleFeature(cartella, regexVietate) {
-  const patterns = regexVietate.map((regex) => ({
+function featureRules(folder, forbiddenRegexes) {
+  const patterns = forbiddenRegexes.map((regex) => ({
     regex,
     message: "Una feature importa da un'altra solo i servizi di navigazione (<nome>-navigation).",
   }));
-  const pagineEComponenti = [`${cartella}/pages/**/*.ts`, `${cartella}/components/**/*.ts`];
+
   return [
     {
-      files: [`${cartella}/*.ts`],
+      files: [`${folder}/*.ts`],
       ignores: ['**/*.spec.ts'],
       rules: {
         'no-restricted-imports': ['error', { paths: RESTRICTED_IMPORT_PATHS, patterns }],
       },
     },
     {
-      files: pagineEComponenti,
+      files: [`${folder}/pages/**/*.ts`, `${folder}/components/**/*.ts`],
       ignores: ['**/*.spec.ts'],
       rules: {
         'no-restricted-imports': [
           'error',
-          {
-            paths: [
-              ...RESTRICTED_IMPORT_PATHS,
-              {
-                name: '@angular/router',
-                importNames: ['Router'],
-                message: 'Naviga con il servizio di navigazione, non con Router.',
-              },
-              {
-                name: '@shared/models/app-routes.model',
-                importNames: ['AppRoutes'],
-                message: 'I percorsi si costruiscono nei servizi di navigazione.',
-              },
-            ],
-            patterns,
-          },
+          { paths: [...RESTRICTED_IMPORT_PATHS, ...NAVIGATION_IMPORT_PATHS], patterns },
         ],
       },
     },
@@ -105,7 +112,7 @@ module.exports = defineConfig(
       'no-restricted-imports': ['error', { paths: RESTRICTED_IMPORT_PATHS }],
     },
   },
-  ...regoleFeature('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
+  ...featureRules('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
   {
     files: ['**/*.html'],
     extends: [...angular.configs.templateRecommended],
