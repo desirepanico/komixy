@@ -97,7 +97,7 @@ Ogni `provideXxx()` restituisce `EnvironmentProviders` e sta in `core/providers/
 ## Accessibilità
 
 - WCAG AA, contrasto minimo 4,5 a 1 (3 a 1 per testo grande e icone). Testo secondario: almeno `surface-500` su `surface-900`/`surface-950`, `surface-400` o più chiaro su sfondi più chiari.
-- Ogni elemento interattivo ha un `focus-visible` ben visibile; bottoni con sola icona hanno `aria-label` tradotto; navigare = `<a routerLink>`, agire = `<button>`; mai `<div>` cliccabili.
+- Ogni elemento interattivo ha un `focus-visible` ben visibile (mai `outline-none` insieme a `focus-visible:outline-*`: in Tailwind v4 cancella l'anello); bottoni con sola icona hanno `aria-label` tradotto; navigare = `<a routerLink>`, agire = `<button>`; mai `<div>` cliccabili.
 - Tutto ciò che si fa con mouse o touch si fa anche da tastiera (nessuna funzione solo hover/swipe/drag). Una card cliccabile ha un solo `<a>` stirato con `after:absolute after:inset-0`. Gli errori di form hanno testo e icona, `aria-invalid` e `aria-describedby`.
 
 ## Test e lint

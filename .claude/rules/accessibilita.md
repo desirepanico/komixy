@@ -10,6 +10,7 @@ paths:
 - Rispetta il livello WCAG AA, inclusi gestione del focus, contrasto dei colori e attributi ARIA.
 - Contrasto minimo del testo: 4,5 a 1 (3 a 1 per il testo grande e per icone e bordi dei componenti). Sul tema scuro il testo secondario usa almeno `surface-500` su `surface-900` o `surface-950`; su sfondi più chiari (`surface-800` e oltre, glass) usa `surface-400` o più chiaro.
 - Ogni elemento interattivo ha un `focus-visible` ben visibile (es. `focus-visible:outline-2 focus-visible:outline-primary-400`).
+- **Mai `outline-none` insieme a `focus-visible:outline-*` sullo stesso elemento**: in Tailwind v4 `outline-none` imposta lo stile del bordo su `none` e `focus-visible:outline-2` non lo riattiva, quindi l'anello non compare mai. Basta `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400`, senza `outline-none`: col mouse il browser non disegna comunque l'anello. `outline-none` resta solo dove l'anello è disegnato altrove (es. la card, con `has-[a:focus-visible]:` o `focus-visible:after:ring-2`). Si controlla nel browser con Tab, non basta guardare le classi.
 - I bottoni con sola icona hanno `aria-label` tradotto con Transloco.
 - Gli elementi che navigano sono `<a>` con `routerLink`, quelli che eseguono un'azione sono `<button>`. Mai `<div>` cliccabili senza ruolo e gestione da tastiera.
 - Le immagini hanno un `alt` significativo; le decorative `alt=""` o `aria-hidden="true"`.
