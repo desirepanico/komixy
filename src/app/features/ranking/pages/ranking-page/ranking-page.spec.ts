@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
-import { RouterTestingHarness } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
@@ -9,18 +8,13 @@ import { RankingPage } from './ranking-page';
 
 describe('RankingPage', () => {
   let html: HTMLElement;
-  let fixture: ComponentFixture<unknown>;
-  let component: RankingPage;
+  let fixture: ComponentFixture<RankingPage>;
 
-  const RANKING_URL = '/discover/ranking';
-
-  const create = async (opzioni: { iscritto?: boolean; aperta?: boolean; url?: string } = {}) => {
+  const create = async (opzioni: { iscritto?: boolean; aperta?: boolean } = {}) => {
     TestBed.inject(SessionService).setAuthenticated(opzioni.iscritto ?? true);
     if (opzioni.aperta ?? true) TestBed.inject(WeeklyPackService).open();
-    const harness = await RouterTestingHarness.create();
-    component = await harness.navigateByUrl(opzioni.url ?? RANKING_URL, RankingPage);
-    fixture = harness.fixture;
-    html = harness.routeNativeElement as HTMLElement;
+    fixture = TestBed.createComponent(RankingPage);
+    html = fixture.nativeElement;
     await fixture.whenStable();
   };
   const item = (n: number) =>
@@ -33,13 +27,14 @@ describe('RankingPage', () => {
   beforeEach(async () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
-      providers: [provideRouter([{ path: 'discover/ranking', component: RankingPage }])],
+      imports: [RankingPage],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
   it('viene creata', async () => {
     await create();
-    expect(component).toBeTruthy();
+    expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('ha un pulsante per tornare a Scopri', async () => {
@@ -110,12 +105,6 @@ describe('RankingPage', () => {
   });
 
   describe('vista Carte', () => {
-    it("si apre direttamente dall'indirizzo con ?view=cards", async () => {
-      await create({ url: `${RANKING_URL}?view=cards` });
-      expect(html.querySelector('app-card-fan')).not.toBeNull();
-      expect(item(1).getAttribute('aria-pressed')).toBe('true');
-    });
-
     it('mostra il ventaglio', async () => {
       await create();
       await openCards();
@@ -124,28 +113,30 @@ describe('RankingPage', () => {
       expect(html.textContent).toContain('common.tapCardHint');
     });
 
-    it("senza parametro nell'indirizzo parte dall'elenco", async () => {
+    it("parte dall'elenco", async () => {
       await create();
       expect(html.querySelector('app-comic-rank-card')).not.toBeNull();
       expect(html.querySelector('app-card-fan')).toBeNull();
     });
 
-    it("con un valore sconosciuto in ?view= parte dall'elenco", async () => {
-      await create({ url: `${RANKING_URL}?view=altro` });
-      expect(html.querySelector('app-comic-rank-card')).not.toBeNull();
-    });
-
-    it("scegliendo le carte mette ?view=cards nell'indirizzo", async () => {
+    it('uscendo e rientrando nella classifica ritrova la vista Carte', async () => {
       await create();
       await openCards();
-      expect(TestBed.inject(Router).url).toBe(`${RANKING_URL}?view=cards`);
+      fixture.destroy();
+
+      await create();
+      expect(html.querySelector('app-card-fan')).not.toBeNull();
+      expect(item(1).getAttribute('aria-pressed')).toBe('true');
     });
 
-    it("tornando all'elenco toglie il parametro dall'indirizzo", async () => {
-      await create({ url: `${RANKING_URL}?view=cards` });
+    it("tornando all'elenco la sceglie anche per la prossima visita", async () => {
+      await create();
+      await openCards();
       item(0).click();
       await fixture.whenStable();
-      expect(TestBed.inject(Router).url).toBe(RANKING_URL);
+      fixture.destroy();
+
+      await create();
       expect(html.querySelector('app-comic-rank-card')).not.toBeNull();
     });
 
