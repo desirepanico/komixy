@@ -51,6 +51,7 @@ Per aggiungere una feature nuova:
 - Icone: `@ng-icons/material-symbols` (`<ng-icon name="matXxxOutline" />`, registrate in `provideIcons`); i loghi dei marchi (Google, Apple) da `@ng-icons/simple-icons` (`simpleGoogle`, `simpleApple`), mai SVG scritti a mano nei template.
 - Traduzioni: Transloco, file in `public/i18n/` (lingua `it`). Regole in `.claude/rules/i18n.md`.
 - Una regola si scrive in un solo posto, in `CLAUDE.md` o in `.claude/rules/`: se esiste già, negli altri file si rimanda senza ripeterla. `CLAUDE.md` riassume e rimanda, `docs/` spiega ma non definisce regole.
+- Lingua: commenti, messaggi di commit, testi, `CLAUDE.md`, `docs/` e `.claude/` in italiano; gli identificatori nel codice (funzioni, classi, variabili, parametri, proprietà) in inglese.
 - Commenti nel codice e messaggi di commit in italiano. Commenti solo dove il codice non basta: regole in `.claude/rules/commenti.md`.
 - Swipe tra pagine: la lista delle pagine principali è `MAIN_PAGES` in `shared/constants/navigation.const.ts` (usata da nav mobile, swipe e transizioni). Le zone che scorrono in orizzontale devono avere `data-no-swipe`.
 
