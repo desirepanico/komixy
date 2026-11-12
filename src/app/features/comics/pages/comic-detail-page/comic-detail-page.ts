@@ -26,10 +26,7 @@ import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 import { WeeklyRankingService } from '@shared/services/weekly-ranking/weekly-ranking.service';
 
-/**
- * Dettaglio di un volume. Un ospite lo vede ma non può salvarlo in lista: al posto del bottone
- * c'è l'invito a iscriversi. La posizione in classifica compare solo a busta aperta (niente spoiler).
- */
+/** La posizione in classifica compare solo a busta aperta (niente spoiler). */
 @Component({
   selector: 'app-comic-detail-page',
   imports: [RouterLink, TranslocoPipe, NgIcon, Button, EmptyState, Message, Skeleton, Tag],

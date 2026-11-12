@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
-/** Ogni feature porta le sue rotte (`routes/<nome>.routes.ts`, relative): qui si montano sui loro percorsi. */
+/** Ogni feature porta le sue rotte relative: qui si montano sui loro percorsi */
 export const routes: Routes = [
   // L'app parte dalla login; dopo l'accesso si arriva a Scopri (o alla pagina richiesta)
   {

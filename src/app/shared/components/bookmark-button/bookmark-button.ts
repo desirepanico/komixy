@@ -8,8 +8,7 @@ import { SessionService } from '../../services/session/session.service';
 import { ToggleButton } from '../toggle-button/toggle-button';
 
 /**
- * Segnalibro di un fumetto (l'«In lista» delle card). Per gli iscritti aggiunge e toglie dalla lista;
- * per gli ospiti ha il lucchetto e porta all'invito a iscriversi.
+ * Segnalibro di un fumetto; per gli ospiti è un lucchetto che porta all'iscrizione.
  *   <app-bookmark-button comicId="w1" class="absolute right-2 top-2 z-10" />
  */
 @Component({

@@ -115,6 +115,40 @@ module.exports = defineConfig(
     },
   },
   ...featureRules('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),
+  // Regole di .claude/rules/signals.md: lo stato è sempre in un signal e gli observable diventano signal
+  {
+    files: ['src/app/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'PropertyDefinition[readonly!=true][static!=true]',
+          message:
+            'Lo stato è un signal (signal<T>()), mai una proprietà modificabile: aggiungi readonly e usa un signal.',
+        },
+        {
+          selector: "CallExpression[callee.property.name='subscribe']",
+          message:
+            'Niente subscribe(): usa toSignal() per mostrare un observable e firstValueFrom() per una richiesta.',
+        },
+      ],
+    },
+  },
+  // I provider di avvio reagiscono agli eventi del router con un effetto sul DOM, non su uno stato
+  {
+    files: ['src/app/core/providers/**/*.ts'],
+    ignores: ['**/*.spec.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'PropertyDefinition[readonly!=true][static!=true]',
+          message: 'Lo stato è un signal (signal<T>()), mai una proprietà modificabile.',
+        },
+      ],
+    },
+  },
   {
     files: ['**/*.html'],
     extends: [
@@ -131,6 +165,13 @@ module.exports = defineConfig(
       // variante dichiarata con @custom-variant in tailwind.css
       'better-tailwindcss/no-unknown-classes': ['warn', { ignore: ['^glass-', '^dark$'] }],
       '@angular-eslint/template/prefer-control-flow': 'error',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "BindingPipe[name='async']",
+          message: 'Niente pipe async: nel componente usa toSignal() e nel template chiama il signal.',
+        },
+      ],
       // Le copertine arrivano da URL esterni: NgOptimizedImage non serve ovunque
       '@angular-eslint/template/prefer-ngsrc': 'off',
     },

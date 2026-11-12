@@ -6,8 +6,8 @@ import { computed, DOCUMENT, inject, Injectable, signal } from '@angular/core';
 })
 export class ViewportService {
   private readonly window = inject(DOCUMENT).defaultView;
-  private readonly width = signal<number>(this.window?.innerWidth ?? 0);
 
+  private readonly width = signal<number>(this.window?.innerWidth ?? 0);
   readonly isDesktop = computed(() => this.width() >= 1024);
   readonly isMobile = computed(() => this.width() < 768);
   readonly isTablet = computed(() => this.width() >= 768 && this.width() < 1024);

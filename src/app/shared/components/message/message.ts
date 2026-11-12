@@ -11,16 +11,9 @@ import { MESSAGE_STYLES } from '../../constants/ui.const';
 import { MessageSeverity } from '../../models/message.model';
 
 /**
- * Messaggio fisso (non sparisce da solo, a differenza del toast) per info, successo, avvisi ed errori.
- * Input: `severity` (il tono), `label` (il testo, già tradotto) e `icon` (se si vuole un'icona diversa
- * da quella del tono: va registrata con `provideIcons` da chi lo usa). Se serve altro, per esempio un
- * link dopo il testo, si mette come contenuto. Errori e avvisi sono annunciati subito (`role="alert"`),
- * gli altri con calma (`role="status"`).
- *
- *   <app-message severity="warn" [label]="'form.warnText' | transloco" />
- *   <app-message severity="primary" icon="matLockOutline" [label]="testo">
- *     <a routerLink="/login">Iscriviti</a>
- *   </app-message>
+ * Messaggio fisso (a differenza del toast non sparisce). Il contenuto viene dopo il testo, es. un link;
+ * un `icon` diverso va registrato con `provideIcons` da chi lo usa.
+ *   <app-message severity="primary" icon="matLockOutline" [label]="text"><a routerLink="/login">Iscriviti</a></app-message>
  */
 @Component({
   selector: 'app-message',
@@ -44,7 +37,7 @@ export class Message {
   protected readonly role = computed(() =>
     this.severity() === 'warn' || this.severity() === 'error' ? 'alert' : 'status',
   );
-  /** Il tono non si capisce solo dal colore e dall'icona: gli screen reader lo sentono dal testo nascosto */
+  /** Il tono è anche testo nascosto: non si capisce solo da colore e icona */
   protected readonly toneKey = computed(() =>
     this.severity() === 'primary' ? null : `message.${this.severity()}`,
   );

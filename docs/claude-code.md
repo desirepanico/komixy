@@ -23,8 +23,8 @@ Le regole di dettaglio stanno in `.claude/rules/` (si caricano quando Claude toc
 
 | File | Argomento | Si carica su (`paths:`) |
 |---|---|---|
-| `angular.md` | Angular e TypeScript | `src/app/**/*.ts` e `*.html` |
-| `signals.md` | Signal di Angular 22 | `src/app/**/*.ts` e `*.html` |
+| `angular.md` | Angular e TypeScript, cartelle, nomi, ordine dei membri di classe | `src/app/**/*.ts` e `*.html` |
+| `signals.md` | Signal di Angular 22: tutto lo stato è un signal, niente `subscribe()` né pipe `async` | `src/app/**/*.ts` e `*.html` |
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
 | `query-params.md` | Stato della pagina nell'indirizzo: lettura, scrittura dal servizio di navigazione, ordine parametro → ultima scelta → predefinito | `src/app/**/*.ts` e `*.html` |

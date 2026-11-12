@@ -2,10 +2,7 @@ import { inject, provideAppInitializer } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { mainPageIndex } from './main-page-index/main-page-index';
 
-/**
- * Imposta `data-nav-direction` ("forward" | "back") su <html> quando si passa da una pagina
- * principale a un'altra. Il CSS in public/theme/page-transition.css lo usa per far scorrere la pagina.
- */
+/** Imposta `data-nav-direction` ("forward" | "back") su <html>: lo usa `page-transition.css`. */
 export function provideNavDirection() {
   return provideAppInitializer(() => {
     const router = inject(Router);

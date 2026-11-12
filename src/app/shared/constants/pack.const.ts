@@ -34,7 +34,7 @@ export const LOGO_URL = '/img/logo/komixy-logo.png';
 export const PACK_CARD_WIDTH_PX = 192;
 export const PACK_CARD_HEIGHT_PX = 320;
 
-/** Sotto questa scala i testi della carta non si leggono: si mostrano la copertina e un numero di posizione grande */
+/** Sotto questa scala i testi non si leggono: copertina e numero di posizione */
 export const PACK_CARD_COMPACT_BELOW = 0.7;
 
 // ─── Carta in primo piano (spotlight) ────────────────────────────────────────
@@ -60,17 +60,17 @@ export const CARD_FAN_BASE_WIDTH_PX = 384;
 export const CARD_FAN_BASE_HEIGHT_PX = 224;
 export const CARD_FAN_BASE_TOP_PX = 24;
 
-/** Con un contenitore più stretto di `CARD_FAN_SHRINK_BELOW_PX` si rimpicciolisce, fino a `CARD_FAN_MIN_GROWTH` */
+/** Sotto `CARD_FAN_SHRINK_BELOW_PX` di contenitore si rimpicciolisce, fino a `CARD_FAN_MIN_GROWTH` */
 export const CARD_FAN_SHRINK_BELOW_PX = 320;
 export const CARD_FAN_MIN_GROWTH = 0.5;
 
-/** Da questa larghezza del contenitore comincia a crescere, fino a `CARD_FAN_MAX_GROWTH` volte la base */
+/** Da questa larghezza cresce, fino a `CARD_FAN_MAX_GROWTH` volte la base */
 export const CARD_FAN_GROW_FROM_PX = 430;
 export const CARD_FAN_MAX_GROWTH = 2.2;
 
 // ─── Pannello «Top» di Scopri ────────────────────────────────────────────────
 
-/** Le carte della classifica mostrate accanto alla busta aperta: al massimo 10, quelle che stanno intere nella larghezza */
+/** Carte mostrate accanto alla busta aperta: al massimo 10, quelle che stanno intere */
 export const WEEKLY_TOP_COUNT = 10;
 
 /** Scala delle carte nel pannello (96×160 px) e distanza tra loro */

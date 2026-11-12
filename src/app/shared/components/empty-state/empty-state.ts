@@ -2,11 +2,8 @@ import { Component, input } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 
 /**
- * Segnaposto centrato con icona, titolo e frase (pagine non ancora pronte, liste vuote).
  * Testi già tradotti; l'icona va registrata con `provideIcons` dalla pagina che lo usa.
- *
- *   <app-empty-state icon="matPersonOutline" [title]="'profile.comingSoon' | transloco"
- *     [description]="'profile.comingSoonHint' | transloco" />
+ *   <app-empty-state icon="matPersonOutline" [title]="..." [description]="..." />
  */
 @Component({
   selector: 'app-empty-state',

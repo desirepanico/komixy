@@ -1,12 +1,10 @@
-import { DestroyRef, Directive, inject, input, output } from '@angular/core';
+import { DestroyRef, Directive, inject, input, output, signal } from '@angular/core';
 import { IGNORED_TARGETS } from '../../constants/navigation.const';
 import { detectSwipe } from './detect-swipe/detect-swipe';
 
 /**
- * Emette `swipeLeft` e `swipeRight` sui gesti touch/penna (non col mouse).
- * Per escludere una zona (es. una lista che scorre) aggiungi `data-no-swipe`.
- *
- *   <main appSwipe (swipeLeft)="avanti()" (swipeRight)="indietro()">
+ * Swipe di pagina sui gesti touch e penna, non col mouse; `data-no-swipe` esclude una zona.
+ *   <main appSwipe (swipeLeft)="next()" (swipeRight)="back()">
  */
 @Directive({
   selector: '[appSwipe]',
@@ -19,12 +17,15 @@ import { detectSwipe } from './detect-swipe/detect-swipe';
 export class Swipe {
   /** Distanza minima in pixel per riconoscere lo swipe */
   public readonly swipeThreshold = input<number>(70);
-
   public readonly swipeLeft = output<void>();
   public readonly swipeRight = output<void>();
 
-  private startX: number | null = null;
-  private startY: number | null = null;
+  private readonly start = signal<{ x: number; y: number } | null>(null);
+  private readonly cleanup = signal<(() => void) | null>(null);
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.releaseClick());
+  }
 
   protected onPointerDown(event: PointerEvent): void {
     this.releaseClick();
@@ -36,16 +37,15 @@ export class Swipe {
       return;
     }
 
-    this.startX = event.clientX;
-    this.startY = event.clientY;
+    this.start.set({ x: event.clientX, y: event.clientY });
   }
-
   protected onPointerUp(event: PointerEvent): void {
-    if (this.startX === null || this.startY === null) return;
+    const start = this.start();
+    if (!start) return;
 
     const direction = detectSwipe(
-      event.clientX - this.startX,
-      event.clientY - this.startY,
+      event.clientX - start.x,
+      event.clientY - start.y,
       this.swipeThreshold(),
     );
     this.reset();
@@ -56,8 +56,7 @@ export class Swipe {
     if (direction === 'left') this.swipeLeft.emit();
     else this.swipeRight.emit();
   }
-
-  /** Se il dito finisce sullo stesso link da cui è partito, il browser genera un click: va annullato. */
+  /** Il browser genera un click se il dito finisce sul link da cui è partito: va annullato */
   private suppressNextClick(): void {
     this.releaseClick();
     const block = (event: Event) => {
@@ -66,21 +65,16 @@ export class Swipe {
     };
     document.addEventListener('click', block, { capture: true, once: true });
     const timer = setTimeout(() => this.releaseClick(), 400);
-    this.releaseClick = () => {
+    this.cleanup.set(() => {
       clearTimeout(timer);
       document.removeEventListener('click', block, { capture: true });
-      this.releaseClick = () => undefined;
-    };
+    });
   }
-
-  private releaseClick: () => void = () => undefined;
-
-  constructor() {
-    inject(DestroyRef).onDestroy(() => this.releaseClick());
+  private releaseClick(): void {
+    this.cleanup()?.();
+    this.cleanup.set(null);
   }
-
   protected reset(): void {
-    this.startX = null;
-    this.startY = null;
+    this.start.set(null);
   }
 }

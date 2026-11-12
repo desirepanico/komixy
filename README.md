@@ -70,19 +70,19 @@ Non ci sono librerie di componenti: PrimeNG è stato rimosso e non va reintrodot
 
 ### File di configurazione nella radice
 
-| File                               | Cosa configura                                                         |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| `angular.json`, `tsconfig*.json`   | Progetto Angular, alias `@core/*`, `@shared/*`, `@features/*`, test    |
-| `.postcssrc.json`                  | Plugin PostCSS di Tailwind                                             |
-| `eslint.config.js`                 | ESLint                                                                 |
-| `package.json` (chiave `prettier`) | Prettier con il plugin Tailwind                                        |
-| `.editorconfig`                    | Indentazione a 2 spazi, apici singoli, fine riga                       |
-| `knip.json`                        | Knip                                                                   |
-| `vitest-base.config.mts`           | Ripristino automatico di mock e globali nei test                       |
-| `vercel.json`                      | Build, cartella di output, rewrite a `index.html`, deploy solo manuali |
-| `.github/workflows/ci.yml`         | CI: `npm ci`, lint, knip, build e test su push e pull request          |
-| `.vscode/`                         | Estensioni consigliate, impostazioni dell'editor e di i18n Ally        |
-| `scripts/`                         | `ensure-deps.mjs` (installa le dipendenze) e `check-specs.mjs` (spec)  |
+| File                               | Cosa configura                                                                                        |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `angular.json`, `tsconfig*.json`   | Progetto Angular, alias `@core/*`, `@shared/*`, `@features/*`, test                                   |
+| `.postcssrc.json`                  | Plugin PostCSS di Tailwind                                                                            |
+| `eslint.config.js`                 | ESLint                                                                                                |
+| `package.json` (chiave `prettier`) | Prettier con il plugin Tailwind                                                                       |
+| `.editorconfig`                    | Indentazione a 2 spazi, apici singoli, fine riga                                                      |
+| `knip.json`                        | Knip                                                                                                  |
+| `vitest-base.config.mts`           | Ripristino automatico di mock e globali nei test                                                      |
+| `vercel.json`                      | Build, cartella di output, rewrite a `index.html`, deploy solo manuali                                |
+| `.github/workflows/ci.yml`         | CI: `npm ci`, lint, knip, build e test su push e pull request                                         |
+| `.vscode/`                         | Estensioni consigliate, impostazioni dell'editor e di i18n Ally                                       |
+| `scripts/`                         | `ensure-deps.mjs` (dipendenze), `check-specs.mjs` (spec), `check-class-order.mjs` (ordine dei membri) |
 
 ### Claude Code
 

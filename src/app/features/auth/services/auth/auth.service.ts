@@ -26,7 +26,7 @@ export class AuthService {
 
   public readonly loggedUser = this._loggedUser.asReadonly();
 
-  /** Chi non ha fatto l'accesso è un ospite: lo stato sta in `SessionService`, che le altre feature possono leggere */
+  /** Lo stato sta in `SessionService`, che le altre feature possono leggere */
   public readonly isAuthenticated = this.session.isAuthenticated;
 
   public login(user: LoggedUser): void {

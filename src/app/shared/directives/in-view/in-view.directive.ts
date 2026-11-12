@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 
 /**
- * Aggiunge l'attributo `data-in-view` all'elemento la prima volta che entra nello schermo.
- * Serve a far partire le animazioni solo quando si vedono:
- *
+ * Aggiunge `data-in-view` la prima volta che l'elemento entra nello schermo, per far partire le animazioni.
  *   <span appInView class="opacity-0 data-in-view:animate-xxx">
  */
 @Directive({

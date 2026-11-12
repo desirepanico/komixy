@@ -20,20 +20,17 @@ export class WeeklyPackService {
   private readonly today = dateInZone(new Date(), WEEKLY_PACK_TIME_ZONE);
   private readonly current = isoWeek(this.today);
   private readonly weekKey = `${this.current.year}-W${this.current.week}`;
+  public readonly daysUntilNextPack: number = daysUntilNextWeek(this.today);
 
   // TODO(api): l'apertura la registra il server, una per utente (user_id) o per ospite (guest_id)
   private readonly opened = signal<OpenedPack | null>(this.read());
-
   /** Numero della settimana ISO, mostrato come «Settimana 46» */
   public readonly weekNumber: number = this.current.week;
-  public readonly daysUntilNextPack: number = daysUntilNextWeek(this.today);
-
   public readonly isOpened = computed(() => this.opened()?.week === this.weekKey);
   public readonly openedAt = computed(() => {
     const opened = this.opened();
     return opened?.week === this.weekKey ? new Date(opened.openedAt) : null;
   });
-
   /** Le carte dalla 10ª alla 1ª: nell'ordine in cui si girano */
   public readonly deck = computed<RankingEntry[]>(() => [...this.ranking.entries()].reverse());
   /** Una carta è rara se è un'edizione speciale (variant, deluxe, limited) */
@@ -48,7 +45,6 @@ export class WeeklyPackService {
     this.opened.set(opened);
     this.write(opened);
   }
-
   /** Giorno dell'apertura, es. «Lun 10 nov» */
   public openedOnLabel(lang: string): string | null {
     const openedAt = this.openedAt();
@@ -63,7 +59,6 @@ export class WeeklyPackService {
       .replace(/\./g, '');
     return label.charAt(0).toUpperCase() + label.slice(1);
   }
-
   private read(): OpenedPack | null {
     try {
       const raw = localStorage.getItem(WEEKLY_PACK_STORAGE_KEY);
@@ -76,7 +71,6 @@ export class WeeklyPackService {
     }
     return null;
   }
-
   private write(opened: OpenedPack): void {
     try {
       localStorage.setItem(WEEKLY_PACK_STORAGE_KEY, JSON.stringify(opened));

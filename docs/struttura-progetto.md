@@ -34,6 +34,7 @@ public/
 └── fonts/
 scripts/
 ├── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
+├── check-class-order.mjs      controllo dell'ordine dei membri di classe, lanciato da `npm run lint` (`--fix` riordina)
 └── ensure-deps.mjs            installa le dipendenze se sono cambiate, lanciato da solo prima di start, build, test, lint e knip
 vitest-base.config.mts         opzioni di Vitest per i test (ripristino automatico di mock e globali)
 knip.json                      configurazione di Knip (file, export e dipendenze inutilizzati), lanciato da `npm run knip`

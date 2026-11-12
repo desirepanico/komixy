@@ -8,7 +8,7 @@
 | `npm run build`           | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
 | `npm run watch`           | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
 | `npm test`                | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
-| `npm run lint`            | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec)                                                                        |
+| `npm run lint`            | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) e `scripts/check-class-order.mjs` (ordine dei membri di classe)                                                                        |
 | `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare |
 | `npm run knip`            | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
 | `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
@@ -74,7 +74,9 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 
-Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test).
+Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test) e `scripts/check-class-order.mjs`.
+
+`scripts/check-class-order.mjs` controlla che in ogni classe di `src/app` (spec esclusi) i membri stiano nell'ordine `inject()`, altre proprietà, query, `input`/`output`, signal, `constructor`, metodi; con `--fix` li riordina (poi `npx prettier --write`). Usa il compilatore TypeScript per leggere le classi. In più ESLint rifiuta le proprietà non `readonly`, `subscribe()` fuori da `core/providers` e la pipe `async` nei template (`no-restricted-syntax`, regole in `.claude/rules/signals.md`).
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
 

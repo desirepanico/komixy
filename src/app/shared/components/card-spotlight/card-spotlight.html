@@ -42,7 +42,7 @@
       [attr.aria-label]="(faceUp() ? 'weeklyPack.nextCard' : 'weeklyPack.flipCard') | transloco"
       (click)="cardPress.emit()"
     >
-      <!-- Una carta nuova nasce già nel suo verso: se si riusasse la stessa carta, passando alla prossima si vedrebbe il suo fronte girare verso il dorso -->
+      <!-- Una carta nuova per ogni voce: riusando la stessa si vedrebbe il fronte girarsi verso il dorso -->
       @for (item of [entry()]; track item.comic.id) {
         <app-pack-card
           [entry]="item"

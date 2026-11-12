@@ -13,7 +13,7 @@ import { TOAST_STYLES } from '../../constants/ui.const';
 import { ToastSeverity } from '../../models/toast.model';
 import { ToastService } from '../../services/toast/toast.service';
 
-/** Va montato una sola volta, in `app.html`: mostra i messaggi di `ToastService` in alto (a tutta larghezza su mobile, a destra da 768px). */
+/** Va montato una sola volta, in `app.html`. */
 @Component({
   selector: 'app-toast',
   imports: [TranslocoPipe, NgIcon, NgTemplateOutlet],

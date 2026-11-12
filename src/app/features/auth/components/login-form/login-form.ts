@@ -1,17 +1,10 @@
 import { Component, inject, output, signal } from '@angular/core';
-import {
-  email,
-  form,
-  FormField,
-  FormRoot,
-  minLength,
-  required,
-  TreeValidationResult,
-} from '@angular/forms/signals';
+import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
 import { simpleApple, simpleGoogle } from '@ng-icons/simple-icons';
 import { RouterLink } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
@@ -38,18 +31,17 @@ import { ApiError, AuthService } from '../../services/auth/auth.service';
   templateUrl: './login-form.html',
 })
 export class LoginForm {
-  public readonly loginSuccess = output<void>();
-  public readonly socialLogin = output<SocialProvider>();
-  public readonly guestAccess = output<void>();
-
   protected readonly navigation = inject(AuthNavigationService);
   private readonly authService = inject(AuthService);
   private readonly toastService = inject(ToastService);
 
   protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
-  private readonly model = signal<LoginCredentials>({ email: '', password: '' });
+  public readonly loginSuccess = output<void>();
+  public readonly socialLogin = output<SocialProvider>();
+  public readonly guestAccess = output<void>();
 
+  private readonly model = signal<LoginCredentials>({ email: '', password: '' });
   protected readonly form = form(
     this.model,
     (path) => {
@@ -60,28 +52,24 @@ export class LoginForm {
     },
     {
       submission: {
-        action: () =>
-          new Promise<TreeValidationResult>((resolve) => {
-            this.authService.authenticate(this.model()).subscribe({
-              next: () => {
-                this.onLoginSuccess();
-                resolve(undefined);
-              },
-              error: (error: unknown) => {
-                this.onLoginError(error);
-                resolve(undefined);
-              },
-            });
-          }),
-        // Dopo un invio fallito il focus va al primo campo con l'errore, così lo trovano anche tastiera e screen reader
+        action: async () => {
+          try {
+            await firstValueFrom(this.authService.authenticate(this.model()));
+            this.onLoginSuccess();
+          } catch (error) {
+            this.onLoginError(error);
+          }
+          return undefined;
+        },
+        // Dopo un invio fallito il focus va al primo campo con l'errore
         onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
       },
     },
   );
+
   private onLoginSuccess(): void {
     this.loginSuccess.emit();
   }
-
   // L'errore dell'API non è di un campo: si mostra in un toast
   private onLoginError(error: unknown): void {
     if (error instanceof ApiError && error.status === 401) {

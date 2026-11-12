@@ -32,10 +32,7 @@ import { PackTear } from '../../components/pack-tear/pack-tear';
 /** sealed = busta da strappare, cards = si girano le carte una alla volta, collection = tutte girate */
 type Phase = 'sealed' | 'cards' | 'collection';
 
-/**
- * Apertura della busta a schermo intero: si strappa, si girano le 10 carte dalla 10ª alla 1ª
- * e si arriva alla raccolta a ventaglio. L'apertura si registra allo strappo.
- */
+/** L'apertura si registra allo strappo. Si girano le 10 carte dalla 10ª alla 1ª. */
 @Component({
   selector: 'app-pack-opening-page',
   imports: [
@@ -64,22 +61,20 @@ export class PackOpeningPage {
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = inject(Injector);
 
-  private readonly primary = viewChild('primary', { read: ElementRef });
-
   /** Una busta già aperta non si riapre: si rimanda alla revisione della settimana */
   protected readonly alreadyOpened = this.pack.isOpened();
+
+  private readonly primary = viewChild('primary', { read: ElementRef });
 
   protected readonly phase = signal<Phase>('sealed');
   protected readonly torn = signal<boolean>(false);
   protected readonly index = signal<number>(0);
   protected readonly faceUp = signal<boolean>(false);
   protected readonly selected = signal<RankingEntry | null>(null);
-
   protected readonly total = computed(() => this.pack.deck().length);
   protected readonly current = computed(() => this.pack.deck()[this.index()]);
   protected readonly previous = computed(() => this.pack.deck().slice(0, this.index()));
   protected readonly isLast = computed(() => this.index() === this.total() - 1);
-
   protected readonly flippedCount = computed(() => {
     switch (this.phase()) {
       case 'collection':
@@ -90,7 +85,6 @@ export class PackOpeningPage {
         return 0;
     }
   });
-
   protected readonly currentLink = computed(() =>
     this.comicsNavigation.detailLink(this.current().comic.id),
   );
@@ -112,7 +106,6 @@ export class PackOpeningPage {
     const timer = setTimeout(() => this.goTo('cards'), PACK_TEAR_ANIMATION_MS);
     this.destroyRef.onDestroy(() => clearTimeout(timer));
   }
-
   /** Un tocco sulla carta o sul bottone principale: prima la gira, poi passa alla prossima */
   protected onPrimary(): void {
     if (!this.faceUp()) {
@@ -124,17 +117,14 @@ export class PackOpeningPage {
       this.faceUp.set(false);
     }
   }
-
   protected select(entry: RankingEntry): void {
     this.selected.set(entry);
     this.focusPrimary();
   }
-
   protected backToCollection(): void {
     this.selected.set(null);
     this.focusPrimary();
   }
-
   /** Esc chiude un livello alla volta: prima il dettaglio della carta scelta, poi la pagina */
   protected close(): void {
     if (this.selected()) {
@@ -143,13 +133,11 @@ export class PackOpeningPage {
     }
     void this.discoverNavigation.goToDiscover();
   }
-
   private goTo(phase: Phase): void {
     this.phase.set(phase);
     this.focusPrimary();
   }
-
-  /** Il bottone che aveva il focus sparisce con la fase: il focus passa al bottone principale della nuova */
+  /** Il bottone con il focus sparisce con la fase: il focus passa al principale della nuova */
   private focusPrimary(): void {
     afterNextRender(() => (this.primary()?.nativeElement as HTMLElement | undefined)?.focus(), {
       injector: this.injector,

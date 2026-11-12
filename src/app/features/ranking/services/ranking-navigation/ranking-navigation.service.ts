@@ -15,7 +15,7 @@ export class RankingNavigationService {
     return this.router.navigate(this.rankingLink);
   }
 
-  /** Mette la vista nell'indirizzo (`?view=cards` o `?view=list`), senza aggiungere una voce alla cronologia */
+  /** Mette la vista nell'indirizzo senza aggiungere una voce alla cronologia */
   public goToView(view: RankingView): Promise<boolean> {
     return this.router.navigate(this.rankingLink, {
       queryParams: { [RANKING_VIEW_QUERY_PARAM]: view },

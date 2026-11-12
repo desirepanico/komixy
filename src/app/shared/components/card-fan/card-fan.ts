@@ -28,11 +28,8 @@ import { packCardRadius } from '../../utils/pack-card-radius/pack-card-radius';
 import { fanAngle } from './fan-layout/fan-layout';
 
 /**
- * Le carte della busta a ventaglio: la 1ª a destra e in primo piano, l'ultima a sinistra.
- * Ogni carta è un bottone (Tab per scorrerle, Invio per sceglierla). Il ventaglio si apre da solo
- * appena compare; con «riduci movimento» compare già aperto. Su tablet e desktop si ingrandisce con
- * la larghezza disponibile (le carte, fino a una certa scala, mostrano solo copertina e posizione).
- *   <app-card-fan [entries]="carte" (cardSelect)="scegli($event)" />
+ * Carte a ventaglio, la 1ª davanti. Ogni carta è un bottone; con «riduci movimento» compare già aperto.
+ *   <app-card-fan [entries]="cards" (cardSelect)="select($event)" />
  */
 @Component({
   selector: 'app-card-fan',
@@ -49,7 +46,7 @@ export class CardFan {
   /** Larghezza del contenitore, 0 finché non è stata misurata */
   private readonly hostWidth = signal<number>(0);
 
-  /** Scala del ventaglio: 1 sui telefoni, fino a `CARD_FAN_MAX_GROWTH` su tablet e desktop, sotto 1 solo in un contenitore stretto */
+  /** 1 sui telefoni, fino a `CARD_FAN_MAX_GROWTH` su tablet e desktop, sotto 1 solo in un contenitore stretto */
   protected readonly growth = computed(() => {
     const width = this.hostWidth();
     if (width === 0) return 1;

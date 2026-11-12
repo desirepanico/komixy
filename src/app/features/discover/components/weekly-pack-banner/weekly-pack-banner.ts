@@ -15,11 +15,7 @@ import { BookmarksService } from '@shared/services/bookmarks/bookmarks.service';
 import { SessionService } from '@shared/services/session/session.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
-/**
- * Busta della settimana in Scopri: da aprire (con «Salta l'animazione» per chi non vuole il 3D)
- * oppure, una volta aperta, una striscia con il pulsante «Rivedi la settimana».
- * Gli ospiti possono aprirla ma non salvare le carte in lista.
- */
+/** Gli ospiti possono aprire la busta ma non salvare le carte in lista. */
 @Component({
   selector: 'app-weekly-pack-banner',
   imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, Message, Tag],

@@ -4,7 +4,7 @@
 </label>
 <ng-content />
 @if (error(); as error) {
-  <!-- Nel messaggio il nome sta a metà frase: iniziale minuscola («Il campo email è obbligatorio») -->
+  <!-- Il nome sta a metà frase: iniziale minuscola -->
   @let nameInMessage = name.charAt(0).toLowerCase() + name.slice(1);
   <!-- L'icona affianca il rosso: l'errore non si riconosce solo dal colore -->
   <p [id]="inputId() + '-error'" class="flex items-start gap-1.5 text-sm text-red-400" role="alert">

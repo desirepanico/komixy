@@ -7,13 +7,12 @@ import { AppRoutes } from '../../models/app-routes.model';
  */
 @Injectable({ providedIn: 'root' })
 export class SessionService {
-  private readonly _isAuthenticated = signal<boolean>(false);
+  /** Come `AuthNavigationService.loginLink`, che qui non si può importare */
+  public readonly signUpLink: readonly string[] = ['/', AppRoutes.Login];
 
+  private readonly _isAuthenticated = signal<boolean>(false);
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
   public readonly isGuest = computed(() => !this._isAuthenticated());
-
-  /** Dove si invita un ospite a iscriversi: stessa pagina di `AuthNavigationService.loginLink`, che qui non si può importare */
-  public readonly signUpLink: readonly string[] = ['/', AppRoutes.Login];
 
   public setAuthenticated(value: boolean): void {
     this._isAuthenticated.set(value);

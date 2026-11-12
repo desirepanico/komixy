@@ -6,17 +6,9 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
 type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
 
 /**
- * Campo di testo con nome del campo ed errore (`app-field-wrapper`), che si lega ai Signal Forms con
- * `[formField]`. `label` è una chiave Transloco; i messaggi d'errore li scrive il wrapper. Per le password c'è `app-input-password`.
- *
- * `implements FormValueControl` è il contratto dei controlli per `[formField]`: la direttiva scrive da sola
- * in `value` (a due vie con il modello del form) e in `disabled`; a runtime l'interfaccia non c'è, serve al
- * compilatore. La direttiva sta sullo stesso elemento: iniettandola (`formField`) si leggono errori e stato
- * «toccato» senza che il form li passi al componente.
- *
- * <app-input-text
- *   label="login.email" inputId="login-email" type="email" placeholder="login.emailPlaceholder"
- *   [formField]="form.email" />
+ * Si lega ai Signal Forms con `[formField]`, che scrive in `value` e `disabled` (contratto `FormValueControl`,
+ * solo per il compilatore). Iniettando la direttiva si leggono errori e stato «toccato» senza passarli dal form.
+ *   <app-input-text label="login.email" inputId="login-email" placeholder="login.emailPlaceholder" [formField]="form.email" />
  */
 @Component({
   selector: 'app-input-text',
@@ -25,6 +17,10 @@ type InputType = 'text' | 'email' | 'tel' | 'url' | 'search';
   host: { class: 'block' },
 })
 export class InputText implements FormValueControl<string> {
+  private readonly formField = inject<FormField<string>>(FormField);
+
+  private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
+
   public readonly value = model<string>('');
   public readonly label = input.required<string>();
   public readonly inputId = input.required<string>();
@@ -32,11 +28,7 @@ export class InputText implements FormValueControl<string> {
   /** Chiave Transloco del segnaposto */
   public readonly placeholder = input.required<string>();
   public readonly autocomplete = input<string>('');
-
   public readonly disabled = input<boolean>(false);
-
-  private readonly formField = inject<FormField<string>>(FormField);
-  private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 
   /** L'errore si vede (e si annuncia) solo dopo che l'utente ha toccato il campo */
   protected readonly showError = computed(
@@ -50,7 +42,6 @@ export class InputText implements FormValueControl<string> {
   protected markAsTouched(): void {
     this.formField.state().markAsTouched();
   }
-
   public focus(options?: FocusOptions): void {
     this.field().nativeElement.focus(options);
   }

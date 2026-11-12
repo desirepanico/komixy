@@ -7,10 +7,7 @@ import { Brand } from '@shared/components/brand/brand';
 import { Hint } from '@shared/components/hint/hint';
 import { Tag } from '@shared/components/tag/tag';
 
-/**
- * Il movimento è sempre in loop e un bottone lo mette in pausa (WCAG 2.2.2); con `prefers-reduced-motion`
- * le copertine fanno solo uno spostamento minimo. I bagliori sono decorativi (`aria-hidden`).
- */
+/** Il movimento è in loop con un bottone di pausa (WCAG 2.2.2); con `prefers-reduced-motion` è minimo. */
 @Component({
   selector: 'app-login-volumes',
   imports: [Brand, Hint, NgIcon, NgOptimizedImage, Tag, TranslocoPipe],
@@ -21,7 +18,7 @@ import { Tag } from '@shared/components/tag/tag';
   host: { class: 'relative block max-lg:contents' },
 })
 export class LoginVolumes {
-  /** Ogni copertina ha la sua inclinazione e altezza; il ritardo alterna 0 e metà ciclo, così quando una sale l'altra scende */
+  /** Il ritardo alterna 0 e metà ciclo: quando una copertina sale, l'altra scende */
   protected readonly covers = [
     {
       id: 'one-piece',
@@ -69,7 +66,6 @@ export class LoginVolumes {
   protected toggleAnimation(): void {
     this.paused.update((value) => !value);
   }
-
   /**
    * Con il dito il primo tocco porta il volume in avanti e solo il secondo lo gira; con mouse e
    * tastiera il clic gira subito (il volume è già avanti con hover o focus).
@@ -83,7 +79,6 @@ export class LoginVolumes {
     this.selected.set(id);
     this.toggle(id);
   }
-
   private toggle(id: string): void {
     this.flipped.update((current) => {
       const next = new Set(current);

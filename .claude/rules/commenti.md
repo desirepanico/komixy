@@ -8,12 +8,12 @@ paths:
 
 # Regole sui commenti
 
-Un commento spiega il **perché**, mai il cosa: se leggendo il codice si capisce già cosa fa, non serve. Pochi commenti, nei punti dove chi legge si fermerebbe a chiedersi «perché così?».
+Un commento spiega il **perché**, mai il cosa: se leggendo il codice si capisce già cosa fa, non serve. Pochi commenti, brevi, solo dove chi legge si fermerebbe a chiedersi «perché così?» o «come si usa?». Quello che è intuitivo dal nome non si commenta.
 
 ## Dove sì
 
-- **JSDoc su componenti e direttive di `shared`**: a cosa servono e come si usano, con un esempio breve. Sugli `input()` solo se il valore non è evidente (unità, valori ammessi, effetto di `true`/`false`).
-- **Funzioni in `shared/utils` e logica con una regola di business**: una riga su cosa garantiscono o perché esistono.
+- **JSDoc su componenti e direttive di `shared`** solo se l'uso non è intuitivo: contenuto proiettato (`ng-content`), input che si combinano, un contratto particolare (un esempio breve basta). Non si scrive a cosa serve ciò che dice già il nome: un campo password, un logo, un tag, un bottone, un segnaposto non hanno bisogno di «Campo password con…». Sugli `input()` solo se il valore non è evidente (unità, valori ammessi, effetto di `true`/`false`).
+- **Funzioni in `shared/utils` e logica con una regola di business**: una riga su cosa garantiscono o perché esistono, solo se non lo dice il nome.
 - **Commento nel corpo del codice** solo per: un workaround, un vincolo del browser o di una libreria, una scelta di accessibilità (es. perché un link è stirato su tutta la card), un numero che sembra strano (soglie, moltiplicatori), un `catch` vuoto (perché si ignora l'errore).
 - **`TODO`** con formato fisso `// TODO(api): cosa manca`, così si ritrovano tutti con una ricerca. Dice cosa sostituire e con cosa (es. `PUT/DELETE /me/bookmarks/:comicId`), non «da sistemare».
 - **Template**: solo se la struttura non si capisce (accessibilità, ordine di Tab, perché un elemento è nascosto o duplicato, come reagisce il layout a un breakpoint).
@@ -31,7 +31,7 @@ Un commento spiega il **perché**, mai il cosa: se leggendo il codice si capisce
 
 ## Forma
 
-- Italiano, breve: una frase, al massimo due righe.
+- Italiano e **breve**: una frase, circa 100 caratteri; due righe solo se la ragione lo richiede. Niente elenchi, niente paragrafi: se serve spiegare di più, il codice è da semplificare o la spiegazione va in `docs/`.
 - Iniziale maiuscola, niente punto finale nei commenti `//` di una riga. Nei JSDoc di più righe le frasi hanno il loro punto.
 - Nei test il nome descrive il comportamento: si commenta solo un'impostazione non ovvia.
 

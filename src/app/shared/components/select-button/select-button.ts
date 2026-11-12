@@ -3,9 +3,8 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { SelectButtonOption } from '../../models/select-button.model';
 
 /**
- * Interruttore a voci (una sola attiva alla volta, come Elenco / Carte). Il valore si lega con `[(value)]`;
- * `label` è la chiave Transloco che dà un nome al gruppo e il testo di ogni voce è la sua `label`.
- *   <app-select-button label="ranking.viewLabel" [options]="viste" [(value)]="vista" />
+ * Scelta singola con `[(value)]`; `label` dà il nome al gruppo.
+ *   <app-select-button label="ranking.viewLabel" [options]="options" [(value)]="view" />
  */
 @Component({
   selector: 'app-select-button',

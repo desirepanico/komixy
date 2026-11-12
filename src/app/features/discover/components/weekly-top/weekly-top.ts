@@ -23,12 +23,7 @@ import {
 } from '@shared/constants/pack.const';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
-/**
- * Le carte della classifica della settimana in un pannello accanto alla busta aperta (su schermi larghi):
- * ne mostra tante quante ne stanno intere nella larghezza, dalla 1ª in poi, e non oltre la larghezza
- * che servirebbe per tutte. Ogni carta porta al dettaglio del volume.
- *   <app-weekly-top />
- */
+/** Mostra le carte che stanno intere nella larghezza del pannello, dalla 1ª in poi. */
 @Component({
   selector: 'app-weekly-top',
   imports: [RouterLink, TranslocoPipe, PackCard],
@@ -39,14 +34,14 @@ export class WeeklyTop {
   private readonly pack = inject(WeeklyPackService);
   private readonly comicsNavigation = inject(ComicsNavigationService);
 
-  private readonly list = viewChild.required<ElementRef<HTMLElement>>('list');
-  /** Larghezza della lista, 0 finché non è stata misurata */
-  private readonly listWidth = signal<number>(0);
-
   protected readonly cardScale = WEEKLY_TOP_CARD_SCALE;
   protected readonly cardRadius = packCardRadius(WEEKLY_TOP_CARD_SCALE);
   protected readonly gap = WEEKLY_TOP_GAP_PX;
 
+  private readonly list = viewChild.required<ElementRef<HTMLElement>>('list');
+
+  /** Larghezza della lista, 0 finché non è stata misurata */
+  private readonly listWidth = signal<number>(0);
   private readonly top = computed(() =>
     this.pack
       .deck()
@@ -54,7 +49,6 @@ export class WeeklyTop {
       .sort((a, b) => a.rank - b.rank)
       .map((entry) => ({ entry, link: this.comicsNavigation.detailLink(entry.comic.id) })),
   );
-
   /** Le carte che ci stanno intere nella larghezza misurata */
   protected readonly visible = computed(() => {
     const width = this.listWidth();
@@ -64,7 +58,6 @@ export class WeeklyTop {
         : WEEKLY_TOP_INITIAL_COUNT;
     return this.top().slice(0, Math.max(1, fit));
   });
-
   /** Oltre questa larghezza non servirebbe altro spazio: tutte le carte sono già in fila */
   protected readonly maxWidth = computed(() => {
     const count = this.top().length;

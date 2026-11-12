@@ -40,6 +40,20 @@ paths:
 - Le funzioni pure (`detect-swipe.ts`) senza suffisso: il nome dice già cosa sono.
 - Prefisso `app` per tutti i componenti e le direttive, sia generici (`shared`) sia di feature: selector `app-nome` (componenti), `[appNome]` (direttive e componenti ad attributo come `button[appButton]`).
 
+## Ordine dei membri
+
+Dentro una classe (componente, direttiva, servizio) i membri stanno in quest'ordine, raggruppati, con una riga vuota tra un gruppo e l'altro:
+
+1. `inject()`
+2. altre proprietà semplici (costanti per il template, valori derivati da un servizio): vengono prima dei signal perché i signal le leggono quando la classe viene creata
+3. query: `viewChild()`, `viewChildren()`, `contentChild()`
+4. `input()`, `model()`, `output()`
+5. signal: `signal()`, `computed()`, `linkedSignal()`, `toSignal()`, `form()` e alias (`x.asReadonly()`, `this.servizio.vista`)
+6. `constructor`
+7. metodi
+
+Lo controlla `npm run lint` (`scripts/check-class-order.mjs`); `node scripts/check-class-order.mjs --fix` riordina e poi si lancia Prettier. Non vale per le classi `Host` degli spec.
+
 ## Stato e servizi
 
 - Signal, `computed`, `effect` e simili: `signals.md`.
@@ -52,7 +66,7 @@ paths:
 
 - Template semplici, senza logica complessa.
 - Control flow nativo (`@if`, `@for`, `@switch`), mai `*ngIf`, `*ngFor`, `*ngSwitch`.
-- Pipe `async` per gli observable.
+- Niente pipe `async`: un observable diventa un signal con `toSignal()` (regole in `signals.md`).
 - Niente funzioni freccia nei template e niente globali come `new Date()`.
 
 ## Import

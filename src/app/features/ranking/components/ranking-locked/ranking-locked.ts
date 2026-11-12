@@ -7,10 +7,7 @@ import { Button } from '@shared/components/button/button';
 import { PACK_IMAGE_URL } from '@shared/constants/pack.const';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
 
-/**
- * Al posto della classifica finché la busta è sigillata: niente spoiler, nemmeno da un link diretto.
- * «Salta l'animazione» apre la busta senza lasciare la pagina.
- */
+/** Al posto della classifica a busta sigillata, anche da link diretto: niente spoiler. */
 @Component({
   selector: 'app-ranking-locked',
   imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button],

@@ -2,7 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { SessionService } from '../session/session.service';
 import { ToastService } from '../toast/toast.service';
 
-/** Segnalibri («In lista»). Gli ospiti non possono salvare: la UI li blocca prima e qui il metodo li avvisa con un toast senza salvare. */
+/** Gli ospiti non possono salvare: `toggle` li avvisa con un toast */
 @Injectable({ providedIn: 'root' })
 export class BookmarksService {
   private readonly session = inject(SessionService);
@@ -18,7 +18,7 @@ export class BookmarksService {
     return this._savedIds().has(comicId);
   }
 
-  /** Aggiunge o toglie il fumetto dalla lista e lo conferma con un toast. Restituisce false se l'ospite non può salvare. */
+  /** Restituisce false se l'ospite non può salvare */
   public toggle(comicId: string): boolean {
     if (!this.canSave()) {
       this.toast.info('bookmark.guestLocked.summaryInfo', 'bookmark.guestLocked.detailInfo');

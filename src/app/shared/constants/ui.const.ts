@@ -75,7 +75,7 @@ export const TOAST_DURATION_MS: Readonly<Record<ToastSeverity, number>> = {
   error: 8000,
 };
 
-// Sfondo molto trasparente (10%) del colore della severity, con bordo, titolo, icona e chiusura dello stesso colore
+// Sfondo al 10% del colore della severity; bordo, titolo e icona dello stesso colore
 export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; container: string }>> = {
   success: {
     icon: 'matCheckCircleOutline',
@@ -97,7 +97,7 @@ export const TOAST_STYLES: Readonly<Record<ToastSeverity, { icon: string; contai
 
 // ─── Messaggi fissi ──────────────────────────────────────────────────────────
 
-/** Stile di un messaggio fisso (`app-message`): icona predefinita, bordo e sfondo al 10%, colore dell'icona */
+/** Icona predefinita, bordo, sfondo e colore dell'icona di `app-message` */
 export const MESSAGE_STYLES: Readonly<
   Record<MessageSeverity, { icon: string; container: string; iconColor: string }>
 > = {

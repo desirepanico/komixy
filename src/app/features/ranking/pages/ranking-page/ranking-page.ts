@@ -24,12 +24,7 @@ import { RankingView } from '../../models/ranking-view.model';
 import { RankingNavigationService } from '../../services/ranking-navigation/ranking-navigation.service';
 import { RankingViewService } from '../../services/ranking-view/ranking-view.service';
 
-/**
- * «Rivedi la settimana»: la classifica in due viste, Elenco e Carte (ventaglio).
- * La vista sta nell'indirizzo (`?view=cards`), così il link si condivide; senza parametro vale l'ultima
- * scelta, ricordata in memoria finché l'app è aperta (`RankingViewService`).
- * Finché la busta è sigillata non mostra nulla della classifica.
- */
+/** La vista sta in `?view=`; senza parametro vale l'ultima scelta (`RankingViewService`). */
 @Component({
   selector: 'app-ranking-page',
   imports: [
@@ -56,28 +51,27 @@ export class RankingPage {
   protected readonly session = inject(SessionService);
   private readonly views = inject(RankingViewService);
   private readonly rankingNavigation = inject(RankingNavigationService);
-  private readonly queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
-    requireSync: true,
-  });
 
-  /** La vista scritta nell'indirizzo (`?view=`), se c'è ed è valida */
-  private readonly urlView = computed<RankingView | null>(() => {
-    const value = this.queryParams().get(RANKING_VIEW_QUERY_PARAM);
-    return value === 'cards' || value === 'list' ? value : null;
-  });
-
-  /** L'indirizzo vince (un link condiviso apre la vista scelta da chi l'ha condiviso); senza, vale l'ultima scelta */
-  protected readonly view = computed<RankingView>(() => this.urlView() ?? this.views.view());
   protected readonly viewOptions: readonly SelectButtonOption<RankingView>[] = [
     { value: 'list', label: 'ranking.list' },
     { value: 'cards', label: 'ranking.cards' },
   ];
 
+  private readonly queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
+    requireSync: true,
+  });
+  /** La vista scritta nell'indirizzo (`?view=`), se c'è ed è valida */
+  private readonly urlView = computed<RankingView | null>(() => {
+    const value = this.queryParams().get(RANKING_VIEW_QUERY_PARAM);
+    return value === 'cards' || value === 'list' ? value : null;
+  });
+  /** L'indirizzo vince sull'ultima scelta */
+  protected readonly view = computed<RankingView>(() => this.urlView() ?? this.views.view());
   /** Carta scelta nella vista Carte */
   protected readonly selected = signal<RankingEntry | null>(null);
 
   public constructor() {
-    // Un link con la vista nell'indirizzo diventa anche l'ultima scelta: uscendo e rientrando resta quella
+    // Una vista nell'indirizzo diventa anche l'ultima scelta
     const fromUrl = this.urlView();
     if (fromUrl) this.views.setView(fromUrl);
   }
@@ -87,7 +81,6 @@ export class RankingPage {
     this.views.setView(view);
     void this.rankingNavigation.goToView(view);
   }
-
   protected detailLink(entry: RankingEntry): readonly string[] {
     return this.comicsNavigation.detailLink(entry.comic.id);
   }
