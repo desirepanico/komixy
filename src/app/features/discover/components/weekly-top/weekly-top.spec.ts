@@ -6,7 +6,7 @@ import { WeeklyTop } from './weekly-top';
 describe('WeeklyTop', () => {
   let fixture: ComponentFixture<WeeklyTop>;
   let html: HTMLElement;
-  let misura: (larghezza: number) => void;
+  let measure: (larghezza: number) => void;
 
   const link = () => Array.from(html.querySelectorAll('ul a')) as HTMLAnchorElement[];
 
@@ -16,7 +16,7 @@ describe('WeeklyTop', () => {
       'ResizeObserver',
       class {
         public constructor(callback: ResizeObserverCallback) {
-          misura = (larghezza) =>
+          measure = (larghezza) =>
             callback(
               [{ contentRect: { width: larghezza } } as ResizeObserverEntry],
               this as unknown as ResizeObserver,
@@ -50,7 +50,7 @@ describe('WeeklyTop', () => {
 
   it('mostra tante carte quante ne stanno intere, dalla 1ª in poi', async () => {
     // 96 px a carta e 12 px tra l'una e l'altra: in 420 px ne stanno 4
-    misura(420);
+    measure(420);
     await fixture.whenStable();
     expect(link()).toHaveLength(4);
     expect(link().map((a) => a.getAttribute('aria-label'))).toEqual(
@@ -59,7 +59,7 @@ describe('WeeklyTop', () => {
   });
 
   it('con molto spazio mostra tutte e dieci le carte, ognuna con il link al suo dettaglio', async () => {
-    misura(2000);
+    measure(2000);
     await fixture.whenStable();
     expect(link()).toHaveLength(10);
     expect(link().every((a) => a.getAttribute('href')?.startsWith('/comic/'))).toBe(true);
@@ -67,7 +67,7 @@ describe('WeeklyTop', () => {
   });
 
   it('non va sotto una carta, anche con pochissimo spazio', async () => {
-    misura(50);
+    measure(50);
     await fixture.whenStable();
     expect(link()).toHaveLength(1);
   });

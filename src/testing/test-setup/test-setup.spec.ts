@@ -8,10 +8,10 @@ describe('test-setup', () => {
   });
 
   it('i finti osservatori non fanno nulla ma si possono usare', () => {
-    const osservatore = new ResizeObserver(() => {});
+    const observer = new ResizeObserver(() => {});
     expect(() => {
-      osservatore.observe(document.body);
-      osservatore.disconnect();
+      observer.observe(document.body);
+      observer.disconnect();
     }).not.toThrow();
   });
 });

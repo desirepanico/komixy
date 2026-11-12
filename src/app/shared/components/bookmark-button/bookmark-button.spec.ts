@@ -12,7 +12,7 @@ import { BookmarkButton } from './bookmark-button';
 class Host {}
 
 describe('BookmarkButton', () => {
-  const crea = async (iscritto: boolean) => {
+  const create = async (iscritto: boolean) => {
     TestBed.inject(SessionService).setAuthenticated(iscritto);
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
@@ -27,27 +27,27 @@ describe('BookmarkButton', () => {
   });
 
   it('viene creato', async () => {
-    expect((await crea(true)).fixture.componentInstance).toBeTruthy();
+    expect((await create(true)).fixture.componentInstance).toBeTruthy();
   });
 
-  it("per un iscritto aggiunge e toglie il fumetto dalla lista", async () => {
-    const { fixture, html } = await crea(true);
-    const bottone = () => html.querySelector('button') as HTMLButtonElement;
-    expect(bottone().getAttribute('aria-pressed')).toBe('false');
-    expect(bottone().getAttribute('aria-label')).toBe('bookmark.add');
+  it('per un iscritto aggiunge e toglie il fumetto dalla lista', async () => {
+    const { fixture, html } = await create(true);
+    const button = () => html.querySelector('button') as HTMLButtonElement;
+    expect(button().getAttribute('aria-pressed')).toBe('false');
+    expect(button().getAttribute('aria-label')).toBe('bookmark.add');
 
-    bottone().click();
+    button().click();
     await fixture.whenStable();
-    expect(bottone().getAttribute('aria-pressed')).toBe('true');
-    expect(bottone().getAttribute('aria-label')).toBe('bookmark.remove');
+    expect(button().getAttribute('aria-pressed')).toBe('true');
+    expect(button().getAttribute('aria-label')).toBe('bookmark.remove');
 
-    bottone().click();
+    button().click();
     await fixture.whenStable();
-    expect(bottone().getAttribute('aria-pressed')).toBe('false');
+    expect(button().getAttribute('aria-pressed')).toBe('false');
   });
 
-  it("per un ospite è un link col lucchetto che porta a iscriversi", async () => {
-    const { html } = await crea(false);
+  it('per un ospite è un link col lucchetto che porta a iscriversi', async () => {
+    const { html } = await create(false);
     expect(html.querySelector('button')).toBeNull();
     const link = html.querySelector('a') as HTMLAnchorElement;
     expect(link.getAttribute('href')).toBe('/login');
@@ -55,9 +55,9 @@ describe('BookmarkButton', () => {
   });
 
   it('il lucchetto dell’ospite non diventa trasparente al passaggio del mouse, così resta visibile sulla copertina', async () => {
-    const { html } = await crea(false);
-    const classi = (html.querySelector('a') as HTMLAnchorElement).className;
-    expect(classi).toContain('hover:bg-surface-800');
-    expect(classi).not.toContain('hover:bg-primary-400/15');
+    const { html } = await create(false);
+    const classes = (html.querySelector('a') as HTMLAnchorElement).className;
+    expect(classes).toContain('hover:bg-surface-800');
+    expect(classes).not.toContain('hover:bg-primary-400/15');
   });
 });

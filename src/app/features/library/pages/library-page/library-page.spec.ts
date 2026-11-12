@@ -16,13 +16,13 @@ describe('LibraryPage', () => {
   });
 
   it('mostra titolo e segnaposto tradotti', () => {
-    const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('common.library');
-    expect(testo).toContain('library.comingSoon');
-    expect(testo).toContain('library.comingSoonHint');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('common.library');
+    expect(text).toContain('library.comingSoon');
+    expect(text).toContain('library.comingSoonHint');
   });
 
-  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+  it("nasconde l'icona decorativa ai lettori di schermo", () => {
     expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

@@ -17,13 +17,13 @@ describe('TranslocoHttpLoader', () => {
   });
 
   it('legge il file JSON della lingua richiesta', () => {
-    let risultato: unknown;
-    loader.getTranslation('it').subscribe((t) => (risultato = t));
+    let result: unknown;
+    loader.getTranslation('it').subscribe((t) => (result = t));
 
-    const richiesta = http.expectOne((r) => r.url.startsWith('./i18n/it.json'));
-    richiesta.flush({ menu: { main: 'Principale' } });
+    const request = http.expectOne((r) => r.url.startsWith('./i18n/it.json'));
+    request.flush({ menu: { main: 'Principale' } });
 
-    expect(risultato).toEqual({ menu: { main: 'Principale' } });
+    expect(result).toEqual({ menu: { main: 'Principale' } });
     http.verify();
   });
 });

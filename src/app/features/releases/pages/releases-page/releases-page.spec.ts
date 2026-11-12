@@ -16,13 +16,13 @@ describe('ReleasesPage', () => {
   });
 
   it('mostra titolo e segnaposto tradotti', () => {
-    const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('common.releases');
-    expect(testo).toContain('releases.comingSoon');
-    expect(testo).toContain('releases.comingSoonHint');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('common.releases');
+    expect(text).toContain('releases.comingSoon');
+    expect(text).toContain('releases.comingSoonHint');
   });
 
-  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+  it("nasconde l'icona decorativa ai lettori di schermo", () => {
     expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

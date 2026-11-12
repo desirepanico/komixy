@@ -10,7 +10,7 @@ describe('RankingViewService', () => {
     expect(TestBed.inject(RankingViewService).view()).toBe('list');
   });
 
-  it('ricorda la vista scelta anche dopo aver riaperto l\'app', () => {
+  it("ricorda la vista scelta anche dopo aver riaperto l'app", () => {
     TestBed.inject(RankingViewService).setView('cards');
     expect(localStorage.getItem(RANKING_VIEW_STORAGE_KEY)).toBe('cards');
 

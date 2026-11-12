@@ -1,11 +1,11 @@
 // Completa jsdom con le API del browser che l'app usa e che jsdom non ha.
-class ResizeObserverFinto {
+class FakeResizeObserver {
   observe(): void {}
   unobserve(): void {}
   disconnect(): void {}
 }
 
-globalThis.ResizeObserver ??= ResizeObserverFinto;
+globalThis.ResizeObserver ??= FakeResizeObserver;
 
 window.matchMedia ??= (query: string) =>
   ({

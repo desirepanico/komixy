@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { MobileBottomNav } from './mobile-bottom-nav';
 
 describe('MobileBottomNav', () => {
-  const crea = async () => {
+  const create = async () => {
     await TestBed.configureTestingModule({
       imports: [MobileBottomNav],
       providers: [provideRouter([])],
@@ -15,11 +15,11 @@ describe('MobileBottomNav', () => {
   };
 
   it('viene creata', async () => {
-    expect(await crea()).toBeTruthy();
+    expect(await create()).toBeTruthy();
   });
 
   it('mostra le quattro pagine principali e il pulsante Scan al centro', async () => {
-    const link = Array.from((await crea()).querySelectorAll('a'));
+    const link = Array.from((await create()).querySelectorAll('a'));
     expect(link.map((a) => a.getAttribute('href'))).toEqual([
       '/discover',
       '/releases',
@@ -30,9 +30,9 @@ describe('MobileBottomNav', () => {
   });
 
   it('traduce le etichette del menu', async () => {
-    const testo = (await crea()).textContent;
-    expect(testo).toContain('menu.discover');
-    expect(testo).toContain('menu.scan');
-    expect(testo).toContain('common.profile');
+    const text = (await create()).textContent;
+    expect(text).toContain('menu.discover');
+    expect(text).toContain('menu.scan');
+    expect(text).toContain('common.profile');
   });
 });

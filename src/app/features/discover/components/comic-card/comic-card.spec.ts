@@ -16,21 +16,21 @@ import { ComicCard } from './comic-card';
       author="C. Arisato"
       [volume]="4"
       [totalVolumes]="12"
-      [isSingleVolume]="unico()"
-      [editionType]="edizione()"
+      [isSingleVolume]="single()"
+      [editionType]="edition()"
     />
   `,
 })
 class Host {
-  readonly unico = signal(false);
-  readonly edizione = signal<EditionType | null>(null);
+  readonly single = signal(false);
+  readonly edition = signal<EditionType | null>(null);
 }
 
 describe('ComicCard', () => {
-  const crea = async (impostazioni: { unico?: boolean; edizione?: EditionType | null } = {}) => {
+  const create = async (impostazioni: { single?: boolean; edition?: EditionType | null } = {}) => {
     const fixture = TestBed.createComponent(Host);
-    fixture.componentInstance.unico.set(impostazioni.unico ?? false);
-    fixture.componentInstance.edizione.set(impostazioni.edizione ?? null);
+    fixture.componentInstance.single.set(impostazioni.single ?? false);
+    fixture.componentInstance.edition.set(impostazioni.edition ?? null);
     await fixture.whenStable();
     return { fixture, html: fixture.nativeElement as HTMLElement };
   };
@@ -43,11 +43,11 @@ describe('ComicCard', () => {
   });
 
   it('viene creata', async () => {
-    expect((await crea()).fixture.componentInstance).toBeTruthy();
+    expect((await create()).fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra titolo e autore, con il titolo che porta alla pagina del fumetto', async () => {
-    const { html } = await crea();
+    const { html } = await create();
     const link = html.querySelector('h3 a') as HTMLAnchorElement;
     expect(link.textContent?.trim()).toBe('Neon Horizon');
     expect(link.getAttribute('href')).toBe('/comic/7');
@@ -55,7 +55,7 @@ describe('ComicCard', () => {
   });
 
   it('mostra lo skeleton finché la copertina non è caricata', async () => {
-    const { fixture, html } = await crea();
+    const { fixture, html } = await create();
     expect(html.querySelector('app-skeleton')).not.toBeNull();
     html.querySelector('img')?.dispatchEvent(new Event('load'));
     await fixture.whenStable();
@@ -63,32 +63,32 @@ describe('ComicCard', () => {
   });
 
   it('mostra volume e totale dei volumi', async () => {
-    const { html } = await crea();
+    const { html } = await create();
     expect(html.textContent).toContain('mangaCard.volumeLabel');
     expect(html.textContent).toContain('4');
     expect(html.textContent).toContain('/ 12');
   });
 
   it('per un volume unico mostra la dicitura tradotta invece del numero', async () => {
-    const { html } = await crea({ unico: true });
+    const { html } = await create({ single: true });
     expect(html.textContent).toContain('mangaCard.singleVolume');
     expect(html.textContent).not.toContain('/ 12');
   });
 
   it("non mostra il tag se non c'è un'edizione speciale", async () => {
-    expect((await crea()).html.querySelector('app-tag')).toBeNull();
+    expect((await create()).html.querySelector('app-tag')).toBeNull();
   });
 
   it("mostra il tag dell'edizione quando c'è", async () => {
-    const { html } = await crea({ edizione: 'limited' });
+    const { html } = await create({ edition: 'limited' });
     expect(html.querySelector('app-tag')?.textContent).toContain('mangaCard.editions.limited');
   });
 
   it('il segnalibro mette il fumetto in lista, senza far seguire il link', async () => {
     TestBed.inject(SessionService).setAuthenticated(true);
-    const { fixture, html } = await crea();
-    const evento = new MouseEvent('click', { bubbles: true, cancelable: true });
-    (html.querySelector('button') as HTMLButtonElement).dispatchEvent(evento);
+    const { fixture, html } = await create();
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+    (html.querySelector('button') as HTMLButtonElement).dispatchEvent(event);
     await fixture.whenStable();
 
     expect(TestBed.inject(BookmarksService).isSaved('7')).toBe(true);
@@ -96,7 +96,7 @@ describe('ComicCard', () => {
   });
 
   it('per un ospite il segnalibro ha il lucchetto e porta a iscriversi', async () => {
-    const { html } = await crea();
+    const { html } = await create();
     expect(html.querySelector('button')).toBeNull();
     expect(html.querySelector('app-bookmark-button a')?.getAttribute('href')).toBe('/login');
   });

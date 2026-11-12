@@ -45,16 +45,16 @@ describe('Button', () => {
   });
 
   it('è pieno viola con angoli arrotondati per default', async () => {
-    const classi = (await el('pieno')).classList;
-    expect(classi).toContain('bg-primary-300');
-    expect(classi).toContain('rounded-sm');
+    const classes = (await el('pieno')).classList;
+    expect(classes).toContain('bg-primary-300');
+    expect(classes).toContain('rounded-sm');
   });
 
   it('con variant outlined ha solo il bordo, e con rounded è a pillola', async () => {
-    const classi = (await el('bordo')).classList;
-    expect(classi).toContain('border-primary-400');
-    expect(classi).not.toContain('bg-primary-300');
-    expect(classi).toContain('rounded-full');
+    const classes = (await el('bordo')).classList;
+    expect(classes).toContain('border-primary-400');
+    expect(classes).not.toContain('bg-primary-300');
+    expect(classes).toContain('rounded-full');
   });
 
   it('con iconOnly è un quadrato di sola icona', async () => {
@@ -62,29 +62,29 @@ describe('Button', () => {
   });
 
   it('con variant text e iconOnly mantiene dimensione e centratura dell icona', async () => {
-    const classi = (await el('testo-icona')).classList;
-    expect(classi).toContain('size-10');
-    expect(classi).toContain('justify-center');
-    expect(classi).not.toContain('bg-primary-300');
+    const classes = (await el('testo-icona')).classList;
+    expect(classes).toContain('size-10');
+    expect(classes).toContain('justify-center');
+    expect(classes).not.toContain('bg-primary-300');
   });
 
   it('con variant text non ha sfondo né bordo e lascia le spaziature a chi lo usa', async () => {
-    const classi = (await el('testo')).classList;
-    expect(classi).not.toContain('bg-primary-300');
-    expect(classi).not.toContain('border');
-    expect(classi).not.toContain('px-4');
+    const classes = (await el('testo')).classList;
+    expect(classes).not.toContain('bg-primary-300');
+    expect(classes).not.toContain('border');
+    expect(classes).not.toContain('px-4');
   });
 
   it('con severity secondary è neutro, non viola', async () => {
-    const classi = (await el('secondario')).classList;
-    expect(classi).toContain('bg-surface-800');
-    expect(classi).not.toContain('bg-primary-300');
+    const classes = (await el('secondario')).classList;
+    expect(classes).toContain('bg-surface-800');
+    expect(classes).not.toContain('bg-primary-300');
   });
 
   it('con severity secondary e variant outlined ha il bordo neutro', async () => {
-    const classi = (await el('secondario-bordo')).classList;
-    expect(classi).toContain('border-surface-600');
-    expect(classi).not.toContain('border-primary-400');
+    const classes = (await el('secondario-bordo')).classList;
+    expect(classes).toContain('border-surface-600');
+    expect(classes).not.toContain('border-primary-400');
   });
 
   it('con severity danger usa i colori rosa in tutte le varianti', async () => {
@@ -100,9 +100,9 @@ describe('Button', () => {
   });
 
   it('la variante accent è viola scuro con testo chiaro', async () => {
-    const classi = (await el('accento')).classList;
-    expect(classi).toContain('bg-primary-600');
-    expect(classi).toContain('text-surface-50');
+    const classes = (await el('accento')).classList;
+    expect(classes).toContain('bg-primary-600');
+    expect(classes).toContain('text-surface-50');
   });
 
   it('la dimensione sm è più bassa di quella di default', async () => {

@@ -6,20 +6,20 @@ import { PackTear } from './pack-tear';
 
 @Component({
   imports: [PackTear],
-  template: `<app-pack-tear [torn]="strappata()" (tearRequest)="strappo()" />`,
+  template: `<app-pack-tear [torn]="torn()" (tearRequest)="strappo()" />`,
 })
 class Host {
-  readonly strappata = signal(false);
+  readonly torn = signal(false);
   strappo = vi.fn();
 }
 
 describe('PackTear', () => {
   let fixture: ReturnType<typeof TestBed.createComponent<Host>>;
   let html: HTMLElement;
-  const maniglia = () => html.querySelector('.cursor-grab') as HTMLElement;
-  const lembo = () => html.querySelector('[style*="transform"]') as HTMLElement;
+  const handle = () => html.querySelector('.cursor-grab') as HTMLElement;
+  const flap = () => html.querySelector('[style*="transform"]') as HTMLElement;
 
-  const evento = (tipo: string, x: number) =>
+  const event = (tipo: string, x: number) =>
     new MouseEvent(tipo, { clientX: x, bubbles: true }) as unknown as PointerEvent;
 
   beforeEach(async () => {
@@ -44,54 +44,54 @@ describe('PackTear', () => {
 
   it('a riposo il lembo non si anima: si muove solo quando lo si trascina o si apre la busta', () => {
     expect(html.querySelector('[class*="animate-"]')).toBeNull();
-    expect(lembo().style.transform).toContain('translateX(0px)');
+    expect(flap().style.transform).toContain('translateX(0px)');
   });
 
   it('trascinando il lembo compaiono i bordi strappati e se si lascia di nuovo la busta si richiude', async () => {
-    maniglia().dispatchEvent(evento('pointerdown', 10));
-    maniglia().dispatchEvent(evento('pointermove', 40));
+    handle().dispatchEvent(event('pointerdown', 10));
+    handle().dispatchEvent(event('pointermove', 40));
     await fixture.whenStable();
     expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(2);
 
-    maniglia().dispatchEvent(evento('pointerup', 40));
+    handle().dispatchEvent(event('pointerup', 40));
     await fixture.whenStable();
     expect(html.querySelectorAll('[style*="clip-path"]').length).toBe(0);
   });
 
   it('trascinando abbastanza il lembo chiede di strappare la busta', async () => {
-    maniglia().dispatchEvent(evento('pointerdown', 10));
-    maniglia().dispatchEvent(evento('pointermove', 10 + PACK_TEAR_DISTANCE_PX + 5));
+    handle().dispatchEvent(event('pointerdown', 10));
+    handle().dispatchEvent(event('pointermove', 10 + PACK_TEAR_DISTANCE_PX + 5));
     await fixture.whenStable();
-    expect(lembo().style.transform).toContain(`translateX(${PACK_TEAR_DISTANCE_PX + 5}px)`);
+    expect(flap().style.transform).toContain(`translateX(${PACK_TEAR_DISTANCE_PX + 5}px)`);
 
-    maniglia().dispatchEvent(evento('pointerup', 10 + PACK_TEAR_DISTANCE_PX + 5));
+    handle().dispatchEvent(event('pointerup', 10 + PACK_TEAR_DISTANCE_PX + 5));
     expect(fixture.componentInstance.strappo).toHaveBeenCalledOnce();
   });
 
   it('trascinando poco il lembo torna a posto e la busta resta chiusa', async () => {
-    maniglia().dispatchEvent(evento('pointerdown', 10));
-    maniglia().dispatchEvent(evento('pointermove', 60));
-    maniglia().dispatchEvent(evento('pointerup', 60));
+    handle().dispatchEvent(event('pointerdown', 10));
+    handle().dispatchEvent(event('pointermove', 60));
+    handle().dispatchEvent(event('pointerup', 60));
     await fixture.whenStable();
     expect(fixture.componentInstance.strappo).not.toHaveBeenCalled();
-    expect(lembo().style.transform).toContain('translateX(0px)');
+    expect(flap().style.transform).toContain('translateX(0px)');
   });
 
   it('trascinando verso sinistra il lembo non si muove', async () => {
-    maniglia().dispatchEvent(evento('pointerdown', 100));
-    maniglia().dispatchEvent(evento('pointermove', 20));
+    handle().dispatchEvent(event('pointerdown', 100));
+    handle().dispatchEvent(event('pointermove', 20));
     await fixture.whenStable();
-    expect(lembo().style.transform).toContain('translateX(0px)');
+    expect(flap().style.transform).toContain('translateX(0px)');
   });
 
   it('strappata, il lembo vola via e non si può più trascinare', async () => {
-    fixture.componentInstance.strappata.set(true);
+    fixture.componentInstance.torn.set(true);
     await fixture.whenStable();
-    expect(lembo().style.transform).toContain('rotate(38deg)');
+    expect(flap().style.transform).toContain('rotate(38deg)');
 
-    maniglia().dispatchEvent(evento('pointerdown', 0));
-    maniglia().dispatchEvent(evento('pointermove', 500));
-    maniglia().dispatchEvent(evento('pointerup', 500));
+    handle().dispatchEvent(event('pointerdown', 0));
+    handle().dispatchEvent(event('pointermove', 500));
+    handle().dispatchEvent(event('pointerup', 500));
     expect(fixture.componentInstance.strappo).not.toHaveBeenCalled();
   });
 });

@@ -16,13 +16,13 @@ describe('ComicsPage', () => {
   });
 
   it('mostra titolo e segnaposto tradotti', () => {
-    const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('comics.title');
-    expect(testo).toContain('comics.comingSoon');
-    expect(testo).toContain('comics.comingSoonHint');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('comics.title');
+    expect(text).toContain('comics.comingSoon');
+    expect(text).toContain('comics.comingSoonHint');
   });
 
-  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+  it("nasconde l'icona decorativa ai lettori di schermo", () => {
     expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

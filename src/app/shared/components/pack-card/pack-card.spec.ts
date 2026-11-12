@@ -22,28 +22,28 @@ const entry = (modifiche: Partial<RankingEntry['comic']> = {}): RankingEntry => 
 @Component({
   imports: [PackCard],
   template: `<app-pack-card
-    [entry]="carta()"
-    [scale]="scala()"
-    [faceUp]="davanti()"
-    [flippable]="girevole()"
-    [decorative]="decorativa()"
-    [compact]="compatta()"
+    [entry]="card()"
+    [scale]="scale()"
+    [faceUp]="faceUp()"
+    [flippable]="flippable()"
+    [decorative]="decorative()"
+    [compact]="compact()"
   />`,
 })
 class Host {
-  readonly carta = signal<RankingEntry>(entry());
-  readonly scala = signal(1);
-  readonly davanti = signal(true);
-  readonly girevole = signal(false);
-  readonly compatta = signal<boolean | undefined>(undefined);
-  readonly decorativa = signal(false);
+  readonly card = signal<RankingEntry>(entry());
+  readonly scale = signal(1);
+  readonly faceUp = signal(true);
+  readonly flippable = signal(false);
+  readonly compact = signal<boolean | undefined>(undefined);
+  readonly decorative = signal(false);
 }
 
 describe('PackCard', () => {
   let fixture: ReturnType<typeof TestBed.createComponent<Host>>;
   let html: HTMLElement;
   const host = () => fixture.componentInstance;
-  const carta = () => html.querySelector('app-pack-card') as HTMLElement;
+  const card = () => html.querySelector('app-pack-card') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
@@ -66,45 +66,45 @@ describe('PackCard', () => {
   });
 
   it('per un volume unico scrive la dicitura al posto del numero', async () => {
-    host().carta.set(entry({ isSingleVolume: true, totalVolumes: null, editionType: null }));
+    host().card.set(entry({ isSingleVolume: true, totalVolumes: null, editionType: null }));
     await fixture.whenStable();
     expect(html.textContent).toContain('mangaCard.singleVolume');
     expect(html.textContent).not.toContain('mangaCard.editions');
   });
 
   it('la scala riduce le misure della carta', async () => {
-    expect(carta().style.width).toBe('192px');
-    expect(carta().style.height).toBe('320px');
+    expect(card().style.width).toBe('192px');
+    expect(card().style.height).toBe('320px');
 
-    host().scala.set(0.5);
+    host().scale.set(0.5);
     await fixture.whenStable();
-    expect(carta().style.width).toBe('96px');
-    expect(carta().style.height).toBe('160px');
+    expect(card().style.width).toBe('96px');
+    expect(card().style.height).toBe('160px');
   });
 
   it('una carta che può girarsi col dorso in vista è ruotata', async () => {
-    host().girevole.set(true);
+    host().flippable.set(true);
     await fixture.whenStable();
-    const ruotata = () => html.querySelector('.rotate-y-180.size-full');
-    expect(ruotata()).toBeNull();
-    host().davanti.set(false);
+    const rotated = () => html.querySelector('.rotate-y-180.size-full');
+    expect(rotated()).toBeNull();
+    host().faceUp.set(false);
     await fixture.whenStable();
-    expect(ruotata()).not.toBeNull();
+    expect(rotated()).not.toBeNull();
   });
 
   it('una carta che non può girarsi è piatta, senza 3D che sfoca il testo', () => {
     expect(html.querySelector('.transform-3d')).toBeNull();
     expect(html.querySelector('.backface-hidden')).toBeNull();
-    expect(carta().classList.contains('perspective-distant')).toBe(false);
-    expect(carta().firstElementChild?.getAttribute('style') ?? '').not.toContain('transform');
+    expect(card().classList.contains('perspective-distant')).toBe(false);
+    expect(card().firstElementChild?.getAttribute('style') ?? '').not.toContain('transform');
   });
 
   it('una carta piatta col dorso in vista mostra il dorso e nasconde il fronte', async () => {
-    host().davanti.set(false);
+    host().faceUp.set(false);
     await fixture.whenStable();
-    const facce = Array.from(html.querySelectorAll('.absolute.inset-0')) as HTMLElement[];
-    expect(facce[0].classList.contains('hidden')).toBe(true);
-    expect(facce[1].classList.contains('hidden')).toBe(false);
+    const faces = Array.from(html.querySelectorAll('.absolute.inset-0')) as HTMLElement[];
+    expect(faces[0].classList.contains('hidden')).toBe(true);
+    expect(faces[1].classList.contains('hidden')).toBe(false);
   });
 
   it('il dorso mostra il logo di Komixy', () => {
@@ -119,7 +119,7 @@ describe('PackCard', () => {
   });
 
   it('una carta piccola mostra copertina e un numero di posizione grande, senza i testi illeggibili', async () => {
-    host().scala.set(0.42);
+    host().scale.set(0.42);
     await fixture.whenStable();
     expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
     expect(html.textContent).not.toContain('One Piece');
@@ -127,16 +127,16 @@ describe('PackCard', () => {
   });
 
   it('a grandezza naturale può essere forzata compatta, come nel ventaglio', async () => {
-    host().compatta.set(true);
+    host().compact.set(true);
     await fixture.whenStable();
     expect(html.querySelector('.text-5xl')?.textContent?.trim()).toBe('4');
     expect(html.textContent).not.toContain('One Piece');
   });
 
   it('se è decorativa si nasconde ai lettori di schermo', async () => {
-    expect(carta().getAttribute('aria-hidden')).toBeNull();
-    host().decorativa.set(true);
+    expect(card().getAttribute('aria-hidden')).toBeNull();
+    host().decorative.set(true);
     await fixture.whenStable();
-    expect(carta().getAttribute('aria-hidden')).toBe('true');
+    expect(card().getAttribute('aria-hidden')).toBe('true');
   });
 });

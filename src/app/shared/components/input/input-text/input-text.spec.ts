@@ -18,12 +18,12 @@ import { InputText } from './input-text';
   `,
 })
 class Host {
-  readonly testo = signal('');
-  readonly spento = signal(false);
-  readonly campoForm = form(this.testo, (path) => {
+  readonly text = signal('');
+  readonly off = signal(false);
+  readonly campoForm = form(this.text, (path) => {
     required(path);
     minLength(path, 3);
-    disabled(path, { when: () => this.spento() });
+    disabled(path, { when: () => this.off() });
   });
 }
 
@@ -32,91 +32,91 @@ describe('InputText', () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
   });
 
-  const crea = async () => {
+  const create = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     const html = fixture.nativeElement as HTMLElement;
-    const campo = html.querySelector('input') as HTMLInputElement;
-    const scrivi = async (valore: string) => {
-      campo.value = valore;
-      campo.dispatchEvent(new Event('input'));
+    const field = html.querySelector('input') as HTMLInputElement;
+    const write = async (valore: string) => {
+      field.value = valore;
+      field.dispatchEvent(new Event('input'));
       await fixture.whenStable();
     };
-    const esci = async () => {
-      campo.dispatchEvent(new Event('blur'));
+    const signOut = async () => {
+      field.dispatchEvent(new Event('blur'));
       await fixture.whenStable();
     };
-    const messaggio = () => html.querySelector('[role="alert"]')?.textContent?.trim();
-    return { fixture, host: fixture.componentInstance, html, campo, scrivi, esci, messaggio };
+    const message = () => html.querySelector('[role="alert"]')?.textContent?.trim();
+    return { fixture, host: fixture.componentInstance, html, field, write, signOut, message };
   };
 
   it('viene creato', async () => {
-    expect((await crea()).fixture).toBeTruthy();
+    expect((await create()).fixture).toBeTruthy();
   });
 
   it('mostra il nome del campo collegato al campo', async () => {
-    const { html, campo } = await crea();
+    const { html, field } = await create();
     const label = html.querySelector('label') as HTMLLabelElement;
     expect(label.textContent?.trim()).toBe('login.email');
-    expect(label.getAttribute('for')).toBe(campo.id);
+    expect(label.getAttribute('for')).toBe(field.id);
   });
 
   it('imposta id, tipo, segnaposto e autocomplete sul campo', async () => {
-    const { campo } = await crea();
-    expect(campo.id).toBe('campo');
-    expect(campo.type).toBe('email');
-    expect(campo.getAttribute('placeholder')).toBe('login.emailPlaceholder');
-    expect(campo.getAttribute('autocomplete')).toBe('email');
+    const { field } = await create();
+    expect(field.id).toBe('campo');
+    expect(field.type).toBe('email');
+    expect(field.getAttribute('placeholder')).toBe('login.emailPlaceholder');
+    expect(field.getAttribute('autocomplete')).toBe('email');
   });
 
   it('aggiorna il modello mentre si scrive', async () => {
-    const { host, scrivi } = await crea();
-    await scrivi('a@b.it');
-    expect(host.testo()).toBe('a@b.it');
+    const { host, write } = await create();
+    await write('a@b.it');
+    expect(host.text()).toBe('a@b.it');
   });
 
   it('mostra nel campo il valore del modello', async () => {
-    const { fixture, host, campo } = await crea();
-    host.testo.set('x@y.it');
+    const { fixture, host, field } = await create();
+    host.text.set('x@y.it');
     await fixture.whenStable();
-    expect(campo.value).toBe('x@y.it');
+    expect(field.value).toBe('x@y.it');
   });
 
   it('non mostra errori finché il campo non è stato toccato', async () => {
-    const { campo, messaggio } = await crea();
-    expect(messaggio()).toBeUndefined();
-    expect(campo.getAttribute('aria-invalid')).toBe('false');
-    expect(campo.getAttribute('aria-describedby')).toBeNull();
+    const { field, message } = await create();
+    expect(message()).toBeUndefined();
+    expect(field.getAttribute('aria-invalid')).toBe('false');
+    expect(field.getAttribute('aria-describedby')).toBeNull();
   });
 
   it('dopo l’uscita dal campo mostra il messaggio e lo collega al campo', async () => {
-    const { html, campo, esci, messaggio } = await crea();
-    await esci();
-    expect(messaggio()).toBe('validation.required');
+    const { html, field, signOut, message } = await create();
+    await signOut();
+    expect(message()).toBe('validation.required');
     expect(html.querySelector('[role="alert"]')?.id).toBe('campo-error');
-    expect(campo.getAttribute('aria-invalid')).toBe('true');
-    expect(campo.getAttribute('aria-describedby')).toBe('campo-error');
+    expect(field.getAttribute('aria-invalid')).toBe('true');
+    expect(field.getAttribute('aria-describedby')).toBe('campo-error');
   });
 
   it('sceglie il messaggio dal tipo di errore', async () => {
-    const { scrivi, esci, messaggio } = await crea();
-    await scrivi('ab');
-    await esci();
-    expect(messaggio()).toBe('validation.minLength');
+    const { write, signOut, message } = await create();
+    await write('ab');
+    await signOut();
+    expect(message()).toBe('validation.minLength');
   });
 
   it('toglie il messaggio quando il valore diventa valido', async () => {
-    const { campo, scrivi, esci, messaggio } = await crea();
-    await esci();
-    await scrivi('abc');
-    expect(messaggio()).toBeUndefined();
-    expect(campo.getAttribute('aria-invalid')).toBe('false');
+    const { field, write, signOut, message } = await create();
+    await signOut();
+    await write('abc');
+    expect(message()).toBeUndefined();
+    expect(field.getAttribute('aria-invalid')).toBe('false');
   });
 
   it('si disabilita quando il campo è disabilitato', async () => {
-    const { fixture, host, campo } = await crea();
-    host.spento.set(true);
+    const { fixture, host, field } = await create();
+    host.off.set(true);
     await fixture.whenStable();
-    expect(campo.disabled).toBe(true);
+    expect(field.disabled).toBe(true);
   });
 });

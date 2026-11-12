@@ -11,38 +11,35 @@ describe('ComicDetailPage', () => {
   let fixture: ComponentFixture<ComicDetailPage>;
   let html: HTMLElement;
 
-  const parametri = new BehaviorSubject(convertToParamMap({}));
+  const params = new BehaviorSubject(convertToParamMap({}));
 
-  const crea = async (id: string, iscritto = true) => {
+  const create = async (id: string, iscritto = true) => {
     TestBed.inject(SessionService).setAuthenticated(iscritto);
-    parametri.next(convertToParamMap({ id }));
+    params.next(convertToParamMap({ id }));
     fixture = TestBed.createComponent(ComicDetailPage);
     html = fixture.nativeElement;
     await fixture.whenStable();
   };
-  const bottone = (testo: string) =>
+  const button = (text: string) =>
     Array.from(html.querySelectorAll('button')).find((b) =>
-      b.textContent?.includes(testo),
+      b.textContent?.includes(text),
     ) as HTMLButtonElement;
 
   beforeEach(async () => {
     localStorage.clear();
     await TestBed.configureTestingModule({
       imports: [ComicDetailPage],
-      providers: [
-        provideRouter([]),
-        { provide: ActivatedRoute, useValue: { paramMap: parametri } },
-      ],
+      providers: [provideRouter([]), { provide: ActivatedRoute, useValue: { paramMap: params } }],
     }).compileComponents();
   });
 
   it('viene creata', async () => {
-    await crea('w1');
+    await create('w1');
     expect(fixture.componentInstance).toBeTruthy();
   });
 
   it('mostra titolo, autore, volume ed edizione del fumetto', async () => {
-    await crea('w1');
+    await create('w1');
     expect(html.querySelector('h1')?.textContent).toContain('comicDetail.title');
     expect(html.querySelector('h2')?.textContent).toContain('One Piece');
     expect(html.textContent).toContain('Eiichiro Oda');
@@ -52,30 +49,32 @@ describe('ComicDetailPage', () => {
   });
 
   it('ha un pulsante per tornare a Scopri', async () => {
-    await crea('w1');
-    expect(html.querySelector('a[href="/discover"]')?.getAttribute('aria-label')).toBe('common.back');
+    await create('w1');
+    expect(html.querySelector('a[href="/discover"]')?.getAttribute('aria-label')).toBe(
+      'common.back',
+    );
   });
 
   it('con la busta sigillata non rivela la posizione in classifica', async () => {
-    await crea('w1');
+    await create('w1');
     expect(html.textContent).not.toContain('comicDetail.ofTheWeek');
   });
 
   it('con la busta aperta mostra la posizione della settimana', async () => {
     TestBed.inject(WeeklyPackService).open();
-    await crea('w1');
+    await create('w1');
     expect(html.textContent).toContain('#1');
     expect(html.textContent).toContain('comicDetail.ofTheWeek');
   });
 
   it('un fumetto fuori classifica non ha la posizione', async () => {
     TestBed.inject(WeeklyPackService).open();
-    await crea('d1');
+    await create('d1');
     expect(html.textContent).not.toContain('comicDetail.ofTheWeek');
   });
 
   it('mostra lo skeleton finché la copertina non è caricata', async () => {
-    await crea('w1');
+    await create('w1');
     expect(html.querySelector('app-skeleton')).not.toBeNull();
     html.querySelector('img')?.dispatchEvent(new Event('load'));
     await fixture.whenStable();
@@ -84,35 +83,35 @@ describe('ComicDetailPage', () => {
 
   describe('da iscritto', () => {
     it('aggiunge e toglie il volume dalla lista', async () => {
-      await crea('w1');
-      expect(bottone('comicDetail.addToList').getAttribute('aria-pressed')).toBe('false');
+      await create('w1');
+      expect(button('comicDetail.addToList').getAttribute('aria-pressed')).toBe('false');
 
-      bottone('comicDetail.addToList').click();
+      button('comicDetail.addToList').click();
       await fixture.whenStable();
       expect(TestBed.inject(BookmarksService).isSaved('w1')).toBe(true);
-      expect(bottone('common.inList').getAttribute('aria-pressed')).toBe('true');
+      expect(button('common.inList').getAttribute('aria-pressed')).toBe('true');
 
-      bottone('common.inList').click();
+      button('common.inList').click();
       await fixture.whenStable();
       expect(TestBed.inject(BookmarksService).isSaved('w1')).toBe(false);
     });
 
     it("non vede l'avviso per gli ospiti", async () => {
-      await crea('w1');
+      await create('w1');
       expect(html.querySelector('app-message')).toBeNull();
     });
   });
 
   describe('da ospite', () => {
     it("al posto di «Aggiungi in lista» c'è l'invito a iscriversi", async () => {
-      await crea('w1', false);
-      expect(bottone('comicDetail.addToList')).toBeUndefined();
-      const invito = html.querySelector('a[href="/login"]');
-      expect(invito?.textContent).toContain('comicDetail.signUpToSave');
+      await create('w1', false);
+      expect(button('comicDetail.addToList')).toBeUndefined();
+      const invitation = html.querySelector('a[href="/login"]');
+      expect(invitation?.textContent).toContain('comicDetail.signUpToSave');
     });
 
-    it('vede il dettaglio con l\'avviso che non può salvare', async () => {
-      await crea('w1', false);
+    it("vede il dettaglio con l'avviso che non può salvare", async () => {
+      await create('w1', false);
       expect(html.querySelector('h2')?.textContent).toContain('One Piece');
       expect(html.querySelector('app-message')).not.toBeNull();
     });
@@ -122,8 +121,8 @@ describe('ComicDetailPage', () => {
     it('usa la condivisione di sistema quando esiste', async () => {
       const share = vi.fn().mockResolvedValue(undefined);
       vi.stubGlobal('navigator', { share });
-      await crea('w1');
-      bottone('comicDetail.share').click();
+      await create('w1');
+      button('comicDetail.share').click();
       await fixture.whenStable();
       expect(share).toHaveBeenCalledWith(expect.objectContaining({ title: 'One Piece' }));
     });
@@ -131,16 +130,16 @@ describe('ComicDetailPage', () => {
     it('altrimenti copia il link e lo dice', async () => {
       const writeText = vi.fn().mockResolvedValue(undefined);
       vi.stubGlobal('navigator', { clipboard: { writeText } });
-      await crea('w1');
-      bottone('comicDetail.share').click();
+      await create('w1');
+      button('comicDetail.share').click();
       await fixture.whenStable();
       expect(writeText).toHaveBeenCalledOnce();
-      expect(bottone('comicDetail.linkCopied')).toBeDefined();
+      expect(button('comicDetail.linkCopied')).toBeDefined();
     });
   });
 
   it('un id sconosciuto mostra il messaggio «non trovato»', async () => {
-    await crea('non-esiste');
+    await create('non-esiste');
     expect(html.querySelector('app-empty-state')?.textContent).toContain('comicDetail.notFound');
     expect(html.querySelector('img')).toBeNull();
   });

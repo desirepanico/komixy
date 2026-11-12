@@ -14,19 +14,19 @@ describe('InView', () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
   });
 
-  const crea = async () => {
+  const create = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return fixture.nativeElement.querySelector('span') as HTMLElement;
   };
 
   it('viene creata', async () => {
-    expect(await crea()).toBeTruthy();
+    expect(await create()).toBeTruthy();
   });
 
   it("mostra subito l'elemento se il browser non ha IntersectionObserver", async () => {
     vi.stubGlobal('IntersectionObserver', undefined);
-    const span = await crea();
+    const span = await create();
     expect(span.hasAttribute('data-in-view')).toBe(true);
   });
 
@@ -44,7 +44,7 @@ describe('InView', () => {
       },
     );
 
-    const span = await crea();
+    const span = await create();
     expect(span.hasAttribute('data-in-view')).toBe(false);
 
     callback([{ isIntersecting: false } as IntersectionObserverEntry], {} as IntersectionObserver);

@@ -6,7 +6,7 @@ import { provideNavDirection } from './nav-direction.provider';
 
 describe('provideNavDirection', () => {
   let router: Router;
-  const direzione = () => document.documentElement.dataset['navDirection'];
+  const direction = () => document.documentElement.dataset['navDirection'];
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
@@ -28,16 +28,16 @@ describe('provideNavDirection', () => {
   it('imposta "forward" passando a una pagina principale successiva e "back" tornando', async () => {
     await router.navigateByUrl('/discover');
     await router.navigateByUrl('/releases');
-    expect(direzione()).toBe('forward');
+    expect(direction()).toBe('forward');
 
     await router.navigateByUrl('/discover');
-    expect(direzione()).toBe('back');
+    expect(direction()).toBe('back');
   });
 
   it('toglie la direzione se la pagina di arrivo non è principale', async () => {
     await router.navigateByUrl('/discover');
     await router.navigateByUrl('/releases');
     await router.navigateByUrl('/altra');
-    expect(direzione()).toBeUndefined();
+    expect(direction()).toBeUndefined();
   });
 });

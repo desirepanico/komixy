@@ -16,13 +16,13 @@ describe('ProfilePage', () => {
   });
 
   it('mostra titolo e segnaposto tradotti', () => {
-    const testo = fixture.nativeElement.textContent;
-    expect(testo).toContain('common.profile');
-    expect(testo).toContain('profile.comingSoon');
-    expect(testo).toContain('profile.comingSoonHint');
+    const text = fixture.nativeElement.textContent;
+    expect(text).toContain('common.profile');
+    expect(text).toContain('profile.comingSoon');
+    expect(text).toContain('profile.comingSoonHint');
   });
 
-  it('nasconde l\'icona decorativa ai lettori di schermo', () => {
+  it("nasconde l'icona decorativa ai lettori di schermo", () => {
     expect(fixture.nativeElement.querySelector('[aria-hidden="true"] ng-icon')).not.toBeNull();
   });
 });

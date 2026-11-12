@@ -11,7 +11,7 @@ describe('LoginPage', () => {
   let router: Router;
   let auth: AuthService;
 
-  const apri = async (url: string) => {
+  const open = async (url: string) => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl(url, LoginPage);
     vi.spyOn(router, 'navigateByUrl').mockResolvedValue(true);
@@ -19,14 +19,14 @@ describe('LoginPage', () => {
     return harness.routeNativeElement as HTMLElement;
   };
 
-  const accedi = async (html: HTMLElement) => {
-    const scrivi = (id: string, valore: string) => {
-      const campo = html.querySelector(`#${id}`) as HTMLInputElement;
-      campo.value = valore;
-      campo.dispatchEvent(new Event('input'));
+  const signIn = async (html: HTMLElement) => {
+    const write = (id: string, valore: string) => {
+      const field = html.querySelector(`#${id}`) as HTMLInputElement;
+      field.value = valore;
+      field.dispatchEvent(new Event('input'));
     };
-    scrivi('login-email', DEMO_CREDENTIALS.email);
-    scrivi('login-password', DEMO_CREDENTIALS.password);
+    write('login-email', DEMO_CREDENTIALS.email);
+    write('login-password', DEMO_CREDENTIALS.password);
     html.querySelector('form')?.dispatchEvent(new Event('submit'));
     await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
   };
@@ -44,24 +44,24 @@ describe('LoginPage', () => {
   });
 
   it('viene creata', async () => {
-    expect(await apri('/login')).toBeTruthy();
+    expect(await open('/login')).toBeTruthy();
   });
 
   it('mostra il titolo e il form', async () => {
-    const html = await apri('/login');
+    const html = await open('/login');
     expect(html.querySelector('h1')?.textContent).toContain('login.submit');
     expect(html.querySelector('app-login-form')).not.toBeNull();
   });
 
   it('mostra il pannello di marca accanto al form', async () => {
-    const html = await apri('/login');
+    const html = await open('/login');
     expect(html.querySelector('app-login-volumes')).not.toBeNull();
     expect(html.querySelector('app-login-form')).not.toBeNull();
   });
 
   it('dopo il login registra l’utente e torna alla pagina richiesta', async () => {
-    const html = await apri('/login?returnUrl=%2Freleases');
-    await accedi(html);
+    const html = await open('/login?returnUrl=%2Freleases');
+    await signIn(html);
 
     expect(auth.loggedUser()).toEqual({
       id: DEMO_CREDENTIALS.email,
@@ -72,21 +72,21 @@ describe('LoginPage', () => {
   });
 
   it('senza returnUrl va a Scopri', async () => {
-    await accedi(await apri('/login'));
+    await signIn(await open('/login'));
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 
   it('con un returnUrl esterno va a Scopri', async () => {
-    await accedi(await apri('/login?returnUrl=https%3A%2F%2Fsito.it'));
+    await signIn(await open('/login?returnUrl=https%3A%2F%2Fsito.it'));
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);
   });
 
   it('l’accesso come ospite entra senza utente e va a Scopri', async () => {
-    const html = await apri('/login');
-    const bottone = Array.from(html.querySelectorAll('button')).find((b) =>
+    const html = await open('/login');
+    const button = Array.from(html.querySelectorAll('button')).find((b) =>
       b.textContent?.includes('login.guest'),
     );
-    bottone?.click();
+    button?.click();
     expect(auth.loggedUser()).toBeNull();
     expect(auth.isAuthenticated()).toBe(false);
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover']);

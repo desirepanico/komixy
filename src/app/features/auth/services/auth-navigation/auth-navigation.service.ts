@@ -28,9 +28,9 @@ export class AuthNavigationService {
 
   /** Dopo l'accesso: torna alla pagina richiesta, se è interna all'app, o a Scopri. */
   public goAfterLogin(returnUrl: string | null): Promise<boolean> {
-    const paginaRichiesta = safeReturnUrl(returnUrl, '');
-    return paginaRichiesta
-      ? this.router.navigateByUrl(paginaRichiesta)
+    const requestedPage = safeReturnUrl(returnUrl, '');
+    return requestedPage
+      ? this.router.navigateByUrl(requestedPage)
       : this.discoverNavigation.goToDiscover();
   }
 }

@@ -7,7 +7,7 @@ describe('Toast', () => {
   let fixture: ComponentFixture<Toast>;
   let service: ToastService;
   const html = () => fixture.nativeElement as HTMLElement;
-  const messaggi = () => Array.from(html().querySelectorAll('div[aria-atomic="true"]'));
+  const messages = () => Array.from(html().querySelectorAll('div[aria-atomic="true"]'));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Toast] }).compileComponents();
@@ -24,15 +24,15 @@ describe('Toast', () => {
   });
 
   it('senza messaggi non mostra nulla', () => {
-    expect(messaggi()).toEqual([]);
+    expect(messages()).toEqual([]);
   });
 
   it('mostra il titolo e il dettaglio del messaggio', async () => {
     service.error('login.serverError.summaryKo', 'login.serverError.detailKo');
     await fixture.whenStable();
-    const [titolo, dettaglio] = Array.from(html().querySelectorAll('p'));
+    const [titolo, detail] = Array.from(html().querySelectorAll('p'));
     expect(titolo.textContent?.trim()).toBe('login.serverError.summaryKo');
-    expect(dettaglio.textContent?.trim()).toBe('login.serverError.detailKo');
+    expect(detail.textContent?.trim()).toBe('login.serverError.detailKo');
   });
 
   it('le zone live esistono anche senza messaggi', () => {
@@ -54,28 +54,28 @@ describe('Toast', () => {
   it('il messaggio è letto per intero', async () => {
     service.info('a', 'b');
     await fixture.whenStable();
-    expect(messaggi()[0].getAttribute('aria-atomic')).toBe('true');
+    expect(messages()[0].getAttribute('aria-atomic')).toBe('true');
   });
 
   it('con il mouse sopra il messaggio non sparisce', async () => {
     vi.useFakeTimers();
     service.success('a', 'b');
     await vi.advanceTimersByTimeAsync(0);
-    messaggi()[0].dispatchEvent(new Event('pointerenter'));
+    messages()[0].dispatchEvent(new Event('pointerenter'));
     await vi.advanceTimersByTimeAsync(10_000);
-    expect(messaggi()).toHaveLength(1);
+    expect(messages()).toHaveLength(1);
   });
 
   it('con il focus dentro il messaggio non sparisce e poi riparte', async () => {
     vi.useFakeTimers();
     service.success('a', 'b');
     await vi.advanceTimersByTimeAsync(0);
-    messaggi()[0].dispatchEvent(new Event('focusin'));
+    messages()[0].dispatchEvent(new Event('focusin'));
     await vi.advanceTimersByTimeAsync(10_000);
-    messaggi()[0].dispatchEvent(new Event('focusout'));
+    messages()[0].dispatchEvent(new Event('focusout'));
     await vi.advanceTimersByTimeAsync(10_000);
     await fixture.whenStable();
-    expect(messaggi()).toEqual([]);
+    expect(messages()).toEqual([]);
   });
 
   it('l’icona è nascosta agli screen reader', async () => {
@@ -87,11 +87,11 @@ describe('Toast', () => {
   it('il bottone ha l’etichetta tradotta e chiude il messaggio', async () => {
     service.info('a', 'b');
     await fixture.whenStable();
-    const chiudi = html().querySelector('button') as HTMLButtonElement;
-    expect(chiudi.getAttribute('aria-label')).toBe('toast.close');
-    chiudi.click();
+    const close = html().querySelector('button') as HTMLButtonElement;
+    expect(close.getAttribute('aria-label')).toBe('toast.close');
+    close.click();
     await fixture.whenStable();
-    expect(messaggi()).toEqual([]);
+    expect(messages()).toEqual([]);
   });
 
   it('il messaggio sparisce da solo', async () => {
@@ -99,6 +99,6 @@ describe('Toast', () => {
     service.success('a', 'b');
     await vi.advanceTimersByTimeAsync(10_000);
     await fixture.whenStable();
-    expect(messaggi()).toEqual([]);
+    expect(messages()).toEqual([]);
   });
 });

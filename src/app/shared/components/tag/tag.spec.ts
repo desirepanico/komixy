@@ -16,22 +16,22 @@ describe('Tag', () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
   });
 
-  const crea = async () => {
+  const create = async () => {
     const fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     return fixture;
   };
 
   it('viene creato', async () => {
-    expect(await crea()).toBeTruthy();
+    expect(await create()).toBeTruthy();
   });
 
   it('mostra il testo passato come contenuto', async () => {
-    expect((await crea()).nativeElement.textContent.trim()).toBe('Limitata');
+    expect((await create()).nativeElement.textContent.trim()).toBe('Limitata');
   });
 
   it('è viola per default e neutro con severity secondary', async () => {
-    const fixture = await crea();
+    const fixture = await create();
     const span = fixture.nativeElement.querySelector('span') as HTMLElement;
     expect(span.classList).toContain('bg-primary-500');
 
@@ -42,7 +42,7 @@ describe('Tag', () => {
   });
 
   it('con severity accent è viola trasparente con un anello, senza cambiare dimensioni', async () => {
-    const fixture = await crea();
+    const fixture = await create();
     fixture.componentInstance.severity.set('accent');
     await fixture.whenStable();
     const span = fixture.nativeElement.querySelector('span') as HTMLElement;

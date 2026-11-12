@@ -28,14 +28,14 @@ describe('Hint', () => {
   });
 
   it("ha sempre l'icona del tocco, nascosta agli screen reader", () => {
-    const icona = html.querySelector('app-hint ng-icon');
-    expect(icona?.getAttribute('name')).toBe('matTouchAppOutline');
-    expect(icona?.getAttribute('aria-hidden')).toBe('true');
+    const icon = html.querySelector('app-hint ng-icon');
+    expect(icon?.getAttribute('name')).toBe('matTouchAppOutline');
+    expect(icon?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('ha la stessa grandezza e lo stesso colore in ogni punto', () => {
-    const classi = html.querySelector('app-hint')?.className ?? '';
-    expect(classi).toContain('text-sm');
-    expect(classi).toContain('text-surface-300');
+    const classes = html.querySelector('app-hint')?.className ?? '';
+    expect(classes).toContain('text-sm');
+    expect(classes).toContain('text-surface-300');
   });
 });

@@ -10,7 +10,7 @@ describe('userRoleGuard', () => {
   let auth: AuthService;
   let router: Router;
 
-  const esegui = () =>
+  const run = () =>
     TestBed.runInInjectionContext(() =>
       userRoleGuard(UserRole.Admin)(
         {} as ActivatedRouteSnapshot,
@@ -24,18 +24,18 @@ describe('userRoleGuard', () => {
   });
 
   it('manda al login chi non è autenticato, ricordando la pagina richiesta', () => {
-    const risultato = esegui() as UrlTree;
-    expect(router.serializeUrl(risultato)).toBe(`/${AppRoutes.Login}?returnUrl=%2Fadmin`);
+    const result = run() as UrlTree;
+    expect(router.serializeUrl(result)).toBe(`/${AppRoutes.Login}?returnUrl=%2Fadmin`);
   });
 
   it('manda a discover chi non ha il ruolo richiesto', () => {
     auth.login({ id: '1', email: 'a@b.it', userRole: UserRole.User });
-    const risultato = esegui() as UrlTree;
-    expect(router.serializeUrl(risultato)).toBe(`/${AppRoutes.Discover}`);
+    const result = run() as UrlTree;
+    expect(router.serializeUrl(result)).toBe(`/${AppRoutes.Discover}`);
   });
 
   it('lascia passare chi ha il ruolo richiesto', () => {
     auth.login({ id: '1', email: 'a@b.it', userRole: UserRole.Admin });
-    expect(esegui()).toBe(true);
+    expect(run()).toBe(true);
   });
 });

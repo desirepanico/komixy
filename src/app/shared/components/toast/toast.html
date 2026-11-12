@@ -16,14 +16,14 @@
     aria-atomic="true"
     [class]="
       'glass-strong pointer-events-auto mb-2 grid grid-cols-[auto_1fr_auto] items-center gap-x-2 rounded-md border px-3 py-2.5 ' +
-      estilo(toast.severity).container
+      style(toast.severity).container
     "
     (pointerenter)="toastService.pause(toast.id)"
     (pointerleave)="toastService.resume(toast.id)"
     (focusin)="toastService.pause(toast.id)"
     (focusout)="toastService.resume(toast.id)"
   >
-    <ng-icon [name]="estilo(toast.severity).icon" size="18" aria-hidden="true" />
+    <ng-icon [name]="style(toast.severity).icon" size="18" aria-hidden="true" />
     <p class="text-base font-semibold">{{ toast.summary }}</p>
     <button
       type="button"

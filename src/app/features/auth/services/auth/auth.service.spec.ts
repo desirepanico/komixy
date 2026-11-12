@@ -9,7 +9,7 @@ import { SessionService } from '@shared/services/session/session.service';
 import { DEMO_CREDENTIALS, FAKE_API_DELAY_MS } from '@shared/constants/form.const';
 import { ApiError, AuthService } from './auth.service';
 
-const utente: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
+const user: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -27,31 +27,31 @@ describe('AuthService', () => {
   });
 
   it("dopo il login espone l'utente", () => {
-    service.login(utente);
-    expect(service.loggedUser()).toEqual(utente);
+    service.login(user);
+    expect(service.loggedUser()).toEqual(user);
     expect(service.isAuthenticated()).toBe(true);
   });
 
   it('dopo il login la sessione condivisa non è più di un ospite', () => {
-    service.login(utente);
+    service.login(user);
     expect(TestBed.inject(SessionService).isGuest()).toBe(false);
   });
 
   it('come ospite non c’è un utente e la sessione condivisa è di un ospite', () => {
-    service.login(utente);
+    service.login(user);
     service.enterAsGuest();
     expect(service.loggedUser()).toBeNull();
     expect(TestBed.inject(SessionService).isGuest()).toBe(true);
   });
 
   it('dopo il logout la sessione condivisa torna di un ospite', () => {
-    service.login(utente);
+    service.login(user);
     service.logout();
     expect(TestBed.inject(SessionService).isGuest()).toBe(true);
   });
 
   it("dopo il logout cancella l'utente e va al login", () => {
-    service.login(utente);
+    service.login(user);
     service.logout();
     expect(service.loggedUser()).toBeNull();
     expect(router.navigate).toHaveBeenCalledWith(['/', AppRoutes.Login]);
@@ -62,10 +62,10 @@ describe('AuthService', () => {
     afterEach(() => vi.useRealTimers());
 
     it('con le credenziali demo risponde dopo la latenza e registra l’utente', async () => {
-      const risposta = firstValueFrom(service.authenticate(DEMO_CREDENTIALS));
+      const response = firstValueFrom(service.authenticate(DEMO_CREDENTIALS));
       expect(service.isAuthenticated()).toBe(false);
       await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
-      expect(await risposta).toEqual({
+      expect(await response).toEqual({
         id: DEMO_CREDENTIALS.email,
         email: DEMO_CREDENTIALS.email,
         userRole: UserRole.User,
@@ -74,21 +74,21 @@ describe('AuthService', () => {
     });
 
     it('ignora maiuscole e spazi nell’email', async () => {
-      const risposta = firstValueFrom(
+      const response = firstValueFrom(
         service.authenticate({ email: ' Demo@Example.com ', password: DEMO_CREDENTIALS.password }),
       );
       await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
-      expect((await risposta).email).toBe(DEMO_CREDENTIALS.email);
+      expect((await response).email).toBe(DEMO_CREDENTIALS.email);
     });
 
     it('con credenziali sbagliate risponde 401 e non registra nessuno', async () => {
-      const risposta = firstValueFrom(
+      const response = firstValueFrom(
         service.authenticate({ email: DEMO_CREDENTIALS.email, password: 'sbagliata' }),
       ).catch((e: unknown) => e);
       await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
-      const errore = await risposta;
-      expect(errore).toBeInstanceOf(ApiError);
-      expect((errore as ApiError).status).toBe(401);
+      const error = await response;
+      expect(error).toBeInstanceOf(ApiError);
+      expect((error as ApiError).status).toBe(401);
       expect(service.isAuthenticated()).toBe(false);
     });
   });

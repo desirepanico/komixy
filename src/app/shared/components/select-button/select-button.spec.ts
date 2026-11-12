@@ -8,11 +8,11 @@ type Vista = 'list' | 'cards' | 'table';
 
 @Component({
   imports: [SelectButton],
-  template: `<app-select-button label="x.gruppo" [options]="voci()" [(value)]="vista" />`,
+  template: `<app-select-button label="x.gruppo" [options]="items()" [(value)]="view" />`,
 })
 class Host {
-  readonly vista = signal<Vista>('list');
-  readonly voci = signal<readonly SelectButtonOption<Vista>[]>([
+  readonly view = signal<Vista>('list');
+  readonly items = signal<readonly SelectButtonOption<Vista>[]>([
     { value: 'list', label: 'x.elenco' },
     { value: 'cards', label: 'x.carte' },
   ]);
@@ -21,7 +21,7 @@ class Host {
 describe('SelectButton', () => {
   let fixture: ReturnType<typeof TestBed.createComponent<Host>>;
   let html: HTMLElement;
-  const bottoni = () => Array.from(html.querySelectorAll('button'));
+  const buttons = () => Array.from(html.querySelectorAll('button'));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
@@ -35,8 +35,8 @@ describe('SelectButton', () => {
   });
 
   it('ha una voce per opzione, col suo testo, e il valore attuale premuto', () => {
-    expect(bottoni().map((b) => b.textContent?.trim())).toEqual(['x.elenco', 'x.carte']);
-    expect(bottoni().map((b) => b.getAttribute('aria-pressed'))).toEqual(['true', 'false']);
+    expect(buttons().map((b) => b.textContent?.trim())).toEqual(['x.elenco', 'x.carte']);
+    expect(buttons().map((b) => b.getAttribute('aria-pressed'))).toEqual(['true', 'false']);
   });
 
   it('è un gruppo con un nome', () => {
@@ -44,23 +44,23 @@ describe('SelectButton', () => {
   });
 
   it('scegliendo una voce cambia il valore del genitore', async () => {
-    bottoni()[1].click();
+    buttons()[1].click();
     await fixture.whenStable();
-    expect(fixture.componentInstance.vista()).toBe('cards');
-    expect(bottoni().map((b) => b.getAttribute('aria-pressed'))).toEqual(['false', 'true']);
+    expect(fixture.componentInstance.view()).toBe('cards');
+    expect(buttons().map((b) => b.getAttribute('aria-pressed'))).toEqual(['false', 'true']);
 
-    bottoni()[0].click();
+    buttons()[0].click();
     await fixture.whenStable();
-    expect(fixture.componentInstance.vista()).toBe('list');
+    expect(fixture.componentInstance.view()).toBe('list');
   });
 
   it('funziona con un numero qualsiasi di voci', async () => {
-    fixture.componentInstance.voci.set([
+    fixture.componentInstance.items.set([
       { value: 'list', label: 'x.elenco' },
       { value: 'cards', label: 'x.carte' },
       { value: 'table', label: 'x.tabella' },
     ]);
     await fixture.whenStable();
-    expect(bottoni()).toHaveLength(3);
+    expect(buttons()).toHaveLength(3);
   });
 });

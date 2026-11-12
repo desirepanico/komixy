@@ -13,20 +13,20 @@ describe('provideBootSkeleton', () => {
 
   afterEach(() => skeleton()?.remove());
 
-  const avvia = async (rotte: Parameters<typeof provideRouter>[0]) => {
+  const start = async (rotte: Parameters<typeof provideRouter>[0]) => {
     TestBed.configureTestingModule({ providers: [provideBootSkeleton(), provideRouter(rotte)] });
     await TestBed.inject(ApplicationInitStatus).donePromise;
     return TestBed.inject(Router);
   };
 
   it('lascia lo skeleton finché la prima navigazione non è finita', async () => {
-    await avvia([{ path: 'discover', children: [] }]);
+    await start([{ path: 'discover', children: [] }]);
     await TestBed.inject(ApplicationInitStatus).donePromise;
     expect(skeleton()).not.toBeNull();
   });
 
   it('toglie lo skeleton a prima navigazione finita', async () => {
-    const router = await avvia([{ path: 'discover', children: [] }]);
+    const router = await start([{ path: 'discover', children: [] }]);
     await router.navigateByUrl('/discover');
     await TestBed.inject(ApplicationInitStatus).donePromise;
     await new Promise((resolve) => setTimeout(resolve));
@@ -34,7 +34,7 @@ describe('provideBootSkeleton', () => {
   });
 
   it('con un reindirizzamento aspetta la pagina finale', async () => {
-    const router = await avvia([
+    const router = await start([
       { path: 'old', redirectTo: 'new' },
       { path: 'new', children: [] },
     ]);

@@ -19,18 +19,18 @@ describe('HorizontalScroller', () => {
   });
 
   let fixture: ComponentFixture<Host>;
-  let lista: HTMLElement;
+  let list: HTMLElement;
   let scrollBy: ReturnType<typeof vi.fn>;
 
-  const frecce = () =>
+  const arrows = () =>
     Array.from(fixture.nativeElement.querySelectorAll('button')) as HTMLButtonElement[];
 
   // Simula una lista larga 1000px in una finestra di 300px, scrollata di `x`
-  const scrolla = async (x: number) => {
-    Object.defineProperty(lista, 'scrollWidth', { value: 1000, configurable: true });
-    Object.defineProperty(lista, 'clientWidth', { value: 300, configurable: true });
-    lista.scrollLeft = x;
-    lista.dispatchEvent(new Event('scroll'));
+  const scrolls = async (x: number) => {
+    Object.defineProperty(list, 'scrollWidth', { value: 1000, configurable: true });
+    Object.defineProperty(list, 'clientWidth', { value: 300, configurable: true });
+    list.scrollLeft = x;
+    list.dispatchEvent(new Event('scroll'));
     await fixture.whenStable();
   };
 
@@ -38,9 +38,9 @@ describe('HorizontalScroller', () => {
     fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
 
-    lista = fixture.nativeElement.querySelector('[role="region"]');
+    list = fixture.nativeElement.querySelector('[role="region"]');
     scrollBy = vi.fn();
-    lista.scrollBy = scrollBy as unknown as typeof lista.scrollBy;
+    list.scrollBy = scrollBy as unknown as typeof list.scrollBy;
   });
 
   it('viene creato', () => {
@@ -48,57 +48,57 @@ describe('HorizontalScroller', () => {
   });
 
   it("è una regione con l'etichetta per i lettori di schermo e il contenuto passato", () => {
-    expect(lista.getAttribute('aria-label')).toBe('Lista di prova');
-    expect(lista.textContent).toContain('uno');
-    expect(lista.hasAttribute('data-no-swipe')).toBe(true);
+    expect(list.getAttribute('aria-label')).toBe('Lista di prova');
+    expect(list.textContent).toContain('uno');
+    expect(list.hasAttribute('data-no-swipe')).toBe(true);
   });
 
   it('lascia passare anche il pan verticale del dito, per scrollare la pagina', () => {
-    expect(lista.classList).toContain('touch-pan-x');
-    expect(lista.classList).toContain('touch-pan-y');
+    expect(list.classList).toContain('touch-pan-x');
+    expect(list.classList).toContain('touch-pan-y');
   });
 
   it('parte con le frecce disattivate se non c’è niente da scorrere', () => {
-    const [indietro, avanti] = frecce();
-    expect(indietro.disabled).toBe(true);
+    const [back, avanti] = arrows();
+    expect(back.disabled).toBe(true);
     expect(avanti.disabled).toBe(true);
   });
 
   it("attiva la freccia avanti all'inizio della lista e quella indietro dopo aver scorso", async () => {
-    await scrolla(0);
-    let [indietro, avanti] = frecce();
-    expect(indietro.disabled).toBe(true);
+    await scrolls(0);
+    let [back, avanti] = arrows();
+    expect(back.disabled).toBe(true);
     expect(avanti.disabled).toBe(false);
 
-    await scrolla(100);
-    [indietro, avanti] = frecce();
-    expect(indietro.disabled).toBe(false);
+    await scrolls(100);
+    [back, avanti] = arrows();
+    expect(back.disabled).toBe(false);
     expect(avanti.disabled).toBe(false);
   });
 
   it('disattiva la freccia avanti in fondo alla lista', async () => {
-    await scrolla(700);
-    expect(frecce()[1].disabled).toBe(true);
+    await scrolls(700);
+    expect(arrows()[1].disabled).toBe(true);
   });
 
   it('scorre di una larghezza visibile con le frecce e i tasti freccia', async () => {
-    await scrolla(100);
-    const [indietro, avanti] = frecce();
+    await scrolls(100);
+    const [back, avanti] = arrows();
 
     avanti.click();
     expect(scrollBy).toHaveBeenLastCalledWith({ left: 300, behavior: 'smooth' });
 
-    indietro.click();
+    back.click();
     expect(scrollBy).toHaveBeenLastCalledWith({ left: -300, behavior: 'smooth' });
 
-    lista.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
+    list.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
     expect(scrollBy).toHaveBeenLastCalledWith({ left: 300, behavior: 'smooth' });
   });
 
   it('non anima lo scroll se l’utente ha chiesto di ridurre il movimento', async () => {
     vi.stubGlobal('matchMedia', () => ({ matches: true }));
-    await scrolla(100);
-    frecce()[1].click();
+    await scrolls(100);
+    arrows()[1].click();
     expect(scrollBy).toHaveBeenLastCalledWith({ left: 300, behavior: 'auto' });
   });
 });

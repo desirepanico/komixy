@@ -36,7 +36,7 @@ export class Toast {
   protected readonly toastService = inject(ToastService);
 
   // `let-toast` del template è senza tipo: qui la severity torna a essere tipizzata
-  protected estilo(severity: ToastSeverity): (typeof TOAST_STYLES)[ToastSeverity] {
+  protected style(severity: ToastSeverity): (typeof TOAST_STYLES)[ToastSeverity] {
     return TOAST_STYLES[severity];
   }
 }

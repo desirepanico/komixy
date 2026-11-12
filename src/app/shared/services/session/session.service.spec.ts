@@ -9,7 +9,7 @@ describe('SessionService', () => {
     service = TestBed.inject(SessionService);
   });
 
-  it('all\'inizio è un ospite', () => {
+  it("all'inizio è un ospite", () => {
     expect(service.isAuthenticated()).toBe(false);
     expect(service.isGuest()).toBe(true);
   });

@@ -30,24 +30,24 @@ describe('LoginForm', () => {
 
   let fixture: ComponentFixture<LoginForm>;
   let html: HTMLElement;
-  let successi = 0;
+  let successes = 0;
 
-  const campo = (id: string) => html.querySelector(`#${id}`) as HTMLInputElement;
-  const scrivi = (id: string, valore: string) => {
-    campo(id).value = valore;
-    campo(id).dispatchEvent(new Event('input'));
+  const field = (id: string) => html.querySelector(`#${id}`) as HTMLInputElement;
+  const write = (id: string, valore: string) => {
+    field(id).value = valore;
+    field(id).dispatchEvent(new Event('input'));
   };
-  const invia = async () => {
+  const submit = async () => {
     html.querySelector('form')?.dispatchEvent(new Event('submit'));
     await fixture.whenStable();
   };
-  const errori = () =>
+  const errors = () =>
     Array.from(html.querySelectorAll('[role="alert"]')).map((e) => e.textContent?.trim());
 
   beforeEach(async () => {
-    successi = 0;
+    successes = 0;
     fixture = TestBed.createComponent(LoginForm);
-    fixture.componentInstance.loginSuccess.subscribe(() => successi++);
+    fixture.componentInstance.loginSuccess.subscribe(() => successes++);
     html = fixture.nativeElement;
     await fixture.whenStable();
   });
@@ -57,175 +57,175 @@ describe('LoginForm', () => {
   });
 
   it('mostra il segnaposto di email e password', () => {
-    expect(campo('login-email').getAttribute('placeholder')).toBe('login.emailPlaceholder');
-    expect(campo('login-password').getAttribute('placeholder')).toBe('login.passwordPlaceholder');
+    expect(field('login-email').getAttribute('placeholder')).toBe('login.emailPlaceholder');
+    expect(field('login-password').getAttribute('placeholder')).toBe('login.passwordPlaceholder');
   });
 
   it('non mostra errori prima del primo invio', () => {
-    expect(errori()).toEqual([]);
+    expect(errors()).toEqual([]);
   });
 
   it('mostra l’errore di un campo quando si esce senza compilarlo', async () => {
-    campo('login-email').dispatchEvent(new Event('blur'));
+    field('login-email').dispatchEvent(new Event('blur'));
     await fixture.whenStable();
-    expect(errori()).toEqual(['required']);
+    expect(errors()).toEqual(['required']);
   });
 
   it('dopo un invio fallito porta il focus sul primo campo non valido', async () => {
-    await invia();
-    expect(document.activeElement).toBe(campo('login-email'));
+    await submit();
+    expect(document.activeElement).toBe(field('login-email'));
 
-    scrivi('login-email', 'a@b.it');
-    await invia();
-    expect(document.activeElement).toBe(campo('login-password'));
+    write('login-email', 'a@b.it');
+    await submit();
+    expect(document.activeElement).toBe(field('login-password'));
   });
 
   it('con il form vuoto mostra gli errori e non emette nulla', async () => {
-    await invia();
-    expect(errori()).toEqual(['required', 'required']);
-    expect(campo('login-email').getAttribute('aria-invalid')).toBe('true');
-    expect(successi).toBe(0);
+    await submit();
+    expect(errors()).toEqual(['required', 'required']);
+    expect(field('login-email').getAttribute('aria-invalid')).toBe('true');
+    expect(successes).toBe(0);
   });
 
   it('segnala email non valida e password troppo corta', async () => {
-    scrivi('login-email', 'non-una-email');
-    scrivi('login-password', '123');
-    await invia();
-    expect(errori()).toEqual(['email', 'minLength']);
-    expect(successi).toBe(0);
+    write('login-email', 'non-una-email');
+    write('login-password', '123');
+    await submit();
+    expect(errors()).toEqual(['email', 'minLength']);
+    expect(successes).toBe(0);
   });
 
   describe('chiamata di accesso', () => {
-    const utente: LoggedUser = { id: 'a@b.it', email: 'a@b.it', userRole: UserRole.User };
-    let risposta: Subject<LoggedUser>;
+    const user: LoggedUser = { id: 'a@b.it', email: 'a@b.it', userRole: UserRole.User };
+    let response: Subject<LoggedUser>;
 
-    const bottone = () => html.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const button = () => html.querySelector('button[type="submit"]') as HTMLButtonElement;
     // La risposta passa da una Promise: serve un giro del loop prima che il form aggiorni lo stato
-    const attendi = async () => {
+    const wait = async () => {
       await new Promise((resolve) => setTimeout(resolve));
       await fixture.whenStable();
     };
-    const compilaEInvia = async () => {
-      scrivi('login-email', 'a@b.it');
-      scrivi('login-password', '12345678');
-      await invia();
+    const fillAndSubmit = async () => {
+      write('login-email', 'a@b.it');
+      write('login-password', '12345678');
+      await submit();
     };
 
     beforeEach(() => {
-      risposta = new Subject<LoggedUser>();
-      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(risposta);
+      response = new Subject<LoggedUser>();
+      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(response);
     });
 
     it('finché attende disattiva il bottone, poi emette loginSuccess', async () => {
-      await compilaEInvia();
-      expect(bottone().disabled).toBe(true);
-      expect(bottone().textContent).toContain('login.submitting');
-      expect(successi).toBe(0);
+      await fillAndSubmit();
+      expect(button().disabled).toBe(true);
+      expect(button().textContent).toContain('login.submitting');
+      expect(successes).toBe(0);
 
-      risposta.next(utente);
-      risposta.complete();
-      await attendi();
-      expect(successi).toBe(1);
-      expect(bottone().disabled).toBe(false);
-      expect(errori()).toEqual([]);
+      response.next(user);
+      response.complete();
+      await wait();
+      expect(successes).toBe(1);
+      expect(button().disabled).toBe(false);
+      expect(errors()).toEqual([]);
     });
 
     it('con credenziali sbagliate mostra un toast e non emette nulla', async () => {
-      const errore = vi.spyOn(TestBed.inject(ToastService), 'error');
-      await compilaEInvia();
-      risposta.error(new ApiError(401, 'Credenziali non valide'));
-      await attendi();
-      expect(errore).toHaveBeenCalledWith(
+      const error = vi.spyOn(TestBed.inject(ToastService), 'error');
+      await fillAndSubmit();
+      response.error(new ApiError(401, 'Credenziali non valide'));
+      await wait();
+      expect(error).toHaveBeenCalledWith(
         'login.invalidCredentials.summaryKo',
         'login.invalidCredentials.detailKo',
       );
-      expect(errori()).toEqual([]);
-      expect(successi).toBe(0);
-      expect(bottone().disabled).toBe(false);
+      expect(errors()).toEqual([]);
+      expect(successes).toBe(0);
+      expect(button().disabled).toBe(false);
     });
 
     it('con un errore diverso da 401 mostra il toast dell’errore del server', async () => {
-      const errore = vi.spyOn(TestBed.inject(ToastService), 'error');
-      await compilaEInvia();
-      risposta.error(new ApiError(500, 'Errore'));
-      await attendi();
-      expect(errore).toHaveBeenCalledWith(
+      const error = vi.spyOn(TestBed.inject(ToastService), 'error');
+      await fillAndSubmit();
+      response.error(new ApiError(500, 'Errore'));
+      await wait();
+      expect(error).toHaveBeenCalledWith(
         'login.serverError.summaryKo',
         'login.serverError.detailKo',
       );
     });
 
     it('dopo un errore si può riprovare senza modificare i campi', async () => {
-      await compilaEInvia();
-      risposta.error(new ApiError(500, 'Errore'));
-      await attendi();
+      await fillAndSubmit();
+      response.error(new ApiError(500, 'Errore'));
+      await wait();
 
-      risposta = new Subject<LoggedUser>();
-      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(risposta);
-      await invia();
-      risposta.next(utente);
-      risposta.complete();
-      await attendi();
-      expect(successi).toBe(1);
+      response = new Subject<LoggedUser>();
+      vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(response);
+      await submit();
+      response.next(user);
+      response.complete();
+      await wait();
+      expect(successes).toBe(1);
     });
   });
 
   it('mostra e nasconde la password', async () => {
-    const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
-    expect(campo('login-password').type).toBe('password');
-    expect(occhio.getAttribute('aria-pressed')).toBe('false');
+    const eye = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
+    expect(field('login-password').type).toBe('password');
+    expect(eye.getAttribute('aria-pressed')).toBe('false');
 
-    occhio.click();
+    eye.click();
     await fixture.whenStable();
-    expect(campo('login-password').type).toBe('text');
-    expect(occhio.getAttribute('aria-pressed')).toBe('true');
+    expect(field('login-password').type).toBe('text');
+    expect(eye.getAttribute('aria-pressed')).toBe('true');
 
-    occhio.click();
+    eye.click();
     await fixture.whenStable();
-    expect(campo('login-password').type).toBe('password');
-    expect(occhio.getAttribute('aria-pressed')).toBe('false');
+    expect(field('login-password').type).toBe('password');
+    expect(eye.getAttribute('aria-pressed')).toBe('false');
   });
 
   it('l’occhio mantiene la stessa etichetta quando cambia stato', async () => {
-    const occhio = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
-    occhio.click();
+    const eye = html.querySelector('button[aria-pressed]') as HTMLButtonElement;
+    eye.click();
     await fixture.whenStable();
-    expect(occhio.getAttribute('aria-label')).toBe('inputPassword.show');
+    expect(eye.getAttribute('aria-label')).toBe('inputPassword.show');
   });
 
   it('collega ogni errore al suo campo con aria-describedby', async () => {
-    expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
+    expect(field('login-email').getAttribute('aria-describedby')).toBeNull();
 
-    await invia();
-    expect(campo('login-email').getAttribute('aria-describedby')).toBe('login-email-error');
-    expect(campo('login-password').getAttribute('aria-describedby')).toBe('login-password-error');
+    await submit();
+    expect(field('login-email').getAttribute('aria-describedby')).toBe('login-email-error');
+    expect(field('login-password').getAttribute('aria-describedby')).toBe('login-password-error');
     expect(html.querySelector('#login-email-error')).not.toBeNull();
   });
 
   it('toglie l’errore man mano che i campi diventano validi', async () => {
-    await invia();
-    scrivi('login-email', 'a@b.it');
+    await submit();
+    write('login-email', 'a@b.it');
     await fixture.whenStable();
-    expect(errori()).toEqual(['required']);
-    expect(campo('login-email').getAttribute('aria-invalid')).toBe('false');
-    expect(campo('login-email').getAttribute('aria-describedby')).toBeNull();
+    expect(errors()).toEqual(['required']);
+    expect(field('login-email').getAttribute('aria-invalid')).toBe('false');
+    expect(field('login-email').getAttribute('aria-describedby')).toBeNull();
 
-    scrivi('login-password', '12345678');
+    write('login-password', '12345678');
     await fixture.whenStable();
-    expect(errori()).toEqual([]);
-    expect(campo('login-password').getAttribute('aria-invalid')).toBe('false');
-    expect(campo('login-password').getAttribute('aria-describedby')).toBeNull();
+    expect(errors()).toEqual([]);
+    expect(field('login-password').getAttribute('aria-invalid')).toBe('false');
+    expect(field('login-password').getAttribute('aria-describedby')).toBeNull();
   });
 
   describe('altre azioni', () => {
-    const pulsante = (testo: string) =>
+    const button = (text: string) =>
       Array.from(html.querySelectorAll('button, a')).find((b) =>
-        b.textContent?.includes(testo),
+        b.textContent?.includes(text),
       ) as HTMLElement;
 
     it('ha link sottolineati verso recupero password e registrazione', () => {
-      const forgot = pulsante('login.forgotPassword');
-      const register = pulsante('login.register');
+      const forgot = button('login.forgotPassword');
+      const register = button('login.register');
       expect(forgot.getAttribute('href')).toBe('/login/forgot-password');
       expect(register.getAttribute('href')).toBe('/login/register');
       expect([forgot, register].every((l) => l.classList.contains('hover:underline'))).toBe(true);
@@ -240,15 +240,15 @@ describe('LoginForm', () => {
     });
 
     it('emette l’accesso come ospite, visibile solo da desktop', () => {
-      let ospite = 0;
-      fixture.componentInstance.guestAccess.subscribe(() => ospite++);
-      const bottone = pulsante('login.guest');
-      bottone.click();
-      expect(ospite).toBe(1);
-      expect(bottone.parentElement?.classList).toContain('hidden');
-      expect(bottone.parentElement?.classList).toContain('md:block');
+      let guest = 0;
+      fixture.componentInstance.guestAccess.subscribe(() => guest++);
+      const guestButton = button('login.guest');
+      guestButton.click();
+      expect(guest).toBe(1);
+      expect(guestButton.parentElement?.classList).toContain('hidden');
+      expect(guestButton.parentElement?.classList).toContain('md:block');
       expect(
-        html.querySelector(`#${bottone.getAttribute('aria-describedby')}`)?.textContent,
+        html.querySelector(`#${guestButton.getAttribute('aria-describedby')}`)?.textContent,
       ).toContain('login.guestHint');
     });
   });

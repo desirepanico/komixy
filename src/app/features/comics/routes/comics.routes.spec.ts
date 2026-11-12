@@ -11,8 +11,8 @@ describe('COMICS_ROUTES', () => {
   });
 
   it('la rotta :id mostra il dettaglio del fumetto', async () => {
-    const dettaglio = COMICS_ROUTES[1];
-    expect(dettaglio.path).toBe(':id');
-    expect(await (dettaglio.loadComponent as () => Promise<unknown>)()).toBe(ComicDetailPage);
+    const detail = COMICS_ROUTES[1];
+    expect(detail.path).toBe(':id');
+    expect(await (detail.loadComponent as () => Promise<unknown>)()).toBe(ComicDetailPage);
   });
 });

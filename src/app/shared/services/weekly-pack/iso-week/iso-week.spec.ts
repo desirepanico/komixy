@@ -3,11 +3,26 @@ import { daysUntilNextWeek, dateInZone, isoWeek } from './iso-week';
 
 describe('isoWeek', () => {
   it.each([
-    [{ year: 2026, month: 11, day: 11 }, { year: 2026, week: 46 }],
-    [{ year: 2026, month: 11, day: 9 }, { year: 2026, week: 46 }],
-    [{ year: 2026, month: 11, day: 8 }, { year: 2026, week: 45 }],
-    [{ year: 2021, month: 1, day: 3 }, { year: 2020, week: 53 }],
-    [{ year: 2024, month: 12, day: 30 }, { year: 2025, week: 1 }],
+    [
+      { year: 2026, month: 11, day: 11 },
+      { year: 2026, week: 46 },
+    ],
+    [
+      { year: 2026, month: 11, day: 9 },
+      { year: 2026, week: 46 },
+    ],
+    [
+      { year: 2026, month: 11, day: 8 },
+      { year: 2026, week: 45 },
+    ],
+    [
+      { year: 2021, month: 1, day: 3 },
+      { year: 2020, week: 53 },
+    ],
+    [
+      { year: 2024, month: 12, day: 30 },
+      { year: 2025, week: 1 },
+    ],
   ])('%j cade nella settimana %j', (giorno, atteso) => {
     expect(isoWeek(giorno)).toEqual(atteso);
   });
@@ -25,8 +40,8 @@ describe('daysUntilNextWeek', () => {
 
 describe('dateInZone', () => {
   it('usa il fuso indicato e non quello del dispositivo', () => {
-    const quasiMezzanotte = new Date('2026-11-14T23:30:00Z');
-    expect(dateInZone(quasiMezzanotte, 'Europe/Rome')).toEqual({ year: 2026, month: 11, day: 15 });
-    expect(dateInZone(quasiMezzanotte, 'UTC')).toEqual({ year: 2026, month: 11, day: 14 });
+    const nearMidnight = new Date('2026-11-14T23:30:00Z');
+    expect(dateInZone(nearMidnight, 'Europe/Rome')).toEqual({ year: 2026, month: 11, day: 15 });
+    expect(dateInZone(nearMidnight, 'UTC')).toEqual({ year: 2026, month: 11, day: 14 });
   });
 });

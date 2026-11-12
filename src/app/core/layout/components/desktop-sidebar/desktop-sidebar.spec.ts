@@ -7,7 +7,7 @@ describe('DesktopSidebar', () => {
   let fixture: ComponentFixture<DesktopSidebar>;
   let html: HTMLElement;
 
-  const titoli = () => Array.from(html.querySelectorAll('section button')) as HTMLButtonElement[];
+  const titles = () => Array.from(html.querySelectorAll('section button')) as HTMLButtonElement[];
   const link = () => Array.from(html.querySelectorAll('nav a')) as HTMLAnchorElement[];
 
   beforeEach(async () => {
@@ -25,7 +25,7 @@ describe('DesktopSidebar', () => {
   });
 
   it('mostra i gruppi di menu con i loro link', () => {
-    expect(titoli().map((b) => b.textContent?.trim())).toEqual(['menu.main', 'common.library']);
+    expect(titles().map((b) => b.textContent?.trim())).toEqual(['menu.main', 'common.library']);
     expect(link().map((a) => a.getAttribute('href'))).toEqual([
       '/discover',
       '/releases',
@@ -43,41 +43,41 @@ describe('DesktopSidebar', () => {
   });
 
   it('il riquadro del profilo è un link alla pagina del profilo', () => {
-    const profilo = html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
-    expect(profilo.getAttribute('href')).toBe('/profile');
+    const profile = html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
+    expect(profile.getAttribute('href')).toBe('/profile');
   });
 
   it('evidenzia il riquadro del profilo solo quando la pagina è aperta', async () => {
-    const profilo = () => html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
-    expect(profilo().getAttribute('aria-current')).toBeNull();
+    const profile = () => html.querySelector('aside > div:last-child a') as HTMLAnchorElement;
+    expect(profile().getAttribute('aria-current')).toBeNull();
 
     const router = TestBed.inject(Router);
     router.resetConfig([{ path: 'profile', children: [] }]);
     await router.navigateByUrl('/profile');
     await fixture.whenStable();
 
-    expect(profilo().getAttribute('aria-current')).toBe('page');
-    expect(profilo().classList).toContain('bg-primary-500/15');
+    expect(profile().getAttribute('aria-current')).toBe('page');
+    expect(profile().classList).toContain('bg-primary-500/15');
   });
 
   it('chiude e riapre un gruppo, aggiornando aria-expanded', async () => {
-    const gruppo = () => titoli()[0];
-    expect(gruppo().getAttribute('aria-expanded')).toBe('true');
+    const group = () => titles()[0];
+    expect(group().getAttribute('aria-expanded')).toBe('true');
 
-    gruppo().click();
+    group().click();
     await fixture.whenStable();
-    expect(gruppo().getAttribute('aria-expanded')).toBe('false');
+    expect(group().getAttribute('aria-expanded')).toBe('false');
     expect(link()).toHaveLength(1);
 
-    gruppo().click();
+    group().click();
     await fixture.whenStable();
-    expect(gruppo().getAttribute('aria-expanded')).toBe('true');
+    expect(group().getAttribute('aria-expanded')).toBe('true');
     expect(link()).toHaveLength(3);
   });
 
   it('chiudere un gruppo non tocca gli altri', async () => {
-    titoli()[0].click();
+    titles()[0].click();
     await fixture.whenStable();
-    expect(titoli()[1].getAttribute('aria-expanded')).toBe('true');
+    expect(titles()[1].getAttribute('aria-expanded')).toBe('true');
   });
 });

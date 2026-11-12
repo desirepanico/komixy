@@ -10,7 +10,7 @@ describe('Layout', () => {
   const desktop = signal(true);
   const navigate = vi.fn();
 
-  const crea = async () => {
+  const create = async () => {
     const fixture = TestBed.createComponent(Layout);
     await fixture.whenStable();
     return fixture.nativeElement as HTMLElement;
@@ -29,38 +29,38 @@ describe('Layout', () => {
   });
 
   it('viene creato', async () => {
-    expect(await crea()).toBeTruthy();
+    expect(await create()).toBeTruthy();
   });
 
   it('da desktop mostra la sidebar e non la barra in basso', async () => {
     desktop.set(true);
-    const html = await crea();
+    const html = await create();
     expect(html.querySelector('app-desktop-sidebar')).not.toBeNull();
     expect(html.querySelector('app-mobile-bottom-nav')).toBeNull();
   });
 
   it('da mobile o tablet mostra la barra in basso e non la sidebar', async () => {
     desktop.set(false);
-    const html = await crea();
+    const html = await create();
     expect(html.querySelector('app-mobile-bottom-nav')).not.toBeNull();
     expect(html.querySelector('app-desktop-sidebar')).toBeNull();
   });
 
   it('da mobile lo swipe cambia pagina nella direzione del gesto', async () => {
     desktop.set(false);
-    const main = (await crea()).querySelector('main') as HTMLElement;
-    const tocca = (type: string, x: number) => {
+    const main = (await create()).querySelector('main') as HTMLElement;
+    const touch = (type: string, x: number) => {
       const e = new Event(type, { bubbles: true }) as PointerEvent;
       Object.assign(e, { clientX: x, clientY: 100, pointerType: 'touch' });
       main.dispatchEvent(e);
     };
 
-    tocca('pointerdown', 300);
-    tocca('pointerup', 100);
+    touch('pointerdown', 300);
+    touch('pointerup', 100);
     expect(navigate).toHaveBeenLastCalledWith('left');
 
-    tocca('pointerdown', 100);
-    tocca('pointerup', 300);
+    touch('pointerdown', 100);
+    touch('pointerup', 300);
     expect(navigate).toHaveBeenLastCalledWith('right');
   });
 });
