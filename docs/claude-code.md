@@ -3,19 +3,21 @@
 Struttura della cartella `.claude/` e di `CLAUDE.md`, secondo la documentazione di Claude Code.
 
 ```
-CLAUDE.md                istruzioni sempre caricate: comandi, struttura, flusso (breve)
+CLAUDE.md                istruzioni sempre caricate: comandi, struttura, convenzioni, flusso git (meno di 200 righe)
 .claude/
 ├── settings.json        permessi e hook condivisi col team
 ├── rules/               una regola per argomento
 ├── skills/              procedure riusabili
 ├── agents/              subagent (revisore)
 └── hooks/               script richiamati da settings.json
-docs/                    documentazione del progetto (questa cartella)
+README.md, docs/         documentazione per le persone (non per Claude Code, che non la carica)
 ```
 
 ## CLAUDE.md
 
-Solo l'essenziale. I dettagli stanno in `.claude/rules/` e in `docs/`, che CLAUDE.md richiama senza ripeterli.
+È il file che Claude Code carica sempre, quindi deve bastare da solo: non importa file di `docs/` (niente `@docs/...`). Contiene ciò che serve a ogni sessione, anche ricavato da `docs/`: comandi, struttura e confini tra le aree, stato delle pagine, dominio (ospiti, busta), tema, provider, convenzioni riassunte, test, rilascio e come lavorare con hook e permessi. Resta sotto le 200 righe, come consiglia la documentazione di Claude Code: oltre, le istruzioni si seguono peggio.
+
+Le regole di dettaglio stanno in `.claude/rules/` (si caricano quando Claude tocca i file indicati in `paths:`) e in CLAUDE.md sono riassunte, non ricopiate: se una regola cambia, si cambia la rule e, se è riassunta, anche la riga in CLAUDE.md.
 
 ## Rules (`.claude/rules/`)
 

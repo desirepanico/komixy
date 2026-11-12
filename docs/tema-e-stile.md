@@ -36,3 +36,7 @@ Tema scuro viola. Il testo secondario deve rispettare il contrasto WCAG AA, che 
 2. Se manca, usa la scala o i colori di default di Tailwind.
 3. Se lo stesso valore serve in più punti, aggiungilo al tema in `@theme`.
 4. Il valore arbitrario (`p-[13px]`) solo se nessun valore di Tailwind va bene e serve in un solo punto.
+
+## Ordine delle classi
+
+Le classi Tailwind nei template si ordinano con `prettier-plugin-tailwindcss`, che legge il tema da `src/tailwind.css` (opzione `tailwindStylesheet` nella configurazione Prettier di `package.json`). Come lanciarlo: `docs/sviluppo.md`, sezione «Formattazione».

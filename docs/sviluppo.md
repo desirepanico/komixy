@@ -9,6 +9,7 @@
 | `npm run watch`           | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
 | `npm test`                | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
 | `npm run lint`            | ESLint su `src` (configurazione in `eslint.config.js`) e `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec)                                                                        |
+| `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare |
 | `npm run knip`            | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
 | `npm run ng -- <comando>` | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
 | `npm run deploy:login`    | Accesso a Vercel (una volta sola)                                                                                                                                                                  |
@@ -75,6 +76,16 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test).
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
+
+## Formattazione
+
+Prettier formatta il codice e `prettier-plugin-tailwindcss` ordina le classi Tailwind nei template. La configurazione è nella chiave `prettier` di `package.json`:
+
+- `printWidth` 100 e apici singoli; per gli `.html` il parser `angular`, che capisce il control flow (`@if`, `@for`);
+- `plugins: ["prettier-plugin-tailwindcss"]`: deve restare l'ultimo dell'elenco;
+- `tailwindStylesheet: "./src/tailwind.css"`: con Tailwind v4 non c'è un `tailwind.config.js`, quindi il plugin legge il tema (e quindi `primary-*`, `surface-*`, `xs:`...) da questo file. Senza, ordina le classi senza conoscere quelle del tema.
+
+Non c'è un comando `npm run` dedicato e la CI non lo controlla: si lancia a mano sui file toccati (`npx prettier --write src/app/.../file.html`) o dall'editor con l'estensione Prettier (consigliata in `.vscode/extensions.json`). Le regole su cosa ci va dentro sono in `.claude/rules/stile.md`.
 
 ## CI
 
