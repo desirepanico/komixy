@@ -54,6 +54,7 @@ Il dettaglio è nelle rules; qui solo ciò che non si deve scordare.
 
 - **PrimeNG è stato rimosso**: non reintrodurlo. HTML nativo + Tailwind. Icone: `@ng-icons/material-symbols`.
 - **Signal**: tutto lo stato è un `signal()`, ogni proprietà `readonly`; mai `subscribe()` né pipe `async` (`signals.md`). Ordine dei membri di classe controllato da `npm run lint` (`angular.md`).
+- **Chiamate al backend**: `HttpClient` nel servizio, che restituisce il `result` di `ApiResponse`; chi chiama usa `firstValueFrom()` e nel `catch` `ApiErrorService.handle()` (`chiamate-api.md`, skill `api-service`).
 - **Form**: solo Signal Forms, con i controlli di `shared/components/input/` (`form.md`).
 - **Costanti**: ogni `const` dichiarata sta in `shared/constants` (`costanti.md`).
 - **Stato nell'indirizzo**: vista, filtro e ordinamento sono query param, mai nello storage (`query-params.md`).
@@ -69,7 +70,13 @@ Le regole sono in `.claude/rules/git.md`. In sintesi: commit e push solo su `dev
 
 ## Claude Code e documentazione
 
-Hook, permessi, skill (`shared-component`, `use-shared`) e subagent `reviewer` sono descritti in `docs/claude-code.md`. Se la tua modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti o dipendenze, aggiorna nello stesso commit il file di `docs/` corrispondente (pagine in `funzionalita.md`, comandi in `sviluppo.md`) e togli ciò che non esiste più.
+Skill disponibili (descritte in `docs/claude-code.md`):
+
+- `shared-component`: crea o modifica un componente in `shared/components`.
+- `use-shared`: usa un componente shared per nome (`/use-shared <nome> [dove]`).
+- `api-service`: crea o modifica un servizio che chiama il backend (`/api-service <metodo> <endpoint> [feature]`), con modelli, errori e spec.
+
+Hook, permessi e subagent `reviewer` sono descritti in `docs/claude-code.md`. Se la tua modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti o dipendenze, aggiorna nello stesso commit il file di `docs/` corrispondente (pagine in `funzionalita.md`, comandi in `sviluppo.md`) e togli ciò che non esiste più.
 
 ## Sicurezza
 

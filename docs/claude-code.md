@@ -35,6 +35,7 @@ Le regole di dettaglio stanno in `.claude/rules/` (si caricano quando Claude toc
 | `i18n.md` | Traduzioni | `public/i18n/**`, `src/app/**` |
 | `commenti.md` | Commenti: solo il perché; dove sì (JSDoc solo sui componenti shared complicati, workaround, `TODO(api)`, sezioni delle costanti), dove no (ripetizioni, banner, storia), forma | `src/**/*.ts`, `*.html`, `*.css`, `public/theme/**` |
 | `knip.md` | Codice inutilizzato: si toglie, non si nasconde in `knip.json` | `src/**/*.ts`, `knip.json`, `scripts/*.mjs` |
+| `chiamate-api.md` | Chiamate al backend: percorso componente → servizio → `ApiResponse`, modelli `Request`/`Response`/`Filters`, errori con `ApiErrorService`, test (esempio: il login) | `src/app/**/*.ts` |
 | `git.md` | Branch | sempre |
 
 ## Hooks (`.claude/hooks/`, registrati in `settings.json`)
@@ -57,6 +58,7 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 - `shared-component`: crea o modifica un componente in `shared/components`. Si usa anche prima di duplicare markup: se esiste già lo si importa, se sta per comparire una seconda volta lo si estrae e lo si importa in entrambi i punti.
 - `use-shared`: usa un componente di `shared/components` indicandone il nome (`/use-shared <nome> [dove]`). Se il nome manca o è impreciso propone i componenti esistenti (elenco generato dalle cartelle). Legge selector e input dal codice del componente, lo importa e lo inserisce senza duplicare markup.
+- `api-service`: crea o modifica un servizio che chiama il backend (`/api-service <metodo> <endpoint> [feature]`). Segue `chiamate-api.md`: modelli `Request`/`Response`/`Filters`, metodo del servizio con `HttpClient`, chiamata dal componente con `firstValueFrom()` e `ApiErrorService`, codici di errore e traduzioni, spec e verifica.
 
 ## Subagent (`.claude/agents/`)
 
