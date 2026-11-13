@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { API_ERROR_MESSAGES } from '../../constants/api-error.const';
+import { API_ERROR_MAX_DEPTH, API_ERROR_MESSAGES } from '../../constants/api-error.const';
 import { ApiError, ApiErrorFallback } from '../../models/api-response.model';
 import { ToastService } from '../toast/toast.service';
-
-/** Quanti livelli di `error` si seguono per trovare il codice */
-const MAX_DEPTH = 3;
 
 /**
  * Da chiamare in ogni `catch` di una chiamata all'API: se l'errore ha un codice noto (`API_ERROR_MESSAGES`)
@@ -26,7 +23,7 @@ export class ApiErrorService {
    */
   private _codeOf(error: unknown): string | null {
     let current: unknown = error;
-    for (let depth = 0; depth < MAX_DEPTH; depth++) {
+    for (let depth = 0; depth < API_ERROR_MAX_DEPTH; depth++) {
       if (!current || typeof current !== 'object') return null;
       if (this._isApiError(current) && current.code) return current.code;
       current = 'error' in current ? current.error : null;
