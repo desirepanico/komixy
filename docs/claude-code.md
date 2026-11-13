@@ -28,7 +28,7 @@ Le regole di dettaglio stanno in `.claude/rules/` (si caricano quando Claude toc
 | `stile.md` | Tailwind e tema | `src/**/*.html`, `*.css`, `public/theme/**` |
 | `accessibilita.md` | WCAG AA e uso da tastiera | `src/app/**/*.html` e `*.ts` |
 | `query-params.md` | Stato della pagina nell'indirizzo: lettura, scrittura dal servizio di navigazione, ordine parametro → ultima scelta → predefinito | `src/app/**/*.ts` e `*.html` |
-| `costanti.md` | Costanti: in `shared/constants`, un file per ambito, al massimo 4, senza sottocartelle | `src/**/*.ts` |
+| `costanti.md` | Costanti: in `shared/constants`, un file per ambito, al massimo 5, senza sottocartelle | `src/**/*.ts` |
 | `form.md` | Form con i Signal Forms (Angular 22): modello, template, invio, campi con label, placeholder, `app-field-wrapper` e messaggi d'errore | `src/app/**/*.ts` e `*.html` |
 | `skeleton.md` | Quando e come usare `app-skeleton` | `src/**/*.html` |
 | `test.md` | Test e spec (zoneless, provider, pulizia automatica) | `src/**/*.ts` |
