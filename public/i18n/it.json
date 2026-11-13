@@ -92,10 +92,6 @@
     "passwordPlaceholder": "Inserisci almeno 6 caratteri",
     "submit": "Accedi",
     "submitting": "Accesso in corso…",
-    "invalidCredentials": {
-      "summaryKo": "Credenziali non valide",
-      "detailKo": "Email o password non corrette."
-    },
     "serverError": {
       "summaryKo": "Accesso non disponibile",
       "detailKo": "Impossibile accedere, riprova tra poco."
@@ -208,5 +204,43 @@
     "success": "Operazione riuscita",
     "warn": "Attenzione",
     "error": "Errore"
+  },
+  "apiError": {
+    "invalidCredentials": {
+      "summaryKo": "Credenziali non valide",
+      "detailKo": "Email o password non corrette."
+    },
+    "unauthorized": {
+      "summaryKo": "Accesso richiesto",
+      "detailKo": "Accedi per continuare."
+    },
+    "sessionExpired": {
+      "summaryKo": "Sessione scaduta",
+      "detailKo": "Accedi di nuovo per continuare."
+    },
+    "forbidden": {
+      "summaryKo": "Operazione non consentita",
+      "detailKo": "Non hai i permessi per farlo."
+    },
+    "notFound": {
+      "summaryKo": "Non trovato",
+      "detailKo": "Quello che cerchi non esiste più."
+    },
+    "emailAlreadyExists": {
+      "summaryKo": "Email già registrata",
+      "detailKo": "Esiste già un account con questa email."
+    },
+    "validationError": {
+      "summaryKo": "Dati non validi",
+      "detailKo": "Controlla i dati inseriti e riprova."
+    },
+    "tooManyRequests": {
+      "summaryKo": "Troppi tentativi",
+      "detailKo": "Attendi qualche istante e riprova."
+    },
+    "serverError": {
+      "summaryKo": "Servizio non disponibile",
+      "detailKo": "Qualcosa è andato storto, riprova tra poco."
+    }
   }
 }

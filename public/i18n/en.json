@@ -92,10 +92,6 @@
     "passwordPlaceholder": "Enter at least 6 characters",
     "submit": "Sign in",
     "submitting": "Signing in…",
-    "invalidCredentials": {
-      "summaryKo": "Invalid credentials",
-      "detailKo": "Incorrect email or password."
-    },
     "serverError": {
       "summaryKo": "Sign-in unavailable",
       "detailKo": "Unable to sign in, please try again shortly."
@@ -208,5 +204,43 @@
     "success": "Success",
     "warn": "Warning",
     "error": "Error"
+  },
+  "apiError": {
+    "invalidCredentials": {
+      "summaryKo": "Invalid credentials",
+      "detailKo": "Incorrect email or password."
+    },
+    "unauthorized": {
+      "summaryKo": "Sign-in required",
+      "detailKo": "Sign in to continue."
+    },
+    "sessionExpired": {
+      "summaryKo": "Session expired",
+      "detailKo": "Sign in again to continue."
+    },
+    "forbidden": {
+      "summaryKo": "Action not allowed",
+      "detailKo": "You don't have permission to do this."
+    },
+    "notFound": {
+      "summaryKo": "Not found",
+      "detailKo": "What you are looking for no longer exists."
+    },
+    "emailAlreadyExists": {
+      "summaryKo": "Email already registered",
+      "detailKo": "An account with this email already exists."
+    },
+    "validationError": {
+      "summaryKo": "Invalid data",
+      "detailKo": "Check the data you entered and try again."
+    },
+    "tooManyRequests": {
+      "summaryKo": "Too many attempts",
+      "detailKo": "Wait a moment and try again."
+    },
+    "serverError": {
+      "summaryKo": "Service unavailable",
+      "detailKo": "Something went wrong, try again shortly."
+    }
   }
 }

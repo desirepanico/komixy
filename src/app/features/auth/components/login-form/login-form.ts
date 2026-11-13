@@ -9,8 +9,7 @@ import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
 import { InputText } from '@shared/components/input/input-text/input-text';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
-import { ToastService } from '@shared/services/toast/toast.service';
-import { isApiError } from '@shared/utils/api-url/api-url';
+import { ApiErrorService } from '@shared/services/api-error/api-error.service';
 import { firstValueFrom } from 'rxjs';
 import { LoginRequest, SocialProvider } from '../../models/auth.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
@@ -34,7 +33,7 @@ import { AuthService } from '../../services/auth/auth.service';
 export class LoginForm {
   protected readonly navigation = inject(AuthNavigationService);
   private readonly _authService = inject(AuthService);
-  private readonly _toastService = inject(ToastService);
+  private readonly _apiError = inject(ApiErrorService);
 
   protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
@@ -72,12 +71,11 @@ export class LoginForm {
   private _onLoginSuccess(): void {
     this.loginSuccess.emit();
   }
-  // L'errore dell'API non è di un campo: si mostra in un toast
+  // L'errore dell'API non è di un campo: si mostra in un toast, col messaggio del suo codice o questo di default
   private _onLoginError(error: unknown): void {
-    if (isApiError(error)) {
-      this._toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
-    } else {
-      this._toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
-    }
+    this._apiError.handle(error, {
+      summary: 'login.serverError.summaryKo',
+      detail: 'login.serverError.detailKo',
+    });
   }
 }
