@@ -1,3 +1,5 @@
+// ─── Errori delle chiamate ───
+
 /** Codice di errore dell'API → gruppo di traduzioni (`<gruppo>.summaryKo` e `<gruppo>.detailKo`) */
 export const API_ERROR_MESSAGES: Readonly<Record<string, string>> = {
   INVALID_CREDENTIALS: 'apiError.invalidCredentials',
@@ -10,3 +12,15 @@ export const API_ERROR_MESSAGES: Readonly<Record<string, string>> = {
   TOO_MANY_REQUESTS: 'apiError.tooManyRequests',
   SERVER_ERROR: 'apiError.serverError',
 };
+
+/** Codice con cui un 401 di un utente già iscritto diventa «sessione scaduta» (token-expired interceptor) */
+export const SESSION_EXPIRED_CODE = 'SESSION_EXPIRED';
+
+// ─── Intestazioni delle chiamate ───
+
+/** Fuso orario dell'utente (timezone interceptor) */
+export const TIMEZONE_HEADER = 'X-Timezone';
+
+export const AUTH_HEADER = 'Authorization';
+
+export const BEARER_PREFIX = 'Bearer ';

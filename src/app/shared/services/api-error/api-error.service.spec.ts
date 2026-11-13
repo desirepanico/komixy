@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { API_ERROR_MESSAGES } from '../../constants/api-error.const';
+import { API_ERROR_MESSAGES } from '../../constants/api.const';
 import { ApiErrorResponse } from '../../utils/api-error-response/api-error-response';
 import { ToastService } from '../toast/toast.service';
 import { ApiErrorService } from './api-error.service';

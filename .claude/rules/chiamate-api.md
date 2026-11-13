@@ -121,11 +121,11 @@ this._http.get<ApiResponse<ComicListResponse>>(apiUrl('/comics', filters)); // C
 ## Servizio
 
 - Il servizio sta nella feature che lo usa (`services/<nome>/<nome>.service.ts`), in `shared/services` se lo usano più feature. Una sola responsabilità, `providedIn: 'root'`, `inject(HttpClient)`.
-- Gli indirizzi sono relativi (`/auth/login`), con il gruppo in una proprietà privata (`private readonly _apiGroup = '/auth'`). I dati viaggiano nel body o nella query string: vedi «Body o query string».
+- Gli indirizzi sono relativi e iniziano con `/` (`/auth/login`), con il gruppo in una proprietà privata (`private readonly _apiGroup = '/auth'`): il `baseUrlInterceptor` ci mette davanti l'`apiUrl` dell'environment, quindi nei servizi non va mai scritto un indirizzo completo né `environment.apiUrl`. I dati viaggiano nel body o nella query string: vedi «Body o query string».
 - Il metodo restituisce `Observable<XxxResponse>`: toglie la busta con `map((response) => response.result)`. Gli effetti sullo stato (utente, sessione, storage) stanno in `tap()` dentro il servizio, non nel componente.
 - Il servizio **non mostra gli errori** (lo fa chi ha lanciato la chiamata), ma **li converte**: `catchError((response: HttpErrorResponse) => throwError(() => ApiErrorResponse.fromHttpError(response)))` (`shared/utils/api-error-response`). Così chi chiama riceve un `ApiErrorResponse` con `status`, `code` e `message`, non un `HttpErrorResponse` grezzo. Ogni metodo che fa una richiesta ha il suo `catchError`.
 - Finché il backend non c'è, i dati restano simulati nel servizio con un `// TODO(api): ...` che dice cosa sostituire (endpoint e metodo).
-- Gli interceptor (token, lingua, ...) si registrano con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`.
+- Ciò che serve a tutte le chiamate lo fanno gli interceptor di `core/interceptors`, registrati in `provideHttp()`: indirizzo di base (`baseUrlInterceptor`), fuso orario (`timezoneInterceptor`, `X-Timezone`), token (`bearerTokenInterceptor`, `Authorization: Bearer`) e sessione scaduta (`tokenExpiredInterceptor`, un 401 a un iscritto fa uscire e diventa `SESSION_EXPIRED`). Il servizio non aggiunge a mano intestazioni, token o fuso, e per un 401 di sessione scaduta non fa nulla: `catchError` e `ApiErrorService` mostrano già il messaggio. Cosa fa ciascuno e perché: `docs/architettura.md`. Un interceptor nuovo si aggiunge in `core/interceptors/<nome>/` (con lo spec) e a `provideHttp()`, e se tocca l'intestazione di una chiamata usa `isApiRequest` per non mandarla a siti di terzi.
 
 ## Errori
 

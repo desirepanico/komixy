@@ -116,10 +116,19 @@ describe('AuthService', () => {
       expect(request.request.method).toBe('POST');
       expect(request.request.body).toEqual(credentials);
       expect(service.isAuthenticated()).toBe(false);
-      request.flush(body(user));
-      expect(await response).toEqual(user);
+      request.flush(body({ ...user, token: 'abc' }));
+      expect(await response).toEqual({ ...user, token: 'abc' });
       expect(service.isAuthenticated()).toBe(true);
       http.verify();
+    });
+
+    it('registra l’utente senza il token e tiene il token nella sessione', async () => {
+      const http = TestBed.inject(HttpTestingController);
+      const response = firstValueFrom(service.authenticate(credentials));
+      http.expectOne('/auth/login').flush(body({ ...user, token: 'abc' }));
+      await response;
+      expect(service.loggedUser()).toEqual(user);
+      expect(TestBed.inject(SessionService).token()).toBe('abc');
     });
 
     it('con un 401 lancia un ApiErrorResponse col codice del backend e non registra nessuno', async () => {

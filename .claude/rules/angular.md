@@ -73,7 +73,7 @@ Lo controlla `npm run lint` (`scripts/check-class-order.mjs`); `node scripts/che
 
 ## Import
 
-- Alias `@core/*`, `@shared/*`, `@features/*` (definiti in `tsconfig.json`) per importare da un'altra area; percorsi relativi dentro la stessa area o feature. Mai `../../../`.
+- Alias `@core/*`, `@shared/*`, `@features/*` (definiti in `tsconfig.json`) per importare da un'altra area; `@env/*` per gli environment (`import { environment } from '@env/environment'`); percorsi relativi dentro la stessa area o feature. Mai `../../../`.
 
 ## Routing
 

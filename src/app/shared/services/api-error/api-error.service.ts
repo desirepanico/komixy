@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { API_ERROR_MESSAGES } from '../../constants/api-error.const';
+import { API_ERROR_MESSAGES } from '../../constants/api.const';
 import { ApiErrorFallback } from '../../models/api-response.model';
 import { ApiErrorResponse } from '../../utils/api-error-response/api-error-response';
 import { ToastService } from '../toast/toast.service';

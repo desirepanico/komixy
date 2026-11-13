@@ -25,9 +25,10 @@ export class AuthService {
   /** Lo stato sta in `SessionService`, che le altre feature possono leggere */
   public readonly isAuthenticated = this._session.isAuthenticated;
 
-  public login(user: LoggedUser): void {
+  public login(user: LoggedUser, token: string | null = null): void {
     this._loggedUser.set(user);
     this._write(user);
+    this._session.setToken(token);
     this._session.setAuthenticated(true);
   }
 
@@ -41,7 +42,7 @@ export class AuthService {
   public authenticate(credentials: LoginRequest): Observable<LoginResponse> {
     return this._http.post<ApiResponse<LoginResponse>>(`${this._apiGroup}/login`, credentials).pipe(
       map((response) => response.result), //estrae i dati dell'utente.
-      tap((user) => this.login(user)), //esegue il login e aggiorna lo stato di autenticazione.
+      tap(({ token, ...user }) => this.login(user, token)), //esegue il login e aggiorna lo stato di autenticazione.
       catchError((response: HttpErrorResponse) =>
         throwError(() => ApiErrorResponse.fromHttpError(response)),
       ),

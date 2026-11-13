@@ -9,9 +9,9 @@ src/
 │   ├── app.routes.ts          monta le rotte di ogni feature sul suo percorso (loadChildren)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
 │   │   ├── guards/            user-role/ (user-role.guard + spec)
-│   │   ├── interceptors/      interceptor HTTP (si crea con il primo interceptor)
+│   │   ├── interceptors/      interceptor HTTP, uno per cartella: base-url/, timezone/, bearer-token/, token-expired/ (più i due aiuti join-url/ e is-api-request/)
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
-│   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, i18n/, nav-direction/
+│   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, http/ (provideHttp), i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
 │   │   └── <feature>/         auth, comics, discover, library, not-found, pack, profile, ranking, releases
 │   │       ├── pages/         componenti collegati alle rotte (lazy)
@@ -20,11 +20,12 @@ src/
 │   │       └── services/      servizi della feature (vedi "Dentro una feature")
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-brand, app-toast, app-hint, app-message, app-select-button, app-pack-card, app-card-fan, app-card-spotlight, ...
-│       ├── constants/         costanti condivise, un file `*.const.ts` per ambito (al massimo cinque), senza sottocartelle (navigation, ui, form, pack, api-error)
+│       ├── constants/         costanti condivise, un file `*.const.ts` per ambito (al massimo cinque), senza sottocartelle (navigation, ui, form, pack, api)
 │       ├── directives/        direttive generiche: appSwipe, appInView
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button): solo tipi ed enum
 │       ├── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
 │       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
+├── environments/              impostazioni per ambiente (apiUrl): environment.ts (produzione), environment.development.ts (dev), environment.localhost.ts (locale); si sostituiscono in `angular.json`, alias `@env/*`
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali
@@ -110,7 +111,7 @@ Per aggiungere una feature nuova:
 - **shared/models** e **shared/services**: modelli e servizi usati da più feature o da `core` (es. `ComicItem`, `UserRole`, `ViewportService`, `WeeklyRankingService`). Un servizio qui è un singleton, come tutti quelli `providedIn: 'root'`.
 - **Errori delle chiamate**: ogni `catch` di una chiamata all'API passa l'errore (un `ApiErrorResponse`, o `null` se non viene dall'API) a `ApiErrorService.handle(error, { summary, detail })` (`shared/services/api-error`). I servizi convertono l'errore HTTP in `ApiErrorResponse` (`shared/utils/api-error-response`, con `status`, `code` e `message`) con un `catchError`. Se il suo `code` è presente in `API_ERROR_MESSAGES` (`api-error.const.ts`), mostra in un toast il messaggio `apiError.<codice>.summaryKo/detailKo` (`it.json` e `en.json`); senza codice, o con un codice sconosciuto, mostra il messaggio di default passato dalla chiamata. Un codice nuovo: voce in `API_ERROR_MESSAGES`, traduzioni in entrambe le lingue, riga nello spec.
 - **core/providers**: le funzioni di avvio `*.provider.ts` (`provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()`). `provideCore()` le raccoglie e `app.config.ts` registra solo quella: un nuovo provider globale ha la sua cartella in `core/providers/` e si aggiunge in `core/providers/core/core.provider.ts`, non in `app.config.ts`. Il router resta in `app.config.ts`, con le sue opzioni.
-- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`), registrati con `provideHttpClient(withInterceptors([...]))` in `core/providers/core/core.provider.ts`. La cartella non esiste finché non serve il primo; un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
+- **core/interceptors**: interceptor HTTP funzionali (`*.interceptor.ts`, uno per cartella con il suo spec), registrati in `provideHttp()` (`core/providers/http/http.provider.ts`); cosa fa ciascuno è in `docs/architettura.md`. Un loader di dati (come quello di Transloco) non è un interceptor e sta in `shared/services`.
 - **core/guards**: guard delle rotte (`*.guard.ts`).
 - **core/layout**: shell dell'app (sidebar desktop, nav mobile, contenitore con lo swipe).
 - **shared/components**: un componente per cartella, `<nome>.ts` + `<nome>.html` (es. `button/`, `tag/`, `empty-state/`). Componenti dello stesso tipo si raggruppano in una cartella, ognuno nella sua sottocartella (es. `input/input-text/`, `input/input-password/`).

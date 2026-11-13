@@ -4,8 +4,11 @@
 
 | Comando                       | Cosa fa                                                                                                                                                                                            |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm start`                   | Dev server (`ng serve`) su http://localhost:4200, si ricarica a ogni modifica                                                                                                                      |
+| `npm start`                   | Come `npm run start:local`                                                                                                                                                                         |
+| `npm run start:local`         | Dev server (`ng serve --configuration local`) su http://localhost:4200, si ricarica a ogni modifica. Le chiamate vanno al backend sulla propria macchina (`environment.localhost.ts`)              |
+| `npm run start:dev`           | Lo stesso dev server, ma le chiamate vanno al backend di dev pubblicato (`environment.development.ts`)                                                                                             |
 | `npm run build`               | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
+| `npm run build:dev`           | Build con l'environment di dev (`ng build --configuration development`)                                                                                                                            |
 | `npm run watch`               | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
 | `npm test`                    | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
 | `npm run lint`                | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) e `scripts/check-class-order.mjs` (ordine dei membri di classe)          |
@@ -18,9 +21,25 @@
 
 Gli script `prestart`, `prebuild`, `pretest`, `prelint` e `preknip` non si lanciano a mano: npm esegue automaticamente lo script con prefisso `pre` prima di quello con lo stesso nome. Tutti eseguono `scripts/ensure-deps.mjs` (sezione seguente).
 
+## Environment (locale, dev, produzione)
+
+Le impostazioni che cambiano tra un ambiente e l'altro (per ora l'indirizzo del backend, `apiUrl`) stanno in `src/environments/`, una per ambiente, con il tipo `Environment` (`shared/models/environment.model.ts`). Il codice le legge con `import { environment } from '@env/environment'`.
+
+| File                         | Ambiente                                              | `apiUrl`                              | Come si usa                              |
+| ---------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------- |
+| `environment.localhost.ts`   | **Locale**: il backend avviato sulla propria macchina | `http://localhost:3000`               | `npm start` o `npm run start:local`      |
+| `environment.development.ts` | **Dev**: il backend di sviluppo pubblicato            | `https://INSERIRE_URL_API_DEV`        | `npm run start:dev`, `npm run build:dev` |
+| `environment.ts`             | **Produzione**: il backend pubblicato                 | `https://INSERIRE_URL_API_PRODUZIONE` | `npm run build` e i test                 |
+
+`environment.ts` è il file di base: `angular.json` lo sostituisce (`fileReplacements`) con quello dell'ambiente scelto nelle configurazioni `development` e `local`. Il codice importa sempre `@env/environment`, senza sapere in che ambiente gira. Gli indirizzi `INSERIRE_URL_...` sono segnaposto da sostituire con quelli veri; `baseUrlInterceptor` li usa per completare le chiamate (`docs/architettura.md`).
+
+**Chiavi e segreti.** Il frontend finisce nel browser dell'utente, quindi una chiave davvero privata non va mai in questi file: sono pubblici come il resto del bundle. Se un servizio chiede una chiave pubblica (per esempio l'identificativo di Google per l'accesso), si aggiunge un campo a `Environment` e nei file committati il valore resta il segnaposto `INSERIRE_CHIAVE_PRIVATA`, che l'utente sostituisce. `environment.local.ts` (con questo nome) è nel `.gitignore` e Claude non lo legge: serve a chi vuole tenere valori personali fuori dal repo.
+
+**Vercel.** `vercel.json` costruisce con `npm run build`, quindi sia la preview (`deploy:dev`) sia la produzione (`deploy:prod`) usano oggi `environment.ts`. Per far usare alla preview l'ambiente di dev, il comando di build dovrebbe scegliere `build:dev` quando `VERCEL_ENV` è `preview`: non è ancora fatto.
+
 ## Installazione automatica delle dipendenze
 
-Non serve lanciare `npm install` a mano dopo un `git pull`. Prima di `npm start`, `build`, `test`, `lint` e `knip` (script `pre*` in `package.json`) parte `scripts/ensure-deps.mjs`: confronta un'impronta di `package.json` e `package-lock.json` con quella salvata in `node_modules/.komixy-deps-hash` e, se è diversa o manca, esegue `npm install`. Se non è cambiato nulla esce subito. In CI (`CI` impostata) non fa nulla, perché le dipendenze arrivano da `npm ci`. Vale anche per le attività di VS Code e per Claude Code (hook `SessionStart` e modifica di `package.json`, vedi `docs/claude-code.md`).
+Non serve lanciare `npm install` a mano dopo un `git pull`. Prima di `npm start`, `start:local`, `start:dev`, `build`, `build:dev`, `test`, `lint` e `knip` (script `pre*` in `package.json`) parte `scripts/ensure-deps.mjs`: confronta un'impronta di `package.json` e `package-lock.json` con quella salvata in `node_modules/.komixy-deps-hash` e, se è diversa o manca, esegue `npm install`. Se non è cambiato nulla esce subito. In CI (`CI` impostata) non fa nulla, perché le dipendenze arrivano da `npm ci`. Vale anche per le attività di VS Code e per Claude Code (hook `SessionStart` e modifica di `package.json`, vedi `docs/claude-code.md`).
 
 ## Flusso git
 

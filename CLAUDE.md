@@ -6,8 +6,8 @@ Questo file è sempre caricato e contiene solo l'essenziale. Le regole di dettag
 
 ## Comandi
 
-- `npm start`: dev server su http://localhost:4200
-- `npm run build`: build di produzione
+- `npm start` (= `npm run start:local`): dev server su http://localhost:4200 col backend sulla propria macchina; `npm run start:dev`: stesso server col backend di dev pubblicato (environment in `src/environments/`, `docs/sviluppo.md`)
+- `npm run build`: build di produzione; `npm run build:dev`: build con l'environment di dev
 - `npm test`: Vitest (nelle sessioni di Claude Code è già una sola esecuzione; in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`)
 - `npm run lint`: ESLint, controllo che ogni `.ts` abbia il suo spec, ordine dei membri di classe (`--fix` riordina)
 - `npm run knip`: file, export e dipendenze inutilizzati; gira anche in CI
@@ -18,14 +18,14 @@ Non serve `npm install` a mano: gli script `pre*` lanciano `scripts/ensure-deps.
 
 ## Struttura di `src/app`
 
-- **core**: shell dell'app (`guards`, `layout`, `providers` con le funzioni `provideXxx()` raccolte da `provideCore()`). Non importa da `features`; unica eccezione, a senso unico: `userRoleGuard` usa `AuthService`.
+- **core**: shell dell'app (`guards`, `layout`, `providers` con le funzioni `provideXxx()` raccolte da `provideCore()`). Non importa da `features`; uniche eccezioni, a senso unico: `userRoleGuard` e il `tokenExpiredInterceptor` usano `AuthService`.
 - **features**: una cartella per area (`auth`, `comics`, `discover`, `library`, `not-found`, `pack`, `profile`, `ranking`, `releases`) con solo le sottocartelle che servono (`pages/`, `components/`, `models/`, `services/`, `routes/`, `utils/`). Una feature non importa da un'altra; unica eccezione, a senso unico: i servizi `<nome>-navigation` (e la card di `ranking` usata da `discover`).
 - **shared**: ciò che serve a più feature o a `core` (`components`, `directives`, `models`, `services`, `constants`, `utils`). Non dipende da `features` né da `core`. Se due feature condividono qualcosa, va qui.
 - `src/testing/`: finti per i test, non fa parte dell'app.
 
 Fuori da `src/app`: `public/i18n/` (traduzioni), `public/theme/` (CSS globale), `src/tailwind.css` (tema), `scripts/` (controlli), `.github/workflows/ci.yml`.
 
-Dipendenze in una direzione: `features` → `shared` e `core`. Import con alias `@core/*`, `@shared/*`, `@features/*` tra aree, percorsi relativi dentro la stessa area, mai `../../../`. Ogni `.ts` sta in una cartella propria con il suo `*.spec.ts` (eccezioni: `*.model.ts`, `*.const.ts`, `main.ts`, file nella radice di `src/app`).
+Dipendenze in una direzione: `features` → `shared` e `core`. Import con alias `@core/*`, `@shared/*`, `@features/*` (e `@env/*` per `src/environments`) tra aree, percorsi relativi dentro la stessa area, mai `../../../`. Ogni `.ts` sta in una cartella propria con il suo `*.spec.ts` (eccezioni: `*.model.ts`, `*.const.ts`, `main.ts`, file nella radice di `src/app`).
 
 ## Routing e navigazione
 
@@ -80,4 +80,4 @@ Hook, permessi e subagent `reviewer` sono descritti in `docs/claude-code.md`. Se
 
 ## Sicurezza
 
-Non leggere né committare file con segreti (`.env*`, `environment.local.ts`, chiavi) e non scrivere chiavi, token o password nei file del repo né in chat. I permessi sono in `.claude/settings.json`, le esclusioni in `.gitignore`.
+Non leggere né committare file con segreti (`.env*`, `environment.local.ts`, chiavi) e non scrivere chiavi, token o password nei file del repo né in chat. Nei file di `src/environments/` ciò che non si conosce resta il segnaposto `INSERIRE_CHIAVE_PRIVATA` (o `INSERIRE_URL_...`): il valore vero lo mette l'utente; il frontend finisce nel browser, quindi nessuna chiave davvero privata va nel bundle. I permessi sono in `.claude/settings.json`, le esclusioni in `.gitignore`.

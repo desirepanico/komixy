@@ -1,4 +1,3 @@
-import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
@@ -14,7 +13,6 @@ describe('provideCore', () => {
     TestBed.configureTestingModule({
       providers: [
         provideCore(),
-        provideHttpClient(),
         provideHttpClientTesting(),
         provideRouter([
           { path: 'discover', children: [] },

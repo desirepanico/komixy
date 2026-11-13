@@ -5,7 +5,7 @@ import { ToastService } from '@shared/services/toast/toast.service';
 import { UserRole } from '@shared/models/user-role.model';
 import { Subject } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { LoggedUser } from '../../models/auth.model';
+import { LoginResponse } from '../../models/auth.model';
 import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoginForm } from './login-form';
@@ -97,8 +97,13 @@ describe('LoginForm', () => {
   });
 
   describe('chiamata di accesso', () => {
-    const user: LoggedUser = { id: 'a@b.it', email: 'a@b.it', userRole: UserRole.User };
-    let response: Subject<LoggedUser>;
+    const user: LoginResponse = {
+      id: 'a@b.it',
+      email: 'a@b.it',
+      userRole: UserRole.User,
+      token: 't',
+    };
+    let response: Subject<LoginResponse>;
 
     const button = () => html.querySelector('button[type="submit"]') as HTMLButtonElement;
     // La risposta passa da una Promise: serve un giro del loop prima che il form aggiorni lo stato
@@ -113,7 +118,7 @@ describe('LoginForm', () => {
     };
 
     beforeEach(() => {
-      response = new Subject<LoggedUser>();
+      response = new Subject<LoginResponse>();
       vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(response);
     });
 
@@ -172,7 +177,7 @@ describe('LoginForm', () => {
       response.error(new ApiErrorResponse(500, '', 'x'));
       await wait();
 
-      response = new Subject<LoggedUser>();
+      response = new Subject<LoginResponse>();
       vi.spyOn(TestBed.inject(AuthService), 'authenticate').mockReturnValue(response);
       await submit();
       response.next(user);
