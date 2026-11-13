@@ -43,7 +43,7 @@
   </div>
 
   <app-hint
-    class="[--delay:240ms] max-sm:mt-(--s1) max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)]"
+    class="max-w-full [--delay:240ms] max-sm:mt-(--s1) max-sm:text-[clamp(0.75rem,calc(1.132dvh+0.2156rem),0.875rem)] md:self-start md:text-left"
     [class]="fadeUpAnimation"
   >
     <span class="pointer-coarse:hidden">{{ 'loginVolumes.coversHint' | transloco }}</span>
@@ -119,7 +119,7 @@
 
   <button
     type="button"
-    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm text-surface-200 hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 max-sm:text-[clamp(0.6875rem,calc(1.132dvh+0.2156rem),0.875rem)] lg:self-start"
+    class="inline-flex w-fit cursor-pointer items-center gap-2 self-center rounded-lg px-2 py-1 text-sm text-surface-200 hover:text-surface-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 max-sm:text-[clamp(0.75rem,calc(1.132dvh+0.2156rem),0.875rem)] md:self-start"
     (click)="toggleAnimation()"
   >
     <ng-icon
