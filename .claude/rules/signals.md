@@ -34,4 +34,5 @@ I provider di avvio (`core/providers`) possono usare `subscribe()` sugli eventi 
 ## Controlli
 
 - `npm run lint`: ESLint rifiuta le proprietà non `readonly`, `subscribe()` fuori da `core/providers` e la pipe `async` nei template.
+- Hook `after-edit.sh` (`.claude/hooks/check-signals.mjs`): a ogni modifica o scrittura di un `.ts`/`.html` in `src/app` controlla ciò che ESLint non vede: `@Input`/`@Output`/`@ViewChild` e simili, `mutate()`, proprietà riassegnate (`this.x = …`, `this.x++`), getter che leggono un signal, `effect()` che scrive altri signal, servizi che espongono un signal non in sola lettura, `signal()`/`input()`/`model()`/`output()` senza tipo, pipe `async`. Se trova una violazione la mostra a Claude, che la corregge.
 - Una classe nuova o modificata segue l'ordine dei membri di `angular.md` («Ordine dei membri»), controllato da `scripts/check-class-order.mjs`.
