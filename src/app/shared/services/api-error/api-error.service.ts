@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { API_ERROR_MESSAGES } from '../../constants/ui.const';
-import { ApiErrorFallback } from '../../models/api-response.model';
-import { isApiError } from '../../utils/api-url/api-url';
+import { ApiError, ApiErrorFallback } from '../../models/api-response.model';
 import { ToastService } from '../toast/toast.service';
 
 /** Quanti livelli di `error` si seguono per trovare il codice */
@@ -29,10 +28,20 @@ export class ApiErrorService {
     let current: unknown = error;
     for (let depth = 0; depth < MAX_DEPTH; depth++) {
       if (!current || typeof current !== 'object') return null;
-      if (isApiError(current) && current.code) return current.code;
+      if (this._isApiError(current) && current.code) return current.code;
       current = 'error' in current ? current.error : null;
     }
     return null;
+  }
+  private _isApiError(error: unknown): error is ApiError {
+    return (
+      typeof error === 'object' &&
+      error !== null &&
+      'code' in error &&
+      'message' in error &&
+      typeof error.code === 'string' &&
+      typeof error.message === 'string'
+    );
   }
   private _messageKey(code: string | null): string | null {
     return code !== null && Object.hasOwn(API_ERROR_MESSAGES, code)
