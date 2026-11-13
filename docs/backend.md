@@ -523,6 +523,62 @@ Con un token di accesso breve, l'utente rientrerebbe ogni ora. Per evitarlo:
 2. I segreti (chiave del JWT, password del database) stanno nelle variabili d'ambiente, non nel repository, e si cambiano se si sospetta una fuga.
 3. Aggiornare le dipendenze e lanciare un controllo (`npm audit` o equivalente) a ogni rilascio.
 
+## Privacy e conformità (UE e Italia)
+
+> Informazioni generali, **non consulenza legale**. Prima della produzione fai rivedere informativa, termini e trattamento dei dati da un avvocato o da un consulente privacy. Le norme e le sentenze citate possono cambiare: verifica la situazione attuale.
+
+Si applicano il **GDPR** (regolamento UE 2016/679), il **Codice Privacy italiano** (D.Lgs. 196/2003, modificato dal D.Lgs. 101/2018) e le regole ePrivacy sui dati conservati nel dispositivo, con le linee guida del **Garante per la protezione dei dati personali**. Valgono anche per un'app gratuita e piccola, appena si trattano dati personali (email, identificativi, libreria, identificativo ospite) di persone in Europa.
+
+### I ruoli
+
+| Chi                                  | Ruolo                                                                | Cosa serve                                                                                                                 |
+| ------------------------------------ | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Tu (chi pubblica l'app)              | **Titolare del trattamento**: rispondi verso gli utenti e il Garante | Informativa, base giuridica, risposta ai diritti, sicurezza                                                                |
+| Google/Firebase, hosting, database   | **Responsabili del trattamento**                                     | Un accordo sul trattamento dei dati (DPA, art. 28): Google lo offre nei suoi termini standard e va accettato nella console |
+| Google (o Meta) per l'accesso social | Anche titolari autonomi per il proprio servizio di login             | Citarli nell'informativa                                                                                                   |
+
+### I rischi, dal più probabile
+
+| #   | Rischio                                                                                                                                                                                                                                                                                                                                                                                     | Cosa fare                                                                                                                                                                                                                                                                                                                                  |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | **Informativa privacy mancante o incompleta** (art. 13): è l'inadempienza più comune                                                                                                                                                                                                                                                                                                        | Scrivere un'informativa che dica chi sei, quali dati raccogli (email, identificativo, ruolo, libreria, identificativo ospite), perché e con quale base giuridica, per quanto tempo li tieni, con chi li condividi (Google, hosting), se li trasferisci fuori dall'UE, come esercitare i diritti e come contattarti o rivolgersi al Garante |
+| 2   | **L'identificativo dell'ospite nel browser** (`komixy.guestId`). Se serve solo al funzionamento del servizio (la busta settimanale) di solito non richiede il consenso, ma va dichiarato; se si usasse per statistiche o marketing servirebbe il consenso                                                                                                                                   | Dichiararlo nell'informativa; **non** aggiungere strumenti di tracciamento o analisi non necessari (per esempio Google Analytics) senza un banner di consenso                                                                                                                                                                              |
+| 3   | **Trasferimento dei dati verso gli Stati Uniti** (Google). Oggi si regge sul Data Privacy Framework UE-USA (decisione di adeguatezza del 2023, confermata dal Tribunale dell'UE a settembre 2025), ma l'appello alla Corte di giustizia (causa C-703/25 P) è pendente. Se fosse annullato resterebbero le clausole contrattuali standard di Google, con una valutazione in più a tuo carico | Citare il trasferimento nell'informativa, accettare i termini di Google e seguire l'esito del giudizio. **Firebase Authentication non permette di scegliere la regione dei dati**                                                                                                                                                          |
+| 4   | **Diritti degli utenti**: accesso, rettifica, cancellazione, portabilità, opposizione; risposta entro un mese                                                                                                                                                                                                                                                                               | `DELETE /me` (cancella i dati e l'utente), un modo per **esportare** i dati dell'utente (per esempio `GET /me/export`) e una casella di contatto                                                                                                                                                                                           |
+| 5   | **Sicurezza e violazione dei dati** (art. 32 e 33): una violazione si **notifica al Garante entro 72 ore**, e agli utenti se il rischio è alto                                                                                                                                                                                                                                              | Tutta la sezione «Sicurezza» di questo documento, più una procedura scritta su chi fa cosa in caso di violazione                                                                                                                                                                                                                           |
+| 6   | **Minori**: in Italia il consenso digitale vale **dai 14 anni** (art. 2-quinquies del Codice Privacy); sotto, per un servizio basato sul consenso serve quello dei genitori. Un'app di fumetti ha probabilmente un pubblico giovane                                                                                                                                                         | Indicare un'**età minima di 14 anni** nei termini, chiederla alla registrazione e decidere come verificarla in modo ragionevole                                                                                                                                                                                                            |
+| 7   | **Registro dei trattamenti** (art. 30) e DPO. Per piccole realtà il registro spesso non è obbligatorio ma è consigliato; il DPO di solito non serve                                                                                                                                                                                                                                         | Tenere un registro semplice (dati, scopo, durata, responsabili)                                                                                                                                                                                                                                                                            |
+| 8   | **Conservazione**: i dati non si tengono più del necessario                                                                                                                                                                                                                                                                                                                                 | Cancellare gli **ospiti inattivi** dopo un tempo stabilito (per esempio 90 giorni) e i log di accesso dopo un tempo breve                                                                                                                                                                                                                  |
+
+### Le sanzioni
+
+Fino a **10 milioni di euro o il 2% del fatturato** per le violazioni degli obblighi del titolare e del responsabile, e fino a **20 milioni o il 4%** per le violazioni di principi, basi giuridiche, diritti degli interessati e trasferimenti. Per una piccola realtà il Garante di solito parte da richieste e ammonimenti, ma le sanzioni esistono, e gli utenti possono chiedere anche un risarcimento (art. 82).
+
+### Un rischio che non riguarda l'accesso: le copertine
+
+Le copertine dei fumetti (`public/img/covers`) sono protette dal diritto d'autore. Prima della pubblicazione verifica con gli editori o usa fonti con licenza.
+
+### Cosa fare prima della produzione
+
+1. **Informativa privacy e termini di servizio**, in italiano e (se serve) in inglese.
+2. **Accordi sul trattamento dati** con Google/Firebase e con l'hosting.
+3. **Nessun tracciamento non necessario**; un banner di consenso solo se si aggiungono strumenti che lo richiedono.
+4. **Cancellazione ed esportazione** dei dati dell'utente (`DELETE /me` e un'esportazione).
+5. **Cancellazione automatica** degli ospiti inattivi e dei log vecchi.
+6. **Procedura per le violazioni**, con l'avviso al Garante entro 72 ore.
+7. **Età minima di 14 anni** nei termini e alla registrazione.
+8. **Revisione di un consulente** su informativa, termini e trasferimenti.
+
+### Firebase o flusso in casa dal punto di vista legale
+
+| Scelta                                         | Dati di accesso                          | Pro                                           | Contro                                                                |
+| ---------------------------------------------- | ---------------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| **Flusso in casa** su backend e database in UE | Nel tuo database, in Europa              | Nessun trasferimento extra-UE da giustificare | Password e token sono tuoi (rischio di sicurezza, vedi «Sicurezza»)   |
+| **Firebase Authentication**                    | Su Google, **regione non selezionabile** | Meno rischio tecnico                          | Trasferimento verso gli Stati Uniti da dichiarare e seguire nel tempo |
+| **Supabase** con progetto in regione europea   | In Europa                                | Dati in UE e meno lavoro                      | Servizio esterno da gestire con il suo DPA                            |
+
+Se la conformità è la priorità, il flusso in casa su hosting europeo o Supabase in regione europea sono le scelte più semplici da giustificare. Con Firebase è gestibile, ma serve più documentazione.
+
 ## Cosa è stato fatto nel frontend
 
 | Cosa                                | Dove                                                                      | Come funziona                                                                                                            |
@@ -546,17 +602,18 @@ In ordine di importanza. «BE» è il backend, «FE» il frontend. Per partire b
 **Prima di andare in produzione**
 
 1. **BE: tutta la sezione «Sicurezza» qui sopra**, in particolare token breve, limite ai tentativi, controllo dei ruoli e CORS con elenco preciso.
-2. **BE e FE: `POST /auth/logout`** (versione 2). Oggi `AuthService.logout()` cancella solo i dati nel browser: il token resterebbe valido fino alla scadenza. Con il logout il backend lo invalida e il frontend lo chiama prima di pulire.
-3. **BE e FE: refresh token con rotazione** (versione 2). Il frontend dovrebbe, su un 401, provare un solo `POST /auth/refresh` e ripetere la chiamata fallita; solo se anche quello fallisce fa uscire l'utente. Oggi esce subito.
-4. **FE: intestazione CSP su Vercel** (`vercel.json`), prima in modalità solo segnalazione (`Content-Security-Policy-Report-Only`) per non rompere stili e font.
-5. **FE: la preview di Vercel con l'ambiente di dev.** Oggi `deploy:dev` e `deploy:prod` costruiscono entrambi con `environment.ts` (produzione): il comando di build in `vercel.json` dovrebbe scegliere `build:dev` per le preview.
-6. **BE e FE: cookie `httpOnly` al posto dello `localStorage`** (versione 3), se frontend e backend stanno sullo stesso sito (vedi «Dove si conserva il token»).
-7. **BE e FE: `GET /me` e utente solo in memoria**, come descritto in «Il ruolo e i dati dell'utente»: il ruolo non si salva più nello storage e all'avvio si ricostruisce dal backend. Da fare **prima della produzione**.
+2. **Privacy e conformità**: informativa, accordi sul trattamento dati, cancellazione ed esportazione, età minima (sezione «Privacy e conformità (UE e Italia)»). Obbligatorio prima della produzione.
+3. **BE e FE: `POST /auth/logout`** (versione 2). Oggi `AuthService.logout()` cancella solo i dati nel browser: il token resterebbe valido fino alla scadenza. Con il logout il backend lo invalida e il frontend lo chiama prima di pulire.
+4. **BE e FE: refresh token con rotazione** (versione 2). Il frontend dovrebbe, su un 401, provare un solo `POST /auth/refresh` e ripetere la chiamata fallita; solo se anche quello fallisce fa uscire l'utente. Oggi esce subito.
+5. **FE: intestazione CSP su Vercel** (`vercel.json`), prima in modalità solo segnalazione (`Content-Security-Policy-Report-Only`) per non rompere stili e font.
+6. **FE: la preview di Vercel con l'ambiente di dev.** Oggi `deploy:dev` e `deploy:prod` costruiscono entrambi con `environment.ts` (produzione): il comando di build in `vercel.json` dovrebbe scegliere `build:dev` per le preview.
+7. **BE e FE: cookie `httpOnly` al posto dello `localStorage`** (versione 3), se frontend e backend stanno sullo stesso sito (vedi «Dove si conserva il token»).
+8. **BE e FE: `GET /me` e utente solo in memoria**, come descritto in «Il ruolo e i dati dell'utente»: il ruolo non si salva più nello storage e all'avvio si ricostruisce dal backend. Da fare **prima della produzione**.
 
 **Poi**
 
-8. **FE: sincronizzare più schede.** Se l'utente esce in una scheda, le altre restano collegate fino alla prima chiamata (reagire all'evento `storage`).
-9. **FE: controllare la scadenza del token** (campo `exp`) prima di una chiamata, per evitare un 401 inutile. Serve solo se non c'è il refresh.
-10. **BE e FE: registrazione, recupero password e accesso con Google e Facebook.** Oggi sono segnaposto o simulati. Per l'accesso social il backend deve verificare il token dell'identità (PKCE o ID token) e mai fidarsi del client.
-11. **FE: i dati veri al posto di quelli simulati** (classifica, «Manga da scoprire», segnalibri, busta), con la skill `api-service` e aggiornando questo documento a ogni chiamata nuova.
-12. **BE: un identificativo di richiesta** (`X-Request-Id`) nei log e nelle risposte, per ritrovare un errore segnalato da un utente.
+9. **FE: sincronizzare più schede.** Se l'utente esce in una scheda, le altre restano collegate fino alla prima chiamata (reagire all'evento `storage`).
+10. **FE: controllare la scadenza del token** (campo `exp`) prima di una chiamata, per evitare un 401 inutile. Serve solo se non c'è il refresh.
+11. **BE e FE: registrazione, recupero password e accesso con Google e Facebook.** Oggi sono segnaposto o simulati. Per l'accesso social il backend deve verificare il token dell'identità (PKCE o ID token) e mai fidarsi del client.
+12. **FE: i dati veri al posto di quelli simulati** (classifica, «Manga da scoprire», segnalibri, busta), con la skill `api-service` e aggiornando questo documento a ogni chiamata nuova.
+13. **BE: un identificativo di richiesta** (`X-Request-Id`) nei log e nelle risposte, per ritrovare un errore segnalato da un utente.
