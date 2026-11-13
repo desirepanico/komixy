@@ -359,6 +359,117 @@ Accanto a ogni categoria ci sono stringhe evidenziate in verde (`0x1ypt94`, `641
 2. Cercare a mano su Wikidata Fairy Tail e Detective Conan, e controllare la demografia di Naruto, Berserk, Monster, Akira e Fruits Basket.
 3. Aggiungere i domini `www.wikidata.org` e `query.wikidata.org` a quelli raggiungibili dall'ambiente, se vuoi che lo faccia io: lo decidi tu.
 
+## 10. Wikidata: quanto sono aggiornati i dati e come scaricarli
+
+### 10.1 Quanto sono aggiornati
+
+Wikidata non ha un anno di riferimento: è una base dati modificata di continuo, quindi ogni dato ha la sua data di ultima modifica. **Non è sempre aggiornata né completa.**
+
+| Aspetto                             | Cosa risulta                                                                                                                     | Stato |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ----- |
+| Dump completo                       | Generato ogni settimana; quello disponibile può avere settimane di ritardo, e un commento vecchio parla di mesi                  | ✅    |
+| Dump incrementali                   | Quotidiani, con le modifiche dall'ultimo dump completo                                                                           | ✅    |
+| Servizio di interrogazione (SPARQL) | Ritardo normale di pochi minuti rispetto alle modifiche                                                                          | ✅    |
+| Cronologia delle modifiche          | I dump normali contengono solo l'ultima versione di ogni voce; la cronologia completa è in un formato a parte, molto più pesante | ✅    |
+| Completezza e fonti                 | Molte affermazioni non hanno una fonte indicata; non esiste un modo semplice per sapere se una voce è completa                   | ✅    |
+| Garanzia di servizio                | Nessuna trovata, né per i dump né per il servizio di interrogazione                                                              | ❌    |
+
+Lo abbiamo visto nell'analisi: lo spokon è su Haikyu!! ma non sull'opera principale di Slam Dunk e Kuroko's Basketball; mancano voci come Fairy Tail; i dati di una serie in corso (volumi, fine della pubblicazione) possono essere fermi. Le osservazioni su singole opere in questo documento sono lo stato del 13 novembre 2026.
+
+**Cosa fare**
+
+1. Importare a intervalli (per esempio una volta a settimana), non in tempo reale.
+2. Salvare per ogni dato la data e la revisione di Wikidata da cui viene (campo `sources`). Nel file JSON di una voce compaiono la data di modifica e l'ultima revisione ⚠️ (dalla mia conoscenza, da verificare).
+3. Tenere nostra la parte editoriale (categorie e temi mancanti, correzioni, Nana tra Shōjo e Josei): un aggiornamento da Wikidata non deve sovrascriverla.
+4. Controllare i dati importati prima di mostrarli.
+5. Correggere anche su Wikidata ciò che manca: è aperta alle modifiche.
+
+### 10.2 Come scaricare i dati
+
+Non ho potuto provare nessuno di questi comandi: dall'ambiente di lavoro i domini di Wikidata sono bloccati. Sono scritti sulla base della documentazione e della mia conoscenza (⚠️) e vanno provati da una macchina con accesso al web.
+
+**Quale strada scegliere**
+
+| Strada                                  | Quando serve                                                 | Peso                                                                   |
+| --------------------------------------- | ------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| **Interrogazione SPARQL** (consigliata) | Per ottenere solo manga, generi, pubblico, rivista           | Pochi MB; limite di tempo per ogni richiesta                           |
+| **Voci singole**                        | Per le 21 opere d'esempio o per correggere un caso           | Pochi KB per voce                                                      |
+| **Dump completo**                       | Solo se serve tutto Wikidata o se l'interrogazione non basta | Circa 104 GB compresso (bz2) e 157 GB (gz) al momento della ricerca ✅ |
+
+**1. Interrogazione SPARQL (per l'importazione)**
+
+Si salva la richiesta in un file e la si invia al servizio di interrogazione. Per le proprietà usate: `P31` (istanza di), `P136` (genere) e `P2360` (pubblico di destinazione) sono confermate ✅; `P279` (sottoclasse di), `P1433` (pubblicato in, cioè la rivista) e `P123` (editore) vengono dalla mia conoscenza ⚠️.
+
+```sparql
+# manga.rq: serie manga con generi, pubblico e rivista
+SELECT ?opera ?operaLabel ?genere ?genereLabel ?pubblico ?pubblicoLabel ?rivistaLabel WHERE {
+  ?opera wdt:P31 wd:Q21198342 .
+  OPTIONAL { ?opera wdt:P136 ?genere . }
+  OPTIONAL { ?opera wdt:P2360 ?pubblico . }
+  OPTIONAL { ?opera wdt:P1433 ?rivista . }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "it,en". }
+}
+```
+
+```sparql
+# sport.rq: opere sportive, anche tramite i sottogeneri (baseball manga, ecc.)
+SELECT ?opera ?operaLabel WHERE {
+  ?opera wdt:P31 wd:Q21198342 ;
+         wdt:P136/wdt:P279* wd:Q2281511 .   # spokon
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "it,en". }
+}
+```
+
+```bash
+curl -G 'https://query.wikidata.org/sparql' \
+  -H 'Accept: text/csv' \
+  -H 'User-Agent: Komixy-import/0.1 (contatto@tuodominio.it)' \
+  --data-urlencode query@manga.rq \
+  -o manga.csv
+```
+
+- Con `-H 'Accept: application/sparql-results+json'` si ottiene il JSON invece del CSV.
+- Il servizio limita il tempo di calcolo per ogni cliente (circa 60 secondi al minuto, cifra datata ⚠️) e risponde con errore 429 se si esagera ✅: se la richiesta è troppo grossa, si divide per pubblico (una richiesta per Shōnen, una per Shōjo…) o con `LIMIT` e `OFFSET`.
+- Conviene dichiarare nel `User-Agent` il nome dell'app e un contatto: è la regola delle fondazioni Wikimedia ⚠️. Il contatto va scritto al posto di quello di esempio.
+
+**2. Voci singole**
+
+```bash
+# una voce intera in JSON (modello dati completo)
+curl -H 'User-Agent: Komixy-import/0.1 (contatto@tuodominio.it)' \
+  'https://www.wikidata.org/wiki/Special:EntityData/Q28667972.json'
+
+# più voci insieme, solo etichette e affermazioni
+curl -G 'https://www.wikidata.org/w/api.php' \
+  -H 'User-Agent: Komixy-import/0.1 (contatto@tuodominio.it)' \
+  --data-urlencode 'action=wbgetentities' \
+  --data-urlencode 'ids=Q231302|Q242492|Q237338|Q503106|Q478804' \
+  --data-urlencode 'props=labels|claims' \
+  --data-urlencode 'languages=it|en|ja' \
+  --data-urlencode 'format=json'
+```
+
+L'indirizzo `Special:EntityData/<voce>.<formato>` è confermato dalle ricerche (ho visto la versione `.ttl`) ✅; il formato `.json` e l'interfaccia `wbgetentities` sono ⚠️.
+
+**3. Dump completo (solo se serve davvero)**
+
+```bash
+# download con ripresa in caso di interruzione
+curl -C - -O https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2
+```
+
+- Il file è enorme (circa 104 GB compresso ✅): serve disco e una lettura in flusso, senza decomprimerlo tutto. Ogni voce sta su una riga ⚠️, quindi si filtra con `bzcat` e uno strumento come `jq`, oppure con programmi fatti apposta (per esempio `wikibase-dump-filter`) ⚠️.
+- Il dump più recente è nella cartella dei file con la data: l'elenco è su https://dumps.wikimedia.org/wikidatawiki/entities/ ✅.
+- Il file `latest-all.json.gz` e quello `.bz2` hanno date diverse: possono non essere allineati ✅.
+- Il dump contiene solo l'ultima versione di ogni voce ✅. Per l'importazione dei soli manga è molto più pratica l'interrogazione SPARQL.
+
+### 10.3 Per la nostra importazione
+
+1. Una prima estrazione con le interrogazioni SPARQL qui sopra, divisa per pubblico (una richiesta per categoria) se è troppo grossa.
+2. Un controllo a mano sulle 21 opere d'esempio, con le voci singole.
+3. Un aggiornamento settimanale con le stesse interrogazioni, confrontando le revisioni per sapere cosa è cambiato.
+4. Il dump completo solo se in futuro servono altri dati (editori, ISBN, autori).
+
 ## Fonti consultate
 
 - AniList, termini e limiti: https://anilist.gitbook.io/anilist-apiv2-docs/docs/guide/terms-of-use · https://docs.anilist.co/guide/rate-limiting · https://anilist.gitbook.io/anilist-apiv2-docs/docs/guide/graphql/queries/media · https://anilist.notion.site/Format-Source-Material-and-Country-of-Origin-3ae74defdf724c56b2ffb1b967953de4
@@ -370,6 +481,7 @@ Accanto a ogni categoria ci sono stringhe evidenziate in verde (`0x1ypt94`, `641
 - Opere e riviste (Wikipedia): https://en.wikipedia.org/wiki/Sh%C5%8Dnen_manga · https://en.wikipedia.org/wiki/Sh%C5%8Djo_manga · https://en.wikipedia.org/wiki/Nana_(manga) · https://en.wikipedia.org/wiki/Talk:Nana_(manga) · https://en.wikipedia.org/wiki/Fruits_Basket · https://en.wikipedia.org/wiki/Berserk_(manga) · https://en.wikipedia.org/wiki/Tokyo_Ghoul · https://en.wikipedia.org/wiki/Haikyu!! · https://fr.wikipedia.org/wiki/D%C3%A9tective_Conan · https://en.wikipedia.org/wiki/Barakamon
 - Wikidata, voci di categorie, generi e opere: https://www.wikidata.org/wiki/Q231302 · https://www.wikidata.org/wiki/Q242492 · https://www.wikidata.org/wiki/Q237338 · https://www.wikidata.org/wiki/Q503106 · https://www.wikidata.org/wiki/Q478804 · https://www.wikidata.org/wiki/Q24826340 · https://www.wikidata.org/wiki/Q53911753 · https://www.wikidata.org/wiki/Q4292083 · https://www.wikidata.org/wiki/Q16575965 · https://www.wikidata.org/wiki/Q6585139 · https://www.wikidata.org/wiki/Q11116488 · https://www.wikidata.org/wiki/Q97358333 · https://www.wikidata.org/wiki/Q4178140 · https://www.wikidata.org/wiki/Q28667972 · https://www.wikidata.org/wiki/Q15051307 · https://www.wikidata.org/wiki/Q964721 · https://www.wikidata.org/wiki/Q235311 · https://www.wikidata.org/wiki/Q1643098 · https://www.wikidata.org/wiki/Q216204 · https://www.wikidata.org/wiki/Q18558978 · https://www.wikidata.org/wiki/Q858384 · https://www.wikidata.org/wiki/Q91486 · https://www.wikidata.org/wiki/Q651753 · https://www.wikidata.org/wiki/Q182469 · https://www.wikidata.org/wiki/Q1977621 · https://www.wikidata.org/wiki/Q11102941 · https://www.wikidata.org/wiki/Q764135 · https://www.wikidata.org/wiki/Q326642 · https://www.wikidata.org/wiki/Q6579725 · https://www.wikidata.org/wiki/Q20718351 · https://www.wikidata.org/wiki/Wikidata:WikiProject_Anime_and_Manga
 - Sport / spokon: https://www.wikidata.org/wiki/Q2281511 · https://www.wikidata.org/wiki/Q11116488 · https://www.wikipedia.org/wiki/Sports_anime · https://www.eroicafenice.com/comics/cose-lo-spokon-storia-e-5-serie-consigliate/
+- Aggiornamento e scaricamento: https://www.wikidata.org/wiki/Wikidata:Database_download · https://wikitech.wikimedia.org/wiki/Dumps/WikidataDumps · https://www.wikidata.org/wiki/Wikidata:Database_reports · https://dumps.wikimedia.org/wikidatawiki/entities/ · https://www.wikidata.org/wiki/Q57495287
 - Library of Congress, termini di genere/forma: https://id.loc.gov/authorities/subjects/sh2022006465.html · https://authorities.loc.gov/authority/gf2022026036?searchFields=lccn
 - Kitsu (nessun termine trovato): https://github.com/wopian/kitsu
 - Comic Vine: https://comicvine.gamespot.com/api/ · https://comicvine.gamespot.com/forums/api-developers-2334/clarify-terms-of-use-2323234/ · https://comicvine.gamespot.com/forums/api-developers-2334/api-rate-limiting-1746419/
