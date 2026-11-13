@@ -1,4 +1,4 @@
-import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
 import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
+import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { AuthService } from './auth.service';
 
 const user: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
@@ -121,7 +122,7 @@ describe('AuthService', () => {
       http.verify();
     });
 
-    it('con un 401 passa l’errore HTTP col corpo dell’API e non registra nessuno', async () => {
+    it('con un 401 lancia un ApiErrorResponse col codice del backend e non registra nessuno', async () => {
       const http = TestBed.inject(HttpTestingController);
       const response = firstValueFrom(service.authenticate(credentials)).catch((e: unknown) => e);
       http.expectOne('/auth/login').flush(
@@ -132,19 +133,21 @@ describe('AuthService', () => {
         },
       );
       const error = await response;
-      expect(error).toBeInstanceOf(HttpErrorResponse);
-      expect((error as HttpErrorResponse).status).toBe(401);
-      expect((error as HttpErrorResponse).error.error.code).toBe('E401');
+      expect(error).toBeInstanceOf(ApiErrorResponse);
+      expect((error as ApiErrorResponse).status).toBe(401);
+      expect((error as ApiErrorResponse).code).toBe('E401');
+      expect((error as ApiErrorResponse).message).toBe('Credenziali non valide');
       expect(service.isAuthenticated()).toBe(false);
     });
 
-    it('con un errore di rete passa l’errore HTTP con stato 0', async () => {
+    it('con un errore di rete lancia un ApiErrorResponse con stato 0 e senza codice', async () => {
       const http = TestBed.inject(HttpTestingController);
       const response = firstValueFrom(service.authenticate(credentials)).catch((e: unknown) => e);
       http.expectOne('/auth/login').error(new ProgressEvent('error'));
       const error = await response;
-      expect(error).toBeInstanceOf(HttpErrorResponse);
-      expect((error as HttpErrorResponse).status).toBe(0);
+      expect(error).toBeInstanceOf(ApiErrorResponse);
+      expect((error as ApiErrorResponse).status).toBe(0);
+      expect((error as ApiErrorResponse).code).toBe('');
     });
   });
 });

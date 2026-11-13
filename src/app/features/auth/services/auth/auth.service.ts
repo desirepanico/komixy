@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
 import { ApiResponse } from '@shared/models/api-response.model';
 import { SessionService } from '@shared/services/session/session.service';
-import { map, Observable, tap } from 'rxjs';
+import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { LoggedUser, LoginRequest, LoginResponse } from '../../models/auth.model';
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
 
@@ -41,6 +42,9 @@ export class AuthService {
     return this._http.post<ApiResponse<LoginResponse>>(`${this._apiGroup}/login`, credentials).pipe(
       map((response) => response.result), //estrae i dati dell'utente.
       tap((user) => this.login(user)), //esegue il login e aggiorna lo stato di autenticazione.
+      catchError((response: HttpErrorResponse) =>
+        throwError(() => ApiErrorResponse.fromHttpError(response)),
+      ),
     );
   }
 

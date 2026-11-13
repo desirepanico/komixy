@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslocoService } from '@jsverse/transloco';
 import { provideRouter } from '@angular/router';
@@ -7,12 +6,9 @@ import { UserRole } from '@shared/models/user-role.model';
 import { Subject } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LoggedUser } from '../../models/auth.model';
+import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoginForm } from './login-form';
-
-// Come arriva dal server: corpo `ApiResponse` con l'errore
-const httpError = (status: number, code: string) =>
-  new HttpErrorResponse({ status, error: { error: { code, message: 'x' }, result: null } });
 
 describe('LoginForm', () => {
   beforeEach(async () => {
@@ -138,7 +134,7 @@ describe('LoginForm', () => {
     it('con credenziali sbagliate (codice INVALID_CREDENTIALS) mostra un toast e non emette nulla', async () => {
       const error = vi.spyOn(TestBed.inject(ToastService), 'error');
       await fillAndSubmit();
-      response.error(httpError(401, 'INVALID_CREDENTIALS'));
+      response.error(new ApiErrorResponse(401, 'INVALID_CREDENTIALS', 'x'));
       await wait();
       expect(error).toHaveBeenCalledWith(
         'apiError.invalidCredentials.summaryKo',
@@ -152,7 +148,7 @@ describe('LoginForm', () => {
     it('con un errore senza codice mostra il toast di default dell’errore del server', async () => {
       const error = vi.spyOn(TestBed.inject(ToastService), 'error');
       await fillAndSubmit();
-      response.error(httpError(500, ''));
+      response.error(new ApiErrorResponse(500, '', 'x'));
       await wait();
       expect(error).toHaveBeenCalledWith(
         'login.serverError.summaryKo',
@@ -162,7 +158,7 @@ describe('LoginForm', () => {
 
     it('dopo un errore si può riprovare senza modificare i campi', async () => {
       await fillAndSubmit();
-      response.error(httpError(500, ''));
+      response.error(new ApiErrorResponse(500, '', 'x'));
       await wait();
 
       response = new Subject<LoggedUser>();

@@ -10,6 +10,3 @@ export const API_ERROR_MESSAGES: Readonly<Record<string, string>> = {
   TOO_MANY_REQUESTS: 'apiError.tooManyRequests',
   SERVER_ERROR: 'apiError.serverError',
 };
-
-/** Quanti livelli di `error` si seguono per trovare il codice */
-export const API_ERROR_MAX_DEPTH = 3;
