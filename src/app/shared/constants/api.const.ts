@@ -1,3 +1,5 @@
+import { HttpContextToken } from '@angular/common/http';
+
 // ─── Errori delle chiamate ───
 
 /** Codice di errore dell'API → gruppo di traduzioni (`<gruppo>.summaryKo` e `<gruppo>.detailKo`) */
@@ -15,6 +17,11 @@ export const API_ERROR_MESSAGES: Readonly<Record<string, string>> = {
 
 /** Codice con cui un 401 di un utente già iscritto diventa «sessione scaduta» (token-expired interceptor) */
 export const SESSION_EXPIRED_CODE = 'SESSION_EXPIRED';
+
+// ─── Interceptor ───
+
+/** Il base-url interceptor la mette a `true` sulle richieste del backend: fuso, token e sessione scaduta guardano solo quelle */
+export const IS_API_REQUEST = new HttpContextToken<boolean>(() => false);
 
 // ─── Intestazioni delle chiamate ───
 

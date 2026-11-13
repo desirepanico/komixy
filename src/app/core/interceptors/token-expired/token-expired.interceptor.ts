@@ -1,11 +1,10 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject, Injector } from '@angular/core';
 import { AuthService } from '@features/auth/services/auth/auth.service';
-import { SESSION_EXPIRED_CODE } from '@shared/constants/api.const';
+import { IS_API_REQUEST, SESSION_EXPIRED_CODE } from '@shared/constants/api.const';
 import { SessionService } from '@shared/services/session/session.service';
 import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { catchError, throwError } from 'rxjs';
-import { isApiRequest } from '../is-api-request/is-api-request';
 
 /**
  * Se il backend risponde 401 a un iscritto, il token è scaduto o non vale più: esce (token tolto, si torna al login)
@@ -22,7 +21,7 @@ export const tokenExpiredInterceptor: HttpInterceptorFn = (req, next) => {
         error instanceof HttpErrorResponse &&
         error.status === 401 &&
         session.isAuthenticated() &&
-        isApiRequest(req.url);
+        req.context.get(IS_API_REQUEST);
       if (!expired) return throwError(() => error);
       injector.get(AuthService).logout();
       return throwError(() => withExpiredCode(error));

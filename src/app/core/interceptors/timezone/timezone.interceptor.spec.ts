@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { environment } from '@env/environment';
 import { TIMEZONE_HEADER } from '@shared/constants/api.const';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { baseUrlInterceptor } from '../base-url/base-url.interceptor';
 import { timezoneInterceptor } from './timezone.interceptor';
 
 describe('timezoneInterceptor', () => {
@@ -13,7 +14,7 @@ describe('timezoneInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(withInterceptors([timezoneInterceptor])),
+        provideHttpClient(withInterceptors([baseUrlInterceptor, timezoneInterceptor])),
         provideHttpClientTesting(),
       ],
     });
@@ -22,7 +23,7 @@ describe('timezoneInterceptor', () => {
   });
 
   it('aggiunge il fuso orario dell’utente alle chiamate del backend', () => {
-    http.get(`${environment.apiUrl}/comics`).subscribe();
+    http.get('/comics').subscribe();
     const request = controller.expectOne(`${environment.apiUrl}/comics`);
     expect(request.request.headers.get(TIMEZONE_HEADER)).toBe(
       Intl.DateTimeFormat().resolvedOptions().timeZone,

@@ -1,8 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AUTH_HEADER, BEARER_PREFIX } from '@shared/constants/api.const';
+import { AUTH_HEADER, BEARER_PREFIX, IS_API_REQUEST } from '@shared/constants/api.const';
 import { SessionService } from '@shared/services/session/session.service';
-import { isApiRequest } from '../is-api-request/is-api-request';
 
 /**
  * Manda il token dell'iscritto al backend (`Authorization: Bearer <token>`): così il server sa chi fa la
@@ -10,6 +9,6 @@ import { isApiRequest } from '../is-api-request/is-api-request';
  */
 export const bearerTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const token = inject(SessionService).token();
-  if (!token || !isApiRequest(req.url)) return next(req);
+  if (!token || !req.context.get(IS_API_REQUEST)) return next(req);
   return next(req.clone({ setHeaders: { [AUTH_HEADER]: `${BEARER_PREFIX}${token}` } }));
 };

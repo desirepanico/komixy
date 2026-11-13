@@ -5,6 +5,7 @@ import { environment } from '@env/environment';
 import { AUTH_HEADER } from '@shared/constants/api.const';
 import { SessionService } from '@shared/services/session/session.service';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { baseUrlInterceptor } from '../base-url/base-url.interceptor';
 import { bearerTokenInterceptor } from './bearer-token.interceptor';
 
 describe('bearerTokenInterceptor', () => {
@@ -17,7 +18,7 @@ describe('bearerTokenInterceptor', () => {
     localStorage.clear();
     TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(withInterceptors([bearerTokenInterceptor])),
+        provideHttpClient(withInterceptors([baseUrlInterceptor, bearerTokenInterceptor])),
         provideHttpClientTesting(),
       ],
     });
@@ -28,13 +29,13 @@ describe('bearerTokenInterceptor', () => {
 
   it('con un token aggiunge Authorization: Bearer alle chiamate del backend', () => {
     session.setToken('abc');
-    http.get(url).subscribe();
+    http.get('/me').subscribe();
     expect(controller.expectOne(url).request.headers.get(AUTH_HEADER)).toBe('Bearer abc');
     controller.verify();
   });
 
   it('senza token (ospite) non aggiunge nulla', () => {
-    http.get(url).subscribe();
+    http.get('/me').subscribe();
     expect(controller.expectOne(url).request.headers.has(AUTH_HEADER)).toBe(false);
     controller.verify();
   });

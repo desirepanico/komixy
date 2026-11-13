@@ -6,8 +6,8 @@ import { timezoneInterceptor } from '../../interceptors/timezone/timezone.interc
 import { tokenExpiredInterceptor } from '../../interceptors/token-expired/token-expired.interceptor';
 
 /**
- * `HttpClient` con gli interceptor, nell'ordine in cui si applicano: prima l'indirizzo completo
- * (gli altri guardano se la richiesta è del backend), poi fuso e token; l'ultimo guarda gli errori che tornano.
+ * `HttpClient` con gli interceptor, nell'ordine in cui si applicano: prima l'indirizzo completo, che segna le
+ * richieste del backend (`IS_API_REQUEST`), poi fuso e token; l'ultimo guarda gli errori che tornano.
  */
 export function provideHttp(): EnvironmentProviders {
   return makeEnvironmentProviders([

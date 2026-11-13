@@ -7,6 +7,7 @@ import { AuthService } from '@features/auth/services/auth/auth.service';
 import { SessionService } from '@shared/services/session/session.service';
 import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { baseUrlInterceptor } from '../base-url/base-url.interceptor';
 import { tokenExpiredInterceptor } from './token-expired.interceptor';
 
 describe('tokenExpiredInterceptor', () => {
@@ -18,7 +19,7 @@ describe('tokenExpiredInterceptor', () => {
 
   const failWith = (status: number, body: object | null = null): Promise<unknown> => {
     const result = new Promise<unknown>((resolve) => {
-      http.get(url).subscribe({ error: resolve });
+      http.get('/me').subscribe({ error: resolve });
     });
     controller.expectOne(url).flush(body, { status, statusText: 'Error' });
     return result;
@@ -31,7 +32,7 @@ describe('tokenExpiredInterceptor', () => {
     TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
-        provideHttpClient(withInterceptors([tokenExpiredInterceptor])),
+        provideHttpClient(withInterceptors([baseUrlInterceptor, tokenExpiredInterceptor])),
         provideHttpClientTesting(),
       ],
     });
@@ -68,7 +69,7 @@ describe('tokenExpiredInterceptor', () => {
   it('lascia passare le risposte riuscite', () => {
     session.setAuthenticated(true);
     let received: unknown;
-    http.get(url).subscribe((value) => (received = value));
+    http.get('/me').subscribe((value) => (received = value));
     controller.expectOne(url).flush({ ok: true });
     expect(received).toEqual({ ok: true });
     expect(logout).not.toHaveBeenCalled();

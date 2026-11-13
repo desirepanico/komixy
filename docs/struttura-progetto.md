@@ -9,7 +9,7 @@ src/
 │   ├── app.routes.ts          monta le rotte di ogni feature sul suo percorso (loadChildren)
 │   ├── core/                  parti singleton usate da tutta l'app, niente UI di feature
 │   │   ├── guards/            user-role/ (user-role.guard + spec)
-│   │   ├── interceptors/      interceptor HTTP, uno per cartella: base-url/, timezone/, bearer-token/, token-expired/ (più i due aiuti join-url/ e is-api-request/)
+│   │   ├── interceptors/      interceptor HTTP, uno per cartella: base-url/, timezone/, bearer-token/, token-expired/
 │   │   ├── layout/            shell dell'app: sidebar desktop, nav mobile
 │   │   └── providers/         provider di avvio, uno per cartella: core/ (provideCore), boot-skeleton/, http/ (provideHttp), i18n/, nav-direction/
 │   ├── features/              una cartella per area funzionale
