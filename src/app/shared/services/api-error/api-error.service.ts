@@ -13,6 +13,12 @@ import { ToastService } from '../toast/toast.service';
 export class ApiErrorService {
   private readonly _toast = inject(ToastService);
 
+  /**
+   * Mostra in un toast l'errore di una chiamata all'API.
+   * @param error l'errore ricevuto: un `ApiErrorResponse`, oppure `null` se non viene dall'API (un bug)
+   * @param fallback chiavi di traduzione del messaggio di default, usato senza codice, con un codice
+   * che non è in `API_ERROR_MESSAGES` o con `null`
+   */
   public handle(error: ApiErrorResponse | null, fallback: ApiErrorFallback): void {
     const code = error?.code ?? '';
     const prefix = Object.hasOwn(API_ERROR_MESSAGES, code) ? API_ERROR_MESSAGES[code] : null;
