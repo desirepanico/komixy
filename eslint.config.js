@@ -5,7 +5,8 @@ const eslint = require('@eslint/js');
 const tseslint = require('typescript-eslint');
 // @ts-ignore
 const angular = require('angular-eslint');
-// @ts-ignore
+// I tipi del plugin non dichiarano `configs`, che a runtime esiste: lo trattiamo come `any`
+/** @type {any} */
 const betterTailwindcss = require('eslint-plugin-better-tailwindcss');
 
 // defineConfig sostituisce tseslint.config (deprecato)
