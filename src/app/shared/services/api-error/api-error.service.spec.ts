@@ -38,13 +38,10 @@ describe('ApiErrorService', () => {
     expect(error).toHaveBeenCalledWith('default.summary', 'default.detail');
   });
 
-  it.each([null, undefined, 'testo', 42, {}, new Error('rete'), { code: 'NOT_FOUND' }])(
-    'con %j (non è un ApiErrorResponse) mostra il messaggio di default',
-    (value) => {
-      service.handle(value, fallback);
-      expect(error).toHaveBeenCalledWith('default.summary', 'default.detail');
-    },
-  );
+  it('con null (un errore che non viene dall’API) mostra il messaggio di default', () => {
+    service.handle(null, fallback);
+    expect(error).toHaveBeenCalledWith('default.summary', 'default.detail');
+  });
 
   it.each(Object.entries(API_ERROR_MESSAGES))('il codice %s usa il gruppo %s', (code, group) => {
     service.handle(new ApiErrorResponse(400, code, 'x'), fallback);

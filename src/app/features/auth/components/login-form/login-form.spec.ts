@@ -156,6 +156,17 @@ describe('LoginForm', () => {
       );
     });
 
+    it('con un errore che non viene dall’API mostra il toast di default', async () => {
+      const error = vi.spyOn(TestBed.inject(ToastService), 'error');
+      await fillAndSubmit();
+      response.error(new Error('bug'));
+      await wait();
+      expect(error).toHaveBeenCalledWith(
+        'login.serverError.summaryKo',
+        'login.serverError.detailKo',
+      );
+    });
+
     it('dopo un errore si può riprovare senza modificare i campi', async () => {
       await fillAndSubmit();
       response.error(new ApiErrorResponse(500, '', 'x'));

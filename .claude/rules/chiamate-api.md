@@ -9,10 +9,10 @@ Esempio di riferimento: il login (`AuthService.authenticate()` e `LoginForm`). O
 
 ## Il percorso di una chiamata
 
-1. **Componente** (`LoginForm`): nell'`action` del form chiama il servizio con `firstValueFrom()` dentro una funzione `async` e `.then(successo, (error: ApiErrorResponse) => ...)`. Mai `subscribe()`.
+1. **Componente** (`LoginForm`): nell'`action` del form chiama il servizio con `firstValueFrom()` dentro una funzione `async`, in un `try/catch`. Mai `subscribe()`.
 2. **Servizio della feature** (`AuthService`): fa la richiesta con `HttpClient`, estrae il `result`, aggiorna lo stato con `tap()` e converte l'errore HTTP in `ApiErrorResponse` con `catchError()`. Restituisce un `Observable` con il solo dato utile.
 3. **Backend**: risponde sempre con la busta `ApiResponse<T>`.
-4. **Errore**: il secondo argomento del `.then` riceve un `ApiErrorResponse` (stato, codice, messaggio) e lo passa a `ApiErrorService.handle(error, fallback)`, che mostra un toast.
+4. **Errore**: il `catch` controlla con `instanceof ApiErrorResponse` (stato, codice, messaggio) e passa l'errore, o `null` se non viene dall'API, a `ApiErrorService.handle(error, fallback)`, che mostra un toast.
 
 ```ts
 // auth.service.ts
@@ -27,17 +27,18 @@ public authenticate(credentials: LoginRequest): Observable<LoginResponse> {
 }
 
 // login-form.ts
-await firstValueFrom(this._authService.authenticate(this._model())).then(
-  () => this._onLoginSuccess(),
-  (error: ApiErrorResponse) =>
-    this._apiError.handle(error, {
-      summary: 'login.serverError.summaryKo',
-      detail: 'login.serverError.detailKo',
-    }),
-);
+try {
+  await firstValueFrom(this._authService.authenticate(this._model()));
+  this._onLoginSuccess();
+} catch (error) {
+  this._apiError.handle(error instanceof ApiErrorResponse ? error : null, {
+    summary: 'login.serverError.summaryKo',
+    detail: 'login.serverError.detailKo',
+  });
+}
 ```
 
-L'errore è tipizzato con `.then(ok, (error: ApiErrorResponse) => ...)` e non con un `catch`: TypeScript permette nel `catch` solo `unknown` o `any`. L'annotazione è una promessa, non un controllo: `ApiErrorService.handle` accetta `unknown` e, se non è un `ApiErrorResponse`, mostra il messaggio di default.
+Nel `catch` TypeScript non permette un tipo preciso (solo `unknown` o `any`, perché si può lanciare qualsiasi cosa): si scrive `catch (error)` senza annotazione e si restringe con `instanceof`. Così il tipo passato a `ApiErrorService.handle` è controllato davvero: `ApiErrorResponse` se l'errore viene dall'API, `null` se è altro (un bug), e in quel caso compare il messaggio di default.
 
 ## Body o query string
 
@@ -80,8 +81,8 @@ this._http.get<ApiResponse<ComicListResponse>>(apiUrl('/comics', filters)); // C
 
 ## Errori
 
-- **Ogni gestione dell'errore di una chiamata (il secondo argomento del `.then`) chiama `ApiErrorService.handle(error, fallback)`** (`shared/services/api-error`). `fallback` ha le chiavi Transloco `summary` e `detail` del messaggio di default, nel gruppo della feature (`login.serverError.summaryKo`, `login.serverError.detailKo`).
-- `ApiErrorResponse.fromHttpError` legge codice e messaggio dal corpo della risposta (la busta `ApiResponse` o un `ApiError`); senza corpo valido (rete, errore del server) il codice è vuoto e il messaggio è quello di `HttpClient`. `ApiErrorService` guarda `error.code`: se è in `API_ERROR_MESSAGES` mostra il suo messaggio, altrimenti il default della chiamata. Un errore che non è un `ApiErrorResponse` (un bug, un `throw`) mostra sempre il default.
+- **Ogni `catch` di una chiamata chiama `ApiErrorService.handle(error, fallback)`** (`shared/services/api-error`). `fallback` ha le chiavi Transloco `summary` e `detail` del messaggio di default, nel gruppo della feature (`login.serverError.summaryKo`, `login.serverError.detailKo`).
+- `ApiErrorResponse.fromHttpError` legge codice e messaggio dal corpo della risposta (la busta `ApiResponse` o un `ApiError`); senza corpo valido (rete, errore del server) il codice è vuoto e il messaggio è quello di `HttpClient`. `ApiErrorService` guarda `error.code`: se è in `API_ERROR_MESSAGES` mostra il suo messaggio, altrimenti il default della chiamata. Con `null` (un errore che non viene dall'API: un bug, un `throw`) mostra sempre il default.
 - **Un codice nuovo**: voce in `API_ERROR_MESSAGES` (`shared/constants/api-error.const.ts`, codice → gruppo), chiavi `apiError.<gruppo>.summaryKo` e `detailKo` in `it.json` **e** `en.json`, e il caso nello spec di `ApiErrorService`. Un testo specifico di una sola chiamata non va nel servizio: è il suo messaggio di default.
 - Un errore che appartiene a un campo si restituisce dall'`action` del form (`{ fieldTree, kind, message }`, `form.md`); gli altri vanno nel toast. L'`action` restituisce `undefined` anche dopo un errore già mostrato.
 - Niente `if (error.status === 401)` nei componenti: il significato dell'errore sta nel codice.

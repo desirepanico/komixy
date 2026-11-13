@@ -55,10 +55,12 @@ export class LoginForm {
       submission: {
         action: async () => {
           //firstValueFrom -> Primo valore: appena l’observable emette, la Promise si risolve con quel valore. (Sottoscrizione automatica:)
-          await firstValueFrom(this._authService.authenticate(this._model())).then(
-            () => this._onLoginSuccess(),
-            (error: ApiErrorResponse) => this._onLoginError(error),
-          );
+          try {
+            await firstValueFrom(this._authService.authenticate(this._model()));
+            this._onLoginSuccess();
+          } catch (error) {
+            this._onLoginError(error instanceof ApiErrorResponse ? error : null);
+          }
         },
         // Dopo un invio fallito il focus va al primo campo con l'errore
         onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
@@ -70,7 +72,7 @@ export class LoginForm {
     this.loginSuccess.emit();
   }
   // L'errore dell'API non è di un campo: si mostra in un toast, col messaggio del suo codice o questo di default
-  private _onLoginError(error: ApiErrorResponse): void {
+  private _onLoginError(error: ApiErrorResponse | null): void {
     this._apiError.handle(error, {
       summary: 'login.serverError.summaryKo',
       detail: 'login.serverError.detailKo',
