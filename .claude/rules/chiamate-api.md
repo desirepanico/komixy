@@ -40,6 +40,13 @@ try {
 
 Nel `catch` TypeScript non permette un tipo preciso (solo `unknown` o `any`, perché si può lanciare qualsiasi cosa): si scrive `catch (error)` senza annotazione e si restringe con `instanceof`. Così il tipo passato a `ApiErrorService.handle` è controllato davvero: `ApiErrorResponse` se l'errore viene dall'API, `null` se è altro (un bug), e in quel caso compare il messaggio di default.
 
+### Mentre si aspetta la risposta
+
+- `await` sospende solo l'`action` del form, non l'app: la pagina resta libera. `firstValueFrom()` si iscrive all'`Observable`, parte la richiesta, e prende il primo valore annullando l'iscrizione (`HttpClient` ne emette uno solo, quindi non resta nulla di aperto).
+- Finché l'`action` non finisce `form().submitting()` è `true`: il bottone di invio è disabilitato (`login.submitting`). A risposta arrivata, in qualunque esito, torna `false` e si può riprovare.
+- **Riuscita**: `map`, `tap` e `firstValueFrom` si risolve, l'esecuzione prosegue dopo l'`await` (`_onLoginSuccess()`). **Errore**: il `catchError` del servizio lo converte, `firstValueFrom` rifiuta e si salta nel `catch`.
+- Un `Observable` che si chiude senza emettere fa rifiutare `firstValueFrom` con un `EmptyError`: finisce nel `catch` e, non essendo un `ApiErrorResponse`, mostra il messaggio di default.
+
 ## Body o query string
 
 I dati di una chiamata viaggiano in uno di questi tre posti, secondo ciò che sono:
