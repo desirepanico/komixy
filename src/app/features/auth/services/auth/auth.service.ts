@@ -1,13 +1,11 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import {
-  AUTH_USER_STORAGE_KEY,
-  DEMO_CREDENTIALS,
-  FAKE_API_DELAY_MS,
-} from '@shared/constants/form.const';
-import { UserRole } from '@shared/models/user-role.model';
+import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
+import { ApiResponse } from '@shared/models/api-response.model';
 import { SessionService } from '@shared/services/session/session.service';
-import { delay, Observable, of, tap, throwError } from 'rxjs';
-import { LoggedUser, LoginCredentials } from '../../models/auth.model';
+import { apiUrl } from '@shared/utils/api-url/api-url';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { LoggedUser, LoginRequest, LoginResponse } from '../../models/auth.model';
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
 
 export class ApiError extends Error {
@@ -25,6 +23,9 @@ export class ApiError extends Error {
 export class AuthService {
   private readonly _navigation = inject(AuthNavigationService);
   private readonly _session = inject(SessionService);
+  private readonly _http = inject(HttpClient);
+
+  private readonly _apiGroup = '/auth';
 
   private readonly _loggedUser = signal<LoggedUser | null>(this._read());
 
@@ -46,18 +47,24 @@ export class AuthService {
     this._session.setAuthenticated(false);
   }
 
-  // TODO(api): sostituire con la chiamata all'API di autenticazione
-  public authenticate(credentials: LoginCredentials): Observable<LoggedUser> {
-    const email = credentials.email.trim().toLowerCase();
-    if (email !== DEMO_CREDENTIALS.email || credentials.password !== DEMO_CREDENTIALS.password) {
-      return throwError(() => new ApiError(401, 'Credenziali non valide')).pipe(
-        delay(FAKE_API_DELAY_MS),
+  public authenticate(credentials: LoginRequest): Observable<LoginResponse> {
+    return this._http
+      .post<ApiResponse<LoginResponse>>(apiUrl(`${this._apiGroup}/login`), credentials)
+      .pipe(
+        map((response) => response.result),
+        tap((user) => this.login(user)),
+        // Il login distingue gli errori dal codice HTTP (401: credenziali non valide)
+        catchError((error: unknown) =>
+          throwError(() =>
+            error instanceof HttpErrorResponse
+              ? new ApiError(
+                  error.status,
+                  (error.error as ApiResponse<null> | null)?.error?.message ?? error.message,
+                )
+              : error,
+          ),
+        ),
       );
-    }
-    return of<LoggedUser>({ id: email, email, userRole: UserRole.User }).pipe(
-      delay(FAKE_API_DELAY_MS),
-      tap((user) => this.login(user)),
-    );
   }
 
   public logout(): void {

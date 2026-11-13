@@ -1,10 +1,3 @@
-export const FAKE_API_DELAY_MS = 800;
-
-export const DEMO_CREDENTIALS: Readonly<{ email: string; password: string }> = {
-  email: 'demo@example.com',
-  password: 'password1',
-};
-
 // TODO(api): la sessione la manterrà il server (cookie o token), non il browser
 /** Chiave dello storage con lo stato «iscritto» (letta da `SessionService`) */
 export const SESSION_STORAGE_KEY = 'komixy.session';

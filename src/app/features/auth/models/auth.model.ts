@@ -6,7 +6,10 @@ export interface LoggedUser {
   userRole: UserRole;
 }
 
-export interface LoginCredentials {
+/** Risultato di `POST /auth/login` (il `result` di `ApiResponse`) */
+export type LoginResponse = LoggedUser;
+
+export interface LoginRequest {
   email: string;
   password: string;
 }

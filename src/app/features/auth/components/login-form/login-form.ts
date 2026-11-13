@@ -11,7 +11,7 @@ import { InputPassword } from '@shared/components/input/input-password/input-pas
 import { InputText } from '@shared/components/input/input-text/input-text';
 import { ToastService } from '@shared/services/toast/toast.service';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
-import { LoginCredentials, SocialProvider } from '../../models/auth.model';
+import { LoginRequest, SocialProvider } from '../../models/auth.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
 import { ApiError, AuthService } from '../../services/auth/auth.service';
 
@@ -41,7 +41,7 @@ export class LoginForm {
   public readonly socialLogin = output<SocialProvider>();
   public readonly guestAccess = output<void>();
 
-  private readonly _model = signal<LoginCredentials>({ email: '', password: '' });
+  private readonly _model = signal<LoginRequest>({ email: '', password: '' });
   protected readonly form = form(
     this._model,
     (path) => {

@@ -1,16 +1,14 @@
+import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { LoggedUser } from '../../models/auth.model';
 import { UserRole } from '@shared/models/user-role.model';
 import { SessionService } from '@shared/services/session/session.service';
-import {
-  AUTH_USER_STORAGE_KEY,
-  DEMO_CREDENTIALS,
-  FAKE_API_DELAY_MS,
-} from '@shared/constants/form.const';
+import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
 import { ApiError, AuthService } from './auth.service';
 
 const user: LoggedUser = { id: '1', email: 'a@b.it', userRole: UserRole.User };
@@ -21,6 +19,9 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     localStorage.clear();
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
     service = TestBed.inject(AuthService);
     router = TestBed.inject(Router);
     vi.spyOn(router, 'navigate').mockResolvedValue(true);
@@ -65,6 +66,9 @@ describe('AuthService', () => {
   describe('dopo un refresh', () => {
     const refresh = () => {
       TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        providers: [provideHttpClient(), provideHttpClientTesting()],
+      });
       vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
       return TestBed.inject(AuthService);
     };
@@ -101,38 +105,47 @@ describe('AuthService', () => {
   });
 
   describe('authenticate', () => {
-    beforeEach(() => vi.useFakeTimers());
-    afterEach(() => vi.useRealTimers());
+    const credentials = { email: 'a@b.it', password: 'password1' };
+    const body = (result: unknown) => ({ error: { code: '', message: '' }, result });
 
-    it('con le credenziali demo risponde dopo la latenza e registra l’utente', async () => {
-      const response = firstValueFrom(service.authenticate(DEMO_CREDENTIALS));
+    it('invia le credenziali, restituisce il result e registra l’utente', async () => {
+      const http = TestBed.inject(HttpTestingController);
+      const response = firstValueFrom(service.authenticate(credentials));
+      const request = http.expectOne('/auth/login');
+      expect(request.request.method).toBe('POST');
+      expect(request.request.body).toEqual(credentials);
       expect(service.isAuthenticated()).toBe(false);
-      await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
-      expect(await response).toEqual({
-        id: DEMO_CREDENTIALS.email,
-        email: DEMO_CREDENTIALS.email,
-        userRole: UserRole.User,
-      });
+      request.flush(body(user));
+      expect(await response).toEqual(user);
       expect(service.isAuthenticated()).toBe(true);
+      http.verify();
     });
 
-    it('ignora maiuscole e spazi nell’email', async () => {
-      const response = firstValueFrom(
-        service.authenticate({ email: ' Demo@Example.com ', password: DEMO_CREDENTIALS.password }),
+    it('con un 401 risponde ApiError con lo stato e non registra nessuno', async () => {
+      const http = TestBed.inject(HttpTestingController);
+      const response = firstValueFrom(service.authenticate(credentials)).catch((e: unknown) => e);
+      http.expectOne('/auth/login').flush(
+        { error: { code: 'E401', message: 'Credenziali non valide' }, result: null },
+        {
+          status: 401,
+          statusText: 'Unauthorized',
+        },
       );
-      await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
-      expect((await response).email).toBe(DEMO_CREDENTIALS.email);
-    });
-
-    it('con credenziali sbagliate risponde 401 e non registra nessuno', async () => {
-      const response = firstValueFrom(
-        service.authenticate({ email: DEMO_CREDENTIALS.email, password: 'sbagliata' }),
-      ).catch((e: unknown) => e);
-      await vi.advanceTimersByTimeAsync(FAKE_API_DELAY_MS);
       const error = await response;
       expect(error).toBeInstanceOf(ApiError);
       expect((error as ApiError).status).toBe(401);
+      expect((error as ApiError).message).toBe('Credenziali non valide');
       expect(service.isAuthenticated()).toBe(false);
+    });
+
+    it('con un errore di rete usa il messaggio di HttpClient', async () => {
+      const http = TestBed.inject(HttpTestingController);
+      const response = firstValueFrom(service.authenticate(credentials)).catch((e: unknown) => e);
+      http.expectOne('/auth/login').error(new ProgressEvent('error'));
+      const error = await response;
+      expect(error).toBeInstanceOf(ApiError);
+      expect((error as ApiError).status).toBe(0);
+      expect(error).not.toBeInstanceOf(HttpErrorResponse);
     });
   });
 });
