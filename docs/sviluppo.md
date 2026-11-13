@@ -66,7 +66,7 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 
 `npm run lint` lancia ESLint 9 (angular-eslint + typescript-eslint) su `src`. La configurazione è nel file `eslint.config.js` in radice: è obbligatorio, senza di esso ESLint 9 non parte.
 
-- `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`).
+- `**/*.ts`: regole raccomandate di ESLint, TypeScript e Angular, più le regole di `.claude/rules/angular.md` (standalone, `OnPush` di default, `inject()`, niente `any`, `output` e signal readonly, `prefer-signals`, niente rinomina degli `input`, membri `private` con prefisso `_`).
 - `**/*.html`: template raccomandati e `@if`/`@for` al posto delle direttive strutturali.
 - Nelle feature `no-restricted-imports` vieta di importare da un'altra feature (tranne i servizi `<nome>-navigation`) e, in `pages` e `components`, anche `Router` e `AppRoutes`: la navigazione passa dai servizi di navigazione.
 - In tutta l'app `no-restricted-imports` vieta `@angular/forms` (si usano i Signal Forms) e `CommonModule`, `NgClass`, `NgStyle` di `@angular/common`. L'elenco è `RESTRICTED_IMPORT_PATHS` in `eslint.config.js`: le regole delle feature lo ripetono, perché la regola non si fonde tra blocchi.

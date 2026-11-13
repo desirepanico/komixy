@@ -23,9 +23,9 @@ import { FieldWrapper } from '../../field-wrapper/field-wrapper';
   host: { class: 'block' },
 })
 export class InputPassword implements FormValueControl<string> {
-  private readonly formField = inject<FormField<string>>(FormField);
+  private readonly _formField = inject<FormField<string>>(FormField);
 
-  private readonly field = viewChild.required<ElementRef<HTMLInputElement>>('field');
+  private readonly _field = viewChild.required<ElementRef<HTMLInputElement>>('field');
 
   public readonly value = model<string>('');
   public readonly label = input.required<string>();
@@ -36,17 +36,17 @@ export class InputPassword implements FormValueControl<string> {
 
   protected readonly visible = signal<boolean>(false);
   protected readonly showError = computed(
-    () => this.formField.state().touched() && this.formField.errors().length > 0,
+    () => this._formField.state().touched() && this._formField.errors().length > 0,
   );
   protected readonly visibleErrors = computed(() =>
-    this.showError() ? this.formField.errors() : [],
+    this.showError() ? this._formField.errors() : [],
   );
 
   protected markAsTouched(): void {
-    this.formField.state().markAsTouched();
+    this._formField.state().markAsTouched();
   }
   public focus(options?: FocusOptions): void {
-    this.field().nativeElement.focus(options);
+    this._field().nativeElement.focus(options);
   }
   protected toggleVisible(): void {
     this.visible.update((visible) => !visible);

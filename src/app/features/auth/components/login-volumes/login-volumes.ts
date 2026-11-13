@@ -77,9 +77,9 @@ export class LoginVolumes {
       return;
     }
     this.selected.set(id);
-    this.toggle(id);
+    this._toggle(id);
   }
-  private toggle(id: string): void {
+  private _toggle(id: string): void {
     this.flipped.update((current) => {
       const next = new Set(current);
       if (!next.delete(id)) next.add(id);

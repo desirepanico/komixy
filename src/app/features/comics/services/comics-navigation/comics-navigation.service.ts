@@ -7,9 +7,9 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 /** Rotte della feature comics: l'elenco e la pagina di un fumetto. */
 @Injectable({ providedIn: 'root' })
 export class ComicsNavigationService {
-  private readonly router = inject(Router);
-  private readonly location = inject(Location);
-  private readonly discoverNavigation = inject(DiscoverNavigationService);
+  private readonly _router = inject(Router);
+  private readonly _location = inject(Location);
+  private readonly _discoverNavigation = inject(DiscoverNavigationService);
 
   public readonly comicsLink: readonly string[] = ['/', AppRoutes.Comic];
 
@@ -18,7 +18,7 @@ export class ComicsNavigationService {
   }
 
   public goToDetail(id: string): Promise<boolean> {
-    return this.router.navigate(this.detailLink(id));
+    return this._router.navigate(this.detailLink(id));
   }
 
   /**
@@ -28,11 +28,11 @@ export class ComicsNavigationService {
    * secondo in poi c'è una pagina precedente.
    */
   public goBack(): void {
-    const state = this.location.getState() as { navigationId?: number } | null;
+    const state = this._location.getState() as { navigationId?: number } | null;
     if ((state?.navigationId ?? 0) > 1) {
-      this.location.back();
+      this._location.back();
     } else {
-      void this.discoverNavigation.goToDiscover();
+      void this._discoverNavigation.goToDiscover();
     }
   }
 }

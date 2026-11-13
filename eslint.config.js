@@ -113,6 +113,16 @@ module.exports = defineConfig(
       '@angular-eslint/no-input-rename': 'error',
       '@typescript-eslint/no-explicit-any': 'error',
       'no-restricted-imports': ['error', { paths: RESTRICTED_IMPORT_PATHS }],
+      // Regola di .claude/rules/angular.md, sezione «Nomi»: i membri `private` iniziano con «_»
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'memberLike',
+          modifiers: ['private'],
+          format: null,
+          leadingUnderscore: 'require',
+        },
+      ],
     },
   },
   ...featureRules('src/app/features/**', ['^@features/(?!.*/services/[^/]+-navigation/)']),

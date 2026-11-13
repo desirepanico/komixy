@@ -36,6 +36,7 @@ paths:
 
 - File in kebab-case, con il tipo nel nome: `comic.model.ts`, `auth.service.ts`, `user-role.guard.ts`, `swipe.directive.ts`, `auth.interceptor.ts`, `i18n.provider.ts` (funzione `provideXxx()` di avvio), `ui.const.ts` (costanti), `login-page.spec.ts` (test). Componenti e pagine senza `.component`: `comic-card.ts`, `discover-page.ts` (le pagine finiscono con `-page`).
 - Classi in PascalCase, con il suffisso del tipo dove il file lo ha: `AuthService`, `DiscoverPage`. Componenti e direttive senza suffisso: `ComicCard`, `Swipe`.
+- Ogni membro `private` (proprietà, metodo, accessor, parametro del costruttore) ha il nome che inizia con `_`: `private readonly _router = inject(Router)`, `private _read()`. I membri `protected` e `public` non lo hanno. Lo controlla ESLint (`@typescript-eslint/naming-convention`).
 - Le costanti stanno in `shared/constants`, un file per argomento: regole in `.claude/rules/costanti.md`.
 - Le funzioni pure (`detect-swipe.ts`) senza suffisso: il nome dice già cosa sono.
 - Prefisso `app` per tutti i componenti e le direttive, sia generici (`shared`) sia di feature: selector `app-nome` (componenti), `[appNome]` (direttive e componenti ad attributo come `button[appButton]`).

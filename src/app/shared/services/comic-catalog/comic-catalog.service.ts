@@ -5,7 +5,7 @@ import { WeeklyRankingService } from '../weekly-ranking/weekly-ranking.service';
 /** I fumetti conosciuti dall'app: i «Manga da scoprire» e quelli della classifica settimanale. */
 @Injectable({ providedIn: 'root' })
 export class ComicCatalogService {
-  private readonly ranking = inject(WeeklyRankingService);
+  private readonly _ranking = inject(WeeklyRankingService);
 
   // TODO(api): sostituire con i dati reali dell'API
   private readonly _toDiscover = signal<ComicItem[]>([
@@ -56,7 +56,7 @@ export class ComicCatalogService {
   public find(id: string): ComicItem | undefined {
     return (
       this._toDiscover().find((comic) => comic.id === id) ??
-      this.ranking.entries().find((entry) => entry.comic.id === id)?.comic
+      this._ranking.entries().find((entry) => entry.comic.id === id)?.comic
     );
   }
 }

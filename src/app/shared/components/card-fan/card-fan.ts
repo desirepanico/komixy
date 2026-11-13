@@ -44,11 +44,11 @@ export class CardFan {
   protected readonly spread = signal<boolean>(false);
 
   /** Larghezza del contenitore, 0 finché non è stata misurata */
-  private readonly hostWidth = signal<number>(0);
+  private readonly _hostWidth = signal<number>(0);
 
   /** 1 sui telefoni, fino a `CARD_FAN_MAX_GROWTH` su tablet e desktop, sotto 1 solo in un contenitore stretto */
   protected readonly growth = computed(() => {
-    const width = this.hostWidth();
+    const width = this._hostWidth();
     if (width === 0) return 1;
     // Sui telefoni resta alla grandezza base; solo un contenitore più stretto la riduce
     if (width < CARD_FAN_SHRINK_BELOW_PX) {
@@ -82,7 +82,9 @@ export class CardFan {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
       this.spread.set(true);
-      const observer = new ResizeObserver(([entry]) => this.hostWidth.set(entry.contentRect.width));
+      const observer = new ResizeObserver(([entry]) =>
+        this._hostWidth.set(entry.contentRect.width),
+      );
       observer.observe(host.nativeElement);
       destroyRef.onDestroy(() => observer.disconnect());
     });

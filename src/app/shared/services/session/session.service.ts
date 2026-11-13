@@ -11,17 +11,17 @@ export class SessionService {
   /** Come `AuthNavigationService.loginLink`, che qui non si può importare */
   public readonly signUpLink: readonly string[] = ['/', AppRoutes.Login];
 
-  private readonly _isAuthenticated = signal<boolean>(this.read());
+  private readonly _isAuthenticated = signal<boolean>(this._read());
   public readonly isAuthenticated = this._isAuthenticated.asReadonly();
   public readonly isGuest = computed(() => !this._isAuthenticated());
 
   public setAuthenticated(value: boolean): void {
     this._isAuthenticated.set(value);
-    this.write(value);
+    this._write(value);
   }
 
   /** Dopo un refresh l'iscritto resta tale: lo stato si rilegge dallo storage */
-  private read(): boolean {
+  private _read(): boolean {
     try {
       return localStorage.getItem(SESSION_STORAGE_KEY) === 'true';
     } catch {
@@ -29,7 +29,7 @@ export class SessionService {
       return false;
     }
   }
-  private write(value: boolean): void {
+  private _write(value: boolean): void {
     try {
       if (value) localStorage.setItem(SESSION_STORAGE_KEY, 'true');
       else localStorage.removeItem(SESSION_STORAGE_KEY);

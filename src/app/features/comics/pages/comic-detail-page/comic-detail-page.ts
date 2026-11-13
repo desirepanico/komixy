@@ -45,19 +45,19 @@ export class ComicDetailPage {
   protected readonly comicsNavigation = inject(ComicsNavigationService);
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly session = inject(SessionService);
-  private readonly catalog = inject(ComicCatalogService);
-  private readonly ranking = inject(WeeklyRankingService);
-  private readonly pack = inject(WeeklyPackService);
-  private readonly document = inject(DOCUMENT);
+  private readonly _catalog = inject(ComicCatalogService);
+  private readonly _ranking = inject(WeeklyRankingService);
+  private readonly _pack = inject(WeeklyPackService);
+  private readonly _document = inject(DOCUMENT);
 
-  private readonly id = toSignal(
+  private readonly _id = toSignal(
     inject(ActivatedRoute).paramMap.pipe(map((params) => params.get('id'))),
     { initialValue: null },
   );
 
   protected readonly comic = computed(() => {
-    const id = this.id();
-    return id ? this.catalog.find(id) : undefined;
+    const id = this._id();
+    return id ? this._catalog.find(id) : undefined;
   });
   protected readonly severity = computed(() => editionSeverity(this.comic()?.editionType ?? null));
   protected readonly saved = computed(() => {
@@ -66,8 +66,8 @@ export class ComicDetailPage {
   });
   protected readonly weeklyRank = computed(() => {
     const comic = this.comic();
-    if (!comic || !this.pack.isOpened()) return null;
-    return this.ranking.entries().find((entry) => entry.comic.id === comic.id)?.rank ?? null;
+    if (!comic || !this._pack.isOpened()) return null;
+    return this._ranking.entries().find((entry) => entry.comic.id === comic.id)?.rank ?? null;
   });
 
   /** Finché la copertina non è arrivata si vede lo skeleton */
@@ -82,7 +82,7 @@ export class ComicDetailPage {
   /** Condivisione di sistema se c'è, altrimenti copia il link */
   protected async share(): Promise<void> {
     const comic = this.comic();
-    const window = this.document.defaultView;
+    const window = this._document.defaultView;
     if (!comic || !window) return;
     const url = window.location.href;
     try {

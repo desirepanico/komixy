@@ -31,44 +31,46 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
   host: { class: 'block', '[style.max-width.px]': 'maxWidth()' },
 })
 export class WeeklyTop {
-  private readonly pack = inject(WeeklyPackService);
-  private readonly comicsNavigation = inject(ComicsNavigationService);
+  private readonly _pack = inject(WeeklyPackService);
+  private readonly _comicsNavigation = inject(ComicsNavigationService);
 
   protected readonly cardScale = WEEKLY_TOP_CARD_SCALE;
   protected readonly cardRadius = packCardRadius(WEEKLY_TOP_CARD_SCALE);
   protected readonly gap = WEEKLY_TOP_GAP_PX;
 
-  private readonly list = viewChild.required<ElementRef<HTMLElement>>('list');
+  private readonly _list = viewChild.required<ElementRef<HTMLElement>>('list');
 
   /** Larghezza della lista, 0 finché non è stata misurata */
-  private readonly listWidth = signal<number>(0);
-  private readonly top = computed(() =>
-    this.pack
+  private readonly _listWidth = signal<number>(0);
+  private readonly _top = computed(() =>
+    this._pack
       .deck()
       .filter((entry) => entry.rank <= WEEKLY_TOP_COUNT)
       .sort((a, b) => a.rank - b.rank)
-      .map((entry) => ({ entry, link: this.comicsNavigation.detailLink(entry.comic.id) })),
+      .map((entry) => ({ entry, link: this._comicsNavigation.detailLink(entry.comic.id) })),
   );
   /** Le carte che ci stanno intere nella larghezza misurata */
   protected readonly visible = computed(() => {
-    const width = this.listWidth();
+    const width = this._listWidth();
     const fit =
       width > 0
         ? Math.floor((width + WEEKLY_TOP_GAP_PX) / (WEEKLY_TOP_CARD_WIDTH_PX + WEEKLY_TOP_GAP_PX))
         : WEEKLY_TOP_INITIAL_COUNT;
-    return this.top().slice(0, Math.max(1, fit));
+    return this._top().slice(0, Math.max(1, fit));
   });
   /** Oltre questa larghezza non servirebbe altro spazio: tutte le carte sono già in fila */
   protected readonly maxWidth = computed(() => {
-    const count = this.top().length;
+    const count = this._top().length;
     return count * WEEKLY_TOP_CARD_WIDTH_PX + (count - 1) * WEEKLY_TOP_GAP_PX + WEEKLY_TOP_FRAME_PX;
   });
 
   public constructor() {
     const destroyRef = inject(DestroyRef);
     afterNextRender(() => {
-      const observer = new ResizeObserver(([entry]) => this.listWidth.set(entry.contentRect.width));
-      observer.observe(this.list().nativeElement);
+      const observer = new ResizeObserver(([entry]) =>
+        this._listWidth.set(entry.contentRect.width),
+      );
+      observer.observe(this._list().nativeElement);
       destroyRef.onDestroy(() => observer.disconnect());
     });
   }

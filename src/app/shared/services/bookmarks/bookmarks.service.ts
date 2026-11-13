@@ -5,14 +5,14 @@ import { ToastService } from '../toast/toast.service';
 /** Gli ospiti non possono salvare: `toggle` li avvisa con un toast */
 @Injectable({ providedIn: 'root' })
 export class BookmarksService {
-  private readonly session = inject(SessionService);
-  private readonly toast = inject(ToastService);
+  private readonly _session = inject(SessionService);
+  private readonly _toast = inject(ToastService);
 
   // TODO(api): sostituire con PUT/DELETE /me/bookmarks/:comicId dell'API
   private readonly _savedIds = signal<ReadonlySet<string>>(new Set());
 
   public readonly savedCount = computed(() => this._savedIds().size);
-  public readonly canSave = this.session.isAuthenticated;
+  public readonly canSave = this._session.isAuthenticated;
 
   public isSaved(comicId: string): boolean {
     return this._savedIds().has(comicId);
@@ -21,7 +21,7 @@ export class BookmarksService {
   /** Restituisce false se l'ospite non può salvare */
   public toggle(comicId: string): boolean {
     if (!this.canSave()) {
-      this.toast.info('bookmark.guestLocked.summaryInfo', 'bookmark.guestLocked.detailInfo');
+      this._toast.info('bookmark.guestLocked.summaryInfo', 'bookmark.guestLocked.detailInfo');
       return false;
     }
     const added = !this.isSaved(comicId);
@@ -30,7 +30,7 @@ export class BookmarksService {
       if (!next.delete(comicId)) next.add(comicId);
       return next;
     });
-    this.toast.success(
+    this._toast.success(
       added ? 'bookmark.added.summaryOk' : 'bookmark.removed.summaryOk',
       added ? 'bookmark.added.detailOk' : 'bookmark.removed.detailOk',
     );

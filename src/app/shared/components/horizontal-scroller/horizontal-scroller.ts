@@ -27,10 +27,10 @@ import { Button } from '../button/button';
   providers: [provideIcons({ matChevronLeftOutline, matChevronRightOutline })],
 })
 export class HorizontalScroller {
-  private readonly list = viewChild.required<ElementRef<HTMLElement>>('list');
-  private readonly content = viewChild.required<ElementRef<HTMLElement>>('content');
-  private readonly prev = viewChild.required('prev', { read: ElementRef<HTMLElement> });
-  private readonly next = viewChild.required('next', { read: ElementRef<HTMLElement> });
+  private readonly _list = viewChild.required<ElementRef<HTMLElement>>('list');
+  private readonly _content = viewChild.required<ElementRef<HTMLElement>>('content');
+  private readonly _prev = viewChild.required('prev', { read: ElementRef<HTMLElement> });
+  private readonly _next = viewChild.required('next', { read: ElementRef<HTMLElement> });
 
   /** Etichetta della lista per i lettori di schermo (già tradotta) */
   public readonly ariaLabel = input.required<string>();
@@ -52,8 +52,8 @@ export class HorizontalScroller {
     afterNextRender(() => {
       // Ricalcola quando cambiano le dimensioni della lista o del suo contenuto
       const observer = new ResizeObserver(() => this.updateScrollState());
-      observer.observe(this.list().nativeElement);
-      observer.observe(this.content().nativeElement);
+      observer.observe(this._list().nativeElement);
+      observer.observe(this._content().nativeElement);
       destroyRef.onDestroy(() => observer.disconnect());
       this.updateScrollState();
     });
@@ -61,7 +61,7 @@ export class HorizontalScroller {
 
   /** Aggiorna lo stato delle frecce in base alla posizione di scroll */
   protected updateScrollState(): void {
-    const el = this.list().nativeElement;
+    const el = this._list().nativeElement;
     const max = el.scrollWidth - el.clientWidth;
     const left = el.scrollLeft > 1;
     const right = el.scrollLeft < max - 1;
@@ -70,12 +70,12 @@ export class HorizontalScroller {
 
     // Se la freccia che ha il focus sta per sparire (inizio/fine lista), il focus passa all'altra freccia
     const active = document.activeElement;
-    if (!left && right && active === this.prev().nativeElement) this.next().nativeElement.focus();
-    if (!right && left && active === this.next().nativeElement) this.prev().nativeElement.focus();
+    if (!left && right && active === this._prev().nativeElement) this._next().nativeElement.focus();
+    if (!right && left && active === this._next().nativeElement) this._prev().nativeElement.focus();
   }
   /** Scorre di una larghezza visibile: 1 = avanti, -1 = indietro */
   protected scroll(direction: 1 | -1): void {
-    const el = this.list().nativeElement;
+    const el = this._list().nativeElement;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     el.scrollBy({
       left: el.clientWidth * direction,

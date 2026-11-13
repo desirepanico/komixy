@@ -31,7 +31,7 @@ export class PackTear {
   protected readonly dragging = signal<boolean>(false);
   /** I denti di sega compaiono solo durante lo strappo: a riposo la busta è chiusa */
   protected readonly tearing = computed(() => this.dragging() || this.torn());
-  private readonly startX = signal<number | null>(null);
+  private readonly _startX = signal<number | null>(null);
   protected readonly stripTransform = computed(() => {
     if (this.torn()) return 'translate(320px, -70px) rotate(38deg)';
     const dx = this.dragX();
@@ -40,19 +40,19 @@ export class PackTear {
 
   protected onPointerDown(event: PointerEvent): void {
     if (this.torn()) return;
-    this.startX.set(event.clientX);
+    this._startX.set(event.clientX);
     this.dragging.set(true);
     (event.currentTarget as Element).setPointerCapture?.(event.pointerId);
   }
   protected onPointerMove(event: PointerEvent): void {
-    const startX = this.startX();
+    const startX = this._startX();
     if (startX === null) return;
     this.dragX.set(Math.max(0, event.clientX - startX));
   }
   protected onPointerEnd(): void {
-    if (this.startX() === null) return;
+    if (this._startX() === null) return;
     const reached = this.dragX() >= PACK_TEAR_DISTANCE_PX;
-    this.startX.set(null);
+    this._startX.set(null);
     this.dragging.set(false);
     if (reached) {
       this.tearRequest.emit();

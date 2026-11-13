@@ -45,10 +45,10 @@ import { packCardRadius } from '../../utils/pack-card-radius/pack-card-radius';
 export class CardSpotlight {
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly session = inject(SessionService);
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly _destroyRef = inject(DestroyRef);
 
-  private readonly stage = viewChild.required<ElementRef<HTMLElement>>('stage');
-  private readonly after = viewChild.required<ElementRef<HTMLElement>>('after');
+  private readonly _stage = viewChild.required<ElementRef<HTMLElement>>('stage');
+  private readonly _after = viewChild.required<ElementRef<HTMLElement>>('after');
 
   public readonly entry = input.required<RankingEntry>();
   /** Percorso della pagina del fumetto */
@@ -61,15 +61,15 @@ export class CardSpotlight {
   public readonly interactive = input<boolean>(false);
   public readonly cardPress = output<void>();
 
-  private readonly stageHeight = signal<number>(0);
-  private readonly stageWidth = signal<number>(0);
-  private readonly afterHeight = signal<number>(0);
+  private readonly _stageHeight = signal<number>(0);
+  private readonly _stageWidth = signal<number>(0);
+  private readonly _afterHeight = signal<number>(0);
   /** Si rimpicciolisce se lo spazio non basta, così la pagina non scrolla; su tablet e desktop cresce */
   protected readonly cardScale = computed(() => {
-    const stage = this.stageHeight();
+    const stage = this._stageHeight();
     if (stage === 0) return 1;
-    const available = stage - this.afterHeight() - SPOTLIGHT_GAP_PX;
-    const max = this.stageWidth() >= SPOTLIGHT_GROW_FROM_PX ? SPOTLIGHT_MAX_SCALE : 1;
+    const available = stage - this._afterHeight() - SPOTLIGHT_GAP_PX;
+    const max = this._stageWidth() >= SPOTLIGHT_GROW_FROM_PX ? SPOTLIGHT_MAX_SCALE : 1;
     return Math.min(max, Math.max(SPOTLIGHT_MIN_SCALE, available / PACK_CARD_HEIGHT_PX));
   });
   protected readonly cardRadius = computed(() => packCardRadius(this.cardScale()));
@@ -82,16 +82,16 @@ export class CardSpotlight {
 
   public constructor() {
     afterNextRender(() => {
-      const stage = this.stage().nativeElement;
-      const after = this.after().nativeElement;
+      const stage = this._stage().nativeElement;
+      const after = this._after().nativeElement;
       const observer = new ResizeObserver(() => {
-        this.stageHeight.set(stage.clientHeight);
-        this.stageWidth.set(stage.clientWidth);
-        this.afterHeight.set(after.offsetHeight);
+        this._stageHeight.set(stage.clientHeight);
+        this._stageWidth.set(stage.clientWidth);
+        this._afterHeight.set(after.offsetHeight);
       });
       observer.observe(stage);
       observer.observe(after);
-      this.destroyRef.onDestroy(() => observer.disconnect());
+      this._destroyRef.onDestroy(() => observer.disconnect());
     });
   }
 

@@ -15,35 +15,35 @@ interface OpenedPack {
  */
 @Injectable({ providedIn: 'root' })
 export class WeeklyPackService {
-  private readonly ranking = inject(WeeklyRankingService);
+  private readonly _ranking = inject(WeeklyRankingService);
 
-  private readonly today = dateInZone(new Date(), WEEKLY_PACK_TIME_ZONE);
-  private readonly current = isoWeek(this.today);
-  private readonly weekKey = `${this.current.year}-W${this.current.week}`;
-  public readonly daysUntilNextPack: number = daysUntilNextWeek(this.today);
+  private readonly _today = dateInZone(new Date(), WEEKLY_PACK_TIME_ZONE);
+  private readonly _current = isoWeek(this._today);
+  private readonly _weekKey = `${this._current.year}-W${this._current.week}`;
+  public readonly daysUntilNextPack: number = daysUntilNextWeek(this._today);
 
   // TODO(api): l'apertura la registra il server, una per utente (user_id) o per ospite (guest_id)
-  private readonly opened = signal<OpenedPack | null>(this.read());
+  private readonly _opened = signal<OpenedPack | null>(this._read());
   /** Numero della settimana ISO, mostrato come «Settimana 46» */
-  public readonly weekNumber: number = this.current.week;
-  public readonly isOpened = computed(() => this.opened()?.week === this.weekKey);
+  public readonly weekNumber: number = this._current.week;
+  public readonly isOpened = computed(() => this._opened()?.week === this._weekKey);
   public readonly openedAt = computed(() => {
-    const opened = this.opened();
-    return opened?.week === this.weekKey ? new Date(opened.openedAt) : null;
+    const opened = this._opened();
+    return opened?.week === this._weekKey ? new Date(opened.openedAt) : null;
   });
   /** Le carte dalla 10ª alla 1ª: nell'ordine in cui si girano */
-  public readonly deck = computed<RankingEntry[]>(() => [...this.ranking.entries()].reverse());
+  public readonly deck = computed<RankingEntry[]>(() => [...this._ranking.entries()].reverse());
   /** Una carta è rara se è un'edizione speciale (variant, deluxe, limited) */
   public readonly rareCount = computed(
-    () => this.ranking.entries().filter((entry) => entry.comic.editionType !== null).length,
+    () => this._ranking.entries().filter((entry) => entry.comic.editionType !== null).length,
   );
 
   /** Registra l'apertura. Si può richiamare: la prima volta conta, le altre non cambiano nulla. */
   public open(): void {
     if (this.isOpened()) return;
-    const opened: OpenedPack = { week: this.weekKey, openedAt: new Date().toISOString() };
-    this.opened.set(opened);
-    this.write(opened);
+    const opened: OpenedPack = { week: this._weekKey, openedAt: new Date().toISOString() };
+    this._opened.set(opened);
+    this._write(opened);
   }
   /** Giorno dell'apertura, es. «Lun 10 nov» */
   public openedOnLabel(lang: string): string | null {
@@ -59,7 +59,7 @@ export class WeeklyPackService {
       .replace(/\./g, '');
     return label.charAt(0).toUpperCase() + label.slice(1);
   }
-  private read(): OpenedPack | null {
+  private _read(): OpenedPack | null {
     try {
       const raw = localStorage.getItem(WEEKLY_PACK_STORAGE_KEY);
       const value: unknown = raw ? JSON.parse(raw) : null;
@@ -71,7 +71,7 @@ export class WeeklyPackService {
     }
     return null;
   }
-  private write(opened: OpenedPack): void {
+  private _write(opened: OpenedPack): void {
     try {
       localStorage.setItem(WEEKLY_PACK_STORAGE_KEY, JSON.stringify(opened));
     } catch {

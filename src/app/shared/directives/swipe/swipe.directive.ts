@@ -20,15 +20,15 @@ export class Swipe {
   public readonly swipeLeft = output<void>();
   public readonly swipeRight = output<void>();
 
-  private readonly start = signal<{ x: number; y: number } | null>(null);
-  private readonly cleanup = signal<(() => void) | null>(null);
+  private readonly _start = signal<{ x: number; y: number } | null>(null);
+  private readonly _cleanup = signal<(() => void) | null>(null);
 
   constructor() {
-    inject(DestroyRef).onDestroy(() => this.releaseClick());
+    inject(DestroyRef).onDestroy(() => this._releaseClick());
   }
 
   protected onPointerDown(event: PointerEvent): void {
-    this.releaseClick();
+    this._releaseClick();
     const target = event.target;
     const ignored = target instanceof Element && !!target.closest(IGNORED_TARGETS);
 
@@ -37,10 +37,10 @@ export class Swipe {
       return;
     }
 
-    this.start.set({ x: event.clientX, y: event.clientY });
+    this._start.set({ x: event.clientX, y: event.clientY });
   }
   protected onPointerUp(event: PointerEvent): void {
-    const start = this.start();
+    const start = this._start();
     if (!start) return;
 
     const direction = detectSwipe(
@@ -52,29 +52,29 @@ export class Swipe {
 
     if (!direction) return;
 
-    this.suppressNextClick();
+    this._suppressNextClick();
     if (direction === 'left') this.swipeLeft.emit();
     else this.swipeRight.emit();
   }
   /** Il browser genera un click se il dito finisce sul link da cui è partito: va annullato */
-  private suppressNextClick(): void {
-    this.releaseClick();
+  private _suppressNextClick(): void {
+    this._releaseClick();
     const block = (event: Event) => {
       event.preventDefault();
       event.stopPropagation();
     };
     document.addEventListener('click', block, { capture: true, once: true });
-    const timer = setTimeout(() => this.releaseClick(), 400);
-    this.cleanup.set(() => {
+    const timer = setTimeout(() => this._releaseClick(), 400);
+    this._cleanup.set(() => {
       clearTimeout(timer);
       document.removeEventListener('click', block, { capture: true });
     });
   }
-  private releaseClick(): void {
-    this.cleanup()?.();
-    this.cleanup.set(null);
+  private _releaseClick(): void {
+    this._cleanup()?.();
+    this._cleanup.set(null);
   }
   protected reset(): void {
-    this.start.set(null);
+    this._start.set(null);
   }
 }

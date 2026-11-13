@@ -45,43 +45,43 @@ import { RankingViewService } from '../../services/ranking-view/ranking-view.ser
 })
 export class RankingPage {
   protected readonly discoverNavigation = inject(DiscoverNavigationService);
-  private readonly comicsNavigation = inject(ComicsNavigationService);
+  private readonly _comicsNavigation = inject(ComicsNavigationService);
   protected readonly ranking = inject(WeeklyRankingService);
   protected readonly pack = inject(WeeklyPackService);
   protected readonly session = inject(SessionService);
-  private readonly views = inject(RankingViewService);
-  private readonly rankingNavigation = inject(RankingNavigationService);
+  private readonly _views = inject(RankingViewService);
+  private readonly _rankingNavigation = inject(RankingNavigationService);
 
   protected readonly viewOptions: readonly SelectButtonOption<RankingView>[] = [
     { value: 'list', label: 'ranking.list' },
     { value: 'cards', label: 'ranking.cards' },
   ];
 
-  private readonly queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
+  private readonly _queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
     requireSync: true,
   });
   /** La vista scritta nell'indirizzo (`?view=`), se c'è ed è valida */
-  private readonly urlView = computed<RankingView | null>(() => {
-    const value = this.queryParams().get(RANKING_VIEW_QUERY_PARAM);
+  private readonly _urlView = computed<RankingView | null>(() => {
+    const value = this._queryParams().get(RANKING_VIEW_QUERY_PARAM);
     return value === 'cards' || value === 'list' ? value : null;
   });
   /** L'indirizzo vince sull'ultima scelta */
-  protected readonly view = computed<RankingView>(() => this.urlView() ?? this.views.view());
+  protected readonly view = computed<RankingView>(() => this._urlView() ?? this._views.view());
   /** Carta scelta nella vista Carte */
   protected readonly selected = signal<RankingEntry | null>(null);
 
   public constructor() {
     // Una vista nell'indirizzo diventa anche l'ultima scelta
-    const fromUrl = this.urlView();
-    if (fromUrl) this.views.setView(fromUrl);
+    const fromUrl = this._urlView();
+    if (fromUrl) this._views.setView(fromUrl);
   }
 
   protected changeView(view: RankingView): void {
     this.selected.set(null);
-    this.views.setView(view);
-    void this.rankingNavigation.goToView(view);
+    this._views.setView(view);
+    void this._rankingNavigation.goToView(view);
   }
   protected detailLink(entry: RankingEntry): readonly string[] {
-    return this.comicsNavigation.detailLink(entry.comic.id);
+    return this._comicsNavigation.detailLink(entry.comic.id);
   }
 }

@@ -23,27 +23,27 @@ export class ApiError extends Error {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly navigation = inject(AuthNavigationService);
-  private readonly session = inject(SessionService);
+  private readonly _navigation = inject(AuthNavigationService);
+  private readonly _session = inject(SessionService);
 
-  private readonly _loggedUser = signal<LoggedUser | null>(this.read());
+  private readonly _loggedUser = signal<LoggedUser | null>(this._read());
 
   public readonly loggedUser = this._loggedUser.asReadonly();
 
   /** Lo stato sta in `SessionService`, che le altre feature possono leggere */
-  public readonly isAuthenticated = this.session.isAuthenticated;
+  public readonly isAuthenticated = this._session.isAuthenticated;
 
   public login(user: LoggedUser): void {
     this._loggedUser.set(user);
-    this.write(user);
-    this.session.setAuthenticated(true);
+    this._write(user);
+    this._session.setAuthenticated(true);
   }
 
   /** L'ospite entra senza account: può guardare ma non salvare in lista */
   public enterAsGuest(): void {
     this._loggedUser.set(null);
-    this.write(null);
-    this.session.setAuthenticated(false);
+    this._write(null);
+    this._session.setAuthenticated(false);
   }
 
   // TODO(api): sostituire con la chiamata all'API di autenticazione
@@ -62,14 +62,14 @@ export class AuthService {
 
   public logout(): void {
     this._loggedUser.set(null);
-    this.write(null);
-    this.session.setAuthenticated(false);
-    void this.navigation.goToLogin();
+    this._write(null);
+    this._session.setAuthenticated(false);
+    void this._navigation.goToLogin();
   }
 
   /** Dopo un refresh l'utente iscritto si rilegge dallo storage; l'ospite non si salva */
-  private read(): LoggedUser | null {
-    if (!this.session.isAuthenticated()) return null;
+  private _read(): LoggedUser | null {
+    if (!this._session.isAuthenticated()) return null;
     try {
       const raw = localStorage.getItem(AUTH_USER_STORAGE_KEY);
       const value: unknown = raw ? JSON.parse(raw) : null;
@@ -87,7 +87,7 @@ export class AuthService {
     }
     return null;
   }
-  private write(user: LoggedUser | null): void {
+  private _write(user: LoggedUser | null): void {
     try {
       if (user) localStorage.setItem(AUTH_USER_STORAGE_KEY, JSON.stringify(user));
       else localStorage.removeItem(AUTH_USER_STORAGE_KEY);

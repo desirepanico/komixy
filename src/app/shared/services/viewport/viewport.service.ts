@@ -5,16 +5,16 @@ import { computed, DOCUMENT, inject, Injectable, signal } from '@angular/core';
   providedIn: 'root',
 })
 export class ViewportService {
-  private readonly window = inject(DOCUMENT).defaultView;
+  private readonly _window = inject(DOCUMENT).defaultView;
 
-  private readonly width = signal<number>(this.window?.innerWidth ?? 0);
-  readonly isDesktop = computed(() => this.width() >= 1024);
-  readonly isMobile = computed(() => this.width() < 768);
-  readonly isTablet = computed(() => this.width() >= 768 && this.width() < 1024);
-  readonly isMobileOrTablet = computed(() => this.width() < 1024);
+  private readonly _width = signal<number>(this._window?.innerWidth ?? 0);
+  readonly isDesktop = computed(() => this._width() >= 1024);
+  readonly isMobile = computed(() => this._width() < 768);
+  readonly isTablet = computed(() => this._width() >= 768 && this._width() < 1024);
+  readonly isMobileOrTablet = computed(() => this._width() < 1024);
 
   constructor() {
     // Il servizio è root: vive quanto l'app, quindi il listener non va rimosso
-    this.window?.addEventListener('resize', () => this.width.set(this.window?.innerWidth ?? 0));
+    this._window?.addEventListener('resize', () => this._width.set(this._window?.innerWidth ?? 0));
   }
 }

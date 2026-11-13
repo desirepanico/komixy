@@ -5,7 +5,7 @@ import { ComicItem } from '../../models/comic.model';
 @Injectable({ providedIn: 'root' })
 export class WeeklyRankingService {
   // TODO(api): sostituire con i dati reali dell'API
-  private readonly comics = signal<ComicItem[]>([
+  private readonly _comics = signal<ComicItem[]>([
     {
       id: 'w1',
       title: 'One Piece',
@@ -110,6 +110,6 @@ export class WeeklyRankingService {
 
   /** La classifica: la posizione dipende dall'ordine dei fumetti */
   public readonly entries = computed<RankingEntry[]>(() =>
-    this.comics().map((comic, index) => ({ rank: index + 1, comic })),
+    this._comics().map((comic, index) => ({ rank: index + 1, comic })),
   );
 }

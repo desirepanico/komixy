@@ -5,11 +5,11 @@ import { AppRoutes } from '@shared/models/app-routes.model';
 /** Rotte della feature library: la pagina della libreria. */
 @Injectable({ providedIn: 'root' })
 export class LibraryNavigationService {
-  private readonly router = inject(Router);
+  private readonly _router = inject(Router);
 
   public readonly libraryLink: readonly string[] = ['/', AppRoutes.Library];
 
   public goToLibrary(): Promise<boolean> {
-    return this.router.navigate(this.libraryLink);
+    return this._router.navigate(this.libraryLink);
   }
 }

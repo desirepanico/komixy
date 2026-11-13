@@ -17,7 +17,7 @@ import { ComicItem } from '@shared/models/comic.model';
   host: { class: 'block' },
 })
 export class ComicRankCard {
-  private readonly comicsNavigation = inject(ComicsNavigationService);
+  private readonly _comicsNavigation = inject(ComicsNavigationService);
 
   /** L'entrata parte quando il numero entra nello schermo, solo senza «riduci movimento» */
   protected readonly enterClasses =
@@ -31,7 +31,7 @@ export class ComicRankCard {
 
   /** Finché la copertina non è arrivata si vede lo skeleton */
   protected readonly coverLoaded = signal<boolean>(false);
-  protected readonly comicLink = computed(() => this.comicsNavigation.detailLink(this.comic().id));
+  protected readonly comicLink = computed(() => this._comicsNavigation.detailLink(this.comic().id));
   /** Solo la prima copertina ha priorità alta: è l'elemento più grande */
   protected readonly fetchPriority = computed(() =>
     this.priority() && this.rank() === 1 ? 'high' : 'auto',

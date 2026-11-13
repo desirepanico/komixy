@@ -176,9 +176,9 @@ describe('CardSpotlight', () => {
     vi.stubGlobal(
       'ResizeObserver',
       class {
-        constructor(private readonly callback: () => void) {}
+        constructor(private readonly _callback: () => void) {}
         observe(): void {
-          this.callback();
+          this._callback();
         }
         disconnect(): void {}
       },
@@ -204,9 +204,9 @@ describe('CardSpotlight', () => {
     vi.stubGlobal(
       'ResizeObserver',
       class {
-        constructor(private readonly callback: () => void) {}
+        constructor(private readonly _callback: () => void) {}
         observe(): void {
-          this.callback();
+          this._callback();
         }
         disconnect(): void {}
       },

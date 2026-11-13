@@ -16,11 +16,11 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
 })
 export class RankingLocked {
   protected readonly packNavigation = inject(PackNavigationService);
-  private readonly pack = inject(WeeklyPackService);
+  private readonly _pack = inject(WeeklyPackService);
 
   protected readonly packImage = PACK_IMAGE_URL;
 
   protected skip(): void {
-    this.pack.open();
+    this._pack.open();
   }
 }

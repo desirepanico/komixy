@@ -32,8 +32,8 @@ import { ApiError, AuthService } from '../../services/auth/auth.service';
 })
 export class LoginForm {
   protected readonly navigation = inject(AuthNavigationService);
-  private readonly authService = inject(AuthService);
-  private readonly toastService = inject(ToastService);
+  private readonly _authService = inject(AuthService);
+  private readonly _toastService = inject(ToastService);
 
   protected readonly socialProviders: readonly SocialProvider[] = ['google', 'apple'];
 
@@ -41,9 +41,9 @@ export class LoginForm {
   public readonly socialLogin = output<SocialProvider>();
   public readonly guestAccess = output<void>();
 
-  private readonly model = signal<LoginCredentials>({ email: '', password: '' });
+  private readonly _model = signal<LoginCredentials>({ email: '', password: '' });
   protected readonly form = form(
-    this.model,
+    this._model,
     (path) => {
       required(path.email);
       email(path.email);
@@ -54,10 +54,10 @@ export class LoginForm {
       submission: {
         action: async () => {
           try {
-            await firstValueFrom(this.authService.authenticate(this.model()));
-            this.onLoginSuccess();
+            await firstValueFrom(this._authService.authenticate(this._model()));
+            this._onLoginSuccess();
           } catch (error) {
-            this.onLoginError(error);
+            this._onLoginError(error);
           }
           return undefined;
         },
@@ -67,18 +67,18 @@ export class LoginForm {
     },
   );
 
-  private onLoginSuccess(): void {
+  private _onLoginSuccess(): void {
     this.loginSuccess.emit();
   }
   // L'errore dell'API non è di un campo: si mostra in un toast
-  private onLoginError(error: unknown): void {
+  private _onLoginError(error: unknown): void {
     if (error instanceof ApiError && error.status === 401) {
-      this.toastService.error(
+      this._toastService.error(
         'login.invalidCredentials.summaryKo',
         'login.invalidCredentials.detailKo',
       );
     } else {
-      this.toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
+      this._toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
     }
   }
 }

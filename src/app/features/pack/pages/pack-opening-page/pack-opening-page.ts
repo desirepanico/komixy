@@ -56,15 +56,15 @@ export class PackOpeningPage {
   protected readonly session = inject(SessionService);
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly rankingNavigation = inject(RankingNavigationService);
-  private readonly comicsNavigation = inject(ComicsNavigationService);
+  private readonly _comicsNavigation = inject(ComicsNavigationService);
   protected readonly discoverNavigation = inject(DiscoverNavigationService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly injector = inject(Injector);
+  private readonly _destroyRef = inject(DestroyRef);
+  private readonly _injector = inject(Injector);
 
   /** Una busta già aperta non si riapre: si rimanda alla revisione della settimana */
   protected readonly alreadyOpened = this.pack.isOpened();
 
-  private readonly primary = viewChild('primary', { read: ElementRef });
+  private readonly _primary = viewChild('primary', { read: ElementRef });
 
   protected readonly phase = signal<Phase>('sealed');
   protected readonly torn = signal<boolean>(false);
@@ -86,11 +86,11 @@ export class PackOpeningPage {
     }
   });
   protected readonly currentLink = computed(() =>
-    this.comicsNavigation.detailLink(this.current().comic.id),
+    this._comicsNavigation.detailLink(this.current().comic.id),
   );
   protected readonly selectedLink = computed(() => {
     const entry = this.selected();
-    return entry ? this.comicsNavigation.detailLink(entry.comic.id) : [];
+    return entry ? this._comicsNavigation.detailLink(entry.comic.id) : [];
   });
 
   public constructor() {
@@ -104,22 +104,22 @@ export class PackOpeningPage {
     this.torn.set(true);
     this.pack.open();
     const timer = setTimeout(() => {
-      if (this.phase() === 'sealed') this.goTo('cards');
+      if (this.phase() === 'sealed') this._goTo('cards');
     }, PACK_TEAR_ANIMATION_MS);
-    this.destroyRef.onDestroy(() => clearTimeout(timer));
+    this._destroyRef.onDestroy(() => clearTimeout(timer));
   }
   /** Registra l'apertura e va alla raccolta, senza strappo né carte da girare */
   protected skip(): void {
     this.torn.set(true);
     this.pack.open();
-    this.goTo('collection');
+    this._goTo('collection');
   }
   /** Un tocco sulla carta o sul bottone principale: prima la gira, poi passa alla prossima */
   protected onPrimary(): void {
     if (!this.faceUp()) {
       this.faceUp.set(true);
     } else if (this.isLast()) {
-      this.goTo('collection');
+      this._goTo('collection');
     } else {
       this.index.update((i) => i + 1);
       this.faceUp.set(false);
@@ -127,11 +127,11 @@ export class PackOpeningPage {
   }
   protected select(entry: RankingEntry): void {
     this.selected.set(entry);
-    this.focusPrimary();
+    this._focusPrimary();
   }
   protected backToCollection(): void {
     this.selected.set(null);
-    this.focusPrimary();
+    this._focusPrimary();
   }
   /** Esc chiude un livello alla volta: prima il dettaglio della carta scelta, poi la pagina */
   protected close(): void {
@@ -141,14 +141,14 @@ export class PackOpeningPage {
     }
     void this.discoverNavigation.goToDiscover();
   }
-  private goTo(phase: Phase): void {
+  private _goTo(phase: Phase): void {
     this.phase.set(phase);
-    this.focusPrimary();
+    this._focusPrimary();
   }
   /** Il bottone con il focus sparisce con la fase: il focus passa al principale della nuova */
-  private focusPrimary(): void {
-    afterNextRender(() => (this.primary()?.nativeElement as HTMLElement | undefined)?.focus(), {
-      injector: this.injector,
+  private _focusPrimary(): void {
+    afterNextRender(() => (this._primary()?.nativeElement as HTMLElement | undefined)?.focus(), {
+      injector: this._injector,
     });
   }
 }

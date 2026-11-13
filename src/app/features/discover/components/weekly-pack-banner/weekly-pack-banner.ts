@@ -29,14 +29,14 @@ export class WeeklyPackBanner {
   protected readonly bookmarks = inject(BookmarksService);
   protected readonly packNavigation = inject(PackNavigationService);
   protected readonly rankingNavigation = inject(RankingNavigationService);
-  private readonly transloco = inject(TranslocoService);
+  private readonly _transloco = inject(TranslocoService);
 
   protected readonly packImage = PACK_IMAGE_URL;
 
-  private readonly lang = toSignal(this.transloco.langChanges$, {
-    initialValue: this.transloco.getActiveLang(),
+  private readonly _lang = toSignal(this._transloco.langChanges$, {
+    initialValue: this._transloco.getActiveLang(),
   });
-  protected readonly openedOn = computed(() => this.pack.openedOnLabel(this.lang()));
+  protected readonly openedOn = computed(() => this.pack.openedOnLabel(this._lang()));
 
   /** Apre la busta senza animazione e va alla revisione della settimana */
   protected skip(): void {
