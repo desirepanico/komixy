@@ -35,6 +35,29 @@ try {
 }
 ```
 
+## Body o query string
+
+I dati di una chiamata viaggiano in uno di questi tre posti, secondo ciò che sono:
+
+| Cosa                                                           | Dove                                   | Quando                            | Modello    |
+| -------------------------------------------------------------- | -------------------------------------- | --------------------------------- | ---------- |
+| Dati da inviare o modificare (credenziali, i campi di un form) | **body** (secondo argomento di `post`) | `POST`, `PUT`, `PATCH`            | `*Request` |
+| Filtri, ordinamento, pagina di una lista                       | **query string**, con `apiUrl()`       | `GET` (anche `DELETE` con filtri) | `*Filters` |
+| Quale risorsa (un volume, un utente)                           | **percorso** dell'indirizzo            | sempre: `` `/comics/${id}` ``     | -          |
+
+- **Il login usa il body**: `POST /auth/login` con `LoginRequest` (`{ email, password }`) come secondo argomento di `post()`. Le credenziali non vanno mai nell'indirizzo, che finisce nei log del server, nella cronologia e nei link condivisi. Vale per ogni dato personale o segreto: sempre nel body, mai nella query string.
+- **I filtri usano `apiUrl()`** (`shared/utils/api-url`): si passa un oggetto e diventa la query string, già codificata (`qs`). Senza filtri l'indirizzo resta com'è.
+- Regola pratica: se la chiamata **cambia** qualcosa sul server, i dati vanno nel body; se **legge** una lista e restringe quello che torna, vanno in `apiUrl()`. Una `GET` non ha body.
+
+```ts
+// body: la chiamata invia dati
+this._http.post<ApiResponse<LoginResponse>>(`${this._apiGroup}/login`, credentials); // LoginRequest
+
+// query string: la chiamata legge una lista filtrata
+this._http.get<ApiResponse<ComicListResponse>>(apiUrl('/comics', filters)); // ComicListFilters
+// apiUrl('/comics', { genre: 'manga', page: 2 })  →  '/comics?genre=manga&page=2'
+```
+
 ## Modelli
 
 - In un `*.model.ts` della feature (`features/auth/models/auth.model.ts`): il body inviato finisce per `Request` (`LoginRequest`), la risposta, cioè il `result` di `ApiResponse<T>`, per `Response` (`LoginResponse`), i filtri della query string per `Filters`. Se la chiamata serve a più feature stanno in `shared/models`.
@@ -43,7 +66,7 @@ try {
 ## Servizio
 
 - Il servizio sta nella feature che lo usa (`services/<nome>/<nome>.service.ts`), in `shared/services` se lo usano più feature. Una sola responsabilità, `providedIn: 'root'`, `inject(HttpClient)`.
-- Gli indirizzi sono relativi (`/auth/login`), con il gruppo in una proprietà privata (`private readonly _apiGroup = '/auth'`). I filtri passano da `apiUrl(path, filters)` (`shared/utils/api-url`), che li trasforma nella query string.
+- Gli indirizzi sono relativi (`/auth/login`), con il gruppo in una proprietà privata (`private readonly _apiGroup = '/auth'`). I dati viaggiano nel body o nella query string: vedi «Body o query string».
 - Il metodo restituisce `Observable<XxxResponse>`: toglie la busta con `map((response) => response.result)`. Gli effetti sullo stato (utente, sessione, storage) stanno in `tap()` dentro il servizio, non nel componente.
 - Il servizio **non gestisce gli errori**: li lascia passare, e li gestisce chi ha fatto partire la chiamata.
 - Finché il backend non c'è, i dati restano simulati nel servizio con un `// TODO(api): ...` che dice cosa sostituire (endpoint e metodo).
