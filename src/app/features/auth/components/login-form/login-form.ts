@@ -1,19 +1,20 @@
 import { Component, inject, output, signal } from '@angular/core';
 import { email, form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matLoginOutline, matVisibilityOutline } from '@ng-icons/material-symbols/outline';
 import { simpleApple, simpleGoogle } from '@ng-icons/simple-icons';
-import { RouterLink } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
-import { TranslocoPipe } from '@jsverse/transloco';
 import { Button } from '@shared/components/button/button';
 import { InputPassword } from '@shared/components/input/input-password/input-password';
 import { InputText } from '@shared/components/input/input-text/input-text';
-import { ToastService } from '@shared/services/toast/toast.service';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
+import { ToastService } from '@shared/services/toast/toast.service';
+import { isApiError } from '@shared/utils/api-url/api-url';
+import { firstValueFrom } from 'rxjs';
 import { LoginRequest, SocialProvider } from '../../models/auth.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
-import { ApiError, AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -54,9 +55,10 @@ export class LoginForm {
       submission: {
         action: async () => {
           try {
+            //firstValueFrom -> Primo valore: appena l’observable emette, la Promise si risolve con quel valore. (Sottoscrizione automatica:)
             await firstValueFrom(this._authService.authenticate(this._model()));
             this._onLoginSuccess();
-          } catch (error) {
+          } catch (error: unknown) {
             this._onLoginError(error);
           }
           return undefined;
@@ -72,11 +74,8 @@ export class LoginForm {
   }
   // L'errore dell'API non è di un campo: si mostra in un toast
   private _onLoginError(error: unknown): void {
-    if (error instanceof ApiError && error.status === 401) {
-      this._toastService.error(
-        'login.invalidCredentials.summaryKo',
-        'login.invalidCredentials.detailKo',
-      );
+    if (isApiError(error)) {
+      this._toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
     } else {
       this._toastService.error('login.serverError.summaryKo', 'login.serverError.detailKo');
     }

@@ -1,21 +1,11 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
 import { ApiResponse } from '@shared/models/api-response.model';
 import { SessionService } from '@shared/services/session/session.service';
-import { apiUrl } from '@shared/utils/api-url/api-url';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { LoggedUser, LoginRequest, LoginResponse } from '../../models/auth.model';
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
-
-export class ApiError extends Error {
-  public constructor(
-    public readonly status: number,
-    message: string,
-  ) {
-    super(message);
-  }
-}
 
 @Injectable({
   providedIn: 'root',
@@ -48,23 +38,10 @@ export class AuthService {
   }
 
   public authenticate(credentials: LoginRequest): Observable<LoginResponse> {
-    return this._http
-      .post<ApiResponse<LoginResponse>>(apiUrl(`${this._apiGroup}/login`), credentials)
-      .pipe(
-        map((response) => response.result),
-        tap((user) => this.login(user)),
-        // Il login distingue gli errori dal codice HTTP (401: credenziali non valide)
-        catchError((error: unknown) =>
-          throwError(() =>
-            error instanceof HttpErrorResponse
-              ? new ApiError(
-                  error.status,
-                  (error.error as ApiResponse<null> | null)?.error?.message ?? error.message,
-                )
-              : error,
-          ),
-        ),
-      );
+    return this._http.post<ApiResponse<LoginResponse>>(`${this._apiGroup}/login`, credentials).pipe(
+      map((response) => response.result), //estrae i dati dell'utente.
+      tap((user) => this.login(user)), //esegue il login e aggiorna lo stato di autenticazione.
+    );
   }
 
   public logout(): void {

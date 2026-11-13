@@ -1,7 +1,9 @@
 export interface ApiResponse<T> {
-  error: {
-    code: string;
-    message: string;
-  };
+  error: ApiError;
   result: T;
+}
+
+export interface ApiError {
+  code: string;
+  message: string;
 }
