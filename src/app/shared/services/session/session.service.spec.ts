@@ -1,6 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { AUTH_TOKEN_STORAGE_KEY, SESSION_STORAGE_KEY } from '../../constants/form.const';
+import {
+  AUTH_TOKEN_STORAGE_KEY,
+  GUEST_ID_STORAGE_KEY,
+  SESSION_STORAGE_KEY,
+} from '../../constants/form.const';
 import { SessionService } from './session.service';
 
 describe('SessionService', () => {
@@ -91,6 +95,37 @@ describe('SessionService', () => {
       expect(fresh.token()).toBeNull();
       fresh.setToken('abc');
       expect(fresh.token()).toBe('abc');
+    });
+  });
+
+  describe('guestId', () => {
+    it('viene creato la prima volta e salvato nello storage', () => {
+      expect(service.guestId()).toMatch(/^[0-9a-f-]{36}$/);
+      expect(localStorage.getItem(GUEST_ID_STORAGE_KEY)).toBe(service.guestId());
+    });
+
+    it('dopo un refresh resta lo stesso', () => {
+      const first = service.guestId();
+      TestBed.resetTestingModule();
+      expect(TestBed.inject(SessionService).guestId()).toBe(first);
+    });
+
+    it('resta lo stesso anche dopo l’uscita di un iscritto', () => {
+      const first = service.guestId();
+      service.setAuthenticated(true);
+      service.setAuthenticated(false);
+      expect(service.guestId()).toBe(first);
+    });
+
+    it('con lo storage non disponibile ne crea uno che vale finché l’app è aperta', () => {
+      vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+        throw new Error('storage bloccato');
+      });
+      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+        throw new Error('storage bloccato');
+      });
+      TestBed.resetTestingModule();
+      expect(TestBed.inject(SessionService).guestId()).toMatch(/^[0-9a-f-]{36}$/);
     });
   });
 });

@@ -31,3 +31,6 @@ export const TIMEZONE_HEADER = 'X-Timezone';
 export const AUTH_HEADER = 'Authorization';
 
 export const BEARER_PREFIX = 'Bearer ';
+
+/** Identificativo anonimo dell'ospite (guest-id interceptor) */
+export const GUEST_ID_HEADER = 'X-Guest-Id';

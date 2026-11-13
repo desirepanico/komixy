@@ -54,7 +54,7 @@ Il dettaglio è nelle rules; qui solo ciò che non si deve scordare.
 
 - **PrimeNG è stato rimosso**: non reintrodurlo. HTML nativo + Tailwind. Icone: `@ng-icons/material-symbols`.
 - **Signal**: tutto lo stato è un `signal()`, ogni proprietà `readonly`; mai `subscribe()` né pipe `async` (`signals.md`). Ordine dei membri di classe controllato da `npm run lint` (`angular.md`).
-- **Chiamate al backend**: `HttpClient` nel servizio, che restituisce il `result` di `ApiResponse`; chi chiama usa `firstValueFrom()` e nel `catch` `ApiErrorService.handle()` (`chiamate-api.md`, skill `api-service`).
+- **Chiamate al backend**: `HttpClient` nel servizio, che restituisce il `result` di `ApiResponse`; chi chiama usa `firstValueFrom()` e nel `catch` `ApiErrorService.handle()` (`chiamate-api.md`, skill `api-service`); cosa si aspetta il backend è in `docs/backend.md`, da aggiornare quando una chiamata cambia il contratto.
 - **Form**: solo Signal Forms, con i controlli di `shared/components/input/` (`form.md`).
 - **Costanti**: ogni `const` dichiarata sta in `shared/constants` (`costanti.md`).
 - **Stato nell'indirizzo**: vista, filtro e ordinamento sono query param, mai nello storage (`query-params.md`).

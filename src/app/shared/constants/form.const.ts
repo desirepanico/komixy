@@ -9,6 +9,9 @@ export const AUTH_USER_STORAGE_KEY = 'komixy.user';
 /** Chiave dello storage con il token di accesso (letta da `SessionService`) */
 export const AUTH_TOKEN_STORAGE_KEY = 'komixy.token';
 
+/** Chiave dello storage con l'identificativo anonimo dell'ospite (letta da `SessionService`) */
+export const GUEST_ID_STORAGE_KEY = 'komixy.guestId';
+
 /** Lunghezza minima della password al login */
 export const PASSWORD_MIN_LENGTH = 6;
 

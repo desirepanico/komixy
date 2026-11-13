@@ -1,5 +1,9 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { AUTH_TOKEN_STORAGE_KEY, SESSION_STORAGE_KEY } from '../../constants/form.const';
+import {
+  AUTH_TOKEN_STORAGE_KEY,
+  GUEST_ID_STORAGE_KEY,
+  SESSION_STORAGE_KEY,
+} from '../../constants/form.const';
 import { AppRoutes } from '../../models/app-routes.model';
 
 /**
@@ -18,6 +22,13 @@ export class SessionService {
   private readonly _token = signal<string | null>(this._readToken());
   /** Il token di accesso dell'iscritto, che il bearer-token interceptor manda al backend */
   public readonly token = this._token.asReadonly();
+
+  private readonly _guestId = signal<string>(this._readGuestId());
+  /**
+   * Identificativo anonimo di questo browser, creato la prima volta e conservato: il backend lo usa per
+   * riconoscere l'ospite (es. la busta settimanale, una apertura per ospite) anche se non ha un account.
+   */
+  public readonly guestId = this._guestId.asReadonly();
 
   public setAuthenticated(value: boolean): void {
     this._isAuthenticated.set(value);
@@ -38,6 +49,21 @@ export class SessionService {
       // Storage non disponibile: si riparte da ospite
       return false;
     }
+  }
+  private _readGuestId(): string {
+    try {
+      const saved = localStorage.getItem(GUEST_ID_STORAGE_KEY);
+      if (saved) return saved;
+    } catch {
+      // Storage non disponibile: l'identificativo vale solo finché l'app è aperta
+    }
+    const created = crypto.randomUUID();
+    try {
+      localStorage.setItem(GUEST_ID_STORAGE_KEY, created);
+    } catch {
+      // Storage non disponibile (es. navigazione privata): vale solo finché l'app è aperta
+    }
+    return created;
   }
   private _readToken(): string | null {
     try {

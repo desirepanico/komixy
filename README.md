@@ -118,11 +118,12 @@ La cartella `docs/` spiega come è fatto il progetto, per chi ci lavora. Claude 
 
 **Per argomento**
 
-| Voglio...                                     | Leggo                                                                                                       |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Capire cosa fa l'app e a che punto è          | [`docs/funzionalita.md`](docs/funzionalita.md)                                                              |
-| Capire come è organizzato il codice           | [`docs/architettura.md`](docs/architettura.md) e [`docs/struttura-progetto.md`](docs/struttura-progetto.md) |
-| Lavorare con comandi, test, lint, CI e deploy | [`docs/sviluppo.md`](docs/sviluppo.md)                                                                      |
-| Toccare stile e tema                          | [`docs/tema-e-stile.md`](docs/tema-e-stile.md)                                                              |
-| Aggiungere o cambiare testi                   | [`docs/traduzioni.md`](docs/traduzioni.md)                                                                  |
-| Capire come è configurato Claude Code         | [`docs/claude-code.md`](docs/claude-code.md)                                                                |
+| Voglio...                                      | Leggo                                                                                                       |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Capire cosa fa l'app e a che punto è           | [`docs/funzionalita.md`](docs/funzionalita.md)                                                              |
+| Capire come è organizzato il codice            | [`docs/architettura.md`](docs/architettura.md) e [`docs/struttura-progetto.md`](docs/struttura-progetto.md) |
+| Lavorare con comandi, test, lint, CI e deploy  | [`docs/sviluppo.md`](docs/sviluppo.md)                                                                      |
+| Toccare stile e tema                           | [`docs/tema-e-stile.md`](docs/tema-e-stile.md)                                                              |
+| Aggiungere o cambiare testi                    | [`docs/traduzioni.md`](docs/traduzioni.md)                                                                  |
+| Collegare il backend (cosa manda e si aspetta) | [`docs/backend.md`](docs/backend.md)                                                                        |
+| Capire come è configurato Claude Code          | [`docs/claude-code.md`](docs/claude-code.md)                                                                |

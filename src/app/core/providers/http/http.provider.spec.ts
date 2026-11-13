@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@features/auth/services/auth/auth.service';
 import { environment } from '@env/environment';
-import { AUTH_HEADER, TIMEZONE_HEADER } from '@shared/constants/api.const';
+import { AUTH_HEADER, GUEST_ID_HEADER, TIMEZONE_HEADER } from '@shared/constants/api.const';
 import { SessionService } from '@shared/services/session/session.service';
 import { firstValueFrom } from 'rxjs';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -33,6 +33,16 @@ describe('provideHttp', () => {
     const controller = TestBed.inject(HttpTestingController);
     const { request } = controller.expectOne('./i18n/it.json');
     expect(request.headers.has(TIMEZONE_HEADER)).toBe(false);
+    controller.verify();
+  });
+
+  it('un ospite manda l’identificativo e non il token', () => {
+    const session = TestBed.inject(SessionService);
+    TestBed.inject(HttpClient).get('/ranking').subscribe();
+    const controller = TestBed.inject(HttpTestingController);
+    const { request } = controller.expectOne(`${environment.apiUrl}/ranking`);
+    expect(request.headers.get(GUEST_ID_HEADER)).toBe(session.guestId());
+    expect(request.headers.has(AUTH_HEADER)).toBe(false);
     controller.verify();
   });
 
