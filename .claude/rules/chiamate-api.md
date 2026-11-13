@@ -47,6 +47,47 @@ Nel `catch` TypeScript non permette un tipo preciso (solo `unknown` o `any`, per
 - **Riuscita**: `map`, `tap` e `firstValueFrom` si risolve, l'esecuzione prosegue dopo l'`await` (`_onLoginSuccess()`). **Errore**: il `catchError` del servizio lo converte, `firstValueFrom` rifiuta e si salta nel `catch`.
 - Un `Observable` che si chiude senza emettere fa rifiutare `firstValueFrom` con un `EmptyError`: finisce nel `catch` e, non essendo un `ApiErrorResponse`, mostra il messaggio di default.
 
+### Skeleton mentre la chiamata è in corso
+
+Quando una pagina o un componente carica dati dal backend mostra `app-skeleton` al posto del contenuto finché la chiamata non finisce (regole in `skeleton.md`). Il segnale è un `loading` che accende chi lancia la chiamata:
+
+```ts
+// comics-page.ts
+protected readonly loading = signal<boolean>(true);
+protected readonly comics = signal<ComicListResponse | null>(null);
+
+private async _load(): Promise<void> {
+  this.loading.set(true);
+  try {
+    this.comics.set(await firstValueFrom(this._comicsService.list(this._filters())));
+  } catch (error) {
+    this._apiError.handle(error instanceof ApiErrorResponse ? error : null, {
+      summary: 'comics.loadError.summaryKo',
+      detail: 'comics.loadError.detailKo',
+    });
+  } finally {
+    this.loading.set(false);
+  }
+}
+```
+
+```html
+<!-- comics-page.html: l'anello è sul contenitore, lo skeleton ha le misure del contenuto vero -->
+<section [attr.aria-busy]="loading()">
+  @if (loading()) {
+  <app-skeleton class="h-48 w-full" />
+  } @else {
+  <!-- contenuto -->
+  }
+</section>
+```
+
+- `loading` si accende **prima** della chiamata e si spegne nel `finally`: così lo skeleton sparisce anche in caso di errore e non resta mai acceso.
+- Una chiamata all'apertura della pagina parte dal costruttore (`void this._load()`); una che dipende dai filtri nell'indirizzo riparte quando cambiano (query param, `query-params.md`).
+- Lo skeleton è per **caricare dati da mostrare**. Un invio di form (come il login) non usa lo skeleton: il bottone si disabilita con `form().submitting()`.
+- Più dati caricati insieme condividono un solo `loading`; non uno skeleton per ogni richiesta.
+- Per un caricamento semplice senza busta né `ApiErrorResponse` si può usare `resource()`/`httpResource()`, che ha già `isLoading()` (`signals.md`).
+
 ## Body o query string
 
 I dati di una chiamata viaggiano in uno di questi tre posti, secondo ciò che sono:
