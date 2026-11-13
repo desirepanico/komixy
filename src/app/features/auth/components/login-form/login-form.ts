@@ -60,7 +60,6 @@ export class LoginForm {
           } catch (error: unknown) {
             this._onLoginError(error);
           }
-          return undefined;
         },
         // Dopo un invio fallito il focus va al primo campo con l'errore
         onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
