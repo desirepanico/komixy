@@ -10,6 +10,7 @@ import { InputPassword } from '@shared/components/input/input-password/input-pas
 import { InputText } from '@shared/components/input/input-text/input-text';
 import { PASSWORD_MIN_LENGTH } from '@shared/constants/form.const';
 import { ApiErrorService } from '@shared/services/api-error/api-error.service';
+import { ApiErrorResponse } from '@shared/utils/api-error-response/api-error-response';
 import { firstValueFrom } from 'rxjs';
 import { LoginRequest, SocialProvider } from '../../models/auth.model';
 import { AuthNavigationService } from '../../services/auth-navigation/auth-navigation.service';
@@ -53,13 +54,11 @@ export class LoginForm {
     {
       submission: {
         action: async () => {
-          try {
-            //firstValueFrom -> Primo valore: appena l’observable emette, la Promise si risolve con quel valore. (Sottoscrizione automatica:)
-            await firstValueFrom(this._authService.authenticate(this._model()));
-            this._onLoginSuccess();
-          } catch (error: unknown) {
-            this._onLoginError(error);
-          }
+          //firstValueFrom -> Primo valore: appena l’observable emette, la Promise si risolve con quel valore. (Sottoscrizione automatica:)
+          await firstValueFrom(this._authService.authenticate(this._model())).then(
+            () => this._onLoginSuccess(),
+            (error: ApiErrorResponse) => this._onLoginError(error),
+          );
         },
         // Dopo un invio fallito il focus va al primo campo con l'errore
         onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
@@ -71,7 +70,7 @@ export class LoginForm {
     this.loginSuccess.emit();
   }
   // L'errore dell'API non è di un campo: si mostra in un toast, col messaggio del suo codice o questo di default
-  private _onLoginError(error: unknown): void {
+  private _onLoginError(error: ApiErrorResponse): void {
     this._apiError.handle(error, {
       summary: 'login.serverError.summaryKo',
       detail: 'login.serverError.detailKo',
