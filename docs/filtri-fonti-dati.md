@@ -22,8 +22,8 @@ Questo documento non è una consulenza legale. Prima di firmare accordi o costru
 2. **Fonti utilizzabili con uso commerciale:** Wikidata (dati CC0 ✅), Open Library (metadati dichiarati liberi, da scaricare con i dump ✅), Metron (licenza CC BY-SA 4.0 con permesso esplicito per l'uso commerciale ✅), il catalogo SBN (CC0 deliberato nel 2013 ⚠️) e ISBNdb (a pagamento, con licenza per prodotti commerciali ✅).
 3. **Fonti da usare solo con permesso scritto:** MyAnimeList/Jikan (ogni monetizzazione richiede l'autorizzazione di MAL ⚠️), MangaUpdates, Kitsu, Grand Comics Database (progetto "non commerciale", licenze in contrasto ✅).
 4. **Il piano realistico per un prodotto commerciale è una base dati nostra**, composta da: cataloghi degli editori (accordi), dati aperti (Wikidata, Open Library, SBN, Metron) e classificazione fatta da noi (categorie, temi, fascia d'età). AniList e MAL si usano solo dopo una licenza commerciale scritta.
-5. **Manga: tutti e sei i filtri si possono alimentare**, ma i dati migliori (demografia, temi) vengono da fonti con vincoli commerciali. **Fumetti: i generi non hanno una fonte coerente** e vanno assegnati da noi.
-6. **La casa editrice ha senso, e per i fumetti più dei generi.** È presente in ogni fonte e in ogni catalogo ISBN, distingue le edizioni dei collezionisti e fa da categoria. Va intesa come editore dell'edizione italiana (sezione 4.3).
+5. **Manga: i sette filtri (con Stato) si possono alimentare, ma con coperture diverse**: i dati migliori (demografia, temi) vengono da fonti con vincoli commerciali. **Fumetti: i generi non hanno una fonte coerente** e vanno assegnati da noi.
+6. **La casa editrice è un dato dell'opera, non un filtro dei fumetti.** È presente in ogni fonte e in ogni catalogo ISBN e distingue le edizioni dei collezionisti, ma per i fumetti si è scelto di non metterla tra i filtri (sezione 4.3). I filtri dei fumetti sono sei: Genere, Formato, Anno, Volumi, Origine, Stato.
 7. **Categorie e temi del documento: la fonte libera è Wikidata.** Ha le voci per tutte e 5 le categorie (Kodomo come «children's manga») e per **tutti i 10 temi**, compreso lo Sport come «spokon» (Q2281511). La copertura per opera è però irregolare (sezione 9).
 8. **Il livello dei dati è diverso da quello che mostriamo.** Le banche dati descrivono l'opera; Komixy mostra volumi di un'edizione italiana. I dati dell'edizione (ISBN, editore italiano, variant, deluxe) vengono dai cataloghi ISBN e dagli editori (sezione 2).
 
@@ -47,14 +47,37 @@ Un filtro come "Seinen" o "Isekai" è una proprietà dell'opera. Un filtro come 
 
 ## 3. Manga: filtro per filtro
 
-| Filtro (prototipo)         | Dato da importare | Dove si trova                                                                                                                                                                  | Copertura | Note                                                                                                                                                                         |
-| -------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Categoria (Shōnen…Josei)   | `demographic`     | MAL (e Jikan): demografie separate da generi e temi ✅ · MangaDex: `publicationDemographic` ⚠️ · Wikidata: proprietà «pubblico di destinazione» (P2360) ✅ · cataloghi editori | Buona     | Kodomo ("Kids") è il meno coperto. Va gestito anche il valore "nessuna". Gli editori italiani spesso indicano la collana (Shōnen, Seinen): fonte consigliata                 |
-| Formato (Serie / One-shot) | `format`          | AniList: `format` con `ONE_SHOT` ✅ · MAL: tipo "One-shot" ⚠️ · Wikidata ⚠️                                                                                                    | Buona     | Su AniList `ONE_SHOT` è un manga con un solo capitolo ✅. Si può ricavare anche dal numero di volumi dell'edizione italiana                                                  |
-| Anno di uscita             | `year`            | AniList: `startDate.year` ✅ · MangaDex: `year` ✅ · Wikidata: data di pubblicazione ⚠️                                                                                        | Ottima    | È l'anno dell'opera in Giappone, non dell'edizione italiana                                                                                                                  |
-| Volumi (1–5, 6–20, 21+)    | `volumes`         | AniList: `volumes` ✅ · MAL/Jikan: `volumes` ✅ · Wikidata: numero di volumi ⚠️                                                                                                | Parziale  | Per le serie in corso il valore è vuoto. Conta i volumi giapponesi: meglio contare quelli dell'edizione italiana                                                             |
-| Tema narrativo             | `themes[]`        | AniList: `genres` ✅ e `tags` ✅ · MAL/Jikan: `genres` e `themes` ⚠️ (Isekai è un tema di MAL ✅) · MangaDex: tag per gruppo ⚠️ · Wikidata: genere ⚠️                          | Buona     | Serve la tabella di conversione qui sotto: i temi di Komixy sono 10, le fonti ne hanno decine                                                                                |
-| Contenuti per adulti (18+) | `ageRating`       | AniList: `isAdult` ✅ · MangaDex: `contentRating` ✅ · cataloghi editori (fascia d'età)                                                                                        | Parziale  | Le fonti segnalano soprattutto il **contenuto sessuale**. La violenza estrema (per esempio Berserk) di solito non è segnalata come "adulto": serve la nostra classificazione |
+| Filtro (prototipo)          | Dato da importare | Dove si trova                                                                                                                                                                  | Copertura                          | Note                                                                                                                                                                         |
+| --------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Categoria (Shōnen…Josei)    | `demographic`     | MAL (e Jikan): demografie separate da generi e temi ✅ · MangaDex: `publicationDemographic` ⚠️ · Wikidata: proprietà «pubblico di destinazione» (P2360) ✅ · cataloghi editori | Buona                              | Kodomo ("Kids") è il meno coperto. Va gestito anche il valore "nessuna". Gli editori italiani spesso indicano la collana (Shōnen, Seinen): fonte consigliata                 |
+| Formato (Serie / One-shot)  | `format`          | AniList: `format` con `ONE_SHOT` ✅ · MAL: tipo "One-shot" ⚠️ · Wikidata ⚠️                                                                                                    | Buona                              | Su AniList `ONE_SHOT` è un manga con un solo capitolo ✅. Si può ricavare anche dal numero di volumi dell'edizione italiana                                                  |
+| Anno di uscita              | `year`            | AniList: `startDate.year` ✅ · MangaDex: `year` ✅ · Wikidata: data di pubblicazione ⚠️                                                                                        | Ottima                             | È l'anno dell'opera in Giappone, non dell'edizione italiana                                                                                                                  |
+| Volumi (1–5, 6–20, 21+)     | `volumes`         | AniList: `volumes` ✅ · MAL/Jikan: `volumes` ✅ · Wikidata: numero di volumi ⚠️                                                                                                | Parziale                           | Per le serie in corso il valore è vuoto. Conta i volumi giapponesi: meglio contare quelli dell'edizione italiana                                                             |
+| Tema narrativo              | `themes[]`        | AniList: `genres` ✅ e `tags` ✅ · MAL/Jikan: `genres` e `themes` ⚠️ (Isekai è un tema di MAL ✅) · MangaDex: tag per gruppo ⚠️ · Wikidata: genere ⚠️                          | Buona                              | Serve la tabella di conversione qui sotto: i temi di Komixy sono 10, le fonti ne hanno decine                                                                                |
+| Contenuti per adulti (18+)  | `ageRating`       | AniList: `isAdult` ✅ · MangaDex: `contentRating` ✅ · cataloghi editori (fascia d'età)                                                                                        | Parziale                           | Le fonti segnalano soprattutto il **contenuto sessuale**. La violenza estrema (per esempio Berserk) di solito non è segnalata come "adulto": serve la nostra classificazione |
+| Stato (Completa / In corso) | `status`          | Wikidata: data di fine (`P582`) ✅ · AniList: `status` ⚠️ · MAL/Jikan: `status` ⚠️ · MangaDex: `status` ⚠️                                                                     | Media (Wikidata, vedi prova sotto) | «Completa» solo se c'è una data di fine. Senza data non si distingue una serie in uscita da una conclusa: va confermata da altra fonte o a mano                              |
+
+### Prova sullo stato (Wikidata)
+
+Query eseguita su Wikidata (`P31` = serie manga, ordinate per numero di pagine collegate, **le prime 100 serie**): campione dei manga più noti, non dell'intero insieme.
+
+| Risultato                                              | Serie | Quota |
+| ------------------------------------------------------ | ----- | ----- |
+| **Completa** (c'è la data di fine, `P582`)             | 65    | 65%   |
+| «In corso o sconosciuto» (c'è l'inizio, manca la fine) | 17    | 17%   |
+| Nessun dato (né inizio né fine)                        | 18    | 18%   |
+| Con anno di inizio (`P580`)                            | 82    | 82%   |
+| Con numero di volumi (`P1113`)                         | **1** | 1%    |
+
+Cosa si ricava:
+
+- **«Completa» regge** per le opere note: Naruto, Death Note, L'attacco dei giganti, Fullmetal Alchemist, My Hero Academia, Vinland Saga hanno inizio e fine plausibili.
+- **«In corso» non è affidabile**: raccoglie sia le serie ancora in uscita (One Piece, Hunter × Hunter, Detective Conan, Chainsaw Man, DanDaDan) sia quelle senza dato. A quanto ricordo ne fanno parte anche serie sospese o concluse senza data (Nana, Claymore, Black Lagoon) ⚠️ non verificato sulla pagina dell'opera.
+- **18 su 100 non hanno nemmeno l'anno** (Doraemon, Sailor Moon, Akira, Gintama, Spy × Family, Tokyo Revengers): per queste serve un'altra fonte.
+- **Il numero di volumi non è su Wikidata**: `P1113` compare solo per Hetalia (52). Il filtro «Volumi» e la regola del one-shot (1 volume e data di fine) vanno alimentati da AniList/MAL (con le loro condizioni) o dai cataloghi italiani, non da Wikidata.
+- Il campione è biasato verso le opere famose; sulle serie minori la copertura sarà più bassa.
+
+Proposta: tenere «Stato» come filtro con i due valori **Completa** e **In corso**, ma assegnare «In corso» solo dove una fonte lo dichiara e lasciare «Sconosciuto» (nascosto o non filtrabile) dove manca il dato.
 
 ### Conversione dei temi (proposta)
 
@@ -79,45 +102,46 @@ Questa tabella non dipende dalla fonte: se i dati arrivano da Wikidata, dai cata
 
 ### 4.1 Filtro per filtro
 
-| Filtro               | Dato da importare | Dove si trova                                                                                                                                                          | Copertura   | Note                                                                                                                                                   |
-| -------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Categoria (generi)   | `categories[]`    | Metron: genere per serie e numero ✅ (elenco non verificato) · Wikidata: genere ⚠️ · GCD: genere per storia ⚠️ (licenza incerta) · Comic Vine: nessun campo trovato ❌ | **Debole**  | Non esiste una fonte coerente. Da assegnare noi, con le fonti come suggerimento                                                                        |
-| Formato              | `format`          | Metron: tipo di serie (Annual, Digital Chapters, Hardcover, Limited Series…) ✅ · ISBNdb: legatura e formato ✅ · cataloghi editori                                    | Parziale    | "Serie" e "Volume unico" si ricavano. **Graphic novel e Omnibus sono proprietà dell'edizione** (legatura, raccolta): vengono dal catalogo dell'editore |
-| Anno di uscita       | `year`            | Metron: anno di inizio ⚠️ · Wikidata ⚠️ · Open Library / ISBNdb: data di pubblicazione dell'edizione ✅                                                                | Buona       | Chiarire se è l'anno dell'opera o dell'edizione italiana                                                                                               |
-| Volumi               | `volumes`         | Metron: numero di numeri ⚠️ · catalogo italiano                                                                                                                        | Poco adatta | In Italia i "volumi" sono raccolte, non numeri americani. Meglio contare i volumi dell'edizione italiana                                               |
-| Casa editrice        | `publisher`       | Metron ✅ · Open Library: `publishers` ⚠️ · ISBNdb: campo `publisher` ✅ · catalogo SBN ⚠️ · ogni catalogo ISBN                                                        | **Ottima**  | È l'unico filtro presente in tutte le fonti. Vedi 4.3                                                                                                  |
-| Contenuti per adulti | `ageRating`       | Metron: classificazione per età ⚠️ · altrove ❌                                                                                                                        | Debole      | Serve una nostra classificazione                                                                                                                       |
+I filtri dei fumetti sono **sei**: Genere, Formato, Anno di uscita, Volumi, Origine, Stato. Nei fumetti la sezione si chiama **Genere** (nei manga «Categoria» è il pubblico e il genere è il «Tema narrativo»). La casa editrice e la fascia d'età (contenuti per adulti) **non** sono filtri; l'autore si cerca con la ricerca testuale.
+
+| Filtro         | Valori                                                                                    | Dato da importare | Dove si trova                                                                                                                              | Copertura   | Note                                                                                                                                                                            |
+| -------------- | ----------------------------------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Genere         | Supereroi, Fantascienza, Fantasy, Horror, Noir / Thriller, Storico e biografico, Umorismo | `categories[]`    | Metron: genere per serie e numero ✅ (elenco non verificato) · Wikidata `P136` ⚠️ · GCD ⚠️ (licenza incerta) · Comic Vine: nessun campo ❌ | **Debole**  | Non esiste una fonte coerente: da assegnare noi, con le fonti come suggerimento (sezione 4.2)                                                                                   |
+| Formato        | Serie, Graphic novel, Omnibus                                                             | `format`          | Metron: tipo di serie ✅ · ISBNdb: legatura e formato ✅ · cataloghi editori                                                               | Parziale    | «Serie» e «Volume unico» si ricavano. **Graphic novel e Omnibus sono proprietà dell'edizione** (legatura, raccolta): l'Omnibus viene dal catalogo dell'editore, non da Wikidata |
+| Anno di uscita | Prima del 1990, Anni '90, Anni 2000, Anni 2010, Dal 2020                                  | `year`            | Metron: anno di inizio ⚠️ · Wikidata `P577`/`P580` ⚠️ · Open Library / ISBNdb: data dell'edizione ✅                                       | Buona       | Chiarire se è l'anno dell'opera o dell'edizione italiana. Gli intervalli si calcolano dall'anno                                                                                 |
+| Volumi         | Volume unico, 2–5, 6–20, 21+                                                              | `volumes`         | Wikidata `P1113` ⚠️ (da verificare, alternativa `P2635`) · Metron: numero di numeri ⚠️ · catalogo italiano                                 | Poco adatta | «Volume unico» = esattamente 1 (non si sovrappone a «2–5»). In Italia i «volumi» sono raccolte: meglio contare i volumi dell'edizione italiana                                  |
+| Origine        | USA, Italia, Franco-belga, Altro                                                          | `origin`          | Wikidata paese di origine `P495` ⚠️                                                                                                        | Media       | Da ricavare dal paese; «Altro» per i restanti                                                                                                                                   |
+| Stato          | Completa, In corso                                                                        | `status`          | Wikidata data di fine `P582` ⚠️                                                                                                            | Bassa       | «Completa» solo se c'è una data di fine; senza dato finisce in «In corso». Va confermato a mano                                                                                 |
+
+Dati non filtro: **casa editrice** (sezione 4.3), **autore** (ricerca testuale), **contenuti per adulti** (nessuna fonte affidabile: serve una classificazione nostra, e per ora non è un filtro).
 
 **Attenzione ai fumetti italiani.** Metron e GCD sono centrati sul fumetto americano. Bonelli, Disney, Diabolik e gli altri periodici italiani sono poco o per niente coperti ⚠️, e quelli da edicola spesso non hanno un ISBN. Per questi serve una fonte italiana (sezione 5.3).
 
 ### 4.2 Generi per i fumetti: proposta
 
-Nessuna fonte li dà in modo uniforme: propongo un elenco **corto e nostro**, popolato a mano o con una conversione dai generi di Metron dove esistono. È una proposta da confermare: il prototipo usa oggi un elenco diverso.
+Nessuna fonte li dà in modo uniforme: l'elenco è **corto e nostro**, popolato a mano o con una conversione dai generi di Wikidata e Metron dove esistono. È una proposta da confermare: il prototipo usa oggi un elenco diverso.
 
-| Categoria            | Come popolarla                                          | Esempi                     |
-| -------------------- | ------------------------------------------------------- | -------------------------- |
-| Supereroi            | Dall'universo o dall'editore (Marvel, DC) e dalle fonti | Watchmen, Batman: Anno Uno |
-| Fantascienza         | Genere Metron / Wikidata, oppure a mano                 | Saga                       |
-| Fantasy              | Genere Metron / Wikidata, oppure a mano                 | Sandman, Saga              |
-| Horror               | Genere Metron / Wikidata, oppure a mano                 | Sandman                    |
-| Noir / Thriller      | A mano                                                  | V for Vendetta             |
-| Storico e biografico | A mano (unisce "Storico" e "Autobiografico")            | Maus, Persepolis           |
-| Umorismo             | A mano                                                  |                            |
+| Genere               | Come popolarla                                               | Esempi                     |
+| -------------------- | ------------------------------------------------------------ | -------------------------- |
+| Supereroi            | Dall'universo o dall'editore (Marvel, DC) e dalle fonti      | Watchmen, Batman: Anno Uno |
+| Fantascienza         | Genere Metron / Wikidata, oppure a mano. Assorbe «Distopico» | Saga, V for Vendetta       |
+| Fantasy              | Genere Metron / Wikidata, oppure a mano                      | Sandman, Saga              |
+| Horror               | Genere Metron / Wikidata, oppure a mano                      | Sandman                    |
+| Noir / Thriller      | A mano, oppure da crimine, mistero e thriller                | V for Vendetta             |
+| Storico e biografico | A mano (unisce «Storico» e «Autobiografico»)                 | Maus, Persepolis           |
+| Umorismo             | A mano, oppure da commedia e satira                          |                            |
 
-"Distopico" nel prototipo è un sottogenere (Watchmen, V for Vendetta): nessuna fonte lo dà, e conviene toglierlo o assorbirlo in "Fantascienza".
+«Distopico» è un sottogenere (Watchmen, V for Vendetta): nessuna fonte lo dà, quindi si assorbe in «Fantascienza». «Autobiografico» confluisce in «Storico e biografico». Da valutare senza decidere: Avventura, Western, Drammatico/Realistico.
 
-### 4.3 La casa editrice ha senso?
+### 4.3 La casa editrice: dato, non filtro
 
-**Sì, e va tenuta per i fumetti.**
+La casa editrice **non è tra i filtri dei fumetti** (scelta presa). Resta però un **dato dell'opera**, da mostrare nella scheda e da usare per la ricerca.
 
-1. **I dati ci sono sempre**, e con licenze utilizzabili: ISBNdb, Open Library e il catalogo SBN la riportano per ogni edizione; i cataloghi degli editori sono la fonte più precisa.
-2. **Per un collezionista è un criterio vero.** Due edizioni della stessa opera di editori diversi sono oggetti diversi, e il valore cambia.
-3. **Fa da categoria.** Marvel e DC indicano i supereroi, Bao il graphic novel d'autore, Bonelli il fumetto da edicola.
+1. **I dati ci sono sempre**, con licenze utilizzabili: ISBNdb, Open Library e il catalogo SBN la riportano per ogni edizione; i cataloghi degli editori sono la fonte più precisa.
+2. **Per un collezionista conta l'edizione**: due edizioni della stessa opera di editori diversi sono oggetti diversi. Per questo la si salva comunque.
+3. **Fa da scorciatoia.** Marvel e DC indicano i supereroi, Bao il graphic novel d'autore, Bonelli il fumetto da edicola.
 
-Due scelte da fare prima di importare:
-
-- **Editore italiano o originale?** Per l'utente conta quello dell'edizione che ha in mano (Panini, Bao, Lion…). Propongo l'editore italiano come filtro e l'editore originale (Marvel, DC, Image) come dato secondario.
-- **Quanti valori nell'elenco.** Gli editori sono decine: il filtro deve mostrare i più frequenti e permettere la ricerca del resto.
+Se in futuro diventasse un filtro: usare l'editore italiano (Panini, Bao, Lion…), con l'editore originale come dato secondario, mostrare solo i più frequenti con una casella di ricerca e normalizzare i nomi (Panini Comics e Planet Manga sono lo stesso gruppo).
 
 **Anche per i manga la casa editrice è utile**, forse più del tema per chi colleziona: le edizioni italiane (Star Comics, Panini/Planet Manga, J-POP, Edizioni BD, Dynit, Goen e altri ⚠️) hanno formati, prezzi e variant diversi. Propongo di aggiungerla come sesto filtro dei manga, con la stessa fonte dei fumetti.
 
