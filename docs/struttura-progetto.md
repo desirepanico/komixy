@@ -25,7 +25,7 @@ src/
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button): solo tipi ed enum
 │       ├── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
 │       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
-├── environments/              impostazioni per ambiente (apiUrl): environment.ts (produzione), environment.development.ts (dev), environment.localhost.ts (locale); si sostituiscono in `angular.json`, alias `@env/*`
+├── environments/              impostazioni per ambiente (apiUrl): environment.ts (produzione), environment.development.ts (dev), environment.local.ts (locale); si sostituiscono in `angular.json`, alias `@env/*`
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
 ├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
 ├── styles.css                 entry degli stili globali

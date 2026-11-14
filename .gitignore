@@ -42,7 +42,8 @@ __screenshots__/
 .env
 .env.*
 *.env
-**/environment.local.ts
+**/environment.development.ts
+**/environment.ts
 
 # System files
 .DS_Store

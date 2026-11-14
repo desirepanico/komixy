@@ -5,7 +5,7 @@
 | Comando                       | Cosa fa                                                                                                                                                                                            |
 | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `npm start`                   | Come `npm run start:local`                                                                                                                                                                         |
-| `npm run start:local`         | Dev server (`ng serve --configuration local`) su http://localhost:4200, si ricarica a ogni modifica. Le chiamate vanno al backend sulla propria macchina (`environment.localhost.ts`)              |
+| `npm run start:local`         | Dev server (`ng serve --configuration local`) su http://localhost:4200, si ricarica a ogni modifica. Le chiamate vanno al backend sulla propria macchina (`environment.local.ts`)                  |
 | `npm run start:dev`           | Lo stesso dev server, ma le chiamate vanno al backend di dev pubblicato (`environment.development.ts`)                                                                                             |
 | `npm run build`               | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
 | `npm run build:dev`           | Build con l'environment di dev (`ng build --configuration development`)                                                                                                                            |
@@ -27,7 +27,7 @@ Le impostazioni che cambiano tra un ambiente e l'altro (per ora l'indirizzo del 
 
 | File                         | Ambiente                                              | `apiUrl`                              | Come si usa                              |
 | ---------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------- |
-| `environment.localhost.ts`   | **Locale**: il backend avviato sulla propria macchina | `http://localhost:3000`               | `npm start` o `npm run start:local`      |
+| `environment.local.ts`       | **Locale**: il backend avviato sulla propria macchina | `http://localhost:3000`               | `npm start` o `npm run start:local`      |
 | `environment.development.ts` | **Dev**: il backend di sviluppo pubblicato            | `https://INSERIRE_URL_API_DEV`        | `npm run start:dev`, `npm run build:dev` |
 | `environment.ts`             | **Produzione**: il backend pubblicato                 | `https://INSERIRE_URL_API_PRODUZIONE` | `npm run build` e i test                 |
 
