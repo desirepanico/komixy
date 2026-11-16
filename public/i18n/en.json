@@ -165,7 +165,7 @@
     "libraryHintGuest": "You need an account to add volumes to your library.",
     "viewDetail": "View details",
     "cardLabel": "Position {{ rank }}: {{ title }}",
-    "topTitle": "Top of the week"
+    "topTitle": "The 10 best manga and comics of the week"
   },
   "ranking": {
     "title": "Review the week",
