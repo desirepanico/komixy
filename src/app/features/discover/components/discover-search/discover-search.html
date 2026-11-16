@@ -30,11 +30,11 @@
   @if (!compact() && !draft() && !open()) {
     <span class="mr-2 hidden shrink-0 items-center gap-1 md:flex" aria-hidden="true">
       <kbd
-        class="rounded-md border border-surface-500 bg-surface-800 px-1.5 text-xs font-bold text-surface-200"
+        class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans text-xs font-bold text-surface-200"
         >Ctrl</kbd
       >
       <kbd
-        class="rounded-md border border-surface-500 bg-surface-800 px-1.5 text-xs font-bold text-surface-200"
+        class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans text-xs font-bold text-surface-200"
         >K</kbd
       >
     </span>
@@ -63,7 +63,7 @@
       [class]="
         compact()
           ? 'bg-surface-900'
-          : 'bg-surface-900/95 backdrop-blur-2xl backdrop-saturate-150 md:bg-surface-800/60'
+          : 'bg-surface-900/90 backdrop-blur-2xl backdrop-saturate-150 md:bg-surface-800/90'
       "
       (mousedown)="$event.preventDefault()"
     >
@@ -174,34 +174,34 @@
         >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >↑</kbd
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >↓</kbd
             >{{ 'discover.search.keys.choose' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >{{ 'discover.search.keys.enter' | transloco }}</kbd
             >{{ 'discover.search.keys.apply' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >{{ 'discover.search.keys.delete' | transloco }}</kbd
             >{{ 'discover.search.keys.removeRecent' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >{{ 'discover.search.keys.tab' | transloco }}</kbd
             >{{ 'discover.search.keys.buttons' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
               >{{ 'discover.search.keys.esc' | transloco }}</kbd
             >{{ 'discover.search.keys.close' | transloco }}</span
           >

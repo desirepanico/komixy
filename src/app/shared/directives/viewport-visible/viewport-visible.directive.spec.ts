@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ApplicationRef, Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ViewportVisible } from './viewport-visible.directive';
@@ -28,10 +28,11 @@ describe('ViewportVisible', () => {
     );
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
     fixture = TestBed.createComponent(Host);
-    await fixture.whenStable();
+    // Un solo giro di rendering, sincrono: fa partire l'`afterNextRender` della direttiva senza aspettare la stabilità
+    TestBed.inject(ApplicationRef).tick();
   });
 
-  it("dice quando l'elemento esce dallo schermo e quando rientra", async () => {
+  it("dice quando l'elemento esce dallo schermo e quando rientra", () => {
     callback([{ isIntersecting: false }]);
     expect(fixture.componentInstance.visible()).toBe(false);
     callback([{ isIntersecting: true }]);
