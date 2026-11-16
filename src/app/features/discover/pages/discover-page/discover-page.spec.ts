@@ -79,6 +79,15 @@ describe('DiscoverPage', () => {
     ]);
   });
 
+  it('ogni riga ha il numero dei suoi titoli accanto al titolo', async () => {
+    await create();
+    const rows = Array.from(html.querySelectorAll('app-discover-row'));
+    expect(rows.length).toBe(3);
+    for (const row of rows) {
+      expect(row.querySelector('h2 span')?.textContent?.trim()).toBe('discover.rows.count');
+    }
+  });
+
   it('il numero accanto al titolo di «Manga da scoprire» è quello delle carte della riga', async () => {
     await create();
     const row = Array.from(html.querySelectorAll('app-discover-row')).at(-1)!;

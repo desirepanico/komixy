@@ -132,12 +132,14 @@
         <app-discover-row
           [title]="'discover.rows.starter.title' | transloco"
           [subtitle]="'discover.rows.starter.subtitle' | transloco"
+          [count]="starterItems().length"
           [items]="starterItems()"
         />
       }
       <app-discover-row
         [title]="'discover.rows.releases.title' | transloco"
         [subtitle]="'discover.rows.releases.subtitle' | transloco"
+        [count]="newItems().length"
         [items]="newItems()"
       />
       <app-discover-row
