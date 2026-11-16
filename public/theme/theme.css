@@ -15,6 +15,11 @@ body {
   overflow-x: clip;
 } /* Nasconde ciò che esce in orizzontale dal contenitore */
 
+/* Con un dialog aperto (pannello dei filtri) la pagina dietro non scorre: scorre solo il dialog */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
 /* Testo alternativo (alt) mostrato quando l'immagine non si carica: leggibile sul tema scuro */
 img {
   color: var(--color-surface-400);
