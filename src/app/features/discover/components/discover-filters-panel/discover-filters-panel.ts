@@ -82,6 +82,14 @@ export class DiscoverFiltersPanel {
   protected readonly infoOpen = signal<boolean>(true);
   // Dopo la guida la vista dei filtri rientra da sinistra, ma non alla prima apertura
   protected readonly returned = signal<boolean>(false);
+  /** Di quanto il foglio (sotto i 768px) è stato trascinato in giù */
+  protected readonly dragY = signal<number>(0);
+  protected readonly dragging = signal<boolean>(false);
+  private readonly _touch = signal<{
+    y: number;
+    time: number;
+    scrollable: HTMLElement | null;
+  } | null>(null);
   /** La categoria della scheda informativa: l'ultima scelta, o la prima */
   protected readonly infoCategory = linkedSignal<ComicCategory>(
     () => this.filters().categories.at(-1) ?? CATEGORY_OPTIONS.manga[0],
@@ -182,6 +190,48 @@ export class DiscoverFiltersPanel {
     this.askAge.set(false);
     this.returned.set(false);
     this.view.set('guide');
+  }
+
+  // Il gesto vale solo se parte dall'intestazione o da una lista già in cima: altrimenti è uno scorrimento
+  protected onTouchStart(event: TouchEvent): void {
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
+    const scrollable = (event.target as HTMLElement).closest<HTMLElement>('[data-sheet-scroll]');
+    if (scrollable && scrollable.scrollTop > 0) return;
+    this._touch.set({ y: event.touches[0].clientY, time: Date.now(), scrollable });
+  }
+
+  protected onTouchMove(event: TouchEvent): void {
+    const start = this._touch();
+    if (!start) return;
+    const distance = event.touches[0].clientY - start.y;
+    if (distance <= 0 || (start.scrollable && start.scrollable.scrollTop > 0)) {
+      this._touch.set(null);
+      this.dragging.set(false);
+      this.dragY.set(0);
+      return;
+    }
+    if (event.cancelable) event.preventDefault();
+    this.dragging.set(true);
+    this.dragY.set(distance);
+  }
+
+  /** Si chiude oltre 120px, o con uno scatto veloce (più di 0,5px per ms) già dopo 40px */
+  protected onTouchEnd(): void {
+    const start = this._touch();
+    this._touch.set(null);
+    if (!start || !this.dragging()) return;
+    this.dragging.set(false);
+    const distance = this.dragY();
+    const speed = distance / Math.max(1, Date.now() - start.time);
+    if (distance > 120 || (distance > 40 && speed > 0.5)) {
+      this.dragY.set(window.innerHeight);
+      setTimeout(() => {
+        this.close();
+        this.dragY.set(0);
+      }, 200);
+    } else {
+      this.dragY.set(0);
+    }
   }
 
   protected examples(text: string): string[] {

@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
@@ -210,5 +210,65 @@ describe('DiscoverFiltersPanel', () => {
     await fixture.whenStable();
     const card = root().querySelector('#discover-info-card')!;
     expect(card.textContent).toContain('discover.guide.info.categories.shonen.example');
+  });
+
+  describe('gesto per chiudere il foglio', () => {
+    const touch = (type: string, y: number, target: Element) =>
+      target.dispatchEvent(
+        Object.assign(new Event(type, { bubbles: true, cancelable: true }), {
+          touches: [{ clientY: y }],
+        }),
+      );
+    const dialog = () => root().querySelector('dialog')!;
+    const header = () => root().querySelector('header')!;
+
+    beforeEach(async () => {
+      vi.spyOn(window, 'matchMedia').mockReturnValue({ matches: true } as MediaQueryList);
+      fixture.componentInstance.open.set(true);
+      await fixture.whenStable();
+    });
+
+    it("trascinando l'intestazione verso il basso il foglio segue il dito", async () => {
+      touch('touchstart', 100, header());
+      touch('touchmove', 160, header());
+      await fixture.whenStable();
+      expect(dialog().style.transform).toBe('translateY(60px)');
+    });
+
+    it('un trascinamento breve e lento lo riporta a posto', async () => {
+      touch('touchstart', 100, header());
+      touch('touchmove', 130, header());
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      touch('touchend', 130, header());
+      await fixture.whenStable();
+      expect(dialog().style.transform).toBe('');
+      expect(fixture.componentInstance.open()).toBe(true);
+    });
+
+    it('un trascinamento lungo lo chiude', async () => {
+      touch('touchstart', 100, header());
+      touch('touchmove', 300, header());
+      touch('touchend', 300, header());
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      await fixture.whenStable();
+      expect(fixture.componentInstance.open()).toBe(false);
+    });
+
+    it('non parte da una lista scorsa: è uno scorrimento', async () => {
+      const list = root().querySelector<HTMLElement>('[data-sheet-scroll]')!;
+      list.scrollTop = 40;
+      touch('touchstart', 100, list);
+      touch('touchmove', 300, list);
+      await fixture.whenStable();
+      expect(dialog().style.transform).toBe('');
+    });
+
+    it('sopra i 768px non fa nulla', async () => {
+      vi.spyOn(window, 'matchMedia').mockReturnValue({ matches: false } as MediaQueryList);
+      touch('touchstart', 100, header());
+      touch('touchmove', 300, header());
+      await fixture.whenStable();
+      expect(dialog().style.transform).toBe('');
+    });
   });
 });
