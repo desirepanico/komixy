@@ -1,4 +1,13 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
@@ -13,6 +22,7 @@ import { ComicKind } from '@shared/models/comic.model';
 import { DiscoverChip, DiscoverFilters } from '@shared/models/discover-filters.model';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
+import { DiscoverDock } from '../../components/discover-dock/discover-dock';
 import { DiscoverChips } from '../../components/discover-chips/discover-chips';
 import {
   DiscoverFiltersPanel,
@@ -37,6 +47,7 @@ import { toggleFilterValue } from '../../utils/toggle-filter-value/toggle-filter
     BookmarkButton,
     ComicCard,
     DiscoverChips,
+    DiscoverDock,
     DiscoverFiltersPanel,
     DiscoverSearch,
     DiscoverTabs,
@@ -48,6 +59,7 @@ import { toggleFilterValue } from '../../utils/toggle-filter-value/toggle-filter
   ],
   templateUrl: './discover-page.html',
   providers: [provideIcons({ matTuneOutline })],
+  host: { '(window:scroll)': 'onScroll()' },
 })
 export class DiscoverPage {
   protected readonly comicsNavigation = inject(ComicsNavigationService);
@@ -55,15 +67,18 @@ export class DiscoverPage {
   protected readonly pack = inject(WeeklyPackService);
   private readonly _navigation = inject(DiscoverNavigationService);
 
+  private readonly _toolbar = viewChild.required<ElementRef<HTMLElement>>('toolbar');
+
   private readonly _queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
     requireSync: true,
   });
-
   protected readonly filters = computed<DiscoverFilters>(() =>
     parseDiscoverFilters(this._queryParams()),
   );
   protected readonly panelOpen = signal<boolean>(false);
-
+  /** Il dock compare quando la barra in cima esce dallo schermo */
+  protected readonly dockOn = signal<boolean>(false);
+  protected readonly progress = signal<number>(0);
   protected readonly chipCount = computed(() => discoverChips(this.filters()).length);
   protected readonly isFiltering = computed(
     () => this.chipCount() > 0 || this.filters().search.trim().length > 0,
@@ -92,6 +107,23 @@ export class DiscoverPage {
     this.results().length ? null : removalSuggestion(this.catalog.toDiscover(), this.filters()),
   );
 
+  public constructor() {
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      // Senza IntersectionObserver il dock resta nascosto
+      if (typeof IntersectionObserver === 'undefined') return;
+      const observer = new IntersectionObserver(([entry]) =>
+        this.dockOn.set(!entry.isIntersecting),
+      );
+      observer.observe(this._toolbar().nativeElement);
+      destroyRef.onDestroy(() => observer.disconnect());
+    });
+  }
+
+  protected onScroll(): void {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    this.progress.set(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
+  }
   protected setKind(kind: ComicKind): void {
     const options = DISCOVER_FILTER_OPTIONS[kind];
     const current = this.filters();
@@ -109,15 +141,12 @@ export class DiscoverPage {
       adult: kind === 'manga' && current.adult,
     });
   }
-
   protected setSearch(search: string): void {
     void this._navigation.goToFilters({ ...this.filters(), search });
   }
-
   protected toggle(change: DiscoverToggle): void {
     void this._navigation.goToFilters(toggleFilterValue(this.filters(), change.key, change.value));
   }
-
   protected setPeriod(period: { from: number; to: number }): void {
     void this._navigation.goToFilters({
       ...this.filters(),
@@ -125,11 +154,9 @@ export class DiscoverPage {
       yearTo: period.to,
     });
   }
-
   protected setAdult(adult: boolean): void {
     void this._navigation.goToFilters({ ...this.filters(), adult });
   }
-
   protected removeChip(chip: DiscoverChip): void {
     const filters = this.filters();
     void this._navigation.goToFilters(
@@ -138,14 +165,12 @@ export class DiscoverPage {
         : toggleFilterValue(filters, chip.key, chip.value),
     );
   }
-
   protected clearFilters(): void {
     void this._navigation.goToFilters({
       ...clearFilter(this.filters(), 'all'),
       search: this.filters().search,
     });
   }
-
   protected undo(
     target: 'all' | 'search' | NonNullable<ReturnType<typeof removalSuggestion>>['target'],
   ): void {

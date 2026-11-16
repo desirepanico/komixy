@@ -1,9 +1,10 @@
 import { Component, computed, ElementRef, inject, input, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { DISCOVER_FAN_CLASSES } from '@shared/constants/ui.const';
 import { CatalogComic, ComicKind } from '@shared/models/comic.model';
 import { coverBackground } from '@shared/utils/cover-background/cover-background';
 
-/** Le sezioni Manga e Fumetti: tablist con frecce, Home e Fine, e tre copertine a ventaglio per sezione */
+/** Le sezioni Manga e Fumetti come due carte: tablist con frecce, Home e Fine, e tre copertine a ventaglio */
 @Component({
   selector: 'app-discover-tabs',
   imports: [TranslocoPipe],
@@ -14,7 +15,8 @@ export class DiscoverTabs {
   private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected readonly tabs: readonly ComicKind[] = ['manga', 'comic'];
-  protected readonly fanTilts: readonly number[] = [-10, 0, 10];
+
+  protected readonly fanClasses = DISCOVER_FAN_CLASSES;
 
   public readonly kind = input.required<ComicKind>();
   public readonly comics = input.required<readonly CatalogComic[]>();

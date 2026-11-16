@@ -26,7 +26,11 @@ Sopra la busta c'è la barra «Cosa vuoi scoprire?»: le sezioni Manga e Fumetti
 - **Carte**: senza filtri né ricerca la fila che scorre di lato, altrimenti una griglia. Se non resta nulla si propone il filtro che, tolto, lascia più volumi (`removalSuggestion`) e «Azzera tutto».
 - **Ricerca**: combobox con ricerche recenti (solo in memoria, `RecentSearchesService`), titoli e autori evidenziati, frecce, Invio, Canc per togliere un recente, Esc, Ctrl/⌘ K.
 - **Dati**: `CatalogComic` (`comic.model.ts`) aggiunge categoria, tema, formato, anno, stato e fascia d'età ai volumi di Scopri; sono dati di prova (`TODO(api)`). I volumi senza copertina vera ne mostrano una disegnata col `coverHue` (`coverBackground`).
-- **Non ancora fatto** rispetto al prototipo di design: la guida ai filtri con i personaggi DiceBear e la scheda informativa della categoria, la barra «dock» che compare scorrendo, la verifica dell'età per i contenuti 18+, lo slider degli anni (c'è la scelta per periodo) e le tendine sui chip.
+- **Schede**: Manga e Fumetti come due carte con tre copertine a ventaglio e il numero dei titoli (`app-discover-tabs`).
+- **Dock**: quando la barra in cima esce dallo schermo compare `app-discover-dock` (sezioni, ricerca compatta, Filtri e la cometa dello scorrimento). La scorciatoia Ctrl/⌘ K vale per la ricerca in vista.
+- **Scheda della categoria** (solo manga, nel pannello): descrizione ed esempi col personaggio spaziale; con più categorie scelte ci sono le linguette. I personaggi sono volti DiceBear (`@dicebear/core`, stile «Adventurer» di Lisa Wischofsky, licenza CC BY 4.0) con casco e fondali disegnati (`CategoryAvatarService`).
+- **Guida ai filtri** (`app-discover-guide`): scorre da destra sopra il pannello, con una scheda per categoria o genere, formato, stato e tema; toccare una scheda attiva o toglie il filtro. Per i manga c'è il blocco 18+ con la verifica dell'età (`AgeVerificationService`, solo in memoria, `TODO(api)`): senza età verificata l'interruttore dei contenuti per adulti apre la guida sul modulo.
+- **Non ancora fatto** rispetto al prototipo di design: lo slider degli anni (c'è la scelta per periodo), le tendine sui chip e i campi della verifica dell'età nel colore rosa (usano i campi standard).
 
 ## Componenti condivisi
 

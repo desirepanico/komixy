@@ -30,3 +30,13 @@ export interface DiscoverRemoval {
   target: DiscoverFilterKey | 'search';
   count: number;
 }
+
+/** Il personaggio di una categoria: opzioni della faccia DiceBear e dettagli disegnati a mano */
+export interface DiscoverAvatar {
+  face: Record<string, unknown>;
+  bg: readonly [string, string];
+  suit: string;
+  sky: string;
+  badge: string;
+  extra?: string;
+}

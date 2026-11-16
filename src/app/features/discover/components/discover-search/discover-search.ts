@@ -47,7 +47,11 @@ interface SearchPart {
     provideIcons({ matCloseOutline, matHistoryOutline, matPersonOutline, matSearchOutline }),
   ],
   host: {
-    class: 'relative block min-w-0',
+    class: 'group/search block min-w-0',
+    '[class.relative]': '!expanded()',
+    '[class.static]': 'expanded()',
+    '[attr.data-compact]': 'compact() ? "" : null',
+    '[attr.data-filled]': 'text() ? "" : null',
     '(document:keydown)': 'onDocumentKeydown($event)',
     '(focusout)': 'onFocusout($event)',
   },
@@ -63,11 +67,17 @@ export class DiscoverSearch {
   public readonly value = input.required<string>();
   public readonly kind = input.required<ComicKind>();
   public readonly comics = input.required<readonly CatalogComic[]>();
+  public readonly compact = input<boolean>(false);
+  /** Con due ricerche nella pagina (in cima e nel dock) la scorciatoia vale solo per quella in vista */
+  public readonly shortcut = input<boolean>(true);
   public readonly searchChange = output<string>();
 
   protected readonly text = linkedSignal<string>(() => this.value());
   protected readonly open = signal<boolean>(false);
   protected readonly activeIndex = signal<number>(-1);
+
+  /** Nel dock la ricerca, aperta o piena, si allarga su tutta la barra e il menu si ancora a lei */
+  protected readonly expanded = computed(() => this.compact() && (this.open() || !!this.text()));
 
   private readonly _query = computed(() => this.text().trim().toLowerCase());
 
@@ -220,6 +230,7 @@ export class DiscoverSearch {
   }
 
   protected onDocumentKeydown(event: KeyboardEvent): void {
+    if (!this.shortcut() || this._host.nativeElement.closest('[inert]')) return;
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
       event.preventDefault();
       const field = this._input().nativeElement;

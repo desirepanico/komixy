@@ -1,7 +1,7 @@
 <div
   role="tablist"
   [attr.aria-label]="'discoverFilters.tabsLabel' | transloco"
-  class="glass-light inline-flex gap-1 rounded-full border border-primary-400/20 bg-surface-900/45 p-1"
+  class="flex max-w-130 gap-3 px-0.5 py-2"
   (keydown)="onKeydown($event)"
 >
   @for (tab of tabs; track tab) {
@@ -10,34 +10,28 @@
       role="tab"
       [id]="'discover-tab-' + tab"
       aria-controls="discover-results"
-      class="flex min-h-9 cursor-pointer items-center gap-2 rounded-full px-4 text-[15px] font-extrabold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-      [class.bg-primary-600]="kind() === tab"
-      [class.text-white]="kind() === tab"
-      [class.text-surface-400]="kind() !== tab"
-      [class.hover:text-surface-100]="kind() !== tab"
+      class="glass-light group flex min-h-16.5 min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-[22px] border border-primary-400/20 bg-surface-900/40 py-2 pr-3 pl-2.5 text-left text-surface-400 transition-[transform,border-color,background,box-shadow] duration-300 hover:border-primary-400/45 hover:text-surface-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-selected:-translate-y-0.5 aria-selected:border-primary-500 aria-selected:bg-linear-to-br aria-selected:from-primary-700/55 aria-selected:to-surface-900/50 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px_var(--color-primary-500),0_12px_30px_-12px_rgb(160_120_255/0.7)] motion-reduce:transition-none sm:min-h-19 sm:gap-3 sm:py-2.5 sm:pr-4 sm:pl-3"
       [attr.aria-selected]="kind() === tab"
       [tabindex]="kind() === tab ? 0 : -1"
       (click)="kindChange.emit(tab)"
     >
-      <span aria-hidden="true" class="relative hidden h-6 w-8 shrink-0 sm:block">
+      <span aria-hidden="true" class="relative h-11.5 w-15 shrink-0 sm:h-14 sm:w-19">
         @for (cover of fans()[tab]; track $index) {
           <span
-            class="absolute bottom-0 h-6 w-4 rounded-[3px] bg-cover bg-center ring-1 ring-surface-900"
-            [style.left.px]="$index * 7"
-            [style.rotate.deg]="fanTilts[$index]"
+            class="absolute bottom-0 h-9.5 w-7 rounded-[7px] border border-surface-50/30 bg-cover bg-center shadow-md shadow-black/50 brightness-80 saturate-70 transition-[transform,filter] duration-400 group-hover:brightness-100 group-hover:saturate-100 group-aria-selected:brightness-100 group-aria-selected:saturate-100 motion-reduce:transition-none sm:h-11.5 sm:w-8.5"
+            [class]="fanClasses[$index]"
             [style.background-image]="cover"
           ></span>
         }
       </span>
-      {{ 'discoverFilters.kind.' + tab | transloco }}
-      <span
-        class="inline-grid h-5 min-w-6 place-items-center rounded-full px-2 text-xs font-extrabold tabular-nums"
-        [class.bg-white]="kind() === tab"
-        [class.text-primary-800]="kind() === tab"
-        [class.bg-surface-800]="kind() !== tab"
-        [class.text-primary-300]="kind() !== tab"
-      >
-        {{ count(tab) }}
+      <span class="grid min-w-0 gap-0.5">
+        <b class="truncate text-[15px]/tight font-black text-inherit sm:text-[17px]/tight">
+          {{ 'discoverFilters.kind.' + tab | transloco }}
+        </b>
+        <small class="text-xs font-bold text-surface-400 group-aria-selected:text-primary-200">
+          <span class="font-black">{{ count(tab) }}</span>
+          {{ 'discoverFilters.titles' | transloco }}
+        </small>
       </span>
     </button>
   }

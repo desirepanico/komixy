@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { DiscoverFilters } from '@shared/models/discover-filters.model';
 import { DiscoverFiltersPanel, DiscoverToggle } from './discover-filters-panel';
 
@@ -58,14 +59,16 @@ describe('DiscoverFiltersPanel', () => {
   });
 
   it('per i manga mostra categoria, formato, stato, anno, volumi, tema e adulti', () => {
-    const sections = Array.from(html.querySelectorAll('h3')).map((h) => h.textContent?.trim());
+    const sections = Array.from(
+      html.querySelectorAll('section[aria-labelledby^="discover-sec-"] > h3'),
+    ).map((h) => h.id);
     expect(sections).toEqual([
-      'discoverFilters.sections.category',
-      'discoverFilters.sections.format',
-      'discoverFilters.sections.status',
-      'discoverFilters.sections.year',
-      'discoverFilters.sections.volumes',
-      'discoverFilters.sections.theme',
+      'discover-sec-category',
+      'discover-sec-format',
+      'discover-sec-status',
+      'discover-sec-year',
+      'discover-sec-volumes',
+      'discover-sec-theme',
     ]);
     expect(html.querySelector('input[role="switch"]')).not.toBeNull();
   });
@@ -91,7 +94,18 @@ describe('DiscoverFiltersPanel', () => {
     expect(fixture.componentInstance.period()).toEqual({ from: 1990, to: 1999 });
   });
 
-  it('l’interruttore degli adulti segnala il nuovo valore', async () => {
+  it('senza età verificata l’interruttore degli adulti apre la guida e non attiva il filtro', async () => {
+    const toggle = html.querySelector<HTMLInputElement>('input[role="switch"]')!;
+    toggle.checked = true;
+    toggle.dispatchEvent(new Event('change'));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.adult()).toBeNull();
+    expect(html.querySelector('#discover-guide')?.hasAttribute('inert')).toBe(false);
+    expect(toggle.checked).toBe(false);
+  });
+
+  it('con l’età verificata l’interruttore degli adulti segnala il nuovo valore', async () => {
+    TestBed.inject(AgeVerificationService).check(1, 1, 1990);
     const toggle = html.querySelector<HTMLInputElement>('input[role="switch"]')!;
     toggle.checked = true;
     toggle.dispatchEvent(new Event('change'));

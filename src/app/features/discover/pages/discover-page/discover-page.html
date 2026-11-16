@@ -1,4 +1,18 @@
 <section class="@container min-w-0 space-y-7 px-3 py-2 md:p-2">
+  <app-discover-dock
+    class="-mb-7"
+    [on]="dockOn()"
+    [kind]="filters().kind"
+    [comics]="catalog.toDiscover()"
+    [kindComics]="kindComics()"
+    [search]="filters().search"
+    [filterCount]="chipCount()"
+    [progress]="progress()"
+    (kindChange)="setKind($event)"
+    (searchChange)="setSearch($event)"
+    (openFilters)="panelOpen.set(true)"
+  />
+
   <header class="min-w-0">
     <p class="text-xs font-bold tracking-widest text-primary-300 uppercase">
       {{ 'discoverFilters.eyebrow' | transloco }}
@@ -8,11 +22,11 @@
     </h2>
   </header>
 
-  <!-- Resta in vista in cima mentre si scorre; sopra i 40rem le schede e la ricerca stanno sulla stessa riga -->
   <div
+    #toolbar
     role="search"
     [attr.aria-label]="'discoverFilters.searchLabel.' + filters().kind | transloco"
-    class="sticky top-0 z-20 -mx-3 -mt-4 grid gap-2.5 bg-surface-950/85 px-3 py-2 backdrop-blur-md md:-mx-2 md:px-2 @min-[40rem]:grid-cols-[auto_minmax(0,1fr)] @min-[40rem]:items-center @min-[40rem]:gap-x-4"
+    class="grid gap-2.5 @min-[40rem]:grid-cols-[auto_minmax(0,1fr)] @min-[40rem]:items-center @min-[40rem]:gap-x-4"
   >
     <app-discover-tabs
       [kind]="filters().kind"
@@ -25,6 +39,7 @@
     <div class="flex items-center gap-2">
       <app-discover-search
         class="flex-1 @min-[40rem]:max-w-170"
+        [shortcut]="!dockOn()"
         [value]="filters().search"
         [kind]="filters().kind"
         [comics]="kindComics()"

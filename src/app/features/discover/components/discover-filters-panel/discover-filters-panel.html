@@ -2,308 +2,423 @@
   #dialog
   class="fixed inset-x-0 top-auto bottom-0 m-0 hidden max-h-[88dvh] w-full max-w-none flex-col overflow-hidden rounded-t-3xl border border-primary-400/30 bg-surface-900 p-0 text-surface-50 shadow-2xl backdrop:bg-surface-950/70 backdrop:backdrop-blur-xs open:flex md:inset-y-0 md:right-0 md:left-auto md:h-dvh md:max-h-none md:w-[min(26rem,100%)] md:rounded-l-3xl md:rounded-tr-none"
   aria-labelledby="discover-filters-title"
-  (close)="open.set(false)"
+  (close)="onClosed()"
+  (cancel)="onCancel($event)"
   (click)="onBackdropClick($event)"
 >
-  <span
-    aria-hidden="true"
-    class="mx-auto mt-2.5 h-1.5 w-11 shrink-0 rounded-full bg-surface-600 md:hidden"
-  ></span>
-  <div class="flex items-center gap-1 py-3.5 pr-2.5 pl-5">
-    <h2 id="discover-filters-title" class="mr-auto text-base font-extrabold">
-      {{ 'discoverFilters.panel.title.' + filters().kind | transloco }}
-    </h2>
-    <button
-      type="button"
-      class="grid size-10 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-primary-300"
-      [attr.aria-label]="'discoverFilters.panel.close' | transloco"
-      (click)="open.set(false)"
-    >
-      <ng-icon name="matCloseOutline" size="20" aria-hidden="true" />
-    </button>
-  </div>
-
-  <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2.5 pb-2.5">
-    <section
-      class="border-b border-surface-800 px-2.5 pt-2 pb-3.5"
-      aria-labelledby="discover-sec-category"
-    >
-      <h3 id="discover-sec-category" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
-        <ng-icon
-          [name]="sectionIcons['category']"
-          size="18"
-          class="text-primary-300"
-          aria-hidden="true"
-        />
-        {{ 'discoverFilters.sections.' + categorySection() | transloco }}
-      </h3>
-      @if (filters().kind === 'manga') {
-        <div class="flex flex-wrap gap-2">
-          @for (value of options().category; track value) {
-            <button
-              type="button"
-              class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-              [class]="
-                selected('category', value)
-                  ? 'border-primary-500 bg-primary-900 text-white'
-                  : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
-              "
-              [attr.aria-pressed]="selected('category', value)"
-              (click)="valueToggle.emit({ key: 'category', value })"
-            >
-              {{ 'discoverFilters.options.category.' + value | transloco }}
-            </button>
-          }
-        </div>
-      } @else {
-        <div class="flex flex-wrap gap-2">
-          @for (value of options().category; track value) {
-            <button
-              type="button"
-              class="flex min-h-11.5 cursor-pointer items-center gap-2.5 rounded-full border py-1.5 pr-4.5 pl-2 text-[15px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-              [class]="
-                selected('category', value)
-                  ? 'border-primary-500 bg-primary-900 text-white'
-                  : 'border-surface-700 text-surface-50 hover:border-primary-400'
-              "
-              [attr.aria-pressed]="selected('category', value)"
-              (click)="valueToggle.emit({ key: 'category', value })"
-            >
-              <ng-icon
-                [name]="optionIcons.genre[value]"
-                size="20"
-                class="ml-1 text-primary-300"
-                aria-hidden="true"
-              />
-              {{ 'discoverFilters.options.category.' + value | transloco }}
-            </button>
-          }
-        </div>
-      }
-    </section>
-
-    <section
-      class="border-b border-surface-800 px-2.5 py-3.5"
-      aria-labelledby="discover-sec-format"
-    >
-      <h3 id="discover-sec-format" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
-        <ng-icon
-          [name]="sectionIcons['format']"
-          size="18"
-          class="text-primary-300"
-          aria-hidden="true"
-        />
-        {{ 'discoverFilters.sections.format' | transloco }}
-      </h3>
-      <div class="flex flex-wrap gap-2">
-        @for (value of options().format; track value) {
-          <button
-            type="button"
-            class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            [class]="
-              selected('format', value)
-                ? 'border-primary-500 bg-primary-900 text-white'
-                : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
-            "
-            [attr.aria-pressed]="selected('format', value)"
-            (click)="valueToggle.emit({ key: 'format', value })"
-          >
-            <ng-icon
-              [name]="optionIcons.format[value]"
-              size="16"
-              class="text-primary-300"
-              aria-hidden="true"
-            />
-            {{ 'discoverFilters.options.format.' + value | transloco }}
-          </button>
-        }
-      </div>
-    </section>
-
-    <section
-      class="border-b border-surface-800 px-2.5 py-3.5"
-      aria-labelledby="discover-sec-status"
-    >
-      <h3 id="discover-sec-status" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
-        <ng-icon
-          [name]="sectionIcons['status']"
-          size="18"
-          class="text-primary-300"
-          aria-hidden="true"
-        />
-        {{ 'discoverFilters.sections.status' | transloco }}
-      </h3>
-      <div class="flex flex-wrap gap-2">
-        @for (value of options().status; track value) {
-          <button
-            type="button"
-            class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            [class]="
-              selected('status', value)
-                ? 'border-primary-500 bg-primary-900 text-white'
-                : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
-            "
-            [attr.aria-pressed]="selected('status', value)"
-            (click)="valueToggle.emit({ key: 'status', value })"
-          >
-            <ng-icon
-              [name]="optionIcons.status[value]"
-              size="16"
-              class="text-primary-300"
-              aria-hidden="true"
-            />
-            {{ 'discoverFilters.options.status.' + value | transloco }}
-          </button>
-        }
-      </div>
-    </section>
-
-    <section class="border-b border-surface-800 px-2.5 py-3.5" aria-labelledby="discover-sec-year">
-      <h3 id="discover-sec-year" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
-        <ng-icon
-          [name]="sectionIcons['year']"
-          size="18"
-          class="text-primary-300"
-          aria-hidden="true"
-        />
-        {{ 'discoverFilters.sections.year' | transloco }}
-      </h3>
-      <div
-        class="flex flex-wrap gap-2"
-        role="group"
-        [attr.aria-label]="'discoverFilters.panel.period' | transloco"
+  <div
+    class="flex min-h-0 flex-1 flex-col transition-[transform,opacity] duration-500 motion-reduce:transition-none"
+    [class]="guideOpen() ? 'translate-x-[-14%] opacity-0' : ''"
+    [attr.inert]="guideOpen() ? '' : null"
+  >
+    <span
+      aria-hidden="true"
+      class="mx-auto mt-2.5 h-1.5 w-11 shrink-0 rounded-full bg-surface-600 md:hidden"
+    ></span>
+    <div class="flex items-center gap-1 py-3.5 pr-2.5 pl-5">
+      <h2 id="discover-filters-title" class="mr-auto text-base font-extrabold">
+        {{ 'discoverFilters.panel.title.' + filters().kind | transloco }}
+      </h2>
+      <button
+        type="button"
+        class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 px-2.5 text-xs font-extrabold tracking-wider text-primary-300 uppercase hover:text-white focus-visible:outline-2 focus-visible:outline-primary-300"
+        aria-haspopup="dialog"
+        aria-controls="discover-guide"
+        [attr.aria-expanded]="guideOpen()"
+        (click)="guideOpen.set(true)"
       >
-        @for (era of eras; track era.id) {
-          <button
-            type="button"
-            class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            [class]="
-              eraActive(era)
-                ? 'border-primary-500 bg-primary-900 text-white'
-                : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
-            "
-            [attr.aria-pressed]="eraActive(era)"
-            (click)="period.emit({ from: era.from, to: era.to })"
-          >
-            {{ 'discoverFilters.eras.' + era.id | transloco }}
-          </button>
-        }
-      </div>
-    </section>
+        <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
+        {{ 'discoverFilters.guide.title' | transloco }}
+      </button>
+      <button
+        type="button"
+        class="grid size-10 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-primary-300"
+        [attr.aria-label]="'discoverFilters.panel.close' | transloco"
+        (click)="open.set(false)"
+      >
+        <ng-icon name="matCloseOutline" size="20" aria-hidden="true" />
+      </button>
+    </div>
 
-    <section
-      class="border-b border-surface-800 px-2.5 py-3.5"
-      aria-labelledby="discover-sec-volumes"
-    >
-      <h3 id="discover-sec-volumes" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
-        <ng-icon
-          [name]="sectionIcons['volumes']"
-          size="18"
-          class="text-primary-300"
-          aria-hidden="true"
-        />
-        {{ 'discoverFilters.sections.volumes' | transloco }}
-      </h3>
-      <div class="grid gap-2" [class]="filters().kind === 'manga' ? 'grid-cols-3' : 'grid-cols-2'">
-        @for (value of options().volumes; track value) {
-          <button
-            type="button"
-            class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            [class]="
-              selected('volumes', value)
-                ? 'border-primary-500 bg-primary-900 text-white'
-                : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
-            "
-            [attr.aria-pressed]="selected('volumes', value)"
-            (click)="valueToggle.emit({ key: 'volumes', value })"
-          >
-            {{ 'discoverFilters.options.volumes.' + value | transloco }}
-          </button>
-        }
-      </div>
-    </section>
-
-    @if (filters().kind === 'manga') {
+    <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2.5 pb-2.5">
       <section
-        class="border-b border-surface-800 px-2.5 py-3.5"
-        aria-labelledby="discover-sec-theme"
+        class="border-b border-surface-800 px-2.5 pt-2 pb-3.5"
+        aria-labelledby="discover-sec-category"
       >
-        <h3 id="discover-sec-theme" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+        <h3
+          id="discover-sec-category"
+          class="mb-2.5 flex items-center gap-2 text-sm font-extrabold"
+        >
           <ng-icon
-            [name]="sectionIcons['theme']"
+            [name]="sectionIcons['category']"
             size="18"
             class="text-primary-300"
             aria-hidden="true"
           />
-          {{ 'discoverFilters.sections.theme' | transloco }}
-        </h3>
-        <div class="flex flex-wrap gap-2">
-          @for (value of options().theme; track value) {
+          {{ 'discoverFilters.sections.' + categorySection() | transloco }}
+          @if (filters().kind === 'manga') {
             <button
               type="button"
-              class="flex min-h-11.5 cursor-pointer items-center gap-2.5 rounded-full border py-1.5 pr-4.5 pl-2 text-[15px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+              class="ml-auto inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-400 hover:text-white focus-visible:outline-2 focus-visible:outline-primary-300"
+              aria-controls="discover-info-card"
+              [attr.aria-expanded]="infoOpen()"
+              (click)="infoOpen.set(!infoOpen())"
+            >
+              <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
+              {{
+                (infoOpen() ? 'discoverFilters.panel.hideInfo' : 'discoverFilters.panel.showInfo')
+                  | transloco
+              }}
+            </button>
+          }
+        </h3>
+        @if (filters().kind === 'manga') {
+          <div class="flex flex-wrap gap-2">
+            @for (value of options().category; track value) {
+              <button
+                type="button"
+                class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+                [class]="
+                  selected('category', value)
+                    ? 'border-primary-500 bg-primary-900 text-white'
+                    : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
+                "
+                [attr.aria-pressed]="selected('category', value)"
+                (click)="valueToggle.emit({ key: 'category', value })"
+              >
+                {{ 'discoverFilters.options.category.' + value | transloco }}
+              </button>
+            }
+          </div>
+          @if (infoOpen() && infoCategory()) {
+            <div
+              id="discover-info-card"
+              class="relative mt-3.5 overflow-hidden rounded-[18px] border border-primary-300/40 bg-[radial-gradient(110%_100%_at_0%_0%,rgb(208_188_255/0.22),transparent_62%),linear-gradient(160deg,#1a1630,#0f0d1c)] p-3.5 shadow-[0_12px_30px_-18px_rgb(208_188_255/0.75)]"
+            >
+              @if (filters().category.length > 1) {
+                <div
+                  role="tablist"
+                  [attr.aria-label]="'discoverFilters.panel.selectedCategories' | transloco"
+                  class="mb-3.5 inline-flex max-w-full flex-wrap gap-1 rounded-full border border-surface-700 bg-black/50 p-1"
+                >
+                  @for (value of filters().category; track value) {
+                    <button
+                      type="button"
+                      role="tab"
+                      class="inline-flex min-h-8.5 cursor-pointer items-center gap-1.75 rounded-full py-0 pr-3.5 pl-2.5 text-[13px] font-extrabold text-surface-400 hover:text-white focus-visible:outline-2 focus-visible:outline-primary-300 aria-selected:bg-primary-300/25 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px_rgb(208_188_255/0.7)]"
+                      [attr.aria-selected]="infoCategory() === value"
+                      (click)="infoCategory.set(value)"
+                    >
+                      <i
+                        aria-hidden="true"
+                        class="size-2 rounded-full bg-primary-300 shadow-[0_0_8px_var(--color-primary-300)]"
+                      ></i>
+                      {{ 'discoverFilters.options.category.' + value | transloco }}
+                    </button>
+                  }
+                </div>
+              }
+              <div class="flex items-center gap-4">
+                <span
+                  aria-hidden="true"
+                  class="relative block size-22 shrink-0 rounded-full drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-[spin_28s_linear_infinite] after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 motion-reduce:after:animate-none max-[420px]:size-18 [&>svg]:block [&>svg]:size-full"
+                  [innerHTML]="avatars.avatar(infoCategory())"
+                ></span>
+                <div class="min-w-0">
+                  <b class="block text-lg/tight font-black text-white">
+                    {{ 'discoverFilters.options.category.' + infoCategory() | transloco }}
+                  </b>
+                  <p class="mt-1 text-[13.5px]/snug text-surface-300">
+                    {{ 'discoverFilters.categoryInfo.' + infoCategory() + '.text' | transloco }}
+                  </p>
+                  <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+                    <span
+                      class="text-[11px] font-extrabold tracking-widest text-surface-500 uppercase"
+                    >
+                      {{ 'discoverFilters.panel.examples' | transloco }}
+                    </span>
+                    @for (
+                      example of (
+                        'discoverFilters.categoryInfo.' + infoCategory() + '.examples' | transloco
+                      ).split(', ');
+                      track example
+                    ) {
+                      <span
+                        class="rounded-full border border-primary-300/40 bg-black/50 px-2.5 py-0.5 text-xs font-bold text-surface-100"
+                        >{{ example }}</span
+                      >
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        } @else {
+          <div class="flex flex-wrap gap-2">
+            @for (value of options().category; track value) {
+              <button
+                type="button"
+                class="flex min-h-11.5 cursor-pointer items-center gap-2.5 rounded-full border py-1.5 pr-4.5 pl-2 text-[15px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+                [class]="
+                  selected('category', value)
+                    ? 'border-primary-500 bg-primary-900 text-white'
+                    : 'border-surface-700 text-surface-50 hover:border-primary-400'
+                "
+                [attr.aria-pressed]="selected('category', value)"
+                (click)="valueToggle.emit({ key: 'category', value })"
+              >
+                <ng-icon
+                  [name]="optionIcons.genre[value]"
+                  size="20"
+                  class="ml-1 text-primary-300"
+                  aria-hidden="true"
+                />
+                {{ 'discoverFilters.options.category.' + value | transloco }}
+              </button>
+            }
+          </div>
+        }
+      </section>
+
+      <section
+        class="border-b border-surface-800 px-2.5 py-3.5"
+        aria-labelledby="discover-sec-format"
+      >
+        <h3 id="discover-sec-format" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+          <ng-icon
+            [name]="sectionIcons['format']"
+            size="18"
+            class="text-primary-300"
+            aria-hidden="true"
+          />
+          {{ 'discoverFilters.sections.format' | transloco }}
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          @for (value of options().format; track value) {
+            <button
+              type="button"
+              class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
               [class]="
-                selected('theme', value)
+                selected('format', value)
                   ? 'border-primary-500 bg-primary-900 text-white'
-                  : 'border-surface-700 text-surface-50 hover:border-primary-400'
+                  : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
               "
-              [attr.aria-pressed]="selected('theme', value)"
-              (click)="valueToggle.emit({ key: 'theme', value })"
+              [attr.aria-pressed]="selected('format', value)"
+              (click)="valueToggle.emit({ key: 'format', value })"
             >
               <ng-icon
-                [name]="optionIcons.theme[value]"
-                size="20"
-                class="ml-1 text-primary-300"
+                [name]="optionIcons.format[value]"
+                size="16"
+                class="text-primary-300"
                 aria-hidden="true"
               />
-              {{ 'discoverFilters.options.theme.' + value | transloco }}
+              {{ 'discoverFilters.options.format.' + value | transloco }}
             </button>
           }
         </div>
       </section>
 
-      <section class="px-2.5 pt-3.5 pb-2">
-        <label
-          class="flex cursor-pointer items-center gap-3 rounded-2xl border border-surface-700 p-3.5 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-300"
-        >
-          <span
+      <section
+        class="border-b border-surface-800 px-2.5 py-3.5"
+        aria-labelledby="discover-sec-status"
+      >
+        <h3 id="discover-sec-status" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+          <ng-icon
+            [name]="sectionIcons['status']"
+            size="18"
+            class="text-primary-300"
             aria-hidden="true"
-            class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-pink-300/15 text-xs font-black text-pink-300"
-            >18+</span
-          >
-          <span class="grid min-w-0 flex-1 gap-0.5">
-            <b class="text-sm">{{ 'discoverFilters.panel.adult' | transloco }}</b>
-            <small id="discover-adult-hint" class="text-xs text-surface-400">{{
-              'discoverFilters.panel.adultHint' | transloco
-            }}</small>
-          </span>
-          <input
-            type="checkbox"
-            role="switch"
-            class="relative h-6.5 w-11.5 shrink-0 cursor-pointer appearance-none rounded-full bg-surface-700 transition-colors outline-none after:absolute after:top-0.75 after:left-0.75 after:size-5 after:rounded-full after:bg-white after:transition-transform checked:bg-primary-500 checked:after:translate-x-5"
-            aria-describedby="discover-adult-hint"
-            [checked]="filters().adult"
-            (change)="adultChange.emit($any($event.target).checked)"
           />
-        </label>
+          {{ 'discoverFilters.sections.status' | transloco }}
+        </h3>
+        <div class="flex flex-wrap gap-2">
+          @for (value of options().status; track value) {
+            <button
+              type="button"
+              class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+              [class]="
+                selected('status', value)
+                  ? 'border-primary-500 bg-primary-900 text-white'
+                  : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
+              "
+              [attr.aria-pressed]="selected('status', value)"
+              (click)="valueToggle.emit({ key: 'status', value })"
+            >
+              <ng-icon
+                [name]="optionIcons.status[value]"
+                size="16"
+                class="text-primary-300"
+                aria-hidden="true"
+              />
+              {{ 'discoverFilters.options.status.' + value | transloco }}
+            </button>
+          }
+        </div>
       </section>
-    }
+
+      <section
+        class="border-b border-surface-800 px-2.5 py-3.5"
+        aria-labelledby="discover-sec-year"
+      >
+        <h3 id="discover-sec-year" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+          <ng-icon
+            [name]="sectionIcons['year']"
+            size="18"
+            class="text-primary-300"
+            aria-hidden="true"
+          />
+          {{ 'discoverFilters.sections.year' | transloco }}
+        </h3>
+        <div
+          class="flex flex-wrap gap-2"
+          role="group"
+          [attr.aria-label]="'discoverFilters.panel.period' | transloco"
+        >
+          @for (era of eras; track era.id) {
+            <button
+              type="button"
+              class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+              [class]="
+                eraActive(era)
+                  ? 'border-primary-500 bg-primary-900 text-white'
+                  : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
+              "
+              [attr.aria-pressed]="eraActive(era)"
+              (click)="period.emit({ from: era.from, to: era.to })"
+            >
+              {{ 'discoverFilters.eras.' + era.id | transloco }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <section
+        class="border-b border-surface-800 px-2.5 py-3.5"
+        aria-labelledby="discover-sec-volumes"
+      >
+        <h3 id="discover-sec-volumes" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+          <ng-icon
+            [name]="sectionIcons['volumes']"
+            size="18"
+            class="text-primary-300"
+            aria-hidden="true"
+          />
+          {{ 'discoverFilters.sections.volumes' | transloco }}
+        </h3>
+        <div
+          class="grid gap-2"
+          [class]="filters().kind === 'manga' ? 'grid-cols-3' : 'grid-cols-2'"
+        >
+          @for (value of options().volumes; track value) {
+            <button
+              type="button"
+              class="min-h-10 cursor-pointer rounded-full border px-3.5 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+              [class]="
+                selected('volumes', value)
+                  ? 'border-primary-500 bg-primary-900 text-white'
+                  : 'border-surface-700 text-surface-300 hover:border-primary-400 hover:text-white'
+              "
+              [attr.aria-pressed]="selected('volumes', value)"
+              (click)="valueToggle.emit({ key: 'volumes', value })"
+            >
+              {{ 'discoverFilters.options.volumes.' + value | transloco }}
+            </button>
+          }
+        </div>
+      </section>
+
+      @if (filters().kind === 'manga') {
+        <section
+          class="border-b border-surface-800 px-2.5 py-3.5"
+          aria-labelledby="discover-sec-theme"
+        >
+          <h3 id="discover-sec-theme" class="mb-2.5 flex items-center gap-2 text-sm font-extrabold">
+            <ng-icon
+              [name]="sectionIcons['theme']"
+              size="18"
+              class="text-primary-300"
+              aria-hidden="true"
+            />
+            {{ 'discoverFilters.sections.theme' | transloco }}
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            @for (value of options().theme; track value) {
+              <button
+                type="button"
+                class="flex min-h-11.5 cursor-pointer items-center gap-2.5 rounded-full border py-1.5 pr-4.5 pl-2 text-[15px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+                [class]="
+                  selected('theme', value)
+                    ? 'border-primary-500 bg-primary-900 text-white'
+                    : 'border-surface-700 text-surface-50 hover:border-primary-400'
+                "
+                [attr.aria-pressed]="selected('theme', value)"
+                (click)="valueToggle.emit({ key: 'theme', value })"
+              >
+                <ng-icon
+                  [name]="optionIcons.theme[value]"
+                  size="20"
+                  class="ml-1 text-primary-300"
+                  aria-hidden="true"
+                />
+                {{ 'discoverFilters.options.theme.' + value | transloco }}
+              </button>
+            }
+          </div>
+        </section>
+
+        <section class="px-2.5 pt-3.5 pb-2">
+          <label
+            class="flex cursor-pointer items-center gap-3 rounded-2xl border border-surface-700 p-3.5 has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary-300"
+          >
+            <span
+              aria-hidden="true"
+              class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-pink-300/15 text-xs font-black text-pink-300"
+              >18+</span
+            >
+            <span class="grid min-w-0 flex-1 gap-0.5">
+              <b class="text-sm">{{ 'discoverFilters.panel.adult' | transloco }}</b>
+              <small id="discover-adult-hint" class="text-xs text-surface-400">{{
+                'discoverFilters.panel.adultHint' | transloco
+              }}</small>
+            </span>
+            <input
+              type="checkbox"
+              role="switch"
+              class="relative h-6.5 w-11.5 shrink-0 cursor-pointer appearance-none rounded-full bg-surface-700 transition-colors outline-none after:absolute after:top-0.75 after:left-0.75 after:size-5 after:rounded-full after:bg-white after:transition-transform checked:bg-primary-500 checked:after:translate-x-5"
+              aria-describedby="discover-adult-hint"
+              [checked]="filters().adult"
+              (change)="onAdultToggle($any($event.target))"
+            />
+          </label>
+        </section>
+      }
+    </div>
+
+    <div class="grid gap-1 border-t border-surface-800 px-3.5 pt-2.5 pb-4">
+      <button
+        type="button"
+        class="min-h-10 cursor-pointer justify-self-center px-2.5 text-sm font-bold text-primary-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-primary-300"
+        (click)="clear.emit()"
+      >
+        {{ 'discoverFilters.clearFilters' | transloco }}
+      </button>
+      <button
+        type="button"
+        class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+        (click)="open.set(false)"
+      >
+        {{ 'discoverFilters.panel.show' | transloco: { count: resultCount() } }}
+      </button>
+    </div>
   </div>
 
-  <div class="grid gap-1 border-t border-surface-800 px-3.5 pt-2.5 pb-4">
-    <button
-      type="button"
-      class="min-h-10 cursor-pointer justify-self-center px-2.5 text-sm font-bold text-primary-300 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-primary-300"
-      (click)="clear.emit()"
-    >
-      {{ 'discoverFilters.clearFilters' | transloco }}
-    </button>
-    <button
-      type="button"
-      class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-      (click)="open.set(false)"
-    >
-      {{ 'discoverFilters.panel.show' | transloco: { count: resultCount() } }}
-    </button>
-  </div>
+  <app-discover-guide
+    [open]="guideOpen()"
+    [filters]="filters()"
+    [resultCount]="resultCount()"
+    (back)="guideOpen.set(false)"
+    (valueToggle)="valueToggle.emit($event)"
+    (adultChange)="adultChange.emit($event)"
+    (clear)="clear.emit()"
+  />
 </dialog>

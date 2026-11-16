@@ -9,7 +9,8 @@
     #field
     type="search"
     role="combobox"
-    class="glass-light h-11 w-full rounded-full border border-primary-400/20 bg-surface-900/45 pr-20 pl-10 text-base text-ellipsis text-surface-50 placeholder:text-surface-500 focus-visible:border-primary-400 focus-visible:ring-3 focus-visible:ring-primary-500/20 focus-visible:outline-0 [&::-webkit-search-cancel-button]:hidden"
+    [class.glass-light]="!compact()"
+    class="h-11 w-full rounded-full border border-primary-400/20 bg-surface-900/45 pr-20 pl-10 text-base text-ellipsis text-surface-50 group-data-compact/search:h-10 group-data-compact/search:border-primary-400/30 group-data-compact/search:bg-white/6 group-data-compact/search:text-sm group-data-compact/search:shadow-none placeholder:text-surface-500 focus-visible:border-primary-400 focus-visible:ring-3 focus-visible:ring-primary-500/20 focus-visible:outline-0 [&::-webkit-search-cancel-button]:hidden"
     aria-autocomplete="list"
     aria-keyshortcuts="Control+K Meta+K"
     aria-controls="discover-search-list"

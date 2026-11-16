@@ -55,8 +55,8 @@ describe('DiscoverTabs', () => {
 
   it('mostra le due sezioni con il numero dei titoli', () => {
     expect(tabs().map((t) => t.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
-      'discoverFilters.kind.manga 12',
-      'discoverFilters.kind.comic 3',
+      'discoverFilters.kind.manga 12 discoverFilters.titles',
+      'discoverFilters.kind.comic 3 discoverFilters.titles',
     ]);
   });
 

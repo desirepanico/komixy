@@ -331,7 +331,11 @@
       "period": "Release period",
       "adult": "Show adult content",
       "adultHint": "Also includes 18+ titles. Requires a profile with verified age.",
-      "show": "Show {{count}} results"
+      "show": "Show {{count}} results",
+      "hideInfo": "Hide description",
+      "showInfo": "Show description",
+      "selectedCategories": "Selected categories",
+      "examples": "Examples"
     },
     "search": {
       "label": "Search by title or author",
@@ -377,6 +381,188 @@
       "removeSearch": "Remove the search · {{count}} volumes",
       "removeFilter": "Remove “{{section}}” · {{count}} volumes",
       "reset": "Reset everything"
+    },
+    "titles": "titles",
+    "categoryInfo": {
+      "shonen": {
+        "text": "Manga for teenage boys, with adventure, action, personal growth and friendship.",
+        "examples": "One Piece, Naruto, Jujutsu Kaisen"
+      },
+      "kodomo": {
+        "text": "Stories for the youngest, with simple messages and colorful art.",
+        "examples": "Doraemon, Chibi Maruko-chan"
+      },
+      "shojo": {
+        "text": "Made for girls, with feelings, friendships and personal growth.",
+        "examples": "Sailor Moon, Fruits Basket"
+      },
+      "seinen": {
+        "text": "Aimed at adults, with more mature and complex stories.",
+        "examples": "Berserk, Vagabond, Monster"
+      },
+      "josei": {
+        "text": "For young adult women, with realistic relationships and daily life.",
+        "examples": "Paradise Kiss, Honey and Clover"
+      }
+    },
+    "dock": {
+      "label": "Quick filters",
+      "section": "Section"
+    },
+    "guide": {
+      "title": "Filters guide",
+      "back": "Back to filters",
+      "intro": "Learn how each filter works to quickly find the perfect {{noun}} in our vast intergalactic library. Tap a card to turn the filter on or off.",
+      "noun": {
+        "manga": "manga",
+        "comic": "comic"
+      },
+      "categories": "Category guide",
+      "genres": "Genre guide",
+      "examples": "Examples",
+      "example": "Example",
+      "examplesShort": "E.g.",
+      "statusLabel": "Series status",
+      "adultTitle": "Adult content (18+)",
+      "adultText": "Safety is our priority. Adult titles include graphic violence, explicit sexual themes or strong language. They are hidden from general browsing by default. Make sure your profile age is verified to access restricted titles.",
+      "verify": "Verify age",
+      "verified": "Age verified",
+      "birth": "Date of birth",
+      "day": "Day",
+      "month": "Month",
+      "year": "Year",
+      "dayPlaceholder": "DD",
+      "monthPlaceholder": "MM",
+      "yearPlaceholder": "YYYY",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "ageNote": "We don't store your date of birth: we only keep the result, adult or not.",
+      "ageMinor": "You must be an adult to see 18+ titles.",
+      "ageInvalid": "Enter a valid date of birth.",
+      "active": "active filters",
+      "reset": "Reset",
+      "info": {
+        "category": {
+          "shonen": {
+            "text": "Manga for teenage boys, with adventure, action, personal growth and friendship.",
+            "example": "One Piece, Naruto, Jujutsu Kaisen"
+          },
+          "kodomo": {
+            "text": "Stories for the youngest, with simple messages and colorful art.",
+            "example": "Doraemon, Chibi Maruko-chan"
+          },
+          "shojo": {
+            "text": "Made for girls, with feelings, friendships and personal growth.",
+            "example": "Sailor Moon, Fruits Basket"
+          },
+          "seinen": {
+            "text": "Aimed at adults, with more mature and complex stories.",
+            "example": "Berserk, Vagabond, Monster"
+          },
+          "josei": {
+            "text": "For young adult women, with realistic relationships and daily life.",
+            "example": "Paradise Kiss, Honey and Clover"
+          },
+          "superheroes": {
+            "text": "Heroes with powers and secret identities, from Marvel and DC to auteur comics.",
+            "example": "Watchmen, Batman: Year One"
+          },
+          "sciFi": {
+            "text": "Distant futures, space, technology and dystopian societies.",
+            "example": "Saga, V for Vendetta"
+          },
+          "fantasy": {
+            "text": "Worlds of magic, dreams and fantastic creatures.",
+            "example": "Sandman, Saga"
+          },
+          "horror": {
+            "text": "Fear and unsettling atmospheres.",
+            "example": "Sandman, Dylan Dog"
+          },
+          "noir": {
+            "text": "Investigations, crime, conspiracies and dark moods.",
+            "example": "V for Vendetta, Batman: Year One"
+          },
+          "historical": {
+            "text": "Stories about real events or past eras, and the author's autobiographical tales.",
+            "example": "Maus, Persepolis"
+          },
+          "humor": {
+            "text": "Comedies, irony and satire.",
+            "example": "La profezia dell'armadillo"
+          }
+        },
+        "format": {
+          "series": {
+            "text": "Manga made of many chapters published over time, with a story that unfolds across one or more volumes.",
+            "example": "One Piece, Naruto, Attack on Titan"
+          },
+          "oneShot": {
+            "text": "Self-contained manga told in a single chapter or volume, ideal for a complete story in little time.",
+            "example": "Look Back, Goodbye, Eri"
+          },
+          "graphicNovel": {
+            "text": "Long, complete stories in a single volume, often by a single author.",
+            "example": "Maus, Persepolis"
+          },
+          "omnibus": {
+            "text": "Collections of several issues or volumes in a single edition.",
+            "example": "Sandman"
+          }
+        },
+        "theme": {
+          "action": {
+            "text": "Fights, missions, journeys and goals to reach.",
+            "example": "One Piece"
+          },
+          "romance": {
+            "text": "Romantic relationships, falling in love and emotional conflict.",
+            "example": "Fruits Basket"
+          },
+          "fantasy": {
+            "text": "Magic, imaginary worlds and extraordinary creatures.",
+            "example": "Fairy Tail"
+          },
+          "sciFi": {
+            "text": "Advanced technology, robots, the future and technological wars.",
+            "example": "Neon Genesis Evangelion"
+          },
+          "horror": {
+            "text": "Fear, tension and supernatural or disturbing elements.",
+            "example": "Tokyo Ghoul"
+          },
+          "mystery": {
+            "text": "Investigations, secrets and puzzles to solve.",
+            "example": "Detective Conan"
+          },
+          "comedy": {
+            "text": "Funny situations, gags and irony.",
+            "example": "Gintama"
+          },
+          "sport": {
+            "text": "Competitions, training, teamwork and discipline.",
+            "example": "Haikyuu!!"
+          },
+          "sliceOfLife": {
+            "text": "Everyday life, ordinary relationships and personal growth.",
+            "example": "Barakamon"
+          },
+          "isekai": {
+            "text": "A character is transported to another world.",
+            "example": "Re:Zero"
+          }
+        },
+        "status": {
+          "completed": {
+            "manga": "Finished: all volumes are out.",
+            "comic": "Finished: all volumes are out."
+          },
+          "ongoing": {
+            "manga": "Not finished yet: new volumes may come out.",
+            "comic": "Not finished yet: new issues may come out."
+          }
+        }
+      }
     }
   }
 }
