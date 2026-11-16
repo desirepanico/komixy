@@ -1,5 +1,5 @@
 <div
-  class="group/dock absolute inset-x-0 top-2 mx-auto flex w-[calc(100%-1rem)] max-w-xl items-center gap-2 rounded-full border border-primary-300/30 bg-surface-900/85 p-1.5 shadow-xl backdrop-blur-md transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.9,0.3,1.25)] motion-reduce:transition-none"
+  class="group/dock absolute inset-x-0 top-2 isolate mx-auto flex w-[calc(100%-1rem)] max-w-xl items-center gap-2 rounded-full p-1.5 transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.9,0.3,1.25)] motion-reduce:transition-none"
   [class]="
     visible()
       ? 'translate-y-0 scale-100 opacity-100'
@@ -9,6 +9,11 @@
   role="toolbar"
   [attr.aria-label]="'discover.dock.label' | transloco"
 >
+  <!-- Il vetro sta su un livello a parte: un backdrop-filter sull'isola toglierebbe la sfocatura alla tendina della ricerca -->
+  <span
+    class="pointer-events-none absolute inset-0 -z-10 rounded-full border border-primary-300/30 bg-surface-900/85 shadow-xl backdrop-blur-md"
+    aria-hidden="true"
+  ></span>
   <!-- Sotto i 640px, con del testo nel campo (anche a ricerca applicata) le schede lasciano il posto alla ricerca -->
   <div
     class="group-has-[input:focus]/dock:hidden max-sm:group-has-[input:not(:placeholder-shown)]/dock:hidden"

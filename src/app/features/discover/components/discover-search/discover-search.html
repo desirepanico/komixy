@@ -1,14 +1,15 @@
 <div
   #root
-  class="group relative isolate flex items-center gap-1 rounded-full pr-1 pl-3.5"
+  class="group isolate flex items-center gap-1 rounded-full pr-1 pl-3.5"
   [class.z-40]="open()"
   [class]="
     compact()
       ? 'h-10 border border-primary-400/30 bg-white/6 transition-colors duration-200 focus-within:border-primary-400 focus-within:bg-surface-950/50 motion-reduce:transition-none'
-      : 'h-11'
+      : 'relative h-11'
   "
   (focusout)="onFocusOut($event, root)"
 >
+  <!-- Nell'isola il root non è `relative`: la tendina si allarga a tutta l'isola, non solo al campo -->
   <!-- Il vetro sta su un livello a parte: un backdrop-filter sul contenitore toglierebbe la sfocatura alla tendina -->
   @if (!compact()) {
     <span
@@ -44,6 +45,7 @@
     (click)="open.set(true)"
     (keydown)="onKeydown($event)"
     class="h-full min-w-0 flex-1 bg-transparent px-2 text-base text-surface-50 placeholder:text-surface-300 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+    [class]="compact() ? 'max-sm:pl-0.5 max-sm:placeholder:text-[13px]' : ''"
   />
   @if (!draft() && !open()) {
     <span class="mr-2 hidden shrink-0 items-center gap-1 md:flex" aria-hidden="true">
@@ -69,25 +71,22 @@
   }
   @if (open()) {
     <div
-      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-drop-in flex-col overflow-hidden rounded-[18px] border border-primary-400/30 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] motion-reduce:animate-none md:max-h-100"
-      [class]="
-        compact() ? 'bg-[#16132a]' : 'bg-surface-900/55 backdrop-blur-[28px] backdrop-saturate-150'
-      "
+      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-drop-in flex-col overflow-hidden rounded-[18px] border border-primary-400/30 bg-surface-900/55 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] backdrop-blur-[28px] backdrop-saturate-150 motion-reduce:animate-none md:max-h-100"
       (mousedown)="$event.preventDefault()"
     >
       @if (recents().length) {
         <div
-          class="flex shrink-0 items-center justify-between bg-surface-950/25 px-4 pt-3 pb-2 shadow-[0_1px_0] shadow-surface-50/8"
+          class="flex shrink-0 items-center justify-between gap-3 bg-surface-950/25 px-4 pt-3 pb-2 shadow-[0_1px_0] shadow-surface-50/8"
         >
           <span
-            class="text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
+            class="text-[11px] font-extrabold tracking-wider whitespace-nowrap text-surface-300 uppercase sm:text-xs sm:tracking-widest"
           >
             {{ 'discover.search.recent' | transloco }}
           </span>
           <button
             type="button"
             (click)="clearRecents()"
-            class="min-h-7 cursor-pointer text-sm font-bold whitespace-nowrap text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            class="min-h-7 cursor-pointer text-[13px] font-bold whitespace-nowrap text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 sm:text-sm"
           >
             {{ 'discover.search.clearRecent' | transloco }}
           </button>
