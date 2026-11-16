@@ -68,6 +68,8 @@ export class DiscoverFiltersPanel {
   protected readonly view = signal<'filters' | 'guide'>('filters');
   protected readonly askAge = signal<boolean>(false);
   protected readonly infoOpen = signal<boolean>(true);
+  /** Tornando dalla guida la vista dei filtri rientra da sinistra */
+  protected readonly returned = signal<boolean>(false);
   /** La categoria della scheda informativa: l'ultima scelta, o la prima */
   protected readonly infoCategory = linkedSignal<ComicCategory>(
     () => this.filters().categories.at(-1) ?? CATEGORY_OPTIONS.manga[0],
@@ -174,10 +176,16 @@ export class DiscoverFiltersPanel {
 
   protected openGuide(): void {
     this.askAge.set(false);
+    this.returned.set(false);
     this.view.set('guide');
   }
 
+  protected examples(text: string): string[] {
+    return text.split(', ');
+  }
+
   protected close(): void {
+    this.returned.set(false);
     this.open.set(false);
     this.view.set('filters');
   }

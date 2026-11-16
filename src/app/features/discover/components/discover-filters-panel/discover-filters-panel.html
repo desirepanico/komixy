@@ -12,234 +12,273 @@
         [items]="items()"
         [askAge]="askAge()"
         (filtersChange)="filtersChange.emit($event)"
-        (back)="view.set('filters')"
+        (back)="returned.set(true); view.set('filters')"
         (done)="close()"
       />
     } @else {
       <div
-        class="mx-auto mt-2.5 h-1.25 w-11 rounded-full bg-surface-600 md:hidden"
-        aria-hidden="true"
-      ></div>
-      <header class="flex items-center gap-1 px-5 pt-3.5 pb-1.5">
-        <h2 id="discover-filters-title" class="mr-auto text-base font-extrabold text-surface-50">
-          {{ 'discover.filters.title' + (isManga() ? 'Manga' : 'Comic') | transloco }}
-        </h2>
-        <button
-          type="button"
-          (click)="openGuide()"
-          class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 px-2.5 text-xs font-extrabold tracking-wider text-primary-300 uppercase hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-        >
-          <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
-          {{ 'discover.filters.guide' | transloco }}
-        </button>
-        <button
-          type="button"
-          (click)="close()"
-          [attr.aria-label]="'discover.filters.close' | transloco"
-          class="grid size-10 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-        >
-          <ng-icon name="matCloseOutline" size="20" aria-hidden="true" />
-        </button>
-      </header>
-
-      <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2.5 pb-2.5">
-        @for (view of facets(); track view.facet) {
-          <section
-            class="border-b border-surface-800 px-2.5 pt-2 pb-3.5 last:border-b-0"
-            [attr.aria-labelledby]="'discover-group-' + view.facet"
+        class="flex min-h-0 flex-1 flex-col motion-reduce:animate-none"
+        [class.animate-filters-back]="returned()"
+      >
+        <div
+          class="mx-auto mt-2.5 h-1.25 w-11 rounded-full bg-surface-600 md:hidden"
+          aria-hidden="true"
+        ></div>
+        <header class="flex items-center gap-1 px-5 pt-3.5 pb-1.5">
+          <h2 id="discover-filters-title" class="mr-auto text-base font-extrabold text-surface-50">
+            {{ 'discover.filters.title' + (isManga() ? 'Manga' : 'Comic') | transloco }}
+          </h2>
+          <button
+            type="button"
+            (click)="openGuide()"
+            class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 px-2.5 text-xs font-extrabold tracking-wider text-primary-300 uppercase hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
-            <div class="mb-2.5 flex min-h-7 items-center justify-between gap-2">
-              <h3
-                [id]="'discover-group-' + view.facet"
-                class="flex items-center gap-2 text-sm font-extrabold text-surface-50"
-              >
-                <ng-icon [name]="view.icon" size="18" class="text-primary-300" aria-hidden="true" />
-                {{ view.titleKey | transloco }}
-                @if (selectedCount(view) > 0) {
-                  <span
-                    class="grid h-4.5 min-w-4.5 place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950"
-                  >
-                    {{ selectedCount(view) }}
-                  </span>
-                }
-              </h3>
-              @if (view.facet === 'categories' && isManga() && view.selected.length) {
-                <button
-                  type="button"
-                  aria-controls="discover-info-card"
-                  [attr.aria-expanded]="infoOpen()"
-                  (click)="infoOpen.set(!infoOpen())"
-                  class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-                >
-                  <ng-icon name="matInfoOutline" size="16" aria-hidden="true" />
-                  {{
-                    (infoOpen() ? 'discover.filters.infoHide' : 'discover.filters.infoShow')
-                      | transloco
-                  }}
-                </button>
-              }
-            </div>
+            <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
+            {{ 'discover.filters.guide' | transloco }}
+          </button>
+          <button
+            type="button"
+            (click)="close()"
+            [attr.aria-label]="'discover.filters.close' | transloco"
+            class="grid size-10 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            <ng-icon name="matCloseOutline" size="20" aria-hidden="true" />
+          </button>
+        </header>
 
-            <div
-              role="group"
+        <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2.5 pb-2.5">
+          @for (view of facets(); track view.facet) {
+            <section
+              class="border-b border-surface-800 px-2.5 pt-2 pb-3.5 last:border-b-0"
               [attr.aria-labelledby]="'discover-group-' + view.facet"
-              [class]="
-                view.style === 'grid'
-                  ? isManga()
-                    ? 'grid grid-cols-3 gap-2'
-                    : 'grid grid-cols-2 gap-2'
-                  : 'flex flex-wrap gap-2'
-              "
             >
-              @for (value of view.values; track value) {
-                @if (view.style === 'cards') {
-                  <button
-                    type="button"
-                    [attr.aria-pressed]="isSelected(view, value)"
-                    [disabled]="isDisabled(view, value)"
-                    (click)="toggle(view, value)"
-                    class="group flex min-h-11.5 max-w-full cursor-pointer items-center gap-2.5 rounded-full border border-surface-700 py-1.5 pr-4.5 pl-2 text-left text-sm font-bold text-surface-50 hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-primary-900 aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500"
-                  >
-                    <span class="grid size-7.5 shrink-0 place-items-center text-primary-300">
-                      <ng-icon
-                        [name]="view.valueIcons[value] ?? view.icon"
-                        size="18"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    {{ 'discover.options.' + view.facet + '.' + value | transloco }}
-                  </button>
-                } @else {
-                  <button
-                    type="button"
-                    [attr.aria-pressed]="isSelected(view, value)"
-                    [disabled]="isDisabled(view, value)"
-                    (click)="toggle(view, value)"
-                    class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border border-surface-700 px-3.5 text-sm font-bold text-surface-300 hover:border-primary-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-primary-900 aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500"
-                    [class.justify-center]="view.style === 'grid'"
-                  >
-                    @if (view.valueIcons[value]) {
-                      <ng-icon
-                        [name]="view.valueIcons[value]"
-                        size="16"
-                        class="text-primary-300"
-                        aria-hidden="true"
-                      />
+              <div class="mb-2.5 flex min-h-7 items-center justify-between gap-2">
+                <h3
+                  [id]="'discover-group-' + view.facet"
+                  class="flex items-center gap-2 text-sm font-extrabold text-surface-50"
+                >
+                  <ng-icon
+                    [name]="view.icon"
+                    size="18"
+                    class="text-primary-300"
+                    aria-hidden="true"
+                  />
+                  {{ view.titleKey | transloco }}
+                  @if (selectedCount(view) > 0) {
+                    @for (n of [selectedCount(view)]; track n) {
+                      <span
+                        class="grid h-4.5 min-w-4.5 animate-bump place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950 motion-reduce:animate-none"
+                      >
+                        {{ n }}
+                      </span>
                     }
-                    {{ 'discover.options.' + view.facet + '.' + value | transloco }}
+                  }
+                </h3>
+                @if (view.facet === 'categories' && isManga() && view.selected.length) {
+                  <button
+                    type="button"
+                    aria-controls="discover-info-card"
+                    [attr.aria-expanded]="infoOpen()"
+                    (click)="infoOpen.set(!infoOpen())"
+                    class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                  >
+                    <ng-icon name="matInfoOutline" size="16" aria-hidden="true" />
+                    {{
+                      (infoOpen() ? 'discover.filters.infoHide' : 'discover.filters.infoShow')
+                        | transloco
+                    }}
                   </button>
                 }
-              }
-            </div>
+              </div>
 
-            @if (view.facet === 'categories' && isManga() && view.selected.length && infoOpen()) {
               <div
-                id="discover-info-card"
-                class="mt-3.5 rounded-2xl border border-primary-400/30 bg-surface-950 p-3.5"
+                role="group"
+                [attr.aria-labelledby]="'discover-group-' + view.facet"
+                [class]="
+                  view.style === 'grid'
+                    ? isManga()
+                      ? 'grid grid-cols-3 gap-2'
+                      : 'grid grid-cols-2 gap-2'
+                    : 'flex flex-wrap gap-2'
+                "
               >
-                <div
-                  class="mb-3 flex flex-wrap gap-1.5 border-b border-surface-800 pb-3"
-                  role="group"
-                  [attr.aria-label]="'discover.filters.infoTabs' | transloco"
-                >
-                  @for (category of view.selected; track category) {
+                @for (value of view.values; track value) {
+                  @if (view.style === 'cards') {
                     <button
                       type="button"
-                      [attr.aria-pressed]="infoCategory() === category"
-                      (click)="infoCategory.set($any(category))"
-                      class="min-h-8.5 cursor-pointer rounded-full border border-surface-700 px-3 text-[13px] font-bold text-surface-300 hover:border-primary-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:border-primary-500 aria-pressed:bg-primary-900 aria-pressed:text-white"
+                      [attr.aria-pressed]="isSelected(view, value)"
+                      [disabled]="isDisabled(view, value)"
+                      (click)="toggle(view, value)"
+                      class="group relative flex min-h-11.5 max-w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-full border border-surface-700 py-1.5 pr-4.5 pl-2 text-left text-sm font-bold text-surface-50 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-primary-900 aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
                     >
-                      {{ 'discover.options.categories.' + category | transloco }}
+                      <span class="grid size-7.5 shrink-0 place-items-center text-primary-300">
+                        <ng-icon
+                          [name]="view.valueIcons[value] ?? view.icon"
+                          size="18"
+                          aria-hidden="true"
+                        />
+                      </span>
+                      {{ 'discover.options.' + view.facet + '.' + value | transloco }}
+                    </button>
+                  } @else {
+                    <button
+                      type="button"
+                      [attr.aria-pressed]="isSelected(view, value)"
+                      [disabled]="isDisabled(view, value)"
+                      (click)="toggle(view, value)"
+                      class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border border-surface-700 px-3.5 text-sm font-bold text-surface-300 hover:border-primary-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-primary-900 aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500"
+                      [class.justify-center]="view.style === 'grid'"
+                    >
+                      @if (view.valueIcons[value]) {
+                        <ng-icon
+                          [name]="view.valueIcons[value]"
+                          size="16"
+                          class="text-primary-300"
+                          aria-hidden="true"
+                        />
+                      }
+                      {{ 'discover.options.' + view.facet + '.' + value | transloco }}
                     </button>
                   }
-                </div>
-                <div class="flex items-center gap-3">
-                  @if (infoAvatar()) {
-                    <span
-                      class="block size-19 shrink-0"
-                      aria-hidden="true"
-                      [innerHTML]="infoAvatar()"
-                    ></span>
-                  }
-                  <div class="min-w-0">
-                    <b class="text-sm text-surface-50">{{
-                      'discover.options.categories.' + infoCategory() | transloco
-                    }}</b>
-                    <p class="mt-0.5 text-[13px]/snug text-surface-300">
-                      {{ 'discover.guide.info.categories.' + infoCategory() + '.text' | transloco }}
-                    </p>
-                    <p class="mt-1 text-[13px] text-surface-300">
-                      <span class="font-bold text-primary-300"
-                        >{{ 'discover.guide.examples' | transloco }}:</span
-                      >
-                      {{
-                        'discover.guide.info.categories.' + infoCategory() + '.example' | transloco
-                      }}
-                    </p>
-                  </div>
-                </div>
+                }
               </div>
-            }
-          </section>
-        }
 
-        @if (showAdultOption()) {
-          <section class="px-2.5 pt-2 pb-3.5">
-            <button
-              type="button"
-              role="switch"
-              [attr.aria-checked]="filters().showAdult"
-              (click)="toggleAdult()"
-              class="flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-surface-700 p-3.5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            >
-              <span
-                class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-pink-300/15 text-xs font-black text-pink-200"
-                aria-hidden="true"
-                >18+</span
-              >
-              <span class="grid min-w-0 flex-1 gap-0.5">
-                <b class="text-sm text-surface-50">{{
-                  'discover.options.showAdult' | transloco
-                }}</b>
-                <small class="text-xs text-surface-300">{{
-                  'discover.filters.adultHint' | transloco
-                }}</small>
-              </span>
-              <span
-                class="relative h-6.5 w-11.5 shrink-0 rounded-full transition-colors"
-                [class]="filters().showAdult ? 'bg-primary-500' : 'bg-surface-700'"
-                aria-hidden="true"
+              @if (view.facet === 'categories' && isManga() && view.selected.length && infoOpen()) {
+                <div
+                  id="discover-info-card"
+                  class="relative mt-3.5 overflow-hidden rounded-2xl border border-primary-300/40 bg-[radial-gradient(110%_100%_at_0%_0%,rgb(208_188_255/0.22),transparent_62%),linear-gradient(160deg,#1a1630,#0f0d1c)] p-3.5 shadow-[0_12px_30px_-18px] shadow-primary-300/75"
+                >
+                  <span
+                    class="pointer-events-none absolute inset-0 bg-[radial-gradient(1px_1px_at_78%_16%,#fff_55%,transparent_60%),radial-gradient(1.4px_1.4px_at_93%_42%,#e7dbff_55%,transparent_60%),radial-gradient(1px_1px_at_66%_84%,#fff_55%,transparent_60%),radial-gradient(1px_1px_at_88%_92%,#e7dbff_55%,transparent_60%),radial-gradient(1px_1px_at_55%_12%,#e7dbff_55%,transparent_60%)] opacity-75"
+                    aria-hidden="true"
+                  ></span>
+                  @if (view.selected.length > 1) {
+                    <div
+                      class="relative mb-3.5 inline-flex max-w-full flex-wrap gap-1 rounded-full border border-surface-700 bg-surface-950/65 p-1"
+                      role="group"
+                      [attr.aria-label]="'discover.filters.infoTabs' | transloco"
+                    >
+                      @for (category of view.selected; track category) {
+                        <button
+                          type="button"
+                          [attr.aria-pressed]="infoCategory() === category"
+                          (click)="infoCategory.set($any(category))"
+                          class="inline-flex min-h-8.5 cursor-pointer items-center gap-1.75 rounded-full pr-3.5 pl-2.75 text-[13px] font-extrabold text-surface-400 transition-[background-color,color,box-shadow] duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:bg-[#4d446a] aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px,0_0_16px_-4px] aria-pressed:shadow-primary-300/70 motion-reduce:transition-none"
+                        >
+                          <span
+                            class="size-2 rounded-full bg-primary-300 shadow-[0_0_8px] shadow-primary-300"
+                            aria-hidden="true"
+                          ></span>
+                          {{ 'discover.options.categories.' + category | transloco }}
+                        </button>
+                      }
+                    </div>
+                  }
+                  @for (category of [infoCategory()]; track category) {
+                    <div
+                      class="relative flex animate-info-in items-center gap-4 motion-reduce:animate-none max-[420px]:gap-3"
+                    >
+                      @if (infoAvatar()) {
+                        <span
+                          class="relative block size-22 shrink-0 drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-orbit after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 after:content-[''] motion-reduce:after:animate-none max-[420px]:size-18 [&>svg]:size-full"
+                          aria-hidden="true"
+                          [innerHTML]="infoAvatar()"
+                        ></span>
+                      }
+                      <div class="min-w-0">
+                        <b class="block text-lg/tight font-black text-white">{{
+                          'discover.options.categories.' + category | transloco
+                        }}</b>
+                        <p class="mt-1 text-[13.5px]/snug text-surface-300">
+                          {{ 'discover.guide.info.categories.' + category + '.text' | transloco }}
+                        </p>
+                        <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+                          <span
+                            class="text-[11px] font-extrabold tracking-widest text-surface-500 uppercase"
+                            >{{ 'discover.guide.examples' | transloco }}</span
+                          >
+                          @for (
+                            example of examples(
+                              'discover.guide.info.categories.' + category + '.example' | transloco
+                            );
+                            track example
+                          ) {
+                            <span
+                              class="rounded-full border border-primary-300/40 bg-surface-950/50 px-2.5 py-0.75 text-xs font-bold text-surface-100"
+                              >{{ example }}</span
+                            >
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </section>
+          }
+
+          @if (showAdultOption()) {
+            <section class="px-2.5 pt-2 pb-3.5">
+              <button
+                type="button"
+                role="switch"
+                [attr.aria-checked]="filters().showAdult"
+                (click)="toggleAdult()"
+                class="flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-surface-700 p-3.5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
               >
                 <span
-                  class="absolute top-0.75 left-0.75 size-5 rounded-full bg-white transition-transform"
-                  [class.translate-x-5]="filters().showAdult"
-                ></span>
-              </span>
-            </button>
-          </section>
-        }
-      </div>
+                  class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-pink-300/15 text-xs font-black text-pink-200"
+                  aria-hidden="true"
+                  >18+</span
+                >
+                <span class="grid min-w-0 flex-1 gap-0.5">
+                  <b class="text-sm text-surface-50">{{
+                    'discover.options.showAdult' | transloco
+                  }}</b>
+                  <small class="text-xs text-surface-300">{{
+                    'discover.filters.adultHint' | transloco
+                  }}</small>
+                </span>
+                <span
+                  class="relative h-6.5 w-11.5 shrink-0 rounded-full transition-colors"
+                  [class]="filters().showAdult ? 'bg-primary-500' : 'bg-surface-700'"
+                  aria-hidden="true"
+                >
+                  <span
+                    class="absolute top-0.75 left-0.75 size-5 rounded-full bg-white transition-transform"
+                    [class.translate-x-5]="filters().showAdult"
+                  ></span>
+                </span>
+              </button>
+            </section>
+          }
+        </div>
 
-      <footer class="grid gap-1 border-t border-surface-800 px-3.5 pt-2.5 pb-3.5">
-        <button
-          type="button"
-          (click)="reset()"
-          [disabled]="!hasChoices()"
-          class="min-h-10 cursor-pointer justify-self-center px-2.5 text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-default disabled:text-surface-600 disabled:no-underline"
-        >
-          {{ 'discover.filters.reset' | transloco }}
-        </button>
-        <button
-          type="button"
-          (click)="close()"
-          class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-        >
-          {{
-            (resultCount() === 0 ? 'discover.filters.showNone' : 'discover.filters.show')
-              | transloco: { count: resultCount() }
-          }}
-        </button>
-      </footer>
+        <footer class="grid gap-1 border-t border-surface-800 px-3.5 pt-2.5 pb-3.5">
+          <button
+            type="button"
+            (click)="reset()"
+            [disabled]="!hasChoices()"
+            class="min-h-10 cursor-pointer justify-self-center px-2.5 text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-default disabled:text-surface-600 disabled:no-underline"
+          >
+            {{ 'discover.filters.reset' | transloco }}
+          </button>
+          <button
+            type="button"
+            (click)="close()"
+            class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+          >
+            {{
+              (resultCount() === 0
+                ? 'discover.filters.showNone'
+                : resultCount() === 1
+                  ? 'discover.filters.showOne'
+                  : 'discover.filters.show'
+              ) | transloco: { count: resultCount() }
+            }}
+          </button>
+        </footer>
+      </div>
     }
   </div>
 </dialog>

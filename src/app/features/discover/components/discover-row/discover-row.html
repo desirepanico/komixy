@@ -12,7 +12,10 @@
       [attr.aria-label]="title()"
     >
       @for (comic of items(); track comic.id) {
-        <li>
+        <li
+          class="animate-card-in motion-reduce:animate-none"
+          [style.animation-delay.ms]="$index * 28"
+        >
           <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
             <app-bookmark-button cardAction [comicId]="comic.id" />
           </app-comic-card>

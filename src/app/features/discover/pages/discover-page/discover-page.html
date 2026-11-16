@@ -100,7 +100,7 @@
       >
         <span class="min-w-0">
           {{
-            'discover.results.count'
+            (results().length === 1 ? 'discover.results.countOne' : 'discover.results.count')
               | transloco: { count: results().length, total: kindItems().length }
           }}
           @if (filters().query) {

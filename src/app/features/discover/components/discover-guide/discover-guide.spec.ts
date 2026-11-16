@@ -131,4 +131,25 @@ describe('DiscoverGuide', () => {
     await fixture.whenStable();
     expect(root().querySelector('#discover-age-form')).not.toBeNull();
   });
+
+  it('i formati hanno la loro illustrazione', () => {
+    expect(root().querySelectorAll('app-format-illustration').length).toBe(2);
+  });
+
+  it('toccare una scheda la fa rimbalzare finché finisce il movimento', async () => {
+    const shonen = card('discover.options.categories.shonen');
+    shonen.click();
+    await fixture.whenStable();
+    expect(shonen.classList).toContain('animate-pop');
+    shonen.dispatchEvent(Object.assign(new Event('animationend'), { animationName: 'pop' }));
+    await fixture.whenStable();
+    expect(shonen.classList).not.toContain('animate-pop');
+  });
+
+  it('una voce senza titoli è spenta e lo dice', async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, era: 'since2020' });
+    await fixture.whenStable();
+    expect(card('discover.options.categories.kodomo').disabled).toBe(true);
+    expect(root().textContent).toContain('discover.guide.noResults');
+  });
 });

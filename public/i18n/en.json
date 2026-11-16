@@ -287,6 +287,7 @@
       "close": "Close the filters",
       "reset": "Clear filters",
       "show": "Show {{ count }} volumes",
+      "showOne": "Show 1 volume",
       "adultHint": "Titles for an adult audience",
       "groups": {
         "categories": {
@@ -382,6 +383,7 @@
     "results": {
       "title": "Results",
       "count": "{{ count }} results out of {{ total }}",
+      "countOne": "{{ count }} result out of {{ total }}",
       "forQuery": "for “{{ query }}”",
       "clear": "Clear"
     },
@@ -555,6 +557,7 @@
       "selected": "Selected",
       "showResults": "Show {{ count }} results",
       "activeCount": "{{ count }} active filters",
+      "activeCountOne": "1 active filter",
       "noFilters": "no filters"
     }
   }

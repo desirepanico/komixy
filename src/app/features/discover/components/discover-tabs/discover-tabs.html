@@ -33,7 +33,7 @@
         type="button"
         [attr.aria-pressed]="kind() === tab.kind"
         (click)="kind.set(tab.kind)"
-        class="group flex min-h-16 min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-2xl border border-surface-700 bg-surface-900/50 p-3 text-left transition-colors hover:border-primary-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-pressed:-translate-y-0.5 aria-pressed:border-primary-300/60 aria-pressed:bg-linear-to-br aria-pressed:from-primary-900/70 aria-pressed:to-surface-800/70 aria-pressed:shadow-[0_12px_30px_-12px] aria-pressed:shadow-primary-500/70 motion-reduce:transition-none sm:max-w-64"
+        class="group flex min-h-16 min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-2xl border border-primary-300/20 bg-surface-900/40 p-3 text-left shadow-[0_6px_24px] shadow-surface-950/40 backdrop-blur-md backdrop-saturate-130 transition-[transform,border-color,background-color,box-shadow] duration-300 ease-[cubic-bezier(0.2,0.9,0.3,1.2)] hover:border-primary-300/45 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-pressed:-translate-y-0.5 aria-pressed:border-primary-500 aria-pressed:bg-linear-to-br aria-pressed:from-primary-700/55 aria-pressed:to-surface-900/50 aria-pressed:shadow-[0_12px_30px_-12px] aria-pressed:shadow-primary-500/70 motion-reduce:transition-none sm:max-w-64"
       >
         <span class="relative ml-1.5 block h-11.5 w-15 shrink-0 sm:h-14 sm:w-19" aria-hidden="true">
           @for (cover of tab.covers; track $index) {

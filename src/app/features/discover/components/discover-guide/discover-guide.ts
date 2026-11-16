@@ -21,6 +21,7 @@ import {
 } from '@ng-icons/material-symbols/outline';
 import { SafeHtml } from '@angular/platform-browser';
 import { InputText } from '@shared/components/input/input-text/input-text';
+import { InView } from '@shared/directives/in-view/in-view.directive';
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
@@ -35,6 +36,7 @@ import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
+import { FormatIllustration } from '../format-illustration/format-illustration';
 
 interface GuideCard {
   value: string;
@@ -55,12 +57,12 @@ interface GuideSection {
 /** La guida ai filtri: una scheda per ogni valore, che si tocca per accenderlo, e la verifica dell'età per i contenuti 18+. */
 @Component({
   selector: 'app-discover-guide',
-  imports: [FormField, FormRoot, InputText, NgIcon, TranslocoPipe],
+  imports: [FormField, FormRoot, FormatIllustration, InputText, InView, NgIcon, TranslocoPipe],
   providers: [
     provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
   ],
   templateUrl: './discover-guide.html',
-  host: { class: 'flex min-h-0 flex-1 flex-col' },
+  host: { class: 'flex min-h-0 flex-1 animate-guide-slide flex-col motion-reduce:animate-none' },
 })
 export class DiscoverGuide {
   private readonly _catalogFilter = inject(CatalogFilterService);
@@ -85,6 +87,8 @@ export class DiscoverGuide {
   protected readonly formOpen = linkedSignal<boolean>(() => this.askAge() && !this.age.verified());
   protected readonly ageError = signal<string | null>(null);
   protected readonly progress = signal<number>(0);
+  /** La scheda appena toccata: fa un piccolo rimbalzo che finisce con `animationend` */
+  protected readonly pulse = signal<string>('');
   protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');
   protected readonly resultCount = computed<number>(
     () => this._catalogFilter.filter(this.items(), this.filters()).length,
@@ -193,10 +197,21 @@ export class DiscoverGuide {
   protected selected(facet: GuideSection['facet'], value: string): boolean {
     return (this.filters()[facet] as readonly string[]).includes(value);
   }
+  protected selectedCount(facet: GuideSection['facet']): number {
+    return this.filters()[facet].length;
+  }
+  /** Una voce senza titoli si mostra spenta, a meno che sia già scelta */
+  protected isDisabled(facet: GuideSection['facet'], value: string): boolean {
+    return this.count(facet, value) === 0 && !this.selected(facet, value);
+  }
+  protected onPulseEnd(event: AnimationEvent): void {
+    if (event.animationName === 'pop') this.pulse.set('');
+  }
   protected count(facet: GuideSection['facet'], value: string): number {
     return this._catalogFilter.count(this.items(), this.filters(), facet, value);
   }
   protected toggle(facet: GuideSection['facet'], value: string): void {
+    this.pulse.set(facet + value);
     this.filtersChange.emit(this._catalogFilter.toggle(this.filters(), facet, value));
   }
   protected reset(): void {

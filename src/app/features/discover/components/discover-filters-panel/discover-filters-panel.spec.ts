@@ -194,4 +194,11 @@ describe('DiscoverFiltersPanel', () => {
     expect(root().querySelector('#discover-info-card')).toBeNull();
     expect(pill('discover.options.categories.noir').querySelector('ng-icon')).not.toBeNull();
   });
+
+  it('la scheda informativa mostra gli esempi come etichette', async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, categories: ['shonen'] });
+    await fixture.whenStable();
+    const card = root().querySelector('#discover-info-card')!;
+    expect(card.textContent).toContain('discover.guide.info.categories.shonen.example');
+  });
 });

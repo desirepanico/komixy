@@ -287,6 +287,7 @@
       "close": "Chiudi i filtri",
       "reset": "Cancella filtri",
       "show": "Mostra {{ count }} volumi",
+      "showOne": "Mostra 1 volume",
       "adultHint": "Titoli per un pubblico adulto",
       "groups": {
         "categories": {
@@ -382,6 +383,7 @@
     "results": {
       "title": "Risultati",
       "count": "{{ count }} risultati su {{ total }}",
+      "countOne": "{{ count }} risultato su {{ total }}",
       "forQuery": "per «{{ query }}»",
       "clear": "Cancella"
     },
@@ -555,6 +557,7 @@
       "selected": "Selezionato",
       "showResults": "Mostra {{ count }} risultati",
       "activeCount": "{{ count }} filtri attivi",
+      "activeCountOne": "1 filtro attivo",
       "noFilters": "nessun filtro"
     }
   }

@@ -11,7 +11,7 @@
           [attr.aria-label]="
             'discover.chips.remove' | transloco: { name: (chip.labelKey | transloco) }
           "
-          class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-primary-500 bg-primary-900 pr-2 pl-3 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          class="group inline-flex min-h-9.5 cursor-pointer items-center gap-2 rounded-full border border-surface-700 bg-surface-900 pr-2 pl-3.5 text-sm font-bold whitespace-nowrap text-surface-100 transition-colors hover:border-primary-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 motion-reduce:transition-none"
         >
           @if (chip.icon) {
             <ng-icon [name]="chip.icon" size="16" class="text-primary-300" aria-hidden="true" />
@@ -23,7 +23,12 @@
             >
           }
           {{ chip.labelKey | transloco }}
-          <ng-icon name="matCloseOutline" size="16" class="text-primary-200" aria-hidden="true" />
+          <span
+            class="grid size-5.5 place-items-center rounded-full bg-surface-700 text-surface-400 transition-colors group-hover:bg-primary-300 group-hover:text-surface-950 motion-reduce:transition-none"
+            aria-hidden="true"
+          >
+            <ng-icon name="matCloseOutline" size="12" />
+          </span>
         </button>
       </li>
     }

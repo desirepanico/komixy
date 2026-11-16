@@ -1,10 +1,18 @@
 <div
-  class="group/dock absolute inset-x-0 top-2 mx-auto flex w-[calc(100%-1rem)] max-w-xl items-center gap-2 rounded-full border border-primary-300/30 bg-surface-900/85 p-1.5 shadow-xl backdrop-blur-md transition duration-300"
-  [class]="visible() ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'"
+  class="group/dock absolute inset-x-0 top-2 mx-auto flex w-[calc(100%-1rem)] max-w-xl items-center gap-2 rounded-full border border-primary-300/30 bg-surface-900/85 p-1.5 shadow-xl backdrop-blur-md transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.9,0.3,1.25)] motion-reduce:transition-none"
+  [class]="
+    visible()
+      ? 'translate-y-0 scale-100 opacity-100'
+      : 'pointer-events-none translate-y-[-160%] scale-95 opacity-0'
+  "
   [attr.inert]="visible() ? null : ''"
   role="toolbar"
   [attr.aria-label]="'discover.dock.label' | transloco"
 >
+  <span
+    class="pointer-events-none absolute inset-0 animate-twinkle rounded-full bg-[radial-gradient(1.2px_1.2px_at_22%_28%,#fff,transparent_60%),radial-gradient(1px_1px_at_48%_74%,#e7dbff,transparent_60%),radial-gradient(1.3px_1.3px_at_71%_30%,#fff,transparent_60%),radial-gradient(1px_1px_at_90%_66%,#e7dbff,transparent_60%)] opacity-70 motion-reduce:animate-none"
+    aria-hidden="true"
+  ></span>
   <span
     class="relative hidden size-7.5 shrink-0 rounded-full bg-[radial-gradient(circle_at_32%_30%,#fff_0_8%,#d0bcff_9%_38%,#6730c2_62%,#2a0b66)] shadow-[0_0_16px_-2px] shadow-primary-400/80 group-has-[input:focus]/dock:hidden sm:block"
     aria-hidden="true"
@@ -24,13 +32,14 @@
     [compact]="true"
     (pressed)="openFilters.emit()"
   />
-  <span
-    class="pointer-events-none absolute inset-x-6 -bottom-px h-0.5 overflow-hidden rounded-full bg-primary-300/15"
-    aria-hidden="true"
-  >
+  <span class="pointer-events-none absolute inset-x-6 -bottom-px h-0.5" aria-hidden="true">
     <i
-      class="block h-full origin-left bg-linear-to-r from-primary-600 to-primary-200"
-      [style.transform]="'scaleX(' + progress() + ')'"
+      class="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-transparent via-primary-500 to-white"
+      [style.width.%]="progress() * 100"
+    ></i>
+    <i
+      class="absolute top-1/2 size-2.25 -translate-1/2 rounded-full bg-white shadow-[0_0_10px_3px] shadow-primary-300/90"
+      [style.left.%]="progress() * 100"
     ></i>
   </span>
 </div>
