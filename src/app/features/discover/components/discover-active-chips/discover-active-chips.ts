@@ -3,7 +3,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCloseOutline } from '@ng-icons/material-symbols/outline';
 import { DISCOVER_FACET_ICONS, DISCOVER_ICON_SET } from '@shared/constants/ui.const';
-import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
+import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 
 interface Chip {
   facet: FacetKey;
@@ -14,7 +14,7 @@ interface Chip {
   icon: string | null;
 }
 
-/** Un chip per ogni filtro attivo: un tocco lo toglie, «Cancella tutto» li toglie tutti. */
+/** Un chip per ogni filtro attivo: un tocco lo toglie. Su telefono scorrono di lato, da tablet vanno a capo. */
 @Component({
   selector: 'app-discover-active-chips',
   imports: [NgIcon, TranslocoPipe],
@@ -69,10 +69,5 @@ export class DiscoverActiveChips {
         ...f,
         [chip.facet]: f[chip.facet].filter((value: string) => value !== chip.value),
       });
-  }
-
-  protected clearAll(): void {
-    const { kind, query } = this.filters();
-    this.filtersChange.emit({ ...EMPTY_FILTERS, kind, query });
   }
 }

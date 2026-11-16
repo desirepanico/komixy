@@ -157,13 +157,26 @@ describe('DiscoverPage', () => {
     );
   });
 
-  it('«Cancella» nella riga dei risultati toglie ricerca e filtri', async () => {
+  it('«Cancella filtri» toglie i filtri e tiene la ricerca scritta', async () => {
     await create({ url: '/discover?q=maus&cat=shonen' });
     const clear = Array.from(
       html.querySelectorAll<HTMLButtonElement>('[role="status"] button'),
-    ).find((b) => b.textContent?.includes('discover.results.clear'))!;
+    ).find((b) => b.textContent?.includes('discover.filters.reset'))!;
     clear.click();
     await fixture.whenStable();
-    expect(TestBed.inject(Router).url).toBe('/discover');
+    expect(TestBed.inject(Router).url).toBe('/discover?q=maus');
+  });
+
+  it('con la sola ricerca la riga dei risultati non ha «Cancella filtri»', async () => {
+    await create({ url: '/discover?q=maus' });
+    expect(html.querySelector('[role="status"] button')).toBeNull();
+  });
+
+  it('la riga dei risultati sta sotto i filtri applicati, in cima alla pagina', async () => {
+    await create({ url: '/discover?tab=comic&cat=noir' });
+    const status = html.querySelector('[role="status"]')!;
+    const chips = html.querySelector('app-discover-active-chips')!;
+    expect(chips.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(status.closest('app-discover-row')).toBeNull();
   });
 });

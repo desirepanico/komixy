@@ -35,9 +35,8 @@ describe('DiscoverActiveChips', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('mostra un chip per ogni filtro e «Cancella tutto»', () => {
-    expect(buttons().length).toBe(4);
-    expect(buttons()[3].textContent).toContain('discover.chips.clearAll');
+  it('mostra un chip per ogni filtro', () => {
+    expect(buttons().length).toBe(3);
   });
 
   it('toglie un solo filtro al tocco', async () => {
@@ -50,12 +49,6 @@ describe('DiscoverActiveChips', () => {
     buttons()[2].click();
     await fixture.whenStable();
     expect(fixture.componentInstance.filters().era).toBe('all');
-  });
-
-  it('cancella tutto e tiene la scheda', async () => {
-    buttons()[3].click();
-    await fixture.whenStable();
-    expect(fixture.componentInstance.filters()).toEqual(EMPTY_FILTERS);
   });
 
   it('senza filtri non mostra niente', async () => {

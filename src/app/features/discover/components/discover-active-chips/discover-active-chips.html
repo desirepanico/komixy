@@ -1,10 +1,10 @@
 @if (chips().length) {
   <ul
     [attr.aria-label]="'discover.chips.label' | transloco"
-    class="flex flex-wrap items-center gap-2"
+    class="-mx-3 flex snap-x snap-proximity [scrollbar-width:none] items-center gap-2 overflow-x-auto mask-[linear-gradient(to_right,#000_calc(100%-28px),transparent)] px-3 py-0.5 md:mx-0 md:flex-wrap md:overflow-visible md:mask-none md:px-0 [&::-webkit-scrollbar]:hidden"
   >
     @for (chip of chips(); track chip.facet + chip.value) {
-      <li>
+      <li class="shrink-0 snap-start">
         <button
           type="button"
           (click)="remove(chip)"
@@ -32,14 +32,5 @@
         </button>
       </li>
     }
-    <li>
-      <button
-        type="button"
-        (click)="clearAll()"
-        class="min-h-9 cursor-pointer px-2 text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-      >
-        {{ 'discover.chips.clearAll' | transloco }}
-      </button>
-    </li>
   </ul>
 }

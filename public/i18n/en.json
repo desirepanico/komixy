@@ -371,8 +371,7 @@
     },
     "chips": {
       "label": "Applied filters",
-      "remove": "Remove the filter {{ name }}",
-      "clearAll": "Clear all"
+      "remove": "Remove the filter {{ name }}"
     },
     "dock": {
       "label": "Quick filters"
@@ -394,10 +393,9 @@
     },
     "results": {
       "title": "Results",
-      "count": "{{ count }} results out of {{ total }}",
-      "countOne": "{{ count }} result out of {{ total }}",
-      "forQuery": "for “{{ query }}”",
-      "clear": "Clear"
+      "count": "results out of {{ total }}",
+      "countOne": "result out of {{ total }}",
+      "forQuery": "for “{{ query }}”"
     },
     "empty": {
       "title": "No volume in this region of space",

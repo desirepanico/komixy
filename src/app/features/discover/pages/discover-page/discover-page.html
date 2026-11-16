@@ -37,6 +37,45 @@
     </div>
 
     <app-discover-active-chips [filters]="filters()" (filtersChange)="setFilters($event)" />
+
+    @if (isFiltering()) {
+      <p
+        class="flex min-h-6 items-center gap-3 text-sm font-semibold text-surface-400"
+        role="status"
+        aria-live="polite"
+      >
+        <span class="min-w-0">
+          <b class="font-extrabold text-primary-300 tabular-nums">{{ results().length }}</b>
+          {{
+            (results().length === 1 ? 'discover.results.countOne' : 'discover.results.count')
+              | transloco: { total: kindItems().length }
+          }}
+          @if (filters().query) {
+            <em class="text-surface-300 not-italic"
+              >· {{ 'discover.results.forQuery' | transloco: { query: filters().query } }}</em
+            >
+          }
+        </span>
+        <span
+          class="h-1 w-24 shrink-0 overflow-hidden rounded-full bg-surface-800"
+          aria-hidden="true"
+        >
+          <i
+            class="block h-full rounded-full bg-linear-to-r from-primary-600 to-primary-300 transition-[width] duration-350 ease-[cubic-bezier(0.2,0.8,0.2,1)] motion-reduce:transition-none"
+            [style.width.%]="kindItems().length ? (results().length / kindItems().length) * 100 : 0"
+          ></i>
+        </span>
+        @if (activeCount() > 0) {
+          <button
+            type="button"
+            (click)="clearFilters()"
+            class="ml-auto min-h-8 cursor-pointer px-1 text-sm font-extrabold text-primary-300 hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+          >
+            {{ 'discover.filters.reset' | transloco }}
+          </button>
+        }
+      </p>
+    }
   </div>
 
   <app-discover-filters-panel
@@ -100,38 +139,6 @@
     />
   } @else {
     <div class="space-y-4">
-      <div
-        class="flex min-h-6 items-center gap-3 text-sm font-semibold text-surface-300"
-        role="status"
-      >
-        <span class="min-w-0">
-          {{
-            (results().length === 1 ? 'discover.results.countOne' : 'discover.results.count')
-              | transloco: { count: results().length, total: kindItems().length }
-          }}
-          @if (filters().query) {
-            <em class="text-surface-300 not-italic"
-              >· {{ 'discover.results.forQuery' | transloco: { query: filters().query } }}</em
-            >
-          }
-        </span>
-        <span
-          class="hidden h-1 w-24 shrink-0 overflow-hidden rounded-full bg-surface-800 sm:block"
-          aria-hidden="true"
-        >
-          <i
-            class="block h-full rounded-full bg-linear-to-r from-primary-600 to-primary-300 transition-[width] duration-300"
-            [style.width.%]="kindItems().length ? (results().length / kindItems().length) * 100 : 0"
-          ></i>
-        </span>
-        <button
-          type="button"
-          (click)="resetAll()"
-          class="ml-auto min-h-8 cursor-pointer px-1 font-bold text-primary-300 hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-        >
-          {{ 'discover.results.clear' | transloco }}
-        </button>
-      </div>
       @if (results().length) {
         <app-discover-row
           [title]="'discover.results.title' | transloco"

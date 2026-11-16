@@ -125,6 +125,12 @@ export class DiscoverPage {
     void this._navigation.goToFilters(filters);
   }
 
+  // Toglie i filtri e tiene la ricerca scritta
+  protected clearFilters(): void {
+    const { kind, query } = this.filters();
+    void this._navigation.goToFilters({ ...EMPTY_FILTERS, kind, query });
+  }
+
   protected resetAll(): void {
     void this._navigation.goToFilters({ ...EMPTY_FILTERS, kind: this.filters().kind });
   }
