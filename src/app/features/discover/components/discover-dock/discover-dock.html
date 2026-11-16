@@ -9,14 +9,6 @@
   role="toolbar"
   [attr.aria-label]="'discover.dock.label' | transloco"
 >
-  <span
-    class="pointer-events-none absolute inset-0 animate-twinkle rounded-full bg-[radial-gradient(1.2px_1.2px_at_22%_28%,#fff,transparent_60%),radial-gradient(1px_1px_at_48%_74%,#e7dbff,transparent_60%),radial-gradient(1.3px_1.3px_at_71%_30%,#fff,transparent_60%),radial-gradient(1px_1px_at_90%_66%,#e7dbff,transparent_60%)] opacity-70 motion-reduce:animate-none"
-    aria-hidden="true"
-  ></span>
-  <span
-    class="relative hidden size-7.5 shrink-0 rounded-full bg-[radial-gradient(circle_at_32%_30%,#fff_0_8%,#d0bcff_9%_38%,#6730c2_62%,#2a0b66)] shadow-[0_0_16px_-2px] shadow-primary-400/80 group-has-[input:focus]/dock:hidden sm:block"
-    aria-hidden="true"
-  ></span>
   <div class="group-has-[input:focus]/dock:hidden">
     <app-discover-tabs [tabs]="tabs()" [compact]="true" [(kind)]="kind" />
   </div>
