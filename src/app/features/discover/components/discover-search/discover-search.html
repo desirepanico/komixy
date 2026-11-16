@@ -59,17 +59,15 @@
     </button>
 
     <div
-      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-72 animate-drop-in flex-col overflow-hidden rounded-2xl border border-primary-300/30 shadow-2xl motion-reduce:animate-none md:max-h-96"
+      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-drop-in flex-col overflow-hidden rounded-[18px] border border-primary-400/30 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] motion-reduce:animate-none md:max-h-100"
       [class]="
-        compact()
-          ? 'bg-surface-900'
-          : 'bg-surface-900/90 backdrop-blur-2xl backdrop-saturate-150 md:bg-surface-800/90'
+        compact() ? 'bg-[#16132a]' : 'bg-surface-900/55 backdrop-blur-[28px] backdrop-saturate-150'
       "
       (mousedown)="$event.preventDefault()"
     >
       @if (recents().length) {
         <div
-          class="flex shrink-0 items-center justify-between bg-surface-950/25 px-4 py-3 shadow-[0_1px_0] shadow-surface-50/10"
+          class="flex shrink-0 items-center justify-between bg-surface-950/25 px-4 pt-3 pb-2 shadow-[0_1px_0] shadow-surface-50/8"
         >
           <span
             class="text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
@@ -85,7 +83,9 @@
           </button>
         </div>
       }
-      <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5">
+      <div
+        class="min-h-0 flex-1 [scrollbar-color:var(--color-surface-500)_transparent] overflow-y-auto overscroll-contain px-1.5 pb-1.5"
+      >
         <ul
           [id]="listId"
           role="listbox"
@@ -95,7 +95,7 @@
             @if (option.type === 'loved' && options()[$index - 1]?.type !== 'loved') {
               <li
                 role="presentation"
-                class="px-2.5 pt-3 pb-1 text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
+                class="px-2.5 pt-2.5 pb-1 text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
               >
                 {{ 'discover.search.loved.' + kind() | transloco }}
               </li>
@@ -106,7 +106,7 @@
                 [id]="option.id"
                 [attr.aria-selected]="option.id === activeId()"
                 (click)="commit(option.value)"
-                class="flex min-h-12 flex-1 cursor-pointer items-center gap-3 rounded-xl px-2.5 py-1 text-surface-300 hover:bg-primary-300/15 hover:text-white aria-selected:bg-primary-300/15 aria-selected:text-white aria-selected:ring-1 aria-selected:ring-primary-300/25"
+                class="flex min-h-12 flex-1 cursor-pointer items-center gap-3 rounded-xl py-1 pr-1.5 pl-2.5 text-surface-300 hover:bg-primary-300/15 hover:text-white aria-selected:bg-primary-300/15 aria-selected:text-white aria-selected:ring-1 aria-selected:ring-primary-300/25"
               >
                 @if (option.type === 'recent') {
                   <ng-icon
@@ -128,7 +128,7 @@
                     alt=""
                     width="34"
                     height="46"
-                    class="h-11.5 w-8.5 shrink-0 rounded-sm border border-surface-600 object-cover"
+                    class="h-11.5 w-8.5 shrink-0 rounded-[7px] border border-surface-700 object-cover"
                   />
                 }
                 <span class="min-w-0">
@@ -140,7 +140,7 @@
                     }
                   </b>
                   @if (option.subtitle) {
-                    <small class="block truncate text-xs text-surface-300">{{
+                    <small class="block truncate text-xs text-surface-400">{{
                       option.subtitle
                     }}</small>
                   }
@@ -169,39 +169,39 @@
       </div>
       @if (!compact()) {
         <p
-          class="hidden shrink-0 flex-wrap gap-x-3.5 gap-y-1.5 border-t border-surface-50/10 bg-surface-950/25 px-3.5 py-2.5 text-xs text-surface-300 md:flex pointer-coarse:hidden"
+          class="hidden shrink-0 flex-wrap gap-x-3.5 gap-y-1.5 border-t border-surface-50/8 bg-surface-950/25 px-3.5 py-2.5 text-xs text-surface-300 md:flex pointer-coarse:hidden"
           aria-hidden="true"
         >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >↑</kbd
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >↓</kbd
             >{{ 'discover.search.keys.choose' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >{{ 'discover.search.keys.enter' | transloco }}</kbd
             >{{ 'discover.search.keys.apply' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >{{ 'discover.search.keys.delete' | transloco }}</kbd
             >{{ 'discover.search.keys.removeRecent' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >{{ 'discover.search.keys.tab' | transloco }}</kbd
             >{{ 'discover.search.keys.buttons' | transloco }}</span
           >
           <span class="inline-flex items-center gap-1"
             ><kbd
-              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans font-bold text-surface-200"
+              class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans leading-[1.55] font-bold text-surface-200"
               >{{ 'discover.search.keys.esc' | transloco }}</kbd
             >{{ 'discover.search.keys.close' | transloco }}</span
           >

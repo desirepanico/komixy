@@ -23,7 +23,10 @@ describe('provideNavDirection', () => {
     router = TestBed.inject(Router);
   });
 
-  afterEach(() => delete document.documentElement.dataset['navDirection']);
+  afterEach(() => {
+    delete document.documentElement.dataset['navDirection'];
+    delete document.documentElement.dataset['navigating'];
+  });
 
   it('imposta "forward" passando a una pagina principale successiva e "back" tornando', async () => {
     await router.navigateByUrl('/discover');
@@ -39,5 +42,13 @@ describe('provideNavDirection', () => {
     await router.navigateByUrl('/releases');
     await router.navigateByUrl('/altra');
     expect(direction()).toBeUndefined();
+  });
+
+  it('«navigating» resta acceso solo per la durata della transizione', async () => {
+    await router.navigateByUrl('/discover');
+    await router.navigateByUrl('/releases');
+    expect(document.documentElement.dataset['navigating']).toBe('');
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    expect(document.documentElement.dataset['navigating']).toBeUndefined();
   });
 });

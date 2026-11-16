@@ -15,7 +15,8 @@
     <div class="min-h-dvh">
       <main
         appSwipe
-        class="min-h-dvh touch-pan-y pb-20 [view-transition-name:page]"
+        class="min-h-dvh touch-pan-y pb-20"
+        data-page-transition
         (swipeLeft)="swipeService.navigate('left')"
         (swipeRight)="swipeService.navigate('right')"
       >

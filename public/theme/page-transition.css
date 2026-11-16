@@ -1,5 +1,5 @@
 /*
-  Transizione tra le pagine (mobile e tablet): la pagina ha view-transition-name "page", la nav in basso
+  Transizione tra le pagine (mobile e tablet): la pagina (`data-page-transition`) ha view-transition-name "page" solo mentre naviga, la nav in basso
   "mobile-nav" (resta ferma). La direzione arriva da <html data-nav-direction="forward|back">, che imposta
   core/providers/nav-direction/nav-direction.provider.ts.
 */
@@ -30,6 +30,11 @@
 }
 
 @media (max-width: 1023px) {
+  /* Il nome c'è solo durante il cambio pagina: acceso sempre toglierebbe il blur ai figli della pagina */
+  html[data-navigating] [data-page-transition] {
+    view-transition-name: page;
+  }
+
   /* Lo sfondo cambia subito, anima solo la pagina */
   ::view-transition-old(root) {
     display: none;
