@@ -2,6 +2,7 @@ import { Component, computed, input, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicItem } from '../../models/comic.model';
+import { coverBackground } from '../../utils/cover-background/cover-background';
 import { editionSeverity } from '../../utils/edition-severity/edition-severity';
 import { CardFrame } from '../card-frame/card-frame';
 import { Skeleton } from '../skeleton/skeleton';
@@ -27,6 +28,7 @@ export class ComicCard {
   /** Finché la copertina non è arrivata si vede lo skeleton */
   protected readonly coverLoaded = signal<boolean>(false);
 
+  protected readonly generatedCover = computed(() => coverBackground(this.comic()));
   protected readonly isRare = computed(() => this.comic().editionType !== null);
   protected readonly editionSeverity = computed(() => editionSeverity(this.comic().editionType));
 }

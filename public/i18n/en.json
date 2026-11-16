@@ -7,10 +7,6 @@
     "myProfile": "My profile",
     "viewProfile": "View profile"
   },
-  "discoverManga": {
-    "title": "Discover Manga",
-    "subtitle": "The next stories to add to your library"
-  },
   "weeklyManga": {
     "title": "Manga of the week",
     "subtitle": "The most read this week",
@@ -241,6 +237,146 @@
     "serverError": {
       "summaryKo": "Service unavailable",
       "detailKo": "Something went wrong, try again shortly."
+    }
+  },
+  "discoverFilters": {
+    "eyebrow": "Explore the intergalactic library",
+    "title": "What do you want to discover?",
+    "searchLabel": {
+      "manga": "Filter manga",
+      "comic": "Filter comics"
+    },
+    "tabsLabel": "Sections to filter",
+    "kind": {
+      "manga": "Manga",
+      "comic": "Comics"
+    },
+    "filters": "Filters",
+    "filtersApplied": "Filters, {{count}} applied",
+    "applied": "Applied filters",
+    "removeChip": "Remove filter {{section}}: {{value}}",
+    "clearFilters": "Clear filters",
+    "sections": {
+      "category": "Category",
+      "genre": "Genre",
+      "format": "Format",
+      "status": "Status",
+      "year": "Release year",
+      "volumes": "Volumes",
+      "theme": "Narrative theme"
+    },
+    "chipValue": {
+      "year": "{{from}}–{{to}}",
+      "adult": "Shown"
+    },
+    "eras": {
+      "all": "All",
+      "before1990": "Before 1990",
+      "y1990": "The ’90s",
+      "y2000": "The 2000s",
+      "y2010": "The 2010s",
+      "from2020": "Since 2020"
+    },
+    "options": {
+      "category": {
+        "shonen": "Shōnen",
+        "kodomo": "Kodomo",
+        "shojo": "Shōjo",
+        "seinen": "Seinen",
+        "josei": "Josei",
+        "superheroes": "Superheroes",
+        "sciFi": "Science fiction",
+        "fantasy": "Fantasy",
+        "horror": "Horror",
+        "noir": "Noir / Thriller",
+        "historical": "Historical and biographical",
+        "humor": "Humor"
+      },
+      "format": {
+        "series": "Series",
+        "oneShot": "One-shot",
+        "graphicNovel": "Graphic novel",
+        "omnibus": "Omnibus"
+      },
+      "status": {
+        "completed": "Complete",
+        "ongoing": "Ongoing"
+      },
+      "volumes": {
+        "v1to5": "1–5 vol.",
+        "v6to20": "6–20 vol.",
+        "v21plus": "21+ vol.",
+        "single": "Single volume",
+        "v2to5": "2–5 vol."
+      },
+      "theme": {
+        "action": "Action / Adventure",
+        "romance": "Romance",
+        "fantasy": "Fantasy",
+        "sciFi": "Sci-fi / Mecha",
+        "horror": "Horror",
+        "mystery": "Mystery",
+        "comedy": "Comedy",
+        "sport": "Sport",
+        "sliceOfLife": "Slice of life",
+        "isekai": "Isekai"
+      }
+    },
+    "panel": {
+      "title": {
+        "manga": "Manga filters",
+        "comic": "Comics filters"
+      },
+      "close": "Close filters",
+      "period": "Release period",
+      "adult": "Show adult content",
+      "adultHint": "Also includes 18+ titles. Requires a profile with verified age.",
+      "show": "Show {{count}} results"
+    },
+    "search": {
+      "label": "Search by title or author",
+      "placeholder": "Search titles and authors…",
+      "help": "Type to search. Up and down arrows to pick a suggestion, Enter to apply it, Delete to remove a recent search, Escape to close.",
+      "clear": "Clear the search",
+      "suggestions": "Suggestions",
+      "recents": "Recent searches",
+      "clearRecents": "Clear all",
+      "removeRecent": "Remove “{{term}}” from recent searches",
+      "featured": "Most loved in {{where}}",
+      "titles": "Titles",
+      "authors": "Authors",
+      "volumesCount": "{{count}} volumes",
+      "none": "No title or author in {{where}} for “{{query}}”.",
+      "suggestionsCount": "{{count}} suggestions",
+      "keyChoose": "choose",
+      "keyEnter": "Enter applies",
+      "keyDelete": "Delete removes a recent",
+      "keyTab": "Tab buttons",
+      "keyEsc": "Esc closes"
+    },
+    "results": {
+      "none": "No results in {{where}}",
+      "noneFiltered": "No results with these filters",
+      "volumeOne": "volume in {{where}}",
+      "volumeOther": "volumes in {{where}}",
+      "ofOne": "result out of {{total}}",
+      "ofOther": "results out of {{total}}",
+      "forQuery": "· for “{{query}}”"
+    },
+    "discover": {
+      "title": {
+        "manga": "Manga to discover",
+        "comic": "Comics to discover"
+      },
+      "subtitle": "The next stories to add to your library"
+    },
+    "empty": {
+      "title": "No volumes in this region of space",
+      "text": "There are no volumes in {{where}}.",
+      "filtered": "No volume matches this combination.",
+      "removeSearch": "Remove the search · {{count}} volumes",
+      "removeFilter": "Remove “{{section}}” · {{count}} volumes",
+      "reset": "Reset everything"
     }
   }
 }

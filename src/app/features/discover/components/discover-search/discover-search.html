@@ -1,0 +1,223 @@
+<div class="relative">
+  <ng-icon
+    name="matSearchOutline"
+    size="18"
+    class="pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-surface-400"
+    aria-hidden="true"
+  />
+  <input
+    #field
+    type="search"
+    role="combobox"
+    class="glass-light h-11 w-full rounded-full border border-primary-400/20 bg-surface-900/45 pr-20 pl-10 text-base text-ellipsis text-surface-50 placeholder:text-surface-500 focus-visible:border-primary-400 focus-visible:ring-3 focus-visible:ring-primary-500/20 focus-visible:outline-0 [&::-webkit-search-cancel-button]:hidden"
+    aria-autocomplete="list"
+    aria-keyshortcuts="Control+K Meta+K"
+    aria-controls="discover-search-list"
+    aria-describedby="discover-search-help"
+    autocomplete="off"
+    enterkeyhint="search"
+    [attr.aria-label]="'discoverFilters.search.label' | transloco"
+    [attr.aria-expanded]="open()"
+    [attr.aria-activedescendant]="activeId()"
+    [placeholder]="'discoverFilters.search.placeholder' | transloco"
+    [value]="text()"
+    (input)="onInput($event)"
+    (focus)="openList()"
+    (click)="openList()"
+    (keydown)="onKeydown($event)"
+  />
+  @if (!text() && !open()) {
+    <span
+      aria-hidden="true"
+      class="pointer-events-none absolute top-1/2 right-3 hidden -translate-y-1/2 gap-0.5 @min-[32rem]:flex"
+    >
+      <kbd
+        class="rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-xs font-bold text-surface-200"
+        >{{ modKey }}</kbd
+      >
+      <kbd
+        class="rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-xs font-bold text-surface-200"
+        >K</kbd
+      >
+    </span>
+  }
+  @if (text()) {
+    <button
+      type="button"
+      class="absolute top-1/2 right-1 grid size-9 -translate-y-1/2 cursor-pointer place-items-center rounded-full text-surface-400 hover:bg-surface-800 hover:text-white focus-visible:outline-2 focus-visible:outline-primary-300"
+      [attr.aria-label]="'discoverFilters.search.clear' | transloco"
+      (click)="clear()"
+    >
+      <ng-icon name="matCloseOutline" size="16" aria-hidden="true" />
+    </button>
+  }
+  <p class="sr-only" id="discover-search-help">{{ 'discoverFilters.search.help' | transloco }}</p>
+</div>
+
+@if (open()) {
+  <div
+    class="glass-strong absolute top-[calc(100%+0.5rem)] left-0 z-30 flex max-h-96 w-full flex-col overflow-hidden rounded-2xl border border-primary-400/30 bg-surface-900/55"
+    (mousedown)="$event.preventDefault()"
+  >
+    @if (recentOptions().length) {
+      <div
+        class="flex items-center justify-between bg-surface-950/25 px-4 pt-3 pb-2 text-xs font-extrabold tracking-widest text-surface-300 uppercase shadow-[0_1px_0_rgb(250_250_252/0.08)]"
+      >
+        <span>{{ 'discoverFilters.search.recents' | transloco }}</span>
+        <button
+          type="button"
+          class="min-h-7 cursor-pointer text-[13px] font-bold tracking-normal text-primary-300 normal-case underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-primary-300"
+          (click)="clearRecents()"
+        >
+          {{ 'discoverFilters.search.clearRecents' | transloco }}
+        </button>
+      </div>
+    }
+    <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+      <ul
+        id="discover-search-list"
+        role="listbox"
+        class="m-0 list-none p-1.5"
+        [attr.aria-label]="'discoverFilters.search.suggestions' | transloco"
+      >
+        @for (option of recentOptions(); track option.value; let i = $index) {
+          <li
+            role="option"
+            class="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl py-1 pr-1.5 pl-2.5 text-surface-400 hover:bg-primary-300/15"
+            [id]="optionId(i)"
+            [class.bg-primary-300/15]="activeIndex() === i"
+            [attr.aria-selected]="activeIndex() === i"
+            (click)="choose(option)"
+            (pointermove)="activeIndex.set(i)"
+          >
+            <ng-icon
+              name="matHistoryOutline"
+              size="18"
+              class="text-primary-400"
+              aria-hidden="true"
+            />
+            <span class="min-w-0 flex-1 truncate text-sm font-bold text-surface-50">{{
+              option.value
+            }}</span>
+            <button
+              type="button"
+              class="grid size-9 cursor-pointer place-items-center rounded-full text-surface-400 hover:bg-surface-50/10 hover:text-white focus-visible:outline-2 focus-visible:outline-primary-300"
+              [attr.aria-label]="
+                'discoverFilters.search.removeRecent' | transloco: { term: option.value }
+              "
+              (click)="removeRecent(option.value); $event.stopPropagation()"
+            >
+              <ng-icon name="matCloseOutline" size="16" aria-hidden="true" />
+            </button>
+          </li>
+        }
+
+        @if (titles().length) {
+          <li
+            role="presentation"
+            class="px-2.5 pt-2.5 pb-1 text-xs font-extrabold tracking-widest text-surface-300 uppercase"
+          >
+            @if (text().trim()) {
+              {{ 'discoverFilters.search.titles' | transloco }}
+            } @else {
+              {{
+                'discoverFilters.search.featured'
+                  | transloco: { where: 'discoverFilters.kind.' + kind() | transloco }
+              }}
+            }
+          </li>
+        }
+        @for (option of titles(); track option.comic!.id; let i = $index) {
+          <li
+            role="option"
+            class="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl py-1 pr-1.5 pl-2.5 text-surface-400 hover:bg-primary-300/15"
+            [id]="optionId(recentOptions().length + i)"
+            [class.bg-primary-300/15]="activeIndex() === recentOptions().length + i"
+            [attr.aria-selected]="activeIndex() === recentOptions().length + i"
+            (click)="choose(option)"
+            (pointermove)="activeIndex.set(recentOptions().length + i)"
+          >
+            <span
+              aria-hidden="true"
+              class="h-11.5 w-8.5 shrink-0 rounded-[7px] border border-surface-700 bg-cover bg-center"
+              [style.background-image]="background(option.comic!)"
+            ></span>
+            <span class="grid min-w-0">
+              <b class="truncate text-sm font-bold text-surface-50">
+                @for (part of parts(option.comic!.title); track $index) {
+                  @if (part.mark) {
+                    <mark
+                      class="bg-transparent font-black text-primary-300 underline decoration-primary-500 underline-offset-4"
+                      >{{ part.text }}</mark
+                    >
+                  } @else {
+                    {{ part.text }}
+                  }
+                }
+              </b>
+              <small class="truncate text-xs text-surface-400">{{ option.comic!.author }}</small>
+            </span>
+          </li>
+        }
+
+        @if (authors().length) {
+          <li
+            role="presentation"
+            class="px-2.5 pt-2.5 pb-1 text-xs font-extrabold tracking-widest text-surface-300 uppercase"
+          >
+            {{ 'discoverFilters.search.authors' | transloco }}
+          </li>
+        }
+        @for (option of authors(); track option.value; let i = $index) {
+          <li
+            role="option"
+            class="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl py-1 pr-1.5 pl-2.5 text-surface-400 hover:bg-primary-300/15"
+            [id]="optionId(recentOptions().length + titles().length + i)"
+            [class.bg-primary-300/15]="
+              activeIndex() === recentOptions().length + titles().length + i
+            "
+            [attr.aria-selected]="activeIndex() === recentOptions().length + titles().length + i"
+            (click)="choose(option)"
+            (pointermove)="activeIndex.set(recentOptions().length + titles().length + i)"
+          >
+            <ng-icon
+              name="matPersonOutline"
+              size="18"
+              class="text-primary-400"
+              aria-hidden="true"
+            />
+            <span class="grid min-w-0">
+              <b class="truncate text-sm font-bold text-surface-50">{{ option.value }}</b>
+              <small class="text-xs text-surface-400">
+                {{ 'discoverFilters.search.volumesCount' | transloco: { count: option.volumes } }}
+              </small>
+            </span>
+          </li>
+        }
+
+        @if (text().trim() && !titles().length && !authors().length) {
+          <li role="presentation" class="px-2.5 py-4 text-center text-sm text-surface-400">
+            {{
+              'discoverFilters.search.none'
+                | transloco
+                  : { where: 'discoverFilters.kind.' + kind() | transloco, query: text().trim() }
+            }}
+          </li>
+        }
+      </ul>
+    </div>
+    <p class="sr-only" role="status" aria-live="polite">
+      {{ 'discoverFilters.search.suggestionsCount' | transloco: { count: options().length } }}
+    </p>
+    <div
+      aria-hidden="true"
+      class="hidden flex-wrap gap-x-3.5 gap-y-1.5 border-t border-surface-50/10 bg-surface-950/25 px-3.5 py-2.5 text-xs text-surface-300 pointer-fine:flex"
+    >
+      <span>↑↓ {{ 'discoverFilters.search.keyChoose' | transloco }}</span>
+      <span>{{ 'discoverFilters.search.keyEnter' | transloco }}</span>
+      <span>{{ 'discoverFilters.search.keyDelete' | transloco }}</span>
+      <span>{{ 'discoverFilters.search.keyTab' | transloco }}</span>
+      <span>{{ 'discoverFilters.search.keyEsc' | transloco }}</span>
+    </div>
+  </div>
+}

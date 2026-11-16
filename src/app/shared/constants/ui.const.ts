@@ -1,5 +1,38 @@
+import {
+  matStarsOutline,
+  matAutoStoriesOutline,
+  matBookOutline,
+  matCalendarTodayOutline,
+  matCheckOutline,
+  matCloseOutline,
+  matFavoriteOutline,
+  matFlagOutline,
+  matGridViewOutline,
+  matHelpOutline,
+  matHourglassTopOutline,
+  matLayersOutline,
+  matLibraryBooksOutline,
+  matLocalCafeOutline,
+  matMenuBookOutline,
+  matRocketLaunchOutline,
+  matSearchInsightsOutline,
+  matSellOutline,
+  matSentimentSatisfiedOutline,
+  matShieldOutline,
+  matSkullOutline,
+  matSmartToyOutline,
+  matSportsBasketballOutline,
+  matSwordsOutline,
+  matTheaterComedyOutline,
+  matTravelExploreOutline,
+  matTuneOutline,
+  matScheduleOutline,
+  matRestartAltOutline,
+} from '@ng-icons/material-symbols/outline';
 import { MessageSeverity } from '@shared/models/message.model';
 import { ToastSeverity } from '@shared/models/toast.model';
+import { ComicKind } from '../models/comic.model';
+import { DiscoverListKey } from '../models/discover-filters.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
 
 // ─── Bottoni ─────────────────────────────────────────────────────────────────
@@ -126,4 +159,139 @@ export const MESSAGE_STYLES: Readonly<
     container: 'border-red-500/40 bg-red-500/10',
     iconColor: 'text-red-400',
   },
+};
+
+// ─── Filtri di Scopri ────────────────────────────────────────────────────────
+
+export const DISCOVER_YEAR_MIN = 1960;
+export const DISCOVER_YEAR_MAX = 2026;
+
+/** I periodi del pannello: «Tutti» è l'intervallo intero, cioè nessun filtro */
+export const DISCOVER_ERAS: readonly { id: string; from: number; to: number }[] = [
+  { id: 'all', from: DISCOVER_YEAR_MIN, to: DISCOVER_YEAR_MAX },
+  { id: 'before1990', from: DISCOVER_YEAR_MIN, to: 1989 },
+  { id: 'y1990', from: 1990, to: 1999 },
+  { id: 'y2000', from: 2000, to: 2009 },
+  { id: 'y2010', from: 2010, to: 2019 },
+  { id: 'from2020', from: 2020, to: DISCOVER_YEAR_MAX },
+];
+
+// I fumetti non hanno tema narrativo né contenuti per adulti (docs/filtri-fonti-dati.md)
+export const DISCOVER_FILTER_OPTIONS: Readonly<
+  Record<ComicKind, Readonly<Record<DiscoverListKey, readonly string[]>>>
+> = {
+  manga: {
+    category: ['shonen', 'kodomo', 'shojo', 'seinen', 'josei'],
+    format: ['series', 'oneShot'],
+    status: ['completed', 'ongoing'],
+    volumes: ['v1to5', 'v6to20', 'v21plus'],
+    theme: [
+      'action',
+      'romance',
+      'fantasy',
+      'sciFi',
+      'horror',
+      'mystery',
+      'comedy',
+      'sport',
+      'sliceOfLife',
+      'isekai',
+    ],
+  },
+  comic: {
+    category: ['superheroes', 'sciFi', 'fantasy', 'horror', 'noir', 'historical', 'humor'],
+    format: ['series', 'graphicNovel', 'omnibus'],
+    status: ['completed', 'ongoing'],
+    volumes: ['single', 'v2to5', 'v6to20', 'v21plus'],
+    theme: [],
+  },
+};
+
+/** Icone dei valori: `genre` sono le categorie dei fumetti */
+export const DISCOVER_OPTION_ICONS: Readonly<
+  Record<'format' | 'status' | 'theme' | 'genre', Readonly<Record<string, string>>>
+> = {
+  format: {
+    series: 'matLibraryBooksOutline',
+    oneShot: 'matBookOutline',
+    graphicNovel: 'matMenuBookOutline',
+    omnibus: 'matLayersOutline',
+  },
+  status: { completed: 'matFlagOutline', ongoing: 'matAutoStoriesOutline' },
+  theme: {
+    action: 'matSwordsOutline',
+    romance: 'matFavoriteOutline',
+    fantasy: 'matStarsOutline',
+    sciFi: 'matSmartToyOutline',
+    horror: 'matSkullOutline',
+    mystery: 'matSearchInsightsOutline',
+    comedy: 'matSentimentSatisfiedOutline',
+    sport: 'matSportsBasketballOutline',
+    sliceOfLife: 'matLocalCafeOutline',
+    isekai: 'matTravelExploreOutline',
+  },
+  genre: {
+    superheroes: 'matShieldOutline',
+    sciFi: 'matRocketLaunchOutline',
+    fantasy: 'matStarsOutline',
+    horror: 'matSkullOutline',
+    noir: 'matSearchInsightsOutline',
+    historical: 'matHourglassTopOutline',
+    humor: 'matTheaterComedyOutline',
+  },
+};
+
+export const DISCOVER_LIST_KEYS: readonly DiscoverListKey[] = [
+  'category',
+  'format',
+  'status',
+  'volumes',
+  'theme',
+];
+
+export const DISCOVER_SEARCH_MAX_RECENTS = 5;
+export const DISCOVER_SEARCH_MAX_TITLES = 4;
+export const DISCOVER_SEARCH_MAX_AUTHORS = 3;
+export const DISCOVER_SEARCH_FEATURED = 4;
+
+/** Le icone usate da Scopri (chip, pannello, schede): un componente le registra con `provideIcons(DISCOVER_ICON_SET)` */
+export const DISCOVER_ICON_SET = {
+  matStarsOutline,
+  matAutoStoriesOutline,
+  matBookOutline,
+  matCalendarTodayOutline,
+  matCheckOutline,
+  matCloseOutline,
+  matFavoriteOutline,
+  matFlagOutline,
+  matGridViewOutline,
+  matHelpOutline,
+  matHourglassTopOutline,
+  matLayersOutline,
+  matLibraryBooksOutline,
+  matLocalCafeOutline,
+  matMenuBookOutline,
+  matRocketLaunchOutline,
+  matSearchInsightsOutline,
+  matSellOutline,
+  matSentimentSatisfiedOutline,
+  matShieldOutline,
+  matSkullOutline,
+  matSmartToyOutline,
+  matSportsBasketballOutline,
+  matSwordsOutline,
+  matTheaterComedyOutline,
+  matTravelExploreOutline,
+  matTuneOutline,
+  matScheduleOutline,
+  matRestartAltOutline,
+};
+
+export const DISCOVER_SECTION_ICONS: Readonly<Record<string, string>> = {
+  category: 'matMenuBookOutline',
+  format: 'matGridViewOutline',
+  year: 'matCalendarTodayOutline',
+  volumes: 'matLayersOutline',
+  status: 'matScheduleOutline',
+  theme: 'matSellOutline',
 };

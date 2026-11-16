@@ -1,0 +1,44 @@
+<div
+  role="tablist"
+  [attr.aria-label]="'discoverFilters.tabsLabel' | transloco"
+  class="glass-light inline-flex gap-1 rounded-full border border-primary-400/20 bg-surface-900/45 p-1"
+  (keydown)="onKeydown($event)"
+>
+  @for (tab of tabs; track tab) {
+    <button
+      type="button"
+      role="tab"
+      [id]="'discover-tab-' + tab"
+      aria-controls="discover-results"
+      class="flex min-h-9 cursor-pointer items-center gap-2 rounded-full px-4 text-[15px] font-extrabold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      [class.bg-primary-600]="kind() === tab"
+      [class.text-white]="kind() === tab"
+      [class.text-surface-400]="kind() !== tab"
+      [class.hover:text-surface-100]="kind() !== tab"
+      [attr.aria-selected]="kind() === tab"
+      [tabindex]="kind() === tab ? 0 : -1"
+      (click)="kindChange.emit(tab)"
+    >
+      <span aria-hidden="true" class="relative hidden h-6 w-8 shrink-0 sm:block">
+        @for (cover of fans()[tab]; track $index) {
+          <span
+            class="absolute bottom-0 h-6 w-4 rounded-[3px] bg-cover bg-center ring-1 ring-surface-900"
+            [style.left.px]="$index * 7"
+            [style.rotate.deg]="fanTilts[$index]"
+            [style.background-image]="cover"
+          ></span>
+        }
+      </span>
+      {{ 'discoverFilters.kind.' + tab | transloco }}
+      <span
+        class="inline-grid h-5 min-w-6 place-items-center rounded-full px-2 text-xs font-extrabold tabular-nums"
+        [class.bg-white]="kind() === tab"
+        [class.text-primary-800]="kind() === tab"
+        [class.bg-surface-800]="kind() !== tab"
+        [class.text-primary-300]="kind() !== tab"
+      >
+        {{ count(tab) }}
+      </span>
+    </button>
+  }
+</div>

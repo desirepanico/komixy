@@ -18,10 +18,6 @@
       "limited": "Limitata"
     }
   },
-  "discoverManga": {
-    "title": "Manga da scoprire",
-    "subtitle": "Le prossime storie da aggiungere alla tua libreria"
-  },
   "weeklyManga": {
     "title": "Manga della settimana",
     "subtitle": "I più letti della settimana",
@@ -241,6 +237,146 @@
     "serverError": {
       "summaryKo": "Servizio non disponibile",
       "detailKo": "Qualcosa è andato storto, riprova tra poco."
+    }
+  },
+  "discoverFilters": {
+    "eyebrow": "Esplora la libreria intergalattica",
+    "title": "Cosa vuoi scoprire?",
+    "searchLabel": {
+      "manga": "Filtra i manga",
+      "comic": "Filtra i fumetti"
+    },
+    "tabsLabel": "Sezioni da filtrare",
+    "kind": {
+      "manga": "Manga",
+      "comic": "Fumetti"
+    },
+    "filters": "Filtri",
+    "filtersApplied": "Filtri, {{count}} applicati",
+    "applied": "Filtri applicati",
+    "removeChip": "Rimuovi filtro {{section}}: {{value}}",
+    "clearFilters": "Cancella filtri",
+    "sections": {
+      "category": "Categoria",
+      "genre": "Genere",
+      "format": "Formato",
+      "status": "Stato",
+      "year": "Anno di uscita",
+      "volumes": "Volumi",
+      "theme": "Tema narrativo"
+    },
+    "chipValue": {
+      "year": "{{from}}–{{to}}",
+      "adult": "Mostrati"
+    },
+    "eras": {
+      "all": "Tutti",
+      "before1990": "Prima del 1990",
+      "y1990": "Anni ’90",
+      "y2000": "Anni 2000",
+      "y2010": "Anni 2010",
+      "from2020": "Dal 2020"
+    },
+    "options": {
+      "category": {
+        "shonen": "Shōnen",
+        "kodomo": "Kodomo",
+        "shojo": "Shōjo",
+        "seinen": "Seinen",
+        "josei": "Josei",
+        "superheroes": "Supereroi",
+        "sciFi": "Fantascienza",
+        "fantasy": "Fantasy",
+        "horror": "Horror",
+        "noir": "Noir / Thriller",
+        "historical": "Storico e biografico",
+        "humor": "Umorismo"
+      },
+      "format": {
+        "series": "Serie",
+        "oneShot": "One-shot",
+        "graphicNovel": "Graphic novel",
+        "omnibus": "Omnibus"
+      },
+      "status": {
+        "completed": "Completa",
+        "ongoing": "In corso"
+      },
+      "volumes": {
+        "v1to5": "1–5 vol.",
+        "v6to20": "6–20 vol.",
+        "v21plus": "21+ vol.",
+        "single": "Volume unico",
+        "v2to5": "2–5 vol."
+      },
+      "theme": {
+        "action": "Azione / Avventura",
+        "romance": "Romance",
+        "fantasy": "Fantasy",
+        "sciFi": "Sci-fi / Mecha",
+        "horror": "Horror",
+        "mystery": "Mystery / Giallo",
+        "comedy": "Commedia",
+        "sport": "Sport",
+        "sliceOfLife": "Slice of life",
+        "isekai": "Isekai"
+      }
+    },
+    "panel": {
+      "title": {
+        "manga": "Filtri manga",
+        "comic": "Filtri fumetti"
+      },
+      "close": "Chiudi i filtri",
+      "period": "Periodo di uscita",
+      "adult": "Mostra contenuti per adulti",
+      "adultHint": "Include anche i titoli 18+. Serve il profilo con l'età verificata.",
+      "show": "Mostra {{count}} risultati"
+    },
+    "search": {
+      "label": "Cerca per titolo o autore",
+      "placeholder": "Cerca titoli e autori…",
+      "help": "Scrivi per cercare. Frecce su e giù per scegliere un suggerimento, Invio per applicarlo, Canc per togliere una ricerca recente, Esc per chiudere.",
+      "clear": "Svuota la ricerca",
+      "suggestions": "Suggerimenti",
+      "recents": "Ricerche recenti",
+      "clearRecents": "Cancella tutto",
+      "removeRecent": "Rimuovi «{{term}}» dalle ricerche recenti",
+      "featured": "Più amati in {{where}}",
+      "titles": "Titoli",
+      "authors": "Autori",
+      "volumesCount": "{{count}} volumi",
+      "none": "Nessun titolo o autore in {{where}} per «{{query}}».",
+      "suggestionsCount": "{{count}} suggerimenti",
+      "keyChoose": "scegli",
+      "keyEnter": "Invio applica",
+      "keyDelete": "Canc toglie un recente",
+      "keyTab": "Tab pulsanti",
+      "keyEsc": "Esc chiudi"
+    },
+    "results": {
+      "none": "Nessun risultato in {{where}}",
+      "noneFiltered": "Nessun risultato con questi filtri",
+      "volumeOne": "volume in {{where}}",
+      "volumeOther": "volumi in {{where}}",
+      "ofOne": "risultato su {{total}}",
+      "ofOther": "risultati su {{total}}",
+      "forQuery": "· per «{{query}}»"
+    },
+    "discover": {
+      "title": {
+        "manga": "Manga da scoprire",
+        "comic": "Fumetti da scoprire"
+      },
+      "subtitle": "Le prossime storie da aggiungere alla tua libreria"
+    },
+    "empty": {
+      "title": "Nessun volume in questa zona di spazio",
+      "text": "Non c’è nessun volume in {{where}}.",
+      "filtered": "Con questa combinazione non c’è nessun volume.",
+      "removeSearch": "Togli la ricerca · {{count}} volumi",
+      "removeFilter": "Togli «{{section}}» · {{count}} volumi",
+      "reset": "Azzera tutto"
     }
   }
 }
