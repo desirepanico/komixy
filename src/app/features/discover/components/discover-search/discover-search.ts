@@ -16,6 +16,7 @@ import {
   matHistoryOutline,
   matSearchOutline,
 } from '@ng-icons/material-symbols/outline';
+import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { SEARCH_SUGGESTION_LIMIT } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
 import { SearchOption } from '../../models/discover-filters.model';
@@ -25,7 +26,7 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
 /**
  * Ricerca per titolo e autore con i suggerimenti (ricerche recenti, più amati, titoli che corrispondono).
  * Il testo si applica con Invio o scegliendo un suggerimento: `search` emette il testo da cercare.
- * Con `compact` sta nell'isola fissa, e il menu si apre sotto tutta l'isola.
+ * Con `compact` sta nell'isola fissa, il menu si apre sotto tutta l'isola e un titolo scelto apre il suo volume.
  */
 @Component({
   selector: 'app-discover-search',
@@ -39,6 +40,7 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
 })
 export class DiscoverSearch {
   private readonly _recents = inject(RecentSearchesService);
+  private readonly _comicsNavigation = inject(ComicsNavigationService);
   private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected readonly modifier = shortcutModifier(navigator.platform || navigator.userAgent);
@@ -51,6 +53,8 @@ export class DiscoverSearch {
   public readonly kind = input.required<ComicKind>();
   /** I titoli della scheda tra cui suggerire (senza quelli per adulti) */
   public readonly items = input.required<readonly CatalogItem[]>();
+  /** Dove cercare quando si scrive, se più largo dei suggerimenti iniziali (l'isola cerca in tutti i titoli) */
+  public readonly searchIn = input<readonly CatalogItem[] | null>(null);
   public readonly compact = input<boolean>(false);
   public readonly searched = output<string>();
 
@@ -62,7 +66,7 @@ export class DiscoverSearch {
   protected readonly matches = computed<SearchOption[]>(() => {
     const text = this.typed().toLowerCase();
     if (!text) return [];
-    return this.items()
+    return (this.searchIn() ?? this.items())
       .filter((item) => `${item.title} ${item.author}`.toLowerCase().includes(text))
       .slice(0, SEARCH_SUGGESTION_LIMIT)
       .map((item) => this._fromItem(item, 'match'));
@@ -82,6 +86,7 @@ export class DiscoverSearch {
           title: value,
           subtitle: '',
           cover: null,
+          comicId: null,
         })),
   );
   protected readonly free = computed<SearchOption[]>(() =>
@@ -94,6 +99,7 @@ export class DiscoverSearch {
             title: this.typed(),
             subtitle: '',
             cover: null,
+            comicId: null,
           },
         ]
       : [],
@@ -136,8 +142,9 @@ export class DiscoverSearch {
         break;
       case 'Enter': {
         event.preventDefault();
-        const chosen = this.options()[this.activeIndex()];
-        this.commit(chosen ? chosen.value : this.draft());
+        const chosen = this.options()[this.activeIndex()] ?? this._onlyMatch();
+        if (chosen) this.choose(chosen);
+        else this.commit(this.draft());
         break;
       }
       case 'Delete': {
@@ -157,6 +164,16 @@ export class DiscoverSearch {
         }
         break;
     }
+  }
+  /** Nell'isola un titolo scelto porta dritto al suo volume; altrimenti si applica il testo */
+  protected choose(option: SearchOption): void {
+    if (this.compact() && option.comicId) {
+      this._recents.add(option.title);
+      this.close();
+      void this._comicsNavigation.goToDetail(option.comicId);
+      return;
+    }
+    this.commit(option.value);
   }
   /** Applica il testo: chiude il menu, ricorda la ricerca e toglie il focus dal campo */
   protected commit(value: string): void {
@@ -190,6 +207,10 @@ export class DiscoverSearch {
       this.activeIndex.set(-1);
     }
   }
+  /** Nell'isola, un testo che trova un solo titolo vale come sceglierlo */
+  private _onlyMatch(): SearchOption | undefined {
+    return this.compact() && this.matches().length === 1 ? this.matches()[0] : undefined;
+  }
   private _fromItem(item: CatalogItem, type: 'match' | 'loved'): SearchOption {
     return {
       id: `${this.listId}-${type}-${item.id}`,
@@ -198,6 +219,7 @@ export class DiscoverSearch {
       title: item.title,
       subtitle: item.author,
       cover: item.coverUrl,
+      comicId: item.id,
     };
   }
 }

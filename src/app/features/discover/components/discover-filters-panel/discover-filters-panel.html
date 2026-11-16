@@ -6,6 +6,7 @@
   class="m-0 mt-auto h-auto max-h-[88dvh] w-full max-w-none overflow-hidden rounded-t-[26px] border border-primary-400/30 bg-surface-900 p-0 text-surface-100 shadow-[0_28px_60px_-16px_rgb(0_0_0/0.9),0_0_50px_-24px_var(--color-primary-500)] backdrop:bg-[rgb(8_9_14/0.7)] backdrop:backdrop-blur-[3px] open:animate-sheet-up motion-reduce:animate-none md:m-0 md:ml-auto md:h-dvh md:max-h-none md:w-105 md:rounded-l-[22px] md:rounded-r-none md:open:animate-drawer-in"
 >
   <div class="flex max-h-[88dvh] flex-col md:h-dvh md:max-h-none">
+    <!-- Filtri e guida si danno il cambio nello stesso pannello, senza chiudere il dialog -->
     @if (view() === 'guide') {
       <app-discover-guide
         [filters]="filters()"
@@ -114,9 +115,8 @@
                     <button
                       type="button"
                       [attr.aria-pressed]="isSelected(view, value)"
-                      [disabled]="isDisabled(view, value)"
                       (click)="toggle(view, value)"
-                      class="group relative flex min-h-11.5 max-w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-full border border-surface-700 py-1.5 pr-4.5 pl-2 text-left text-sm font-bold text-surface-50 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-[#2a1166] aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
+                      class="group relative flex min-h-11.5 max-w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-full border border-surface-700 py-1.5 pr-4.5 pl-2 text-left text-sm font-bold text-surface-50 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:border-primary-500 aria-pressed:bg-[#2a1166] aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
                     >
                       <span class="grid size-7.5 shrink-0 place-items-center text-primary-300!">
                         <ng-icon
@@ -131,9 +131,8 @@
                     <button
                       type="button"
                       [attr.aria-pressed]="isSelected(view, value)"
-                      [disabled]="isDisabled(view, value)"
                       (click)="toggle(view, value)"
-                      class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border border-surface-700 px-3.5 text-sm font-bold text-surface-300 hover:border-primary-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-[#2a1166] aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500"
+                      class="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full border border-surface-700 px-3.5 text-sm font-bold text-surface-300 hover:border-primary-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:border-primary-500 aria-pressed:bg-[#2a1166] aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500"
                       [class.justify-center]="view.style === 'grid'"
                     >
                       @if (view.valueIcons[value]) {
@@ -155,6 +154,7 @@
                 }
               </div>
 
+              <!-- La scheda racconta l'ultima categoria scelta, o quella toccata nelle linguette -->
               @if (view.facet === 'categories' && isManga() && view.selected.length && infoOpen()) {
                 <div
                   id="discover-info-card"
@@ -265,9 +265,12 @@
         <footer class="grid gap-1 border-t border-surface-800 px-3.5 pt-2.5 pb-3.5">
           <button
             type="button"
+            appButton
+            variant="text"
+            [underline]="true"
             (click)="reset()"
             [disabled]="!hasChoices()"
-            class="min-h-10 cursor-pointer justify-self-center px-2.5 text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 disabled:cursor-default disabled:text-surface-600 disabled:no-underline"
+            class="min-h-10 justify-self-center px-2.5 text-sm font-bold underline disabled:no-underline"
           >
             {{ 'discover.filters.reset' | transloco }}
           </button>

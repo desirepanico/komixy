@@ -13,6 +13,7 @@ import { DiscoverDock } from './discover-dock';
     [tabs]="tabs"
     query=""
     [items]="items"
+    [searchIn]="items"
     [activeCount]="2"
     [(kind)]="kind"
     (openFilters)="opened.set(opened() + 1)"

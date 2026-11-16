@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { Router } from '@angular/router';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { CatalogItem } from '@shared/models/catalog-item.model';
 import { RecentSearchesService } from '../../services/recent-searches/recent-searches.service';
@@ -12,6 +13,7 @@ import { DiscoverSearch } from './discover-search';
     [query]="query()"
     kind="manga"
     [items]="items"
+    [searchIn]="searchIn()"
     [compact]="compact()"
     (searched)="applied.set($event)"
   />`,
@@ -20,6 +22,7 @@ class Host {
   public readonly items: CatalogItem[] = TestBed.inject(ComicCatalogService)
     .items()
     .filter((item) => item.kind === 'manga' && !item.isAdult);
+  public readonly searchIn = signal<CatalogItem[] | null>(null);
   public readonly query = signal<string>('');
   public readonly compact = signal<boolean>(false);
   public readonly applied = signal<string | null>(null);
@@ -163,5 +166,45 @@ describe('DiscoverSearch', () => {
     input.dispatchEvent(new Event('focus'));
     await fixture.whenStable();
     expect(root().querySelectorAll('kbd').length).toBe(0);
+  });
+
+  describe("nell'isola", () => {
+    beforeEach(async () => {
+      fixture.componentInstance.compact.set(true);
+      await fixture.whenStable();
+    });
+
+    it('un titolo scelto porta dritto al suo volume', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      await type('chainsaw');
+      root().querySelector<HTMLElement>('[role="option"]')?.click();
+      await fixture.whenStable();
+      expect(navigate).toHaveBeenCalledWith(['/', 'comic', expect.any(String)]);
+      expect(fixture.componentInstance.applied()).toBeNull();
+    });
+
+    it('con Invio, un testo che trova un solo titolo lo apre', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      await type('chainsaw');
+      await key('Enter');
+      expect(navigate).toHaveBeenCalledTimes(1);
+    });
+
+    it('con Invio, un testo che ne trova più di uno resta una ricerca', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      await type('o');
+      await key('Enter');
+      expect(navigate).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.applied()).toBe('o');
+    });
+
+    it('con `searchIn` trova anche i titoli dell’altra scheda', async () => {
+      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+      fixture.componentInstance.searchIn.set(TestBed.inject(ComicCatalogService).items());
+      await fixture.whenStable();
+      await type('watchmen');
+      await key('Enter');
+      expect(navigate).toHaveBeenCalledWith(['/', 'comic', expect.any(String)]);
+    });
   });
 });

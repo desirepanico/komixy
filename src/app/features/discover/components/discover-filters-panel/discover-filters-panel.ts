@@ -30,6 +30,7 @@ import {
   THEME_OPTIONS,
   VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
+import { Button } from '@shared/components/button/button';
 import { CatalogItem, ComicCategory } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
@@ -54,7 +55,7 @@ interface FacetView {
 /** Il pannello dei filtri: un cassetto dal basso sotto i 768px, un pannello a destra da lì in su. */
 @Component({
   selector: 'app-discover-filters-panel',
-  imports: [DiscoverGuide, NgIcon, TranslocoPipe],
+  imports: [Button, DiscoverGuide, NgIcon, TranslocoPipe],
   providers: [
     provideIcons({
       ...DISCOVER_ICON_SET,
@@ -79,7 +80,7 @@ export class DiscoverFiltersPanel {
   protected readonly view = signal<'filters' | 'guide'>('filters');
   protected readonly askAge = signal<boolean>(false);
   protected readonly infoOpen = signal<boolean>(true);
-  /** Tornando dalla guida la vista dei filtri rientra da sinistra */
+  // Dopo la guida la vista dei filtri rientra da sinistra, ma non alla prima apertura
   protected readonly returned = signal<boolean>(false);
   /** La categoria della scheda informativa: l'ultima scelta, o la prima */
   protected readonly infoCategory = linkedSignal<ComicCategory>(
@@ -137,7 +138,7 @@ export class DiscoverFiltersPanel {
   );
 
   constructor() {
-    // Il dialog nativo si apre e si chiude da codice: dà da solo focus trap, Esc e sfondo
+    // Il dialog nativo dà da solo focus trap, Esc e sfondo, ma si apre solo da codice
     effect(() => {
       const dialog = this._dialog().nativeElement;
       if (this.open() && !dialog.open) {
@@ -150,19 +151,11 @@ export class DiscoverFiltersPanel {
     });
   }
 
-  protected count(facet: FacetView['facet'], value: string): number {
-    return this._catalogFilter.count(this.items(), this.filters(), facet, value);
-  }
-
   protected isSelected(view: FacetView, value: string): boolean {
     return view.selected.includes(value);
   }
 
-  /** Il valore non darebbe nessun titolo: si mostra spento, a meno che sia già scelto */
-  protected isDisabled(view: FacetView, value: string): boolean {
-    return this.count(view.facet, value) === 0 && !this.isSelected(view, value);
-  }
-
+  // Il periodo ha sempre un valore: conta come scelta solo se non è «tutti»
   protected selectedCount(view: FacetView): number {
     return view.facet === 'era' ? (this.filters().era === 'all' ? 0 : 1) : view.selected.length;
   }
@@ -171,7 +164,7 @@ export class DiscoverFiltersPanel {
     this.filtersChange.emit(this._catalogFilter.toggle(this.filters(), view.facet, value));
   }
 
-  /** Accendere gli adulti senza età verificata apre la guida sul modulo dell'età */
+  // Senza età verificata gli adulti non si accendono: si apre il modulo dell'età nella guida
   protected toggleAdult(): void {
     if (!this.filters().showAdult && !this._age.verified()) {
       this.askAge.set(true);

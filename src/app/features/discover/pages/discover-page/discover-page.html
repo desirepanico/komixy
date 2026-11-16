@@ -4,6 +4,7 @@
     [tabs]="tabs()"
     [query]="filters().query"
     [items]="suggestable()"
+    [searchIn]="searchable()"
     [activeCount]="activeCount()"
     [kind]="filters().kind"
     (kindChange)="setKind($event)"

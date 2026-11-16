@@ -84,6 +84,9 @@ export class DiscoverPage {
   protected readonly suggestable = computed<CatalogItem[]>(() =>
     this._catalog.items().filter((item) => item.kind === this.filters().kind && !item.isAdult),
   );
+  protected readonly searchable = computed<CatalogItem[]>(() =>
+    this._catalog.items().filter((item) => !item.isAdult),
+  );
   protected readonly isFiltering = computed<boolean>(
     () => this.filters().query !== '' || this._catalogFilter.activeCount(this.filters()) > 0,
   );

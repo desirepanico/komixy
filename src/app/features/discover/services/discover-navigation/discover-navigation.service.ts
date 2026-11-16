@@ -24,6 +24,8 @@ export class DiscoverNavigationService {
     return this._router.navigate(this.discoverLink, {
       queryParams: serializeDiscoverFilters(filters),
       replaceUrl: true,
+      // Cambiare scheda o filtri non deve riportare in cima: chi usa l'isola resta dov'è
+      scroll: 'manual',
     });
   }
 }

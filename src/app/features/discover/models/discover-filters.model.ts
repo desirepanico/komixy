@@ -51,4 +51,6 @@ export interface SearchOption {
   title: string;
   subtitle: string;
   cover: string | null;
+  /** Il volume a cui porta il suggerimento (titoli); null per ricerche recenti e testo libero */
+  comicId: string | null;
 }

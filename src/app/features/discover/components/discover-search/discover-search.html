@@ -122,7 +122,7 @@
               role="option"
               [id]="option.id"
               [attr.aria-selected]="option.id === activeId()"
-              (click)="commit(option.value)"
+              (click)="choose(option)"
               class="mb-0.5 flex min-h-12 cursor-pointer items-center gap-3 rounded-md py-1 pr-1.5 pl-2.5 text-surface-300 transition-colors hover:bg-primary-300/16 hover:text-white hover:shadow-[inset_0_0_0_1px] hover:shadow-primary-300/22 aria-selected:bg-primary-300/16 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px] aria-selected:shadow-primary-300/22 motion-reduce:transition-none"
             >
               @if (option.type === 'recent') {

@@ -24,6 +24,8 @@ export class DiscoverDock {
   public readonly tabs = input.required<readonly DiscoverTab[]>();
   public readonly query = input.required<string>();
   public readonly items = input.required<readonly CatalogItem[]>();
+  /** Tutti i titoli: dall'isola si trova subito un manga o un fumetto, qualunque sia la scheda */
+  public readonly searchIn = input.required<readonly CatalogItem[]>();
   public readonly activeCount = input.required<number>();
   public readonly kind = model.required<ComicKind>();
   public readonly searched = output<string>();

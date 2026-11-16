@@ -30,6 +30,15 @@ describe('DiscoverNavigationService', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/', 'discover'], {
       queryParams: expect.objectContaining({ tab: 'comic', cat: 'noir', q: null }),
       replaceUrl: true,
+      scroll: 'manual',
     });
+  });
+
+  it('non riporta in cima cambiando scheda o filtri', async () => {
+    await service.goToFilters(EMPTY_FILTERS);
+    expect(router.navigate).toHaveBeenCalledWith(
+      ['/', 'discover'],
+      expect.objectContaining({ scroll: 'manual' }),
+    );
   });
 });

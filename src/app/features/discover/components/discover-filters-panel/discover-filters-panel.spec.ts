@@ -181,11 +181,21 @@ describe('DiscoverFiltersPanel', () => {
     );
   });
 
-  it('un valore che non darebbe titoli è spento', async () => {
+  it('ogni valore si può scegliere, anche se con gli altri filtri non darebbe titoli', async () => {
     fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, era: 'since2020' });
     await fixture.whenStable();
-    expect(pill('discover.options.categories.kodomo').disabled).toBe(true);
-    expect(pill('discover.options.categories.shonen').disabled).toBe(false);
+    expect(pill('discover.options.categories.kodomo').disabled).toBe(false);
+    pill('discover.options.categories.kodomo').click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters().categories).toEqual(['kodomo']);
+  });
+
+  it('«Cancella filtri» è il bottone condiviso e si spegne senza scelte', async () => {
+    const reset = root().querySelector<HTMLButtonElement>('footer button[appButton]')!;
+    expect(reset.disabled).toBe(true);
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, formats: ['series'] });
+    await fixture.whenStable();
+    expect(reset.disabled).toBe(false);
   });
 
   it("per i fumetti i generi sono schede con icona e non c'è la scheda informativa", async () => {
