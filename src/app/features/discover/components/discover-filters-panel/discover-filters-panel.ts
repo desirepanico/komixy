@@ -234,6 +234,11 @@ export class DiscoverFiltersPanel {
     }
   }
 
+  // La chiave si compone qui: scritta a pezzi nel template, i controlli delle traduzioni la leggono male
+  protected infoKey(category: ComicCategory, part: 'text' | 'example'): string {
+    return `discover.guide.info.categories.${category}.${part}`;
+  }
+
   protected examples(text: string): string[] {
     return text.split(', ');
   }

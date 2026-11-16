@@ -205,7 +205,7 @@
                           'discover.options.categories.' + category | transloco
                         }}</b>
                         <p class="mt-1 text-[13.5px]/snug text-surface-300">
-                          {{ 'discover.guide.info.categories.' + category + '.text' | transloco }}
+                          {{ infoKey(category, 'text') | transloco }}
                         </p>
                         <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
                           <span
@@ -213,9 +213,7 @@
                             >{{ 'discover.guide.examples' | transloco }}</span
                           >
                           @for (
-                            example of examples(
-                              'discover.guide.info.categories.' + category + '.example' | transloco
-                            );
+                            example of examples(infoKey(category, 'example') | transloco);
                             track example
                           ) {
                             <span
