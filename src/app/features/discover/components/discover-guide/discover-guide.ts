@@ -74,7 +74,7 @@ interface GuideSection {
   templateUrl: './discover-guide.html',
   host: {
     class:
-      'flex min-h-0 flex-1 animate-guide-slide flex-col bg-[linear-gradient(180deg,#19142f,#0f0d1c_45%)] motion-reduce:animate-none',
+      'flex min-h-0 flex-1 animate-guide-slide flex-col bg-[linear-gradient(180deg,#19142f,#0f0d1c_45%)]',
   },
 })
 export class DiscoverGuide {
