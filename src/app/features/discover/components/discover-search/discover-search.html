@@ -33,7 +33,7 @@
     [attr.aria-expanded]="open()"
     [attr.aria-controls]="listId"
     [attr.aria-activedescendant]="activeId()"
-    aria-keyshortcuts="Control+K"
+    aria-keyshortcuts="Control+K Meta+K"
     [attr.aria-label]="'discover.search.label' | transloco"
     [placeholder]="
       (compact() ? 'discover.search.placeholderCompact' : 'discover.search.placeholder') | transloco
@@ -45,11 +45,11 @@
     (keydown)="onKeydown($event)"
     class="h-full min-w-0 flex-1 bg-transparent px-2 text-base text-surface-50 placeholder:text-surface-300 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
   />
-  @if (!compact() && !draft() && !open()) {
+  @if (!draft() && !open()) {
     <span class="mr-2 hidden shrink-0 items-center gap-1 md:flex" aria-hidden="true">
       <kbd
         class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans text-xs font-bold text-surface-200"
-        >Ctrl</kbd
+        >{{ modifier }}</kbd
       >
       <kbd
         class="min-w-5.5 rounded-md border border-b-2 border-surface-600 bg-surface-950 px-1.5 text-center font-sans text-xs font-bold text-surface-200"

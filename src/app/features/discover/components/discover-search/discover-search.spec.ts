@@ -128,11 +128,12 @@ describe('DiscoverSearch', () => {
     expect(document.activeElement).toBe(input);
   });
 
-  it('mostra il suggerimento Ctrl K solo nella versione grande', async () => {
-    expect(root().querySelectorAll('kbd').length).toBe(2);
-    fixture.componentInstance.compact.set(true);
-    await fixture.whenStable();
-    expect(root().querySelectorAll('kbd').length).toBe(0);
+  it('mostra il suggerimento Ctrl K finché il campo è vuoto e chiuso', async () => {
+    const hint = () =>
+      Array.from(root().querySelectorAll('kbd')).filter((k) => k.textContent === 'Ctrl');
+    expect(hint().length).toBe(1);
+    await type('maus');
+    expect(hint().length).toBe(0);
   });
 
   it("con un recente scelto, Canc lo toglie dall'elenco", async () => {
@@ -152,5 +153,15 @@ describe('DiscoverSearch', () => {
     fixture.componentInstance.compact.set(true);
     await fixture.whenStable();
     expect(root().textContent).not.toContain('discover.search.keys.apply');
+  });
+
+  it('mostra la scorciatoia anche nella versione compatta, finché il campo è vuoto', async () => {
+    fixture.componentInstance.compact.set(true);
+    await fixture.whenStable();
+    expect(root().querySelectorAll('kbd').length).toBe(2);
+    expect(root().querySelector('kbd')?.textContent).toBe('Ctrl');
+    input.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(root().querySelectorAll('kbd').length).toBe(0);
   });
 });

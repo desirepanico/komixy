@@ -20,6 +20,7 @@ import { SEARCH_SUGGESTION_LIMIT } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
 import { SearchOption } from '../../models/discover-filters.model';
 import { RecentSearchesService } from '../../services/recent-searches/recent-searches.service';
+import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifier';
 
 /**
  * Ricerca per titolo e autore con i suggerimenti (ricerche recenti, più amati, titoli che corrispondono).
@@ -40,6 +41,7 @@ export class DiscoverSearch {
   private readonly _recents = inject(RecentSearchesService);
   private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef);
 
+  protected readonly modifier = shortcutModifier(navigator.platform || navigator.userAgent);
   protected readonly listId = `discover-suggestions-${Math.random().toString(36).slice(2, 8)}`;
 
   private readonly _input = viewChild.required<ElementRef<HTMLInputElement>>('field');
