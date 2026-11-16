@@ -46,7 +46,7 @@ export interface DiscoverTab {
 /** Una voce dei suggerimenti della ricerca: un titolo, una ricerca recente o il testo digitato. */
 export interface SearchOption {
   id: string;
-  type: 'recent' | 'loved' | 'match' | 'free';
+  type: 'recent' | 'loved' | 'match' | 'author' | 'free';
   value: string;
   title: string;
   subtitle: string;

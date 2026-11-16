@@ -262,6 +262,10 @@
         "manga": "Most loved manga",
         "comic": "Most loved comics"
       },
+      "titles": "Titles",
+      "authors": "Authors",
+      "authorOne": "{{ count }} volume",
+      "authorMany": "{{ count }} volumes",
       "searchFor": "Search “{{ query }}”",
       "noMatch": "No title matches, but you can search the text you typed.",
       "shortcut": "Shortcut: Ctrl K",

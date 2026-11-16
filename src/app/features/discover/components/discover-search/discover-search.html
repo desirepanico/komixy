@@ -110,12 +110,12 @@
           [attr.aria-label]="'discover.search.suggestions' | transloco"
         >
           @for (option of options(); track option.id) {
-            @if (option.type === 'loved' && options()[$index - 1]?.type !== 'loved') {
+            @if (groupKey($index); as group) {
               <li
                 role="presentation"
                 class="px-2.5 pt-2.5 pb-1 text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
               >
-                {{ 'discover.search.loved.' + kind() | transloco }}
+                {{ group | transloco }}
               </li>
             }
             <li
@@ -128,6 +128,13 @@
               @if (option.type === 'recent') {
                 <ng-icon
                   name="matHistoryOutline"
+                  size="18"
+                  class="shrink-0 text-primary-400"
+                  aria-hidden="true"
+                />
+              } @else if (option.type === 'author') {
+                <ng-icon
+                  name="matPersonOutline"
                   size="18"
                   class="shrink-0 text-primary-400"
                   aria-hidden="true"
@@ -153,13 +160,38 @@
                   @if (option.type === 'free') {
                     {{ 'discover.search.searchFor' | transloco: { query: option.title } }}
                   } @else {
-                    {{ option.title }}
+                    @for (part of parts(option.title); track $index) {
+                      @if (part.hit) {
+                        <mark
+                          class="bg-transparent font-black text-primary-300 underline decoration-primary-500 underline-offset-3"
+                          >{{ part.text }}</mark
+                        >
+                      } @else {
+                        <span>{{ part.text }}</span>
+                      }
+                    }
                   }
                 </b>
-                @if (option.subtitle) {
+                @if (option.type === 'author') {
                   <small class="block truncate text-xs text-surface-400">{{
-                    option.subtitle
+                    (option.subtitle === '1'
+                      ? 'discover.search.authorOne'
+                      : 'discover.search.authorMany'
+                    ) | transloco: { count: option.subtitle }
                   }}</small>
+                } @else if (option.subtitle) {
+                  <small class="block truncate text-xs text-surface-400">
+                    @for (part of parts(option.subtitle); track $index) {
+                      @if (part.hit) {
+                        <mark
+                          class="bg-transparent font-black text-primary-300 underline decoration-primary-500 underline-offset-3"
+                          >{{ part.text }}</mark
+                        >
+                      } @else {
+                        <span>{{ part.text }}</span>
+                      }
+                    }
+                  </small>
                 }
               </span>
               @if (option.type === 'recent') {

@@ -69,12 +69,34 @@ describe('DiscoverSearch', () => {
   });
 
   it('digitando suggerisce i titoli che corrispondono e il testo libero', async () => {
-    await type('oda');
+    await type('one');
     const titles = Array.from(root().querySelectorAll('[role="option"] b')).map((b) =>
       b.textContent?.trim(),
     );
     expect(titles[0]).toBe('One Piece');
+    expect(root().textContent).toContain('discover.search.titles');
+  });
+
+  it('digitando un autore lo propone tra gli autori, con i suoi volumi', async () => {
+    await type('oda');
+    expect(root().textContent).toContain('discover.search.authors');
+    const author = Array.from(root().querySelectorAll('[role="option"]')).find((o) =>
+      o.textContent?.includes('Eiichiro'),
+    )!;
+    expect(author.textContent).toContain('discover.search.authorOne');
     expect(root().querySelectorAll('[role="option"]').length).toBe(2);
+  });
+
+  it('il testo scritto si sottolinea nel titolo e nell’autore', async () => {
+    await type('oda');
+    expect(root().querySelector('mark')?.textContent).toBe('Oda');
+  });
+
+  it('scegliere un autore applica il suo nome come ricerca', async () => {
+    await type('oda');
+    root().querySelector<HTMLElement>('[role="option"]')?.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.applied()).toBe('Eiichiro Oda');
   });
 
   it('con Invio applica il testo e lo ricorda', async () => {

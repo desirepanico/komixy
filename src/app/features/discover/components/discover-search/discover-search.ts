@@ -14,10 +14,11 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   matCloseOutline,
   matHistoryOutline,
+  matPersonOutline,
   matSearchOutline,
 } from '@ng-icons/material-symbols/outline';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
-import { SEARCH_SUGGESTION_LIMIT } from '@shared/constants/ui.const';
+import { SEARCH_AUTHOR_LIMIT, SEARCH_SUGGESTION_LIMIT } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
 import { SearchOption } from '../../models/discover-filters.model';
 import { RecentSearchesService } from '../../services/recent-searches/recent-searches.service';
@@ -31,7 +32,9 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
 @Component({
   selector: 'app-discover-search',
   imports: [NgIcon, TranslocoPipe],
-  providers: [provideIcons({ matCloseOutline, matHistoryOutline, matSearchOutline })],
+  providers: [
+    provideIcons({ matCloseOutline, matHistoryOutline, matPersonOutline, matSearchOutline }),
+  ],
   templateUrl: './discover-search.html',
   host: {
     '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1 md:max-w-170"',
@@ -67,9 +70,30 @@ export class DiscoverSearch {
     const text = this.typed().toLowerCase();
     if (!text) return [];
     return (this.searchIn() ?? this.items())
-      .filter((item) => `${item.title} ${item.author}`.toLowerCase().includes(text))
+      .filter((item) => item.title.toLowerCase().includes(text))
       .slice(0, SEARCH_SUGGESTION_LIMIT)
       .map((item) => this._fromItem(item, 'match'));
+  });
+  protected readonly authors = computed<SearchOption[]>(() => {
+    const text = this.typed().toLowerCase();
+    if (!text) return [];
+    // Un titolo può avere più autori: ognuno conta i volumi in cui compare
+    const volumes = new Map<string, number>();
+    for (const item of this.searchIn() ?? this.items()) {
+      for (const author of item.author.split(', ')) {
+        if (author.toLowerCase().includes(text))
+          volumes.set(author, (volumes.get(author) ?? 0) + 1);
+      }
+    }
+    return Array.from(volumes, ([author, count]) => ({
+      id: `${this.listId}-author-${author}`,
+      type: 'author' as const,
+      value: author,
+      title: author,
+      subtitle: String(count),
+      cover: null,
+      comicId: null,
+    })).slice(0, SEARCH_AUTHOR_LIMIT);
   });
   protected readonly loved = computed<SearchOption[]>(() =>
     this.items()
@@ -107,7 +131,7 @@ export class DiscoverSearch {
   /** Tutte le voci nell'ordine in cui compaiono, per le frecce */
   protected readonly options = computed<SearchOption[]>(() => [
     ...this.recents(),
-    ...(this.typed() ? this.matches() : this.loved()),
+    ...(this.typed() ? [...this.matches(), ...this.authors()] : this.loved()),
     ...this.free(),
   ]);
   protected readonly activeId = computed<string | null>(
@@ -121,6 +145,26 @@ export class DiscoverSearch {
     if (this.compact() !== dockShown || this._host.nativeElement.closest('[inert]')) return;
     event.preventDefault();
     this._input().nativeElement.focus();
+  }
+  /** Il titolo del gruppo di suggerimenti, solo sulla prima voce del gruppo */
+  protected groupKey(index: number): string | null {
+    const options = this.options();
+    const type = options[index].type;
+    if (type === options[index - 1]?.type) return null;
+    if (type === 'match') return 'discover.search.titles';
+    if (type === 'author') return 'discover.search.authors';
+    return type === 'loved' ? `discover.search.loved.${this.kind()}` : null;
+  }
+  /** Il testo spezzato in parti, per sottolineare quella che corrisponde a ciò che si scrive */
+  protected parts(text: string): { text: string; hit: boolean }[] {
+    const query = this.typed();
+    const index = query ? text.toLowerCase().indexOf(query.toLowerCase()) : -1;
+    if (index < 0) return [{ text, hit: false }];
+    return [
+      { text: text.slice(0, index), hit: false },
+      { text: text.slice(index, index + query.length), hit: true },
+      { text: text.slice(index + query.length), hit: false },
+    ].filter((part) => part.text);
   }
   protected onInput(value: string): void {
     this.draft.set(value);

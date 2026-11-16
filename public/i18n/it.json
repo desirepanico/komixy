@@ -262,6 +262,10 @@
         "manga": "Più amati in manga",
         "comic": "Più amati in fumetti"
       },
+      "titles": "Titoli",
+      "authors": "Autori",
+      "authorOne": "{{ count }} volume",
+      "authorMany": "{{ count }} volumi",
       "searchFor": "Cerca «{{ query }}»",
       "noMatch": "Nessun titolo corrisponde, ma puoi cercare il testo scritto.",
       "shortcut": "Scorciatoia: Ctrl K",

@@ -222,6 +222,7 @@ export const ERA_RANGES: Readonly<Record<YearEra, readonly [number, number]>> = 
 /** Titoli di ogni riga di Scopri (Da dove iniziare, Nuove uscite) e suggerimenti della ricerca */
 export const DISCOVER_ROW_SIZE = 8;
 export const SEARCH_SUGGESTION_LIMIT = 4;
+export const SEARCH_AUTHOR_LIMIT = 3;
 export const RECENT_SEARCH_LIMIT = 5;
 /** Ricerche di esempio all'avvio, finché la cronologia vera non arriva dal backend */
 export const RECENT_SEARCH_SAMPLES: readonly string[] = ['Berserk', 'Alan Moore'];
