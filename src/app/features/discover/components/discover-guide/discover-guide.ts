@@ -12,6 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { form, FormField, FormRoot, pattern, required } from '@angular/forms/signals';
+import { SafeHtml } from '@angular/platform-browser';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -19,9 +20,8 @@ import {
   matCheckOutline,
   matWarningOutline,
 } from '@ng-icons/material-symbols/outline';
-import { SafeHtml } from '@angular/platform-browser';
+import { Button } from '@shared/components/button/button';
 import { InputText } from '@shared/components/input/input-text/input-text';
-import { InView } from '@shared/directives/in-view/in-view.directive';
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
@@ -31,6 +31,7 @@ import {
   STATUS_OPTIONS,
   THEME_OPTIONS,
 } from '@shared/constants/ui.const';
+import { InView } from '@shared/directives/in-view/in-view.directive';
 import { CatalogItem } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
@@ -57,7 +58,16 @@ interface GuideSection {
 /** La guida ai filtri: una scheda per ogni valore, che si tocca per accenderlo, e la verifica dell'età per i contenuti 18+. */
 @Component({
   selector: 'app-discover-guide',
-  imports: [FormField, FormRoot, FormatIllustration, InputText, InView, NgIcon, TranslocoPipe],
+  imports: [
+    FormField,
+    FormRoot,
+    FormatIllustration,
+    InputText,
+    InView,
+    NgIcon,
+    TranslocoPipe,
+    Button,
+  ],
   providers: [
     provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
   ],

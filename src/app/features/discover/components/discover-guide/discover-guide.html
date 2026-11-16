@@ -2,10 +2,12 @@
   class="relative flex items-center gap-3 border-b border-[#2a2440] px-3.5 pt-3.5 pb-3 md:px-3.5"
 >
   <button
-    type="button"
+    appButton
+    variant="outlined"
+    severity="primary"
+    [rounded]="true"
     (click)="back.emit()"
     [attr.aria-label]="'discover.guide.back' | transloco"
-    class="grid size-10 cursor-pointer place-items-center rounded-full bg-[#241d40] text-primary-300 transition-[transform,background-color] duration-200 hover:-translate-x-0.75 hover:bg-[#2f2554] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 motion-reduce:transition-none"
   >
     <ng-icon name="matArrowBackOutline" size="20" aria-hidden="true" />
   </button>
@@ -43,7 +45,7 @@
         [id]="'discover-guide-' + section.facet"
         class="mb-3 flex items-center gap-2.5 text-base font-black text-surface-50 opacity-0 before:h-4.5 before:w-0.75 before:rounded-sm before:bg-linear-to-b before:from-primary-300 before:to-primary-600 before:shadow-[0_0_10px] before:shadow-primary-500 before:content-[''] data-in-view:animate-guide-in motion-reduce:opacity-100 motion-reduce:data-in-view:animate-none"
       >
-        <ng-icon [name]="section.icon" size="18" class="text-primary-300" aria-hidden="true" />
+        <ng-icon [name]="section.icon" size="18" class="text-primary-300!" aria-hidden="true" />
         {{ section.titleKey | transloco }}
         @if (selectedCount(section.facet) > 0) {
           @for (n of [selectedCount(section.facet)]; track n) {

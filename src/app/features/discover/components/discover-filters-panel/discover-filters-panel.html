@@ -62,7 +62,7 @@
                   <ng-icon
                     [name]="view.icon"
                     size="18"
-                    class="text-primary-300"
+                    class="text-primary-300!"
                     aria-hidden="true"
                   />
                   {{ view.titleKey | transloco }}
@@ -87,7 +87,7 @@
                     <ng-icon
                       [name]="infoOpen() ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
                       size="16"
-                      class="text-primary-300"
+                      class="text-primary-300!"
                       aria-hidden="true"
                     />
                     {{
@@ -118,7 +118,7 @@
                       (click)="toggle(view, value)"
                       class="group relative flex min-h-11.5 max-w-full cursor-pointer items-center gap-2.5 overflow-hidden rounded-full border border-surface-700 py-1.5 pr-4.5 pl-2 text-left text-sm font-bold text-surface-50 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:border-dashed disabled:opacity-40 aria-pressed:border-primary-500 aria-pressed:bg-[#2a1166] aria-pressed:shadow-[inset_0_0_0_1px] aria-pressed:shadow-primary-500 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
                     >
-                      <span class="grid size-7.5 shrink-0 place-items-center text-primary-300">
+                      <span class="grid size-7.5 shrink-0 place-items-center text-primary-300!">
                         <ng-icon
                           [name]="view.valueIcons[value] ?? view.icon"
                           size="18"
@@ -140,7 +140,7 @@
                         <ng-icon
                           [name]="view.valueIcons[value]"
                           size="16"
-                          class="text-primary-300"
+                          class="text-primary-300!"
                           aria-hidden="true"
                         />
                       }
