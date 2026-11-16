@@ -1,10 +1,11 @@
 import { Injectable, signal } from '@angular/core';
-import { RECENT_SEARCH_LIMIT } from '@shared/constants/ui.const';
+import { RECENT_SEARCH_LIMIT, RECENT_SEARCH_SAMPLES } from '@shared/constants/ui.const';
 
 /** Le ultime ricerche, solo finché l'app è aperta (non è una preferenza di interfaccia da ricordare). */
 @Injectable({ providedIn: 'root' })
 export class RecentSearchesService {
-  private readonly _recent = signal<string[]>([]);
+  // TODO(api): la cronologia delle ricerche dell'utente (GET /me/recent-searches) al posto degli esempi
+  private readonly _recent = signal<string[]>([...RECENT_SEARCH_SAMPLES]);
 
   public readonly recent = this._recent.asReadonly();
 

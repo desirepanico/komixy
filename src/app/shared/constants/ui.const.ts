@@ -223,6 +223,8 @@ export const ERA_RANGES: Readonly<Record<YearEra, readonly [number, number]>> = 
 export const DISCOVER_ROW_SIZE = 8;
 export const SEARCH_SUGGESTION_LIMIT = 4;
 export const RECENT_SEARCH_LIMIT = 5;
+/** Ricerche di esempio all'avvio, finché la cronologia vera non arriva dal backend */
+export const RECENT_SEARCH_SAMPLES: readonly string[] = ['Berserk', 'Alan Moore'];
 
 /** Fino a quanti volumi una serie è «da dove iniziare» */
 export const STARTER_MAX_VOLUMES = 10;

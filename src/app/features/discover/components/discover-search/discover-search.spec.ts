@@ -42,6 +42,7 @@ describe('DiscoverSearch', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+    TestBed.inject(RecentSearchesService).clear();
     fixture = TestBed.createComponent(Host);
     await fixture.whenStable();
     input = root().querySelector('input')!;
