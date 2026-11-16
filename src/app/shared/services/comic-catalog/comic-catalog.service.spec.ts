@@ -9,8 +9,8 @@ describe('ComicCatalogService', () => {
     service = TestBed.inject(ComicCatalogService);
   });
 
-  it('ha i manga da scoprire con id diversi', () => {
-    const ids = service.toDiscover().map((comic) => comic.id);
+  it('ha i titoli del catalogo con id diversi', () => {
+    const ids = service.items().map((comic) => comic.id);
     expect(ids.length).toBeGreaterThan(0);
     expect(new Set(ids).size).toBe(ids.length);
   });

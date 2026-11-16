@@ -1,150 +1,55 @@
-<section class="@container min-w-0 space-y-7 px-3 py-2 md:p-2">
+<section class="min-w-0 space-y-8 px-3 py-2 md:p-2">
   <app-discover-dock
-    class="-mb-7"
-    [on]="dockOn()"
+    [visible]="!barVisible()"
+    [tabs]="tabs()"
+    [query]="filters().query"
+    [items]="suggestable()"
+    [activeCount]="activeCount()"
     [kind]="filters().kind"
-    [comics]="catalog.toDiscover()"
-    [kindComics]="kindComics()"
-    [search]="filters().search"
-    [filterCount]="chipCount()"
-    [progress]="progress()"
     (kindChange)="setKind($event)"
-    (searchChange)="setSearch($event)"
+    (searched)="setQuery($event)"
     (openFilters)="panelOpen.set(true)"
   />
 
-  <header class="min-w-0">
-    <p class="text-xs font-bold tracking-widest text-primary-300 uppercase">
-      {{ 'discoverFilters.eyebrow' | transloco }}
-    </p>
-    <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
-      {{ 'discoverFilters.title' | transloco }}
-    </h2>
-  </header>
+  <div class="space-y-4" appViewportVisible (viewportVisibleChange)="barVisible.set($event)">
+    <div class="min-w-0">
+      <p class="text-xs font-extrabold tracking-widest text-primary-300 uppercase">
+        {{ 'discover.kicker' | transloco }}
+      </p>
+      <h1 class="text-2xl font-extrabold text-surface-50">{{ 'discover.title' | transloco }}</h1>
+    </div>
 
-  <div
-    #toolbar
-    role="search"
-    [attr.aria-label]="'discoverFilters.searchLabel.' + filters().kind | transloco"
-    class="grid gap-2.5"
-  >
-    <app-discover-tabs
-      [kind]="filters().kind"
-      [comics]="catalog.toDiscover()"
-      [mangaCount]="mangaCount()"
-      [comicCount]="comicCount()"
-      (kindChange)="setKind($event)"
-    />
+    <app-discover-tabs [tabs]="tabs()" [kind]="filters().kind" (kindChange)="setKind($event)" />
 
     <div class="flex items-center gap-2">
       <app-discover-search
-        class="flex-1 @min-[40rem]:max-w-170"
-        [shortcut]="!dockOn()"
-        [value]="filters().search"
+        [query]="filters().query"
         [kind]="filters().kind"
-        [comics]="kindComics()"
-        (searchChange)="setSearch($event)"
+        [items]="suggestable()"
+        (searched)="setQuery($event)"
       />
-      <button
-        type="button"
-        class="glass-light relative inline-flex h-11 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-primary-400/20 bg-surface-900/45 px-3.5 text-sm font-bold text-surface-200 transition-colors hover:border-primary-400/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 @min-[32rem]:px-4"
-        [class.bg-primary-900]="panelOpen()"
-        aria-haspopup="dialog"
-        [attr.aria-expanded]="panelOpen()"
-        [attr.aria-label]="
-          chipCount()
-            ? ('discoverFilters.filtersApplied' | transloco: { count: chipCount() })
-            : ('discoverFilters.filters' | transloco)
-        "
-        (click)="panelOpen.set(true)"
-      >
-        <ng-icon name="matTuneOutline" size="18" class="text-primary-300" aria-hidden="true" />
-        <span class="hidden @min-[32rem]:inline">{{ 'discoverFilters.filters' | transloco }}</span>
-        @if (chipCount()) {
-          <span
-            aria-hidden="true"
-            class="absolute -top-1.5 -right-1 inline-grid h-5 min-w-5 place-items-center rounded-full bg-primary-500 px-1.5 text-[11px] font-black text-primary-950 ring-2 ring-surface-950 @min-[32rem]:static @min-[32rem]:text-xs @min-[32rem]:ring-0"
-          >
-            {{ chipCount() }}
-          </span>
-        }
-      </button>
+      <app-discover-filters-button
+        [count]="activeCount()"
+        [expanded]="panelOpen()"
+        (pressed)="panelOpen.set(true)"
+      />
     </div>
 
-    @if (chipCount()) {
-      <div>
-        <app-discover-chips [filters]="filters()" (remove)="removeChip($event)" />
-      </div>
-    }
-
-    <!-- Senza filtri la riga serve solo a chi usa uno screen reader: il numero è già nella scheda -->
-    <p
-      role="status"
-      aria-live="polite"
-      class="flex min-h-6 items-center gap-3 text-sm font-semibold text-surface-400"
-      [class.sr-only]="!isFiltering()"
-    >
-      <span class="min-w-0">
-        @if (results().length === 0) {
-          {{
-            (isFiltering()
-              ? 'discoverFilters.results.noneFiltered'
-              : 'discoverFilters.results.none'
-            ) | transloco: { where: 'discoverFilters.kind.' + filters().kind | transloco }
-          }}
-        } @else if (!isFiltering()) {
-          <b class="font-extrabold text-primary-300 tabular-nums">{{ results().length }}</b>
-          {{
-            (results().length === 1
-              ? 'discoverFilters.results.volumeOne'
-              : 'discoverFilters.results.volumeOther'
-            ) | transloco: { where: 'discoverFilters.kind.' + filters().kind | transloco }
-          }}
-        } @else {
-          <b class="font-extrabold text-primary-300 tabular-nums">{{ results().length }}</b>
-          {{
-            (results().length === 1
-              ? 'discoverFilters.results.ofOne'
-              : 'discoverFilters.results.ofOther'
-            ) | transloco: { total: kindComics().length }
-          }}
-          @if (filters().search.trim()) {
-            <em class="text-surface-300 not-italic">
-              {{
-                'discoverFilters.results.forQuery' | transloco: { query: filters().search.trim() }
-              }}
-            </em>
-          }
-        }
-      </span>
-      @if (isFiltering()) {
-        <span
-          aria-hidden="true"
-          class="h-1 w-24 shrink-0 overflow-hidden rounded-sm bg-surface-800"
-        >
-          <i
-            class="block h-full rounded-sm bg-linear-to-r from-primary-600 to-primary-300 transition-[width] duration-300"
-            [style.width.%]="percent()"
-          ></i>
-        </span>
-      }
-      @if (chipCount()) {
-        <button
-          type="button"
-          class="ml-auto min-h-8 cursor-pointer px-1 font-extrabold text-primary-300 hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-primary-400"
-          (click)="clearFilters()"
-        >
-          {{ 'discoverFilters.clearFilters' | transloco }}
-        </button>
-      }
-    </p>
+    <app-discover-active-chips [filters]="filters()" (filtersChange)="setFilters($event)" />
   </div>
+
+  <app-discover-filters-panel
+    [(open)]="panelOpen"
+    [filters]="filters()"
+    [items]="kindItems()"
+    (filtersChange)="setFilters($event)"
+  />
 
   <div class="space-y-4">
     <div class="min-w-0">
-      <h1 class="text-lg font-bold text-surface-50 sm:text-xl">
+      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
         {{ 'weeklyManga.title' | transloco }}
-      </h1>
+      </h2>
       <p class="text-sm text-surface-400">
         {{ 'weeklyManga.subtitle' | transloco }}
       </p>
@@ -169,104 +74,53 @@
     </div>
   </div>
 
-  <div class="space-y-4">
-    <div class="min-w-0">
-      <h2 class="text-lg font-bold text-surface-50 sm:text-xl">
-        {{ 'discoverFilters.discover.title.' + filters().kind | transloco }}
-      </h2>
-      <p class="text-sm text-surface-400">
-        {{ 'discoverFilters.discover.subtitle' | transloco }}
+  @if (!isFiltering()) {
+    @if (starterItems().length) {
+      <app-discover-row
+        [title]="'discover.rows.starter.title' | transloco"
+        [subtitle]="'discover.rows.starter.subtitle' | transloco"
+        [items]="starterItems()"
+      />
+    }
+    <app-discover-row
+      [title]="'discover.rows.releases.title' | transloco"
+      [subtitle]="'discover.rows.releases.subtitle' | transloco"
+      [items]="newItems()"
+    />
+    <app-discover-row
+      [title]="'discoverManga.title' | transloco"
+      [subtitle]="'discoverManga.subtitle' | transloco"
+      [items]="kindItems()"
+    />
+  } @else {
+    <div class="space-y-4">
+      <p class="text-sm text-surface-300" role="status">
+        {{
+          'discover.results.count'
+            | transloco: { count: results().length, total: kindItems().length }
+        }}
       </p>
-    </div>
-
-    <div
-      id="discover-results"
-      role="tabpanel"
-      [attr.aria-labelledby]="'discover-tab-' + filters().kind"
-    >
-      @if (results().length === 0) {
-        <div
-          class="grid justify-items-center gap-2.5 rounded-2xl border border-dashed border-surface-600 bg-surface-900/60 px-4 py-9 text-center"
-        >
-          <h3 class="text-lg font-bold text-surface-50">
-            {{ 'discoverFilters.empty.title' | transloco }}
-          </h3>
-          <p class="max-w-[40ch] text-sm text-surface-400">
-            {{
-              (isFiltering() ? 'discoverFilters.empty.filtered' : 'discoverFilters.empty.text')
-                | transloco: { where: 'discoverFilters.kind.' + filters().kind | transloco }
-            }}
-          </p>
-          <div class="mt-1.5 flex flex-wrap justify-center gap-2">
-            @if (removal(); as suggestion) {
-              <button
-                type="button"
-                class="min-h-10.5 cursor-pointer rounded-full border border-primary-400/40 px-4.5 text-sm font-bold text-primary-200 hover:bg-primary-400/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-                (click)="undo(suggestion.target)"
-              >
-                {{
-                  (suggestion.target === 'search'
-                    ? 'discoverFilters.empty.removeSearch'
-                    : 'discoverFilters.empty.removeFilter'
-                  )
-                    | transloco
-                      : {
-                          section:
-                            'discoverFilters.sections.' +
-                              (suggestion.target === 'category' && filters().kind === 'comic'
-                                ? 'genre'
-                                : suggestion.target) | transloco,
-                          count: suggestion.count,
-                        }
-                }}
-              </button>
-            }
-            @if (isFiltering()) {
-              <button
-                type="button"
-                class="min-h-10.5 cursor-pointer rounded-full bg-primary-500 px-5.5 text-sm font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-                (click)="undo('all')"
-              >
-                {{ 'discoverFilters.empty.reset' | transloco }}
-              </button>
-            }
-          </div>
-        </div>
-      } @else if (isFiltering()) {
-        <ul
-          class="m-0 grid list-none grid-cols-2 gap-x-3 gap-y-4 p-0 py-1.5 sm:grid-cols-[repeat(auto-fill,minmax(9.75rem,1fr))]"
-        >
-          @for (comic of results(); track comic.id) {
-            <li>
-              <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
-                <app-bookmark-button cardAction [comicId]="comic.id" />
-              </app-comic-card>
-            </li>
-          }
-        </ul>
+      @if (results().length) {
+        <app-discover-row
+          [title]="'discover.results.title' | transloco"
+          [items]="results()"
+          [grid]="true"
+        />
       } @else {
-        <app-horizontal-scroller
-          [ariaLabel]="'discoverFilters.discover.title.' + filters().kind | transloco"
-        >
-          @for (comic of results(); track comic.id) {
-            <div class="w-40 shrink-0 snap-start lg:w-44">
-              <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
-                <app-bookmark-button cardAction [comicId]="comic.id" />
-              </app-comic-card>
-            </div>
-          }
-        </app-horizontal-scroller>
+        <div class="rounded-2xl border border-surface-700 bg-surface-900/60 p-6 text-center">
+          <h3 class="text-lg font-bold text-surface-50">
+            {{ 'discover.empty.title' | transloco }}
+          </h3>
+          <p class="mt-1 text-sm text-surface-300">{{ 'discover.empty.text' | transloco }}</p>
+          <button
+            type="button"
+            (click)="resetAll()"
+            class="mt-4 min-h-10 cursor-pointer rounded-full bg-primary-500 px-5 text-sm font-extrabold text-surface-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+          >
+            {{ 'discover.empty.reset' | transloco }}
+          </button>
+        </div>
       }
     </div>
-  </div>
+  }
 </section>
-
-<app-discover-filters-panel
-  [(open)]="panelOpen"
-  [filters]="filters()"
-  [resultCount]="results().length"
-  (valueToggle)="toggle($event)"
-  (period)="setPeriod($event)"
-  (adultChange)="setAdult($event)"
-  (clear)="clearFilters()"
-/>

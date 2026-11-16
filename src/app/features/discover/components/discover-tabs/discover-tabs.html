@@ -1,38 +1,67 @@
-<div
-  role="tablist"
-  [attr.aria-label]="'discoverFilters.tabsLabel' | transloco"
-  class="flex max-w-130 gap-3 px-0.5 py-2"
-  (keydown)="onKeydown($event)"
->
-  @for (tab of tabs; track tab) {
-    <button
-      type="button"
-      role="tab"
-      [id]="'discover-tab-' + tab"
-      aria-controls="discover-results"
-      class="glass-light group flex min-h-16.5 min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-[22px] border border-primary-400/20 bg-surface-900/40 py-2 pr-3 pl-2.5 text-left text-surface-400 transition-[transform,border-color,background,box-shadow] duration-300 hover:border-primary-400/45 hover:text-surface-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-selected:-translate-y-0.5 aria-selected:border-primary-500 aria-selected:bg-linear-to-br aria-selected:from-primary-700/55 aria-selected:to-surface-900/50 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px_var(--color-primary-500),0_12px_30px_-12px_rgb(160_120_255/0.7)] motion-reduce:transition-none sm:min-h-19 sm:gap-3 sm:py-2.5 sm:pr-4 sm:pl-3"
-      [attr.aria-selected]="kind() === tab"
-      [tabindex]="kind() === tab ? 0 : -1"
-      (click)="kindChange.emit(tab)"
-    >
-      <span aria-hidden="true" class="relative h-11.5 w-15 shrink-0 sm:h-14 sm:w-19">
-        @for (cover of fans()[tab]; track $index) {
-          <span
-            class="absolute bottom-0 h-9.5 w-7 rounded-[7px] border border-surface-50/30 bg-cover bg-center shadow-md shadow-black/50 brightness-80 saturate-70 transition-[transform,filter] duration-400 group-hover:brightness-100 group-hover:saturate-100 group-aria-selected:brightness-100 group-aria-selected:saturate-100 motion-reduce:transition-none sm:h-11.5 sm:w-8.5"
-            [class]="fanClasses[$index]"
-            [style.background-image]="cover"
-          ></span>
-        }
-      </span>
-      <span class="grid min-w-0 gap-0.5">
-        <b class="truncate text-[15px]/tight font-black text-inherit sm:text-[17px]/tight">
-          {{ 'discoverFilters.kind.' + tab | transloco }}
-        </b>
-        <small class="text-xs font-bold text-surface-400 group-aria-selected:text-primary-200">
-          <span class="font-black">{{ count(tab) }}</span>
-          {{ 'discoverFilters.titles' | transloco }}
-        </small>
-      </span>
-    </button>
-  }
-</div>
+@if (compact()) {
+  <div
+    role="group"
+    [attr.aria-label]="'discover.tabs.label' | transloco"
+    class="flex shrink-0 gap-0.5 rounded-full bg-surface-950/40 p-1"
+  >
+    @for (tab of tabs(); track tab.kind) {
+      <button
+        type="button"
+        [attr.aria-pressed]="kind() === tab.kind"
+        (click)="kind.set(tab.kind)"
+        class="inline-flex min-h-9 cursor-pointer items-center gap-2 rounded-full px-3 text-sm font-extrabold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-pressed:bg-primary-600 aria-pressed:text-white [&:not([aria-pressed=true])]:text-surface-300 [&:not([aria-pressed=true])]:hover:text-white"
+      >
+        <img
+          [src]="tab.covers[0]"
+          alt=""
+          width="24"
+          height="24"
+          class="hidden size-6 rounded-full object-cover sm:block"
+        />
+        {{ 'discover.tabs.' + tab.kind | transloco }}
+      </button>
+    }
+  </div>
+} @else {
+  <div
+    role="group"
+    [attr.aria-label]="'discover.tabs.label' | transloco"
+    class="grid grid-cols-2 gap-3"
+  >
+    @for (tab of tabs(); track tab.kind) {
+      <button
+        type="button"
+        [attr.aria-pressed]="kind() === tab.kind"
+        (click)="kind.set(tab.kind)"
+        class="group flex min-h-16 cursor-pointer items-center gap-3 rounded-2xl border-2 border-surface-700 bg-surface-900/60 p-3 text-left transition-colors hover:border-primary-400/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-pressed:border-primary-400 aria-pressed:bg-primary-900/40 aria-pressed:shadow-[0_0_24px_-6px] aria-pressed:shadow-primary-400"
+      >
+        <span class="relative block h-12 w-14 shrink-0" aria-hidden="true">
+          @for (cover of tab.covers; track $index) {
+            <img
+              [src]="cover"
+              alt=""
+              width="32"
+              height="44"
+              class="absolute bottom-0 h-11 w-8 rounded-md border border-surface-50/30 object-cover shadow-md transition-transform group-aria-pressed:-translate-y-1"
+              [class]="
+                $index === 0
+                  ? 'left-0 -rotate-6'
+                  : $index === 1
+                    ? 'left-3'
+                    : 'left-6 rotate-6 group-aria-pressed:translate-x-1'
+              "
+            />
+          }
+        </span>
+        <span class="min-w-0">
+          <b class="block text-lg/tight text-surface-50">
+            {{ 'discover.tabs.' + tab.kind | transloco }}
+          </b>
+          <small class="text-sm text-surface-400">
+            {{ 'discover.tabs.count' | transloco: { count: tab.count } }}
+          </small>
+        </span>
+      </button>
+    }
+  </div>
+}

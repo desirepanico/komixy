@@ -1,0 +1,33 @@
+<div class="min-w-0">
+  <h2 class="text-lg font-bold text-surface-50 sm:text-xl">{{ title() }}</h2>
+  @if (subtitle()) {
+    <p class="text-sm text-surface-400">{{ subtitle() }}</p>
+  }
+</div>
+
+<div class="mt-5">
+  @if (grid()) {
+    <ul
+      class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+      [attr.aria-label]="title()"
+    >
+      @for (comic of items(); track comic.id) {
+        <li>
+          <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
+            <app-bookmark-button cardAction [comicId]="comic.id" />
+          </app-comic-card>
+        </li>
+      }
+    </ul>
+  } @else {
+    <app-horizontal-scroller [ariaLabel]="title()">
+      @for (comic of items(); track comic.id) {
+        <div class="w-40 shrink-0 snap-start lg:w-44">
+          <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
+            <app-bookmark-button cardAction [comicId]="comic.id" />
+          </app-comic-card>
+        </div>
+      }
+    </app-horizontal-scroller>
+  }
+</div>

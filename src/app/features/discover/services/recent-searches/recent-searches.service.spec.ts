@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { RECENT_SEARCH_LIMIT } from '@shared/constants/ui.const';
 import { RecentSearchesService } from './recent-searches.service';
 
 describe('RecentSearchesService', () => {
@@ -9,33 +10,34 @@ describe('RecentSearchesService', () => {
     service = TestBed.inject(RecentSearchesService);
   });
 
-  it('parte vuoto', () => {
-    expect(service.items()).toEqual([]);
+  it("mette in cima l'ultima ricerca", () => {
+    service.add('one piece');
+    service.add('maus');
+    expect(service.recent()).toEqual(['maus', 'one piece']);
   });
 
-  it('mette in cima l’ultima ricerca e non tiene doppioni', () => {
-    service.add('Berserk');
+  it('non ripete una ricerca già fatta, anche con altre maiuscole', () => {
     service.add('Maus');
-    service.add('berserk');
-    expect(service.items()).toEqual(['berserk', 'Maus']);
+    service.add('maus');
+    expect(service.recent()).toEqual(['maus']);
   });
 
   it('ignora il testo vuoto', () => {
     service.add('   ');
-    expect(service.items()).toEqual([]);
+    expect(service.recent()).toEqual([]);
   });
 
-  it('ne tiene al massimo cinque', () => {
-    ['a', 'b', 'c', 'd', 'e', 'f'].forEach((term) => service.add(term));
-    expect(service.items()).toEqual(['f', 'e', 'd', 'c', 'b']);
+  it('ne tiene al massimo il limite', () => {
+    for (let i = 0; i < RECENT_SEARCH_LIMIT + 3; i++) service.add(`q${i}`);
+    expect(service.recent().length).toBe(RECENT_SEARCH_LIMIT);
   });
 
-  it('toglie una ricerca o tutte', () => {
+  it('ne toglie una o tutte', () => {
     service.add('a');
     service.add('b');
     service.remove('a');
-    expect(service.items()).toEqual(['b']);
+    expect(service.recent()).toEqual(['b']);
     service.clear();
-    expect(service.items()).toEqual([]);
+    expect(service.recent()).toEqual([]);
   });
 });

@@ -1,29 +1,29 @@
 import { Injectable, signal } from '@angular/core';
-import { DISCOVER_SEARCH_MAX_RECENTS } from '@shared/constants/ui.const';
+import { RECENT_SEARCH_LIMIT } from '@shared/constants/ui.const';
 
-/** Le ultime ricerche di Scopri, solo in memoria: ricaricando l'app si perdono (`query-params.md`) */
+/** Le ultime ricerche, solo finché l'app è aperta (non è una preferenza di interfaccia da ricordare). */
 @Injectable({ providedIn: 'root' })
 export class RecentSearchesService {
-  private readonly _items = signal<string[]>([]);
+  private readonly _recent = signal<string[]>([]);
 
-  public readonly items = this._items.asReadonly();
+  public readonly recent = this._recent.asReadonly();
 
-  public add(term: string): void {
-    const value = term.trim();
+  public add(query: string): void {
+    const value = query.trim();
     if (!value) return;
-    this._items.update((items) =>
-      [value, ...items.filter((item) => item.toLowerCase() !== value.toLowerCase())].slice(
+    this._recent.update((list) =>
+      [value, ...list.filter((item) => item.toLowerCase() !== value.toLowerCase())].slice(
         0,
-        DISCOVER_SEARCH_MAX_RECENTS,
+        RECENT_SEARCH_LIMIT,
       ),
     );
   }
 
-  public remove(term: string): void {
-    this._items.update((items) => items.filter((item) => item !== term));
+  public remove(query: string): void {
+    this._recent.update((list) => list.filter((item) => item !== query));
   }
 
   public clear(): void {
-    this._items.set([]);
+    this._recent.set([]);
   }
 }

@@ -1,129 +1,110 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
-import { DiscoverFilters } from '@shared/models/discover-filters.model';
-import { DiscoverFiltersPanel, DiscoverToggle } from './discover-filters-panel';
-
-const none: DiscoverFilters = {
-  kind: 'manga',
-  search: '',
-  category: [],
-  format: [],
-  status: [],
-  volumes: [],
-  theme: [],
-  yearFrom: 1960,
-  yearTo: 2026,
-  adult: false,
-};
+import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
+import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
+import { DiscoverFiltersPanel } from './discover-filters-panel';
 
 @Component({
   imports: [DiscoverFiltersPanel],
   template: `<app-discover-filters-panel
     [(open)]="open"
     [filters]="filters()"
-    [resultCount]="7"
-    (valueToggle)="toggled.set($event)"
-    (period)="period.set($event)"
-    (adultChange)="adult.set($event)"
-    (clear)="cleared.set(true)"
+    [items]="items"
+    (filtersChange)="filters.set($event)"
   />`,
 })
 class Host {
-  public readonly open = signal<boolean>(true);
-  public readonly filters = signal<DiscoverFilters>(none);
-  public readonly toggled = signal<DiscoverToggle | null>(null);
-  public readonly period = signal<{ from: number; to: number } | null>(null);
-  public readonly adult = signal<boolean | null>(null);
-  public readonly cleared = signal<boolean>(false);
+  public readonly items = TestBed.inject(ComicCatalogService).items();
+  public readonly open = signal<boolean>(false);
+  public readonly filters = signal<DiscoverFilters>(EMPTY_FILTERS);
 }
 
 describe('DiscoverFiltersPanel', () => {
   let fixture: ComponentFixture<Host>;
-  let html: HTMLElement;
-  const pressed = (label: string) =>
-    Array.from(html.querySelectorAll<HTMLButtonElement>('button[aria-pressed]')).find((b) =>
-      b.textContent?.includes(label),
-    )!;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
     fixture = TestBed.createComponent(Host);
-    html = fixture.nativeElement;
     await fixture.whenStable();
   });
+
+  const root = (): HTMLElement => fixture.nativeElement;
+  const pill = (text: string) =>
+    Array.from(root().querySelectorAll<HTMLButtonElement>('[role="group"] button')).find((b) =>
+      b.textContent?.includes(text),
+    )!;
 
   it('viene creato', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('per i manga mostra categoria, formato, stato, anno, volumi, tema e adulti', () => {
-    const sections = Array.from(
-      html.querySelectorAll('section[aria-labelledby^="discover-sec-"] > h3'),
-    ).map((h) => h.id);
-    expect(sections).toEqual([
-      'discover-sec-category',
-      'discover-sec-format',
-      'discover-sec-status',
-      'discover-sec-year',
-      'discover-sec-volumes',
-      'discover-sec-theme',
-    ]);
-    expect(html.querySelector('input[role="switch"]')).not.toBeNull();
+  it('è un dialog con titolo', () => {
+    const dialog = root().querySelector('dialog')!;
+    expect(dialog.getAttribute('aria-labelledby')).toBe('discover-filters-title');
   });
 
-  it('per i fumetti mostra il genere e niente tema né adulti', async () => {
-    fixture.componentInstance.filters.set({ ...none, kind: 'comic' });
+  it('si apre quando `open` è vero', async () => {
+    fixture.componentInstance.open.set(true);
     await fixture.whenStable();
-    expect(html.textContent).toContain('discoverFilters.sections.genre');
-    expect(html.textContent).not.toContain('discoverFilters.sections.theme');
-    expect(html.querySelector('input[role="switch"]')).toBeNull();
+    expect(root().querySelector('dialog')?.hasAttribute('open')).toBe(true);
   });
 
-  it('un valore scelto ha aria-pressed e un clic lo segnala', async () => {
-    fixture.componentInstance.filters.set({ ...none, category: ['shonen'] });
+  it('per i manga mostra categorie, tema e contenuti per adulti', () => {
+    expect(root().textContent).toContain('discover.filters.groups.categories.manga');
+    expect(root().textContent).toContain('discover.filters.groups.themes');
+    expect(root().querySelector('[role="switch"]')).toBeTruthy();
+  });
+
+  it('per i fumetti non ha tema né adulti', async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, kind: 'comic' });
     await fixture.whenStable();
-    expect(pressed('options.category.shonen').getAttribute('aria-pressed')).toBe('true');
-    pressed('options.category.seinen').click();
-    expect(fixture.componentInstance.toggled()).toEqual({ key: 'category', value: 'seinen' });
+    expect(root().textContent).not.toContain('discover.filters.groups.themes');
+    expect(root().querySelector('[role="switch"]')).toBeNull();
   });
 
-  it('scegliere un periodo segnala l’intervallo', () => {
-    pressed('eras.y1990').click();
-    expect(fixture.componentInstance.period()).toEqual({ from: 1990, to: 1999 });
-  });
-
-  it('senza età verificata l’interruttore degli adulti apre la guida e non attiva il filtro', async () => {
-    const toggle = html.querySelector<HTMLInputElement>('input[role="switch"]')!;
-    toggle.checked = true;
-    toggle.dispatchEvent(new Event('change'));
+  it('sceglie e toglie una categoria', async () => {
+    pill('discover.options.categories.shonen').click();
     await fixture.whenStable();
-    expect(fixture.componentInstance.adult()).toBeNull();
-    expect(html.querySelector('#discover-guide')?.hasAttribute('inert')).toBe(false);
-    expect(toggle.checked).toBe(false);
+    expect(fixture.componentInstance.filters().categories).toEqual(['shonen']);
+    expect(pill('discover.options.categories.shonen').getAttribute('aria-pressed')).toBe('true');
+    pill('discover.options.categories.shonen').click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters().categories).toEqual([]);
   });
 
-  it('con l’età verificata l’interruttore degli adulti segnala il nuovo valore', async () => {
-    TestBed.inject(AgeVerificationService).check(1, 1, 1990);
-    const toggle = html.querySelector<HTMLInputElement>('input[role="switch"]')!;
-    toggle.checked = true;
-    toggle.dispatchEvent(new Event('change'));
-    expect(fixture.componentInstance.adult()).toBe(true);
+  it('il periodo ha una sola scelta', async () => {
+    pill('discover.options.era.tens').click();
+    await fixture.whenStable();
+    pill('discover.options.era.since2020').click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters().era).toBe('since2020');
   });
 
-  it('«Cancella filtri» segnala il reset e il pulsante finale chiude con il conteggio', async () => {
-    const buttons = Array.from(
-      html.querySelectorAll<HTMLButtonElement>('button:not([aria-pressed])'),
-    );
-    buttons.find((b) => b.textContent?.includes('clearFilters'))!.click();
-    expect(fixture.componentInstance.cleared()).toBe(true);
-    buttons.find((b) => b.textContent?.includes('panel.show'))!.click();
+  it('accende i contenuti per adulti', async () => {
+    root().querySelector<HTMLButtonElement>('[role="switch"]')?.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters().showAdult).toBe(true);
+  });
+
+  it('azzera i filtri e tiene la scheda', async () => {
+    fixture.componentInstance.filters.set({
+      ...EMPTY_FILTERS,
+      kind: 'comic',
+      categories: ['noir'],
+    });
+    await fixture.whenStable();
+    const reset = Array.from(root().querySelectorAll<HTMLButtonElement>('footer button'))[0];
+    reset.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters()).toEqual({ ...EMPTY_FILTERS, kind: 'comic' });
+  });
+
+  it('il pulsante in fondo chiude il pannello', async () => {
+    fixture.componentInstance.open.set(true);
+    await fixture.whenStable();
+    Array.from(root().querySelectorAll<HTMLButtonElement>('footer button'))[1].click();
     await fixture.whenStable();
     expect(fixture.componentInstance.open()).toBe(false);
-  });
-
-  it('chiudere il pannello dal pulsante ha un’etichetta', () => {
-    expect(html.querySelector('button[aria-label="discoverFilters.panel.close"]')).not.toBeNull();
   });
 });

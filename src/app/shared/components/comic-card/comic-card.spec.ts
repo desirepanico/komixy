@@ -76,17 +76,6 @@ describe('ComicCard', () => {
     expect(html.querySelector('img')?.getAttribute('alt')).toBe('mangaCard.coverAlt');
   });
 
-  it('senza copertina disegna un fondale col titolo, senza immagine né skeleton', async () => {
-    const { fixture, html } = await create();
-    fixture.componentInstance.comic.update((c) => ({ ...c, coverUrl: '', coverHue: 300 }));
-    await fixture.whenStable();
-    expect(html.querySelector('img')).toBeNull();
-    expect(html.querySelector('app-skeleton')).toBeNull();
-    expect(html.querySelector('[role="img"]')?.getAttribute('aria-label')).toBe(
-      'mangaCard.coverAlt',
-    );
-  });
-
   it('mostra lo skeleton finché la copertina non è caricata, anche se non arriva', async () => {
     const { fixture, html } = await create();
     expect(html.querySelector('app-skeleton')).not.toBeNull();

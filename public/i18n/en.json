@@ -7,9 +7,13 @@
     "myProfile": "My profile",
     "viewProfile": "View profile"
   },
+  "discoverManga": {
+    "title": "Discover Manga",
+    "subtitle": "The next stories to add to your library"
+  },
   "weeklyManga": {
-    "title": "Manga of the week",
-    "subtitle": "The most read this week",
+    "title": "Weekly pack",
+    "subtitle": "The 10 most read volumes, manga and comics",
     "rank": "Rank {{ rank }}"
   },
   "bookmark": {
@@ -239,330 +243,131 @@
       "detailKo": "Something went wrong, try again shortly."
     }
   },
-  "discoverFilters": {
-    "eyebrow": "Explore the intergalactic library",
+  "discover": {
+    "kicker": "Explore the intergalactic library",
     "title": "What do you want to discover?",
-    "searchLabel": {
-      "manga": "Filter manga",
-      "comic": "Filter comics"
-    },
-    "tabsLabel": "Sections to filter",
-    "kind": {
+    "tabs": {
+      "label": "Sections to filter",
       "manga": "Manga",
-      "comic": "Comics"
+      "comic": "Comics",
+      "count": "{{ count }} titles"
     },
-    "filters": "Filters",
-    "filtersApplied": "Filters, {{count}} applied",
-    "applied": "Applied filters",
-    "removeChip": "Remove filter {{section}}: {{value}}",
-    "clearFilters": "Clear filters",
-    "sections": {
-      "category": "Category",
-      "genre": "Genre",
-      "format": "Format",
-      "status": "Status",
-      "year": "Release year",
-      "volumes": "Volumes",
-      "theme": "Narrative theme"
+    "search": {
+      "label": "Search by title or author",
+      "placeholder": "Search titles and authors…",
+      "placeholderCompact": "Search",
+      "clear": "Clear the text",
+      "close": "Close",
+      "recent": "Recent searches",
+      "clearRecent": "Clear all",
+      "removeRecent": "Remove “{{ query }}” from recent searches",
+      "suggestions": "Search suggestions",
+      "loved": {
+        "manga": "Most loved manga",
+        "comic": "Most loved comics"
+      },
+      "searchFor": "Search “{{ query }}”",
+      "noMatch": "No title matches, but you can search the text you typed."
     },
-    "chipValue": {
-      "year": "{{from}}–{{to}}",
-      "adult": "Shown"
-    },
-    "eras": {
-      "all": "All",
-      "before1990": "Before 1990",
-      "y1990": "The ’90s",
-      "y2000": "The 2000s",
-      "y2010": "The 2010s",
-      "from2020": "Since 2020"
+    "filters": {
+      "title": "Filters",
+      "open": "Filters, {{ count }} active",
+      "close": "Close the filters",
+      "reset": "Reset filters",
+      "show": "Show {{ count }} results",
+      "adultHint": "Titles for an adult audience",
+      "groups": {
+        "categories": {
+          "manga": "Category",
+          "comic": "Genre"
+        },
+        "formats": "Format",
+        "era": "Release year",
+        "volumes": "Volumes",
+        "statuses": "Status",
+        "themes": "Narrative theme"
+      }
     },
     "options": {
-      "category": {
+      "categories": {
         "shonen": "Shōnen",
         "kodomo": "Kodomo",
         "shojo": "Shōjo",
         "seinen": "Seinen",
         "josei": "Josei",
         "superheroes": "Superheroes",
-        "sciFi": "Science fiction",
+        "scifi": "Science fiction",
         "fantasy": "Fantasy",
         "horror": "Horror",
         "noir": "Noir / Thriller",
         "historical": "Historical and biographical",
         "humor": "Humor"
       },
-      "format": {
+      "formats": {
         "series": "Series",
         "oneShot": "One-shot",
         "graphicNovel": "Graphic novel",
         "omnibus": "Omnibus"
       },
-      "status": {
-        "completed": "Complete",
+      "statuses": {
+        "completed": "Completed",
         "ongoing": "Ongoing"
       },
       "volumes": {
-        "v1to5": "1–5 vol.",
-        "v6to20": "6–20 vol.",
-        "v21plus": "21+ vol.",
         "single": "Single volume",
-        "v2to5": "2–5 vol."
+        "oneToFive": "1–5 vols.",
+        "twoToFive": "2–5 vols.",
+        "sixToTwenty": "6–20 vols.",
+        "overTwenty": "21+ vols."
       },
-      "theme": {
+      "themes": {
         "action": "Action / Adventure",
         "romance": "Romance",
         "fantasy": "Fantasy",
-        "sciFi": "Sci-fi / Mecha",
+        "scifiMecha": "Sci-fi / Mecha",
         "horror": "Horror",
         "mystery": "Mystery",
         "comedy": "Comedy",
         "sport": "Sport",
         "sliceOfLife": "Slice of life",
         "isekai": "Isekai"
-      }
-    },
-    "panel": {
-      "title": {
-        "manga": "Manga filters",
-        "comic": "Comics filters"
       },
-      "close": "Close filters",
-      "period": "Release period",
-      "adult": "Show adult content",
-      "adultHint": "Also includes 18+ titles. Requires a profile with verified age.",
-      "show": "Show {{count}} results",
-      "hideInfo": "Hide description",
-      "showInfo": "Show description",
-      "selectedCategories": "Selected categories",
-      "examples": "Examples"
-    },
-    "search": {
-      "label": "Search by title or author",
-      "placeholder": "Search titles and authors…",
-      "help": "Type to search. Up and down arrows to pick a suggestion, Enter to apply it, Delete to remove a recent search, Escape to close.",
-      "clear": "Clear the search",
-      "suggestions": "Suggestions",
-      "recents": "Recent searches",
-      "clearRecents": "Clear all",
-      "removeRecent": "Remove “{{term}}” from recent searches",
-      "featured": "Most loved in {{where}}",
-      "titles": "Titles",
-      "authors": "Authors",
-      "volumesCount": "{{count}} volumes",
-      "none": "No title or author in {{where}} for “{{query}}”.",
-      "suggestionsCount": "{{count}} suggestions",
-      "keyChoose": "choose",
-      "keyEnter": "Enter applies",
-      "keyDelete": "Delete removes a recent",
-      "keyTab": "Tab buttons",
-      "keyEsc": "Esc closes"
-    },
-    "results": {
-      "none": "No results in {{where}}",
-      "noneFiltered": "No results with these filters",
-      "volumeOne": "volume in {{where}}",
-      "volumeOther": "volumes in {{where}}",
-      "ofOne": "result out of {{total}}",
-      "ofOther": "results out of {{total}}",
-      "forQuery": "· for “{{query}}”"
-    },
-    "discover": {
-      "title": {
-        "manga": "Manga to discover",
-        "comic": "Comics to discover"
+      "era": {
+        "all": "All",
+        "before1990": "Before 1990",
+        "nineties": "The ’90s",
+        "noughties": "The 2000s",
+        "tens": "The 2010s",
+        "since2020": "Since 2020"
       },
-      "subtitle": "The next stories to add to your library"
+      "showAdult": "Adult content"
     },
-    "empty": {
-      "title": "No volumes in this region of space",
-      "text": "There are no volumes in {{where}}.",
-      "filtered": "No volume matches this combination.",
-      "removeSearch": "Remove the search · {{count}} volumes",
-      "removeFilter": "Remove “{{section}}” · {{count}} volumes",
-      "reset": "Reset everything"
-    },
-    "titles": "titles",
-    "categoryInfo": {
-      "shonen": {
-        "text": "Manga for teenage boys, with adventure, action, personal growth and friendship.",
-        "examples": "One Piece, Naruto, Jujutsu Kaisen"
-      },
-      "kodomo": {
-        "text": "Stories for the youngest, with simple messages and colorful art.",
-        "examples": "Doraemon, Chibi Maruko-chan"
-      },
-      "shojo": {
-        "text": "Made for girls, with feelings, friendships and personal growth.",
-        "examples": "Sailor Moon, Fruits Basket"
-      },
-      "seinen": {
-        "text": "Aimed at adults, with more mature and complex stories.",
-        "examples": "Berserk, Vagabond, Monster"
-      },
-      "josei": {
-        "text": "For young adult women, with realistic relationships and daily life.",
-        "examples": "Paradise Kiss, Honey and Clover"
-      }
+    "chips": {
+      "label": "Applied filters",
+      "remove": "Remove the filter {{ name }}",
+      "clearAll": "Clear all"
     },
     "dock": {
-      "label": "Quick filters",
-      "section": "Section"
+      "label": "Quick filters"
     },
-    "guide": {
-      "title": "Filters guide",
-      "back": "Back to filters",
-      "intro": "Learn how each filter works to quickly find the perfect {{noun}} in our vast intergalactic library. Tap a card to turn the filter on or off.",
-      "noun": {
-        "manga": "manga",
-        "comic": "comic"
+    "rows": {
+      "starter": {
+        "title": "Where to start",
+        "subtitle": "Series of up to 10 volumes, ideal to begin with"
       },
-      "categories": "Category guide",
-      "genres": "Genre guide",
-      "examples": "Examples",
-      "example": "Example",
-      "examplesShort": "E.g.",
-      "statusLabel": "Series status",
-      "adultTitle": "Adult content (18+)",
-      "adultText": "Safety is our priority. Adult titles include graphic violence, explicit sexual themes or strong language. They are hidden from general browsing by default. Make sure your profile age is verified to access restricted titles.",
-      "verify": "Verify age",
-      "verified": "Age verified",
-      "birth": "Date of birth",
-      "day": "Day",
-      "month": "Month",
-      "year": "Year",
-      "dayPlaceholder": "DD",
-      "monthPlaceholder": "MM",
-      "yearPlaceholder": "YYYY",
-      "confirm": "Confirm",
-      "cancel": "Cancel",
-      "ageNote": "We don't store your date of birth: we only keep the result, adult or not.",
-      "ageMinor": "You must be an adult to see 18+ titles.",
-      "ageInvalid": "Enter a valid date of birth.",
-      "active": "active filters",
-      "reset": "Reset",
-      "info": {
-        "category": {
-          "shonen": {
-            "text": "Manga for teenage boys, with adventure, action, personal growth and friendship.",
-            "example": "One Piece, Naruto, Jujutsu Kaisen"
-          },
-          "kodomo": {
-            "text": "Stories for the youngest, with simple messages and colorful art.",
-            "example": "Doraemon, Chibi Maruko-chan"
-          },
-          "shojo": {
-            "text": "Made for girls, with feelings, friendships and personal growth.",
-            "example": "Sailor Moon, Fruits Basket"
-          },
-          "seinen": {
-            "text": "Aimed at adults, with more mature and complex stories.",
-            "example": "Berserk, Vagabond, Monster"
-          },
-          "josei": {
-            "text": "For young adult women, with realistic relationships and daily life.",
-            "example": "Paradise Kiss, Honey and Clover"
-          },
-          "superheroes": {
-            "text": "Heroes with powers and secret identities, from Marvel and DC to auteur comics.",
-            "example": "Watchmen, Batman: Year One"
-          },
-          "sciFi": {
-            "text": "Distant futures, space, technology and dystopian societies.",
-            "example": "Saga, V for Vendetta"
-          },
-          "fantasy": {
-            "text": "Worlds of magic, dreams and fantastic creatures.",
-            "example": "Sandman, Saga"
-          },
-          "horror": {
-            "text": "Fear and unsettling atmospheres.",
-            "example": "Sandman, Dylan Dog"
-          },
-          "noir": {
-            "text": "Investigations, crime, conspiracies and dark moods.",
-            "example": "V for Vendetta, Batman: Year One"
-          },
-          "historical": {
-            "text": "Stories about real events or past eras, and the author's autobiographical tales.",
-            "example": "Maus, Persepolis"
-          },
-          "humor": {
-            "text": "Comedies, irony and satire.",
-            "example": "La profezia dell'armadillo"
-          }
-        },
-        "format": {
-          "series": {
-            "text": "Manga made of many chapters published over time, with a story that unfolds across one or more volumes.",
-            "example": "One Piece, Naruto, Attack on Titan"
-          },
-          "oneShot": {
-            "text": "Self-contained manga told in a single chapter or volume, ideal for a complete story in little time.",
-            "example": "Look Back, Goodbye, Eri"
-          },
-          "graphicNovel": {
-            "text": "Long, complete stories in a single volume, often by a single author.",
-            "example": "Maus, Persepolis"
-          },
-          "omnibus": {
-            "text": "Collections of several issues or volumes in a single edition.",
-            "example": "Sandman"
-          }
-        },
-        "theme": {
-          "action": {
-            "text": "Fights, missions, journeys and goals to reach.",
-            "example": "One Piece"
-          },
-          "romance": {
-            "text": "Romantic relationships, falling in love and emotional conflict.",
-            "example": "Fruits Basket"
-          },
-          "fantasy": {
-            "text": "Magic, imaginary worlds and extraordinary creatures.",
-            "example": "Fairy Tail"
-          },
-          "sciFi": {
-            "text": "Advanced technology, robots, the future and technological wars.",
-            "example": "Neon Genesis Evangelion"
-          },
-          "horror": {
-            "text": "Fear, tension and supernatural or disturbing elements.",
-            "example": "Tokyo Ghoul"
-          },
-          "mystery": {
-            "text": "Investigations, secrets and puzzles to solve.",
-            "example": "Detective Conan"
-          },
-          "comedy": {
-            "text": "Funny situations, gags and irony.",
-            "example": "Gintama"
-          },
-          "sport": {
-            "text": "Competitions, training, teamwork and discipline.",
-            "example": "Haikyuu!!"
-          },
-          "sliceOfLife": {
-            "text": "Everyday life, ordinary relationships and personal growth.",
-            "example": "Barakamon"
-          },
-          "isekai": {
-            "text": "A character is transported to another world.",
-            "example": "Re:Zero"
-          }
-        },
-        "status": {
-          "completed": {
-            "manga": "Finished: all volumes are out.",
-            "comic": "Finished: all volumes are out."
-          },
-          "ongoing": {
-            "manga": "Not finished yet: new volumes may come out.",
-            "comic": "Not finished yet: new issues may come out."
-          }
-        }
+      "releases": {
+        "title": "New releases",
+        "subtitle": "Out in the last 30 days"
       }
+    },
+    "results": {
+      "title": "Results",
+      "count": "{{ count }} results out of {{ total }}"
+    },
+    "empty": {
+      "title": "No volume in this region of space",
+      "text": "No title matches these filters.",
+      "reset": "Reset filters"
     }
   }
 }

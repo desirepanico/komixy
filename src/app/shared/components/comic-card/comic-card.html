@@ -1,32 +1,18 @@
 <!-- Il link sta sul titolo e il suo ::after copre tutta la carta -->
 <app-card-frame class="block h-full" [rare]="isRare()" [interactive]="link() !== null">
   <div class="relative aspect-3/4 w-full shrink-0 overflow-hidden rounded-lg bg-surface-800">
-    @if (comic().coverUrl) {
-      @if (!coverLoaded()) {
-        <app-skeleton class="absolute inset-0 rounded-none" />
-      }
-      <img
-        class="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-        [src]="comic().coverUrl"
-        loading="lazy"
-        draggable="false"
-        (load)="coverLoaded.set(true)"
-        (error)="coverLoaded.set(true)"
-        [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
-      />
-    } @else {
-      <!-- Senza copertina vera: fondale dal colore del volume con il titolo -->
-      <div
-        role="img"
-        class="absolute inset-0 flex items-end p-2.5 pb-8"
-        [style.background-image]="generatedCover()"
-        [attr.aria-label]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
-      >
-        <b class="text-base/tight font-black text-white [text-shadow:0_2px_10px_rgb(0_0_0/0.6)]">
-          {{ comic().title }}
-        </b>
-      </div>
+    @if (!coverLoaded()) {
+      <app-skeleton class="absolute inset-0 rounded-none" />
     }
+    <img
+      class="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+      [src]="comic().coverUrl"
+      loading="lazy"
+      draggable="false"
+      (load)="coverLoaded.set(true)"
+      (error)="coverLoaded.set(true)"
+      [alt]="'mangaCard.coverAlt' | transloco: { title: comic().title }"
+    />
 
     <div class="absolute top-2 right-2 z-10"><ng-content select="[cardAction]" /></div>
 

@@ -5,118 +5,167 @@ import {
   ElementRef,
   inject,
   input,
-  linkedSignal,
   model,
   output,
-  signal,
   viewChild,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
+import { matCloseOutline } from '@ng-icons/material-symbols/outline';
 import {
-  DISCOVER_ERAS,
-  DISCOVER_FILTER_OPTIONS,
-  DISCOVER_ICON_SET,
-  DISCOVER_OPTION_ICONS,
-  DISCOVER_SECTION_ICONS,
+  CATEGORY_OPTIONS,
+  ERA_OPTIONS,
+  FORMAT_OPTIONS,
+  STATUS_OPTIONS,
+  THEME_OPTIONS,
+  VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
-import { DiscoverFilters, DiscoverListKey } from '@shared/models/discover-filters.model';
+import { CatalogItem } from '@shared/models/catalog-item.model';
+import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
+import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 
-import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
-import { DiscoverGuide } from '../discover-guide/discover-guide';
-import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
-
-export interface DiscoverToggle {
-  key: DiscoverListKey;
-  value: string;
+interface FacetView {
+  facet: Exclude<FacetKey, 'showAdult'>;
+  titleKey: string;
+  values: readonly string[];
+  selected: readonly string[];
+  /** Una sola scelta (il periodo) o più scelte insieme */
+  single: boolean;
 }
 
-/** Cassetto a destra da 768px, foglio dal basso sotto: un `<dialog>` modale, con focus e Esc gestiti dal browser. */
+/** Il pannello dei filtri: un cassetto dal basso sui telefoni, una finestra al centro dagli schermi più larghi. */
 @Component({
   selector: 'app-discover-filters-panel',
-  imports: [DiscoverGuide, NgIcon, TranslocoPipe],
+  imports: [NgIcon, TranslocoPipe],
+  providers: [provideIcons({ matCloseOutline })],
   templateUrl: './discover-filters-panel.html',
-  providers: [provideIcons(DISCOVER_ICON_SET)],
 })
 export class DiscoverFiltersPanel {
-  protected readonly avatars = inject(CategoryAvatarService);
-  protected readonly age = inject(AgeVerificationService);
-
-  protected readonly eras = DISCOVER_ERAS;
-  protected readonly sectionIcons = DISCOVER_SECTION_ICONS;
-  protected readonly optionIcons = DISCOVER_OPTION_ICONS;
-
-  private readonly _guide = viewChild.required(DiscoverGuide);
+  private readonly _catalogFilter = inject(CatalogFilterService);
   private readonly _dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
   public readonly open = model.required<boolean>();
   public readonly filters = input.required<DiscoverFilters>();
-  public readonly resultCount = input.required<number>();
-  public readonly valueToggle = output<DiscoverToggle>();
-  public readonly period = output<{ from: number; to: number }>();
-  public readonly adultChange = output<boolean>();
-  public readonly clear = output<void>();
+  public readonly items = input.required<readonly CatalogItem[]>();
+  public readonly filtersChange = output<DiscoverFilters>();
 
-  /** La scheda con la descrizione della categoria si può nascondere */
-  protected readonly infoOpen = signal<boolean>(true);
-  /** La categoria della scheda: l'ultima scelta, o quella toccata tra le linguette */
-  protected readonly infoCategory = linkedSignal<readonly string[], string>({
-    source: () => this.filters().category,
-    computation: (selected, previous) =>
-      previous && selected.includes(previous.value) ? previous.value : (selected.at(-1) ?? ''),
+  protected readonly facets = computed<FacetView[]>(() => {
+    const f = this.filters();
+    const shown = this._catalogFilter.facetsFor(f.kind);
+    const views: FacetView[] = [
+      {
+        facet: 'categories',
+        titleKey: `discover.filters.groups.categories.${f.kind}`,
+        values: CATEGORY_OPTIONS[f.kind],
+        selected: f.categories,
+        single: false,
+      },
+      {
+        facet: 'formats',
+        titleKey: 'discover.filters.groups.formats',
+        values: FORMAT_OPTIONS[f.kind],
+        selected: f.formats,
+        single: false,
+      },
+      {
+        facet: 'era',
+        titleKey: 'discover.filters.groups.era',
+        values: ERA_OPTIONS,
+        selected: [f.era],
+        single: true,
+      },
+      {
+        facet: 'volumes',
+        titleKey: 'discover.filters.groups.volumes',
+        values: VOLUME_OPTIONS[f.kind],
+        selected: f.volumes,
+        single: false,
+      },
+      {
+        facet: 'statuses',
+        titleKey: 'discover.filters.groups.statuses',
+        values: STATUS_OPTIONS,
+        selected: f.statuses,
+        single: false,
+      },
+      {
+        facet: 'themes',
+        titleKey: 'discover.filters.groups.themes',
+        values: THEME_OPTIONS,
+        selected: f.themes,
+        single: false,
+      },
+    ];
+    return views.filter((view) => shown.includes(view.facet));
   });
-  /** La guida scorre sopra i filtri; Esc e la freccia riportano ai filtri */
-  protected readonly guideOpen = signal<boolean>(false);
-
-  protected readonly options = computed(() => DISCOVER_FILTER_OPTIONS[this.filters().kind]);
-  protected readonly categorySection = computed(() =>
-    this.filters().kind === 'manga' ? 'category' : 'genre',
+  protected readonly showAdultOption = computed<boolean>(() =>
+    this._catalogFilter.facetsFor(this.filters().kind).includes('showAdult'),
+  );
+  protected readonly resultCount = computed<number>(
+    () => this._catalogFilter.filter(this.items(), this.filters()).length,
+  );
+  protected readonly hasChoices = computed<boolean>(
+    () => this._catalogFilter.activeCount(this.filters()) > 0,
   );
 
-  public constructor() {
+  constructor() {
+    // Il dialog nativo si apre e si chiude da codice: dà da solo focus trap, Esc e sfondo
     effect(() => {
       const dialog = this._dialog().nativeElement;
       if (this.open() && !dialog.open) {
-        // jsdom non ha showModal: nei test il dialog si apre senza modalità
-        if (dialog.showModal) dialog.showModal();
+        if (typeof dialog.showModal === 'function') dialog.showModal();
         else dialog.setAttribute('open', '');
       } else if (!this.open() && dialog.open) {
-        if (dialog.close) dialog.close();
+        if (typeof dialog.close === 'function') dialog.close();
         else dialog.removeAttribute('open');
       }
     });
   }
 
-  protected selected(key: DiscoverListKey, value: string): boolean {
-    return this.filters()[key].includes(value);
-  }
-  protected eraActive(era: { from: number; to: number }): boolean {
-    return this.filters().yearFrom === era.from && this.filters().yearTo === era.to;
-  }
-  /** Un clic sul fondo scuro (cioè sul dialog stesso, non sul suo contenuto) lo chiude */
-  protected onBackdropClick(event: MouseEvent): void {
-    if (event.target === this._dialog().nativeElement) this.open.set(false);
+  protected count(facet: FacetView['facet'], value: string): number {
+    return this._catalogFilter.count(this.items(), this.filters(), facet, value);
   }
 
-  protected onCancel(event: Event): void {
-    if (!this.guideOpen()) return;
-    event.preventDefault();
-    this.guideOpen.set(false);
+  protected isSelected(view: FacetView, value: string): boolean {
+    return view.selected.includes(value);
   }
 
-  protected onClosed(): void {
-    this.guideOpen.set(false);
+  protected toggle(view: FacetView, value: string): void {
+    const current = this.filters();
+    if (view.facet === 'era') {
+      this.filtersChange.emit({
+        ...current,
+        era: view.selected[0] === value ? 'all' : (value as DiscoverFilters['era']),
+      });
+      return;
+    }
+    const next = view.selected.includes(value)
+      ? view.selected.filter((item) => item !== value)
+      : [...view.selected, value];
+    this.filtersChange.emit({ ...current, [view.facet]: next });
+  }
+
+  protected toggleAdult(): void {
+    const current = this.filters();
+    this.filtersChange.emit({ ...current, showAdult: !current.showAdult });
+  }
+
+  protected reset(): void {
+    const { kind, query } = this.filters();
+    this.filtersChange.emit({ ...EMPTY_FILTERS, kind, query });
+  }
+
+  protected close(): void {
     this.open.set(false);
   }
 
-  /** Senza età verificata l'interruttore apre la guida sul modulo, altrimenti attiva il filtro */
-  protected onAdultToggle(input: HTMLInputElement): void {
-    if (input.checked && !this.age.verified()) {
-      input.checked = false;
-      this.guideOpen.set(true);
-      this._guide().requestAdult();
-      return;
-    }
-    this.adultChange.emit(input.checked);
+  /** Un clic sullo sfondo (il dialog stesso, fuori dal contenuto) chiude il pannello */
+  protected onDialogClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) this.close();
+  }
+
+  /** Esc chiude il dialog nativo: il modello segue */
+  protected onNativeClose(): void {
+    this.open.set(false);
   }
 }

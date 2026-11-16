@@ -1,0 +1,31 @@
+@if (chips().length) {
+  <ul
+    [attr.aria-label]="'discover.chips.label' | transloco"
+    class="flex flex-wrap items-center gap-2"
+  >
+    @for (chip of chips(); track chip.facet + chip.value) {
+      <li>
+        <button
+          type="button"
+          (click)="remove(chip)"
+          [attr.aria-label]="
+            'discover.chips.remove' | transloco: { name: (chip.labelKey | transloco) }
+          "
+          class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-full border border-primary-500 bg-primary-900 pr-2 pl-3 text-sm font-bold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+        >
+          {{ chip.labelKey | transloco }}
+          <ng-icon name="matCloseOutline" size="16" class="text-primary-200" aria-hidden="true" />
+        </button>
+      </li>
+    }
+    <li>
+      <button
+        type="button"
+        (click)="clearAll()"
+        class="min-h-9 cursor-pointer px-2 text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      >
+        {{ 'discover.chips.clearAll' | transloco }}
+      </button>
+    </li>
+  </ul>
+}

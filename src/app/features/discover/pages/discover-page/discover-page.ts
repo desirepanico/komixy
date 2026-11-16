@@ -1,179 +1,128 @@
-import {
-  afterNextRender,
-  Component,
-  computed,
-  DestroyRef,
-  ElementRef,
-  inject,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matTuneOutline } from '@ng-icons/material-symbols/outline';
-import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
-import { ComicCard } from '@shared/components/comic-card/comic-card';
-import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
-import { DISCOVER_FILTER_OPTIONS } from '@shared/constants/ui.const';
-import { ComicKind } from '@shared/models/comic.model';
-import { DiscoverChip, DiscoverFilters } from '@shared/models/discover-filters.model';
+import {
+  COVER_PLACEHOLDER,
+  DISCOVER_ROW_SIZE,
+  STARTER_MAX_VOLUMES,
+} from '@shared/constants/ui.const';
+import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
+import { ViewportVisible } from '@shared/directives/viewport-visible/viewport-visible.directive';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.service';
+import { DiscoverActiveChips } from '../../components/discover-active-chips/discover-active-chips';
 import { DiscoverDock } from '../../components/discover-dock/discover-dock';
-import { DiscoverChips } from '../../components/discover-chips/discover-chips';
-import {
-  DiscoverFiltersPanel,
-  DiscoverToggle,
-} from '../../components/discover-filters-panel/discover-filters-panel';
+import { DiscoverFiltersButton } from '../../components/discover-filters-button/discover-filters-button';
+import { DiscoverFiltersPanel } from '../../components/discover-filters-panel/discover-filters-panel';
+import { DiscoverRow } from '../../components/discover-row/discover-row';
 import { DiscoverSearch } from '../../components/discover-search/discover-search';
 import { DiscoverTabs } from '../../components/discover-tabs/discover-tabs';
 import { WeeklyPackBanner } from '../../components/weekly-pack-banner/weekly-pack-banner';
 import { WeeklyTop } from '../../components/weekly-top/weekly-top';
+import { DiscoverFilters, DiscoverTab, EMPTY_FILTERS } from '../../models/discover-filters.model';
+import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 import { DiscoverNavigationService } from '../../services/discover-navigation/discover-navigation.service';
-import { clearFilter } from '../../utils/clear-filter/clear-filter';
-import { discoverChips } from '../../utils/discover-chips/discover-chips';
-import { filterComics } from '../../utils/filter-comics/filter-comics';
 import { parseDiscoverFilters } from '../../utils/parse-discover-filters/parse-discover-filters';
-import { removalSuggestion } from '../../utils/removal-suggestion/removal-suggestion';
-import { toggleFilterValue } from '../../utils/toggle-filter-value/toggle-filter-value';
 
-/** Sezione, ricerca e filtri stanno nell'indirizzo (`?type=`, `?q=`, `?category=`…): vedi `DISCOVER_QUERY_PARAMS`. */
+const KINDS: readonly ComicKind[] = ['manga', 'comic'];
+
+/** Scheda, ricerca e filtri stanno nell'indirizzo (`?tab=comic&cat=noir`): il link si condivide e Indietro li ritrova. */
 @Component({
   selector: 'app-discover-page',
   imports: [
-    BookmarkButton,
-    ComicCard,
-    DiscoverChips,
+    DiscoverActiveChips,
     DiscoverDock,
+    DiscoverFiltersButton,
     DiscoverFiltersPanel,
+    DiscoverRow,
     DiscoverSearch,
     DiscoverTabs,
-    HorizontalScroller,
-    NgIcon,
     TranslocoPipe,
+    ViewportVisible,
     WeeklyPackBanner,
     WeeklyTop,
   ],
   templateUrl: './discover-page.html',
-  providers: [provideIcons({ matTuneOutline })],
-  host: { '(window:scroll)': 'onScroll()' },
 })
 export class DiscoverPage {
-  protected readonly comicsNavigation = inject(ComicsNavigationService);
-  protected readonly catalog = inject(ComicCatalogService);
-  protected readonly pack = inject(WeeklyPackService);
+  private readonly _route = inject(ActivatedRoute);
   private readonly _navigation = inject(DiscoverNavigationService);
+  private readonly _catalog = inject(ComicCatalogService);
+  private readonly _catalogFilter = inject(CatalogFilterService);
 
-  private readonly _toolbar = viewChild.required<ElementRef<HTMLElement>>('toolbar');
+  protected readonly pack = inject(WeeklyPackService);
 
-  private readonly _queryParams = toSignal(inject(ActivatedRoute).queryParamMap, {
-    requireSync: true,
+  private readonly _params = toSignal(this._route.queryParamMap, {
+    initialValue: this._route.snapshot.queryParamMap,
   });
+
   protected readonly filters = computed<DiscoverFilters>(() =>
-    parseDiscoverFilters(this._queryParams()),
+    parseDiscoverFilters(this._params()),
   );
   protected readonly panelOpen = signal<boolean>(false);
-  /** Il dock compare quando la barra in cima esce dallo schermo */
-  protected readonly dockOn = signal<boolean>(false);
-  protected readonly progress = signal<number>(0);
-  protected readonly chipCount = computed(() => discoverChips(this.filters()).length);
-  protected readonly isFiltering = computed(
-    () => this.chipCount() > 0 || this.filters().search.trim().length > 0,
+  /** La barra dei filtri in cima è nello schermo: se esce compare l'isola fissa */
+  protected readonly barVisible = signal<boolean>(true);
+
+  protected readonly tabs = computed<DiscoverTab[]>(() =>
+    KINDS.map((kind) => {
+      const own = this._catalogFilter.itemsOfKind(this._catalog.items(), {
+        ...this.filters(),
+        kind,
+      });
+      return {
+        kind,
+        count: own.length,
+        covers: own
+          .filter((item) => item.coverUrl !== COVER_PLACEHOLDER)
+          .slice(0, 3)
+          .map((item) => item.coverUrl),
+      };
+    }),
   );
-  /** I titoli della sezione, senza filtri: la base delle ricerche e dei conteggi */
-  protected readonly kindComics = computed(() =>
-    filterComics(this.catalog.toDiscover(), this.filters(), 'all'),
+  /** I titoli della scheda che si possono suggerire: senza quelli per adulti */
+  protected readonly suggestable = computed<CatalogItem[]>(() =>
+    this._catalog.items().filter((item) => item.kind === this.filters().kind && !item.isAdult),
   );
-  protected readonly results = computed(() =>
-    filterComics(this.catalog.toDiscover(), this.filters()),
+  protected readonly isFiltering = computed<boolean>(
+    () => this.filters().query !== '' || this._catalogFilter.activeCount(this.filters()) > 0,
   );
-  protected readonly mangaCount = computed(
-    () =>
-      filterComics(this.catalog.toDiscover(), { ...this.filters(), kind: 'manga' }, 'all').length,
+  protected readonly activeCount = computed<number>(() =>
+    this._catalogFilter.activeCount(this.filters()),
   );
-  protected readonly comicCount = computed(
-    () =>
-      filterComics(this.catalog.toDiscover(), { ...this.filters(), kind: 'comic' }, 'all').length,
+  protected readonly results = computed<CatalogItem[]>(() =>
+    this._catalogFilter.filter(this._catalog.items(), this.filters()),
   );
-  protected readonly percent = computed(() =>
-    this.kindComics().length
-      ? Math.round((this.results().length / this.kindComics().length) * 100)
-      : 0,
+  protected readonly kindItems = computed<CatalogItem[]>(() =>
+    this._catalogFilter.itemsOfKind(this._catalog.items(), this.filters()),
   );
-  protected readonly removal = computed(() =>
-    this.results().length ? null : removalSuggestion(this.catalog.toDiscover(), this.filters()),
+  protected readonly starterItems = computed<CatalogItem[]>(() =>
+    this.suggestable()
+      .filter(
+        (item) =>
+          item.isSingleVolume ||
+          (item.totalVolumes !== null && item.totalVolumes <= STARTER_MAX_VOLUMES),
+      )
+      .slice(0, DISCOVER_ROW_SIZE),
+  );
+  protected readonly newItems = computed<CatalogItem[]>(() =>
+    [...this.suggestable()].sort((a, b) => b.year - a.year).slice(0, DISCOVER_ROW_SIZE),
   );
 
-  public constructor() {
-    const destroyRef = inject(DestroyRef);
-    afterNextRender(() => {
-      // Senza IntersectionObserver il dock resta nascosto
-      if (typeof IntersectionObserver === 'undefined') return;
-      const observer = new IntersectionObserver(([entry]) =>
-        this.dockOn.set(!entry.isIntersecting),
-      );
-      observer.observe(this._toolbar().nativeElement);
-      destroyRef.onDestroy(() => observer.disconnect());
-    });
-  }
-
-  protected onScroll(): void {
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    this.progress.set(max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0);
-  }
   protected setKind(kind: ComicKind): void {
-    const options = DISCOVER_FILTER_OPTIONS[kind];
-    const current = this.filters();
-    // Cambiando sezione restano solo i valori che esistono anche nell'altra
-    const keep = (values: readonly string[], valid: readonly string[]) =>
-      values.filter((value) => valid.includes(value));
-    void this._navigation.goToFilters({
-      ...current,
-      kind,
-      category: keep(current.category, options.category),
-      format: keep(current.format, options.format),
-      status: keep(current.status, options.status),
-      volumes: keep(current.volumes, options.volumes),
-      theme: keep(current.theme, options.theme),
-      adult: kind === 'manga' && current.adult,
-    });
+    // Le scelte dei filtri valgono per una scheda sola: cambiando si riparte puliti, tenendo la ricerca
+    void this._navigation.goToFilters({ ...EMPTY_FILTERS, kind, query: this.filters().query });
   }
-  protected setSearch(search: string): void {
-    void this._navigation.goToFilters({ ...this.filters(), search });
+
+  protected setQuery(query: string): void {
+    void this._navigation.goToFilters({ ...this.filters(), query });
   }
-  protected toggle(change: DiscoverToggle): void {
-    void this._navigation.goToFilters(toggleFilterValue(this.filters(), change.key, change.value));
+
+  protected setFilters(filters: DiscoverFilters): void {
+    void this._navigation.goToFilters(filters);
   }
-  protected setPeriod(period: { from: number; to: number }): void {
-    void this._navigation.goToFilters({
-      ...this.filters(),
-      yearFrom: period.from,
-      yearTo: period.to,
-    });
-  }
-  protected setAdult(adult: boolean): void {
-    void this._navigation.goToFilters({ ...this.filters(), adult });
-  }
-  protected removeChip(chip: DiscoverChip): void {
-    const filters = this.filters();
-    void this._navigation.goToFilters(
-      chip.key === 'year' || chip.key === 'adult'
-        ? clearFilter(filters, chip.key)
-        : toggleFilterValue(filters, chip.key, chip.value),
-    );
-  }
-  protected clearFilters(): void {
-    void this._navigation.goToFilters({
-      ...clearFilter(this.filters(), 'all'),
-      search: this.filters().search,
-    });
-  }
-  protected undo(
-    target: 'all' | 'search' | NonNullable<ReturnType<typeof removalSuggestion>>['target'],
-  ): void {
-    void this._navigation.goToFilters(clearFilter(this.filters(), target));
+
+  protected resetAll(): void {
+    void this._navigation.goToFilters({ ...EMPTY_FILTERS, kind: this.filters().kind });
   }
 }

@@ -1,86 +1,23 @@
 <div
+  class="group/dock absolute inset-x-0 top-2 mx-auto flex w-[calc(100%-1rem)] max-w-xl items-center gap-2 rounded-full border border-primary-300/30 bg-surface-900/85 p-1.5 shadow-xl backdrop-blur-md transition duration-300"
+  [class]="visible() ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-4 opacity-0'"
+  [attr.inert]="visible() ? null : ''"
   role="toolbar"
-  [attr.aria-label]="'discoverFilters.dock.label' | transloco"
-  class="group/dock glass-strong @container/dock absolute inset-x-0 top-2.5 mx-auto flex w-[min(35rem,calc(100%-1.5rem))] items-center gap-2 rounded-full border border-primary-400/30 bg-[#141126]/80 px-2 py-1.75 transition-[transform,opacity] duration-500 motion-reduce:transition-none"
-  [class]="
-    on()
-      ? 'translate-y-0 scale-100 opacity-100'
-      : 'pointer-events-none translate-y-[-160%] scale-95 opacity-0'
-  "
-  [attr.inert]="on() ? null : ''"
+  [attr.aria-label]="'discover.dock.label' | transloco"
 >
-  <span
-    aria-hidden="true"
-    class="relative size-7.5 shrink-0 rounded-full bg-[radial-gradient(circle_at_32%_30%,#fff_0_8%,#d0bcff_9%_38%,#6730c2_62%,#2a0b66)] shadow-[0_0_16px_-2px_rgb(160_120_255/0.8)] group-has-focus-within/dock:hidden group-has-data-filled/dock:hidden @max-[32.5rem]/dock:hidden"
-  >
-    <span
-      class="absolute inset-x-[-7px] top-1/2 -mt-1 h-2 -rotate-20 rounded-full border-[1.5px] border-primary-200/75"
-    ></span>
-  </span>
-
-  <div
-    role="group"
-    [attr.aria-label]="'discoverFilters.dock.section' | transloco"
-    class="flex gap-0.5 rounded-full bg-surface-950/40 p-0.75 group-has-focus-within/dock:hidden group-has-data-filled/dock:hidden"
-  >
-    @for (tab of tabs; track tab) {
-      <button
-        type="button"
-        class="inline-flex min-h-9 cursor-pointer items-center gap-1.75 rounded-full py-0 pr-3 pl-1.25 text-sm font-extrabold text-surface-400 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:bg-primary-600 aria-pressed:text-white aria-pressed:shadow-[0_0_16px_-3px_rgb(160_120_255/0.8)] @max-[32.5rem]/dock:pl-3"
-        [attr.aria-pressed]="kind() === tab"
-        (click)="kindChange.emit(tab)"
-      >
-        <i
-          aria-hidden="true"
-          class="size-6.5 shrink-0 rounded-full border-[1.5px] border-surface-50/35 bg-cover bg-center saturate-70 in-aria-pressed:saturate-100 @max-[32.5rem]/dock:hidden"
-          [style.background-image]="covers()[tab]"
-        ></i>
-        {{ 'discoverFilters.kind.' + tab | transloco }}
-      </button>
-    }
+  <div class="group-has-[input:focus]/dock:hidden">
+    <app-discover-tabs [tabs]="tabs()" [compact]="true" [(kind)]="kind" />
   </div>
-
   <app-discover-search
-    class="min-w-21 flex-1"
-    [compact]="true"
-    [value]="search()"
+    [query]="query()"
     [kind]="kind()"
-    [comics]="kindComics()"
-    (searchChange)="searchChange.emit($event)"
+    [items]="items()"
+    [compact]="true"
+    (searched)="searched.emit($event)"
   />
-
-  <button
-    type="button"
-    class="relative inline-flex h-10 shrink-0 cursor-pointer items-center gap-2 rounded-full border border-primary-400/30 bg-white/6 px-3.5 text-sm font-bold text-surface-200 transition-colors hover:border-primary-400/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 @max-[32.5rem]/dock:px-3"
-    aria-haspopup="dialog"
-    [attr.aria-label]="
-      filterCount()
-        ? ('discoverFilters.filtersApplied' | transloco: { count: filterCount() })
-        : ('discoverFilters.filters' | transloco)
-    "
-    (click)="openFilters.emit()"
-  >
-    <ng-icon name="matTuneOutline" size="18" class="text-primary-300" aria-hidden="true" />
-    <span class="@max-[32.5rem]/dock:hidden">{{ 'discoverFilters.filters' | transloco }}</span>
-    @if (filterCount()) {
-      <span
-        aria-hidden="true"
-        class="inline-grid h-5 min-w-5 place-items-center rounded-full bg-primary-500 px-1.5 text-xs font-black text-primary-950 @max-[32.5rem]/dock:absolute @max-[32.5rem]/dock:-top-1.75 @max-[32.5rem]/dock:-right-1.25 @max-[32.5rem]/dock:text-[11px] @max-[32.5rem]/dock:ring-2 @max-[32.5rem]/dock:ring-surface-950"
-      >
-        {{ filterCount() }}
-      </span>
-    }
-  </button>
-
-  <!-- La cometa: una scia che si allunga con lo scorrimento, con una stellina in testa -->
-  <span aria-hidden="true" class="pointer-events-none absolute inset-x-5.5 -bottom-px h-0.5">
-    <span
-      class="absolute inset-y-0 left-0 rounded-xs bg-linear-to-r from-transparent via-primary-500 to-white"
-      [style.width.%]="progress() * 100"
-    ></span>
-    <span
-      class="absolute top-1/2 -mt-1.25 -ml-1.25 size-2.5 rounded-full bg-white shadow-[0_0_10px_3px_rgb(208_188_255/0.9)]"
-      [style.left.%]="progress() * 100"
-    ></span>
-  </span>
+  <app-discover-filters-button
+    [count]="activeCount()"
+    [compact]="true"
+    (pressed)="openFilters.emit()"
+  />
 </div>

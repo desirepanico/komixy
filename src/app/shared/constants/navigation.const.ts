@@ -48,16 +48,15 @@ export const IGNORED_TARGETS = [
 /** Parametro con la vista della classifica: `?view=cards` o `?view=list` */
 export const RANKING_VIEW_QUERY_PARAM = 'view';
 
-/** Parametri di Scopri: sezione (`type`), ricerca (`q`) e un parametro per ogni filtro (i valori multipli si ripetono) */
+/** Parametri della pagina Scopri: scheda, ricerca e filtri stanno nell'indirizzo (valori multipli separati da virgola) */
 export const DISCOVER_QUERY_PARAMS = {
-  kind: 'type',
-  search: 'q',
-  category: 'category',
-  format: 'format',
-  status: 'status',
-  volumes: 'volumes',
-  theme: 'theme',
-  yearFrom: 'from',
-  yearTo: 'to',
+  kind: 'tab',
+  query: 'q',
+  categories: 'cat',
+  formats: 'fmt',
+  statuses: 'st',
+  volumes: 'vol',
+  themes: 'theme',
+  era: 'era',
   adult: 'adult',
 } as const;

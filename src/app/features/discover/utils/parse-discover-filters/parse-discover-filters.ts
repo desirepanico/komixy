@@ -1,42 +1,35 @@
 import { ParamMap } from '@angular/router';
 import { DISCOVER_QUERY_PARAMS } from '@shared/constants/navigation.const';
 import {
-  DISCOVER_FILTER_OPTIONS,
-  DISCOVER_YEAR_MAX,
-  DISCOVER_YEAR_MIN,
+  CATEGORY_OPTIONS,
+  ERA_OPTIONS,
+  FORMAT_OPTIONS,
+  STATUS_OPTIONS,
+  THEME_OPTIONS,
+  VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
-import { ComicKind } from '@shared/models/comic.model';
-import { DiscoverFilters, DiscoverListKey } from '@shared/models/discover-filters.model';
+import { ComicKind } from '@shared/models/catalog-item.model';
+import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
 
-/** Un valore mancante o sconosciuto non è un errore: si usa quello di riserva */
+/** I valori del parametro che stanno tra quelli ammessi, senza doppioni: il resto si scarta. */
+function listOf<T extends string>(params: ParamMap, name: string, allowed: readonly T[]): T[] {
+  const raw = params.get(name)?.split(',') ?? [];
+  return allowed.filter((value) => raw.includes(value));
+}
+
+/** Legge scheda, ricerca e filtri dall'indirizzo. Un valore mancante o sconosciuto non è un errore. */
 export function parseDiscoverFilters(params: ParamMap): DiscoverFilters {
   const kind: ComicKind = params.get(DISCOVER_QUERY_PARAMS.kind) === 'comic' ? 'comic' : 'manga';
-  const options = DISCOVER_FILTER_OPTIONS[kind];
-  const list = (key: DiscoverListKey): string[] =>
-    params
-      .getAll(DISCOVER_QUERY_PARAMS[key])
-      .filter((value, i, all) => options[key].includes(value) && all.indexOf(value) === i);
-  const year = (name: string, fallback: number): number => {
-    const value = Number(params.get(name));
-    return Number.isInteger(value) && value >= DISCOVER_YEAR_MIN && value <= DISCOVER_YEAR_MAX
-      ? value
-      : fallback;
-  };
-  const from = year(DISCOVER_QUERY_PARAMS.yearFrom, DISCOVER_YEAR_MIN);
-  const to = year(DISCOVER_QUERY_PARAMS.yearTo, DISCOVER_YEAR_MAX);
-  const ordered = from <= to;
-
+  const era = params.get(DISCOVER_QUERY_PARAMS.era);
   return {
     kind,
-    search: params.get(DISCOVER_QUERY_PARAMS.search) ?? '',
-    category: list('category'),
-    format: list('format'),
-    status: list('status'),
-    volumes: list('volumes'),
-    theme: list('theme'),
-    yearFrom: ordered ? from : DISCOVER_YEAR_MIN,
-    yearTo: ordered ? to : DISCOVER_YEAR_MAX,
-    // Solo i manga hanno il filtro per adulti
-    adult: kind === 'manga' && params.get(DISCOVER_QUERY_PARAMS.adult) === '1',
+    query: params.get(DISCOVER_QUERY_PARAMS.query)?.trim() ?? '',
+    categories: listOf(params, DISCOVER_QUERY_PARAMS.categories, CATEGORY_OPTIONS[kind]),
+    formats: listOf(params, DISCOVER_QUERY_PARAMS.formats, FORMAT_OPTIONS[kind]),
+    statuses: listOf(params, DISCOVER_QUERY_PARAMS.statuses, STATUS_OPTIONS),
+    volumes: listOf(params, DISCOVER_QUERY_PARAMS.volumes, VOLUME_OPTIONS[kind]),
+    themes: kind === 'manga' ? listOf(params, DISCOVER_QUERY_PARAMS.themes, THEME_OPTIONS) : [],
+    era: ERA_OPTIONS.find((option) => option === era) ?? EMPTY_FILTERS.era,
+    showAdult: kind === 'manga' && params.get(DISCOVER_QUERY_PARAMS.adult) === '1',
   };
 }

@@ -21,7 +21,7 @@ src/
 │   └── shared/                riutilizzabile da più feature e da core, non dipende da features
 │       ├── components/        componenti UI generici: app-tag, appButton, app-horizontal-scroller, app-empty-state, app-skeleton, app-field-wrapper, app-input-text, app-bookmark-button, app-brand, app-toast, app-hint, app-message, app-select-button, app-pack-card, app-card-fan, app-card-spotlight, ...
 │       ├── constants/         costanti condivise, un file `*.const.ts` per ambito (al massimo cinque), senza sottocartelle (navigation, ui, form, pack, api)
-│       ├── directives/        direttive generiche: appSwipe, appInView
+│       ├── directives/        direttive generiche: appSwipe, appInView, appViewportVisible
 │       ├── models/            modelli condivisi (comic, ranking-entry, user-role, nav-item, app-routes, button): solo tipi ed enum
 │       ├── services/          servizi condivisi, uno per cartella (weekly-ranking/, weekly-pack/, bookmarks/, session/, comic-catalog/, viewport/, mobile-swipe/, transloco-http-loader/)
 │       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
