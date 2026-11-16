@@ -53,105 +53,158 @@
     <button
       type="button"
       (click)="close()"
-      class="min-h-8 shrink-0 cursor-pointer rounded-full bg-primary-900 px-3 text-sm font-bold text-primary-200 hover:bg-primary-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      class="min-h-8 shrink-0 cursor-pointer rounded-full bg-primary-900 px-3 text-sm font-bold text-primary-200 hover:bg-primary-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 md:hidden"
     >
       {{ 'discover.search.close' | transloco }}
     </button>
-  }
 
-  @if (open()) {
     <div
-      class="absolute inset-x-0 top-full z-40 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-surface-600 bg-surface-900 p-2 shadow-2xl"
+      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-72 flex-col overflow-hidden rounded-2xl border border-primary-300/30 shadow-2xl md:max-h-96"
+      [class]="
+        compact()
+          ? 'bg-surface-900'
+          : 'bg-surface-900/95 backdrop-blur-2xl backdrop-saturate-150 md:bg-surface-800/60'
+      "
       (mousedown)="$event.preventDefault()"
     >
       @if (recents().length) {
-        <div class="flex items-center justify-between px-2 py-1">
-          <span class="text-xs font-extrabold tracking-widest text-surface-300 uppercase">
+        <div
+          class="flex shrink-0 items-center justify-between bg-surface-950/25 px-4 py-3 shadow-[0_1px_0] shadow-surface-50/10"
+        >
+          <span
+            class="text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
+          >
             {{ 'discover.search.recent' | transloco }}
           </span>
           <button
             type="button"
             (click)="clearRecents()"
-            class="min-h-7 cursor-pointer text-sm font-bold text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            class="min-h-7 cursor-pointer text-sm font-bold whitespace-nowrap text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             {{ 'discover.search.clearRecent' | transloco }}
           </button>
         </div>
-      } @else if (!typed()) {
-        <p class="px-2 py-1 text-xs font-extrabold tracking-widest text-surface-300 uppercase">
-          {{ 'discover.search.loved.' + kind() | transloco }}
-        </p>
       }
-      <ul
-        [id]="listId"
-        role="listbox"
-        [attr.aria-label]="'discover.search.suggestions' | transloco"
-      >
-        @for (option of options(); track option.id) {
-          <li role="presentation" class="flex items-center">
-            <span
-              role="option"
-              [id]="option.id"
-              [attr.aria-selected]="option.id === activeId()"
-              (click)="commit(option.value)"
-              class="flex min-h-11 flex-1 cursor-pointer items-center gap-3 rounded-xl px-2 py-1 hover:bg-surface-800 aria-selected:bg-surface-800"
-            >
-              @if (option.type === 'recent') {
-                <ng-icon
-                  name="matHistoryOutline"
-                  size="20"
-                  class="text-primary-300"
-                  aria-hidden="true"
-                />
-              } @else if (option.type === 'free') {
-                <ng-icon
-                  name="matSearchOutline"
-                  size="20"
-                  class="text-primary-300"
-                  aria-hidden="true"
-                />
-              } @else {
-                <img
-                  [src]="option.cover"
-                  alt=""
-                  width="32"
-                  height="44"
-                  class="h-11 w-8 shrink-0 rounded-sm object-cover"
-                />
-              }
-              <span class="min-w-0">
-                <b class="block truncate text-base text-surface-50">
-                  @if (option.type === 'free') {
-                    {{ 'discover.search.searchFor' | transloco: { query: option.title } }}
-                  } @else {
-                    {{ option.title }}
-                  }
-                </b>
-                @if (option.subtitle) {
-                  <small class="block truncate text-sm text-surface-300">{{
-                    option.subtitle
-                  }}</small>
-                }
-              </span>
-            </span>
-            @if (option.type === 'recent') {
-              <button
-                type="button"
-                (click)="removeRecent(option.value)"
-                [attr.aria-label]="
-                  'discover.search.removeRecent' | transloco: { query: option.title }
-                "
-                class="grid size-9 shrink-0 cursor-pointer place-items-center rounded-full text-surface-300 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      <div class="min-h-0 flex-1 overflow-y-auto overscroll-contain p-1.5">
+        <ul
+          [id]="listId"
+          role="listbox"
+          [attr.aria-label]="'discover.search.suggestions' | transloco"
+        >
+          @for (option of options(); track option.id) {
+            @if (option.type === 'loved' && options()[$index - 1]?.type !== 'loved') {
+              <li
+                role="presentation"
+                class="px-2.5 pt-3 pb-1 text-xs font-extrabold tracking-widest whitespace-nowrap text-surface-300 uppercase"
               >
-                <ng-icon name="matCloseOutline" size="18" aria-hidden="true" />
-              </button>
+                {{ 'discover.search.loved.' + kind() | transloco }}
+              </li>
             }
-          </li>
+            <li role="presentation" class="flex items-center">
+              <span
+                role="option"
+                [id]="option.id"
+                [attr.aria-selected]="option.id === activeId()"
+                (click)="commit(option.value)"
+                class="flex min-h-12 flex-1 cursor-pointer items-center gap-3 rounded-xl px-2.5 py-1 text-surface-300 hover:bg-primary-300/15 hover:text-white aria-selected:bg-primary-300/15 aria-selected:text-white aria-selected:ring-1 aria-selected:ring-primary-300/25"
+              >
+                @if (option.type === 'recent') {
+                  <ng-icon
+                    name="matHistoryOutline"
+                    size="20"
+                    class="text-primary-400"
+                    aria-hidden="true"
+                  />
+                } @else if (option.type === 'free') {
+                  <ng-icon
+                    name="matSearchOutline"
+                    size="20"
+                    class="text-primary-400"
+                    aria-hidden="true"
+                  />
+                } @else {
+                  <img
+                    [src]="option.cover"
+                    alt=""
+                    width="34"
+                    height="46"
+                    class="h-11.5 w-8.5 shrink-0 rounded-sm border border-surface-600 object-cover"
+                  />
+                }
+                <span class="min-w-0">
+                  <b class="block truncate text-sm text-surface-50">
+                    @if (option.type === 'free') {
+                      {{ 'discover.search.searchFor' | transloco: { query: option.title } }}
+                    } @else {
+                      {{ option.title }}
+                    }
+                  </b>
+                  @if (option.subtitle) {
+                    <small class="block truncate text-xs text-surface-300">{{
+                      option.subtitle
+                    }}</small>
+                  }
+                </span>
+              </span>
+              @if (option.type === 'recent') {
+                <button
+                  type="button"
+                  (click)="removeRecent(option.value)"
+                  [attr.aria-label]="
+                    'discover.search.removeRecent' | transloco: { query: option.title }
+                  "
+                  class="grid size-9 shrink-0 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-50/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-300"
+                >
+                  <ng-icon name="matCloseOutline" size="16" aria-hidden="true" />
+                </button>
+              }
+            </li>
+          }
+        </ul>
+        @if (typed() && !matches().length) {
+          <p class="p-3 text-center text-sm text-surface-300">
+            {{ 'discover.search.noMatch' | transloco }}
+          </p>
         }
-      </ul>
-      @if (typed() && !matches().length) {
-        <p class="p-2 text-sm text-surface-300">
-          {{ 'discover.search.noMatch' | transloco }}
+      </div>
+      @if (!compact()) {
+        <p
+          class="hidden shrink-0 flex-wrap gap-x-3.5 gap-y-1.5 border-t border-surface-50/10 bg-surface-950/25 px-3.5 py-2.5 text-xs text-surface-300 md:flex pointer-coarse:hidden"
+          aria-hidden="true"
+        >
+          <span class="inline-flex items-center gap-1"
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >↑</kbd
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >↓</kbd
+            >{{ 'discover.search.keys.choose' | transloco }}</span
+          >
+          <span class="inline-flex items-center gap-1"
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >{{ 'discover.search.keys.enter' | transloco }}</kbd
+            >{{ 'discover.search.keys.apply' | transloco }}</span
+          >
+          <span class="inline-flex items-center gap-1"
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >{{ 'discover.search.keys.delete' | transloco }}</kbd
+            >{{ 'discover.search.keys.removeRecent' | transloco }}</span
+          >
+          <span class="inline-flex items-center gap-1"
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >{{ 'discover.search.keys.tab' | transloco }}</kbd
+            >{{ 'discover.search.keys.buttons' | transloco }}</span
+          >
+          <span class="inline-flex items-center gap-1"
+            ><kbd
+              class="rounded-md border border-surface-500 bg-surface-950 px-1.5 font-bold text-surface-200"
+              >{{ 'discover.search.keys.esc' | transloco }}</kbd
+            >{{ 'discover.search.keys.close' | transloco }}</span
+          >
         </p>
       }
     </div>

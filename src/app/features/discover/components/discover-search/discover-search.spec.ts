@@ -133,4 +133,23 @@ describe('DiscoverSearch', () => {
     await fixture.whenStable();
     expect(root().querySelectorAll('kbd').length).toBe(0);
   });
+
+  it("con un recente scelto, Canc lo toglie dall'elenco", async () => {
+    const recents = TestBed.inject(RecentSearchesService);
+    recents.add('berserk');
+    input.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    await key('ArrowDown');
+    await key('Delete');
+    expect(recents.recent()).toEqual([]);
+  });
+
+  it('mostra le scorciatoie da tastiera solo nella versione grande', async () => {
+    input.dispatchEvent(new Event('focus'));
+    await fixture.whenStable();
+    expect(root().textContent).toContain('discover.search.keys.apply');
+    fixture.componentInstance.compact.set(true);
+    await fixture.whenStable();
+    expect(root().textContent).not.toContain('discover.search.keys.apply');
+  });
 });

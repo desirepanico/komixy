@@ -32,7 +32,7 @@ import { RecentSearchesService } from '../../services/recent-searches/recent-sea
   providers: [provideIcons({ matCloseOutline, matHistoryOutline, matSearchOutline })],
   templateUrl: './discover-search.html',
   host: {
-    '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1"',
+    '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1 md:max-w-170"',
     '(document:keydown)': 'onShortcut($event)',
   },
 })
@@ -136,6 +136,16 @@ export class DiscoverSearch {
         event.preventDefault();
         const chosen = this.options()[this.activeIndex()];
         this.commit(chosen ? chosen.value : this.draft());
+        break;
+      }
+      case 'Delete': {
+        // Con un recente scelto, Canc lo toglie dall'elenco invece di cancellare il testo
+        const recent = this.options()[this.activeIndex()];
+        if (this.open() && recent?.type === 'recent') {
+          event.preventDefault();
+          this.removeRecent(recent.value);
+          this.activeIndex.set(-1);
+        }
         break;
       }
       case 'Escape':

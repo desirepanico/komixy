@@ -268,7 +268,18 @@
       },
       "searchFor": "Cerca «{{ query }}»",
       "noMatch": "Nessun titolo corrisponde, ma puoi cercare il testo scritto.",
-      "shortcut": "Scorciatoia: Ctrl K"
+      "shortcut": "Scorciatoia: Ctrl K",
+      "keys": {
+        "choose": "scegli",
+        "enter": "Invio",
+        "apply": "applica",
+        "delete": "Canc",
+        "removeRecent": "toglie un recente",
+        "tab": "Tab",
+        "buttons": "pulsanti",
+        "close": "chiudi",
+        "esc": "Esc"
+      }
     },
     "filters": {
       "title": "Filtri",

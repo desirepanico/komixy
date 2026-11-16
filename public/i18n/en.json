@@ -268,7 +268,18 @@
       },
       "searchFor": "Search “{{ query }}”",
       "noMatch": "No title matches, but you can search the text you typed.",
-      "shortcut": "Shortcut: Ctrl K"
+      "shortcut": "Shortcut: Ctrl K",
+      "keys": {
+        "choose": "choose",
+        "enter": "Enter",
+        "apply": "apply",
+        "delete": "Del",
+        "removeRecent": "removes a recent",
+        "tab": "Tab",
+        "buttons": "buttons",
+        "close": "close",
+        "esc": "Esc"
+      }
     },
     "filters": {
       "title": "Filters",
