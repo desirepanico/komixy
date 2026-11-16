@@ -244,7 +244,7 @@
     }
   },
   "discover": {
-    "kicker": "Esplora la libreria intergalattica",
+    "kicker": "Il catalogo intergalattico",
     "title": "Cosa vuoi scoprire?",
     "tabs": {
       "label": "Sezioni da filtrare",
@@ -402,7 +402,7 @@
     "guide": {
       "title": "Guida ai filtri",
       "back": "Torna ai filtri",
-      "intro": "Scopri come funziona ogni filtro per trovare subito il {{noun}} perfetto nella nostra vasta libreria intergalattica. Tocca una scheda per attivare o togliere il filtro.",
+      "intro": "Scopri come funziona ogni filtro per trovare subito il {{noun}} perfetto nel nostro vasto catalogo intergalattico. Tocca una scheda per attivare o togliere il filtro.",
       "noun": {
         "manga": "manga",
         "comic": "fumetto"

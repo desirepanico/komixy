@@ -15,7 +15,8 @@ import { DiscoverTabs } from '../discover-tabs/discover-tabs';
   imports: [DiscoverTabs, DiscoverSearch, DiscoverFiltersButton, TranslocoPipe],
   templateUrl: './discover-dock.html',
   host: {
-    class: 'sticky top-0 z-30 block h-0',
+    // mb-0: la pagina spazia i blocchi con space-y, e l'isola alta zero non deve spingere giù il titolo
+    class: 'sticky top-0 z-30 mb-0! block h-0',
     '(window:scroll)': 'onScroll()',
   },
 })

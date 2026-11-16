@@ -244,7 +244,7 @@
     }
   },
   "discover": {
-    "kicker": "Explore the intergalactic library",
+    "kicker": "The intergalactic catalogue",
     "title": "What do you want to discover?",
     "tabs": {
       "label": "Sections to filter",
@@ -402,7 +402,7 @@
     "guide": {
       "title": "Filters guide",
       "back": "Back to filters",
-      "intro": "Learn how each filter works to quickly find the perfect {{noun}} in our vast intergalactic library. Tap a card to turn the filter on or off.",
+      "intro": "Learn how each filter works to quickly find the perfect {{noun}} in our vast intergalactic catalogue. Tap a card to turn the filter on or off.",
       "noun": {
         "manga": "manga",
         "comic": "comic"
