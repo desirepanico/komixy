@@ -9,7 +9,10 @@
   role="toolbar"
   [attr.aria-label]="'discover.dock.label' | transloco"
 >
-  <div class="group-has-[input:focus]/dock:hidden">
+  <!-- Sotto i 640px, con del testo nel campo (anche a ricerca applicata) le schede lasciano il posto alla ricerca -->
+  <div
+    class="group-has-[input:focus]/dock:hidden max-sm:group-has-[input:not(:placeholder-shown)]/dock:hidden"
+  >
     <app-discover-tabs [tabs]="tabs()" [compact]="true" [(kind)]="kind" />
   </div>
   <app-discover-search
