@@ -51,6 +51,12 @@ export interface SearchOption {
   title: string;
   subtitle: string;
   cover: string | null;
-  /** Il volume a cui porta il suggerimento (titoli); null per ricerche recenti e testo libero */
-  comicId: string | null;
+  /** La scheda del titolo suggerito; null per autori, ricerche recenti e testo libero */
+  kind: ComicKind | null;
+}
+
+/** Un titolo scelto dalla ricerca che sta nell'altra scheda: la pagina cambia scheda e lo cerca. */
+export interface FoundTitle {
+  title: string;
+  kind: ComicKind;
 }

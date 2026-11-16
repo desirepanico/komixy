@@ -179,4 +179,18 @@ describe('DiscoverPage', () => {
     expect(chips.compareDocumentPosition(status) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(status.closest('app-discover-row')).toBeNull();
   });
+
+  it('un titolo dell’altra scheda cercato in pagina cambia scheda e lo mostra', async () => {
+    await create();
+    const search = Array.from(
+      html.querySelectorAll<HTMLInputElement>('app-discover-search input'),
+    ).at(-1)!;
+    search.value = 'watchmen';
+    search.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/discover?tab=comic&q=Watchmen');
+    expect(tab(1).getAttribute('aria-pressed')).toBe('true');
+  });
 });

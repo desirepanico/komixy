@@ -1,7 +1,7 @@
 import { Component, input, model, output, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicKind, CatalogItem } from '@shared/models/catalog-item.model';
-import { DiscoverTab } from '../../models/discover-filters.model';
+import { DiscoverTab, FoundTitle } from '../../models/discover-filters.model';
 import { DiscoverFiltersButton } from '../discover-filters-button/discover-filters-button';
 import { DiscoverSearch } from '../discover-search/discover-search';
 import { DiscoverTabs } from '../discover-tabs/discover-tabs';
@@ -30,6 +30,7 @@ export class DiscoverDock {
   public readonly activeCount = input.required<number>();
   public readonly kind = model.required<ComicKind>();
   public readonly searched = output<string>();
+  public readonly titleFound = output<FoundTitle>();
   public readonly openFilters = output<void>();
 
   protected readonly progress = signal<number>(0);

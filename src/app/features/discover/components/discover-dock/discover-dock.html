@@ -19,6 +19,7 @@
     [searchIn]="searchIn()"
     [compact]="true"
     (searched)="searched.emit($event)"
+    (titleFound)="titleFound.emit($event)"
   />
   <app-discover-filters-button
     [count]="activeCount()"

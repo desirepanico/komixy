@@ -8,7 +8,8 @@
     [activeCount]="activeCount()"
     [kind]="filters().kind"
     (kindChange)="setKind($event)"
-    (searched)="setQuery($event)"
+    (searched)="searchFromDock($event)"
+    (titleFound)="searchTitleFromDock($event)"
     (openFilters)="panelOpen.set(true)"
   />
 
@@ -27,7 +28,9 @@
         [query]="filters().query"
         [kind]="filters().kind"
         [items]="suggestable()"
+        [searchIn]="searchable()"
         (searched)="setQuery($event)"
+        (titleFound)="searchTitle($event)"
       />
       <app-discover-filters-button
         [count]="activeCount()"
@@ -114,52 +117,55 @@
     </div>
   </div>
 
-  @if (!isFiltering()) {
-    @if (starterItems().length) {
-      <app-discover-row
-        [title]="'discover.rows.starter.title' | transloco"
-        [subtitle]="'discover.rows.starter.subtitle' | transloco"
-        [items]="starterItems()"
-      />
-    }
-    <app-discover-row
-      [title]="'discover.rows.releases.title' | transloco"
-      [subtitle]="'discover.rows.releases.subtitle' | transloco"
-      [items]="newItems()"
-    />
-    <app-discover-row
-      [title]="
-        (filters().kind === 'manga'
-          ? 'discover.rows.all.titleManga'
-          : 'discover.rows.all.titleComic'
-        ) | transloco
-      "
-      [subtitle]="'discover.rows.all.subtitle' | transloco"
-      [items]="kindItems()"
-    />
-  } @else {
-    <div class="space-y-4">
-      @if (results().length) {
+  <!-- I risultati: dalla ricerca dell'isola la pagina scorre fin qui -->
+  <div #resultsArea class="scroll-mt-20 space-y-8">
+    @if (!isFiltering()) {
+      @if (starterItems().length) {
         <app-discover-row
-          [title]="'discover.results.title' | transloco"
-          [items]="results()"
-          [grid]="true"
+          [title]="'discover.rows.starter.title' | transloco"
+          [subtitle]="'discover.rows.starter.subtitle' | transloco"
+          [items]="starterItems()"
         />
-      } @else {
-        <div class="rounded-2xl border border-surface-700 bg-surface-900/60 p-6 text-center">
-          <h3 class="text-lg font-bold text-surface-50">
-            {{ 'discover.empty.title' | transloco }}
-          </h3>
-          <p class="mt-1 text-sm text-surface-300">{{ 'discover.empty.text' | transloco }}</p>
-          <button
-            type="button"
-            (click)="resetAll()"
-            class="mt-4 min-h-10 cursor-pointer rounded-full bg-primary-500 px-5 text-sm font-extrabold text-surface-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-          >
-            {{ 'discover.empty.reset' | transloco }}
-          </button>
-        </div>
       }
-    </div>
-  }
+      <app-discover-row
+        [title]="'discover.rows.releases.title' | transloco"
+        [subtitle]="'discover.rows.releases.subtitle' | transloco"
+        [items]="newItems()"
+      />
+      <app-discover-row
+        [title]="
+          (filters().kind === 'manga'
+            ? 'discover.rows.all.titleManga'
+            : 'discover.rows.all.titleComic'
+          ) | transloco
+        "
+        [subtitle]="'discover.rows.all.subtitle' | transloco"
+        [items]="kindItems()"
+      />
+    } @else {
+      <div class="space-y-4">
+        @if (results().length) {
+          <app-discover-row
+            [title]="'discover.results.title' | transloco"
+            [items]="results()"
+            [grid]="true"
+          />
+        } @else {
+          <div class="rounded-2xl border border-surface-700 bg-surface-900/60 p-6 text-center">
+            <h3 class="text-lg font-bold text-surface-50">
+              {{ 'discover.empty.title' | transloco }}
+            </h3>
+            <p class="mt-1 text-sm text-surface-300">{{ 'discover.empty.text' | transloco }}</p>
+            <button
+              type="button"
+              (click)="resetAll()"
+              class="mt-4 min-h-10 cursor-pointer rounded-full bg-primary-500 px-5 text-sm font-extrabold text-surface-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+            >
+              {{ 'discover.empty.reset' | transloco }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
 </section>

@@ -17,17 +17,16 @@ import {
   matPersonOutline,
   matSearchOutline,
 } from '@ng-icons/material-symbols/outline';
-import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { SEARCH_AUTHOR_LIMIT, SEARCH_SUGGESTION_LIMIT } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
-import { SearchOption } from '../../models/discover-filters.model';
+import { FoundTitle, SearchOption } from '../../models/discover-filters.model';
 import { RecentSearchesService } from '../../services/recent-searches/recent-searches.service';
 import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifier';
 
 /**
  * Ricerca per titolo e autore con i suggerimenti (ricerche recenti, più amati, titoli che corrispondono).
- * Il testo si applica con Invio o scegliendo un suggerimento: `search` emette il testo da cercare.
- * Con `compact` sta nell'isola fissa, il menu si apre sotto tutta l'isola e un titolo scelto apre il suo volume.
+ * Il testo, un titolo, un autore o una ricerca recente si applicano con Invio o scegliendoli: `searched` emette il testo da cercare.
+ * Con `compact` sta nell'isola fissa, il menu si apre sotto tutta l'isola.
  */
 @Component({
   selector: 'app-discover-search',
@@ -43,7 +42,6 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
 })
 export class DiscoverSearch {
   private readonly _recents = inject(RecentSearchesService);
-  private readonly _comicsNavigation = inject(ComicsNavigationService);
   private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected readonly modifier = shortcutModifier(navigator.platform || navigator.userAgent);
@@ -56,10 +54,12 @@ export class DiscoverSearch {
   public readonly kind = input.required<ComicKind>();
   /** I titoli della scheda tra cui suggerire (senza quelli per adulti) */
   public readonly items = input.required<readonly CatalogItem[]>();
-  /** Dove cercare quando si scrive, se più largo dei suggerimenti iniziali (l'isola cerca in tutti i titoli) */
+  /** Dove cercare quando si scrive, se più largo dei suggerimenti iniziali (si cerca in tutti i titoli, manga e fumetti) */
   public readonly searchIn = input<readonly CatalogItem[] | null>(null);
   public readonly compact = input<boolean>(false);
   public readonly searched = output<string>();
+  /** Un titolo dell'altra scheda: chi usa la ricerca cambia scheda e lo cerca */
+  public readonly titleFound = output<FoundTitle>();
 
   protected readonly draft = linkedSignal<string>(() => this.query());
   protected readonly open = signal<boolean>(false);
@@ -92,7 +92,7 @@ export class DiscoverSearch {
       title: author,
       subtitle: String(count),
       cover: null,
-      comicId: null,
+      kind: null,
     })).slice(0, SEARCH_AUTHOR_LIMIT);
   });
   protected readonly loved = computed<SearchOption[]>(() =>
@@ -110,7 +110,7 @@ export class DiscoverSearch {
           title: value,
           subtitle: '',
           cover: null,
-          comicId: null,
+          kind: null,
         })),
   );
   protected readonly free = computed<SearchOption[]>(() =>
@@ -123,7 +123,7 @@ export class DiscoverSearch {
             title: this.typed(),
             subtitle: '',
             cover: null,
-            comicId: null,
+            kind: null,
           },
         ]
       : [],
@@ -209,12 +209,13 @@ export class DiscoverSearch {
         break;
     }
   }
-  /** Nell'isola un titolo scelto porta dritto al suo volume; altrimenti si applica il testo */
+  /** Un titolo, un autore o il testo libero diventano una ricerca; un titolo dell'altra scheda cambia anche scheda */
   protected choose(option: SearchOption): void {
-    if (this.compact() && option.comicId) {
+    if (option.kind && option.kind !== this.kind()) {
+      this.draft.set(option.title);
+      this.titleFound.emit({ title: option.title, kind: option.kind });
       this._recents.add(option.title);
       this.close();
-      void this._comicsNavigation.goToDetail(option.comicId);
       return;
     }
     this.commit(option.value);
@@ -251,9 +252,10 @@ export class DiscoverSearch {
       this.activeIndex.set(-1);
     }
   }
-  /** Nell'isola, un testo che trova un solo titolo vale come sceglierlo */
+  /** Un testo che trova un solo titolo, ma dell'altra scheda, vale come sceglierlo: altrimenti non darebbe risultati */
   private _onlyMatch(): SearchOption | undefined {
-    return this.compact() && this.matches().length === 1 ? this.matches()[0] : undefined;
+    const [only] = this.matches();
+    return this.matches().length === 1 && only.kind !== this.kind() ? only : undefined;
   }
   private _fromItem(item: CatalogItem, type: 'match' | 'loved'): SearchOption {
     return {
@@ -263,7 +265,7 @@ export class DiscoverSearch {
       title: item.title,
       subtitle: item.author,
       cover: item.coverUrl,
-      comicId: item.id,
+      kind: item.kind,
     };
   }
 }

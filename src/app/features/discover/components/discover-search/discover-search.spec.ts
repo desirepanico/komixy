@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { CatalogItem } from '@shared/models/catalog-item.model';
+import { FoundTitle } from '../../models/discover-filters.model';
 import { RecentSearchesService } from '../../services/recent-searches/recent-searches.service';
 import { DiscoverSearch } from './discover-search';
 
@@ -16,6 +17,7 @@ import { DiscoverSearch } from './discover-search';
     [searchIn]="searchIn()"
     [compact]="compact()"
     (searched)="applied.set($event)"
+    (titleFound)="found.set($event)"
   />`,
 })
 class Host {
@@ -26,6 +28,7 @@ class Host {
   public readonly query = signal<string>('');
   public readonly compact = signal<boolean>(false);
   public readonly applied = signal<string | null>(null);
+  public readonly found = signal<FoundTitle | null>(null);
 }
 
 describe('DiscoverSearch', () => {
@@ -185,43 +188,55 @@ describe('DiscoverSearch', () => {
     expect(root().querySelectorAll('kbd').length).toBe(0);
   });
 
-  describe("nell'isola", () => {
+  describe('titoli e autori, in cima o nell’isola', () => {
     beforeEach(async () => {
       fixture.componentInstance.compact.set(true);
       await fixture.whenStable();
     });
 
-    it('un titolo scelto porta dritto al suo volume', async () => {
+    it('un titolo della stessa scheda diventa la ricerca, senza lasciare la pagina', async () => {
       const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
       await type('chainsaw');
       root().querySelector<HTMLElement>('[role="option"]')?.click();
       await fixture.whenStable();
-      expect(navigate).toHaveBeenCalledWith(['/', 'comic', expect.any(String)]);
-      expect(fixture.componentInstance.applied()).toBeNull();
+      expect(fixture.componentInstance.applied()).toBe('Chainsaw Man');
+      expect(navigate).not.toHaveBeenCalled();
     });
 
-    it('con Invio, un testo che trova un solo titolo lo apre', async () => {
-      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    it('anche dal campo in cima un titolo diventa la ricerca', async () => {
+      fixture.componentInstance.compact.set(false);
+      await fixture.whenStable();
+      await type('chainsaw');
+      root().querySelector<HTMLElement>('[role="option"]')?.click();
+      await fixture.whenStable();
+      expect(fixture.componentInstance.applied()).toBe('Chainsaw Man');
+    });
+
+    describe('un titolo dell’altra scheda', () => {
+      beforeEach(async () => {
+        fixture.componentInstance.searchIn.set(TestBed.inject(ComicCatalogService).items());
+        await fixture.whenStable();
+      });
+
+      it('si sceglie dalla lista e chiede di cambiare scheda', async () => {
+        await type('watchmen');
+        root().querySelector<HTMLElement>('[role="option"]')?.click();
+        await fixture.whenStable();
+        expect(fixture.componentInstance.found()).toEqual({ title: 'Watchmen', kind: 'comic' });
+        expect(fixture.componentInstance.applied()).toBeNull();
+      });
+
+      it('con Invio, se è l’unico che corrisponde, vale come sceglierlo', async () => {
+        await type('watchmen');
+        await key('Enter');
+        expect(fixture.componentInstance.found()).toEqual({ title: 'Watchmen', kind: 'comic' });
+      });
+    });
+
+    it('con Invio, un testo che trova un titolo della stessa scheda resta il testo scritto', async () => {
       await type('chainsaw');
       await key('Enter');
-      expect(navigate).toHaveBeenCalledTimes(1);
-    });
-
-    it('con Invio, un testo che ne trova più di uno resta una ricerca', async () => {
-      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
-      await type('o');
-      await key('Enter');
-      expect(navigate).not.toHaveBeenCalled();
-      expect(fixture.componentInstance.applied()).toBe('o');
-    });
-
-    it('con `searchIn` trova anche i titoli dell’altra scheda', async () => {
-      const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
-      fixture.componentInstance.searchIn.set(TestBed.inject(ComicCatalogService).items());
-      await fixture.whenStable();
-      await type('watchmen');
-      await key('Enter');
-      expect(navigate).toHaveBeenCalledWith(['/', 'comic', expect.any(String)]);
+      expect(fixture.componentInstance.applied()).toBe('chainsaw');
     });
   });
 });
