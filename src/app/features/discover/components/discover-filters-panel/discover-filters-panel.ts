@@ -7,11 +7,12 @@ import {
   input,
   model,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matCloseOutline } from '@ng-icons/material-symbols/outline';
+import { matCloseOutline, matInfoOutline } from '@ng-icons/material-symbols/outline';
 import {
   CATEGORY_OPTIONS,
   ERA_OPTIONS,
@@ -21,8 +22,10 @@ import {
   VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
 import { CatalogItem } from '@shared/models/catalog-item.model';
-import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
+import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
+import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
+import { DiscoverGuide } from '../discover-guide/discover-guide';
 
 interface FacetView {
   facet: Exclude<FacetKey, 'showAdult'>;
@@ -36,12 +39,13 @@ interface FacetView {
 /** Il pannello dei filtri: un cassetto dal basso sui telefoni, una finestra al centro dagli schermi più larghi. */
 @Component({
   selector: 'app-discover-filters-panel',
-  imports: [NgIcon, TranslocoPipe],
-  providers: [provideIcons({ matCloseOutline })],
+  imports: [DiscoverGuide, NgIcon, TranslocoPipe],
+  providers: [provideIcons({ matCloseOutline, matInfoOutline })],
   templateUrl: './discover-filters-panel.html',
 })
 export class DiscoverFiltersPanel {
   private readonly _catalogFilter = inject(CatalogFilterService);
+  private readonly _age = inject(AgeVerificationService);
   private readonly _dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
   public readonly open = model.required<boolean>();
@@ -49,6 +53,8 @@ export class DiscoverFiltersPanel {
   public readonly items = input.required<readonly CatalogItem[]>();
   public readonly filtersChange = output<DiscoverFilters>();
 
+  protected readonly view = signal<'filters' | 'guide'>('filters');
+  protected readonly askAge = signal<boolean>(false);
   protected readonly facets = computed<FacetView[]>(() => {
     const f = this.filters();
     const shown = this._catalogFilter.facetsFor(f.kind);
@@ -131,32 +137,31 @@ export class DiscoverFiltersPanel {
   }
 
   protected toggle(view: FacetView, value: string): void {
-    const current = this.filters();
-    if (view.facet === 'era') {
-      this.filtersChange.emit({
-        ...current,
-        era: view.selected[0] === value ? 'all' : (value as DiscoverFilters['era']),
-      });
-      return;
-    }
-    const next = view.selected.includes(value)
-      ? view.selected.filter((item) => item !== value)
-      : [...view.selected, value];
-    this.filtersChange.emit({ ...current, [view.facet]: next });
+    this.filtersChange.emit(this._catalogFilter.toggle(this.filters(), view.facet, value));
   }
 
+  /** Accendere gli adulti senza età verificata apre la guida sul modulo dell'età */
   protected toggleAdult(): void {
-    const current = this.filters();
-    this.filtersChange.emit({ ...current, showAdult: !current.showAdult });
+    if (!this.filters().showAdult && !this._age.verified()) {
+      this.askAge.set(true);
+      this.view.set('guide');
+      return;
+    }
+    this.filtersChange.emit(this._catalogFilter.toggle(this.filters(), 'showAdult', '1'));
   }
 
   protected reset(): void {
-    const { kind, query } = this.filters();
-    this.filtersChange.emit({ ...EMPTY_FILTERS, kind, query });
+    this.filtersChange.emit(this._catalogFilter.reset(this.filters()));
+  }
+
+  protected openGuide(): void {
+    this.askAge.set(false);
+    this.view.set('guide');
   }
 
   protected close(): void {
     this.open.set(false);
+    this.view.set('filters');
   }
 
   /** Un clic sullo sfondo (il dialog stesso, fuori dal contenuto) chiude il pannello */
@@ -167,5 +172,6 @@ export class DiscoverFiltersPanel {
   /** Esc chiude il dialog nativo: il modello segue */
   protected onNativeClose(): void {
     this.open.set(false);
+    this.view.set('filters');
   }
 }

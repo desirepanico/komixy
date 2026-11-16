@@ -31,10 +31,14 @@ import { RecentSearchesService } from '../../services/recent-searches/recent-sea
   imports: [NgIcon, TranslocoPipe],
   providers: [provideIcons({ matCloseOutline, matHistoryOutline, matSearchOutline })],
   templateUrl: './discover-search.html',
-  host: { '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1"' },
+  host: {
+    '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1"',
+    '(document:keydown)': 'onShortcut($event)',
+  },
 })
 export class DiscoverSearch {
   private readonly _recents = inject(RecentSearchesService);
+  private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef);
 
   protected readonly listId = `discover-suggestions-${Math.random().toString(36).slice(2, 8)}`;
 
@@ -102,6 +106,14 @@ export class DiscoverSearch {
     () => this.options()[this.activeIndex()]?.id ?? null,
   );
 
+  /** Ctrl K (o Cmd K) porta il cursore nel campo visibile: con l'isola in vista è quello dell'isola */
+  protected onShortcut(event: KeyboardEvent): void {
+    if (event.key.toLowerCase() !== 'k' || !(event.ctrlKey || event.metaKey)) return;
+    const dockShown = !!document.querySelector('app-discover-dock [role="toolbar"]:not([inert])');
+    if (this.compact() !== dockShown || this._host.nativeElement.closest('[inert]')) return;
+    event.preventDefault();
+    this._input().nativeElement.focus();
+  }
   protected onInput(value: string): void {
     this.draft.set(value);
     this.activeIndex.set(-1);

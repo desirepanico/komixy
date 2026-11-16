@@ -5,7 +5,7 @@ import {
   ComicStatus,
   ComicTheme,
 } from '@shared/models/catalog-item.model';
-import { VolumeBucket, YearEra } from '@shared/models/catalog-filter.model';
+import { DiscoverAvatar, VolumeBucket, YearEra } from '@shared/models/catalog-filter.model';
 import { MessageSeverity } from '@shared/models/message.model';
 import { ToastSeverity } from '@shared/models/toast.model';
 import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
@@ -199,3 +199,125 @@ export const STARTER_MAX_VOLUMES = 10;
 
 /** Copertina che si usa finché un titolo non ne ha una vera */
 export const COVER_PLACEHOLDER = '/img/covers/placeholder.svg';
+
+// ─── Personaggi delle categorie (DiceBear, stile Adventurer) ─────────────────
+
+export const DISCOVER_AVATARS: Readonly<Record<string, DiscoverAvatar>> = {
+  shonen: {
+    face: {
+      seed: 'Shonen0',
+      hair: ['short05'],
+      hairColor: ['ffd37a'],
+      eyes: ['variant12'],
+      mouth: ['variant05'],
+      eyebrows: ['variant03'],
+    },
+    bg: ['#7a3fe0', '#1f004d'],
+    suit: '#b89bff',
+    sky: 'comet',
+    badge: 'star',
+  },
+  kodomo: {
+    face: {
+      seed: 'Kodomo0',
+      hairProbability: 0,
+      skinColor: ['b89bff'],
+      eyes: ['variant02'],
+      mouth: ['variant02'],
+      eyebrows: ['variant09'],
+      features: ['blush'],
+      featuresProbability: 100,
+    },
+    bg: ['#5b3fe0', '#1f004d'],
+    suit: '#b89bff',
+    sky: 'ringed',
+    badge: 'dots',
+    extra: 'antennae',
+  },
+  shojo: {
+    face: {
+      seed: 'Shojo0',
+      hair: ['long10'],
+      hairColor: ['e9a3ff'],
+      eyes: ['variant09'],
+      mouth: ['variant04'],
+      eyebrows: ['variant09'],
+      features: ['blush'],
+      featuresProbability: 100,
+      earrings: ['variant01'],
+      earringsProbability: 100,
+    },
+    bg: ['#d06be0', '#340080'],
+    suit: '#e9a3ff',
+    sky: 'hearts',
+    badge: 'heart',
+  },
+  seinen: {
+    face: {
+      seed: 'Seinen1',
+      hair: ['short07'],
+      hairColor: ['afafaf'],
+      eyes: ['variant14'],
+      mouth: ['variant20'],
+      eyebrows: ['variant10'],
+      features: ['mustache'],
+      featuresProbability: 100,
+      glasses: ['variant02'],
+      glassesProbability: 100,
+    },
+    bg: ['#3a1a8a', '#0e1017'],
+    suit: '#b89bff',
+    sky: 'planet',
+    badge: 'bars',
+  },
+  josei: {
+    face: {
+      seed: 'Josei2',
+      hair: ['long20'],
+      hairColor: ['592454'],
+      eyes: ['variant13'],
+      mouth: ['variant02'],
+      eyebrows: ['variant02'],
+      earrings: ['variant02'],
+      earringsProbability: 100,
+    },
+    bg: ['#8455e0', '#1f004d'],
+    suit: '#e9a3ff',
+    sky: 'sparkle',
+    badge: 'cup',
+    extra: 'mug',
+  },
+};
+
+export const DISCOVER_AVATAR_STARS =
+  '<circle cx="24" cy="86" r="2" fill="#fff"/><circle cx="176" cy="104" r="2.4" fill="#fff"/><circle cx="96" cy="14" r="2" fill="#fff"/><circle cx="62" cy="30" r="1.5" fill="#e7dbff"/><circle cx="140" cy="150" r="1.8" fill="#fff"/><circle cx="12" cy="120" r="1.5" fill="#e7dbff"/><circle cx="186" cy="62" r="1.5" fill="#fff"/>';
+
+export const DISCOVER_AVATAR_SKY: Readonly<Record<string, string>> = {
+  comet:
+    '<path d="M176 24 120 74" stroke="#ffd37a" stroke-opacity=".45" stroke-width="10" stroke-linecap="round"/><circle cx="178" cy="22" r="11" fill="#fff4c4"/>',
+  ringed:
+    '<circle cx="42" cy="46" r="15" fill="#d0bcff"/><ellipse cx="42" cy="46" rx="27" ry="7" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="3" transform="rotate(-20 42 46)"/>',
+  hearts:
+    '<path d="M44 44c-6-9-18-2-11 8l11 10 11-10c7-10-5-17-11-8z" fill="#ffd3ec" fill-opacity=".9"/><path d="M160 60c-4-6-12-1-7 5l7 6 7-6c5-6-3-11-7-5z" fill="#ffd3ec" fill-opacity=".8"/><path d="M168 126c-3-4-9-1-5 4l5 4 5-4c4-5-2-8-5-4z" fill="#ffd3ec" fill-opacity=".7"/>',
+  planet:
+    '<circle cx="30" cy="150" r="40" fill="#6730c2"/><ellipse cx="30" cy="150" rx="62" ry="12" fill="none" stroke="#d0bcff" stroke-opacity=".6" stroke-width="3" transform="rotate(-18 30 150)"/>',
+  sparkle:
+    '<path d="M160 30l4.5 12.5L177 47l-12.5 4.5L160 64l-4.5-12.5L143 47l12.5-4.5z" fill="#fff"/><path d="M40 52l2.5 7 7 2.5-7 2.5-2.5 7-2.5-7-7-2.5 7-2.5z" fill="#e7dbff"/>',
+};
+
+export const DISCOVER_AVATAR_EXTRA: Readonly<Record<string, string>> = {
+  antennae:
+    '<path d="M78 66Q70 44 62 36M122 66Q130 44 138 36" fill="none" stroke="#b89bff" stroke-width="5" stroke-linecap="round"/><circle cx="62" cy="34" r="7" fill="#e7dbff"/><circle cx="138" cy="34" r="7" fill="#e7dbff"/>',
+  mug: '<g transform="translate(128 140)"><path d="M0 0h26v18a9 9 0 0 1-9 9H9a9 9 0 0 1-9-9z" fill="#fff"/><path d="M26 6h4a5 5 0 0 1 0 10h-4" fill="none" stroke="#fff" stroke-width="3.5"/><path d="M8-6q-3-5 0-9M17-6q-3-5 0-9" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="2.5" stroke-linecap="round"/></g>',
+};
+
+export const DISCOVER_AVATAR_BADGE: Readonly<Record<string, string>> = {
+  star: '<path d="M100 178l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z" fill="#1f004d"/>',
+  heart:
+    '<path d="M100 192c-8-6-9-9-9-12a4.6 4.6 0 0 1 9-1 4.6 4.6 0 0 1 9 1c0 3-1 6-9 12z" fill="#7a0f4d"/>',
+  bars: '<path d="M91 182h18M91 187h18M91 192h18" stroke="#1f004d" stroke-width="3" stroke-linecap="round"/>',
+  dots: '<circle cx="93" cy="186" r="3" fill="#1f004d"/><circle cx="107" cy="186" r="3" fill="#1f004d"/><circle cx="100" cy="193" r="3" fill="#1f004d"/>',
+  cup: '<path d="M91 182h18l-2 12h-14z" fill="#1f004d"/>',
+};
+
+export const DISCOVER_ADULT_AGE = 18;

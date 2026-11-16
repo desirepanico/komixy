@@ -62,4 +62,30 @@ describe('CatalogFilterService', () => {
     };
     expect(service.activeCount(filters)).toBe(2);
   });
+
+  it('accende e toglie un valore di una lista', () => {
+    const on = service.toggle(EMPTY_FILTERS, 'categories', 'shonen');
+    expect(on.categories).toEqual(['shonen']);
+    expect(service.toggle(on, 'categories', 'shonen').categories).toEqual([]);
+  });
+
+  it('il periodo ha una sola scelta e riscegliere lo toglie', () => {
+    const tens = service.toggle(EMPTY_FILTERS, 'era', 'tens');
+    expect(service.toggle(tens, 'era', 'since2020').era).toBe('since2020');
+    expect(service.toggle(tens, 'era', 'tens').era).toBe('all');
+  });
+
+  it('accende e spegne i contenuti per adulti', () => {
+    expect(service.toggle(EMPTY_FILTERS, 'showAdult', '1').showAdult).toBe(true);
+  });
+
+  it('azzera i filtri e tiene scheda e ricerca', () => {
+    const filters = {
+      ...EMPTY_FILTERS,
+      kind: 'comic' as const,
+      query: 'x',
+      formats: ['omnibus' as const],
+    };
+    expect(service.reset(filters)).toEqual({ ...EMPTY_FILTERS, kind: 'comic', query: 'x' });
+  });
 });

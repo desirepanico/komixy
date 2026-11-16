@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
+import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { DiscoverFiltersPanel } from './discover-filters-panel';
 
 @Component({
@@ -81,10 +82,41 @@ describe('DiscoverFiltersPanel', () => {
     expect(fixture.componentInstance.filters().era).toBe('since2020');
   });
 
-  it('accende i contenuti per adulti', async () => {
+  it('accendere gli adulti senza età verificata apre la guida con il modulo', async () => {
+    root().querySelector<HTMLButtonElement>('[role="switch"]')?.click();
+    await fixture.whenStable();
+    expect(root().querySelector('app-discover-guide')).not.toBeNull();
+    expect(root().querySelector('#discover-age-form')).not.toBeNull();
+    expect(fixture.componentInstance.filters().showAdult).toBe(false);
+  });
+
+  it("con l'età verificata accende gli adulti direttamente", async () => {
+    TestBed.inject(AgeVerificationService).check(1, 1, 1990);
     root().querySelector<HTMLButtonElement>('[role="switch"]')?.click();
     await fixture.whenStable();
     expect(fixture.componentInstance.filters().showAdult).toBe(true);
+  });
+
+  it('«Guida ai filtri» apre la guida e il pulsante indietro torna ai filtri', async () => {
+    const guide = Array.from(root().querySelectorAll<HTMLButtonElement>('header button')).find(
+      (b) => b.textContent?.includes('discover.filters.guide'),
+    )!;
+    guide.click();
+    await fixture.whenStable();
+    expect(root().querySelector('app-discover-guide')).not.toBeNull();
+    root().querySelector<HTMLButtonElement>('app-discover-guide header button')?.click();
+    await fixture.whenStable();
+    expect(root().querySelector('app-discover-guide')).toBeNull();
+  });
+
+  it('un tocco sullo sfondo chiude il pannello', async () => {
+    fixture.componentInstance.open.set(true);
+    await fixture.whenStable();
+    root()
+      .querySelector('dialog')
+      ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await fixture.whenStable();
+    expect(fixture.componentInstance.open()).toBe(false);
   });
 
   it('azzera i filtri e tiene la scheda', async () => {

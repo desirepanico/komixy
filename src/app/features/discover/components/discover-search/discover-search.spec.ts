@@ -118,4 +118,19 @@ describe('DiscoverSearch', () => {
     expect(fixture.componentInstance.applied()).toBe('');
     expect(input.value).toBe('');
   });
+
+  it('Ctrl K porta il cursore nel campo', async () => {
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, cancelable: true }),
+    );
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(input);
+  });
+
+  it('mostra il suggerimento Ctrl K solo nella versione grande', async () => {
+    expect(root().querySelectorAll('kbd').length).toBe(2);
+    fixture.componentInstance.compact.set(true);
+    await fixture.whenStable();
+    expect(root().querySelectorAll('kbd').length).toBe(0);
+  });
 });

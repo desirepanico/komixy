@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ERA_RANGES } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
-import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
+import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
 import { volumeBucket } from '../../utils/volume-bucket/volume-bucket';
 
 /** Ricerca e filtri sul catalogo: puro, senza stato (lo stato sta nell'indirizzo). */
@@ -49,6 +49,22 @@ export class CatalogFilterService {
       return others.filter((item) => item.year >= from && item.year <= to).length;
     }
     return others.filter((item) => this._valuesOf(item, facet).includes(value)).length;
+  }
+
+  /** Accende o toglie un valore di un gruppo (il periodo ne ha uno solo: sceglierlo di nuovo lo toglie). */
+  public toggle(filters: DiscoverFilters, facet: FacetKey, value: string): DiscoverFilters {
+    if (facet === 'era') {
+      return { ...filters, era: filters.era === value ? 'all' : (value as DiscoverFilters['era']) };
+    }
+    if (facet === 'showAdult') return { ...filters, showAdult: !filters.showAdult };
+    const current: readonly string[] = filters[facet];
+    const next = current.includes(value) ? current.filter((v) => v !== value) : [...current, value];
+    return { ...filters, [facet]: next };
+  }
+
+  /** Toglie tutte le scelte e tiene scheda e ricerca. */
+  public reset(filters: DiscoverFilters): DiscoverFilters {
+    return { ...EMPTY_FILTERS, kind: filters.kind, query: filters.query };
   }
 
   public isActive(filters: DiscoverFilters, facet: FacetKey): boolean {

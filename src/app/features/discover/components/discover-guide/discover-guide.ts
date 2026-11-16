@@ -1,0 +1,196 @@
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  linkedSignal,
+  output,
+  signal,
+  untracked,
+  viewChild,
+} from '@angular/core';
+import { form, FormField, FormRoot, pattern, required } from '@angular/forms/signals';
+import { TranslocoPipe } from '@jsverse/transloco';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import {
+  matArrowBackOutline,
+  matCheckOutline,
+  matWarningOutline,
+} from '@ng-icons/material-symbols/outline';
+import { SafeHtml } from '@angular/platform-browser';
+import { InputText } from '@shared/components/input/input-text/input-text';
+import {
+  CATEGORY_OPTIONS,
+  FORMAT_OPTIONS,
+  STATUS_OPTIONS,
+  THEME_OPTIONS,
+} from '@shared/constants/ui.const';
+import { CatalogItem } from '@shared/models/catalog-item.model';
+import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
+import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
+import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
+import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
+
+interface GuideCard {
+  value: string;
+  nameKey: string;
+  textKey: string;
+  exampleKey: string | null;
+  avatar: SafeHtml | null;
+}
+
+interface GuideSection {
+  facet: Exclude<FacetKey, 'era' | 'showAdult'>;
+  titleKey: string;
+  cards: GuideCard[];
+}
+
+/** La guida ai filtri: una scheda per ogni valore, che si tocca per accenderlo, e la verifica dell'età per i contenuti 18+. */
+@Component({
+  selector: 'app-discover-guide',
+  imports: [FormField, FormRoot, InputText, NgIcon, TranslocoPipe],
+  providers: [provideIcons({ matArrowBackOutline, matCheckOutline, matWarningOutline })],
+  templateUrl: './discover-guide.html',
+  host: { class: 'flex min-h-0 flex-1 flex-col' },
+})
+export class DiscoverGuide {
+  private readonly _catalogFilter = inject(CatalogFilterService);
+  private readonly _avatars = inject(CategoryAvatarService);
+  protected readonly age = inject(AgeVerificationService);
+
+  private readonly _adultSection = viewChild<ElementRef<HTMLElement>>('adultSection');
+
+  public readonly filters = input.required<DiscoverFilters>();
+  public readonly items = input.required<readonly CatalogItem[]>();
+  /** Aprire la guida dall'interruttore dei contenuti per adulti mostra subito il modulo dell'età */
+  public readonly askAge = input<boolean>(false);
+  public readonly filtersChange = output<DiscoverFilters>();
+  public readonly back = output<void>();
+  public readonly done = output<void>();
+
+  private readonly _model = signal<{ day: string; month: string; year: string }>({
+    day: '',
+    month: '',
+    year: '',
+  });
+  protected readonly formOpen = linkedSignal<boolean>(() => this.askAge() && !this.age.verified());
+  protected readonly ageError = signal<string | null>(null);
+  protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');
+  protected readonly resultCount = computed<number>(
+    () => this._catalogFilter.filter(this.items(), this.filters()).length,
+  );
+  protected readonly activeCount = computed<number>(() =>
+    this._catalogFilter.activeCount(this.filters()),
+  );
+  protected readonly sections = computed<GuideSection[]>(() => {
+    const kind = this.filters().kind;
+    const card = (
+      group: string,
+      value: string,
+      optionGroup: string,
+      options: { avatar?: boolean; infoKey?: string; example?: boolean } = {},
+    ): GuideCard => ({
+      value,
+      nameKey: `discover.options.${optionGroup}.${value}`,
+      textKey: `discover.guide.info.${group}.${options.infoKey ?? value}.${options.example === false ? kind : 'text'}`,
+      exampleKey:
+        options.example === false
+          ? null
+          : `discover.guide.info.${group}.${options.infoKey ?? value}.example`,
+      avatar: options.avatar ? this._avatars.avatar(value) : null,
+    });
+    const sections: GuideSection[] = [
+      {
+        facet: 'categories',
+        titleKey: kind === 'manga' ? 'discover.guide.categories' : 'discover.guide.genres',
+        cards: CATEGORY_OPTIONS[kind].map((v) =>
+          card('categories', v, 'categories', { avatar: kind === 'manga' }),
+        ),
+      },
+      {
+        facet: 'formats',
+        titleKey: 'discover.guide.sectionFormats',
+        cards: FORMAT_OPTIONS[kind].map((v) =>
+          card('formats', v, 'formats', {
+            infoKey: v === 'series' && kind === 'comic' ? 'seriesComic' : v,
+          }),
+        ),
+      },
+      {
+        facet: 'statuses',
+        titleKey: 'discover.guide.sectionStatus',
+        cards: STATUS_OPTIONS.map((v) => card('statuses', v, 'statuses', { example: false })),
+      },
+    ];
+    if (kind === 'manga') {
+      sections.push({
+        facet: 'themes',
+        titleKey: 'discover.guide.sectionThemes',
+        cards: THEME_OPTIONS.map((v) => card('themes', v, 'themes')),
+      });
+    }
+    return sections;
+  });
+  protected readonly form = form(
+    this._model,
+    (path) => {
+      required(path.day);
+      pattern(path.day, /^\d{1,2}$/);
+      required(path.month);
+      pattern(path.month, /^\d{1,2}$/);
+      required(path.year);
+      pattern(path.year, /^\d{4}$/);
+    },
+    {
+      submission: {
+        action: async () => {
+          const { day, month, year } = this._model();
+          const result = this.age.check(Number(day), Number(month), Number(year));
+          if (result === 'adult') {
+            this.ageError.set(null);
+            this.formOpen.set(false);
+            this.filtersChange.emit({ ...this.filters(), showAdult: true });
+          } else {
+            this.ageError.set(
+              result === 'minor' ? 'discover.guide.ageMinor' : 'discover.guide.ageInvalid',
+            );
+          }
+        },
+        onInvalid: (field) => field().errorSummary()[0]?.fieldTree().focusBoundControl(),
+      },
+    },
+  );
+
+  constructor() {
+    // Il modulo dell'età si apre sotto lo schermo: lo si porta in vista
+    effect(() => {
+      if (this.formOpen()) {
+        untracked(() =>
+          this._adultSection()?.nativeElement.scrollIntoView?.({
+            block: 'center',
+            behavior: 'smooth',
+          }),
+        );
+      }
+    });
+  }
+
+  protected selected(facet: GuideSection['facet'], value: string): boolean {
+    return (this.filters()[facet] as readonly string[]).includes(value);
+  }
+  protected count(facet: GuideSection['facet'], value: string): number {
+    return this._catalogFilter.count(this.items(), this.filters(), facet, value);
+  }
+  protected toggle(facet: GuideSection['facet'], value: string): void {
+    this.filtersChange.emit(this._catalogFilter.toggle(this.filters(), facet, value));
+  }
+  protected reset(): void {
+    this.filtersChange.emit(this._catalogFilter.reset(this.filters()));
+  }
+  protected toggleForm(): void {
+    this.formOpen.update((open) => !open);
+    this.ageError.set(null);
+  }
+}
