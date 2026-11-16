@@ -253,7 +253,6 @@
       "placeholder": "Cerca titoli e autori…",
       "placeholderCompact": "Cerca",
       "clear": "Cancella il testo",
-      "close": "Chiudi",
       "recent": "Ricerche recenti",
       "clearRecent": "Cancella tutto",
       "removeRecent": "Togli «{{ query }}» dalle ricerche recenti",

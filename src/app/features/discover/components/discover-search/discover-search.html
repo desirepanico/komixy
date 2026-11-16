@@ -68,14 +68,6 @@
     </button>
   }
   @if (open()) {
-    <button
-      type="button"
-      (click)="close()"
-      class="min-h-8 shrink-0 cursor-pointer rounded-full bg-primary-400/18 px-3 text-[13px] font-extrabold text-primary-300 transition-colors hover:bg-primary-400/30 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-300 motion-reduce:transition-none md:hidden"
-    >
-      {{ 'discover.search.close' | transloco }}
-    </button>
-
     <div
       class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-drop-in flex-col overflow-hidden rounded-[18px] border border-primary-400/30 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] motion-reduce:animate-none md:max-h-100"
       [class]="

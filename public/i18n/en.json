@@ -253,7 +253,6 @@
       "placeholder": "Search titles and authors…",
       "placeholderCompact": "Search",
       "clear": "Clear the text",
-      "close": "Close",
       "recent": "Recent searches",
       "clearRecent": "Clear all",
       "removeRecent": "Remove “{{ query }}” from recent searches",

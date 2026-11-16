@@ -123,15 +123,10 @@ describe('DiscoverSearch', () => {
     expect(input.getAttribute('aria-expanded')).toBe('false');
   });
 
-  it('il bottone Chiudi compare con il menu aperto', async () => {
+  it('con il menu aperto non c’è un bottone Chiudi: il menu si chiude con Esc o uscendo dal campo', async () => {
     input.dispatchEvent(new Event('focus'));
     await fixture.whenStable();
-    const close = Array.from(root().querySelectorAll('button')).find(
-      (b) => b.textContent?.trim() === 'discover.search.close',
-    );
-    close?.click();
-    await fixture.whenStable();
-    expect(input.getAttribute('aria-expanded')).toBe('false');
+    expect(root().textContent).not.toContain('discover.search.close');
   });
 
   it('cancella il testo e lo comunica', async () => {
