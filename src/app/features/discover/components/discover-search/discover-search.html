@@ -1,10 +1,28 @@
 <div
   #root
-  class="flex h-11 items-center gap-1 rounded-full border border-surface-600 bg-surface-900/70 pr-1 pl-3 transition-colors focus-within:border-primary-400 focus-within:bg-surface-950/80"
-  [class.h-10]="compact()"
+  class="group relative isolate flex items-center gap-1 rounded-full pr-1 pl-3.5"
+  [class.z-40]="open()"
+  [class]="
+    compact()
+      ? 'h-10 border border-primary-400/30 bg-white/6 transition-colors duration-200 focus-within:border-primary-400 focus-within:bg-surface-950/50 motion-reduce:transition-none'
+      : 'h-11'
+  "
   (focusout)="onFocusOut($event, root)"
 >
-  <ng-icon name="matSearchOutline" size="20" class="shrink-0 text-primary-300" aria-hidden="true" />
+  <!-- Il vetro sta su un livello a parte: un backdrop-filter sul contenitore toglierebbe la sfocatura alla tendina -->
+  @if (!compact()) {
+    <span
+      class="pointer-events-none absolute inset-0 -z-10 rounded-full border border-primary-400/22 bg-surface-900/45 shadow-[0_6px_24px_rgb(14_16_23/0.4),inset_0_1px_0_rgb(250_250_252/0.06)] backdrop-blur-[14px] backdrop-saturate-130 transition-[border-color,box-shadow] duration-200 group-focus-within:border-primary-400 group-focus-within:shadow-[0_0_0_3px_rgb(160_120_255/0.2)] motion-reduce:transition-none"
+      aria-hidden="true"
+    ></span>
+  }
+  <ng-icon
+    name="matSearchOutline"
+    size="18"
+    class="shrink-0"
+    [class]="compact() ? 'text-primary-300' : 'text-surface-400'"
+    aria-hidden="true"
+  />
   <input
     #field
     type="search"
@@ -53,7 +71,7 @@
     <button
       type="button"
       (click)="close()"
-      class="min-h-8 shrink-0 cursor-pointer rounded-full bg-primary-900 px-3 text-sm font-bold text-primary-200 hover:bg-primary-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 md:hidden"
+      class="min-h-8 shrink-0 cursor-pointer rounded-full bg-primary-400/18 px-3 text-[13px] font-extrabold text-primary-300 transition-colors hover:bg-primary-400/30 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-300 motion-reduce:transition-none md:hidden"
     >
       {{ 'discover.search.close' | transloco }}
     </button>
@@ -84,7 +102,7 @@
         </div>
       }
       <div
-        class="min-h-0 flex-1 [scrollbar-color:var(--color-surface-500)_transparent] overflow-y-auto overscroll-contain px-1.5 pb-1.5"
+        class="min-h-0 flex-1 [scrollbar-color:var(--color-surface-500)_transparent] overflow-y-auto overscroll-contain px-2 pb-2"
       >
         <ul
           [id]="listId"
@@ -100,60 +118,58 @@
                 {{ 'discover.search.loved.' + kind() | transloco }}
               </li>
             }
-            <li role="presentation" class="flex items-center">
-              <span
-                role="option"
-                [id]="option.id"
-                [attr.aria-selected]="option.id === activeId()"
-                (click)="commit(option.value)"
-                class="flex min-h-12 flex-1 cursor-pointer items-center gap-3 rounded-xl py-1 pr-1.5 pl-2.5 text-surface-300 hover:bg-primary-300/15 hover:text-white aria-selected:bg-primary-300/15 aria-selected:text-white aria-selected:ring-1 aria-selected:ring-primary-300/25"
-              >
-                @if (option.type === 'recent') {
-                  <ng-icon
-                    name="matHistoryOutline"
-                    size="20"
-                    class="text-primary-400"
-                    aria-hidden="true"
-                  />
-                } @else if (option.type === 'free') {
-                  <ng-icon
-                    name="matSearchOutline"
-                    size="20"
-                    class="text-primary-400"
-                    aria-hidden="true"
-                  />
-                } @else {
-                  <img
-                    [src]="option.cover"
-                    alt=""
-                    width="34"
-                    height="46"
-                    class="h-11.5 w-8.5 shrink-0 rounded-[7px] border border-surface-700 object-cover"
-                  />
-                }
-                <span class="min-w-0">
-                  <b class="block truncate text-sm text-surface-50">
-                    @if (option.type === 'free') {
-                      {{ 'discover.search.searchFor' | transloco: { query: option.title } }}
-                    } @else {
-                      {{ option.title }}
-                    }
-                  </b>
-                  @if (option.subtitle) {
-                    <small class="block truncate text-xs text-surface-400">{{
-                      option.subtitle
-                    }}</small>
+            <li
+              role="option"
+              [id]="option.id"
+              [attr.aria-selected]="option.id === activeId()"
+              (click)="commit(option.value)"
+              class="mb-0.5 flex min-h-12 cursor-pointer items-center gap-3 rounded-md py-1 pr-1.5 pl-2.5 text-surface-300 transition-colors hover:bg-primary-300/16 hover:text-white hover:shadow-[inset_0_0_0_1px] hover:shadow-primary-300/22 aria-selected:bg-primary-300/16 aria-selected:text-white aria-selected:shadow-[inset_0_0_0_1px] aria-selected:shadow-primary-300/22 motion-reduce:transition-none"
+            >
+              @if (option.type === 'recent') {
+                <ng-icon
+                  name="matHistoryOutline"
+                  size="18"
+                  class="shrink-0 text-primary-400"
+                  aria-hidden="true"
+                />
+              } @else if (option.type === 'free') {
+                <ng-icon
+                  name="matSearchOutline"
+                  size="18"
+                  class="shrink-0 text-primary-400"
+                  aria-hidden="true"
+                />
+              } @else {
+                <img
+                  [src]="option.cover"
+                  alt=""
+                  width="34"
+                  height="46"
+                  class="h-11.5 w-8.5 shrink-0 rounded-[7px] border border-surface-700 object-cover"
+                />
+              }
+              <span class="min-w-0 flex-1">
+                <b class="block truncate text-sm text-surface-50">
+                  @if (option.type === 'free') {
+                    {{ 'discover.search.searchFor' | transloco: { query: option.title } }}
+                  } @else {
+                    {{ option.title }}
                   }
-                </span>
+                </b>
+                @if (option.subtitle) {
+                  <small class="block truncate text-xs text-surface-400">{{
+                    option.subtitle
+                  }}</small>
+                }
               </span>
               @if (option.type === 'recent') {
                 <button
                   type="button"
-                  (click)="removeRecent(option.value)"
+                  (click)="removeRecent(option.value); $event.stopPropagation()"
                   [attr.aria-label]="
                     'discover.search.removeRecent' | transloco: { query: option.title }
                   "
-                  class="grid size-9 shrink-0 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-50/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-300"
+                  class="grid size-9 shrink-0 cursor-pointer place-items-center rounded-full text-surface-400 transition-colors hover:bg-surface-50/12 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-300 motion-reduce:transition-none"
                 >
                   <ng-icon name="matCloseOutline" size="16" aria-hidden="true" />
                 </button>

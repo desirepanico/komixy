@@ -4,11 +4,14 @@
   [attr.aria-expanded]="expanded()"
   [attr.aria-label]="'discover.filters.open' | transloco: { count: count() }"
   (click)="pressed.emit()"
-  class="relative inline-flex h-11 cursor-pointer items-center justify-center gap-2 rounded-full border border-surface-600 bg-surface-900/70 px-4 text-sm font-bold text-surface-100 transition-colors hover:border-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 aria-expanded:border-primary-400 aria-expanded:bg-primary-900 max-sm:px-3"
-  [class.h-10]="compact()"
-  [class.px-3]="compact()"
+  class="relative inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border text-sm font-bold text-surface-200 transition-[border-color,background-color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 motion-reduce:transition-none max-sm:px-3.5"
+  [class]="
+    compact()
+      ? 'h-10 border-primary-400/30 bg-white/6 px-3 hover:border-primary-400/50 aria-expanded:border-primary-400 aria-expanded:bg-primary-900'
+      : 'h-11 border-primary-400/22 bg-surface-900/45 px-4 shadow-[0_6px_24px_rgb(14_16_23/0.4),inset_0_1px_0_rgb(250_250_252/0.06)] backdrop-blur-[14px] backdrop-saturate-130 hover:border-primary-400/50 hover:bg-surface-900/70 aria-expanded:border-primary-500 aria-expanded:bg-primary-900'
+  "
 >
-  <ng-icon name="matTuneOutline" size="20" class="text-primary-300" aria-hidden="true" />
+  <ng-icon name="matTuneOutline" size="18" class="text-primary-300" aria-hidden="true" />
   <span class="max-sm:sr-only" [class.sr-only]="compact()" aria-hidden="true">{{
     'discover.filters.title' | transloco
   }}</span>
