@@ -304,8 +304,8 @@
       "titleManga": "Manga filters",
       "titleComic": "Comics filters",
       "showNone": "No volumes",
-      "infoShow": "What is it?",
-      "infoHide": "Hide",
+      "infoShow": "Show information",
+      "infoHide": "Hide information",
       "infoTabs": "Categories"
     },
     "options": {

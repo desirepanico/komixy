@@ -14,7 +14,11 @@ import {
 import { SafeHtml } from '@angular/platform-browser';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matCloseOutline } from '@ng-icons/material-symbols/outline';
+import {
+  matCloseOutline,
+  matVisibilityOffOutline,
+  matVisibilityOutline,
+} from '@ng-icons/material-symbols/outline';
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
@@ -51,7 +55,14 @@ interface FacetView {
 @Component({
   selector: 'app-discover-filters-panel',
   imports: [DiscoverGuide, NgIcon, TranslocoPipe],
-  providers: [provideIcons({ ...DISCOVER_ICON_SET, matCloseOutline })],
+  providers: [
+    provideIcons({
+      ...DISCOVER_ICON_SET,
+      matCloseOutline,
+      matVisibilityOffOutline,
+      matVisibilityOutline,
+    }),
+  ],
   templateUrl: './discover-filters-panel.html',
 })
 export class DiscoverFiltersPanel {

@@ -82,9 +82,14 @@
                     aria-controls="discover-info-card"
                     [attr.aria-expanded]="infoOpen()"
                     (click)="infoOpen.set(!infoOpen())"
-                    class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-400 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                    class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
                   >
-                    <ng-icon name="matInfoOutline" size="16" aria-hidden="true" />
+                    <ng-icon
+                      [name]="infoOpen() ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
+                      size="16"
+                      class="text-primary-300"
+                      aria-hidden="true"
+                    />
                     {{
                       (infoOpen() ? 'discover.filters.infoHide' : 'discover.filters.infoShow')
                         | transloco
@@ -170,12 +175,8 @@
                           type="button"
                           [attr.aria-pressed]="infoCategory() === category"
                           (click)="infoCategory.set($any(category))"
-                          class="inline-flex min-h-8.5 cursor-pointer items-center gap-1.75 rounded-full pr-3.5 pl-2.75 text-[13px] font-extrabold text-surface-400 transition-[background-color,color,box-shadow] duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:bg-[#4d446a] aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px,0_0_16px_-4px] aria-pressed:shadow-primary-300/70 motion-reduce:transition-none"
+                          class="inline-flex min-h-8.5 cursor-pointer items-center gap-1.75 rounded-full px-3.5 text-[13px] font-extrabold text-surface-400 transition-[background-color,color,box-shadow] duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:bg-[#4d446a] aria-pressed:text-white aria-pressed:shadow-[inset_0_0_0_1px,0_0_16px_-4px] aria-pressed:shadow-primary-300/70 motion-reduce:transition-none"
                         >
-                          <span
-                            class="size-2 rounded-full bg-primary-300 shadow-[0_0_8px] shadow-primary-300"
-                            aria-hidden="true"
-                          ></span>
                           {{ 'discover.options.categories.' + category | transloco }}
                         </button>
                       }
