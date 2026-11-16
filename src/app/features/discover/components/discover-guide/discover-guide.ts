@@ -62,7 +62,10 @@ interface GuideSection {
     provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
   ],
   templateUrl: './discover-guide.html',
-  host: { class: 'flex min-h-0 flex-1 animate-guide-slide flex-col motion-reduce:animate-none' },
+  host: {
+    class:
+      'flex min-h-0 flex-1 animate-guide-slide flex-col bg-[linear-gradient(180deg,#19142f,#0f0d1c_45%)] motion-reduce:animate-none',
+  },
 })
 export class DiscoverGuide {
   private readonly _catalogFilter = inject(CatalogFilterService);
