@@ -40,6 +40,24 @@ describe('DiscoverFiltersPanel', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  it('passa dai filtri alla guida e torna indietro, con una sola vista alla volta', async () => {
+    const guideButton = (): HTMLButtonElement =>
+      Array.from(root().querySelectorAll<HTMLButtonElement>('header button')).find((b) =>
+        b.textContent?.includes('discover.filters.guide'),
+      )!;
+    expect(root().querySelector('app-discover-guide')).toBeNull();
+
+    guideButton().click();
+    await fixture.whenStable();
+    expect(root().querySelector('app-discover-guide')).toBeTruthy();
+    expect(root().querySelector('#discover-filters-title')).toBeNull();
+
+    root().querySelector<HTMLButtonElement>('app-discover-guide header button')!.click();
+    await fixture.whenStable();
+    expect(root().querySelector('app-discover-guide')).toBeNull();
+    expect(root().querySelector('#discover-filters-title')).toBeTruthy();
+  });
+
   it('è un dialog con titolo', () => {
     const dialog = root().querySelector('dialog')!;
     expect(dialog.getAttribute('aria-labelledby')).toBe('discover-filters-title');

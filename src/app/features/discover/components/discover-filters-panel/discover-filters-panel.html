@@ -11,10 +11,14 @@
   [class.transition-transform]="!dragging()"
   class="m-0 mt-auto h-auto max-h-[88dvh] w-full max-w-none overflow-hidden rounded-t-[26px] border border-primary-400/30 bg-surface-900 p-0 text-surface-100 shadow-[0_28px_60px_-16px_rgb(0_0_0/0.9),0_0_50px_-24px_var(--color-primary-500)] backdrop:bg-[rgb(8_9_14/0.7)] backdrop:backdrop-blur-[3px] open:animate-sheet-up motion-reduce:animate-none md:m-0 md:ml-auto md:h-dvh md:max-h-none md:w-105 md:rounded-l-[22px] md:rounded-r-none md:open:animate-drawer-in"
 >
-  <div class="flex max-h-[88dvh] flex-col md:h-dvh md:max-h-none">
-    <!-- Filtri e guida si danno il cambio nello stesso pannello, senza chiudere il dialog -->
+  <!-- Filtri e guida si danno il cambio nello stesso pannello, senza chiudere il dialog: durante il passaggio stanno nella stessa cella, una sull'altra -->
+  <div
+    class="grid max-h-[88dvh] grid-cols-1 grid-rows-[minmax(0,1fr)] overflow-hidden md:h-dvh md:max-h-none"
+  >
     @if (view() === 'guide') {
       <app-discover-guide
+        animate.leave="animate-guide-out! motion-reduce:animate-none!"
+        class="col-start-1 row-start-1"
         [filters]="filters()"
         [items]="items()"
         [askAge]="askAge()"
@@ -24,7 +28,8 @@
       />
     } @else {
       <div
-        class="flex min-h-0 flex-1 flex-col motion-reduce:animate-none"
+        animate.leave="animate-filters-out! motion-reduce:animate-none!"
+        class="col-start-1 row-start-1 flex min-h-0 flex-col motion-reduce:animate-none"
         [class.animate-filters-back]="returned()"
       >
         <div

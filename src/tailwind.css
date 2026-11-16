@@ -45,6 +45,8 @@
   --animate-guide-in: guide-in 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   --animate-guide-slide: guide-slide 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
   --animate-filters-back: filters-back 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-filters-out: filters-out 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-guide-out: guide-out 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 
   /* Risultati e tendine: le carte entrano a cascata, la tendina della ricerca scende */
   --animate-card-in: card-in 350ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -69,6 +71,19 @@
   @keyframes guide-slide {
     from {
       transform: translateX(104%);
+    }
+  }
+
+  @keyframes guide-out {
+    to {
+      transform: translateX(104%);
+    }
+  }
+
+  @keyframes filters-out {
+    to {
+      opacity: 0;
+      transform: translateX(-14%);
     }
   }
 
