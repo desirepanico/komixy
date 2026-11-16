@@ -562,7 +562,6 @@
       "sectionFormats": "Formato",
       "sectionStatus": "Stato",
       "sectionThemes": "Tema narrativo",
-      "noResults": "Nessun risultato",
       "selected": "Selezionato",
       "showResults": "Mostra {{ count }} risultati",
       "activeCount": "{{ count }} filtri attivi",

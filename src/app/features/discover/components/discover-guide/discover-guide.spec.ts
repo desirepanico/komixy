@@ -146,10 +146,26 @@ describe('DiscoverGuide', () => {
     expect(shonen.classList).not.toContain('animate-pop');
   });
 
-  it('una voce senza titoli è spenta e lo dice', async () => {
+  it('ogni voce si può scegliere, anche se con gli altri filtri non darebbe titoli', async () => {
     fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, era: 'since2020' });
     await fixture.whenStable();
-    expect(card('discover.options.categories.kodomo').disabled).toBe(true);
-    expect(root().textContent).toContain('discover.guide.noResults');
+    const kodomo = card('discover.options.categories.kodomo');
+    expect(kodomo.disabled).toBe(false);
+    kodomo.click();
+    await fixture.whenStable();
+    expect(fixture.componentInstance.filters().categories).toEqual(['kodomo']);
+    expect(root().textContent).not.toContain('discover.guide.noResults');
+  });
+
+  it('si possono scegliere tutti i valori di tutti i gruppi, uno dopo l’altro', async () => {
+    for (const name of cards().map((c) => c.textContent ?? '')) {
+      expect(name).not.toBe('');
+    }
+    expect(cards().every((c) => !c.disabled)).toBe(true);
+    for (const button of cards()) {
+      button.click();
+      await fixture.whenStable();
+    }
+    expect(cards().every((c) => c.getAttribute('aria-pressed') === 'true')).toBe(true);
   });
 });

@@ -22,33 +22,14 @@ export class CatalogFilterService {
     );
   }
 
-  /** Applica ricerca e filtri; `skip` salta un gruppo (serve a contare cosa darebbe una scelta). */
-  public filter(
-    items: readonly CatalogItem[],
-    filters: DiscoverFilters,
-    skip?: FacetKey | 'query',
-  ): CatalogItem[] {
+  /** Applica ricerca e filtri alla scheda scelta. */
+  public filter(items: readonly CatalogItem[], filters: DiscoverFilters): CatalogItem[] {
     const facets = this.facetsFor(filters.kind);
     return this.itemsOfKind(items, filters).filter(
       (item) =>
-        (skip === 'query' || this._matchesQuery(item, filters.query)) &&
-        facets.every((facet) => facet === skip || this._matchesFacet(item, filters, facet)),
+        this._matchesQuery(item, filters.query) &&
+        facets.every((facet) => this._matchesFacet(item, filters, facet)),
     );
-  }
-
-  /** Quanti titoli darebbe scegliere `value` nel gruppo, tenendo gli altri filtri. */
-  public count(
-    items: readonly CatalogItem[],
-    filters: DiscoverFilters,
-    facet: FacetKey,
-    value: string,
-  ): number {
-    const others = this.filter(items, filters, facet);
-    if (facet === 'era') {
-      const [from, to] = ERA_RANGES[value as DiscoverFilters['era']];
-      return others.filter((item) => item.year >= from && item.year <= to).length;
-    }
-    return others.filter((item) => this._valuesOf(item, facet).includes(value)).length;
   }
 
   /** Accende o toglie un valore di un gruppo (il periodo ne ha uno solo: sceglierlo di nuovo lo toglie). */

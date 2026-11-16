@@ -45,14 +45,6 @@ describe('CatalogFilterService', () => {
     expect(service.facetsFor('manga')).toContain('showAdult');
   });
 
-  it('conta i titoli di una scelta tenendo gli altri filtri', () => {
-    const filters = { ...EMPTY_FILTERS, statuses: ['ongoing' as const] };
-    expect(service.count(items(), filters, 'categories', 'shonen')).toBe(
-      service.filter(items(), { ...EMPTY_FILTERS, statuses: ['ongoing'], categories: ['shonen'] })
-        .length,
-    );
-  });
-
   it('conta i gruppi attivi senza contare la ricerca', () => {
     const filters = {
       ...EMPTY_FILTERS,

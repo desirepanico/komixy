@@ -213,15 +213,8 @@ export class DiscoverGuide {
   protected selectedCount(facet: GuideSection['facet']): number {
     return this.filters()[facet].length;
   }
-  /** Una voce senza titoli si mostra spenta, a meno che sia già scelta */
-  protected isDisabled(facet: GuideSection['facet'], value: string): boolean {
-    return this.count(facet, value) === 0 && !this.selected(facet, value);
-  }
   protected onPulseEnd(event: AnimationEvent): void {
     if (event.animationName === 'pop') this.pulse.set('');
-  }
-  protected count(facet: GuideSection['facet'], value: string): number {
-    return this._catalogFilter.count(this.items(), this.filters(), facet, value);
   }
   protected toggle(facet: GuideSection['facet'], value: string): void {
     this.pulse.set(facet + value);
