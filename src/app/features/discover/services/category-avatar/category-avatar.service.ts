@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { createAvatar } from '@dicebear/core';
-import * as adventurer from '@dicebear/adventurer';
+import { Avatar, Style } from '@dicebear/core';
+import adventurer from '@dicebear/styles/adventurer.json' with { type: 'json' };
 import {
   DISCOVER_AVATAR_BADGE,
   DISCOVER_AVATAR_EXTRA,
@@ -14,6 +14,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class CategoryAvatarService {
   private readonly _sanitizer = inject(DomSanitizer);
+  private readonly _style = new Style(adventurer);
   private readonly _cache = new Map<string, SafeHtml | null>();
 
   public avatar(category: string): SafeHtml | null {
@@ -24,16 +25,17 @@ export class CategoryAvatarService {
   private _build(category: string): SafeHtml | null {
     const character = DISCOVER_AVATARS[category];
     if (!character) return null;
-    const face = createAvatar(adventurer, {
-      randomizeIds: true,
+    const face = new Avatar(this._style, {
+      idRandomization: true,
       earringsProbability: 0,
       glassesProbability: 0,
-      featuresProbability: 0,
+      detailsProbability: 0,
       hairProbability: 100,
       ...character.face,
     })
       .toString()
       // Il credito della licenza sta nella documentazione, non dentro l'immagine
+      .replace(/<!--[\s\S]*?-->/g, '')
       .replace(/<metadata[\s\S]*?<\/metadata>/g, '')
       .replace(/<title[\s\S]*?<\/title>/g, '')
       .replace('<svg ', '<svg x="22" y="30" width="156" height="156" ');
