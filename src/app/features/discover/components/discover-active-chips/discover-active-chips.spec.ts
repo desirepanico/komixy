@@ -63,4 +63,14 @@ describe('DiscoverActiveChips', () => {
     await fixture.whenStable();
     expect(buttons().length).toBe(0);
   });
+
+  it("ogni chip ha l'icona del suo gruppo", () => {
+    expect(buttons()[0].querySelector('ng-icon')).not.toBeNull();
+  });
+
+  it('il chip dei contenuti per adulti ha il bollino 18+', async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, showAdult: true });
+    await fixture.whenStable();
+    expect(buttons()[0].textContent).toContain('18+');
+  });
 });

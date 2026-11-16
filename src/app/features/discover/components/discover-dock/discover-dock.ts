@@ -1,4 +1,4 @@
-import { Component, input, model, output } from '@angular/core';
+import { Component, input, model, output, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicKind, CatalogItem } from '@shared/models/catalog-item.model';
 import { DiscoverTab } from '../../models/discover-filters.model';
@@ -14,7 +14,10 @@ import { DiscoverTabs } from '../discover-tabs/discover-tabs';
   selector: 'app-discover-dock',
   imports: [DiscoverTabs, DiscoverSearch, DiscoverFiltersButton, TranslocoPipe],
   templateUrl: './discover-dock.html',
-  host: { class: 'sticky top-0 z-30 block h-0' },
+  host: {
+    class: 'sticky top-0 z-30 block h-0',
+    '(window:scroll)': 'onScroll()',
+  },
 })
 export class DiscoverDock {
   public readonly visible = input.required<boolean>();
@@ -25,4 +28,13 @@ export class DiscoverDock {
   public readonly kind = model.required<ComicKind>();
   public readonly searched = output<string>();
   public readonly openFilters = output<void>();
+
+  protected readonly progress = signal<number>(0);
+
+  /** Quanto della pagina è stato scorso: riempie la linea sotto l'isola */
+  protected onScroll(): void {
+    const root = document.documentElement;
+    const max = root.scrollHeight - root.clientHeight;
+    this.progress.set(max > 0 ? Math.min(1, window.scrollY / max) : 0);
+  }
 }

@@ -23,6 +23,9 @@ import { SafeHtml } from '@angular/platform-browser';
 import { InputText } from '@shared/components/input/input-text/input-text';
 import {
   CATEGORY_OPTIONS,
+  DISCOVER_FACET_ICONS,
+  DISCOVER_ICON_SET,
+  DISCOVER_OPTION_ICONS,
   FORMAT_OPTIONS,
   STATUS_OPTIONS,
   THEME_OPTIONS,
@@ -35,6 +38,7 @@ import { CategoryAvatarService } from '../../services/category-avatar/category-a
 
 interface GuideCard {
   value: string;
+  icon: string;
   nameKey: string;
   textKey: string;
   exampleKey: string | null;
@@ -43,6 +47,7 @@ interface GuideCard {
 
 interface GuideSection {
   facet: Exclude<FacetKey, 'era' | 'showAdult'>;
+  icon: string;
   titleKey: string;
   cards: GuideCard[];
 }
@@ -51,7 +56,9 @@ interface GuideSection {
 @Component({
   selector: 'app-discover-guide',
   imports: [FormField, FormRoot, InputText, NgIcon, TranslocoPipe],
-  providers: [provideIcons({ matArrowBackOutline, matCheckOutline, matWarningOutline })],
+  providers: [
+    provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
+  ],
   templateUrl: './discover-guide.html',
   host: { class: 'flex min-h-0 flex-1 flex-col' },
 })
@@ -77,6 +84,7 @@ export class DiscoverGuide {
   });
   protected readonly formOpen = linkedSignal<boolean>(() => this.askAge() && !this.age.verified());
   protected readonly ageError = signal<string | null>(null);
+  protected readonly progress = signal<number>(0);
   protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');
   protected readonly resultCount = computed<number>(
     () => this._catalogFilter.filter(this.items(), this.filters()).length,
@@ -93,6 +101,7 @@ export class DiscoverGuide {
       options: { avatar?: boolean; infoKey?: string; example?: boolean } = {},
     ): GuideCard => ({
       value,
+      icon: DISCOVER_OPTION_ICONS[optionGroup]?.[value] ?? DISCOVER_FACET_ICONS[optionGroup],
       nameKey: `discover.options.${optionGroup}.${value}`,
       textKey: `discover.guide.info.${group}.${options.infoKey ?? value}.${options.example === false ? kind : 'text'}`,
       exampleKey:
@@ -104,6 +113,7 @@ export class DiscoverGuide {
     const sections: GuideSection[] = [
       {
         facet: 'categories',
+        icon: DISCOVER_FACET_ICONS['categories'],
         titleKey: kind === 'manga' ? 'discover.guide.categories' : 'discover.guide.genres',
         cards: CATEGORY_OPTIONS[kind].map((v) =>
           card('categories', v, 'categories', { avatar: kind === 'manga' }),
@@ -111,6 +121,7 @@ export class DiscoverGuide {
       },
       {
         facet: 'formats',
+        icon: DISCOVER_FACET_ICONS['formats'],
         titleKey: 'discover.guide.sectionFormats',
         cards: FORMAT_OPTIONS[kind].map((v) =>
           card('formats', v, 'formats', {
@@ -120,6 +131,7 @@ export class DiscoverGuide {
       },
       {
         facet: 'statuses',
+        icon: DISCOVER_FACET_ICONS['statuses'],
         titleKey: 'discover.guide.sectionStatus',
         cards: STATUS_OPTIONS.map((v) => card('statuses', v, 'statuses', { example: false })),
       },
@@ -127,6 +139,7 @@ export class DiscoverGuide {
     if (kind === 'manga') {
       sections.push({
         facet: 'themes',
+        icon: DISCOVER_FACET_ICONS['themes'],
         titleKey: 'discover.guide.sectionThemes',
         cards: THEME_OPTIONS.map((v) => card('themes', v, 'themes')),
       });
@@ -189,6 +202,12 @@ export class DiscoverGuide {
   protected reset(): void {
     this.filtersChange.emit(this._catalogFilter.reset(this.filters()));
   }
+  protected onScroll(event: Event): void {
+    const el = event.target as HTMLElement;
+    const max = el.scrollHeight - el.clientHeight;
+    this.progress.set(max > 0 ? el.scrollTop / max : 0);
+  }
+
   protected toggleForm(): void {
     this.formOpen.update((open) => !open);
     this.ageError.set(null);

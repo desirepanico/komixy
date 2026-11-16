@@ -54,10 +54,12 @@
           }
         </span>
         <span class="min-w-0">
-          <b class="block text-lg/tight text-surface-50">
+          <b
+            class="block text-base/tight font-black text-surface-500 group-hover:text-surface-100 group-aria-pressed:text-white"
+          >
             {{ 'discover.tabs.' + tab.kind | transloco }}
           </b>
-          <small class="text-sm text-surface-400">
+          <small class="text-xs font-bold text-surface-400 group-aria-pressed:text-primary-200">
             {{ 'discover.tabs.count' | transloco: { count: tab.count } }}
           </small>
         </span>

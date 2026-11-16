@@ -139,4 +139,59 @@ describe('DiscoverFiltersPanel', () => {
     await fixture.whenStable();
     expect(fixture.componentInstance.open()).toBe(false);
   });
+
+  it('il titolo dice se sono i filtri dei manga o dei fumetti', async () => {
+    expect(root().querySelector('#discover-filters-title')?.textContent).toContain(
+      'discover.filters.titleManga',
+    );
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, kind: 'comic' });
+    await fixture.whenStable();
+    expect(root().querySelector('#discover-filters-title')?.textContent).toContain(
+      'discover.filters.titleComic',
+    );
+  });
+
+  it("le sezioni stanno nell'ordine: categoria, formato, stato, anno, volumi, tema", () => {
+    const titles = Array.from(root().querySelectorAll('section h3')).map((h) => h.id);
+    expect(titles).toEqual([
+      'discover-group-categories',
+      'discover-group-formats',
+      'discover-group-statuses',
+      'discover-group-era',
+      'discover-group-volumes',
+      'discover-group-themes',
+    ]);
+  });
+
+  it('la scheda informativa compare solo con una categoria scelta e si può nascondere', async () => {
+    expect(root().querySelector('#discover-info-card')).toBeNull();
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, categories: ['shonen'] });
+    await fixture.whenStable();
+    expect(root().querySelector('#discover-info-card')).not.toBeNull();
+    root().querySelector<HTMLButtonElement>('button[aria-controls="discover-info-card"]')?.click();
+    await fixture.whenStable();
+    expect(root().querySelector('#discover-info-card')).toBeNull();
+  });
+
+  it("la scheda informativa segue l'ultima categoria scelta", async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, categories: ['shonen', 'seinen'] });
+    await fixture.whenStable();
+    expect(root().querySelector('#discover-info-card')?.textContent).toContain(
+      'discover.guide.info.categories.seinen.text',
+    );
+  });
+
+  it('un valore che non darebbe titoli è spento', async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, era: 'since2020' });
+    await fixture.whenStable();
+    expect(pill('discover.options.categories.kodomo').disabled).toBe(true);
+    expect(pill('discover.options.categories.shonen').disabled).toBe(false);
+  });
+
+  it("per i fumetti i generi sono schede con icona e non c'è la scheda informativa", async () => {
+    fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, kind: 'comic' });
+    await fixture.whenStable();
+    expect(root().querySelector('#discover-info-card')).toBeNull();
+    expect(pill('discover.options.categories.noir').querySelector('ng-icon')).not.toBeNull();
+  });
 });

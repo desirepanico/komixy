@@ -5,47 +5,59 @@ import {
   ElementRef,
   inject,
   input,
+  linkedSignal,
   model,
   output,
   signal,
   viewChild,
 } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matCloseOutline, matInfoOutline } from '@ng-icons/material-symbols/outline';
+import { matCloseOutline } from '@ng-icons/material-symbols/outline';
 import {
   CATEGORY_OPTIONS,
+  DISCOVER_FACET_ICONS,
+  DISCOVER_ICON_SET,
+  DISCOVER_OPTION_ICONS,
   ERA_OPTIONS,
   FORMAT_OPTIONS,
   STATUS_OPTIONS,
   THEME_OPTIONS,
   VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
-import { CatalogItem } from '@shared/models/catalog-item.model';
+import { CatalogItem, ComicCategory } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
+import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
 import { DiscoverGuide } from '../discover-guide/discover-guide';
+
+type FacetStyle = 'pills' | 'cards' | 'grid';
 
 interface FacetView {
   facet: Exclude<FacetKey, 'showAdult'>;
   titleKey: string;
+  icon: string;
   values: readonly string[];
   selected: readonly string[];
   /** Una sola scelta (il periodo) o più scelte insieme */
   single: boolean;
+  style: FacetStyle;
+  valueIcons: Readonly<Record<string, string>>;
 }
 
-/** Il pannello dei filtri: un cassetto dal basso sui telefoni, una finestra al centro dagli schermi più larghi. */
+/** Il pannello dei filtri: un cassetto dal basso sotto i 768px, un pannello a destra da lì in su. */
 @Component({
   selector: 'app-discover-filters-panel',
   imports: [DiscoverGuide, NgIcon, TranslocoPipe],
-  providers: [provideIcons({ matCloseOutline, matInfoOutline })],
+  providers: [provideIcons({ ...DISCOVER_ICON_SET, matCloseOutline })],
   templateUrl: './discover-filters-panel.html',
 })
 export class DiscoverFiltersPanel {
   private readonly _catalogFilter = inject(CatalogFilterService);
   private readonly _age = inject(AgeVerificationService);
+  private readonly _avatars = inject(CategoryAvatarService);
   private readonly _dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
   public readonly open = model.required<boolean>();
@@ -55,54 +67,51 @@ export class DiscoverFiltersPanel {
 
   protected readonly view = signal<'filters' | 'guide'>('filters');
   protected readonly askAge = signal<boolean>(false);
+  protected readonly infoOpen = signal<boolean>(true);
+  /** La categoria della scheda informativa: l'ultima scelta, o la prima */
+  protected readonly infoCategory = linkedSignal<ComicCategory>(
+    () => this.filters().categories.at(-1) ?? CATEGORY_OPTIONS.manga[0],
+  );
+  protected readonly infoAvatar = computed<SafeHtml | null>(() =>
+    this._avatars.avatar(this.infoCategory()),
+  );
+  protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');
   protected readonly facets = computed<FacetView[]>(() => {
     const f = this.filters();
     const shown = this._catalogFilter.facetsFor(f.kind);
+    const view = (
+      facet: FacetView['facet'],
+      values: readonly string[],
+      selected: readonly string[],
+      style: FacetStyle,
+      single = false,
+    ): FacetView => ({
+      facet,
+      titleKey:
+        facet === 'categories'
+          ? `discover.filters.groups.categories.${f.kind}`
+          : `discover.filters.groups.${facet}`,
+      icon: DISCOVER_FACET_ICONS[facet],
+      values,
+      selected,
+      single,
+      style,
+      valueIcons: DISCOVER_OPTION_ICONS[facet] ?? {},
+    });
     const views: FacetView[] = [
-      {
-        facet: 'categories',
-        titleKey: `discover.filters.groups.categories.${f.kind}`,
-        values: CATEGORY_OPTIONS[f.kind],
-        selected: f.categories,
-        single: false,
-      },
-      {
-        facet: 'formats',
-        titleKey: 'discover.filters.groups.formats',
-        values: FORMAT_OPTIONS[f.kind],
-        selected: f.formats,
-        single: false,
-      },
-      {
-        facet: 'era',
-        titleKey: 'discover.filters.groups.era',
-        values: ERA_OPTIONS,
-        selected: [f.era],
-        single: true,
-      },
-      {
-        facet: 'volumes',
-        titleKey: 'discover.filters.groups.volumes',
-        values: VOLUME_OPTIONS[f.kind],
-        selected: f.volumes,
-        single: false,
-      },
-      {
-        facet: 'statuses',
-        titleKey: 'discover.filters.groups.statuses',
-        values: STATUS_OPTIONS,
-        selected: f.statuses,
-        single: false,
-      },
-      {
-        facet: 'themes',
-        titleKey: 'discover.filters.groups.themes',
-        values: THEME_OPTIONS,
-        selected: f.themes,
-        single: false,
-      },
+      view(
+        'categories',
+        CATEGORY_OPTIONS[f.kind],
+        f.categories,
+        f.kind === 'manga' ? 'pills' : 'cards',
+      ),
+      view('formats', FORMAT_OPTIONS[f.kind], f.formats, 'pills'),
+      view('statuses', STATUS_OPTIONS, f.statuses, 'pills'),
+      view('era', ERA_OPTIONS, [f.era], 'pills', true),
+      view('volumes', VOLUME_OPTIONS[f.kind], f.volumes, 'grid'),
+      view('themes', THEME_OPTIONS, f.themes, 'cards'),
     ];
-    return views.filter((view) => shown.includes(view.facet));
+    return views.filter((v) => shown.includes(v.facet));
   });
   protected readonly showAdultOption = computed<boolean>(() =>
     this._catalogFilter.facetsFor(this.filters().kind).includes('showAdult'),
@@ -134,6 +143,15 @@ export class DiscoverFiltersPanel {
 
   protected isSelected(view: FacetView, value: string): boolean {
     return view.selected.includes(value);
+  }
+
+  /** Il valore non darebbe nessun titolo: si mostra spento, a meno che sia già scelto */
+  protected isDisabled(view: FacetView, value: string): boolean {
+    return this.count(view.facet, value) === 0 && !this.isSelected(view, value);
+  }
+
+  protected selectedCount(view: FacetView): number {
+    return view.facet === 'era' ? (this.filters().era === 'all' ? 0 : 1) : view.selected.length;
   }
 
   protected toggle(view: FacetView, value: string): void {

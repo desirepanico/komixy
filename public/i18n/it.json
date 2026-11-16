@@ -285,8 +285,8 @@
       "title": "Filtri",
       "open": "Filtri, {{ count }} attivi",
       "close": "Chiudi i filtri",
-      "reset": "Azzera i filtri",
-      "show": "Mostra {{ count }} risultati",
+      "reset": "Cancella filtri",
+      "show": "Mostra {{ count }} volumi",
       "adultHint": "Titoli per un pubblico adulto",
       "groups": {
         "categories": {
@@ -299,7 +299,13 @@
         "statuses": "Stato",
         "themes": "Tema narrativo"
       },
-      "guide": "Guida ai filtri"
+      "guide": "Guida ai filtri",
+      "titleManga": "Filtri manga",
+      "titleComic": "Filtri fumetti",
+      "showNone": "Nessun volume",
+      "infoShow": "Cos'è?",
+      "infoHide": "Nascondi",
+      "infoTabs": "Categorie"
     },
     "options": {
       "categories": {
@@ -375,7 +381,9 @@
     },
     "results": {
       "title": "Risultati",
-      "count": "{{ count }} risultati su {{ total }}"
+      "count": "{{ count }} risultati su {{ total }}",
+      "forQuery": "per «{{ query }}»",
+      "clear": "Cancella"
     },
     "empty": {
       "title": "Nessun volume in questa zona di spazio",
@@ -546,7 +554,8 @@
       "noResults": "Nessun risultato",
       "selected": "Selezionato",
       "showResults": "Mostra {{ count }} risultati",
-      "activeCount": "{{ count }} filtri attivi"
+      "activeCount": "{{ count }} filtri attivi",
+      "noFilters": "nessun filtro"
     }
   }
 }

@@ -143,4 +143,21 @@ describe('DiscoverPage', () => {
     const locks = html.querySelectorAll('app-comic-card app-bookmark-button a[href="/login"]');
     expect(locks.length).toBe(html.querySelectorAll('app-comic-card').length);
   });
+
+  it('con una ricerca la riga dei risultati dice per cosa si è cercato', async () => {
+    await create({ url: '/discover?tab=comic&q=maus' });
+    expect(html.querySelector('[role="status"]')?.textContent).toContain(
+      'discover.results.forQuery',
+    );
+  });
+
+  it('«Cancella» nella riga dei risultati toglie ricerca e filtri', async () => {
+    await create({ url: '/discover?q=maus&cat=shonen' });
+    const clear = Array.from(
+      html.querySelectorAll<HTMLButtonElement>('[role="status"] button'),
+    ).find((b) => b.textContent?.includes('discover.results.clear'))!;
+    clear.click();
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/discover');
+  });
 });

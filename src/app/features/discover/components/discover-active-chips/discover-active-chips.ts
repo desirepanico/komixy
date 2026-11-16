@@ -2,6 +2,7 @@ import { Component, computed, input, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCloseOutline } from '@ng-icons/material-symbols/outline';
+import { DISCOVER_FACET_ICONS, DISCOVER_ICON_SET } from '@shared/constants/ui.const';
 import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
 
 interface Chip {
@@ -9,13 +10,15 @@ interface Chip {
   value: string;
   /** Chiave di traduzione del testo */
   labelKey: string;
+  /** Icona del gruppo; i contenuti per adulti hanno il bollino 18+ */
+  icon: string | null;
 }
 
 /** Un chip per ogni filtro attivo: un tocco lo toglie, «Cancella tutto» li toglie tutti. */
 @Component({
   selector: 'app-discover-active-chips',
   imports: [NgIcon, TranslocoPipe],
-  providers: [provideIcons({ matCloseOutline })],
+  providers: [provideIcons({ ...DISCOVER_ICON_SET, matCloseOutline })],
   templateUrl: './discover-active-chips.html',
   host: { class: 'block' },
 })
@@ -28,7 +31,12 @@ export class DiscoverActiveChips {
     const chips: Chip[] = [];
     const add = (facet: Exclude<FacetKey, 'era' | 'showAdult'>, values: readonly string[]) =>
       values.forEach((value) =>
-        chips.push({ facet, value, labelKey: `discover.options.${facet}.${value}` }),
+        chips.push({
+          facet,
+          value,
+          labelKey: `discover.options.${facet}.${value}`,
+          icon: DISCOVER_FACET_ICONS[facet],
+        }),
       );
     add('categories', f.categories);
     add('formats', f.formats);
@@ -36,9 +44,19 @@ export class DiscoverActiveChips {
     add('volumes', f.volumes);
     add('themes', f.themes);
     if (f.era !== 'all')
-      chips.push({ facet: 'era', value: f.era, labelKey: `discover.options.era.${f.era}` });
+      chips.push({
+        facet: 'era',
+        value: f.era,
+        labelKey: `discover.options.era.${f.era}`,
+        icon: DISCOVER_FACET_ICONS['era'],
+      });
     if (f.showAdult)
-      chips.push({ facet: 'showAdult', value: '1', labelKey: 'discover.options.showAdult' });
+      chips.push({
+        facet: 'showAdult',
+        value: '1',
+        labelKey: 'discover.options.showAdult',
+        icon: null,
+      });
     return chips;
   });
 

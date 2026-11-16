@@ -1,4 +1,34 @@
 import {
+  matBookOutline,
+  matCalendarMonthOutline,
+  matCoffeeOutline,
+  matFavoriteOutline,
+  matFilterNoneOutline,
+  matFlagOutline,
+  matGridViewOutline,
+  matHelpOutline,
+  matHistoryEduOutline,
+  matInfoOutline,
+  matLayersOutline,
+  matLibraryBooksOutline,
+  matManageSearchOutline,
+  matMenuBookOutline,
+  matMoodOutline,
+  matAutoStoriesOutline,
+  matPersonSearchOutline,
+  matPublicOutline,
+  matRocketLaunchOutline,
+  matScheduleOutline,
+  matSellOutline,
+  matSentimentSatisfiedOutline,
+  matShieldOutline,
+  matSkullOutline,
+  matSmartToyOutline,
+  matSportsBaseballOutline,
+  matStarsOutline,
+  matSwordsOutline,
+} from '@ng-icons/material-symbols/outline';
+import {
   ComicCategory,
   ComicFormat,
   ComicKind,
@@ -321,3 +351,78 @@ export const DISCOVER_AVATAR_BADGE: Readonly<Record<string, string>> = {
 };
 
 export const DISCOVER_ADULT_AGE = 18;
+
+// ─── Icone dei filtri di Scopri ──────────────────────────────────────────────
+
+export const DISCOVER_ICON_SET = {
+  matBookOutline,
+  matCalendarMonthOutline,
+  matCoffeeOutline,
+  matFavoriteOutline,
+  matFilterNoneOutline,
+  matFlagOutline,
+  matGridViewOutline,
+  matHelpOutline,
+  matHistoryEduOutline,
+  matInfoOutline,
+  matLayersOutline,
+  matLibraryBooksOutline,
+  matManageSearchOutline,
+  matMenuBookOutline,
+  matMoodOutline,
+  matAutoStoriesOutline,
+  matPersonSearchOutline,
+  matPublicOutline,
+  matRocketLaunchOutline,
+  matScheduleOutline,
+  matSellOutline,
+  matSentimentSatisfiedOutline,
+  matShieldOutline,
+  matSkullOutline,
+  matSmartToyOutline,
+  matSportsBaseballOutline,
+  matStarsOutline,
+  matSwordsOutline,
+};
+
+/** L'icona di ogni gruppo di filtri, nell'intestazione del pannello e nei chip */
+export const DISCOVER_FACET_ICONS: Readonly<Record<string, string>> = {
+  categories: 'matMenuBookOutline',
+  formats: 'matGridViewOutline',
+  statuses: 'matScheduleOutline',
+  era: 'matCalendarMonthOutline',
+  volumes: 'matLayersOutline',
+  themes: 'matSellOutline',
+};
+
+/** L'icona dei valori che ne hanno una (i generi dei fumetti, i formati, lo stato e i temi) */
+export const DISCOVER_OPTION_ICONS: Readonly<Record<string, Readonly<Record<string, string>>>> = {
+  categories: {
+    superheroes: 'matShieldOutline',
+    scifi: 'matRocketLaunchOutline',
+    fantasy: 'matStarsOutline',
+    horror: 'matSkullOutline',
+    noir: 'matPersonSearchOutline',
+    historical: 'matHistoryEduOutline',
+    humor: 'matMoodOutline',
+  },
+  formats: {
+    series: 'matFilterNoneOutline',
+    oneShot: 'matBookOutline',
+    graphicNovel: 'matMenuBookOutline',
+    omnibus: 'matLibraryBooksOutline',
+  },
+  statuses: { completed: 'matFlagOutline', ongoing: 'matAutoStoriesOutline' },
+  themes: {
+    action: 'matSwordsOutline',
+    romance: 'matFavoriteOutline',
+    fantasy: 'matStarsOutline',
+    scifiMecha: 'matSmartToyOutline',
+    horror: 'matSkullOutline',
+    mystery: 'matManageSearchOutline',
+    comedy: 'matSentimentSatisfiedOutline',
+    sport: 'matSportsBaseballOutline',
+    sliceOfLife: 'matCoffeeOutline',
+    isekai: 'matPublicOutline',
+  },
+};

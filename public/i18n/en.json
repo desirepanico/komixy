@@ -285,8 +285,8 @@
       "title": "Filters",
       "open": "Filters, {{ count }} active",
       "close": "Close the filters",
-      "reset": "Reset filters",
-      "show": "Show {{ count }} results",
+      "reset": "Clear filters",
+      "show": "Show {{ count }} volumes",
       "adultHint": "Titles for an adult audience",
       "groups": {
         "categories": {
@@ -299,7 +299,13 @@
         "statuses": "Status",
         "themes": "Narrative theme"
       },
-      "guide": "Filters guide"
+      "guide": "Filters guide",
+      "titleManga": "Manga filters",
+      "titleComic": "Comics filters",
+      "showNone": "No volumes",
+      "infoShow": "What is it?",
+      "infoHide": "Hide",
+      "infoTabs": "Categories"
     },
     "options": {
       "categories": {
@@ -375,7 +381,9 @@
     },
     "results": {
       "title": "Results",
-      "count": "{{ count }} results out of {{ total }}"
+      "count": "{{ count }} results out of {{ total }}",
+      "forQuery": "for “{{ query }}”",
+      "clear": "Clear"
     },
     "empty": {
       "title": "No volume in this region of space",
@@ -546,7 +554,8 @@
       "noResults": "No results",
       "selected": "Selected",
       "showResults": "Show {{ count }} results",
-      "activeCount": "{{ count }} active filters"
+      "activeCount": "{{ count }} active filters",
+      "noFilters": "no filters"
     }
   }
 }
