@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { DiscoverGuide } from './discover-guide';
@@ -10,7 +9,6 @@ import { DiscoverGuide } from './discover-guide';
   imports: [DiscoverGuide],
   template: `<app-discover-guide
     [filters]="filters()"
-    [items]="items"
     [askAge]="askAge()"
     (filtersChange)="filters.set($event)"
     (back)="backed.set(backed() + 1)"
@@ -18,7 +16,6 @@ import { DiscoverGuide } from './discover-guide';
   />`,
 })
 class Host {
-  public readonly items = TestBed.inject(ComicCatalogService).items();
   public readonly filters = signal<DiscoverFilters>(EMPTY_FILTERS);
   public readonly askAge = signal<boolean>(false);
   public readonly backed = signal<number>(0);
@@ -47,6 +44,11 @@ describe('DiscoverGuide', () => {
 
   it('viene creata', () => {
     expect(fixture.componentInstance).toBeTruthy();
+  });
+
+  it('il pulsante in fondo dice «Mostra risultati», senza numero', () => {
+    const buttons = Array.from(root().querySelectorAll<HTMLButtonElement>('footer button'));
+    expect(buttons.at(-1)?.textContent?.trim()).toBe('discover.filters.show');
   });
 
   it('per i manga ha categorie, formati, stato, temi e il blocco 18+', () => {

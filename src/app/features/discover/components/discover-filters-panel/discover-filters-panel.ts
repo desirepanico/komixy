@@ -31,7 +31,7 @@ import {
   VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
 import { Button } from '@shared/components/button/button';
-import { CatalogItem, ComicCategory } from '@shared/models/catalog-item.model';
+import { ComicCategory } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
@@ -74,7 +74,6 @@ export class DiscoverFiltersPanel {
 
   public readonly open = model.required<boolean>();
   public readonly filters = input.required<DiscoverFilters>();
-  public readonly items = input.required<readonly CatalogItem[]>();
   public readonly filtersChange = output<DiscoverFilters>();
 
   protected readonly view = signal<'filters' | 'guide'>('filters');
@@ -137,9 +136,6 @@ export class DiscoverFiltersPanel {
   });
   protected readonly showAdultOption = computed<boolean>(() =>
     this._catalogFilter.facetsFor(this.filters().kind).includes('showAdult'),
-  );
-  protected readonly resultCount = computed<number>(
-    () => this._catalogFilter.filter(this.items(), this.filters()).length,
   );
   protected readonly hasChoices = computed<boolean>(
     () => this._catalogFilter.activeCount(this.filters()) > 0,

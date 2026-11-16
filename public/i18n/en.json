@@ -284,8 +284,7 @@
       "open": "Filters, {{ count }} active",
       "close": "Close the filters",
       "reset": "Clear filters",
-      "show": "Show {{ count }} volumes",
-      "showOne": "Show 1 volume",
+      "show": "Show results",
       "adultHint": "Titles for an adult audience",
       "groups": {
         "categories": {
@@ -301,7 +300,6 @@
       "guide": "Filters guide",
       "titleManga": "Manga filters",
       "titleComic": "Comics filters",
-      "showNone": "No volumes",
       "infoShow": "Show information",
       "infoHide": "Hide information",
       "infoTabs": "Categories"

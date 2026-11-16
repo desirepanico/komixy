@@ -284,8 +284,7 @@
       "open": "Filtri, {{ count }} attivi",
       "close": "Chiudi i filtri",
       "reset": "Cancella filtri",
-      "show": "Mostra {{ count }} volumi",
-      "showOne": "Mostra 1 volume",
+      "show": "Mostra risultati",
       "adultHint": "Titoli per un pubblico adulto",
       "groups": {
         "categories": {
@@ -301,7 +300,6 @@
       "guide": "Guida ai filtri",
       "titleManga": "Filtri manga",
       "titleComic": "Filtri fumetti",
-      "showNone": "Nessun volume",
       "infoShow": "Mostra informazioni",
       "infoHide": "Nascondi informazioni",
       "infoTabs": "Categorie"

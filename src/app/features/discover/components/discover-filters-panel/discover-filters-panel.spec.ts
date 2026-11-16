@@ -1,7 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ComicCatalogService } from '@shared/services/comic-catalog/comic-catalog.service';
 import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { DiscoverFiltersPanel } from './discover-filters-panel';
@@ -11,12 +10,10 @@ import { DiscoverFiltersPanel } from './discover-filters-panel';
   template: `<app-discover-filters-panel
     [(open)]="open"
     [filters]="filters()"
-    [items]="items"
     (filtersChange)="filters.set($event)"
   />`,
 })
 class Host {
-  public readonly items = TestBed.inject(ComicCatalogService).items();
   public readonly open = signal<boolean>(false);
   public readonly filters = signal<DiscoverFilters>(EMPTY_FILTERS);
 }
@@ -56,6 +53,11 @@ describe('DiscoverFiltersPanel', () => {
     await fixture.whenStable();
     expect(root().querySelector('app-discover-guide')).toBeNull();
     expect(root().querySelector('#discover-filters-title')).toBeTruthy();
+  });
+
+  it('il pulsante in fondo dice «Mostra risultati», senza numero', () => {
+    const buttons = Array.from(root().querySelectorAll<HTMLButtonElement>('footer button'));
+    expect(buttons.at(-1)?.textContent?.trim()).toBe('discover.filters.show');
   });
 
   it('è un dialog con titolo', () => {

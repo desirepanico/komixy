@@ -32,7 +32,6 @@ import {
   THEME_OPTIONS,
 } from '@shared/constants/ui.const';
 import { InView } from '@shared/directives/in-view/in-view.directive';
-import { CatalogItem } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
@@ -85,7 +84,6 @@ export class DiscoverGuide {
   private readonly _adultSection = viewChild<ElementRef<HTMLElement>>('adultSection');
 
   public readonly filters = input.required<DiscoverFilters>();
-  public readonly items = input.required<readonly CatalogItem[]>();
   /** Aprire la guida dall'interruttore dei contenuti per adulti mostra subito il modulo dell'età */
   public readonly askAge = input<boolean>(false);
   public readonly filtersChange = output<DiscoverFilters>();
@@ -103,9 +101,6 @@ export class DiscoverGuide {
   /** La scheda appena toccata: fa un piccolo rimbalzo che finisce con `animationend` */
   protected readonly pulse = signal<string>('');
   protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');
-  protected readonly resultCount = computed<number>(
-    () => this._catalogFilter.filter(this.items(), this.filters()).length,
-  );
   protected readonly activeCount = computed<number>(() =>
     this._catalogFilter.activeCount(this.filters()),
   );

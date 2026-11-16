@@ -20,7 +20,6 @@
         animate.leave="animate-guide-out!"
         class="col-start-1 row-start-1"
         [filters]="filters()"
-        [items]="items()"
         [askAge]="askAge()"
         (filtersChange)="filtersChange.emit($event)"
         (back)="returned.set(true); view.set('filters')"
@@ -288,14 +287,7 @@
             (click)="close()"
             class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
           >
-            {{
-              (resultCount() === 0
-                ? 'discover.filters.showNone'
-                : resultCount() === 1
-                  ? 'discover.filters.showOne'
-                  : 'discover.filters.show'
-              ) | transloco: { count: resultCount() }
-            }}
+            {{ 'discover.filters.show' | transloco }}
           </button>
         </footer>
       </div>

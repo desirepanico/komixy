@@ -356,13 +356,6 @@
     (click)="done.emit()"
     class="min-h-11 shrink-0 cursor-pointer rounded-full bg-primary-500 px-5 text-sm font-black text-primary-950 transition-[background-color,box-shadow] duration-200 hover:bg-primary-400 hover:shadow-[0_0_20px_-2px] hover:shadow-primary-500/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
   >
-    {{
-      (resultCount() === 0
-        ? 'discover.filters.showNone'
-        : resultCount() === 1
-          ? 'discover.filters.showOne'
-          : 'discover.filters.show'
-      ) | transloco: { count: resultCount() }
-    }}
+    {{ 'discover.filters.show' | transloco }}
   </button>
 </footer>
