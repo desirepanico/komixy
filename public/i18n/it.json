@@ -245,8 +245,7 @@
     "tabs": {
       "label": "Sezioni da filtrare",
       "manga": "Manga",
-      "comic": "Fumetti",
-      "count": "{{ count }} titoli"
+      "comic": "Fumetti"
     },
     "search": {
       "label": "Cerca per titolo o autore",
@@ -376,6 +375,7 @@
       "label": "Filtri rapidi"
     },
     "rows": {
+      "count": "{{ count }} titoli",
       "starter": {
         "title": "Da dove iniziare",
         "subtitle": "Serie fino a 10 volumi, ideali per cominciare"

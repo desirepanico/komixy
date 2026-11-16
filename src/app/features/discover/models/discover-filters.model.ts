@@ -36,10 +36,9 @@ export const EMPTY_FILTERS: DiscoverFilters = {
   showAdult: false,
 };
 
-/** Una scheda con quanti titoli ha e le copertine del ventaglio. */
+/** Una scheda con le copertine del ventaglio. */
 export interface DiscoverTab {
   kind: ComicKind;
-  count: number;
   covers: string[];
 }
 

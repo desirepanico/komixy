@@ -6,8 +6,8 @@ import { DiscoverTab } from '../../models/discover-filters.model';
 import { DiscoverTabs } from './discover-tabs';
 
 const TABS: DiscoverTab[] = [
-  { kind: 'manga', count: 14, covers: ['/a.webp', '/b.webp', '/c.webp'] },
-  { kind: 'comic', count: 11, covers: ['/d.webp', '/e.webp'] },
+  { kind: 'manga', covers: ['/a.webp', '/b.webp', '/c.webp'] },
+  { kind: 'comic', covers: ['/d.webp', '/e.webp'] },
 ];
 
 @Component({

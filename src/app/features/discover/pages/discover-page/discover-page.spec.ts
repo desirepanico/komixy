@@ -15,7 +15,9 @@ describe('DiscoverPage', () => {
   const bookmarks = () =>
     Array.from(html.querySelectorAll('app-comic-card button[aria-pressed]')) as HTMLButtonElement[];
   const rowTitles = () =>
-    Array.from(html.querySelectorAll('app-discover-row h2')).map((h) => h.textContent?.trim());
+    Array.from(html.querySelectorAll('app-discover-row h2')).map((h) =>
+      h.firstChild?.textContent?.trim(),
+    );
   const tab = (n: number) =>
     html.querySelectorAll<HTMLButtonElement>(
       'app-discover-tabs [role="group"] button[aria-pressed]',
@@ -75,6 +77,21 @@ describe('DiscoverPage', () => {
       'discover.rows.releases.title',
       'discover.rows.all.titleManga',
     ]);
+  });
+
+  it('il numero accanto al titolo di «Manga da scoprire» è quello delle carte della riga', async () => {
+    await create();
+    const row = Array.from(html.querySelectorAll('app-discover-row')).at(-1)!;
+    const cards = row.querySelectorAll('app-comic-card').length;
+    expect(row.querySelector('h2 span')?.textContent?.trim()).toBe('discover.rows.count');
+    expect(cards).toBeGreaterThan(0);
+  });
+
+  it('le schede Manga e Fumetti non mostrano più il numero dei titoli', async () => {
+    await create();
+    expect(html.querySelector('app-discover-tabs')?.textContent).not.toContain(
+      'discover.tabs.count',
+    );
   });
 
   it('con la scheda Fumetti l’ultima riga è «Fumetti da scoprire»', async () => {

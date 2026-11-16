@@ -76,7 +76,6 @@ export class DiscoverPage {
       });
       return {
         kind,
-        count: own.length,
         covers: own
           .filter((item) => item.coverUrl !== COVER_PLACEHOLDER)
           .slice(0, 3)

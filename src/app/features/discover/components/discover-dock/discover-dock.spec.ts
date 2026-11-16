@@ -21,8 +21,8 @@ import { DiscoverDock } from './discover-dock';
 })
 class Host {
   public readonly tabs: DiscoverTab[] = [
-    { kind: 'manga', count: 14, covers: ['/a.webp'] },
-    { kind: 'comic', count: 11, covers: ['/b.webp'] },
+    { kind: 'manga', covers: ['/a.webp'] },
+    { kind: 'comic', covers: ['/b.webp'] },
   ];
   public readonly items = TestBed.inject(ComicCatalogService).items();
   public readonly visible = signal<boolean>(false);

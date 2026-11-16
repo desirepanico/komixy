@@ -245,8 +245,7 @@
     "tabs": {
       "label": "Sections to filter",
       "manga": "Manga",
-      "comic": "Comics",
-      "count": "{{ count }} titles"
+      "comic": "Comics"
     },
     "search": {
       "label": "Search by title or author",
@@ -376,6 +375,7 @@
       "label": "Quick filters"
     },
     "rows": {
+      "count": "{{ count }} titles",
       "starter": {
         "title": "Where to start",
         "subtitle": "Series of up to 10 volumes, ideal to begin with"

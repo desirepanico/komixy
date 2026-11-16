@@ -8,11 +8,18 @@ import { DiscoverRow } from './discover-row';
 
 @Component({
   imports: [DiscoverRow],
-  template: `<app-discover-row title="Titolo" subtitle="Sotto" [items]="items" [grid]="grid()" />`,
+  template: `<app-discover-row
+    title="Titolo"
+    subtitle="Sotto"
+    [count]="count()"
+    [items]="items"
+    [grid]="grid()"
+  />`,
 })
 class Host {
   public readonly items: CatalogItem[] = TestBed.inject(ComicCatalogService).items().slice(0, 3);
   public readonly grid = signal<boolean>(false);
+  public readonly count = signal<number | null>(null);
 }
 
 describe('DiscoverRow', () => {
@@ -31,9 +38,17 @@ describe('DiscoverRow', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  it('senza `count` non mostra il numero, con `count` lo mostra accanto al titolo', async () => {
+    const el: HTMLElement = fixture.nativeElement;
+    expect(el.querySelector('h2 span')).toBeNull();
+    fixture.componentInstance.count.set(3);
+    await fixture.whenStable();
+    expect(el.querySelector('h2 span')?.textContent?.trim()).toBe('discover.rows.count');
+  });
+
   it('mostra titolo, sottotitolo e una card per volume', () => {
     const el: HTMLElement = fixture.nativeElement;
-    expect(el.querySelector('h2')?.textContent).toBe('Titolo');
+    expect(el.querySelector('h2')?.textContent?.trim()).toBe('Titolo');
     expect(el.textContent).toContain('Sotto');
     expect(el.querySelectorAll('app-comic-card').length).toBe(3);
   });
