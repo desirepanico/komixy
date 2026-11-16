@@ -340,6 +340,13 @@
         "sixToTwenty": "6–20 vols.",
         "overTwenty": "21+ vols."
       },
+      "volumesShort": {
+        "single": "Single volume",
+        "oneToFive": "1–5",
+        "twoToFive": "2–5",
+        "sixToTwenty": "6–20",
+        "overTwenty": "21+"
+      },
       "themes": {
         "action": "Action / Adventure",
         "romance": "Romance",
