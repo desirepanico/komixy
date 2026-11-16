@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DiscoverFilters, EMPTY_FILTERS } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { DiscoverGuide } from './discover-guide';
@@ -132,6 +132,20 @@ describe('DiscoverGuide', () => {
     fixture.componentInstance.askAge.set(true);
     await fixture.whenStable();
     expect(root().querySelector('#discover-age-form')).not.toBeNull();
+  });
+
+  it("aprendo il modulo dell'età la guida scende fino a lui, dopo l'ingresso", async () => {
+    const scroll = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      value: scroll,
+      configurable: true,
+    });
+    fixture.componentInstance.askAge.set(true);
+    await fixture.whenStable();
+    expect(scroll).not.toHaveBeenCalled();
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(scroll).toHaveBeenCalledWith({ block: 'center', behavior: 'smooth' });
+    delete (HTMLElement.prototype as { scrollIntoView?: unknown }).scrollIntoView;
   });
 
   it('i formati hanno la loro illustrazione', () => {

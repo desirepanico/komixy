@@ -8,7 +8,6 @@ import {
   linkedSignal,
   output,
   signal,
-  untracked,
   viewChild,
 } from '@angular/core';
 import { form, FormField, FormRoot, pattern, required } from '@angular/forms/signals';
@@ -28,6 +27,7 @@ import {
   DISCOVER_ICON_SET,
   DISCOVER_OPTION_ICONS,
   FORMAT_OPTIONS,
+  GUIDE_SLIDE_MS,
   STATUS_OPTIONS,
   THEME_OPTIONS,
 } from '@shared/constants/ui.const';
@@ -81,7 +81,9 @@ export class DiscoverGuide {
   private readonly _avatars = inject(CategoryAvatarService);
   protected readonly age = inject(AgeVerificationService);
 
-  private readonly _adultSection = viewChild<ElementRef<HTMLElement>>('adultSection');
+  private readonly _shownAt = Date.now();
+
+  private readonly _ageForm = viewChild<ElementRef<HTMLElement>>('ageForm');
 
   public readonly filters = input.required<DiscoverFilters>();
   /** Aprire la guida dall'interruttore dei contenuti per adulti mostra subito il modulo dell'età */
@@ -189,16 +191,16 @@ export class DiscoverGuide {
   );
 
   constructor() {
-    // Il modulo dell'età si apre sotto lo schermo: lo si porta in vista
-    effect(() => {
-      if (this.formOpen()) {
-        untracked(() =>
-          this._adultSection()?.nativeElement.scrollIntoView?.({
-            block: 'center',
-            behavior: 'smooth',
-          }),
-        );
-      }
+    // Il modulo dell'età sta sotto lo schermo: si scende quando esiste e dopo l'ingresso della guida, che scorrendo da destra interromperebbe lo scorrimento
+    effect((onCleanup) => {
+      const form = this._ageForm()?.nativeElement;
+      if (!form) return;
+      const wait = Math.max(0, GUIDE_SLIDE_MS - (Date.now() - this._shownAt));
+      const timer = setTimeout(
+        () => form.scrollIntoView?.({ block: 'center', behavior: 'smooth' }),
+        wait,
+      );
+      onCleanup(() => clearTimeout(timer));
     });
   }
 
