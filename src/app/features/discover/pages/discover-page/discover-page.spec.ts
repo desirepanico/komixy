@@ -193,4 +193,19 @@ describe('DiscoverPage', () => {
     expect(TestBed.inject(Router).url).toBe('/discover?tab=comic&q=Watchmen');
     expect(tab(1).getAttribute('aria-pressed')).toBe('true');
   });
+
+  it('con una ricerca o un filtro la busta e la top della settimana non si vedono', async () => {
+    TestBed.inject(WeeklyPackService).open();
+    await create({ url: '/discover?q=maus' });
+    expect(html.querySelector('app-weekly-pack-banner')).toBeNull();
+    expect(html.querySelector('app-weekly-top')).toBeNull();
+    await create({ url: '/discover?tab=comic&cat=noir' });
+    expect(html.querySelector('app-weekly-pack-banner')).toBeNull();
+  });
+
+  it('cancellando la ricerca la busta torna', async () => {
+    await create({ url: '/discover?q=maus' });
+    await create({ url: '/discover' });
+    expect(html.querySelector('app-weekly-pack-banner')).not.toBeNull();
+  });
 });
