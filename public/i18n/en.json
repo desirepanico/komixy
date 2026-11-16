@@ -7,10 +7,6 @@
     "myProfile": "My profile",
     "viewProfile": "View profile"
   },
-  "discoverManga": {
-    "title": "Discover Manga",
-    "subtitle": "The next stories to add to your library"
-  },
   "weeklyManga": {
     "title": "Weekly pack",
     "subtitle": "The 10 most read volumes, manga and comics",
@@ -381,6 +377,11 @@
       "starter": {
         "title": "Where to start",
         "subtitle": "Series of up to 10 volumes, ideal to begin with"
+      },
+      "all": {
+        "titleManga": "Discover Manga",
+        "titleComic": "Discover Comics",
+        "subtitle": "The next stories to add to your library"
       },
       "releases": {
         "title": "New releases",

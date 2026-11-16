@@ -18,10 +18,6 @@
       "limited": "Limitata"
     }
   },
-  "discoverManga": {
-    "title": "Manga da scoprire",
-    "subtitle": "Le prossime storie da aggiungere alla tua libreria"
-  },
   "weeklyManga": {
     "title": "Busta della settimana",
     "subtitle": "I 10 volumi più letti, manga e fumetti",
@@ -381,6 +377,11 @@
       "starter": {
         "title": "Da dove iniziare",
         "subtitle": "Serie fino a 10 volumi, ideali per cominciare"
+      },
+      "all": {
+        "titleManga": "Manga da scoprire",
+        "titleComic": "Fumetti da scoprire",
+        "subtitle": "Le prossime storie da aggiungere alla tua libreria"
       },
       "releases": {
         "title": "Nuove uscite",

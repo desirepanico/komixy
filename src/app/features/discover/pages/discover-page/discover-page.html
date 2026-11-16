@@ -89,8 +89,13 @@
       [items]="newItems()"
     />
     <app-discover-row
-      [title]="'discoverManga.title' | transloco"
-      [subtitle]="'discoverManga.subtitle' | transloco"
+      [title]="
+        (filters().kind === 'manga'
+          ? 'discover.rows.all.titleManga'
+          : 'discover.rows.all.titleComic'
+        ) | transloco
+      "
+      [subtitle]="'discover.rows.all.subtitle' | transloco"
       [items]="kindItems()"
     />
   } @else {

@@ -73,8 +73,14 @@ describe('DiscoverPage', () => {
     expect(rowTitles()).toEqual([
       'discover.rows.starter.title',
       'discover.rows.releases.title',
-      'discoverManga.title',
+      'discover.rows.all.titleManga',
     ]);
+  });
+
+  it('con la scheda Fumetti l’ultima riga è «Fumetti da scoprire»', async () => {
+    await create({ url: '/discover?tab=comic' });
+    expect(rowTitles()).toContain('discover.rows.all.titleComic');
+    expect(rowTitles()).not.toContain('discover.rows.all.titleManga');
   });
 
   it('la scheda Manga è quella attiva di default', async () => {
