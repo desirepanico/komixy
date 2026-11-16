@@ -240,7 +240,7 @@
     }
   },
   "discover": {
-    "kicker": "The intergalactic catalogue",
+    "kicker": "Explore the intergalactic catalogue",
     "title": "What do you want to discover?",
     "tabs": {
       "label": "Sections to filter",
