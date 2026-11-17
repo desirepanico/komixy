@@ -44,23 +44,21 @@ import { ButtonSeverity, ButtonVariant } from '../models/button.model';
 
 // Colori presi dai set Severity, Outlined e Text del file Figma "Manga App"
 const FILLED_TEXT = 'text-surface-800';
-// Hover «di vetro», come le voci della tendina della ricerca: velo viola e filo interno chiaro
-const GLASS_HOVER =
-  'hover:bg-primary-300/16 hover:text-white hover:shadow-[inset_0_0_0_1px] hover:shadow-primary-300/22';
 export const BUTTON_COLORS: Readonly<
   Record<ButtonSeverity, Readonly<Record<ButtonVariant, string>>>
 > = {
   // Viola pieno (primary-500) con testo scuro, per il contrasto: l'azione principale di una schermata
   primary: {
     filled: 'bg-primary-500 text-primary-950 hover:bg-primary-400',
-    outlined: `border border-primary-400/55 text-primary-300 ${GLASS_HOVER}`,
-    text: `text-primary-300 ${GLASS_HOVER}`,
+    outlined: 'border border-primary-400/55 text-primary-300 hover:bg-primary-400/15',
+    text: 'text-primary-300 hover:bg-primary-400/15',
   },
   secondary: {
     filled:
       'border border-surface-700 bg-surface-800 text-surface-100 hover:border-surface-600 hover:bg-surface-700',
-    outlined: `border border-surface-500 text-surface-300 ${GLASS_HOVER}`,
-    text: `text-surface-300 ${GLASS_HOVER}`,
+    outlined:
+      'border border-surface-500 text-surface-300 hover:bg-surface-500/25 hover:text-surface-100',
+    text: 'text-surface-300 hover:bg-surface-500/25 hover:text-surface-100',
   },
   success: {
     filled: `bg-green-400 ${FILLED_TEXT} hover:bg-green-300`,
