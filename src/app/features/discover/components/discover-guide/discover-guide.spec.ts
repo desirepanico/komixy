@@ -59,7 +59,9 @@ describe('DiscoverGuide', () => {
   });
 
   it('le categorie dei manga hanno il personaggio', () => {
-    expect(root().querySelectorAll('svg[viewBox="0 0 200 200"]').length).toBe(5);
+    const avatars = root().querySelectorAll<HTMLImageElement>('img[src^="data:image/svg+xml"]');
+    expect(avatars.length).toBe(5);
+    expect(avatars[0].getAttribute('alt')).toBe('');
   });
 
   it('per i fumetti usa i generi e non ha né temi né 18+', async () => {

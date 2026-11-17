@@ -202,10 +202,16 @@
                     >
                       @if (infoAvatar()) {
                         <span
-                          class="relative block size-22 shrink-0 drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-orbit after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 after:content-[''] motion-reduce:after:animate-none max-[420px]:size-18 [&>svg]:size-full"
-                          aria-hidden="true"
-                          [innerHTML]="infoAvatar()"
-                        ></span>
+                          class="relative block size-22 shrink-0 drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-orbit after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 after:content-[''] motion-reduce:after:animate-none max-[420px]:size-18"
+                        >
+                          <img
+                            [src]="infoAvatar()"
+                            alt=""
+                            width="88"
+                            height="88"
+                            class="size-full"
+                          />
+                        </span>
                       }
                       <div class="min-w-0">
                         <b class="block text-lg/tight font-black text-white">{{

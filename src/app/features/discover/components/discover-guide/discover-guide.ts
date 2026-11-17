@@ -11,7 +11,6 @@ import {
   viewChild,
 } from '@angular/core';
 import { form, FormField, FormRoot, pattern, required } from '@angular/forms/signals';
-import { SafeHtml } from '@angular/platform-browser';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -44,7 +43,7 @@ interface GuideCard {
   nameKey: string;
   textKey: string;
   exampleKey: string | null;
-  avatar: SafeHtml | null;
+  avatar: string | null;
 }
 
 interface GuideSection {

@@ -11,7 +11,6 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { SafeHtml } from '@angular/platform-browser';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -93,7 +92,7 @@ export class DiscoverFiltersPanel {
   protected readonly infoCategory = linkedSignal<ComicCategory>(
     () => this.filters().categories.at(-1) ?? CATEGORY_OPTIONS.manga[0],
   );
-  protected readonly infoAvatar = computed<SafeHtml | null>(() =>
+  protected readonly infoAvatar = computed<string | null>(() =>
     this._avatars.avatar(this.infoCategory()),
   );
   protected readonly isManga = computed<boolean>(() => this.filters().kind === 'manga');

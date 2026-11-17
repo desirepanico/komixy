@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { DomSanitizer } from '@angular/platform-browser';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { CategoryAvatarService } from './category-avatar.service';
 
@@ -24,23 +23,16 @@ describe('CategoryAvatarService', () => {
     expect(service.avatar('shonen')).toBe(service.avatar('shonen'));
   });
 
-  it('il personaggio è un SVG con la faccia dentro, senza il testo della licenza', () => {
-    const html = TestBed.inject(DomSanitizer).sanitize(1, service.avatar('shonen')) ?? '';
-    expect(html).toContain('viewBox="0 0 200 200"');
-    expect(html).toContain('x="22" y="30" width="156" height="156"');
-    expect(html).not.toContain('<!--');
-    expect(html).not.toContain('<metadata');
+  it('il personaggio è un indirizzo dati SVG con la faccia DiceBear dentro', () => {
+    const uri = service.avatar('shonen') ?? '';
+    expect(uri.startsWith('data:image/svg+xml;charset=utf-8,')).toBe(true);
+    const svg = decodeURIComponent(uri.slice(uri.indexOf(',') + 1));
+    expect(svg).toContain('viewBox="0 0 200 200"');
+    expect(svg).toContain('<image href="data:image/svg+xml');
+    expect(svg).toContain('x="22" y="30" width="156" height="156"');
   });
 
-  it('ogni personaggio ha i suoi id, così più SVG nella pagina non si confondono', () => {
-    const ids = (category: string): string[] =>
-      Array.from(
-        (TestBed.inject(DomSanitizer).sanitize(1, service.avatar(category)) ?? '').matchAll(
-          /id="([^"]+)"/g,
-        ),
-        (m) => m[1],
-      );
-    const shared = ids('shonen').filter((id) => ids('kodomo').includes(id));
-    expect(shared).toEqual([]);
+  it('ogni categoria ha un personaggio diverso', () => {
+    expect(service.avatar('shonen')).not.toBe(service.avatar('kodomo'));
   });
 });
