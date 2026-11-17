@@ -11,20 +11,13 @@
   <h2 class="text-lg font-bold text-surface-50">{{ 'ranking.lockedTitle' | transloco }}</h2>
   <p class="text-sm/snug text-surface-300">{{ 'ranking.lockedText' | transloco }}</p>
   <div class="flex items-center gap-3">
-    <a
-      appButton
-      severity="accent"
-      size="sm"
-      [rounded]="true"
-      [routerLink]="packNavigation.packLink"
-    >
+    <a appButton size="sm" [rounded]="true" [routerLink]="packNavigation.packLink">
       {{ 'weeklyPack.open' | transloco }}
     </a>
     <button
       type="button"
       appButton
       variant="text"
-      severity="accent"
       [rounded]="true"
       class="px-3 py-1.5 text-sm font-semibold"
       (click)="skip()"

@@ -46,7 +46,6 @@
             #primary
             type="button"
             appButton
-            [severity]="'accent'"
             [rounded]="true"
             class="min-w-40"
             [disabled]="torn()"
@@ -58,7 +57,6 @@
             type="button"
             appButton
             variant="text"
-            severity="accent"
             [rounded]="true"
             class="px-3 py-1.5 text-sm font-semibold"
             (click)="skip()"
@@ -100,7 +98,6 @@
             #primary
             type="button"
             appButton
-            severity="accent"
             [rounded]="true"
             class="min-w-40"
             (click)="onPrimary()"
@@ -117,7 +114,6 @@
             type="button"
             appButton
             variant="text"
-            severity="accent"
             [rounded]="true"
             class="px-3 py-1.5 text-sm font-semibold"
             (click)="skip()"
@@ -139,7 +135,6 @@
               #primary
               type="button"
               appButton
-              severity="accent"
               [rounded]="true"
               class="min-w-40"
               (click)="backToCollection()"
@@ -177,13 +172,7 @@
               }}
             </p>
             <app-hint>{{ 'common.tapCardHint' | transloco }}</app-hint>
-            <a
-              #primary
-              appButton
-              severity="accent"
-              [rounded]="true"
-              [routerLink]="rankingNavigation.rankingLink"
-            >
+            <a #primary appButton [rounded]="true" [routerLink]="rankingNavigation.rankingLink">
               {{ 'weeklyPack.seeRanking' | transloco }}
             </a>
           </div>

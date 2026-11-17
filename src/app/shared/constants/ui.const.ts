@@ -47,47 +47,43 @@ const FILLED_TEXT = 'text-surface-800';
 export const BUTTON_COLORS: Readonly<
   Record<ButtonSeverity, Readonly<Record<ButtonVariant, string>>>
 > = {
+  // Viola pieno (primary-500) con testo scuro, per il contrasto: l'azione principale di una schermata
   primary: {
-    filled: `bg-primary-300 ${FILLED_TEXT} hover:bg-primary-500`,
-    outlined: 'border border-primary-400 text-primary-300 hover:bg-primary-400/15',
+    filled: 'bg-primary-500 text-primary-950 hover:bg-primary-400',
+    outlined: 'border border-primary-400/55 text-primary-300 hover:bg-primary-400/15',
     text: 'text-primary-300 hover:bg-primary-400/15',
   },
   secondary: {
     filled:
-      'border border-surface-700 bg-surface-800 text-primary-300 hover:border-surface-600 hover:bg-surface-700',
-    outlined: 'border border-surface-600 text-surface-400 hover:bg-surface-600/15',
-    text: 'text-surface-400 hover:bg-surface-600/15',
+      'border border-surface-700 bg-surface-800 text-surface-100 hover:border-surface-600 hover:bg-surface-700',
+    outlined:
+      'border border-surface-500 text-surface-300 hover:bg-surface-500/25 hover:text-surface-100',
+    text: 'text-surface-300 hover:bg-surface-500/25 hover:text-surface-100',
   },
   success: {
     filled: `bg-green-400 ${FILLED_TEXT} hover:bg-green-300`,
-    outlined: 'border border-green-400 text-green-400 hover:bg-green-400/15',
-    text: 'text-green-400 hover:bg-green-400/15',
+    outlined: 'border border-green-400 text-green-300 hover:bg-green-400/15',
+    text: 'text-green-300 hover:bg-green-400/15',
   },
   info: {
-    filled: `bg-blue-400 ${FILLED_TEXT} hover:bg-sky-300`,
-    outlined: 'border border-blue-400 text-blue-400 hover:bg-blue-400/15',
-    text: 'text-blue-400 hover:bg-blue-400/15',
+    filled: `bg-blue-400 ${FILLED_TEXT} hover:bg-blue-300`,
+    outlined: 'border border-blue-400 text-blue-300 hover:bg-blue-400/15',
+    text: 'text-blue-300 hover:bg-blue-400/15',
   },
   warn: {
     filled: `bg-orange-400 ${FILLED_TEXT} hover:bg-orange-300`,
-    outlined: 'border border-orange-300 text-orange-300 hover:bg-orange-300/15',
-    text: 'text-orange-300 hover:bg-orange-300/15',
+    outlined: 'border border-orange-400 text-orange-300 hover:bg-orange-400/15',
+    text: 'text-orange-300 hover:bg-orange-400/15',
   },
   danger: {
     filled: `bg-rose-400 ${FILLED_TEXT} hover:bg-rose-300`,
-    outlined: 'border border-rose-300 text-rose-300 hover:bg-rose-300/15',
-    text: 'text-red-400 hover:bg-red-400/15',
+    outlined: 'border border-rose-400 text-rose-300 hover:bg-rose-400/15',
+    text: 'text-rose-300 hover:bg-rose-400/15',
   },
   contrast: {
     filled: `bg-surface-100 ${FILLED_TEXT} hover:bg-surface-300`,
     outlined: 'border border-surface-100 text-surface-100 hover:bg-surface-100/15',
     text: 'text-surface-100 hover:bg-surface-100/15',
-  },
-  // Viola pieno con testo chiaro (primary-600): è il bottone principale del flusso della busta
-  accent: {
-    filled: 'bg-primary-600 text-surface-50 hover:bg-primary-700',
-    outlined: 'border border-primary-400/55 text-primary-300 hover:bg-primary-400/15',
-    text: 'text-primary-300 hover:bg-primary-400/15',
   },
 };
 

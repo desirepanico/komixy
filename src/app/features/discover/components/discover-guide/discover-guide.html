@@ -223,15 +223,15 @@
       <div
         appInView
         [inViewThreshold]="0.1"
-        class="group/adult relative overflow-hidden rounded-lg border border-[#6b2a4a] bg-[linear-gradient(160deg,#2b1331,#16102a)] p-4 opacity-0 after:pointer-events-none after:absolute after:inset-0 after:animate-warn-glow after:rounded-[inherit] after:content-[''] data-in-view:animate-guide-in motion-reduce:after:animate-none"
+        class="group/adult relative overflow-hidden rounded-lg border border-rose-400/40 bg-linear-to-br from-rose-950 to-surface-950 p-4 opacity-0 after:pointer-events-none after:absolute after:inset-0 after:animate-warn-glow after:rounded-[inherit] after:content-[''] data-in-view:animate-guide-in motion-reduce:after:animate-none"
       >
         <div class="mb-2 flex items-center gap-2.5">
           <span
-            class="grid size-8.5 place-items-center rounded-[10px] bg-pink-300/15 text-pink-300 group-data-in-view/adult:animate-icon-shake"
+            class="grid size-8.5 place-items-center rounded-[10px] bg-rose-300/15 text-rose-300 group-data-in-view/adult:animate-icon-shake"
           >
             <ng-icon name="matWarningOutline" size="20" aria-hidden="true" />
           </span>
-          <b id="discover-guide-adult" class="text-sm tracking-widest text-pink-300 uppercase">
+          <b id="discover-guide-adult" class="text-sm tracking-widest text-rose-300 uppercase">
             {{ 'discover.guide.adultTitle' | transloco }}
           </b>
         </div>
@@ -242,7 +242,7 @@
           type="button"
           appButton
           variant="outlined"
-          severity="warn"
+          severity="danger"
           [rounded]="true"
           aria-controls="discover-age-form"
           [attr.aria-expanded]="formOpen()"
@@ -256,11 +256,11 @@
           <form
             #ageForm
             id="discover-age-form"
-            class="mt-4 border-t border-pink-300/30 pt-4"
+            class="mt-4 border-t border-rose-300/30 pt-4"
             [formRoot]="form"
           >
             <fieldset class="m-0 min-w-0 border-0 p-0">
-              <legend class="mb-2 p-0 text-sm font-extrabold text-pink-300">
+              <legend class="mb-2 p-0 text-sm font-extrabold text-rose-300">
                 {{ 'discover.guide.birth' | transloco }}
               </legend>
               <div class="grid grid-cols-[1fr_1fr_1.4fr] gap-2">
@@ -293,14 +293,14 @@
               </p>
             }
             <div class="mt-3 flex items-center gap-4">
-              <button type="submit" appButton severity="warn" [rounded]="true">
+              <button type="submit" appButton severity="danger" [rounded]="true">
                 {{ 'discover.guide.confirm' | transloco }}
               </button>
               <button
                 type="button"
                 appButton
                 variant="text"
-                severity="warn"
+                severity="danger"
                 [rounded]="true"
                 [underline]="true"
                 (click)="toggleForm()"
@@ -359,14 +359,7 @@
       {{ 'discover.guide.reset' | transloco }}
     </button>
   </div>
-  <button
-    type="button"
-    appButton
-    severity="accent"
-    [rounded]="true"
-    (click)="done.emit()"
-    class="shrink-0"
-  >
+  <button type="button" appButton [rounded]="true" (click)="done.emit()" class="shrink-0">
     {{ 'discover.filters.show' | transloco }}
   </button>
 </footer>

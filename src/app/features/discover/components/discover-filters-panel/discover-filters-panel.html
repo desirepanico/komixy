@@ -255,7 +255,7 @@
                 class="flex w-full cursor-pointer items-center gap-3 rounded-[20px] border border-surface-700 p-3.5 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
               >
                 <span
-                  class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-pink-300/15 text-xs font-black text-pink-200"
+                  class="grid size-8.5 shrink-0 place-items-center rounded-[10px] bg-rose-300/15 text-xs font-black text-rose-200"
                   aria-hidden="true"
                   >18+</span
                 >
@@ -294,14 +294,7 @@
           >
             {{ 'discover.filters.reset' | transloco }}
           </button>
-          <button
-            type="button"
-            appButton
-            severity="accent"
-            [rounded]="true"
-            (click)="close()"
-            class="w-full"
-          >
+          <button type="button" appButton [rounded]="true" (click)="close()" class="w-full">
             {{ 'discover.filters.show' | transloco }}
           </button>
         </footer>
