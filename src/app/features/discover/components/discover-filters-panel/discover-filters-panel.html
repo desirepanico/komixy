@@ -41,17 +41,24 @@
           </h2>
           <button
             type="button"
+            appButton
+            variant="text"
+            [rounded]="true"
             (click)="openGuide()"
-            class="inline-flex min-h-9 cursor-pointer items-center gap-1.5 px-2.5 text-xs font-extrabold tracking-wider text-primary-300 uppercase hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+            class="min-h-9 gap-1.5 px-2.5 text-xs font-extrabold tracking-wider uppercase"
           >
             <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
             {{ 'discover.filters.guide' | transloco }}
           </button>
           <button
             type="button"
+            appButton
+            variant="text"
+            severity="secondary"
+            [iconOnly]="true"
+            [rounded]="true"
             (click)="close()"
             [attr.aria-label]="'discover.filters.close' | transloco"
-            class="grid size-10 cursor-pointer place-items-center rounded-full text-surface-300 hover:bg-surface-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             <ng-icon name="matCloseOutline" size="20" aria-hidden="true" />
           </button>
@@ -91,10 +98,14 @@
                 @if (view.facet === 'categories' && isManga() && view.selected.length) {
                   <button
                     type="button"
+                    appButton
+                    variant="text"
+                    severity="secondary"
+                    [rounded]="true"
                     aria-controls="discover-info-card"
                     [attr.aria-expanded]="infoOpen()"
                     (click)="infoOpen.set(!infoOpen())"
-                    class="inline-flex min-h-8 cursor-pointer items-center gap-1.5 px-1.5 text-xs font-bold text-surface-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                    class="min-h-8 gap-1.5 px-1.5 text-xs font-bold"
                   >
                     <ng-icon
                       [name]="infoOpen() ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
@@ -276,6 +287,7 @@
             type="button"
             appButton
             variant="text"
+            [rounded]="true"
             (click)="reset()"
             [disabled]="!hasChoices()"
             class="min-h-10 justify-self-center px-2.5 text-sm font-bold"
@@ -284,8 +296,11 @@
           </button>
           <button
             type="button"
+            appButton
+            severity="accent"
+            [rounded]="true"
             (click)="close()"
-            class="min-h-11.5 w-full cursor-pointer rounded-full bg-primary-500 text-[15px] font-extrabold text-primary-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
+            class="w-full"
           >
             {{ 'discover.filters.show' | transloco }}
           </button>
