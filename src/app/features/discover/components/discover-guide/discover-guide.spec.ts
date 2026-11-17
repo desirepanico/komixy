@@ -150,6 +150,33 @@ describe('DiscoverGuide', () => {
     delete (HTMLElement.prototype as { scrollIntoView?: unknown }).scrollIntoView;
   });
 
+  it("su mobile la guida scende al modulo dell'età dopo un ingresso più lento", async () => {
+    const scroll = vi.fn();
+    Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', {
+      value: scroll,
+      configurable: true,
+    });
+    const width = window.innerWidth;
+    window.innerWidth = 375;
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({ imports: [Host] }).compileComponents();
+    const mobile = TestBed.createComponent(Host);
+    mobile.componentInstance.askAge.set(true);
+    await mobile.whenStable();
+    await new Promise((resolve) => setTimeout(resolve, 550));
+    expect(scroll).not.toHaveBeenCalled();
+    await new Promise((resolve) => setTimeout(resolve, 350));
+    expect(scroll).toHaveBeenCalledWith({ block: 'center', behavior: 'smooth' });
+    window.innerWidth = width;
+    delete (HTMLElement.prototype as { scrollIntoView?: unknown }).scrollIntoView;
+  });
+
+  it('le schede entrano a cascata con un ritardo che segue la variabile del tema', () => {
+    const delays = cards().map((b) => (b.parentElement as HTMLElement).style.animationDelay);
+    expect(delays[0]).toContain('calc(0 * var(--guide-stagger-ms))');
+    expect(delays[1]).toContain('calc(1 * var(--guide-stagger-ms))');
+  });
+
   it('i formati hanno la loro illustrazione', () => {
     expect(root().querySelectorAll('app-format-illustration').length).toBe(2);
   });

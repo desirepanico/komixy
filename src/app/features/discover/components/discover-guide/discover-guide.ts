@@ -26,11 +26,13 @@ import {
   DISCOVER_ICON_SET,
   DISCOVER_OPTION_ICONS,
   FORMAT_OPTIONS,
+  GUIDE_SLIDE_MOBILE_MS,
   GUIDE_SLIDE_MS,
   STATUS_OPTIONS,
   THEME_OPTIONS,
 } from '@shared/constants/ui.const';
 import { InView } from '@shared/directives/in-view/in-view.directive';
+import { ViewportService } from '@shared/services/viewport/viewport.service';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
@@ -78,6 +80,7 @@ interface GuideSection {
 export class DiscoverGuide {
   private readonly _catalogFilter = inject(CatalogFilterService);
   private readonly _avatars = inject(CategoryAvatarService);
+  private readonly _viewport = inject(ViewportService);
   protected readonly age = inject(AgeVerificationService);
 
   private readonly _shownAt = Date.now();
@@ -194,7 +197,8 @@ export class DiscoverGuide {
     effect((onCleanup) => {
       const form = this._ageForm()?.nativeElement;
       if (!form) return;
-      const wait = Math.max(0, GUIDE_SLIDE_MS - (Date.now() - this._shownAt));
+      const slideMs = this._viewport.isMobile() ? GUIDE_SLIDE_MOBILE_MS : GUIDE_SLIDE_MS;
+      const wait = Math.max(0, slideMs - (Date.now() - this._shownAt));
       const timer = setTimeout(
         () => form.scrollIntoView?.({ block: 'center', behavior: 'smooth' }),
         wait,

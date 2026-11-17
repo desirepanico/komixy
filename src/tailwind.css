@@ -42,11 +42,14 @@
   }
 
   /* Guida ai filtri: le schede salgono una dopo l'altra mentre si scorre; la vista scorre da destra */
-  --animate-guide-in: guide-in 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-guide-slide: guide-slide 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-filters-back: filters-back 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-filters-out: filters-out 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-guide-out: guide-out 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --guide-slide-ms: 450ms;
+  --guide-in-ms: 600ms;
+  --guide-stagger-ms: 70ms;
+  --animate-guide-in: guide-in var(--guide-in-ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-guide-slide: guide-slide var(--guide-slide-ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-filters-back: filters-back var(--guide-slide-ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-filters-out: filters-out var(--guide-slide-ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-guide-out: guide-out var(--guide-slide-ms) cubic-bezier(0.2, 0.8, 0.2, 1) both;
 
   /* Risultati e tendine: le carte entrano a cascata, la tendina della ricerca scende */
   --animate-card-in: card-in 350ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -328,6 +331,15 @@
 }
 
 /* Nasconde la scrollbar mantenendo lo scroll (usata dal carosello) */
+/* Su mobile la guida occupa tutta la larghezza: le animazioni durano di più (stessi valori in GUIDE_SLIDE_MOBILE_MS) */
+@media (width < 48rem) {
+  :root {
+    --guide-slide-ms: 800ms;
+    --guide-in-ms: 900ms;
+    --guide-stagger-ms: 130ms;
+  }
+}
+
 @utility scrollbar-none {
   scrollbar-width: none;
   &::-webkit-scrollbar {

@@ -66,7 +66,7 @@
               <div
                 appInView
                 [inViewThreshold]="0.1"
-                [style.animation-delay.ms]="i * 70"
+                [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
                 class="min-w-0 opacity-0 data-in-view:animate-guide-in"
               >
                 <button
@@ -116,7 +116,7 @@
               <div
                 appInView
                 [inViewThreshold]="0.1"
-                [style.animation-delay.ms]="i * 70"
+                [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
                 class="min-w-0 opacity-0 data-in-view:animate-guide-in"
               >
                 <button
@@ -161,7 +161,7 @@
               <div
                 appInView
                 [inViewThreshold]="0.1"
-                [style.animation-delay.ms]="i * 70"
+                [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
                 class="min-w-0 opacity-0 data-in-view:animate-guide-in"
               >
                 <button
