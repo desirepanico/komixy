@@ -1,9 +1,7 @@
-import { computed, DOCUMENT, inject, Injectable, signal } from '@angular/core';
+import { computed, DOCUMENT, inject, Service, signal } from '@angular/core';
 
 /** Larghezza della finestra e breakpoint (stessi valori di Tailwind: md = 768px, lg = 1024px). */
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class ViewportService {
   private readonly _window = inject(DOCUMENT).defaultView;
 

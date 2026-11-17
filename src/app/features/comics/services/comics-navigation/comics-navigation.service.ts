@@ -1,11 +1,11 @@
 import { Location } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
 import { DiscoverNavigationService } from '@features/discover/services/discover-navigation/discover-navigation.service';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
 /** Rotte della feature comics: l'elenco e la pagina di un fumetto. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ComicsNavigationService {
   private readonly _router = inject(Router);
   private readonly _location = inject(Location);

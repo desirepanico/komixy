@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 import { WEEKLY_PACK_STORAGE_KEY, WEEKLY_PACK_TIME_ZONE } from '../../constants/pack.const';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { WeeklyRankingService } from '../weekly-ranking/weekly-ranking.service';
@@ -13,7 +13,7 @@ interface OpenedPack {
  * La busta della settimana: 10 carte, i volumi più letti, che si aprono una volta a settimana.
  * Le carte sono la classifica della settimana, non c'è casualità.
  */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class WeeklyPackService {
   private readonly _ranking = inject(WeeklyRankingService);
 

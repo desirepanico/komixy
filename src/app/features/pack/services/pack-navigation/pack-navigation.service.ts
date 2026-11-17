@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
 /** Rotte di `pack`: l'apertura della busta, a schermo intero. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class PackNavigationService {
   private readonly _router = inject(Router);
 

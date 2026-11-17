@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { ERA_RANGES } from '@shared/constants/ui.const';
 import { CatalogItem, ComicKind } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, EMPTY_FILTERS, FacetKey } from '../../models/discover-filters.model';
 import { volumeBucket } from '../../utils/volume-bucket/volume-bucket';
 
 /** Ricerca e filtri sul catalogo: puro, senza stato (lo stato sta nell'indirizzo). */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class CatalogFilterService {
   /** I gruppi di filtri della scheda: i fumetti non hanno tema né contenuti per adulti. */
   public facetsFor(kind: ComicKind): readonly FacetKey[] {

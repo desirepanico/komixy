@@ -1,8 +1,8 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, Service, signal } from '@angular/core';
 import { RankingEntry } from '../../models/ranking-entry.model';
 import { ComicItem } from '../../models/comic.model';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class WeeklyRankingService {
   // TODO(api): sostituire con i dati reali dell'API
   private readonly _comics = signal<ComicItem[]>([

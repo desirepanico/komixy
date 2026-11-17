@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 
 /** Rotte della feature library: la pagina della libreria. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class LibraryNavigationService {
   private readonly _router = inject(Router);
 

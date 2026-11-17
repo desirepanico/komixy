@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import { MAIN_PAGES } from '../../constants/navigation.const';
 
@@ -10,9 +10,7 @@ function collectPaths(routes: Routes, prefix = ''): string[] {
   });
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 /** Cambia pagina con lo swipe, seguendo l'ordine delle pagine principali che esistono davvero. */
 export class MobileSwipeService {
   private readonly _router = inject(Router);

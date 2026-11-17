@@ -1,8 +1,8 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { RankingView } from '../../models/ranking-view.model';
 
 /** Ultima vista scelta, in memoria: vale quando l'indirizzo non ha `?view=`. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class RankingViewService {
   private readonly _view = signal<RankingView>('list');
 

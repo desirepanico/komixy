@@ -129,7 +129,7 @@ for (const file of files) {
     if (ts.isClassDeclaration(node)) {
       const isService = ts
         .getDecorators(node)
-        ?.some((d) => d.expression.getText().startsWith('Injectable'));
+        ?.some((d) => d.expression.getText().startsWith('Service'));
       if (isService) {
         for (const m of node.members) {
           if (!ts.isPropertyDeclaration(m) || !m.initializer || !ts.isCallExpression(m.initializer))

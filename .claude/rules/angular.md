@@ -61,7 +61,7 @@ Lo controlla `npm run lint` (`scripts/check-class-order.mjs`); `node scripts/che
 - Signal, `computed`, `effect` e simili: `signals.md`.
 - Membri usati solo nel template: `protected`.
 - Trasformazioni di stato pure e prevedibili.
-- Servizi con una sola responsabilità, `providedIn: 'root'`, e `inject()` al posto dell'iniezione nel costruttore.
+- Servizi con una sola responsabilità, dichiarati con `@Service()` (da `@angular/core`, al posto di `@Injectable({ providedIn: 'root' })`: è già disponibile in tutta l'app, senza `providers`), e `inject()` al posto dell'iniezione nel costruttore. Mai `@Injectable` per un servizio; `@Service({ autoProvided: false })` solo se va elencato a mano in un `providers`.
 - Provider globali: funzioni `provideXxx()` in `core/providers`, raccolte da `provideCore()` (vedi `docs/architettura.md`). Mai `NgModule` né `importProvidersFrom` se esiste una funzione `provideXxx()`.
 
 ## Template

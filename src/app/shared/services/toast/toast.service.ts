@@ -1,10 +1,10 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import { TOAST_DURATION_MS, TOAST_MAX_VISIBLE } from '../../constants/ui.const';
 import { ToastMessage, ToastParams, ToastSeverity } from '../../models/toast.model';
 
 /** `summary` e `detail` sono chiavi Transloco, tradotte quando il toast compare; `params` riempie i segnaposto */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ToastService {
   private readonly _translateService = inject(TranslocoService);
 

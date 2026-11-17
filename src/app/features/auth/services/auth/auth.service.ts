@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { AUTH_USER_STORAGE_KEY } from '@shared/constants/form.const';
 import { ApiResponse } from '@shared/models/api-response.model';
 import { SessionService } from '@shared/services/session/session.service';
@@ -8,9 +8,7 @@ import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { LoggedUser, LoginRequest, LoginResponse } from '../../models/auth.model';
 import { AuthNavigationService } from '../auth-navigation/auth-navigation.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class AuthService {
   private readonly _navigation = inject(AuthNavigationService);
   private readonly _session = inject(SessionService);

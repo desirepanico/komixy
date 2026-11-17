@@ -56,7 +56,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 | -------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------- |
 | Configurazione dell'app          | `app.config.ts`                            | `provideRouter(...)`, `provideBrowserGlobalErrorListeners()`, `provideCore()`      |
 | Funzioni di avvio `provideXxx()` | `core/providers/<nome>/<nome>.provider.ts` | `provideHttp()`, `provideI18n()`, `provideNavDirection()`, `provideBootSkeleton()` |
-| Servizi `providedIn: 'root'`     | `shared/services`, `features/*/services`   | `ViewportService`, `AuthService`, `WeeklyRankingService`                           |
+| Servizi `@Service()`             | `shared/services`, `features/*/services`   | `ViewportService`, `AuthService`, `WeeklyRankingService`                           |
 | Provider di componente           | `providers: [...]` nel decorator           | `provideIcons({ matXxxOutline })`                                                  |
 
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
@@ -69,14 +69,14 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 
 `provideAppInitializer` esegue codice all'avvio; se restituisce una `Promise` o un `Observable`, Angular aspetta che finisca prima di mostrare l'app.
 
-**Servizi `providedIn: 'root'`.** Sono registrati da soli: un'unica istanza per tutta l'app, e finiscono nel bundle solo se qualcuno li usa. Non vanno elencati in nessun `providers`.
+**Servizi `@Service()`.** Il decorator `@Service()` di `@angular/core` sostituisce `@Injectable({ providedIn: 'root' })`. Sono registrati da soli: un'unica istanza per tutta l'app, e finiscono nel bundle solo se qualcuno li usa. Non vanno elencati in nessun `providers`.
 
 **Provider di componente.** `provideIcons` registra solo le icone usate dal componente, così le altre non entrano nel suo chunk lazy. Il provider vive quanto il componente.
 
 Regole:
 
 - Un nuovo provider globale è una funzione `provideXxx()` in `core/providers/<nome>/<nome>.provider.ts`, aggiunta all'elenco di `provideCore()`. In `app.config.ts` si lascia solo ciò che riguarda il router e `provideCore()`.
-- Un servizio non ha bisogno di un provider: usa `providedIn: 'root'` e `inject()`. Un provider esplicito serve solo per configurare qualcosa (opzioni, token, valori diversi per ambiente).
+- Un servizio non ha bisogno di un provider: usa `@Service()` e `inject()`. Un provider esplicito serve solo per configurare qualcosa (opzioni, token, valori diversi per ambiente).
 - I provider che dipendono dal router o da altre librerie restano nel posto che le configura: non spostare `provideRouter` in `provideCore()`.
 - Gli interceptor HTTP si registrano in `provideHttp()` (`core/providers/http/http.provider.ts`), che `provideCore()` include: vedi «Chiamate HTTP: gli interceptor».
 

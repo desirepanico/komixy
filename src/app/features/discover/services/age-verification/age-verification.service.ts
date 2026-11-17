@@ -1,10 +1,10 @@
-import { Injectable, signal } from '@angular/core';
+import { Service, signal } from '@angular/core';
 import { DISCOVER_ADULT_AGE } from '@shared/constants/ui.const';
 
 export type AgeCheck = 'adult' | 'minor' | 'invalid';
 
 /** Se l'utente ha dichiarato di essere maggiorenne. Non conserva la data di nascita, solo il risultato. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AgeVerificationService {
   // TODO(api): l'età verificata sta sul profilo dell'iscritto, non in memoria
   private readonly _verified = signal<boolean>(false);

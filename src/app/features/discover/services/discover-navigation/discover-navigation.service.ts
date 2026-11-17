@@ -1,11 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { DiscoverFilters } from '../../models/discover-filters.model';
 import { serializeDiscoverFilters } from '../../utils/serialize-discover-filters/serialize-discover-filters';
 
 /** Rotte della feature discover: la pagina Scopri. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class DiscoverNavigationService {
   private readonly _router = inject(Router);
 

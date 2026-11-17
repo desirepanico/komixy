@@ -1,11 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Router } from '@angular/router';
 import { RANKING_VIEW_QUERY_PARAM } from '@shared/constants/navigation.const';
 import { AppRoutes } from '@shared/models/app-routes.model';
 import { RankingView } from '../../models/ranking-view.model';
 
 /** Rotte della feature ranking: la classifica, che sta sotto il percorso di Scopri. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class RankingNavigationService {
   private readonly _router = inject(Router);
 

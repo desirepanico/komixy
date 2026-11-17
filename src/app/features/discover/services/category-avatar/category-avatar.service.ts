@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Avatar, Style } from '@dicebear/core';
 import adventurer from '@dicebear/styles/adventurer.json' with { type: 'json' };
 import {
@@ -10,7 +10,7 @@ import {
 } from '@shared/constants/ui.const';
 
 /** Il personaggio spaziale di una categoria dei manga, come indirizzo dati per un `<img>`: la faccia è DiceBear (Adventurer, CC BY 4.0), il resto è disegnato qui. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class CategoryAvatarService {
   private readonly _style = new Style(adventurer);
   private readonly _cache = new Map<string, string | null>();

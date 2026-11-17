@@ -1,4 +1,4 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Service, computed, signal } from '@angular/core';
 import {
   AUTH_TOKEN_STORAGE_KEY,
   GUEST_ID_STORAGE_KEY,
@@ -10,7 +10,7 @@ import { AppRoutes } from '../../models/app-routes.model';
  * Chi sta usando l'app: iscritto o ospite. Lo stato lo imposta `AuthService` (feature auth);
  * sta in `shared` perché serve a più feature, che non possono importarsi tra loro.
  */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class SessionService {
   /** Come `AuthNavigationService.loginLink`, che qui non si può importare */
   public readonly signUpLink: readonly string[] = ['/', AppRoutes.Login];

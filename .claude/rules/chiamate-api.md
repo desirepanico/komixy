@@ -120,7 +120,7 @@ this._http.get<ApiResponse<ComicListResponse>>(apiUrl('/comics', filters)); // C
 
 ## Servizio
 
-- Il servizio sta nella feature che lo usa (`services/<nome>/<nome>.service.ts`), in `shared/services` se lo usano più feature. Una sola responsabilità, `providedIn: 'root'`, `inject(HttpClient)`.
+- Il servizio sta nella feature che lo usa (`services/<nome>/<nome>.service.ts`), in `shared/services` se lo usano più feature. Una sola responsabilità, `@Service()`, `inject(HttpClient)`.
 - Gli indirizzi sono relativi e iniziano con `/` (`/auth/login`), con il gruppo in una proprietà privata (`private readonly _apiGroup = '/auth'`): il `baseUrlInterceptor` ci mette davanti l'`apiUrl` dell'environment, quindi nei servizi non va mai scritto un indirizzo completo né `environment.apiUrl`. I dati viaggiano nel body o nella query string: vedi «Body o query string».
 - Il metodo restituisce `Observable<XxxResponse>`: toglie la busta con `map((response) => response.result)`. Gli effetti sullo stato (utente, sessione, storage) stanno in `tap()` dentro il servizio, non nel componente.
 - Il servizio **non mostra gli errori** (lo fa chi ha lanciato la chiamata), ma **li converte**: `catchError((response: HttpErrorResponse) => throwError(() => ApiErrorResponse.fromHttpError(response)))` (`shared/utils/api-error-response`). Così chi chiama riceve un `ApiErrorResponse` con `status`, `code` e `message`, non un `HttpErrorResponse` grezzo. Ogni metodo che fa una richiesta ha il suo `catchError`.

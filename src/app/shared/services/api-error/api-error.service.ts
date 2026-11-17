@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { API_ERROR_MESSAGES } from '../../constants/api.const';
 import { ApiErrorFallback } from '../../models/api-response.model';
 import { ApiErrorResponse } from '../../utils/api-error-response/api-error-response';
@@ -9,7 +9,7 @@ import { ToastService } from '../toast/toast.service';
  * noto (`API_ERROR_MESSAGES`) mostra il messaggio di quel codice, altrimenti quello di default della chiamata.
  * `null` è un errore che non viene dall'API (un bug): il chiamante lo riconosce con `instanceof`.
  */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ApiErrorService {
   private readonly _toast = inject(ToastService);
 

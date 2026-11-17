@@ -1,11 +1,11 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Service, inject, signal } from '@angular/core';
 import { COVER_PLACEHOLDER } from '../../constants/ui.const';
 import { CatalogItem } from '../../models/catalog-item.model';
 import { ComicItem } from '../../models/comic.model';
 import { WeeklyRankingService } from '../weekly-ranking/weekly-ranking.service';
 
 /** I fumetti conosciuti dall'app: il catalogo di Scopri (manga e fumetti) e quelli della classifica settimanale. */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ComicCatalogService {
   private readonly _ranking = inject(WeeklyRankingService);
 

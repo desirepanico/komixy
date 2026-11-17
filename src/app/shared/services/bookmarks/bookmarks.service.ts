@@ -1,9 +1,9 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 import { SessionService } from '../session/session.service';
 import { ToastService } from '../toast/toast.service';
 
 /** Gli ospiti non possono salvare: `toggle` li avvisa con un toast */
-@Injectable({ providedIn: 'root' })
+@Service()
 export class BookmarksService {
   private readonly _session = inject(SessionService);
   private readonly _toast = inject(ToastService);
