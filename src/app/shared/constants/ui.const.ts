@@ -233,12 +233,12 @@ export const DISCOVER_AVATARS: Readonly<Record<string, DiscoverAvatar>> = {
   shonen: {
     face: {
       seed: 'Shonen0',
-      hairVariant: 'short05',
+      hairVariant: 'short15',
       hairColor: '#ffd37a',
       skinColor: '#763900',
-      eyesVariant: 'variant12',
-      mouthVariant: 'variant05',
-      eyebrowsVariant: 'variant03',
+      eyesVariant: 'variant26',
+      mouthVariant: 'variant23',
+      eyebrowsVariant: 'variant04',
     },
     bg: ['#7a3fe0', '#1f004d'],
     suit: '#b89bff',
