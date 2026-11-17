@@ -20,7 +20,8 @@
             type="button"
             variant="text"
             severity="secondary"
-            class="mb-2 w-full justify-between rounded-lg! text-left text-xs! font-bold! tracking-wider uppercase hover:bg-surface-800/70"
+            [rounded]="true"
+            class="mb-2 w-full justify-between text-left text-xs! font-bold! tracking-wider uppercase"
             [attr.aria-expanded]="group.expandable"
             [attr.aria-controls]="'nav-group-' + group.title"
             (click)="toggleGroup(group)"
@@ -42,11 +43,13 @@
                     [routerLinkActiveOptions]="{
                       exact: item.route === '/',
                     }"
-                    #rla="routerLinkActive"
-                    [routerLinkActive]="['bg-primary-500/15', 'text-primary-300']"
-                    [class.hover:bg-surface-800/70]="!rla.isActive"
-                    [class.hover:text-surface-100]="!rla.isActive"
-                    class="group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+                    [routerLinkActive]="[
+                      'bg-primary-500/25',
+                      'text-white',
+                      'shadow-[inset_0_0_0_1px]',
+                      'shadow-primary-400/55',
+                    ]"
+                    class="group flex items-center gap-3 rounded-full px-4 py-2.5 text-sm font-medium text-surface-400 transition-colors duration-200 hover:bg-primary-300/16 hover:text-white hover:shadow-[inset_0_0_0_1px] hover:shadow-primary-300/22 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
                   >
                     <ng-icon [name]="item.icon" size="16" />
                     <span>{{ item.label | transloco }}</span>
@@ -63,11 +66,13 @@
   <div class="border-t border-surface-700/40 p-3">
     <a
       [routerLink]="profileLink"
-      #profileRla="routerLinkActive"
-      routerLinkActive="bg-primary-500/15"
+      [routerLinkActive]="[
+        'bg-primary-500/25',
+        'shadow-[inset_0_0_0_1px]',
+        'shadow-primary-400/55',
+      ]"
       ariaCurrentWhenActive="page"
-      [class.hover:bg-surface-800/70]="!profileRla.isActive"
-      class="flex w-full items-center gap-3 rounded-xl p-2.5 text-left transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
+      class="flex w-full items-center gap-3 rounded-full p-2.5 pr-4 text-left transition-colors duration-200 hover:bg-primary-300/16 hover:shadow-[inset_0_0_0_1px] hover:shadow-primary-300/22 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
     >
       <span
         class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary-500 text-sm font-semibold text-surface-950"

@@ -62,7 +62,7 @@ describe('DesktopSidebar', () => {
     await fixture.whenStable();
 
     expect(profile().getAttribute('aria-current')).toBe('page');
-    expect(profile().classList).toContain('bg-primary-500/15');
+    expect(profile().classList).toContain('bg-primary-500/25');
   });
 
   it('chiude e riapre un gruppo, aggiornando aria-expanded', async () => {
