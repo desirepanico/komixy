@@ -28,7 +28,7 @@ Il frontend chiama indirizzi che iniziano con `/` (`/auth/login`): `baseUrlInter
 | Dev      | `npm run start:dev` | `https://INSERIRE_URL_API_DEV` (da sostituire)        |
 | Prod     | build di produzione | `https://INSERIRE_URL_API_PRODUZIONE` (da sostituire) |
 
-Il frontend è su un altro indirizzo (`http://localhost:4200`, Vercel), quindi il backend deve abilitare **CORS** per quegli indirizzi. Le intestazioni personalizzate qui sotto fanno partire una richiesta preliminare `OPTIONS`: il backend deve rispondere con `Access-Control-Allow-Headers: Authorization, Content-Type, X-Timezone, X-Guest-Id`.
+Il frontend è su un altro indirizzo (`http://localhost:4300`, Vercel), quindi il backend deve abilitare **CORS** per quegli indirizzi. Le intestazioni personalizzate qui sotto fanno partire una richiesta preliminare `OPTIONS`: il backend deve rispondere con `Access-Control-Allow-Headers: Authorization, Content-Type, X-Timezone, X-Guest-Id`.
 
 ### Formato delle risposte
 
@@ -537,7 +537,7 @@ Il frontend gira nel browser dell'utente e chiunque può modificarlo: **ogni con
 
 ### CORS e intestazioni (entrambi i flussi)
 
-1. **CORS con un elenco preciso di origini** (`http://localhost:4200`, il sito di dev, il sito pubblico). Mai `*` insieme alle credenziali.
+1. **CORS con un elenco preciso di origini** (`http://localhost:4300`, il sito di dev, il sito pubblico). Mai `*` insieme alle credenziali.
 2. Consentire solo i metodi e le intestazioni che servono (`Authorization`, `Content-Type`, `X-Timezone`, `X-Guest-Id`).
 3. Sulle risposte dell'API: `X-Content-Type-Options: nosniff` e, se il token passa a un cookie, i flag `httpOnly; Secure; SameSite=Lax` più la protezione CSRF sulle scritture (vedi «Dove si conserva il token»).
 

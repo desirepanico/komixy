@@ -26,7 +26,7 @@ npm install
 npm start
 ```
 
-L'app parte su http://localhost:4200. Dopo un `git pull` non serve rilanciare `npm install` a mano: prima di `start`, `build`, `test`, `lint` e `knip` lo script `scripts/ensure-deps.mjs` reinstalla se `package.json` o il lock sono cambiati.
+L'app parte su http://localhost:4300. Dopo un `git pull` non serve rilanciare `npm install` a mano: prima di `start`, `build`, `test`, `lint` e `knip` lo script `scripts/ensure-deps.mjs` reinstalla se `package.json` o il lock sono cambiati.
 
 ## Comandi
 

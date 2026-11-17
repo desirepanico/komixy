@@ -6,7 +6,7 @@ Questo file è sempre caricato e contiene solo l'essenziale. Le regole di dettag
 
 ## Comandi
 
-- `npm start` (= `npm run start:local`): dev server su http://localhost:4200 col backend sulla propria macchina; `npm run start:dev`: stesso server col backend di dev pubblicato (environment in `src/environments/`, `docs/sviluppo.md`)
+- `npm start` (= `npm run start:local`): dev server su http://localhost:4300 col backend sulla propria macchina; `npm run start:dev`: stesso server col backend di dev pubblicato (environment in `src/environments/`, `docs/sviluppo.md`)
 - `npm run build`: build di produzione; `npm run build:dev`: build con l'environment di dev
 - `npm test`: Vitest (nelle sessioni di Claude Code è già una sola esecuzione; in un terminale interattivo resta in watch, per una sola esecuzione `npm test -- --no-watch`)
 - `npm run lint`: ESLint, controllo che ogni `.ts` abbia il suo spec, ordine dei membri di classe (`--fix` riordina)
