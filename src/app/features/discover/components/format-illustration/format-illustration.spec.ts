@@ -27,6 +27,18 @@ describe('FormatIllustration', () => {
     expect(groups()).toBe(4);
   });
 
+  it('ogni movimento al passaggio c’è anche quando la scheda è scelta (touch)', () => {
+    const hover = (c: string) => c.split(/\s+/).filter((t) => t.startsWith('group-hover/tile:'));
+    const pressed = (c: string) =>
+      c.split(/\s+/).filter((t) => t.startsWith('group-aria-pressed/tile:'));
+    const root: HTMLElement = fixture.nativeElement;
+    const animated = Array.from(root.querySelectorAll<SVGElement>('svg [class]'))
+      .map((el) => el.getAttribute('class') ?? '')
+      .filter((c) => hover(c).length > 0);
+    expect(animated.length).toBeGreaterThan(0);
+    for (const c of animated) expect(pressed(c).length).toBe(hover(c).length);
+  });
+
   it('il volume unico e la graphic novel hanno un solo libro', async () => {
     for (const format of ['oneShot', 'graphicNovel'] as const) {
       fixture.componentInstance.format.set(format);

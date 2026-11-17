@@ -3,7 +3,7 @@ import { ComicFormat } from '@shared/models/catalog-item.model';
 
 /**
  * La piccola illustrazione di un formato (serie, volume unico, graphic novel, omnibus) con i volumi
- * nei colori del tema. Al passaggio sulla scheda (`group/tile`) i volumi si alzano uno dopo l'altro.
+ * nei colori del tema. Al passaggio sulla scheda (`group/tile`), o quando è scelta (utile sul touch, dove non c’è hover), i volumi si alzano uno dopo l'altro.
  */
 @Component({
   selector: 'app-format-illustration',
