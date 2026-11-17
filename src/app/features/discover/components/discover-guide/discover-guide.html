@@ -302,9 +302,7 @@
                 variant="text"
                 severity="danger"
                 [rounded]="true"
-                [underline]="true"
                 (click)="toggleForm()"
-                class="min-h-11 px-3 text-sm font-bold"
               >
                 {{ 'discover.guide.cancel' | transloco }}
               </button>
@@ -354,7 +352,7 @@
       [rounded]="true"
       (click)="reset()"
       [disabled]="activeCount() === 0"
-      class="min-h-9 px-2 text-[13px] font-extrabold disabled:cursor-default"
+      class="disabled:cursor-default"
     >
       {{ 'discover.guide.reset' | transloco }}
     </button>

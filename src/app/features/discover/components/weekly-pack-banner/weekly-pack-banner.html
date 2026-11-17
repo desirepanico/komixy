@@ -26,17 +26,10 @@
           {{ (session.isGuest() ? 'weeklyPack.guestText' : 'weeklyPack.readyText') | transloco }}
         </p>
         <div class="mt-1 flex flex-wrap items-center gap-2">
-          <a appButton size="sm" [rounded]="true" [routerLink]="packNavigation.packLink">
+          <a appButton [rounded]="true" [routerLink]="packNavigation.packLink">
             {{ 'weeklyPack.open' | transloco }}
           </a>
-          <button
-            type="button"
-            appButton
-            variant="text"
-            [rounded]="true"
-            class="px-3 py-1.5 text-sm font-semibold"
-            (click)="skip()"
-          >
+          <button type="button" appButton variant="text" [rounded]="true" (click)="skip()">
             {{ 'weeklyPack.skip' | transloco }}
           </button>
         </div>
@@ -98,7 +91,6 @@
         <a
           appButton
           variant="outlined"
-          size="sm"
           [rounded]="true"
           class="shrink-0"
           [routerLink]="rankingNavigation.rankingLink"

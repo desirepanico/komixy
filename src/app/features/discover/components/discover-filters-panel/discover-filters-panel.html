@@ -39,14 +39,7 @@
           <h2 id="discover-filters-title" class="mr-auto text-base font-extrabold text-surface-50">
             {{ 'discover.filters.title' + (isManga() ? 'Manga' : 'Comic') | transloco }}
           </h2>
-          <button
-            type="button"
-            appButton
-            variant="text"
-            [rounded]="true"
-            (click)="openGuide()"
-            class="min-h-9 gap-1.5 px-2.5 text-xs font-extrabold tracking-wider uppercase"
-          >
+          <button type="button" appButton variant="text" [rounded]="true" (click)="openGuide()">
             <ng-icon name="matHelpOutline" size="16" aria-hidden="true" />
             {{ 'discover.filters.guide' | transloco }}
           </button>
@@ -105,7 +98,6 @@
                     aria-controls="discover-info-card"
                     [attr.aria-expanded]="infoOpen()"
                     (click)="infoOpen.set(!infoOpen())"
-                    class="min-h-8 gap-1.5 px-1.5 text-xs font-bold"
                   >
                     <ng-icon
                       [name]="infoOpen() ? 'matVisibilityOffOutline' : 'matVisibilityOutline'"
@@ -290,7 +282,7 @@
             [rounded]="true"
             (click)="reset()"
             [disabled]="!hasChoices()"
-            class="min-h-10 justify-self-center px-2.5 text-sm font-bold"
+            class="justify-self-center"
           >
             {{ 'discover.filters.reset' | transloco }}
           </button>

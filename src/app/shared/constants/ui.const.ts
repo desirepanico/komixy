@@ -38,7 +38,7 @@ import {
 import { DiscoverAvatar, VolumeBucket, YearEra } from '@shared/models/catalog-filter.model';
 import { MessageSeverity } from '@shared/models/message.model';
 import { ToastSeverity } from '@shared/models/toast.model';
-import { ButtonSeverity, ButtonSize, ButtonVariant } from '../models/button.model';
+import { ButtonSeverity, ButtonVariant } from '../models/button.model';
 
 // ─── Bottoni ─────────────────────────────────────────────────────────────────
 
@@ -85,11 +85,6 @@ export const BUTTON_COLORS: Readonly<
     outlined: 'border border-surface-100 text-surface-100 hover:bg-surface-100/15',
     text: 'text-surface-100 hover:bg-surface-100/15',
   },
-};
-
-export const BUTTON_SIZES: Readonly<Record<ButtonSize, string>> = {
-  md: 'h-11 px-4 text-base',
-  sm: 'h-9 px-4 text-sm',
 };
 
 // ─── Avvio ───────────────────────────────────────────────────────────────────

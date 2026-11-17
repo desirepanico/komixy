@@ -53,14 +53,7 @@
           >
             {{ 'weeklyPack.open' | transloco }}
           </button>
-          <button
-            type="button"
-            appButton
-            variant="text"
-            [rounded]="true"
-            class="px-3 py-1.5 text-sm font-semibold"
-            (click)="skip()"
-          >
+          <button type="button" appButton variant="text" [rounded]="true" (click)="skip()">
             {{ 'weeklyPack.skip' | transloco }}
           </button>
         </div>
@@ -110,14 +103,7 @@
               {{ 'weeklyPack.nextCard' | transloco }}
             }
           </button>
-          <button
-            type="button"
-            appButton
-            variant="text"
-            [rounded]="true"
-            class="px-3 py-1.5 text-sm font-semibold"
-            (click)="skip()"
-          >
+          <button type="button" appButton variant="text" [rounded]="true" (click)="skip()">
             {{ 'weeklyPack.skip' | transloco }}
           </button>
         </app-card-spotlight>

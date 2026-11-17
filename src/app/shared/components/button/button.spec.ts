@@ -22,7 +22,7 @@ import { Button } from './button';
     <button id="pericolo" appButton severity="danger">Ok</button>
     <button id="pericolo-bordo" appButton severity="danger" variant="outlined">Ok</button>
     <button id="pericolo-testo" appButton severity="danger" variant="text">Ok</button>
-    <button id="piccolo" appButton size="sm">Ok</button>
+    <a id="collegamento" appButton variant="text" [underline]="true" href="/x">Ok</a>
     <a id="link" appButton href="/x">Vai</a>
   `,
 })
@@ -57,21 +57,28 @@ describe('Button', () => {
   });
 
   it('con iconOnly è un quadrato di sola icona', async () => {
-    expect((await el('icona')).classList).toContain('size-10');
+    expect((await el('icona')).classList).toContain('size-11');
   });
 
   it('con variant text e iconOnly mantiene dimensione e centratura dell icona', async () => {
     const classes = (await el('testo-icona')).classList;
-    expect(classes).toContain('size-10');
+    expect(classes).toContain('size-11');
     expect(classes).toContain('justify-center');
     expect(classes).not.toContain('bg-primary-500');
   });
 
-  it('con variant text non ha sfondo né bordo e lascia le spaziature a chi lo usa', async () => {
+  it('con variant text non ha sfondo né bordo, ma ha la stessa altezza degli altri', async () => {
     const classes = (await el('testo')).classList;
     expect(classes).not.toContain('bg-primary-500');
     expect(classes).not.toContain('border');
-    expect(classes).not.toContain('px-4');
+    expect(classes).toContain('h-11');
+    expect(classes).toContain('px-3');
+  });
+
+  it('un collegamento nel testo (text con underline) non ha altezza fissa', async () => {
+    const classes = (await el('collegamento')).classList;
+    expect(classes).not.toContain('h-11');
+    expect(classes).toContain('px-1');
   });
 
   it('con severity secondary è neutro, non viola', async () => {
@@ -104,8 +111,10 @@ describe('Button', () => {
     expect(classes).toContain('text-primary-950');
   });
 
-  it('la dimensione sm è più bassa di quella di default', async () => {
-    expect((await el('piccolo')).classList).toContain('h-9');
-    expect((await el('pieno')).classList).toContain('h-11');
+  it('ha una sola dimensione: altezza 44px, testo sm e semibold', async () => {
+    const classes = (await el('pieno')).classList;
+    expect(classes).toContain('h-11');
+    expect(classes).toContain('text-sm');
+    expect(classes).toContain('font-semibold');
   });
 });
