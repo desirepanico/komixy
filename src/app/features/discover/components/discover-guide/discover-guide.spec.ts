@@ -177,6 +177,14 @@ describe('DiscoverGuide', () => {
     expect(delays[1]).toContain('calc(1 * var(--guide-stagger-ms))');
   });
 
+  it('le schede dei temi, scelte, animano icona e riflesso anche senza hover (touch)', () => {
+    const theme = cards().find((b) => b.textContent?.includes('discover.options.themes.'))!;
+    expect(theme.className).toContain('aria-pressed:before:translate-x-[125%]');
+    expect(theme.querySelector('span[aria-hidden="true"]')?.className).toContain(
+      'group-aria-pressed:animate-icon-float',
+    );
+  });
+
   it('i formati hanno la loro illustrazione', () => {
     expect(root().querySelectorAll('app-format-illustration').length).toBe(2);
   });
