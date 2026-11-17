@@ -49,13 +49,12 @@
         <ng-icon [name]="section.icon" size="18" class="text-primary-300!" aria-hidden="true" />
         {{ section.titleKey | transloco }}
         @if (selectedCount(section.facet) > 0) {
-          @for (n of [selectedCount(section.facet)]; track n) {
-            <span
-              class="grid h-4.5 min-w-4.5 animate-bump place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950"
-            >
-              {{ n }}
-            </span>
-          }
+          <span
+            [appRestartAnimation]="selectedCount(section.facet)"
+            class="grid h-4.5 min-w-4.5 place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950 data-restart:animate-bump"
+          >
+            {{ selectedCount(section.facet) }}
+          </span>
         }
       </h3>
 
@@ -326,18 +325,15 @@
       [class]="activeCount() === 0 ? 'text-surface-400' : 'text-surface-200'"
       role="status"
     >
-      @for (n of [activeCount()]; track n) {
-        <b
-          class="inline-grid h-6.5 min-w-6.5 animate-bump place-items-center rounded-full px-1.75 tabular-nums"
-          [class]="
-            activeCount() === 0
-              ? 'bg-[#2a2440] text-surface-400'
-              : 'bg-primary-500 text-primary-950'
-          "
-          aria-hidden="true"
-          >{{ n }}</b
-        >
-      }
+      <b
+        [appRestartAnimation]="activeCount()"
+        class="inline-grid h-6.5 min-w-6.5 place-items-center rounded-full px-1.75 tabular-nums data-restart:animate-bump"
+        [class]="
+          activeCount() === 0 ? 'bg-[#2a2440] text-surface-400' : 'bg-primary-500 text-primary-950'
+        "
+        aria-hidden="true"
+        >{{ activeCount() }}</b
+      >
       <span class="max-md:sr-only">{{
         (activeCount() === 0
           ? 'discover.guide.noFilters'

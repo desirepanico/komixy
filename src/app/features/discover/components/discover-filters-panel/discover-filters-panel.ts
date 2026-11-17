@@ -29,6 +29,7 @@ import {
   THEME_OPTIONS,
   VOLUME_OPTIONS,
 } from '@shared/constants/ui.const';
+import { RestartAnimation } from '@shared/directives/restart-animation/restart-animation.directive';
 import { Button } from '@shared/components/button/button';
 import { ComicCategory } from '@shared/models/catalog-item.model';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
@@ -54,7 +55,7 @@ interface FacetView {
 /** Il pannello dei filtri: un cassetto dal basso sotto i 768px, un pannello a destra da lì in su. */
 @Component({
   selector: 'app-discover-filters-panel',
-  imports: [Button, DiscoverGuide, NgIcon, TranslocoPipe],
+  imports: [Button, DiscoverGuide, NgIcon, RestartAnimation, TranslocoPipe],
   providers: [
     provideIcons({
       ...DISCOVER_ICON_SET,

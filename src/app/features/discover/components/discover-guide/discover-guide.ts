@@ -32,6 +32,7 @@ import {
   THEME_OPTIONS,
 } from '@shared/constants/ui.const';
 import { InView } from '@shared/directives/in-view/in-view.directive';
+import { RestartAnimation } from '@shared/directives/restart-animation/restart-animation.directive';
 import { ViewportService } from '@shared/services/viewport/viewport.service';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
 import { AgeVerificationService } from '../../services/age-verification/age-verification.service';
@@ -65,6 +66,7 @@ interface GuideSection {
     InputText,
     InView,
     NgIcon,
+    RestartAnimation,
     TranslocoPipe,
     Button,
   ],

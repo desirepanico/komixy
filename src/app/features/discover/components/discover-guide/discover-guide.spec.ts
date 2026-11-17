@@ -185,6 +185,20 @@ describe('DiscoverGuide', () => {
     );
   });
 
+  it('i contatori si aggiornano senza ricreare il DOM e senza NG0956', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    card('discover.options.categories.shonen').click();
+    await fixture.whenStable();
+    const badge = root().querySelector('footer b');
+    card('discover.options.categories.seinen').click();
+    await fixture.whenStable();
+    card('discover.options.formats.series').click();
+    await fixture.whenStable();
+    expect(root().querySelector('footer b')).toBe(badge);
+    expect(badge?.textContent).toContain('2');
+    expect(warn.mock.calls.flat().join(' ')).not.toContain('NG0956');
+  });
+
   it('i formati hanno la loro illustrazione', () => {
     expect(root().querySelectorAll('app-format-illustration').length).toBe(2);
   });

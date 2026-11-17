@@ -201,6 +201,23 @@ describe('DiscoverFiltersPanel', () => {
     );
   });
 
+  it('cambiando scelte e scheda informativa non genera NG0956', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const filters = fixture.componentInstance.filters;
+    filters.set({ ...EMPTY_FILTERS, categories: ['shonen', 'seinen'] });
+    await fixture.whenStable();
+    const tabs = root().querySelectorAll<HTMLButtonElement>(
+      '[role="group"][aria-label="discover.filters.infoTabs"] button',
+    );
+    for (const tab of Array.from(tabs)) {
+      tab.click();
+      await fixture.whenStable();
+    }
+    filters.set({ ...EMPTY_FILTERS, categories: ['shonen', 'seinen', 'kodomo'] });
+    await fixture.whenStable();
+    expect(warn.mock.calls.flat().join(' ')).not.toContain('NG0956');
+  });
+
   it('ogni valore si può scegliere, anche se con gli altri filtri non darebbe titoli', async () => {
     fixture.componentInstance.filters.set({ ...EMPTY_FILTERS, era: 'since2020' });
     await fixture.whenStable();

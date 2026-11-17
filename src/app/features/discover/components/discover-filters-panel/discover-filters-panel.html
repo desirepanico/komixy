@@ -79,13 +79,12 @@
                   />
                   {{ view.titleKey | transloco }}
                   @if (selectedCount(view) > 0) {
-                    @for (n of [selectedCount(view)]; track n) {
-                      <span
-                        class="grid h-4.5 min-w-4.5 animate-bump place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950 motion-reduce:animate-none"
-                      >
-                        {{ n }}
-                      </span>
-                    }
+                    <span
+                      [appRestartAnimation]="selectedCount(view)"
+                      class="grid h-4.5 min-w-4.5 place-items-center rounded-full bg-primary-500 px-1 text-[11px] font-black text-primary-950 data-restart:animate-bump motion-reduce:animate-none"
+                    >
+                      {{ selectedCount(view) }}
+                    </span>
                   }
                 </h3>
                 @if (view.facet === 'categories' && isManga() && view.selected.length) {
@@ -196,48 +195,42 @@
                       }
                     </div>
                   }
-                  @for (category of [infoCategory()]; track category) {
-                    <div
-                      class="relative flex animate-info-in items-center gap-4 motion-reduce:animate-none max-[420px]:gap-3"
-                    >
-                      @if (infoAvatar()) {
+                  @let category = infoCategory();
+                  <div
+                    [appRestartAnimation]="category"
+                    class="relative flex items-center gap-4 data-restart:animate-info-in motion-reduce:animate-none max-[420px]:gap-3"
+                  >
+                    @if (infoAvatar()) {
+                      <span
+                        class="relative block size-22 shrink-0 drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-orbit after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 after:content-[''] motion-reduce:after:animate-none max-[420px]:size-18"
+                      >
+                        <img [src]="infoAvatar()" alt="" width="88" height="88" class="size-full" />
+                      </span>
+                    }
+                    <div class="min-w-0">
+                      <b class="block text-lg/tight font-black text-white">{{
+                        'discover.options.categories.' + category | transloco
+                      }}</b>
+                      <p class="mt-1 text-[13.5px]/snug text-surface-300">
+                        {{ infoKey(category, 'text') | transloco }}
+                      </p>
+                      <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
                         <span
-                          class="relative block size-22 shrink-0 drop-shadow-[0_0_16px_rgb(208_188_255/0.65)] after:pointer-events-none after:absolute after:-inset-1.75 after:animate-orbit after:rounded-full after:border-[1.5px] after:border-dashed after:border-primary-300/65 after:content-[''] motion-reduce:after:animate-none max-[420px]:size-18"
+                          class="text-[11px] font-extrabold tracking-widest text-surface-500 uppercase"
+                          >{{ 'discover.guide.examples' | transloco }}</span
                         >
-                          <img
-                            [src]="infoAvatar()"
-                            alt=""
-                            width="88"
-                            height="88"
-                            class="size-full"
-                          />
-                        </span>
-                      }
-                      <div class="min-w-0">
-                        <b class="block text-lg/tight font-black text-white">{{
-                          'discover.options.categories.' + category | transloco
-                        }}</b>
-                        <p class="mt-1 text-[13.5px]/snug text-surface-300">
-                          {{ infoKey(category, 'text') | transloco }}
-                        </p>
-                        <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+                        @for (
+                          example of examples(infoKey(category, 'example') | transloco);
+                          track $index
+                        ) {
                           <span
-                            class="text-[11px] font-extrabold tracking-widest text-surface-500 uppercase"
-                            >{{ 'discover.guide.examples' | transloco }}</span
+                            class="rounded-full border border-primary-300/40 bg-surface-950/50 px-2.5 py-0.75 text-xs font-bold text-surface-100"
+                            >{{ example }}</span
                           >
-                          @for (
-                            example of examples(infoKey(category, 'example') | transloco);
-                            track example
-                          ) {
-                            <span
-                              class="rounded-full border border-primary-300/40 bg-surface-950/50 px-2.5 py-0.75 text-xs font-bold text-surface-100"
-                              >{{ example }}</span
-                            >
-                          }
-                        </div>
+                        }
                       </div>
                     </div>
-                  }
+                  </div>
                 </div>
               }
             </section>
