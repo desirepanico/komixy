@@ -62,7 +62,24 @@ describe('DesktopSidebar', () => {
     await fixture.whenStable();
 
     expect(profile().getAttribute('aria-current')).toBe('page');
-    expect(profile().classList).toContain('bg-primary-500/25');
+  });
+
+  it('segna con aria-current solo la voce della pagina aperta', async () => {
+    const links = () => Array.from(html.querySelectorAll<HTMLAnchorElement>('nav ul a'));
+    expect(links().every((link) => link.getAttribute('aria-current') === null)).toBe(true);
+
+    const path = (links()[0].getAttribute('href') ?? '').replace(/^\//, '');
+    const router = TestBed.inject(Router);
+    router.resetConfig([{ path, children: [] }]);
+    await router.navigateByUrl(`/${path}`);
+    await fixture.whenStable();
+
+    expect(links()[0].getAttribute('aria-current')).toBe('page');
+    expect(
+      links()
+        .slice(1)
+        .every((link) => link.getAttribute('aria-current') === null),
+    ).toBe(true);
   });
 
   it('chiude e riapre un gruppo, aggiornando aria-expanded', async () => {
