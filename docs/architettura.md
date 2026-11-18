@@ -32,7 +32,7 @@ Ogni feature può avere `pages/`, `components/`, `models/`, `services/`: si crea
 `app.routes.ts` monta le feature sui loro percorsi, sempre con lazy loading (`loadChildren`). Ogni feature ha le sue rotte in `features/<nome>/routes/<nome>.routes.ts` (`DISCOVER_ROUTES`, `RANKING_ROUTES`, `PACK_ROUTES`, `COMICS_ROUTES`, `RELEASES_ROUTES`, `LIBRARY_ROUTES`, `PROFILE_ROUTES`, `AUTH_ROUTES`, `NOT_FOUND_ROUTES`): sono relative alla radice della feature, senza il suo percorso, così la feature non conosce dove è montata e non importa le altre. L'enum `AppRoutes` sta in `shared/models/app-routes.model.ts`, così nessuna area dipende da `app.routes.ts`.
 
 - Tutte le pagine stanno dentro il layout (`core/layout`), tranne il login (`login`), la pagina 404 (`**`) e l'apertura della busta (`discover/pack`, feature `pack`), che è a schermo intero e quindi senza menu: `app.routes.ts` la monta prima del layout con il percorso `discover/pack`.
-- `/` reindirizza a `discover`; `discover/ranking` è montata come figlia di `discover` (le rotte sono della feature `ranking`), così la voce di menu resta attiva.
+- `/` reindirizza a `login` (dopo l'accesso si arriva a Scopri); `discover/ranking` è montata come figlia di `discover` (le rotte sono della feature `ranking`), così la voce di menu resta attiva.
 - `comic` mostra il segnaposto dell'elenco, `comic/:id` il dettaglio del volume (feature `comics`).
 - Il router usa le view transitions e il ripristino dello scroll.
 
@@ -62,7 +62,7 @@ Un provider dice al sistema di dependency injection di Angular come creare o con
 **Funzioni di avvio.** Ogni `provideXxx()` restituisce `EnvironmentProviders` (`makeEnvironmentProviders`) e raccoglie tutto ciò che serve a una funzione dell'app:
 
 - `provideHttp()` registra `HttpClient` con gli interceptor (indirizzo di base, fuso orario, token, sessione scaduta): vedi «Chiamate HTTP: gli interceptor».
-- `provideI18n()` configura Transloco (lingua `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
+- `provideI18n()` configura Transloco (lingue `it` e `en`, predefinita `it`, loader HTTP) e, con `provideAppInitializer`, carica le traduzioni prima che l'app parta, così la prima schermata è già tradotta.
 - `provideNavDirection()` registra con `provideAppInitializer` un ascolto sul router che imposta `data-nav-direction` su `<html>`; il CSS lo usa per la transizione tra pagine.
 - `provideBootSkeleton()` toglie lo skeleton di avvio di `index.html` (`#skeleton`, fuori da `<app-root>`) dopo la prima navigazione finita. Finché c'è, il CSS in `index.html` nasconde `<app-root>`: così, mentre arrivano i chunk lazy, non si vede lo sfondo viola vuoto.
 - `provideCore()` (`core/providers/core/core.provider.ts`) le mette insieme: `app.config.ts` registra solo quella.
@@ -105,3 +105,11 @@ Fuso, token, identificativo dell'ospite e controllo della sessione scaduta valgo
 ## Dati
 
 I dati sono ancora simulati nei servizi (es. `WeeklyRankingService`, con `TODO` per l'API reale).
+
+## Bundle iniziale
+
+`angular.json` dà un avviso a 500 kB per il bundle iniziale (misurato senza compressione: oggi 487 kB, 113 kB trasferiti). Cosa pesa e cosa lo tiene basso:
+
+- Angular (`core`, `router`, `common`), Transloco e il CSS di Tailwind (148 kB) sono il minimo.
+- Le icone di `@ng-icons/material-symbols` sono un modulo solo: se un file che parte con l'app importa anche una sola icona, il bundler porta nel bundle iniziale tutte quelle usate in tutta l'app (33 kB). Per questo `app-toast` è in `@defer (on immediate)` in `app.html` e i file `*.const.ts` non importano icone.
+- Per controllare cosa è nel bundle iniziale: `npx ng build --stats-json` e leggere `dist/komixy/browser-stats.json`.

@@ -134,6 +134,9 @@ export const GUIDE_SLIDE_MS = 450;
 /** Come `GUIDE_SLIDE_MS` sotto i 768px, dove l'ingresso è più lento */
 export const GUIDE_SLIDE_MOBILE_MS = 800;
 
+/** Le due schede di Scopri */
+export const COMIC_KINDS: readonly ComicKind[] = ['manga', 'comic'];
+
 /** Categorie dei manga e generi dei fumetti, nell'ordine in cui compaiono nel pannello */
 export const CATEGORY_OPTIONS: Readonly<Record<ComicKind, readonly ComicCategory[]>> = {
   manga: ['shonen', 'kodomo', 'shojo', 'seinen', 'josei'],

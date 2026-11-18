@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
+  COMIC_KINDS,
   COVER_PLACEHOLDER,
   DISCOVER_ROW_SIZE,
   STARTER_MAX_VOLUMES,
@@ -29,8 +30,6 @@ import {
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 import { DiscoverNavigationService } from '../../services/discover-navigation/discover-navigation.service';
 import { parseDiscoverFilters } from '../../utils/parse-discover-filters/parse-discover-filters';
-
-const KINDS: readonly ComicKind[] = ['manga', 'comic'];
 
 /** Scheda, ricerca e filtri stanno nell'indirizzo (`?tab=comic&cat=noir`): il link si condivide e Indietro li ritrova. */
 @Component({
@@ -69,7 +68,7 @@ export class DiscoverPage {
   /** La barra dei filtri in cima è nello schermo: se esce compare l'isola fissa */
   protected readonly barVisible = signal<boolean>(true);
   protected readonly tabs = computed<DiscoverTab[]>(() =>
-    KINDS.map((kind) => {
+    COMIC_KINDS.map((kind) => {
       const own = this._catalogFilter.itemsOfKind(this._catalog.items(), {
         ...this.filters(),
         kind,

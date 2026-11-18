@@ -14,7 +14,7 @@ export function provideI18n(): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideTransloco({
       config: {
-        availableLangs: ['it'],
+        availableLangs: ['it', 'en'],
         reRenderOnLangChange: false,
         fallbackLang: 'it', // lingua di riserva quando una chiave non esiste nella lingua attiva
         defaultLang: 'it',

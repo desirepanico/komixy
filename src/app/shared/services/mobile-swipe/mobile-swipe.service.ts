@@ -10,8 +10,8 @@ function collectPaths(routes: Routes, prefix = ''): string[] {
   });
 }
 
-@Service()
 /** Cambia pagina con lo swipe, seguendo l'ordine delle pagine principali che esistono davvero. */
+@Service()
 export class MobileSwipeService {
   private readonly _router = inject(Router);
 
@@ -21,7 +21,7 @@ export class MobileSwipeService {
     return MAIN_PAGES.map((page) => `/${page.route}`).filter((path) => existing.has(path));
   })();
 
-  navigate(direction: 'left' | 'right'): void {
+  public navigate(direction: 'left' | 'right'): void {
     const currentUrl = this._router.url.split(/[?#]/)[0];
 
     const currentIndex = this._routes.indexOf(currentUrl);

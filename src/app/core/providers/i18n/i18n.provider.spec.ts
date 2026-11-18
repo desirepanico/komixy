@@ -22,4 +22,18 @@ describe('provideI18n', () => {
     expect(transloco.translate('saluto')).toBe('Ciao');
     http.verify();
   });
+
+  it('ha italiano e inglese tra le lingue disponibili', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideI18n(), provideHttpClient(), provideHttpClientTesting()],
+    });
+    const http = TestBed.inject(HttpTestingController);
+    const init = TestBed.inject(ApplicationInitStatus);
+
+    http.expectOne((r) => r.url.startsWith('./i18n/it.json')).flush({});
+    await init.donePromise;
+
+    expect(TestBed.inject(TranslocoService).getAvailableLangs()).toEqual(['it', 'en']);
+    http.verify();
+  });
 });
