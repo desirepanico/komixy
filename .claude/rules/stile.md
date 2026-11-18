@@ -27,7 +27,10 @@ paths:
 | Animazione o `@keyframes` di un solo componente                        | il `.css` del componente (`styleUrl`, `ViewEncapsulation.None`) |
 | Layout, colori, spaziature                                             | classi Tailwind nel template                                    |
 
+- **Il `.css` di un componente c'è solo se serve**: per `@keyframes` suoi o per regole che Tailwind non esprime. Un componente senza queste cose non ha `styleUrl` né un file vuoto. Tutto il resto segue la tabella: `theme.css`, `animations.css`, `styles.css`.
 - Un'animazione nasce nel componente che la usa e passa in `src/styles/animations.css` solo quando una seconda parte la usa.
+- Una classe globale (come `glass-strong`) è una `@utility` in `theme.css`, così funziona con le varianti (`md:glass-strong`); non si dichiara se nessun template la usa.
+- Il font (`@font-face` in `theme.css`) non ha `font-display`: il file è già precaricato in `index.html`.
 - `@keyframes` di un componente: nome col prefisso del componente (`comic-rank-card-in`), perché con `ViewEncapsulation.None` sono globali. Nel template la classe è `animate-[nome_durata_easing]`, che tiene valide le varianti (`motion-safe:`, `data-in-view:`). Dove serve una classe con nome (`animate.leave`, `[class.x]`) la si definisce nel `.css` del componente e si aggiunge il suo prefisso a `no-unknown-classes` in `eslint.config.js`.
 - Un valore che serve sia al CSS sia a TypeScript ha un solo posto: il CSS; il TypeScript lo legge da lì o lo dichiara come costante con il rimando.
 - `src/styles.css` contiene solo gli `@import` (con `tailwindcss` per primo) e `@custom-variant`: nessuna regola. `theme.css` è in sezioni con l'intestazione `/* ─── Nome ─── */`; la sezione Tema contiene solo il design system, e se ci finisce altro va in un'altra sezione.

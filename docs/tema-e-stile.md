@@ -9,9 +9,9 @@ Il CSS globale sta in tre file:
 - `src/styles.css`: il file d'ingresso, registrato in `angular.json` (`styles`). Contiene solo `@import 'tailwindcss'`, gli import dei due file sotto e la variante `dark` (`@custom-variant`). Nessuna regola.
 - `src/styles/theme.css`: tema e base, in sezioni con l'intestazione `/* ─── Nome ─── */`:
   - **Tema** (`@theme static`): font `Mulish`, breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`), raggi `--radius-*` e colori `primary-*` (alias di `violet-*`), `violet-*`, `surface-*`, `neutral-*`.
-  - **Base**: `@font-face`, colore del testo, alt delle immagini e blocco dello scroll con un dialog aperto.
+  - **Base**: `@font-face` (senza `font-display`, il file è precaricato in `index.html`), colore del testo, alt delle immagini e blocco dello scroll con un dialog aperto.
   - **Sfondo**: lo sfondo viola dell'app.
-  - **Effetto vetro**: `.glass`, `.glass-light`, `.glass-strong`; ogni livello imposta le sue variabili `--glass-*` e una regola sola le usa.
+  - **Effetto vetro**: la utility `glass-strong` (navbar, menu, toast, pannelli), usabile con le varianti (`md:glass-strong`).
   - **Riempimento automatico** del browser e **Utility** (`scrollbar-none`).
 - `src/styles/animations.css`: tutte le animazioni globali.
   - **Animazioni dei componenti** (`@theme`): quelle usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes`.
