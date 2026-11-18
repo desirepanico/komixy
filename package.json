@@ -30,7 +30,7 @@
     "plugins": [
       "prettier-plugin-tailwindcss"
     ],
-    "tailwindStylesheet": "./src/styles.css",
+    "tailwindStylesheet": "./src/styles/index.css",
     "overrides": [
       {
         "files": "*.html",

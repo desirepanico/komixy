@@ -3,7 +3,7 @@
 ## Stack
 
 - Angular 22: componenti standalone, signals, `OnPush` (default), zoneless, control flow nativo
-- Tailwind CSS v4 (tema in `src/theme.css`)
+- Tailwind CSS v4 (tema in `src/styles/theme.css`)
 - Transloco per le traduzioni
 - Icone con `@ng-icons/material-symbols`; i loghi dei marchi (Google, Apple) con `@ng-icons/simple-icons`
 - Test con Vitest (`ng test`)

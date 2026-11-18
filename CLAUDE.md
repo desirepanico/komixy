@@ -23,7 +23,7 @@ Non serve `npm install` a mano: gli script `pre*` lanciano `scripts/ensure-deps.
 - **shared**: ciò che serve a più feature o a `core` (`components`, `directives`, `models`, `services`, `constants`, `utils`). Non dipende da `features` né da `core`. Se due feature condividono qualcosa, va qui.
 - `src/testing/`: finti per i test, non fa parte dell'app.
 
-Fuori da `src/app`: `public/i18n/` (traduzioni), `src/styles.css`, `theme.css`, `motion.css` e `base.css` (CSS globale e tema), `scripts/` (controlli), `.github/workflows/ci.yml`.
+Fuori da `src/app`: `public/i18n/` (traduzioni), `src/styles/` (`index.css`, `theme.css`, `motion.css`, `base.css`: CSS globale e tema), `scripts/` (controlli), `.github/workflows/ci.yml`.
 
 Dipendenze in una direzione: `features` → `shared` e `core`. Import con alias `@core/*`, `@shared/*`, `@features/*` (e `@env/*` per `src/environments`) tra aree, percorsi relativi dentro la stessa area, mai `../../../`. Ogni `.ts` sta in una cartella propria con il suo `*.spec.ts` (eccezioni: `*.model.ts`, `*.const.ts`, `main.ts`, file nella radice di `src/app`).
 

@@ -4,16 +4,18 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 
 ## Dove sta cosa
 
-- `src/styles.css`: entry degli stili globali, registrato in `angular.json`. Importa `tailwindcss` per primo, poi `theme.css`, `motion.css` e `base.css`; dichiara la variante `dark`. Non contiene regole.
-- `src/theme.css`: il design system (`@theme static`): colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, raggi `--radius-*`, font `Mulish` e breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`).
-- `src/motion.css`: le animazioni usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes`.
-- `src/base.css`: CSS globale in sezioni: font (`@font-face`), pagina (colore del testo, alt delle immagini), sfondo viola dell'app, effetto glass, transizione tra le pagine, autofill del browser e la utility `scrollbar-none`.
+Il CSS globale sta nella cartella `src/styles/`:
+
+- `src/styles/index.css`: entry degli stili globali, registrato in `angular.json`. Importa `tailwindcss` per primo, poi `theme.css`, `motion.css` e `base.css`; dichiara la variante `dark`. Non contiene regole.
+- `src/styles/theme.css`: il design system (`@theme static`): colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, raggi `--radius-*`, font `Mulish` e breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`).
+- `src/styles/motion.css`: le animazioni usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes`.
+- `src/styles/base.css`: CSS globale in sezioni: font (`@font-face`), pagina (colore del testo, alt delle immagini), sfondo viola dell'app, effetto glass, transizione tra le pagine, autofill del browser e la utility `scrollbar-none`.
 - Le animazioni di un solo componente stanno nel suo `.css` (es. `comic-rank-card.css`, `discover-guide.css`).
 
 ## Come si organizza
 
 - È CSS globale solo ciò che non appartiene a un componente; per lo stile dei componenti si usa Tailwind nel template (`.claude/rules/stile.md`, che ha anche la tabella «Dove va uno stile»).
-- I file vanno importati in `src/styles.css`: un file nuovo non importato non ha effetto. Un argomento globale nuovo è una sezione di `base.css`, non un file in più.
+- I file vanno importati in `src/styles/index.css`: un file nuovo non importato non ha effetto. Un argomento globale nuovo è una sezione di `base.css`, non un file in più.
 - Le custom property dichiarate nel `.css` di un componente sono prefissate da Angular con un namespace (`--x` diventa `--%NS%x`); senza `cssVarNamespace` è vuoto e il nome non cambia. Una variabile di un componente letta dal tema andrebbe dichiarata come `--global--x`.
 
 ### Transizione tra le pagine (sezione di `base.css`)
@@ -37,4 +39,4 @@ Tema scuro viola. Il testo secondario deve rispettare il contrasto WCAG AA, che 
 
 ## Ordine delle classi
 
-Le classi Tailwind nei template si ordinano con `prettier-plugin-tailwindcss`, che legge il tema da `src/styles.css` (opzione `tailwindStylesheet` nella configurazione Prettier di `package.json`). Come lanciarlo: `docs/sviluppo.md`, sezione «Formattazione».
+Le classi Tailwind nei template si ordinano con `prettier-plugin-tailwindcss`, che legge il tema da `src/styles/index.css` (opzione `tailwindStylesheet` nella configurazione Prettier di `package.json`). Come lanciarlo: `docs/sviluppo.md`, sezione «Formattazione».
