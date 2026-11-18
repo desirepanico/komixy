@@ -7,11 +7,15 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 Il CSS globale sta in tre file:
 
 - `src/styles.css`: il file d'ingresso, registrato in `angular.json` (`styles`). Contiene solo `@import 'tailwindcss'`, gli import dei due file sotto e la variante `dark` (`@custom-variant`). Nessuna regola.
-- `src/styles/theme.css`: tema e base, in sezioni con l'intestazione `/* ─── Nome ─── */`.
-  - **Tema** (`@theme static`): il design system. Colori `primary-*`, `surface-*`, `neutral-*`, `violet-*`, raggi `--radius-*`, font `Mulish` e breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`).
-  - **Font, Pagina, Sfondo**: `@font-face`, colore del testo e alt delle immagini, sfondo viola dell'app.
-  - **Effetto vetro, Transizione tra le pagine, Riempimento automatico, Utility**: glass, view transition, autofill del browser e `scrollbar-none`.
-- `src/styles/animations.css`: le animazioni usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes` (`@theme`).
+- `src/styles/theme.css`: tema e base, in sezioni con l'intestazione `/* ─── Nome ─── */`:
+  - **Tema** (`@theme static`): font `Mulish`, breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`), raggi `--radius-*` e colori `primary-*` (alias di `violet-*`), `violet-*`, `surface-*`, `neutral-*`.
+  - **Base**: `@font-face`, colore del testo, alt delle immagini e blocco dello scroll con un dialog aperto.
+  - **Sfondo**: lo sfondo viola dell'app.
+  - **Effetto vetro**: `.glass`, `.glass-light`, `.glass-strong`; ogni livello imposta le sue variabili `--glass-*` e una regola sola le usa.
+  - **Riempimento automatico** del browser e **Utility** (`scrollbar-none`).
+- `src/styles/animations.css`: tutte le animazioni globali.
+  - **Animazioni dei componenti** (`@theme`): quelle usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes`.
+  - **Transizione tra le pagine**: i `@keyframes` e le regole della view transition.
 
 Le animazioni di un solo componente stanno nel suo `.css` (es. `comic-rank-card.css`, `discover-guide.css`).
 
@@ -21,7 +25,7 @@ Le animazioni di un solo componente stanno nel suo `.css` (es. `comic-rank-card.
 - I file vanno importati in `src/styles.css`: uno nuovo non importato non ha effetto. Un argomento globale nuovo è una sezione di `theme.css`, non un file in più.
 - Le custom property dichiarate nel `.css` di un componente sono prefissate da Angular con un namespace (`--x` diventa `--%NS%x`); senza `cssVarNamespace` è vuoto e il nome non cambia. Una variabile di un componente letta dal tema andrebbe dichiarata come `--global--x`.
 
-### Transizione tra le pagine (sezione di `theme.css`)
+### Transizione tra le pagine (sezione di `animations.css`)
 
 - Anima il passaggio tra le pagine principali con la View Transitions API, solo sotto i 1024px (mobile e tablet). Da 1024px in su la pagina cambia senza animazione.
 - La pagina ha `view-transition-name: page` e la nav in basso `mobile-nav` (resta ferma): sono impostati in `core/layout/layout.html` e `mobile-bottom-nav.html`.

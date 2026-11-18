@@ -19,13 +19,13 @@ paths:
 
 ## Dove va uno stile
 
-| Cosa                                                                                          | Dove                                                            |
-| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Valore del design system (colore, raggio, font, breakpoint)                                   | `src/styles/theme.css`, sezione Tema                            |
-| Animazione usata da due o più componenti                                                      | `src/styles/animations.css`                                     |
-| CSS globale non legato a un componente (font, sfondo, glass, transizione di pagina, autofill) | `src/styles/theme.css`, altre sezioni                           |
-| Animazione o `@keyframes` di un solo componente                                               | il `.css` del componente (`styleUrl`, `ViewEncapsulation.None`) |
-| Layout, colori, spaziature                                                                    | classi Tailwind nel template                                    |
+| Cosa                                                                   | Dove                                                            |
+| ---------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Valore del design system (colore, raggio, font, breakpoint)            | `src/styles/theme.css`, sezione Tema                            |
+| Animazione usata da due o più componenti, transizione tra le pagine    | `src/styles/animations.css`                                     |
+| CSS globale non legato a un componente (font, sfondo, glass, autofill) | `src/styles/theme.css`, altre sezioni                           |
+| Animazione o `@keyframes` di un solo componente                        | il `.css` del componente (`styleUrl`, `ViewEncapsulation.None`) |
+| Layout, colori, spaziature                                             | classi Tailwind nel template                                    |
 
 - Un'animazione nasce nel componente che la usa e passa in `src/styles/animations.css` solo quando una seconda parte la usa.
 - `@keyframes` di un componente: nome col prefisso del componente (`comic-rank-card-in`), perché con `ViewEncapsulation.None` sono globali. Nel template la classe è `animate-[nome_durata_easing]`, che tiene valide le varianti (`motion-safe:`, `data-in-view:`). Dove serve una classe con nome (`animate.leave`, `[class.x]`) la si definisce nel `.css` del componente e si aggiunge il suo prefisso a `no-unknown-classes` in `eslint.config.js`.

@@ -1,26 +1,24 @@
-/* Tema e base: design system (font, breakpoint, palette, raggi) e CSS globale (font, sfondo, glass, transizione di pagina, autofill) */
+/* Tema e base: il design system e il CSS globale che non appartiene a un componente. Le animazioni sono in animations.css */
 
 /* ─── Tema ─── */
 
 @theme static {
+  /* Font e breakpoint */
   --font-sans: 'Mulish', sans-serif;
 
   /* Telefoni stretti: sotto i 360px (es. 320px) le card della classifica si stringono */
   --breakpoint-xs: 22.5rem;
 
-  /* Palette violet */
-  --color-violet-50: #fcfaff;
-  --color-violet-100: #f5f0ff;
-  --color-violet-200: #e7dbff;
-  --color-violet-300: #d0bcff;
-  --color-violet-400: #b89bff;
-  --color-violet-500: #a078ff;
-  --color-violet-600: #8455e0;
-  --color-violet-700: #6730c2;
-  --color-violet-800: #4d109e;
-  --color-violet-900: #340080;
-  --color-violet-950: #1f004d;
+  /* Raggi */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 48px;
 
+  /* Colori: primary è l'alias di violet, surface e neutral sono i grigi del tema scuro */
   --color-primary-50: var(--color-violet-50);
   --color-primary-100: var(--color-violet-100);
   --color-primary-200: var(--color-violet-200);
@@ -32,6 +30,18 @@
   --color-primary-800: var(--color-violet-800);
   --color-primary-900: var(--color-violet-900);
   --color-primary-950: var(--color-violet-950);
+
+  --color-violet-50: #fcfaff;
+  --color-violet-100: #f5f0ff;
+  --color-violet-200: #e7dbff;
+  --color-violet-300: #d0bcff;
+  --color-violet-400: #b89bff;
+  --color-violet-500: #a078ff;
+  --color-violet-600: #8455e0;
+  --color-violet-700: #6730c2;
+  --color-violet-800: #4d109e;
+  --color-violet-900: #340080;
+  --color-violet-950: #1f004d;
 
   --color-surface-50: #fafafc;
   --color-surface-100: #f6f6f8;
@@ -45,16 +55,6 @@
   --color-surface-900: #1b1f2d;
   --color-surface-950: #0e1017;
 
-  /* Border radius */
-  --radius-xs: 4px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
-  --radius-3xl: 48px;
-
-  /* Palette neutral */
   --color-neutral-50: #fcfbfc;
   --color-neutral-100: #f8f7fa;
   --color-neutral-200: #f0edf4;
@@ -68,85 +68,71 @@
   --color-neutral-950: #22192e;
 }
 
-/* ─── Font ─── */
+/* ─── Base ─── */
 
 @font-face {
   font-family: 'Mulish';
   src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
   font-style: normal;
-  font-weight: 200 1000; /* Tutti i pesi disponibili tra 200 e 1000 */
+  font-weight: 200 1000;
   font-display: swap;
 }
 
-/* ─── Pagina ─── */
-
 body {
   font-family: var(--font-sans);
-  /* Colore base del testo (tema scuro): chi non imposta un colore lo eredita da qui, senza finire nero su sfondo scuro */
+  /* Chi non imposta un colore lo eredita da qui: senza, il testo sarebbe nero su sfondo scuro */
   color: var(--color-surface-100);
+  /* Ciò che esce in orizzontale dal contenitore non fa scorrere la pagina */
   overflow-x: clip;
-} /* Nasconde ciò che esce in orizzontale dal contenitore */
+}
 
 /* Con un dialog aperto (pannello dei filtri) la pagina dietro non scorre: scorre solo il dialog */
 html:has(dialog[open]) {
   overflow: hidden;
 }
 
-/* Testo alternativo (alt) mostrato quando l'immagine non si carica: leggibile sul tema scuro */
+/* Alt delle immagini che non caricano: leggibile sul tema scuro */
 img {
   color: var(--color-surface-400);
 }
 
 /* ─── Sfondo ─── */
 
-#komixy {
-  &.dark {
-    /* Sfondo dark Komixy:
-   - Base: surface-950
-   - 1° gradiente: primary-700, bagliore principale a sinistra
-   - 2° gradiente: primary-600, bagliore secondario in alto a destra
-   - 3° gradiente: primary-800, bagliore secondario in basso al centro
-*/
-    background-color: var(--color-surface-950);
-    background-image:
-      radial-gradient(
-        circle at 180px 300px,
-        color-mix(in srgb, var(--color-primary-700) 22%, transparent),
-        color-mix(in srgb, var(--color-primary-700) 8%, transparent) 35%,
-        transparent 65%
-      ),
-      radial-gradient(
-        circle at 80% 20%,
-        color-mix(in srgb, var(--color-primary-600) 12%, transparent),
-        transparent 45%
-      ),
-      radial-gradient(
-        circle at 50% 80%,
-        color-mix(in srgb, var(--color-primary-800) 15%, transparent),
-        transparent 60%
-      );
-    background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scroll */
-  }
+/* Base surface-950 con tre bagliori: primary-700 a sinistra, primary-600 in alto a destra, primary-800 in basso al centro */
+#komixy.dark {
+  background-color: var(--color-surface-950);
+  background-image:
+    radial-gradient(
+      circle at 180px 300px,
+      color-mix(in srgb, var(--color-primary-700) 22%, transparent),
+      color-mix(in srgb, var(--color-primary-700) 8%, transparent) 35%,
+      transparent 65%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      color-mix(in srgb, var(--color-primary-600) 12%, transparent),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      color-mix(in srgb, var(--color-primary-800) 15%, transparent),
+      transparent 60%
+    );
+  /* Lo sfondo resta fermo mentre la pagina scorre */
+  background-attachment: fixed;
 }
 
 /* ─── Effetto vetro ─── */
-/* Effetto vetro: sfocatura dello sfondo con un'ombra e un filo di luce in alto. Tre livelli, dal più leggero al più marcato */
 
-:root {
+/* Sfocatura dello sfondo con un'ombra e un filo di luce in alto. Ogni livello imposta le sue variabili, la regola è una sola.
+   Predefinito: card, pannelli, sezioni */
+.glass {
   --glass-blur: 20px;
   --glass-saturation: 140%;
   --glass-shadow: 55%;
-}
-
-/* Predefinito: card, pannelli, sezioni */
-.glass {
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
-  box-shadow:
-    0 8px 32px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 8%, transparent);
+  --glass-offset: 8px;
+  --glass-spread: 32px;
+  --glass-shine: 8%;
 }
 
 /* Leggero: filtri, toolbar, badge, piccoli pannelli */
@@ -154,14 +140,9 @@ img {
   --glass-blur: 14px;
   --glass-saturation: 130%;
   --glass-shadow: 40%;
-
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
-  box-shadow:
-    0 6px 24px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 6%, transparent);
+  --glass-offset: 6px;
+  --glass-spread: 24px;
+  --glass-shine: 6%;
 }
 
 /* Marcato: navbar, menu, drawer, modal, popup */
@@ -169,14 +150,20 @@ img {
   --glass-blur: 28px;
   --glass-saturation: 150%;
   --glass-shadow: 70%;
+  --glass-offset: 12px;
+  --glass-spread: 40px;
+  --glass-shine: 10%;
+}
 
+.glass,
+.glass-light,
+.glass-strong {
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
   box-shadow:
-    0 12px 40px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
+    0 var(--glass-offset) var(--glass-spread)
+      color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) var(--glass-shine), transparent);
 }
 
 /* Come .glass-strong ma solo da 1024px: sotto la card della login non esiste e il form sta sullo sfondo */
@@ -185,14 +172,15 @@ img {
     --glass-blur: 28px;
     --glass-saturation: 150%;
     --glass-shadow: 70%;
-
+    --glass-offset: 12px;
+    --glass-spread: 40px;
+    --glass-shine: 10%;
     backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-
     box-shadow:
-      0 12px 40px color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
-      inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
+      0 var(--glass-offset) var(--glass-spread)
+        color-mix(in srgb, var(--color-surface-950) var(--glass-shadow), transparent),
+      inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) var(--glass-shine), transparent);
   }
 }
 
@@ -207,82 +195,12 @@ img {
   }
 }
 
-/* ─── Transizione tra le pagine ─── */
-/* Transizione tra le pagine (mobile e tablet): la pagina (`data-page-transition`) ha view-transition-name "page" */
-/* e la nav in basso (`data-nav-transition`) "mobile-nav" (resta ferma), entrambe solo mentre si naviga. */
-/* La direzione arriva da <html data-nav-direction="forward|back">, che imposta */
-/* core/providers/nav-direction/nav-direction.provider.ts. */
-
-@keyframes page-out-left {
-  to {
-    transform: translateX(-24px);
-    opacity: 0;
-  }
-}
-@keyframes page-out-right {
-  to {
-    transform: translateX(24px);
-    opacity: 0;
-  }
-}
-@keyframes page-in-from-right {
-  from {
-    transform: translateX(24px);
-    opacity: 0;
-  }
-}
-@keyframes page-in-from-left {
-  from {
-    transform: translateX(-24px);
-    opacity: 0;
-  }
-}
-
-@media (max-width: 1023px) {
-  /* Il nome c'è solo durante il cambio pagina: acceso sempre toglierebbe il blur ai figli della pagina */
-  html[data-navigating] [data-page-transition] {
-    view-transition-name: page;
-  }
-  /* Idem la barra in basso, che resta ferma: sempre accesa, durante i filtri comparirebbe sopra il pannello */
-  html[data-navigating] [data-nav-transition] {
-    view-transition-name: mobile-nav;
-  }
-
-  /* Lo sfondo cambia subito, anima solo la pagina */
-  ::view-transition-old(root) {
-    display: none;
-  }
-  ::view-transition-new(root) {
-    animation: none;
-  }
-
-  html[data-nav-direction='forward']::view-transition-old(page) {
-    animation: page-out-left 200ms ease both;
-  }
-  html[data-nav-direction='forward']::view-transition-new(page) {
-    animation: page-in-from-right 200ms ease both;
-  }
-  html[data-nav-direction='back']::view-transition-old(page) {
-    animation: page-out-right 200ms ease both;
-  }
-  html[data-nav-direction='back']::view-transition-new(page) {
-    animation: page-in-from-left 200ms ease both;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none !important;
-  }
-}
-
 /* ─── Riempimento automatico del browser ─── */
-/* Riempimento automatico del browser. Scegliendo un suggerimento (email, password) il browser colora il */
-/* campo di azzurro e forza il testo nero, fuori dal tema scuro. Quei colori del browser sono !important e */
-/* non si sovrascrivono: una transition lunghissima lascia il campo com'era, e il colore del testo si fissa a parte. */
 
+/* Scegliendo un suggerimento (email, password) il browser colora il campo di azzurro e forza il testo nero.
+   Quei colori sono !important e non si sovrascrivono: una transition lunghissima lascia il campo com'era,
+   e il colore del testo si fissa a parte.
+   Il nome standard della pseudo-classe è una regola a parte: un browser che non lo conosce scarterebbe tutto il blocco */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -294,7 +212,6 @@ input:-webkit-autofill:active {
     color 600000s 0s;
 }
 
-/* Nome standard della pseudo-classe: regola a parte, perché un browser che non la conosce scarterebbe tutto il blocco */
 input:autofill,
 input:autofill:hover,
 input:autofill:focus,
