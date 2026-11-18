@@ -20,7 +20,7 @@
     "deploy:login": "npx vercel login",
     "deploy:prod": "npx vercel --prod",
     "prelint": "node scripts/ensure-deps.mjs",
-    "lint": "eslint src && node scripts/check-specs.mjs && node scripts/check-class-order.mjs",
+    "lint": "eslint src && node scripts/check-specs.mjs && node scripts/check-class-order.mjs && node scripts/check-skeleton.mjs",
     "preknip": "node scripts/ensure-deps.mjs",
     "knip": "knip"
   },

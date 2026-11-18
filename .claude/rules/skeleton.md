@@ -1,7 +1,7 @@
 ---
 paths:
-  - "src/**/*.html"
-  - "src/index.html"
+  - 'src/**/*.html'
+  - 'src/index.html'
 ---
 
 # Regole sugli skeleton
@@ -13,3 +13,5 @@ paths:
 - È solo decorativo (`aria-hidden`, già nel componente). Se serve annunciare il caricamento, lo fa il contenitore con `aria-busy`.
 - Non serve sulle pagine con contenuto statico o già in memoria (es. i segnaposto con `app-empty-state`): lo skeleton si aggiunge quando compare un caricamento vero.
 - Lo skeleton di avvio in `src/index.html` è HTML puro perché Angular non è ancora partito: usa gli stessi token (`bg-surface-800`) e la stessa animazione; sta fuori da `<app-root>` e lo toglie `provideBootSkeleton()` dopo la prima navigazione; la sua guida è nel commento in quel file.
+- **Ha una variante per ogni tipo di pagina** (`data-variant`, scelta dall'indirizzo dallo script sotto lo skeleton) e due attributi di stato, `data-guest` e `data-pack`, letti dallo storage come fa l'app: le pagine che cambiano con l'ospite o con la busta (Scopri, Classifica, dettaglio) hanno un blocco per ogni caso. Le misure si prendono dai template veri (stesse classi, righe alte quanto il testo con `h-lh`), non a occhio, e si confrontano con la pagina vera a più larghezze.
+- Una pagina nuova, o una che cambia struttura, aggiorna lo skeleton nello stesso commit: blocco in `index.html`, rotta nello script e riga in `scripts/check-skeleton.mjs`, che gira in `npm run lint` e rifiuta una rotta senza skeleton suo.

@@ -2,22 +2,22 @@
 
 ## Comandi
 
-| Comando                       | Cosa fa                                                                                                                                                                                            |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `npm start`                   | Come `npm run start:local`                                                                                                                                                                         |
-| `npm run start:local`         | Dev server (`ng serve --configuration local`) su http://localhost:4300, si ricarica a ogni modifica. Le chiamate vanno al backend sulla propria macchina (`environment.local.ts`)                  |
-| `npm run start:dev`           | Lo stesso dev server, ma le chiamate vanno al backend di dev pubblicato (`environment.development.ts`)                                                                                             |
-| `npm run build`               | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                   |
-| `npm run build:dev`           | Build con l'environment di dev (`ng build --configuration development`)                                                                                                                            |
-| `npm run watch`               | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                        |
-| `npm test`                    | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola) |
-| `npm run lint`                | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) e `scripts/check-class-order.mjs` (ordine dei membri di classe)          |
-| `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare                                                             |
-| `npm run knip`                | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                    |
-| `npm run ng -- <comando>`     | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                 |
-| `npm run deploy:login`        | Accesso a Vercel (una volta sola)                                                                                                                                                                  |
-| `npm run deploy:dev`          | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia                                                                                       |
-| `npm run deploy:prod`         | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico                                                                                                               |
+| Comando                       | Cosa fa                                                                                                                                                                                                                                    |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `npm start`                   | Come `npm run start:local`                                                                                                                                                                                                                 |
+| `npm run start:local`         | Dev server (`ng serve --configuration local`) su http://localhost:4300, si ricarica a ogni modifica. Le chiamate vanno al backend sulla propria macchina (`environment.local.ts`)                                                          |
+| `npm run start:dev`           | Lo stesso dev server, ma le chiamate vanno al backend di dev pubblicato (`environment.development.ts`)                                                                                                                                     |
+| `npm run build`               | Build di produzione (`ng build`) in `dist/komixy/browser`, usata anche da Vercel                                                                                                                                                           |
+| `npm run build:dev`           | Build con l'environment di dev (`ng build --configuration development`)                                                                                                                                                                    |
+| `npm run watch`               | Come `build` ma in modalità sviluppo e rilanciata a ogni modifica: controlla solo che compili, senza server                                                                                                                                |
+| `npm test`                    | Tutti gli `*.spec.ts` di `src` con Vitest (`ng test`). In un terminale interattivo resta in watch; per una sola esecuzione `npm test -- --no-watch` (nelle sessioni di Claude Code è già una sola)                                         |
+| `npm run lint`                | ESLint su `src` (configurazione in `eslint.config.js`) `scripts/check-specs.mjs` (ogni file `.ts` deve avere il suo spec) `scripts/check-class-order.mjs` (ordine dei membri di classe) e `scripts/check-skeleton.mjs` (skeleton di avvio) |
+| `npx prettier --write <file>` | Formatta un file e ordina le classi Tailwind (vedi «Formattazione»); `npx prettier --check "src/**/*.html"` elenca quelli da sistemare                                                                                                     |
+| `npm run knip`                | Cerca file, export e dipendenze inutilizzati (configurazione in `knip.json`, regole in `.claude/rules/knip.md`)                                                                                                                            |
+| `npm run ng -- <comando>`     | CLI di Angular, per esempio `npm run ng -- generate component ...`                                                                                                                                                                         |
+| `npm run deploy:login`        | Accesso a Vercel (una volta sola)                                                                                                                                                                                                          |
+| `npm run deploy:dev`          | Preview su Vercel (`npx vercel`): un indirizzo di prova con le modifiche locali, il sito pubblico non cambia                                                                                                                               |
+| `npm run deploy:prod`         | Pubblicazione in produzione su Vercel (`npx vercel --prod`): cambia il sito pubblico                                                                                                                                                       |
 
 Gli script `prestart`, `prebuild`, `pretest`, `prelint` e `preknip` non si lanciano a mano: npm esegue automaticamente lo script con prefisso `pre` prima di quello con lo stesso nome. Tutti eseguono `scripts/ensure-deps.mjs` (sezione seguente).
 
@@ -93,9 +93,11 @@ I file di `src/testing/` non fanno parte dell'app: `tsconfig.app.json` li esclud
 - Disattivate di proposito: `component-selector` (i componenti shared usano selector ad attributo, es. `button[appButton]`), `prefer-ngsrc` (le copertine arrivano da URL esterni) e `no-host-metadata-property`.
 - Ignorati: `dist/`, `.angular/`, `node_modules/`.
 
-Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test) e `scripts/check-class-order.mjs`.
+Dopo ESLint, `npm run lint` esegue `scripts/check-specs.mjs` (vedi sopra, sezione Test), `scripts/check-class-order.mjs` e `scripts/check-skeleton.mjs`.
 
 `scripts/check-class-order.mjs` controlla che in ogni classe di `src/app` (spec esclusi) i membri stiano nell'ordine `inject()`, altre proprietà, query, `input`/`output`, signal, `constructor`, metodi; con `--fix` li riordina (poi `npx prettier --write`). Usa il compilatore TypeScript per leggere le classi. In più ESLint rifiuta le proprietà non `readonly`, `subscribe()` fuori da `core/providers` e la pipe `async` nei template (`no-restricted-syntax`, regole in `.claude/rules/signals.md`).
+
+`scripts/check-skeleton.mjs` controlla lo skeleton di avvio di `src/index.html` (regole in `.claude/rules/skeleton.md`): esegue lo script che sceglie la variante con indirizzi e storage finti e verifica che ogni indirizzo dell'app abbia la sua variante, che ogni variante abbia il suo blocco nell'HTML (e viceversa), che ospite (`data-guest`) e busta (`data-pack`) seguano lo storage, settimana ISO compresa, e che ogni percorso di primo livello di `AppRoutes` abbia uno skeleton suo. Una pagina nuova si aggiunge sia a `index.html` sia alla tabella `VARIANTS` del controllo.
 
 Quando una regola di `.claude/rules/angular.md` cambia, si aggiorna `eslint.config.js` nello stesso commit.
 

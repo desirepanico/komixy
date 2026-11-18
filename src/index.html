@@ -31,78 +31,271 @@
       Angular lo cancellerebbe subito e, mentre arrivano i chunk lazy, resterebbe solo lo sfondo viola.
       Finché c'è, <app-root> è nascosto dal CSS nell'<head>.
       È solo decorativo (aria-hidden) e usa le stesse misure della pagina vera (sidebar w-64, nav mobile h-14)
-      per non far "saltare" il layout. La variante si sceglie con data-variant sul div #skeleton.
+      per non far "saltare" il layout. La variante si sceglie con data-variant sul div #skeleton, dall'indirizzo:
+        discover (default) · ranking · detail · placeholder   con il menu (Scopri, Classifica, dettaglio fumetto, Profilo/Libreria/Uscite/elenco fumetti)
+        login · authtext · pack · notfound                    senza menu (accesso, Registrati e Password dimenticata, busta a schermo intero, 404)
+      Altri due attributi, letti dallo storage dallo script: data-guest (ospite o iscritto) e data-pack (busta della
+      settimana sigillata o aperta). Cambiano le pagine con l'avviso per gli ospiti e la busta: Scopri, Classifica, dettaglio.
       Per adattarlo a una pagina nuova:
-        1. aggiungi un blocco con `group-data-[variant=<nome>]/skel:...` (come "list" e "placeholder" qui sotto);
-        2. aggiungi la rotta nella mappa dello script sotto lo skeleton.
-      "list" è la variante di default (Scopri, Classifica) e vale anche per le rotte non in mappa; "placeholder" è per Profilo, Libreria e Uscite.
+        1. aggiungi un blocco con `group-data-[variant=<nome>]/skel:...` (le misure vengono dai template veri);
+        2. aggiungi la rotta nella funzione dello script sotto lo skeleton;
+        3. se la pagina non ha il menu, aggiungi la variante a quelle nascoste nel primo blocco.
     -->
-    <div id="skeleton" class="group/skel" data-variant="list" aria-hidden="true">
-      <!-- Pagine con menu (tutte tranne login): sidebar da 1024px in su, barra in basso sotto -->
+    <div
+      id="skeleton"
+      class="group/skel"
+      data-variant="discover"
+      data-guest="true"
+      data-pack="sealed"
+      aria-hidden="true"
+    >
+      <!-- Pagine con menu: sidebar da 1024px in su, barra in basso sotto. Senza menu: accesso, auth di testo, busta, 404 -->
       <div
-        class="min-h-dvh animate-pulse group-data-[variant=login]/skel:hidden motion-reduce:animate-none lg:flex lg:gap-1 lg:py-2 lg:pl-2"
+        class="min-h-dvh animate-pulse group-data-[variant=authtext]/skel:hidden group-data-[variant=login]/skel:hidden group-data-[variant=notfound]/skel:hidden group-data-[variant=pack]/skel:hidden motion-reduce:animate-none lg:flex lg:gap-1 lg:py-2 lg:pl-2"
       >
         <div
           class="sticky top-4 hidden h-[calc(100dvh-2rem)] w-64 shrink-0 rounded-xl border border-surface-50/10 bg-surface-950/70 lg:block"
         ></div>
 
         <div class="min-w-0 flex-1 space-y-8 px-3 py-2 md:p-2">
-          <!-- list: titolo, classifica (5 card su telefono, 6 su due colonne da tablet) con il bottone «vedi tutte» e una fila di card -->
-          <div class="hidden space-y-8 group-data-[variant=list]/skel:block">
-            <div class="space-y-4">
-              <div class="flex items-end justify-between gap-3">
-                <div class="space-y-2">
-                  <div class="h-6 w-56 rounded-md bg-surface-800"></div>
-                  <div class="h-4 w-40 rounded-md bg-surface-800/70"></div>
+          <!-- discover: titolo, schede Manga/Fumetti, ricerca con filtri, busta della settimana e file di card -->
+          <div class="hidden space-y-8 group-data-[variant=discover]/skel:block">
+            <div class="space-y-4 max-lg:pt-4">
+              <div>
+                <div class="flex h-4 items-center">
+                  <div class="h-3 w-52 rounded-md bg-surface-800/70"></div>
                 </div>
+                <div class="flex h-8 items-center">
+                  <div class="h-6 w-64 max-w-full rounded-md bg-surface-800"></div>
+                </div>
+              </div>
+              <div class="flex gap-3">
                 <div
-                  class="h-11 w-56 shrink-0 rounded-full border border-primary-400/20 bg-surface-900 max-md:hidden"
+                  class="h-18 min-w-0 flex-1 rounded-2xl border border-primary-300/20 bg-surface-900/40 sm:h-20.5 sm:max-w-64"
+                ></div>
+                <div
+                  class="h-18 min-w-0 flex-1 rounded-2xl border border-primary-300/20 bg-surface-900/40 sm:h-20.5 sm:max-w-64"
                 ></div>
               </div>
-              <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+              <div class="flex items-center gap-2">
                 <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                  class="h-11 min-w-0 flex-1 rounded-full border border-primary-400/20 bg-surface-900 sm:max-w-170"
                 ></div>
                 <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                  class="h-11 w-12 shrink-0 rounded-full border border-primary-400/20 bg-surface-900 sm:w-22.5"
                 ></div>
-                <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
-                ></div>
-                <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
-                ></div>
-                <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
-                ></div>
-                <div
-                  class="h-31.5 rounded-xl border border-primary-400/20 bg-surface-900 max-md:hidden md:h-34.5"
-                ></div>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <div class="flex h-7 items-center">
+                  <div class="h-5 w-48 rounded-md bg-surface-800"></div>
+                </div>
+                <div class="flex h-5 items-center">
+                  <div class="h-3.5 w-60 max-w-full rounded-md bg-surface-800/70"></div>
+                </div>
+              </div>
+              <!-- Come la pagina: striscia della busta (sigillata o aperta) con l'avviso per gli ospiti e, da 59rem con la busta aperta, il pannello Top accanto -->
+              <div class="@container">
+                <div class="flex flex-col gap-4 @min-[59rem]:flex-row">
+                  <div
+                    class="flex min-w-0 flex-1 flex-col group-data-[pack=opened]/skel:@min-[59rem]:max-w-3xl group-data-[pack=opened]/skel:@min-[59rem]:min-w-lg"
+                  >
+                    <div
+                      class="hidden h-65 rounded-3xl border border-primary-400/30 bg-surface-900 group-data-[guest=true]/skel:group-data-[pack=sealed]/skel:block min-[420px]:h-60 min-[560px]:h-58"
+                    ></div>
+                    <div
+                      class="hidden h-79.25 rounded-3xl border border-primary-400/30 bg-surface-900 group-data-[guest=false]/skel:group-data-[pack=sealed]/skel:block min-[380px]:h-73.75 min-[420px]:h-69 min-[560px]:h-58"
+                    ></div>
+                    <div
+                      class="hidden h-36.75 rounded-2xl border border-primary-400/20 bg-surface-900 group-data-[pack=opened]/skel:block md:h-43.75 @min-[59rem]:h-auto @min-[59rem]:flex-1"
+                    ></div>
+                    <div
+                      class="mt-2.5 h-14.25 rounded-xl border border-primary-400/20 bg-surface-900 group-data-[guest=false]/skel:hidden min-[500px]:h-9.25"
+                    ></div>
+                  </div>
+                  <div
+                    class="hidden h-56.5 rounded-2xl border border-primary-400/20 bg-surface-900 @min-[59rem]:min-w-104 @min-[59rem]:flex-1 group-data-[pack=opened]/skel:@min-[59rem]:block"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-8">
+              <div>
+                <div>
+                  <div class="flex h-7 items-center">
+                    <div class="h-5 w-44 rounded-md bg-surface-800"></div>
+                  </div>
+                  <div class="flex h-5 items-center">
+                    <div class="h-3.5 w-64 max-w-full rounded-md bg-surface-800/70"></div>
+                  </div>
+                </div>
+                <div class="mt-5 flex gap-3 overflow-hidden">
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div class="flex h-7 items-center">
+                    <div class="h-5 w-52 rounded-md bg-surface-800"></div>
+                  </div>
+                  <div class="flex h-5 items-center">
+                    <div class="h-3.5 w-56 max-w-full rounded-md bg-surface-800/70"></div>
+                  </div>
+                </div>
+                <div class="mt-5 flex gap-3 overflow-hidden">
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                  <div
+                    class="h-73 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:h-78.25 lg:w-44"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ranking: freccia indietro con titolo; sigillata il riquadro con la busta, aperta il selettore di vista, l'avviso per gli ospiti e le 10 card -->
+          <div class="hidden space-y-6 group-data-[variant=ranking]/skel:block">
+            <div class="flex flex-wrap items-start gap-3">
+              <div
+                class="size-11 shrink-0 rounded-full border border-primary-400/20 bg-surface-900"
+              ></div>
+              <div class="min-w-48 flex-1">
+                <div class="flex h-7 items-center">
+                  <div class="h-5 w-48 rounded-md bg-surface-800"></div>
+                </div>
+                <div class="flex h-5 items-center">
+                  <div class="h-3.5 w-32 rounded-md bg-surface-800/70"></div>
+                </div>
               </div>
               <div
-                class="h-11 rounded-full border border-primary-400/20 bg-surface-900 md:hidden"
+                class="ml-auto hidden h-9.5 w-32.5 shrink-0 rounded-full border border-primary-400/20 bg-surface-900 group-data-[pack=opened]/skel:block"
               ></div>
             </div>
-            <div class="space-y-4">
-              <div class="space-y-2">
-                <div class="h-6 w-48 rounded-md bg-surface-800"></div>
-                <div class="h-4 w-64 max-w-full rounded-md bg-surface-800/70"></div>
+            <div
+              class="hidden flex-col items-center gap-3 rounded-3xl border border-primary-400/30 bg-surface-900 p-5 group-data-[pack=sealed]/skel:flex"
+            >
+              <div class="h-42.25 w-24 rounded-md bg-surface-800"></div>
+              <div
+                class="flex h-14 w-full flex-col items-center justify-center gap-2 min-[400px]:h-7 min-[400px]:gap-0"
+              >
+                <div class="h-5 w-4/5 max-w-xs rounded-md bg-surface-800"></div>
+                <div class="h-5 w-2/3 max-w-xs rounded-md bg-surface-800 min-[400px]:hidden"></div>
               </div>
-              <div class="flex gap-2 overflow-hidden">
+              <div
+                class="flex h-9.75 w-full flex-col items-center justify-center gap-2 min-[560px]:h-5 min-[560px]:gap-0"
+              >
+                <div class="h-3.5 w-full max-w-lg rounded-md bg-surface-800/70"></div>
                 <div
-                  class="h-64.5 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"
+                  class="h-3.5 w-1/2 max-w-lg rounded-md bg-surface-800/70 min-[560px]:hidden"
+                ></div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="h-11 w-29 rounded-full bg-surface-800"></div>
+                <div class="h-11 w-36.5 rounded-full bg-surface-800/70"></div>
+              </div>
+            </div>
+            <div class="hidden space-y-6 group-data-[pack=opened]/skel:block">
+              <div
+                class="h-14.25 rounded-xl border border-primary-400/20 bg-surface-900 group-data-[guest=false]/skel:hidden min-[500px]:h-9.25"
+              ></div>
+              <div class="grid grid-cols-1 gap-2 md:grid-flow-col md:grid-cols-2 md:grid-rows-5">
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
                 ></div>
                 <div
-                  class="h-64.5 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
                 ></div>
                 <div
-                  class="h-64.5 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
                 ></div>
                 <div
-                  class="h-64.5 w-40 shrink-0 rounded-xl border border-primary-400/20 bg-surface-900 lg:w-44"
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
+                ></div>
+                <div
+                  class="h-32 rounded-xl border border-primary-400/20 bg-surface-900 md:h-34.5"
                 ></div>
               </div>
             </div>
+          </div>
+
+          <!-- detail: freccia indietro con titolo, copertina e dati del volume, due bottoni e l'avviso per gli ospiti -->
+          <div class="hidden space-y-6 group-data-[variant=detail]/skel:block">
+            <div class="flex h-11 items-center gap-3">
+              <div
+                class="size-11 shrink-0 rounded-full border border-primary-400/20 bg-surface-900"
+              ></div>
+              <div class="h-5 w-20 rounded-md bg-surface-800"></div>
+            </div>
+            <div class="flex gap-4">
+              <div class="aspect-2/3 h-50 shrink-0 rounded-xl bg-surface-800"></div>
+              <div class="flex min-w-0 flex-1 flex-col items-start gap-2">
+                <div class="flex h-6.25 items-center">
+                  <div class="h-5 w-36 rounded-md bg-surface-800"></div>
+                </div>
+                <div class="flex h-5 items-center">
+                  <div class="h-3.5 w-24 rounded-md bg-surface-800/70"></div>
+                </div>
+                <div class="flex h-6 items-center">
+                  <div class="h-4 w-24 rounded-md bg-surface-800/70"></div>
+                </div>
+                <div class="h-6 w-16 rounded-full bg-surface-800"></div>
+              </div>
+            </div>
+            <div class="grid gap-2.5">
+              <div
+                class="h-11 rounded-full border border-dashed border-primary-400/20 bg-surface-900"
+              ></div>
+              <div class="h-11 rounded-full border border-primary-400/20 bg-surface-900"></div>
+            </div>
+            <div
+              class="h-14.25 rounded-xl border border-primary-400/20 bg-surface-900 group-data-[guest=false]/skel:hidden max-[380px]:h-19 sm:h-9.25"
+            ></div>
           </div>
 
           <!-- placeholder: titolo e riquadro centrato con cerchio, titolo e descrizione (Profilo, Libreria, Uscite) -->
@@ -157,95 +350,257 @@
         </div>
       </div>
 
-      <!-- login: sotto 1024px una colonna centrata senza card (marchio, titolo, invito, copertine, campi); da 1024px pannello di marca a sinistra e card a destra, senza menu -->
+      <!-- authtext (Registrati, Password dimenticata): titolo, testo e link, centrati -->
       <div
-        class="hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden p-6 group-data-[variant=login]/skel:flex motion-reduce:animate-none sm:gap-6 sm:py-8 lg:grid-cols-2 lg:justify-normal lg:gap-0 lg:p-0 group-data-[variant=login]/skel:lg:grid"
+        class="hidden min-h-dvh animate-pulse items-center justify-center px-6 py-10 group-data-[variant=authtext]/skel:flex motion-reduce:animate-none"
       >
-        <!-- Stesse misure di login-volumes: marchio, titolo e sottotitolo (solo da 1024px), invito e copertine -->
-        <div
-          class="flex flex-col justify-center max-lg:contents lg:gap-[3dvh] lg:px-12 lg:py-[6dvh] xl:px-20"
-        >
-          <div class="flex items-center justify-center gap-3 lg:justify-start">
-            <div class="size-10 rounded-xl bg-surface-800"></div>
-            <div class="h-6 w-16.5 rounded-md bg-surface-800"></div>
+        <div class="flex w-full max-w-md flex-col items-start gap-3">
+          <div class="flex h-8 items-center">
+            <div class="h-6 w-28 rounded-md bg-surface-800"></div>
           </div>
-          <div class="max-w-xl space-y-3 text-center">
-            <div
-              class="flex h-12.5 flex-col items-center justify-center gap-2 sm:h-18.75 sm:gap-3 lg:h-[min(11.25rem,22.5dvh)] lg:items-stretch lg:gap-[min(0.75rem,1.5dvh)]"
-            >
-              <div
-                class="h-5 w-full rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"
-              ></div>
-              <div
-                class="h-5 w-4/5 rounded-md bg-surface-800 sm:h-9 lg:h-[min(2.25rem,4.5dvh)]"
-              ></div>
-              <div
-                class="hidden h-9 w-2/3 rounded-md bg-surface-800 lg:block lg:h-[min(2.25rem,4.5dvh)]"
-              ></div>
-            </div>
-            <div class="hidden h-14 flex-col justify-center gap-2 lg:flex">
-              <div class="h-4 rounded-md bg-surface-800/70"></div>
-              <div class="h-4 w-2/3 rounded-md bg-surface-800/70"></div>
-            </div>
+          <div class="flex h-5 items-center">
+            <div class="h-3.5 w-52 rounded-md bg-surface-800/70"></div>
           </div>
-          <div class="h-5 w-63 max-w-full rounded-md bg-surface-800/70 lg:self-start"></div>
-          <div
-            class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 sm:h-[min(18rem,28dvh)] sm:-space-x-8 lg:h-[min(18rem,32dvh)] lg:justify-start lg:-space-x-3"
-          >
-            <div
-              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
-            ></div>
-            <div
-              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
-            ></div>
-            <div
-              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
-            ></div>
-            <div
-              class="aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg bg-surface-800 sm:w-[min(11rem,17dvh)] lg:w-[min(9rem,15dvh)]"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Stesse misure di login-page e login-form: titolo, sottotitolo (solo da 1024px), due campi e bottone -->
-        <div class="max-lg:contents lg:flex lg:items-center lg:justify-center lg:px-8 lg:py-10">
-          <div
-            class="max-lg:contents lg:w-full lg:max-w-md lg:rounded-3xl lg:border lg:border-primary-400/20 lg:bg-surface-900/65 lg:p-10"
-          >
-            <div class="hidden h-9 items-center lg:flex">
-              <div class="h-6 w-24 rounded-md bg-surface-800 lg:h-7"></div>
-            </div>
-            <div class="mt-3 mb-8 hidden h-6 items-center lg:flex">
-              <div class="h-4 w-full rounded-md bg-surface-800/70"></div>
-            </div>
-            <div class="flex w-full max-w-sm flex-col gap-5 lg:max-w-none">
-              <div class="flex flex-col gap-2">
-                <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
-                <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
-              </div>
-              <div class="flex flex-col gap-2">
-                <div class="h-5 w-20 rounded-md bg-surface-800/70"></div>
-                <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
-              </div>
-              <div class="mt-2 h-11 rounded-full bg-surface-800"></div>
-            </div>
+          <div class="mt-3 flex h-5 items-center">
+            <div class="h-3.5 w-30 rounded-md bg-surface-800/70"></div>
           </div>
         </div>
       </div>
+
+      <!-- notfound (404): riquadro centrato con icona, codice, titolo, testo e bottone, senza menu -->
+      <div
+        class="hidden min-h-[calc(100dvh-2rem)] animate-pulse items-center justify-center px-4 py-10 group-data-[variant=notfound]/skel:flex motion-reduce:animate-none sm:px-8"
+      >
+        <div
+          class="w-full max-w-2xl rounded-3xl border border-primary-400/20 bg-surface-900/65 px-5 py-10 sm:px-12 sm:py-14"
+        >
+          <div
+            class="mx-auto mb-6 size-16 rounded-2xl border border-primary-400/25 bg-surface-800 sm:size-20"
+          ></div>
+          <div class="flex h-18 items-center justify-center sm:h-32">
+            <div class="h-12 w-40 rounded-md bg-surface-800 sm:h-20 sm:w-72"></div>
+          </div>
+          <div class="mt-5 flex h-8 items-center justify-center sm:h-9">
+            <div class="h-6 w-56 rounded-md bg-surface-800 sm:h-7 sm:w-72"></div>
+          </div>
+          <div
+            class="mx-auto mt-4 flex h-21 max-w-md flex-col items-center justify-center gap-2 min-[400px]:h-14 sm:h-12"
+          >
+            <div class="h-3.5 w-full rounded-md bg-surface-800/70"></div>
+            <div class="h-3.5 w-5/6 rounded-md bg-surface-800/70"></div>
+            <div class="h-3.5 w-2/3 rounded-md bg-surface-800/70 min-[400px]:hidden"></div>
+          </div>
+          <div class="mt-8 flex justify-center">
+            <div class="h-11 w-full rounded-full bg-surface-800 sm:w-52.75"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- pack (busta a schermo intero): intestazione, busta al centro e, in basso, suggerimento e bottoni -->
+      <div
+        class="hidden h-dvh animate-pulse flex-col overflow-hidden p-4 group-data-[variant=pack]/skel:flex motion-reduce:animate-none sm:pt-5 sm:pb-6"
+      >
+        <div class="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
+          <div class="flex min-w-0 basis-full items-start gap-3 sm:flex-1 sm:basis-0">
+            <div
+              class="size-11 shrink-0 rounded-full border border-primary-400/20 bg-surface-900"
+            ></div>
+            <div class="min-w-0">
+              <div class="flex h-5 items-center sm:h-7">
+                <div class="h-4 w-44 rounded-md bg-surface-800"></div>
+              </div>
+              <div class="flex h-4 items-center sm:h-5">
+                <div class="h-3 w-52 rounded-md bg-surface-800/70"></div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-auto h-6 w-31.25 shrink-0 rounded-full bg-surface-800"></div>
+        </div>
+        <div class="flex min-h-0 flex-1 flex-col items-center justify-center">
+          <div
+            class="aspect-480/847 h-[min(19.4rem,45dvh)] rounded-2xl bg-surface-800 md:h-[min(26rem,50dvh)]"
+          ></div>
+        </div>
+        <div class="flex shrink-0 flex-col items-center gap-3 pt-3 sm:gap-4 sm:pt-6">
+          <div class="h-10 w-full max-w-xs rounded-md bg-surface-800/70"></div>
+          <div class="h-11 w-40 rounded-full bg-surface-800"></div>
+          <div class="h-11 w-24 rounded-full bg-surface-800/70"></div>
+        </div>
+      </div>
+
+      <!--
+        login: stesse classi di login-page, login-volumes e login-form (variabili --cw/--logo/--s1..3 comprese), con righe alte quanto il testo (h-lh).
+        Sotto i 768px una colonna senza card (marchio, titolo, invito, copertine, pausa, campi, social, registrati); da 768px due colonne: marchio a sinistra, card a destra.
+      -->
+      <main
+        class="relative hidden h-dvh animate-pulse flex-col items-center justify-start gap-4 overflow-hidden p-6 group-data-[variant=login]/skel:flex motion-reduce:animate-none max-sm:gap-(--s1) max-sm:pt-(--s3) max-sm:pb-[calc(var(--s1)*0.5)] max-sm:[--cw:max(3rem,min(7rem,calc(19.6dvh-70.7px),calc(3rem+0.45*(100dvh-40rem)),calc((100vw-2rem)/4)))] max-sm:[--logo:clamp(1.75rem,calc(9.06dvh-32.4px),3.25rem)] max-sm:[--s1:clamp(0.5rem,calc(3.02dvh-12.1px),1rem)] max-sm:[--s2:clamp(0.75rem,calc(4.53dvh-18.2px),1.5rem)] max-sm:[--s3:clamp(1rem,calc(6.04dvh-24.3px),2rem)] sm:gap-6 sm:py-8 md:grid-cols-2 md:items-stretch md:justify-normal md:gap-0 md:overflow-y-hidden md:p-0 group-data-[variant=login]/skel:md:grid"
+      >
+        <!-- Colonna del marchio (login-volumes): sotto i 768px i suoi elementi stanno in fila nel main -->
+        <div
+          class="relative flex h-full flex-col justify-center max-md:contents max-md:*:shrink-0 md:gap-[3dvh] md:px-6 md:py-[6dvh] lg:px-12 xl:px-20 md:[@media(max-height:40rem)]:py-2"
+        >
+          <div class="flex items-center justify-center gap-3 md:justify-start">
+            <div class="aspect-193/56 h-14 rounded-lg bg-surface-800 max-sm:h-(--logo)"></div>
+          </div>
+          <div
+            class="w-full max-w-xl space-y-3 text-center max-sm:space-y-0 md:text-left 2xl:max-w-3xl"
+          >
+            <div
+              class="w-full text-xl/tight font-bold max-sm:text-[clamp(0.9375rem,calc(1.132dvh+0.466rem),1.125rem)] sm:text-3xl lg:text-[min(3rem,6dvh)]"
+            >
+              <div class="flex h-lh items-center">
+                <div class="h-[0.7lh] w-full rounded-md bg-surface-800"></div>
+              </div>
+              <div class="flex h-lh items-center">
+                <div class="h-[0.7lh] w-4/5 rounded-md bg-surface-800 max-md:mx-auto"></div>
+              </div>
+              <div class="hidden h-lh items-center md:flex">
+                <div class="h-[0.7lh] w-2/3 rounded-md bg-surface-800"></div>
+              </div>
+            </div>
+            <div class="hidden text-base/7 md:[@media(min-height:40rem)]:block">
+              <div class="flex h-lh items-center">
+                <div class="h-[0.6lh] w-full rounded-md bg-surface-800/70"></div>
+              </div>
+              <div class="flex h-lh items-center">
+                <div class="h-[0.6lh] w-2/3 rounded-md bg-surface-800/70"></div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="h-[1.7em] w-[17.3em] max-w-full rounded-md bg-surface-800/70 text-sm max-sm:mt-(--s1) max-sm:text-[clamp(0.75rem,calc(1.132dvh+0.2156rem),0.875rem)] md:self-start"
+          ></div>
+          <div
+            class="flex h-[min(12rem,23dvh)] items-end justify-center -space-x-6 max-sm:mt-[calc(var(--s1)+0.5rem)] max-sm:h-[calc(1.5*var(--cw)+1.25rem)] max-sm:-space-x-2 sm:h-[min(18rem,28dvh)] sm:-space-x-8 md:h-[min(12.5rem,max(26dvh,9rem))] md:justify-start md:-space-x-5 lg:h-[min(18rem,32dvh)]"
+          >
+            <div
+              class="relative mb-4 aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg border border-primary-300/20 bg-surface-800 max-sm:w-(--cw) sm:w-[min(11rem,17dvh)] md:w-[max(4rem,min(6rem,15dvh))] lg:mb-10 lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="relative mb-0 aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg border border-primary-300/20 bg-surface-800 max-sm:w-(--cw) sm:w-[min(11rem,17dvh)] md:w-[max(4rem,min(6rem,15dvh))] lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="relative mb-5 aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg border border-primary-300/20 bg-surface-800 max-sm:w-(--cw) sm:w-[min(11rem,17dvh)] md:w-[max(4rem,min(6rem,15dvh))] lg:mb-14 lg:w-[min(9rem,15dvh)]"
+            ></div>
+            <div
+              class="relative mb-1 aspect-2/3 w-[min(5.5rem,12.5dvh)] rounded-lg border border-primary-300/20 bg-surface-800 max-sm:w-(--cw) sm:w-[min(11rem,17dvh)] md:w-[max(4rem,min(6rem,15dvh))] lg:mb-4 lg:w-[min(9rem,15dvh)]"
+            ></div>
+          </div>
+          <div
+            class="h-7 w-36 self-center rounded-lg bg-surface-800/70 max-sm:h-6 md:self-start"
+          ></div>
+        </div>
+
+        <!-- Colonna del form (login-page e login-form): sotto i 768px senza card, da 768px dentro la card -->
+        <div
+          class="max-md:contents max-md:*:shrink-0 md:flex md:justify-center md:px-6 md:py-10 lg:px-8 md:[@media(max-height:50rem)]:py-4"
+        >
+          <div
+            class="max-md:contents max-md:*:shrink-0 md:my-auto md:w-full md:max-w-md md:rounded-3xl md:border md:border-primary-400/20 md:bg-surface-900/65 md:px-6 md:py-10 lg:px-10 2xl:max-w-lg"
+          >
+            <div class="hidden h-8 items-center md:flex lg:h-9">
+              <div class="h-6 w-24 rounded-md bg-surface-800 lg:h-7"></div>
+            </div>
+            <div class="mt-3 mb-8 hidden text-sm/6 md:block">
+              <div class="flex h-lh items-center">
+                <div class="h-3.5 w-full rounded-md bg-surface-800/70"></div>
+              </div>
+              <div class="flex h-lh items-center lg:hidden">
+                <div class="h-3.5 w-2/3 rounded-md bg-surface-800/70"></div>
+              </div>
+            </div>
+            <div class="block w-full max-w-sm md:max-w-none">
+              <div class="flex flex-col gap-5 max-sm:gap-(--s2)">
+                <div class="flex flex-col gap-2">
+                  <div class="h-5 w-16 rounded-md bg-surface-800/70"></div>
+                  <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <div class="h-5 w-20 rounded-md bg-surface-800/70"></div>
+                  <div class="h-10.5 rounded-xl bg-surface-800/70"></div>
+                </div>
+                <div
+                  class="-mt-2 h-5 w-40 self-end rounded-md bg-surface-800/70 max-sm:-mt-1"
+                ></div>
+                <div class="mt-2 h-11 w-full rounded-full bg-surface-800"></div>
+              </div>
+              <div class="my-6 flex h-5 items-center gap-3 max-sm:my-(--s2) max-sm:h-4">
+                <span class="h-px flex-1 bg-surface-700"></span>
+                <span class="h-3 w-24 rounded-md bg-surface-800/70"></span>
+                <span class="h-px flex-1 bg-surface-700"></span>
+              </div>
+              <div class="flex justify-center gap-4">
+                <div class="size-11 rounded-full border border-primary-400/20 bg-surface-900"></div>
+                <div class="size-11 rounded-full border border-primary-400/20 bg-surface-900"></div>
+              </div>
+              <div class="mt-4 hidden flex-col items-center md:flex">
+                <div class="h-11 w-40 rounded-full bg-surface-800/70"></div>
+                <div class="mt-2 flex h-8 w-full flex-col items-center justify-center gap-1 lg:h-4">
+                  <div class="h-3 w-full rounded-md bg-surface-800/70"></div>
+                  <div class="h-3 w-2/3 rounded-md bg-surface-800/70 lg:hidden"></div>
+                </div>
+              </div>
+              <div class="mt-6 flex h-5 items-center justify-center max-sm:mt-(--s1)">
+                <div class="h-3.5 w-48 rounded-md bg-surface-800/70"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
     <script>
-      // Sceglie lo skeleton dal primo segmento dell'indirizzo (rotte non in mappa = "list"; la radice porta alla login)
+      // Sceglie lo skeleton dall'indirizzo (come le rotte di app.routes.ts: la radice porta alla login, il resto che non esiste è la 404)
       (function () {
-        var variants = {
-          '': 'login',
-          login: 'login',
-          profile: 'placeholder',
-          library: 'placeholder',
-          releases: 'placeholder',
-        };
         var skeleton = document.getElementById('skeleton');
-        var variant = variants[location.pathname.split('/')[1]];
-        if (skeleton && variant) skeleton.setAttribute('data-variant', variant);
+        if (!skeleton) return;
+        var parts = location.pathname.split('/').filter(Boolean);
+        var first = parts[0];
+        var second = parts[1];
+        var variant;
+        if (!first || first === 'login') {
+          variant = second === 'register' || second === 'forgot-password' ? 'authtext' : 'login';
+        } else if (first === 'discover') {
+          variant = second === 'ranking' ? 'ranking' : second === 'pack' ? 'pack' : 'discover';
+        } else if (first === 'comic') {
+          variant = second ? 'detail' : 'placeholder';
+        } else if (first === 'profile' || first === 'library' || first === 'releases') {
+          variant = 'placeholder';
+        } else {
+          variant = 'notfound';
+        }
+        skeleton.setAttribute('data-variant', variant);
+
+        // Ospite e busta della settimana, come li legge l'app dallo storage: SessionService (komixy.session) e
+        // WeeklyPackService (komixy.weeklyPack, settimana ISO nel fuso Europe/Rome, come iso-week.ts)
+        var guest = true;
+        var opened = false;
+        try {
+          guest = localStorage.getItem('komixy.session') !== 'true';
+          var saved = JSON.parse(localStorage.getItem('komixy.weeklyPack') || 'null');
+          var parts = new Intl.DateTimeFormat('en-US', {
+            timeZone: 'Europe/Rome',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+          }).formatToParts(new Date());
+          var part = function (type) {
+            return Number(
+              parts.filter(function (p) {
+                return p.type === type;
+              })[0].value,
+            );
+          };
+          var day = new Date(Date.UTC(part('year'), part('month') - 1, part('day')));
+          var thursday = new Date(day.getTime());
+          thursday.setUTCDate(thursday.getUTCDate() + 4 - (day.getUTCDay() || 7));
+          var year = thursday.getUTCFullYear();
+          var week = Math.ceil(((thursday.getTime() - Date.UTC(year, 0, 1)) / 86400000 + 1) / 7);
+          opened = !!saved && saved.week === year + '-W' + week;
+        } catch (e) {
+          // Storage o Intl non disponibili: ospite con la busta da aprire, come parte l'app
+        }
+        skeleton.setAttribute('data-guest', String(guest));
+        skeleton.setAttribute('data-pack', opened ? 'opened' : 'sealed');
       })();
     </script>
   </body>
