@@ -6,12 +6,12 @@ Le regole operative sono in `.claude/rules/stile.md`. Qui il contesto.
 
 Il CSS globale sta in tre file:
 
-- `src/styles.css`: il file d'ingresso, registrato in `angular.json` (`styles`). Contiene solo `@import 'tailwindcss'`, gli import dei tre file sotto e la variante `dark` (`@custom-variant`). Nessuna regola.
+- `src/styles.css`: il file d'ingresso, registrato in `angular.json` (`styles`). Contiene solo `@import 'tailwindcss'`, e gli import dei quattro file sotto. Nessuna regola. L'app è solo scura: non c'è una classe o una variante `dark`.
 - `src/styles/theme.css`: tema e base, in quest'ordine:
   - **Tema** (`@theme static`): font `Mulish`, breakpoint `xs` (360px: sotto questa soglia, sui telefoni più stretti, le card della classifica si stringono; si usa come `xs:`), raggi `--radius-*` e colori `primary-*` (alias di `violet-*`), `violet-*`, `surface-*`, `neutral-*`.
   - **Font**: `@font-face`, senza `font-display` (il file è precaricato in `index.html`).
-  - **Base**: in `@layer base`, così le classi Tailwind li sovrascrivono. `:root` ha font e colore del testo; poi lo scroll bloccato con un dialog aperto, il colore dell'alt delle immagini e lo sfondo viola dell'app.
-  - **Utility**: `glass-strong` (navbar, menu, toast, pannelli, usabile con le varianti: `md:glass-strong`) e `scrollbar-none`.
+  - **Base**: in `@layer base`, così le classi Tailwind li sovrascrivono. `:root` ha font, colore del testo e lo sfondo viola dell'app (tre bagliori su `surface-950`); poi `overflow-x: clip` sul `body` (non `hidden`, per non rompere la sidebar `sticky`), lo scroll bloccato con un dialog aperto e il colore dell'alt delle immagini.
+- `src/styles/utilities.css`: le classi globali, scritte come `@utility`: `glass-strong` (navbar, menu, toast, pannelli, usabile con le varianti: `md:glass-strong`) e `scrollbar-none`.
 - `src/styles/animations.css`: tutte le animazioni globali.
 - `src/styles/overrides.css`: le correzioni ai browser, fuori dai layer di Tailwind di proposito perché devono battere le utility. Oggi c'è il riempimento automatico (autofill): il browser colora i campi suggeriti e non si può sovrascrivere, quindi una `transition` lunghissima li lascia com'erano. Si scrive con `:is()`, che ignora il nome della pseudo-classe che un browser non conosce.
   - **Animazioni dei componenti** (`@theme`): quelle usate da due o più componenti (`card-sheen`, `foil`, `bump`), con i loro `@keyframes`.
@@ -22,7 +22,7 @@ Le animazioni di un solo componente stanno nel suo `.css` (es. `comic-rank-card.
 ## Come si organizza
 
 - È CSS globale solo ciò che non appartiene a un componente; per lo stile dei componenti si usa Tailwind nel template (`.claude/rules/stile.md`, che ha anche la tabella «Dove va uno stile»).
-- I file vanno importati in `src/styles.css`: uno nuovo non importato non ha effetto. Un argomento globale nuovo è una sezione di `theme.css`, non un file in più.
+- I file vanno importati in `src/styles.css`: uno nuovo non importato non ha effetto. Una classe globale nuova va in `utilities.css`, un argomento globale nuovo in una sezione di `theme.css`, non in un file in più.
 - Le custom property dichiarate nel `.css` di un componente sono prefissate da Angular con un namespace (`--x` diventa `--%NS%x`); senza `cssVarNamespace` è vuoto e il nome non cambia. Una variabile di un componente letta dal tema andrebbe dichiarata come `--global--x`.
 
 ### Transizione tra le pagine (sezione di `animations.css`)

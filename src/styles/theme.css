@@ -1,7 +1,7 @@
 /*
   Tema dell'app: il design system (font, breakpoint, raggi, colori) da cui Tailwind ricava le classi,
-  e il CSS globale che non appartiene a un componente.
-  Le animazioni globali sono in animations.css; quelle di un solo componente nel suo .css.
+  e gli stili di base dell'app (font, colore del testo, sfondo).
+  Le animazioni globali sono in animations.css, le classi globali in utilities.css.
 */
 
 @theme static {
@@ -80,23 +80,6 @@
   :root {
     font-family: var(--font-sans);
     color: var(--color-surface-100);
-  }
-
-  body {
-    overflow-x: clip;
-  }
-
-  /* Con un dialog aperto la pagina dietro non scorre */
-  html:has(dialog[open]) {
-    overflow: hidden;
-  }
-
-  img {
-    color: var(--color-surface-400);
-  }
-
-  /* Sfondo viola dell'app */
-  #komixy.dark {
     background-color: var(--color-surface-950);
     background-image:
       radial-gradient(
@@ -117,24 +100,18 @@
       );
     background-attachment: fixed;
   }
-}
 
-@utility glass-strong {
-  backdrop-filter: blur(28px) saturate(150%);
-  -webkit-backdrop-filter: blur(28px) saturate(150%);
-  box-shadow:
-    0 12px 40px color-mix(in srgb, var(--color-surface-950) 70%, transparent),
-    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
-
-  @supports not (backdrop-filter: blur(1px)) {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  /* clip e non hidden: la sidebar sticky continua a funzionare */
+  body {
+    overflow-x: clip;
   }
-}
 
-@utility scrollbar-none {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+  /* Con un dialog aperto la pagina dietro non scorre */
+  :root:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  img {
+    color: var(--color-surface-400);
   }
 }

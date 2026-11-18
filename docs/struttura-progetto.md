@@ -27,8 +27,8 @@ src/
 │       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
 ├── environments/              impostazioni per ambiente (apiUrl): environment.ts (produzione), environment.development.ts (dev), environment.local.ts (locale); si sostituiscono in `angular.json`, alias `@env/*`
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
-├── styles.css                 entry del CSS globale (registrato in angular.json): solo gli @import e la variante `dark`
-├── styles/                    theme.css (tema @theme e base: font, sfondo, glass), animations.css (animazioni usate da 2+ componenti e transizione tra le pagine), overrides.css (correzioni ai browser, es. autofill)
+├── styles.css                 entry del CSS globale (registrato in angular.json): solo gli @import
+├── styles/                    theme.css (tema @theme e base: font, sfondo), utilities.css (classi globali @utility, es. glass-strong), animations.css (animazioni usate da 2+ componenti e transizione tra le pagine), overrides.css (correzioni ai browser, es. autofill)
 public/
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
 └── fonts/

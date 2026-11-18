@@ -1,0 +1,24 @@
+/*
+  Classi globali usate da più componenti. Sono utility di Tailwind, quindi funzionano anche con le varianti
+  (`md:glass-strong`). Una classe che nessun template usa non si dichiara.
+*/
+
+@utility glass-strong {
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow:
+    0 12px 40px color-mix(in srgb, var(--color-surface-950) 70%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--color-surface-50) 10%, transparent);
+
+  @supports not (backdrop-filter: blur(1px)) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

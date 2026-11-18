@@ -172,12 +172,11 @@ module.exports = defineConfig(
       // L'ordine e l'a capo delle classi li gestisce Prettier (prettier-plugin-tailwindcss)
       'better-tailwindcss/enforce-consistent-class-order': 'off',
       'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
-      // Classi che il plugin non trova nel tema: `dark` è la
-      // variante dichiarata con @custom-variant in styles.css e `discover-filters-panel-*` e `discover-guide-*` sono
+      // Classi che il plugin non trova nel tema: `discover-filters-panel-*` e `discover-guide-*` sono
       // nei .css dei componenti (le usano `animate.leave` e `[class.x]`, che non accettano classi con le parentesi)
       'better-tailwindcss/no-unknown-classes': [
         'warn',
-        { ignore: ['^dark$', '^discover-(filters-panel|guide)(-|$)'] },
+        { ignore: ['^discover-(filters-panel|guide)(-|$)'] },
       ],
       '@angular-eslint/template/prefer-control-flow': 'error',
       'no-restricted-syntax': [
