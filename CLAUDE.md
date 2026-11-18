@@ -74,6 +74,7 @@ Skill disponibili (descritte in `docs/claude-code.md`):
 
 - `shared-component`: crea o modifica un componente in `shared/components`.
 - `use-shared`: usa un componente shared per nome (`/use-shared <nome> [dove]`).
+- `check-shared-usage`: controlla che i template usino i componenti shared senza ricrearli (`/check-shared-usage [percorso] [--fix]`).
 - `api-service`: crea o modifica un servizio che chiama il backend (`/api-service <metodo> <endpoint> [feature]`), con modelli, errori e spec.
 
 Hook, permessi e subagent `reviewer` sono descritti in `docs/claude-code.md`. Se la tua modifica cambia struttura, rotte, funzionalità, hook, comandi, strumenti o dipendenze, aggiorna nello stesso commit il file di `docs/` corrispondente (pagine in `funzionalita.md`, comandi in `sviluppo.md`) e togli ciò che non esiste più.

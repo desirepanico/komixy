@@ -58,6 +58,7 @@ Gli hook sono controlli eseguiti sempre dalla harness; le rules sono indicazioni
 
 - `shared-component`: crea o modifica un componente in `shared/components`. Si usa anche prima di duplicare markup: se esiste già lo si importa, se sta per comparire una seconda volta lo si estrae e lo si importa in entrambi i punti.
 - `use-shared`: usa un componente di `shared/components` indicandone il nome (`/use-shared <nome> [dove]`). Se il nome manca o è impreciso propone i componenti esistenti (elenco generato dalle cartelle). Legge selector e input dal codice del componente, lo importa e lo inserisce senza duplicare markup.
+- `check-shared-usage`: controlla che template di feature e `core` usino i componenti di `shared/components` invece di ricrearli (`/check-shared-usage [percorso] [--fix]`). Cerca `<button>`/`<a>` senza `appButton`, pillole, avvisi, stati vuoti, skeleton, liste orizzontali e campi a mano, lascia i casi che il componente non copre e con `--fix` applica le sostituzioni come `use-shared`; chiude con un riepilogo e le verifiche.
 - `api-service`: crea o modifica un servizio che chiama il backend (`/api-service <metodo> <endpoint> [feature]`). Segue `chiamate-api.md`: modelli `Request`/`Response`/`Filters`, metodo del servizio con `HttpClient`, chiamata dal componente con `firstValueFrom()` e `ApiErrorService`, codici di errore e traduzioni, spec e verifica.
 
 ## Subagent (`.claude/agents/`)
