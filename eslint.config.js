@@ -167,13 +167,13 @@ module.exports = defineConfig(
       betterTailwindcss.configs['recommended-warn'],
     ],
     // Con Tailwind v4 il tema sta in questo file CSS: senza, il plugin non conosce primary-*, surface-*, xs:
-    settings: { 'better-tailwindcss': { entryPoint: 'src/styles/index.css' } },
+    settings: { 'better-tailwindcss': { entryPoint: 'src/styles.css' } },
     rules: {
       // L'ordine e l'a capo delle classi li gestisce Prettier (prettier-plugin-tailwindcss)
       'better-tailwindcss/enforce-consistent-class-order': 'off',
       'better-tailwindcss/enforce-consistent-line-wrapping': 'off',
-      // Classi che il plugin non trova nel tema: `glass-*` sono in src/styles/base.css, `dark` è la
-      // variante dichiarata con @custom-variant in index.css e `discover-filters-panel-*` e `discover-guide-*` sono
+      // Classi che il plugin non trova nel tema: `glass-*` sono in src/styles/theme.css, `dark` è la
+      // variante dichiarata con @custom-variant in styles.css e `discover-filters-panel-*` e `discover-guide-*` sono
       // nei .css dei componenti (le usano `animate.leave` e `[class.x]`, che non accettano classi con le parentesi)
       'better-tailwindcss/no-unknown-classes': [
         'warn',

@@ -1,4 +1,5 @@
 /* Animazioni usate da due o più componenti: quelle di un componente solo stanno nel suo .css */
+
 @theme {
   /* Un riflesso lucido attraversa la carta (edizione speciale) o la scelta */
   --animate-card-sheen: card-sheen 4.5s ease-in-out infinite;

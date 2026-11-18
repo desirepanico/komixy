@@ -8,7 +8,7 @@
   },
 
   "css.lint.unknownAtRules": "ignore",
-  "tailwindCSS.experimental.configFile": "src/styles/index.css",
+  "tailwindCSS.experimental.configFile": "src/styles.css",
 
   "i18n-ally.sourceLanguage": "it",
   "i18n-ally.displayLanguage": "it",
