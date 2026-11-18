@@ -27,11 +27,12 @@ src/
 │       └── utils/             funzioni pure usate da più aree, una per cartella con il suo spec (edition-severity/, pack-card-radius/)
 ├── environments/              impostazioni per ambiente (apiUrl): environment.ts (produzione), environment.development.ts (dev), environment.local.ts (locale); si sostituiscono in `angular.json`, alias `@env/*`
 ├── testing/                   codice di supporto ai test, non fa parte dell'app: test-providers/ (Transloco finto), test-setup/ (polyfill di jsdom)
-├── tailwind.css               tema Tailwind (@theme): colori primary/surface/neutral/violet, radius
-├── styles.css                 entry degli stili globali
+├── styles.css                 entry degli stili globali: solo gli @import e la variante `dark`
+├── theme.css                  design system (@theme): font, breakpoint, colori primary/surface/neutral/violet, radius
+├── motion.css                 animazioni usate da due o più componenti (@theme + @keyframes)
+├── base.css                   CSS globale: font, sfondo, effetto glass, transizione di pagina, autofill
 public/
 ├── i18n/                      traduzioni Transloco (it.json, en.json)
-├── theme/                     theme.css (token, sfondo), glass.css (effetto glass), page-transition.css (transizione tra pagine)
 └── fonts/
 scripts/
 ├── check-specs.mjs            controllo degli spec mancanti, lanciato da `npm run lint`
