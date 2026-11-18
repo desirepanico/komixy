@@ -4,7 +4,7 @@
   Le animazioni globali sono in animations.css, le classi globali in utilities.css.
 */
 
-@theme static {
+@theme {
   --font-sans: 'Mulish', sans-serif;
 
   /* Telefoni stretti (sotto i 360px): si usa come `xs:` */
