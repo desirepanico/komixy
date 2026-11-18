@@ -29,6 +29,7 @@ paths:
 
 - **Il `.css` di un componente c'è solo se serve**: per `@keyframes` suoi o per regole che Tailwind non esprime. Un componente senza queste cose non ha `styleUrl` né un file vuoto. Tutto il resto segue la tabella: `theme.css`, `animations.css`, `styles.css`.
 - Un'animazione nasce nel componente che la usa e passa in `src/styles/animations.css` solo quando una seconda parte la usa.
+- Gli stili di partenza su elementi e `:root` stanno in `@layer base` di `theme.css`; ciò che deve battere le utility di Tailwind (come il riempimento automatico) resta fuori dal layer.
 - Una classe globale (come `glass-strong`) è una `@utility` in `theme.css`, così funziona con le varianti (`md:glass-strong`); non si dichiara se nessun template la usa.
 - Il font (`@font-face` in `theme.css`) non ha `font-display`: il file è già precaricato in `index.html`.
 - `@keyframes` di un componente: nome col prefisso del componente (`comic-rank-card-in`), perché con `ViewEncapsulation.None` sono globali. Nel template la classe è `animate-[nome_durata_easing]`, che tiene valide le varianti (`motion-safe:`, `data-in-view:`). Dove serve una classe con nome (`animate.leave`, `[class.x]`) la si definisce nel `.css` del componente e si aggiunge il suo prefisso a `no-unknown-classes` in `eslint.config.js`.
