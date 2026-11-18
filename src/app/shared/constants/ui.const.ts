@@ -1,34 +1,4 @@
 import {
-  matBookOutline,
-  matCalendarMonthOutline,
-  matCoffeeOutline,
-  matFavoriteOutline,
-  matFilterNoneOutline,
-  matFlagOutline,
-  matGridViewOutline,
-  matHelpOutline,
-  matHistoryEduOutline,
-  matInfoOutline,
-  matLayersOutline,
-  matLibraryBooksOutline,
-  matManageSearchOutline,
-  matMenuBookOutline,
-  matMoodOutline,
-  matAutoStoriesOutline,
-  matPersonSearchOutline,
-  matPublicOutline,
-  matRocketLaunchOutline,
-  matScheduleOutline,
-  matSellOutline,
-  matSentimentSatisfiedOutline,
-  matShieldOutline,
-  matSkullOutline,
-  matSmartToyOutline,
-  matSportsBaseballOutline,
-  matStarsOutline,
-  matSwordsOutline,
-} from '@ng-icons/material-symbols/outline';
-import {
   ComicCategory,
   ComicFormat,
   ComicKind,
@@ -356,37 +326,7 @@ export const DISCOVER_AVATAR_BADGE: Readonly<Record<string, string>> = {
 export const DISCOVER_ADULT_AGE = 18;
 
 // ─── Icone dei filtri di Scopri ──────────────────────────────────────────────
-
-export const DISCOVER_ICON_SET = {
-  matBookOutline,
-  matCalendarMonthOutline,
-  matCoffeeOutline,
-  matFavoriteOutline,
-  matFilterNoneOutline,
-  matFlagOutline,
-  matGridViewOutline,
-  matHelpOutline,
-  matHistoryEduOutline,
-  matInfoOutline,
-  matLayersOutline,
-  matLibraryBooksOutline,
-  matManageSearchOutline,
-  matMenuBookOutline,
-  matMoodOutline,
-  matAutoStoriesOutline,
-  matPersonSearchOutline,
-  matPublicOutline,
-  matRocketLaunchOutline,
-  matScheduleOutline,
-  matSellOutline,
-  matSentimentSatisfiedOutline,
-  matShieldOutline,
-  matSkullOutline,
-  matSmartToyOutline,
-  matSportsBaseballOutline,
-  matStarsOutline,
-  matSwordsOutline,
-};
+// Solo i nomi: le icone vere le registra `discoverIcons()` (features/discover/utils)
 
 /** L'icona di ogni gruppo di filtri, nell'intestazione del pannello e nei chip */
 export const DISCOVER_FACET_ICONS: Readonly<Record<string, string>> = {

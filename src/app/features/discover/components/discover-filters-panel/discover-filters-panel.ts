@@ -22,7 +22,6 @@ import {
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
-  DISCOVER_ICON_SET,
   DISCOVER_OPTION_ICONS,
   ERA_OPTIONS,
   FORMAT_OPTIONS,
@@ -38,6 +37,7 @@ import { AgeVerificationService } from '../../services/age-verification/age-veri
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
 import { DiscoverGuide } from '../discover-guide/discover-guide';
+import { discoverIcons } from '../../utils/discover-icons/discover-icons';
 
 type FacetStyle = 'pills' | 'cards' | 'grid';
 
@@ -59,7 +59,7 @@ interface FacetView {
   imports: [Button, DiscoverGuide, NgIcon, RestartAnimation, TranslocoPipe],
   providers: [
     provideIcons({
-      ...DISCOVER_ICON_SET,
+      ...discoverIcons(),
       matCloseOutline,
       matVisibilityOffOutline,
       matVisibilityOutline,

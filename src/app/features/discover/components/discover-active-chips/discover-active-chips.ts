@@ -2,8 +2,9 @@ import { Component, computed, input, output } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { matCloseOutline } from '@ng-icons/material-symbols/outline';
-import { DISCOVER_FACET_ICONS, DISCOVER_ICON_SET } from '@shared/constants/ui.const';
+import { DISCOVER_FACET_ICONS } from '@shared/constants/ui.const';
 import { DiscoverFilters, FacetKey } from '../../models/discover-filters.model';
+import { discoverIcons } from '../../utils/discover-icons/discover-icons';
 
 interface Chip {
   facet: FacetKey;
@@ -18,7 +19,7 @@ interface Chip {
 @Component({
   selector: 'app-discover-active-chips',
   imports: [NgIcon, TranslocoPipe],
-  providers: [provideIcons({ ...DISCOVER_ICON_SET, matCloseOutline })],
+  providers: [provideIcons({ ...discoverIcons(), matCloseOutline })],
   templateUrl: './discover-active-chips.html',
   host: { class: 'block' },
 })

@@ -1,2 +1,5 @@
 <router-outlet></router-outlet>
-<app-toast />
+<!-- Il toast serve solo dopo un'azione: caricarlo a parte tiene fuori dal bundle iniziale le icone -->
+@defer (on immediate) {
+  <app-toast />
+}

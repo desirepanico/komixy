@@ -24,7 +24,6 @@ import { InputText } from '@shared/components/input/input-text/input-text';
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
-  DISCOVER_ICON_SET,
   DISCOVER_OPTION_ICONS,
   FORMAT_OPTIONS,
   GUIDE_SLIDE_MOBILE_MS,
@@ -40,6 +39,7 @@ import { AgeVerificationService } from '../../services/age-verification/age-veri
 import { CatalogFilterService } from '../../services/catalog-filter/catalog-filter.service';
 import { CategoryAvatarService } from '../../services/category-avatar/category-avatar.service';
 import { FormatIllustration } from '../format-illustration/format-illustration';
+import { discoverIcons } from '../../utils/discover-icons/discover-icons';
 
 interface GuideCard {
   value: string;
@@ -72,7 +72,7 @@ interface GuideSection {
     Button,
   ],
   providers: [
-    provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
+    provideIcons({ ...discoverIcons(), matArrowBackOutline, matCheckOutline, matWarningOutline }),
   ],
   templateUrl: './discover-guide.html',
   styleUrl: './discover-guide.css',
