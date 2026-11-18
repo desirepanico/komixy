@@ -16,7 +16,7 @@ Un commento spiega il **perché**, mai il cosa: se leggendo il codice si capisce
 - **Commento nel corpo del codice** solo per: un workaround, un vincolo del browser o di una libreria, una scelta di accessibilità (es. perché un link è stirato su tutta la card), un numero che sembra strano (soglie, moltiplicatori), un `catch` vuoto (perché si ignora l'errore).
 - **`TODO`** con formato fisso `// TODO(api): cosa manca`, così si ritrovano tutti con una ricerca. Dice cosa sostituire e con cosa (es. `PUT/DELETE /me/bookmarks/:comicId`), non «da sistemare».
 - **Template**: solo se la struttura non si capisce (accessibilità, ordine di Tab, perché un elemento è nascosto o duplicato, come reagisce il layout a un breakpoint).
-- **CSS globale** (`src/styles/theme.css`, `animations.css`): una riga di intestazione per file e per sezione che dice a cosa serve, e un commento sulle regole non ovvie (quando usare quale variante, perché un fallback).
+- **CSS globale** (`src/styles/theme.css`, `animations.css`, `overrides.css`): un commento d'intestazione per file che dice a cosa serve (niente titoli di sezione) e un commento sulle regole non ovvie (quando usare quale variante, perché un fallback).
 - **File di costanti** (`*.const.ts`): intestazione di sezione `// ─── Nome ───` e un commento solo sul valore che non si capisce dal nome (l'unità sta già nel nome: `_MS`, `_PX`).
 
 ## Dove no

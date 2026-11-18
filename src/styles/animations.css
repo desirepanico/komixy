@@ -1,7 +1,5 @@
 /* Tutte le animazioni globali: quelle usate da due o più componenti e la transizione tra le pagine. Quelle di un componente solo stanno nel suo .css */
 
-/* ─── Animazioni dei componenti ─── */
-
 @theme {
   /* Un riflesso lucido attraversa la carta (edizione speciale) o la scelta */
   --animate-card-sheen: card-sheen 4.5s ease-in-out infinite;
@@ -36,8 +34,6 @@
     }
   }
 }
-
-/* ─── Transizione tra le pagine ─── */
 
 /* Mobile e tablet: la pagina (`data-page-transition`) ha view-transition-name "page" e la nav in basso
    (`data-nav-transition`) "mobile-nav" (resta ferma), entrambe solo mentre si naviga.

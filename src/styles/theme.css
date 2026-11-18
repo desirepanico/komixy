@@ -4,8 +4,6 @@
   Le animazioni globali sono in animations.css; quelle di un solo componente nel suo .css.
 */
 
-/* ─── Tema ─── */
-
 @theme static {
   --font-sans: 'Mulish', sans-serif;
 
@@ -70,16 +68,12 @@
   --color-neutral-950: #22192e;
 }
 
-/* ─── Font ─── */
-
 @font-face {
   font-family: 'Mulish';
   src: url('/fonts/mulish-latin-wght-normal.woff2') format('woff2');
   font-style: normal;
   font-weight: 200 1000;
 }
-
-/* ─── Base ─── */
 
 /* Stili di partenza: stanno nel layer base, così le classi Tailwind li sovrascrivono */
 @layer base {
@@ -101,6 +95,7 @@
     color: var(--color-surface-400);
   }
 
+  /* Sfondo viola dell'app */
   #komixy.dark {
     background-color: var(--color-surface-950);
     background-image:
@@ -124,8 +119,6 @@
   }
 }
 
-/* ─── Effetto vetro ─── */
-
 @utility glass-strong {
   backdrop-filter: blur(28px) saturate(150%);
   -webkit-backdrop-filter: blur(28px) saturate(150%);
@@ -138,35 +131,6 @@
     -webkit-backdrop-filter: none;
   }
 }
-
-/* ─── Riempimento automatico del browser ─── */
-
-/* Fuori dal layer base di proposito: la transition lunga deve battere le classi `transition-*`.
-   Il browser colora i campi suggeriti e non si può sovrascrivere; la transition lo tiene com'era.
-   Il nome standard è una regola a parte: un browser che non lo conosce scarterebbe tutto il blocco */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-text-fill-color: var(--color-surface-50);
-  caret-color: var(--color-surface-50);
-  transition:
-    background-color 600000s 0s,
-    color 600000s 0s;
-}
-
-input:autofill,
-input:autofill:hover,
-input:autofill:focus,
-input:autofill:active {
-  -webkit-text-fill-color: var(--color-surface-50);
-  caret-color: var(--color-surface-50);
-  transition:
-    background-color 600000s 0s,
-    color 600000s 0s;
-}
-
-/* ─── Utility ─── */
 
 @utility scrollbar-none {
   scrollbar-width: none;

@@ -1,0 +1,14 @@
+/*
+  Correzioni ai browser, fuori dai layer di Tailwind di proposito: devono battere le classi di utility.
+*/
+
+/* Il browser colora i campi suggeriti e non si può sovrascrivere: la transition lunga lo tiene com'era.
+   `:is()` ignora il nome che il browser non conosce, mentre in una lista normale scarterebbe tutta la regola */
+input:is(:-webkit-autofill, :autofill),
+input:is(:-webkit-autofill, :autofill):is(:hover, :focus, :active) {
+  -webkit-text-fill-color: var(--color-surface-50);
+  caret-color: var(--color-surface-50);
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
