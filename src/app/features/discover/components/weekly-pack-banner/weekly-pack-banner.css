@@ -1,0 +1,5 @@
+@keyframes weekly-pack-banner-float {
+  50% {
+    transform: translateY(-6px) rotate(1.5deg);
+  }
+}

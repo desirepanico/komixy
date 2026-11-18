@@ -8,6 +8,7 @@ import {
   output,
   signal,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -35,6 +36,8 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
     provideIcons({ matCloseOutline, matHistoryOutline, matPersonOutline, matSearchOutline }),
   ],
   templateUrl: './discover-search.html',
+  styleUrl: './discover-search.css',
+  encapsulation: ViewEncapsulation.None,
   host: {
     '[class]': 'compact() ? "block min-w-0 flex-1" : "relative block min-w-0 flex-1 md:max-w-170"',
     '(document:keydown)': 'onShortcut($event)',

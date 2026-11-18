@@ -1,3 +1,6 @@
+@let twinkle =
+  'group-hover/tile:animate-[format-illustration-twinkle_900ms_ease-in-out_infinite] group-focus-visible/tile:animate-[format-illustration-twinkle_900ms_ease-in-out_infinite] group-aria-pressed/tile:animate-[format-illustration-twinkle_900ms_ease-in-out_infinite]';
+
 <svg viewBox="0 0 140 84" class="block size-full" focusable="false">
   <!-- Stelline di fondo: quelle in alto brillano al passaggio -->
   <circle
@@ -5,14 +8,16 @@
     cy="16"
     r="1.6"
     fill="#fff"
-    class="group-hover/tile:animate-tile-twinkle group-focus-visible/tile:animate-tile-twinkle group-aria-pressed/tile:animate-tile-twinkle motion-reduce:animate-none"
+    class="motion-reduce:animate-none"
+    [class]="twinkle"
   />
   <circle
     cx="126"
     cy="22"
     r="1.4"
     fill="#fff"
-    class="[animation-delay:0.3s] group-hover/tile:animate-tile-twinkle group-focus-visible/tile:animate-tile-twinkle group-aria-pressed/tile:animate-tile-twinkle motion-reduce:animate-none"
+    class="[animation-delay:0.3s] motion-reduce:animate-none"
+    [class]="twinkle"
   />
   <circle cx="120" cy="68" r="1.2" fill="#e7dbff" />
   <circle cx="20" cy="64" r="1.2" fill="#e7dbff" />

@@ -159,7 +159,7 @@ export const MESSAGE_STYLES: Readonly<
 
 // ─── Filtri di Scopri ────────────────────────────────────────────────────────
 
-/** Durata dell'ingresso della guida (`--guide-slide-ms` in tailwind.css): lo scorrimento parte dopo */
+/** Durata dell'ingresso della guida (`--guide-slide-ms` in discover-filters-panel.css): lo scorrimento parte dopo */
 export const GUIDE_SLIDE_MS = 450;
 /** Come `GUIDE_SLIDE_MS` sotto i 768px, dove l'ingresso è più lento */
 export const GUIDE_SLIDE_MOBILE_MS = 800;

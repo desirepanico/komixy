@@ -71,7 +71,7 @@
   }
   @if (open()) {
     <div
-      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-drop-in flex-col overflow-hidden rounded-[18px] border border-primary-400/30 bg-surface-900/55 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] backdrop-blur-[28px] backdrop-saturate-150 motion-reduce:animate-none md:max-h-100"
+      class="absolute inset-x-0 top-full z-40 mt-2 flex max-h-65 animate-[discover-search-drop-in_160ms_ease-out] flex-col overflow-hidden rounded-[18px] border border-primary-400/30 bg-surface-900/55 shadow-[0_12px_40px_rgb(14_16_23/0.7),inset_0_1px_0_rgb(250_250_252/0.1)] backdrop-blur-[28px] backdrop-saturate-150 motion-reduce:animate-none md:max-h-100"
       (mousedown)="$event.preventDefault()"
     >
       @if (recents().length) {

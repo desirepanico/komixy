@@ -9,6 +9,7 @@ import {
   output,
   signal,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { form, FormField, FormRoot, pattern, required } from '@angular/forms/signals';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -74,9 +75,11 @@ interface GuideSection {
     provideIcons({ ...DISCOVER_ICON_SET, matArrowBackOutline, matCheckOutline, matWarningOutline }),
   ],
   templateUrl: './discover-guide.html',
+  styleUrl: './discover-guide.css',
+  encapsulation: ViewEncapsulation.None,
   host: {
     class:
-      'flex min-h-0 flex-1 animate-guide-slide flex-col bg-[linear-gradient(180deg,#19142f,#0f0d1c_45%)]',
+      'flex min-h-0 flex-1 animate-[discover-guide-slide_var(--guide-slide-ms)_cubic-bezier(0.2,0.8,0.2,1)_both] flex-col bg-[linear-gradient(180deg,#19142f,#0f0d1c_45%)]',
   },
 })
 export class DiscoverGuide {
@@ -216,7 +219,7 @@ export class DiscoverGuide {
     return this.filters()[facet].length;
   }
   protected onPulseEnd(event: AnimationEvent): void {
-    if (event.animationName === 'pop') this.pulse.set('');
+    if (event.animationName === 'discover-guide-pop') this.pulse.set('');
   }
   protected toggle(facet: GuideSection['facet'], value: string): void {
     this.pulse.set(facet + value);

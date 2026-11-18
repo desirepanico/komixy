@@ -30,7 +30,7 @@
   <p
     appInView
     [inViewThreshold]="0.1"
-    class="mb-4.5 text-sm/relaxed text-surface-300 opacity-0 data-in-view:animate-guide-in"
+    class="mb-4.5 text-sm/relaxed text-surface-300 opacity-0 data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both]"
   >
     {{
       'discover.guide.intro'
@@ -44,7 +44,7 @@
         appInView
         [inViewThreshold]="0.1"
         [id]="'discover-guide-' + section.facet"
-        class="mb-3 flex items-center gap-2.5 text-base font-black text-surface-50 opacity-0 before:h-4.5 before:w-0.75 before:rounded-sm before:bg-linear-to-b before:from-primary-300 before:to-primary-600 before:shadow-[0_0_10px] before:shadow-primary-500 before:content-[''] data-in-view:animate-guide-in"
+        class="mb-3 flex items-center gap-2.5 text-base font-black text-surface-50 opacity-0 before:h-4.5 before:w-0.75 before:rounded-sm before:bg-linear-to-b before:from-primary-300 before:to-primary-600 before:shadow-[0_0_10px] before:shadow-primary-500 before:content-[''] data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both]"
       >
         <ng-icon [name]="section.icon" size="18" class="text-primary-300!" aria-hidden="true" />
         {{ section.titleKey | transloco }}
@@ -66,14 +66,14 @@
                 appInView
                 [inViewThreshold]="0.1"
                 [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
-                class="min-w-0 opacity-0 data-in-view:animate-guide-in"
+                class="min-w-0 opacity-0 data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both]"
               >
                 <button
                   type="button"
                   [attr.aria-pressed]="selected(section.facet, card.value)"
                   (click)="toggle(section.facet, card.value)"
                   (animationend)="onPulseEnd($event)"
-                  [class.animate-pop]="pulse() === section.facet + card.value"
+                  [class.discover-guide-pop]="pulse() === section.facet + card.value"
                   class="group/tile relative flex size-full cursor-pointer flex-col gap-2.5 overflow-hidden rounded-[18px] border border-[#2c2f44] bg-[linear-gradient(160deg,#1c1834,#13102a)] p-2 pb-3.5 text-left text-surface-100 transition-[transform,border-color,box-shadow,background-color,opacity] duration-200 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:-translate-y-0.75 hover:border-primary-300 hover:shadow-[0_14px_30px_-18px] hover:shadow-primary-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:border-primary-300 aria-pressed:bg-[linear-gradient(160deg,#2a1d58,#1a1236)] aria-pressed:shadow-[0_0_0_1px,0_16px_32px_-16px] aria-pressed:shadow-primary-300 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
                 >
                   <app-format-illustration [format]="$any(card.value)" />
@@ -116,14 +116,14 @@
                 appInView
                 [inViewThreshold]="0.1"
                 [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
-                class="min-w-0 opacity-0 data-in-view:animate-guide-in"
+                class="min-w-0 opacity-0 data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both]"
               >
                 <button
                   type="button"
                   [attr.aria-pressed]="selected(section.facet, card.value)"
                   (click)="toggle(section.facet, card.value)"
                   (animationend)="onPulseEnd($event)"
-                  [class.animate-pop]="pulse() === section.facet + card.value"
+                  [class.discover-guide-pop]="pulse() === section.facet + card.value"
                   class="group/opt relative flex size-full min-w-0 cursor-pointer flex-col items-start gap-2.5 rounded-[15px] border border-transparent py-3.5 pr-10 pl-3.5 text-left text-surface-100 transition-[background-color,border-color,box-shadow,opacity] duration-200 after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:bg-primary-300/12 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 aria-pressed:overflow-hidden aria-pressed:border-primary-300 aria-pressed:bg-[#3e345e] aria-pressed:shadow-[0_10px_26px_-16px] aria-pressed:shadow-primary-300 aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:aria-pressed:after:hidden"
                 >
                   <span
@@ -161,14 +161,14 @@
                 appInView
                 [inViewThreshold]="0.1"
                 [style.animation-delay]="'calc(' + i + ' * var(--guide-stagger-ms))'"
-                class="min-w-0 opacity-0 data-in-view:animate-guide-in"
+                class="min-w-0 opacity-0 data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both]"
               >
                 <button
                   type="button"
                   [attr.aria-pressed]="selected(section.facet, card.value)"
                   (click)="toggle(section.facet, card.value)"
                   (animationend)="onPulseEnd($event)"
-                  [class.animate-pop]="pulse() === section.facet + card.value"
+                  [class.discover-guide-pop]="pulse() === section.facet + card.value"
                   class="group relative flex min-h-23 w-full cursor-pointer items-start gap-3 overflow-hidden rounded-lg border border-[#2c2f44] bg-[radial-gradient(120%_150%_at_100%_100%,rgb(208_188_255/0.2),transparent_62%),linear-gradient(160deg,#1c1834,#13102a)] py-4 pr-11 pl-4 text-left text-surface-100 transition-[transform,border-color,box-shadow,background-color,opacity] duration-200 before:pointer-events-none before:absolute before:inset-0 before:translate-x-[-125%] before:bg-[linear-gradient(115deg,transparent_38%,rgb(255_255_255/0.1)_50%,transparent_62%)] before:transition-transform before:duration-800 before:content-[''] after:pointer-events-none after:absolute after:inset-y-0 after:left-0 after:hidden after:w-[38%] after:bg-linear-to-r after:from-transparent after:via-white/16 after:to-transparent after:content-[''] hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-[0_14px_30px_-18px] hover:shadow-primary-300 hover:before:translate-x-[125%] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 focus-visible:before:translate-x-[125%] aria-pressed:border-primary-300 aria-pressed:bg-[radial-gradient(120%_150%_at_100%_100%,rgb(208_188_255/0.34),transparent_66%),linear-gradient(160deg,#2a1d58,#1a1236)] aria-pressed:shadow-[0_0_0_1px,0_16px_32px_-16px] aria-pressed:shadow-primary-300 aria-pressed:before:translate-x-[125%] aria-pressed:after:block aria-pressed:after:animate-foil motion-reduce:before:hidden motion-reduce:aria-pressed:after:hidden"
                 >
                   @if (card.avatar) {
@@ -181,7 +181,7 @@
                     />
                   } @else {
                     <span
-                      class="pointer-events-none absolute -right-3.5 -bottom-4 size-28 -rotate-14 text-primary-300 opacity-25 drop-shadow-[0_0_14px_rgb(208_188_255/0.55)] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.9,0.3,1.3)] group-hover:animate-icon-float group-hover:opacity-50 group-focus-visible:animate-icon-float group-focus-visible:opacity-50 group-active:-translate-x-1.5 group-active:-translate-y-2 group-active:scale-128 group-active:rotate-10 group-active:animate-none group-aria-pressed:animate-icon-float group-aria-pressed:opacity-60 motion-reduce:animate-none"
+                      class="pointer-events-none absolute -right-3.5 -bottom-4 size-28 -rotate-14 text-primary-300 opacity-25 drop-shadow-[0_0_14px_rgb(208_188_255/0.55)] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.2,0.9,0.3,1.3)] group-hover:animate-[discover-guide-icon-float_2.8s_ease-in-out_infinite] group-hover:opacity-50 group-focus-visible:animate-[discover-guide-icon-float_2.8s_ease-in-out_infinite] group-focus-visible:opacity-50 group-active:-translate-x-1.5 group-active:-translate-y-2 group-active:scale-128 group-active:rotate-10 group-active:animate-none group-aria-pressed:animate-[discover-guide-icon-float_2.8s_ease-in-out_infinite] group-aria-pressed:opacity-60 motion-reduce:animate-none"
                       aria-hidden="true"
                     >
                       <ng-icon [name]="card.icon" size="112" />
@@ -224,11 +224,11 @@
       <div
         appInView
         [inViewThreshold]="0.1"
-        class="group/adult relative overflow-hidden rounded-lg border border-rose-400/40 bg-linear-to-br from-rose-950 to-surface-950 p-4 opacity-0 after:pointer-events-none after:absolute after:inset-0 after:animate-warn-glow after:rounded-[inherit] after:content-[''] data-in-view:animate-guide-in motion-reduce:after:animate-none"
+        class="group/adult relative overflow-hidden rounded-lg border border-rose-400/40 bg-linear-to-br from-rose-950 to-surface-950 p-4 opacity-0 after:pointer-events-none after:absolute after:inset-0 after:animate-[discover-guide-warn-glow_3.4s_ease-in-out_infinite] after:rounded-[inherit] after:content-[''] data-in-view:animate-[discover-guide-in_var(--guide-in-ms)_cubic-bezier(0.2,0.8,0.2,1)_both] motion-reduce:after:animate-none"
       >
         <div class="mb-2 flex items-center gap-2.5">
           <span
-            class="grid size-8.5 place-items-center rounded-[10px] bg-rose-300/15 text-rose-300 group-data-in-view/adult:animate-icon-shake"
+            class="grid size-8.5 place-items-center rounded-[10px] bg-rose-300/15 text-rose-300 group-data-in-view/adult:animate-[discover-guide-icon-shake_700ms_500ms_both]"
           >
             <ng-icon name="matWarningOutline" size="20" aria-hidden="true" />
           </span>

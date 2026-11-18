@@ -181,7 +181,7 @@ describe('DiscoverGuide', () => {
     const theme = cards().find((b) => b.textContent?.includes('discover.options.themes.'))!;
     expect(theme.className).toContain('aria-pressed:before:translate-x-[125%]');
     expect(theme.querySelector('span[aria-hidden="true"]')?.className).toContain(
-      'group-aria-pressed:animate-icon-float',
+      'group-aria-pressed:animate-[discover-guide-icon-float_2.8s_ease-in-out_infinite]',
     );
   });
 
@@ -207,10 +207,12 @@ describe('DiscoverGuide', () => {
     const shonen = card('discover.options.categories.shonen');
     shonen.click();
     await fixture.whenStable();
-    expect(shonen.classList).toContain('animate-pop');
-    shonen.dispatchEvent(Object.assign(new Event('animationend'), { animationName: 'pop' }));
+    expect(shonen.classList).toContain('discover-guide-pop');
+    shonen.dispatchEvent(
+      Object.assign(new Event('animationend'), { animationName: 'discover-guide-pop' }),
+    );
     await fixture.whenStable();
-    expect(shonen.classList).not.toContain('animate-pop');
+    expect(shonen.classList).not.toContain('discover-guide-pop');
   });
 
   it('ogni voce si può scegliere, anche se con gli altri filtri non darebbe titoli', async () => {

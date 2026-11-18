@@ -1,0 +1,58 @@
+@keyframes discover-guide-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes discover-guide-slide {
+  from {
+    transform: translateX(104%);
+  }
+}
+
+@keyframes discover-guide-pop {
+  40% {
+    transform: scale(1.035);
+  }
+}
+
+@keyframes discover-guide-icon-float {
+  0%,
+  100% {
+    transform: translate(-8px, -6px) rotate(-6deg) scale(1.14);
+  }
+  50% {
+    transform: translate(-12px, -14px) rotate(5deg) scale(1.2);
+  }
+}
+
+@keyframes discover-guide-icon-shake {
+  20% {
+    transform: rotate(-12deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(-6deg);
+  }
+  80% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes discover-guide-warn-glow {
+  50% {
+    box-shadow: inset 0 0 26px rgb(255 161 173 / 0.22);
+  }
+}
+
+/* Un tocco su una scelta: piccolo rimbalzo (lo spegne `onPulseEnd` a fine animazione) */
+.discover-guide-pop {
+  animation: discover-guide-pop 500ms cubic-bezier(0.2, 0.9, 0.3, 1.4);
+}

@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, ViewEncapsulation } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
@@ -21,6 +21,8 @@ import { WeeklyPackService } from '@shared/services/weekly-pack/weekly-pack.serv
   imports: [NgOptimizedImage, RouterLink, TranslocoPipe, Button, Message, Tag],
   providers: [provideIcons({ matLockOutline })],
   templateUrl: './weekly-pack-banner.html',
+  styleUrl: './weekly-pack-banner.css',
+  encapsulation: ViewEncapsulation.None,
   host: { class: 'block' },
 })
 export class WeeklyPackBanner {

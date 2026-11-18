@@ -10,6 +10,7 @@ import {
   output,
   signal,
   viewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -65,6 +66,8 @@ interface FacetView {
     }),
   ],
   templateUrl: './discover-filters-panel.html',
+  styleUrl: './discover-filters-panel.css',
+  encapsulation: ViewEncapsulation.None,
 })
 export class DiscoverFiltersPanel {
   private readonly _catalogFilter = inject(CatalogFilterService);

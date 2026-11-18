@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ViewEncapsulation } from '@angular/core';
 import { ComicFormat } from '@shared/models/catalog-item.model';
 
 /**
@@ -8,6 +8,8 @@ import { ComicFormat } from '@shared/models/catalog-item.model';
 @Component({
   selector: 'app-format-illustration',
   templateUrl: './format-illustration.html',
+  styleUrl: './format-illustration.css',
+  encapsulation: ViewEncapsulation.None,
   host: {
     class:
       'block h-24 overflow-hidden rounded-md bg-[radial-gradient(90%_110%_at_50%_110%,rgb(208_188_255/0.3),transparent_70%),#0f0c20] text-primary-300',

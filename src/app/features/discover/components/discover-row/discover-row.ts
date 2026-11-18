@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ViewEncapsulation } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { ComicsNavigationService } from '@features/comics/services/comics-navigation/comics-navigation.service';
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
@@ -11,6 +11,8 @@ import { CatalogItem } from '@shared/models/catalog-item.model';
   selector: 'app-discover-row',
   imports: [BookmarkButton, ComicCard, HorizontalScroller, TranslocoPipe],
   templateUrl: './discover-row.html',
+  styleUrl: './discover-row.css',
+  encapsulation: ViewEncapsulation.None,
   host: { class: 'block min-w-0' },
 })
 export class DiscoverRow {

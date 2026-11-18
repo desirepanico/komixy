@@ -21,7 +21,7 @@
     >
       @for (comic of items(); track comic.id) {
         <li
-          class="animate-card-in motion-reduce:animate-none"
+          class="animate-[discover-row-card-in_350ms_cubic-bezier(0.2,0.8,0.2,1)_both] motion-reduce:animate-none"
           [style.animation-delay.ms]="$index * 28"
         >
           <app-comic-card [comic]="comic" [link]="comicsNavigation.detailLink(comic.id)">
