@@ -76,8 +76,11 @@
         @if (activeCount() > 0) {
           <button
             type="button"
+            appButton
+            variant="text"
+            [underline]="true"
+            class="ml-auto"
             (click)="clearFilters()"
-            class="ml-auto min-h-8 cursor-pointer px-1 text-sm font-extrabold text-primary-300 hover:text-white hover:underline hover:underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
           >
             {{ 'discover.filters.reset' | transloco }}
           </button>
@@ -166,11 +169,7 @@
               {{ 'discover.empty.title' | transloco }}
             </h3>
             <p class="mt-1 text-sm text-surface-300">{{ 'discover.empty.text' | transloco }}</p>
-            <button
-              type="button"
-              (click)="resetAll()"
-              class="mt-4 min-h-10 cursor-pointer rounded-full bg-primary-500 px-5 text-sm font-extrabold text-surface-950 hover:bg-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300"
-            >
+            <button type="button" appButton [rounded]="true" class="mt-4" (click)="resetAll()">
               {{ 'discover.empty.reset' | transloco }}
             </button>
           </div>

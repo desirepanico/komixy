@@ -4,12 +4,13 @@ import { ComicsNavigationService } from '@features/comics/services/comics-naviga
 import { BookmarkButton } from '@shared/components/bookmark-button/bookmark-button';
 import { ComicCard } from '@shared/components/comic-card/comic-card';
 import { HorizontalScroller } from '@shared/components/horizontal-scroller/horizontal-scroller';
+import { Tag } from '@shared/components/tag/tag';
 import { CatalogItem } from '@shared/models/catalog-item.model';
 
 /** Una riga di Scopri: titolo, sottotitolo e i volumi, che scorrono di lato o stanno in griglia (`grid`, per i risultati). */
 @Component({
   selector: 'app-discover-row',
-  imports: [BookmarkButton, ComicCard, HorizontalScroller, TranslocoPipe],
+  imports: [BookmarkButton, ComicCard, HorizontalScroller, Tag, TranslocoPipe],
   templateUrl: './discover-row.html',
   styleUrl: './discover-row.css',
   encapsulation: ViewEncapsulation.None,

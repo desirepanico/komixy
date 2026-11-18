@@ -21,6 +21,7 @@ import {
 } from '@ng-icons/material-symbols/outline';
 import { Button } from '@shared/components/button/button';
 import { InputText } from '@shared/components/input/input-text/input-text';
+import { Message } from '@shared/components/message/message';
 import {
   CATEGORY_OPTIONS,
   DISCOVER_FACET_ICONS,
@@ -70,6 +71,7 @@ interface GuideSection {
     RestartAnimation,
     TranslocoPipe,
     Button,
+    Message,
   ],
   providers: [
     provideIcons({ ...discoverIcons(), matArrowBackOutline, matCheckOutline, matWarningOutline }),

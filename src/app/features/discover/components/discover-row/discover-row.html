@@ -2,10 +2,9 @@
   <h2 class="flex items-center gap-2.5 text-lg font-bold text-surface-50 sm:text-xl">
     {{ title() }}
     @if (count() !== null) {
-      <span
-        class="rounded-full bg-primary-500/20 px-2.5 py-0.5 text-xs font-extrabold text-primary-200 tabular-nums"
-        >{{ 'discover.rows.count' | transloco: { count: count() } }}</span
-      >
+      <app-tag severity="accent" class="tabular-nums">
+        {{ 'discover.rows.count' | transloco: { count: count() } }}
+      </app-tag>
     }
   </h2>
   @if (subtitle()) {

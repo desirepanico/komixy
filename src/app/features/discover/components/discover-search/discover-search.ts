@@ -11,6 +11,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { Button } from '@shared/components/button/button';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   matCloseOutline,
@@ -31,7 +32,7 @@ import { shortcutModifier } from '../../utils/shortcut-modifier/shortcut-modifie
  */
 @Component({
   selector: 'app-discover-search',
-  imports: [NgIcon, TranslocoPipe],
+  imports: [Button, NgIcon, TranslocoPipe],
   providers: [
     provideIcons({ matCloseOutline, matHistoryOutline, matPersonOutline, matSearchOutline }),
   ],

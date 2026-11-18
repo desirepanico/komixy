@@ -2,6 +2,7 @@ import { Component, computed, ElementRef, inject, signal, viewChild } from '@ang
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { Button } from '@shared/components/button/button';
 import {
   COMIC_KINDS,
   COVER_PLACEHOLDER,
@@ -35,6 +36,7 @@ import { parseDiscoverFilters } from '../../utils/parse-discover-filters/parse-d
 @Component({
   selector: 'app-discover-page',
   imports: [
+    Button,
     DiscoverActiveChips,
     DiscoverDock,
     DiscoverFiltersButton,

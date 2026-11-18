@@ -85,8 +85,11 @@
           </span>
           <button
             type="button"
+            appButton
+            variant="text"
+            [underline]="true"
+            class="whitespace-nowrap"
             (click)="clearRecents()"
-            class="min-h-7 cursor-pointer text-[13px] font-bold whitespace-nowrap text-primary-300 underline underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400 sm:text-sm"
           >
             {{ 'discover.search.clearRecent' | transloco }}
           </button>

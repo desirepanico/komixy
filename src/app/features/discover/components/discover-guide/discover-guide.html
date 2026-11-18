@@ -289,9 +289,7 @@
               </div>
             </fieldset>
             @if (ageError(); as error) {
-              <p role="alert" class="mt-3 text-sm font-bold text-rose-300">
-                {{ error | transloco }}
-              </p>
+              <app-message class="mt-3" severity="error" [label]="error | transloco" />
             }
             <div class="mt-3 flex items-center gap-4">
               <button type="submit" appButton severity="danger" [rounded]="true">

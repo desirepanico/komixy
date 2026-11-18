@@ -61,7 +61,7 @@ describe('WeeklyPackBanner', () => {
 
     it('la riga dei pulsanti ha solo «Apri la busta» e «Salta l’animazione»', async () => {
       await create(false);
-      expect(html.querySelectorAll('[appButton]')).toHaveLength(2);
+      expect(html.querySelectorAll('[appButton]:not(app-message *)')).toHaveLength(2);
     });
 
     it("«Salta l'animazione» apre la busta e va alla revisione della settimana", async () => {

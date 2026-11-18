@@ -50,10 +50,7 @@
         icon="matLockOutline"
         [label]="'guestNotice.list' | transloco"
       >
-        <a
-          [routerLink]="session.signUpLink"
-          class="rounded-xs font-bold text-primary-300 underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-400"
-        >
+        <a appButton variant="text" [underline]="true" [routerLink]="session.signUpLink">
           {{ 'guestNotice.signUp' | transloco }}
         </a>
       </app-message>
